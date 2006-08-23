@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNet", "FlickrNet\FlickrNet.csproj", "{5F017126-C1FF-4996-85CC-6150E80C6AFC}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 2
+		SccProjectName0 = $/FlickrNet
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Team\u0020Foundation\u0020Server\u0020MSSCCI\u0020Provider
+		CanCheckoutShared = true
+		SolutionUniqueID = {64FD664B-4439-4A4E-8C9B-435608F57B97}
+		SccProjectUniqueName1 = FlickrNet\\FlickrNet.csproj
+		SccLocalPath1 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection1 = FlickrNet\\
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Debug.ActiveCfg = Debug|.NET
+		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Debug.Build.0 = Debug|.NET
+		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Release.ActiveCfg = Release|.NET
+		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

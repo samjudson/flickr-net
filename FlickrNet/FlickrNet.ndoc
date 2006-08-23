@@ -1,0 +1,51 @@
+<project SchemaVersion="1.3">
+    <assemblies>
+        <assembly location=".\bin\Debug\FlickrNet.dll" documentation=".\bin\Debug\FlickrNet.xml" />
+    </assemblies>
+    <namespaces>
+        <namespace name="FlickrNet">Flickr.Net API Library classes. See the Flickr class for main methods.</namespace>
+    </namespaces>
+    <documenters>
+        <documenter name="JavaDoc">
+            <property name="OutputDirectory" value=".\doc\" />
+        </documenter>
+        <documenter name="LaTeX">
+            <property name="OutputDirectory" value=".\doc\" />
+            <property name="TextFileFullName" value="Documentation.tex" />
+            <property name="TexFileBaseName" value="Documentation" />
+            <property name="LatexCompiler" value="latex" />
+            <property name="TexFileFullPath" value=".\doc\Documentation.tex" />
+        </documenter>
+        <documenter name="LinearHtml">
+            <property name="OutputDirectory" value=".\doc\" />
+            <property name="Title" value="An NDoc Documented Class Library" />
+        </documenter>
+        <documenter name="MSDN">
+            <property name="OutputDirectory" value=".\doc\" />
+            <property name="HtmlHelpName" value="Flickr .Net Api Library" />
+            <property name="Title" value="Flickr .Net Api Library" />
+            <property name="ShowVisualBasic" value="True" />
+            <property name="ShowMissingSummaries" value="True" />
+            <property name="ShowMissingRemarks" value="True" />
+            <property name="ShowMissingParams" value="True" />
+            <property name="ShowMissingReturns" value="True" />
+            <property name="ShowMissingValues" value="True" />
+            <property name="AssemblyVersionInfo" value="AssemblyVersion" />
+            <property name="CopyrightText" value="Released under Common Public License 1.0" />
+            <property name="CopyrightHref" value="http://www.opensource.org/licenses/cpl.php" />
+            <property name="DocumentAttributes" value="True" />
+        </documenter>
+        <documenter name="MSDN 2003">
+            <property name="OutputDirectory" value=".\doc\" />
+            <property name="Title" value="An NDoc Documented Class Library" />
+        </documenter>
+        <documenter name="VS.NET 2003">
+            <property name="OutputDirectory" value=".\doc\" />
+            <property name="HtmlHelpName" value="Documentation" />
+            <property name="Title" value="An NDoc documented library" />
+        </documenter>
+        <documenter name="XML">
+            <property name="OutputFile" value=".\doc\doc.xml" />
+        </documenter>
+    </documenters>
+</project>
