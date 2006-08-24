@@ -83,7 +83,7 @@ namespace FlickrNet
 
 		private static string[] _baseUrl = new string[] { 
 															"http://api.flickr.com/services/rest/", 
-															"http://beta.zooomr.com/bluenote/api/rest/",
+															"http://beta.zooomr.com/bluenote/api/rest",
 															"http://www.23hq.com/services/rest/"};
 
 		private static string UploadUrl
@@ -92,7 +92,7 @@ namespace FlickrNet
 		}
 		private static string[] _uploadUrl = new string[] {
 															  "http://api.flickr.com/services/upload/",
-															  "http://beta.zooomr.com/bluenote/api/upload/",
+															  "http://beta.zooomr.com/bluenote/api/upload",
 															  "http://www.23hq.com/services/upload/"};
 
 		private static string ReplaceUrl
@@ -101,7 +101,7 @@ namespace FlickrNet
 		}
 		private static string[] _replaceUrl = new string[] {
 															   "http://api.flickr.com/services/replace/",
-															   "http://beta.zooomr.com/bluenote/api/replace/",
+															   "http://beta.zooomr.com/bluenote/api/replace",
 															   "http://www.23hq.com/services/replace/"};
 
 		private static string AuthUrl
@@ -378,8 +378,9 @@ namespace FlickrNet
 
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
-			req.Method = "POST";
-			req.ContentLength = 0;
+			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
+			if( req.Method == "POST" ) req.ContentLength = 0;
+			//req.Method = "POST";
 			req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
@@ -489,7 +490,7 @@ namespace FlickrNet
 
 			foreach(string key in keys)
 			{
-				if( UrlStringBuilder.Length > 0 ) UrlStringBuilder.Append("&");
+				if( UrlStringBuilder.Length > BaseUrl.Length + 1 ) UrlStringBuilder.Append("&");
                 UrlStringBuilder.Append(key);
                 UrlStringBuilder.Append("=");
                 UrlStringBuilder.Append(Utils.UrlEncode(parameters[key]));
@@ -499,7 +500,7 @@ namespace FlickrNet
 
             if (_sharedSecret != null && _sharedSecret.Length > 0) 
             {
-                if (UrlStringBuilder.Length > 0)
+                if (UrlStringBuilder.Length > BaseUrl.Length + 1)
                 {
                     UrlStringBuilder.Append("&");
                 }
@@ -892,10 +893,11 @@ namespace FlickrNet
 			req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
 			req.Method = "POST";
 			if( Proxy != null ) req.Proxy = Proxy;
-			req.Referer = "http://www.flickr.com";
-			req.KeepAlive = false;
+			//req.Referer = "http://www.flickr.com";
+			req.KeepAlive = true;
 			req.Timeout = HttpTimeout * 100;
 			req.ContentType = "multipart/form-data; boundary=" + boundary + "";
+			req.Expect = "";
 
 			StringBuilder sb = new StringBuilder();
             
