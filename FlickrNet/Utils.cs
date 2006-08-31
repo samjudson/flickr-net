@@ -113,6 +113,12 @@ namespace FlickrNet
 				sb.Append("tags");
 			}
 
+			if( (extras & PhotoSearchExtras.Geo) == PhotoSearchExtras.Geo )
+			{
+				if( sb.Length>0 ) sb.Append(",");
+				sb.Append("geo");
+			}
+
 			return sb.ToString();
 		}
 

@@ -135,6 +135,15 @@ namespace FlickrNet
 		public PhotoDates Dates;
 
 		/// <summary>
+		/// The location information of this photo, if available.
+		/// </summary>
+		/// <remarks>
+		/// Will be null if the photo has no location information stored on Flickr.
+		/// </remarks>
+		[XmlElement("location", Form=XmlSchemaForm.Unqualified)]
+		public PhotoLocation Location;
+
+		/// <summary>
 		/// The Web url for flickr web page for this photo.
 		/// </summary>
 		[XmlIgnore()]
@@ -197,67 +206,6 @@ namespace FlickrNet
 		{
 			get { return string.Format(photoUrl, Server, PhotoId, Secret, "_b"); }
 		}
-	}
-
-	/// <summary>
-	/// The date information for a photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoDates
-	{
-		/// <summary>
-		/// The date the photo was posted (or uploaded).
-		/// </summary>
-		[XmlIgnore]
-		public DateTime PostedDate
-		{
-			get { return Utils.UnixTimestampToDate(raw_posted); }
-		}
-
-		/// <summary>
-		/// The raw timestamp for the date the photo was posted.
-		/// </summary>
-		/// <remarks>Use <see cref="PhotoDates.PostedDate"/> instead.</remarks>
-		[XmlAttribute("posted", Form=XmlSchemaForm.Unqualified)]
-		public long raw_posted;
-
-		/// <summary>
-		/// The date the photo was taken.
-		/// </summary>
-		[XmlIgnore]
-		public DateTime TakenDate
-		{
-			get { return DateTime.Parse(raw_taken); }
-		}
-
-		/// <summary>
-		/// The raw timestamp for the date the photo was taken.
-		/// </summary>
-		/// <remarks>Use <see cref="PhotoDates.TakenDate"/> instead.</remarks>
-		[XmlAttribute("taken", Form=XmlSchemaForm.Unqualified)]
-		public string raw_taken;
-
-		/// <summary>
-		/// The granularity of the taken date.
-		/// </summary>
-		[XmlAttribute("takengranularity", Form=XmlSchemaForm.Unqualified)]
-		public int TakenGranularity;
-
-		/// <summary>
-		/// The raw timestamp for the date the photo was last updated.
-		/// </summary>
-		[XmlAttribute("lastupdate", Form=XmlSchemaForm.Unqualified)]
-		public long raw_lastupdate;
-
-		/// <summary>
-		/// The date the photo was last updated (includes comments, tags, title, description etc).
-		/// </summary>
-		[XmlIgnore()]
-		public DateTime LastUpdated
-		{
-			get{ return Utils.UnixTimestampToDate(raw_lastupdate); }
-		}
-
 	}
 
 	/// <summary>
@@ -333,60 +281,6 @@ namespace FlickrNet
 		/// </summary>
 		[XmlAttribute("permaddmeta", Form=XmlSchemaForm.Unqualified)]
 		public PermissionAddMeta PermissionAddMeta;
-	}
-
-	/// <summary>
-	/// An enumeration defining who can add comments.
-	/// </summary>
-	public enum PermissionComment
-	{
-		/// <summary>
-		/// Nobody.
-		/// </summary>
-		[XmlEnum("0")]
-		Nobody = 0,
-		/// <summary>
-		/// Friends and family only.
-		/// </summary>
-		[XmlEnum("1")]
-		FriendsAndFamily = 1,
-		/// <summary>
-		/// Contacts only.
-		/// </summary>
-		[XmlEnum("2")]
-		ContactsOnly = 2,
-		/// <summary>
-		/// All Flickr users.
-		/// </summary>
-		[XmlEnum("3")]
-		Everybody = 3
-	}
-
-	/// <summary>
-	/// An enumeration defining who can add meta data (tags and notes).
-	/// </summary>
-	public enum PermissionAddMeta
-	{
-		/// <summary>
-		/// The owner of the photo only.
-		/// </summary>
-		[XmlEnum("0")]
-		Owner = 0,
-		/// <summary>
-		/// Friends and family only.
-		/// </summary>
-		[XmlEnum("1")]
-		FriendsAndFamily = 1,
-		/// <summary>
-		/// All contacts.
-		/// </summary>
-		[XmlEnum("2")]
-		Contacts = 2,
-		/// <summary>
-		/// All Flickr users.
-		/// </summary>
-		[XmlEnum("3")]
-		Everybody = 3
 	}
 
 	/// <summary>

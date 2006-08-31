@@ -9,18 +9,19 @@ namespace FlickrNet
 	{
 		private string _userId;
 		private string _tags;
-		private TagMode _tagMode = TagMode.AllTags;
+		private TagMode _tagMode = TagMode.None;
 		private string _text;
 		private DateTime _minUploadDate = DateTime.MinValue;
 		private DateTime _maxUploadDate = DateTime.MinValue;
 		private DateTime _minTakenDate = DateTime.MinValue;
 		private DateTime _maxTakenDate = DateTime.MinValue;
 		private int _license;
-		private PhotoSearchExtras _extras = PhotoSearchExtras.All;
-		private int _perPage = 100;
-		private int _page = 1;
+		private PhotoSearchExtras _extras = PhotoSearchExtras.None;
+		private int _perPage = 0;
+		private int _page = 0;
 		private PhotoSearchSortOrder _sort = PhotoSearchSortOrder.None;
 		private PrivacyFilter _privacyFilter = PrivacyFilter.None;
+		private BoundaryBox _boundaryBox = new BoundaryBox();
 
 		/// <summary>
 		/// Creates a new instance of the search options.
@@ -107,6 +108,8 @@ namespace FlickrNet
 			{
 				switch(_tagMode)
 				{
+					case TagMode.None:
+						return "";
 					case TagMode.AllTags:
 						return "all";
 					case TagMode.AnyTag:
@@ -228,6 +231,38 @@ namespace FlickrNet
 			set { _privacyFilter = value; }
 		}
 
+		/// <summary>
+		/// The boundary box for which to search for geo location photos.
+		/// </summary>
+		public BoundaryBox BoundaryBox
+		{
+			get { return _boundaryBox; }
+			set 
+			{
+				if( value == null )
+					  _boundaryBox = new BoundaryBox();
+				  else 
+					  _boundaryBox = value; 
+			}
+		}
+
+		/// <summary>
+		/// The accuracy of the search for geo location photos.
+		/// </summary>
+		/// <remarks>
+		/// Can also be set as a property of the <see cref="BoundaryBox"/> property.
+		/// </remarks>
+		public GeoAccuracy Accuracy
+		{
+			get { return _boundaryBox==null?GeoAccuracy.None:_boundaryBox.Accuracy; }
+			set 
+			{ 
+				if (_boundaryBox==null) { _boundaryBox = new BoundaryBox(); }
+				_boundaryBox.Accuracy = value;
+			}
+		
+		}
+
 		internal string ExtrasString
 		{
 			get { return Utils.ExtrasToString(Extras); }
@@ -260,73 +295,4 @@ namespace FlickrNet
 		}
 	}
 
-	/// <summary>
-	/// The sort order for the PhotoSearch method.
-	/// </summary>
-	public enum PhotoSearchSortOrder
-	{
-		/// <summary>
-		/// No sort order.
-		/// </summary>
-		None,
-		/// <summary>
-		/// Sort by date uploaded (posted).
-		/// </summary>
-		DatePostedAsc,
-		/// <summary>
-		/// Sort by date uploaded (posted) in descending order.
-		/// </summary>
-		DatePostedDesc,
-		/// <summary>
-		/// Sort by date taken.
-		/// </summary>
-		DateTakenAsc,
-		/// <summary>
-		/// Sort by date taken in descending order.
-		/// </summary>
-		DateTakenDesc,
-		/// <summary>
-		/// Sort by interestingness.
-		/// </summary>
-		InterestingnessAsc,
-		/// <summary>
-		/// Sort by interestingness in descending order.
-		/// </summary>
-		InterestingnessDesc,
-		/// <summary>
-		/// Sort by relevance
-		/// </summary>
-		Relevance
-	}
-
-	/// <summary>
-	/// When searching for photos you can filter on the privacy of the photos.
-	/// </summary>
-	public enum PrivacyFilter
-	{
-		/// <summary>
-		/// Do not filter.
-		/// </summary>
-		None = 0,
-		/// <summary>
-		/// Show only public photos.
-		/// </summary>
-		PublicPhotos = 1,
-		/// <summary>
-		/// Show photos which are marked as private but viewable by family contacts.
-		/// </summary>
-		PrivateVisibleToFamily = 2,
-		/// <summary>
-		/// Show photos which are marked as private but viewable by friends.
-		/// </summary>
-		PrivateVisibleToFriends = 3,
-		/// <summary>
-		/// Show photos which are marked as private but viewable by friends and family contacts.
-		/// </summary>
-		PrivateVisibleToFriendsFamily = 4,
-		/// <summary>
-		/// Show photos which are marked as completely private.
-		/// </summary>
-		CompletelyPrivate = 5
-	}
 }

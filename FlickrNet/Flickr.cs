@@ -1676,10 +1676,10 @@ namespace FlickrNet
 			NameValueCollection parameters = new NameValueCollection();
 			parameters.Add("method", "flickr.groups.pools.getPhotos");
 			parameters.Add("group_id", groupId);
-			if( tags != null )parameters.Add("tags", tags);
+			if( tags != null && tags.Length > 0 )parameters.Add("tags", tags);
 			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
 			if( page > 0 ) parameters.Add("page", page.ToString());
-			if( userId != null ) parameters.Add("user_id", userId);
+			if( userId != null && userId.Length > 0 ) parameters.Add("user_id", userId);
 			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
 
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -3254,13 +3254,10 @@ namespace FlickrNet
 		{
 			NameValueCollection parameters = new NameValueCollection();
 			parameters.Add("method", "flickr.photos.search");
-			if( options.UserId != null ) parameters.Add("user_id", options.UserId);
+			if( options.UserId != null && options.UserId.Length > 0 ) parameters.Add("user_id", options.UserId);
 			if( options.Text != null && options.Text.Length > 0 ) parameters.Add("text", options.Text);
-			if( options.Tags != null ) 
-			{
-				parameters.Add("tags", options.Tags);
-				parameters.Add("tag_mode", options.TagModeString);
-			}
+			if( options.Tags != null && options.Tags.Length > 0 ) parameters.Add("tags", options.Tags);
+			if( options.TagMode != TagMode.None ) parameters.Add("tag_mode", options.TagModeString);
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_upload_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_upload_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
 			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
@@ -3268,12 +3265,11 @@ namespace FlickrNet
 			if( options.License != 0 ) parameters.Add("license", options.License.ToString("d"));
 			if( options.PerPage != 0 ) parameters.Add("per_page", options.PerPage.ToString());
 			if( options.Page != 0 ) parameters.Add("page", options.Page.ToString());
-			if( options.Extras != PhotoSearchExtras.None )
-				parameters.Add("extras", options.ExtrasString);
-			if( options.SortOrder != PhotoSearchSortOrder.None )
-				parameters.Add("sort", options.SortOrderString);
-			if( options.PrivacyFilter != PrivacyFilter.None )
-				parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
+			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
+			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+			if( options.BoundaryBox.IsSet ) parameters.Add("bbox", options.BoundaryBox.ToString());
+			if( options.Accuracy != GeoAccuracy.None ) parameters.Add("accuracy", options.Accuracy.ToString("d"));
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
@@ -4201,7 +4197,217 @@ namespace FlickrNet
 
 		#endregion
 
+		#region	[ Geo ]
+		/// <summary>
+		/// Returns the location data for a give photo.
+		/// </summary>
+		/// <param name="photoId">The ID of the photo to return the location information for.</param>
+		/// <returns>Returns null if the photo has no location information, otherwise returns the location information.</returns>
+		public PhotoLocation PhotosGeoGetLocation(string photoId)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.geo.getLocation");
+			parameters.Add("photo_id", photoId);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.PhotoInfo.Location;
+			}
+			else
+			{
+				if( response.Error.Code == 2 )
+					return null;
+				else
+					throw new FlickrException(response.Error);
+			}
+		}
+		/// <summary>
+		/// Sets the geo location for a photo.
+		/// </summary>
+		/// <param name="photoId">The ID of the photo to set to location for.</param>
+		/// <param name="latitude">The latitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
+		/// <param name="longitude">The longitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
+		public void PhotosGeoSetLocation(string photoId, decimal latitude, decimal longitude)
+		{
+			PhotosGeoSetLocation(photoId, latitude, longitude, GeoAccuracy.None);
+		}
+
+		/// <summary>
+		/// Sets the geo location for a photo.
+		/// </summary>
+		/// <param name="photoId">The ID of the photo to set to location for.</param>
+		/// <param name="latitude">The latitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
+		/// <param name="longitude">The longitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
+		/// <param name="accuracy">The accuracy of the photos geo location.</param>
+		public void PhotosGeoSetLocation(string photoId, decimal latitude, decimal longitude, GeoAccuracy accuracy)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.geo.setLocation");
+			parameters.Add("photo_id", photoId);
+			parameters.Add("lat", latitude.ToString());
+			parameters.Add("lon", longitude.ToString());
+			if( accuracy != GeoAccuracy.None )
+				parameters.Add("accuracy", ((int)accuracy).ToString());
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				return;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
+		/// <summary>
+		/// Removes Location information.
+		/// </summary>
+		/// <param name="photoId">The photo ID of the photo to remove information from.</param>
+		/// <returns>Returns true if the location information as found and removed. Returns false if no photo information was found.</returns>
+		public bool PhotosGeoRemoveLocation(string photoId)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.geo.removeLocation");
+			parameters.Add("photo_id", photoId);
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				return true;
+			}
+			else
+			{
+				if( response.Error.Code == 2 )
+					return false;
+				else
+					throw new FlickrException(response.Error);
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of photos that do not contain geo location information.
+		/// </summary>
+		/// <returns>A list of photos that do not contain location information.</returns>
+		public Photos PhotosGetWithoutGeoData()
+		{
+			PhotoSearchOptions options = new PhotoSearchOptions();
+			return PhotosGetWithoutGeoData(options);
+		}
+
+		/// <summary>
+		/// Gets a list of photos that do not contain geo location information.
+		/// </summary>
+		/// <param name="options">A limited set of options are supported. 
+		/// Unsupported arguments are ignored. 
+		/// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
+		/// <returns>A list of photos that do not contain location information.</returns>
+		public Photos PhotosGetWithoutGeoData(PhotoSearchOptions options)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.getWithoutGeoData");
+			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
+			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
+			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
+			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
+			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
+			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
+			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString());
+			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString());
+			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Photos;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of photos that contain geo location information.
+		/// </summary>
+		/// <remarks>
+		/// Note, this method doesn't actually return the location information with the photos, 
+		/// unless you specify the <see cref="PhotoSearchExtras.Geo"/> option in the <c>extras</c> parameter.
+		/// </remarks>
+		/// <returns>A list of photos that contain Location information.</returns>
+		public Photos PhotosGetWithGeoData()
+		{
+			PhotoSearchOptions options = new PhotoSearchOptions();
+			return PhotosGetWithGeoData(options);
+		}
+
+		/// <summary>
+		/// Gets a list of photos that contain geo location information.
+		/// </summary>
+		/// <remarks>
+		/// Note, this method doesn't actually return the location information with the photos, 
+		/// unless you specify the <see cref="PhotoSearchExtras.Geo"/> option in the <c>extras</c> parameter.
+		/// </remarks>
+		/// <param name="options">A limited set of options are supported. 
+		/// Unsupported arguments are ignored. 
+		/// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
+		/// <returns>A list of photos that contain Location information.</returns>
+		public Photos PhotosGetWithGeoData(PhotoSearchOptions options)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.getWithGeoData");
+			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
+			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
+			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
+			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
+			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
+			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
+			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString());
+			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString());
+			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Photos;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
+		#endregion
+
 		#region [ Tests ]
+		/// <summary>
+		/// Can be used to call unsupported methods in the Flickr API.
+		/// </summary>
+		/// <remarks>
+		/// Use of this method is not supported. 
+		/// The way the FlickrNet API Library works may mean that some methods do not return an expected result 
+		/// when using this method.
+		/// </remarks>
+		/// <param name="method">The method name, e.g. "flickr.test.null".</param>
+		/// <param name="parameters">A list of parameters. Note, api_key is added by default and is not included. Can be null.</param>
+		/// <returns>An array of <see cref="XmlElement"/> instances which is the expected response.</returns>
+		public XmlElement[] TestGeneric(string method, NameValueCollection parameters)
+		{
+			if( parameters == null ) parameters = new NameValueCollection();
+			parameters.Add("method", method);
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.AllElements;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
 		/// <summary>
 		/// Runs the flickr.test.echo method and returned an array of <see cref="XmlElement"/> items.
 		/// </summary>
@@ -4492,25 +4698,6 @@ namespace FlickrNet
 			return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 		}
 		#endregion
-	}
-
-	/// <summary>
-	/// Used to specify where all tags must be matched or any tag to be matched.
-	/// </summary>
-	public enum TagMode
-	{
-		/// <summary>
-		/// Any tag must match, but not all.
-		/// </summary>
-		AnyTag,
-		/// <summary>
-		/// All tags must be found.
-		/// </summary>
-		AllTags,
-		/// <summary>
-		/// Uncodumented and unsupported tag mode where boolean operators are supported.
-		/// </summary>
-		Boolean
 	}
 
 }

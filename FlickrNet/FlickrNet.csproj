@@ -87,6 +87,11 @@
                     AssemblyName = "System.Web"
                     HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Web.dll"
                 />
+                <Reference
+                    Name = "System.Drawing"
+                    AssemblyName = "System.Drawing"
+                    HintPath = "..\..\..\..\..\..\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
+                />
             </References>
         </Build>
         <Files>
@@ -103,6 +108,11 @@
                 />
                 <File
                     RelPath = "Blogs.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "BoundaryBox.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -133,6 +143,11 @@
                 />
                 <File
                     RelPath = "DateGranularity.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Enums.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -174,6 +189,11 @@
                     BuildAction = "None"
                 />
                 <File
+                    RelPath = "GeoAccuracy.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Groups.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -213,7 +233,17 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Photo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "PhotoCounts.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "PhotoDates.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -223,12 +253,27 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "PhotoLocation.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Photos.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "PhotoSearchExtras.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "PhotoSearchOptions.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "PhotoSearchOrder.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
