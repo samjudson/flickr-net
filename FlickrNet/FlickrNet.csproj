@@ -194,6 +194,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "GeoPermissions.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Groups.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -254,6 +259,11 @@
                 />
                 <File
                     RelPath = "PhotoLocation.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "PhotoPermissions.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

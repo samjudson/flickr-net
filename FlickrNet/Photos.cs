@@ -32,37 +32,6 @@ namespace FlickrNet
 	}
 
 	/// <summary>
-	/// Permissions for the selected photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoPermissions
-	{
-		/// <remarks/>
-		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string PhotoId;
-
-		/// <remarks/>
-		[XmlAttribute("ispublic", Form=XmlSchemaForm.Unqualified)]
-		public int IsPublic;
-    
-		/// <remarks/>
-		[XmlAttribute("isfriend", Form=XmlSchemaForm.Unqualified)]
-		public int IsFriend;
-    
-		/// <remarks/>
-		[XmlAttribute("isfamily", Form=XmlSchemaForm.Unqualified)]
-		public int IsFamily;
-
-		/// <remarks/>
-		[XmlAttribute("permcomment", Form=XmlSchemaForm.Unqualified)]
-		public PermissionComment PermissionComment;
-
-		/// <remarks/>
-		[XmlAttribute("permaddmeta", Form=XmlSchemaForm.Unqualified)]
-		public PermissionAddMeta PermissionAddMeta;
-	}
-
-	/// <summary>
 	/// A collection of <see cref="Photo"/> instances.
 	/// </summary>
 	[System.Serializable]

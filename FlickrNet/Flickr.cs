@@ -2436,14 +2436,14 @@ namespace FlickrNet
 		public PhotoPermissions PhotosGetPerms(string photoId)
 		{
 			NameValueCollection parameters = new NameValueCollection();
-			parameters.Add("method", "flickr.photos.getExif");
+			parameters.Add("method", "flickr.photos.getPerms");
 			parameters.Add("photo_id", photoId);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				return response.PhotoPermissions;
+				return new PhotoPermissions(response.AllElements[0]);
 			}
 			else
 			{
@@ -3379,10 +3379,9 @@ namespace FlickrNet
 		/// <param name="isFamily">1 if the photo is viewable by family, 0 if it is not.</param>
 		/// <param name="permComment">Who can add comments. See <see cref="PermissionComment"/> for more details.</param>
 		/// <param name="permAddMeta">Who can add metadata (notes and tags). See <see cref="PermissionAddMeta"/> for more details.</param>
-		/// <returns>True if the photo was updated successfully.</returns>
-		public bool PhotosSetPerms(string photoId, int isPublic, int isFriend, int isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta)
+		public void PhotosSetPerms(string photoId, int isPublic, int isFriend, int isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta)
 		{
-			return PhotosSetPerms(photoId, (isPublic==1), (isFriend==1), (isFamily==1), permComment, permAddMeta);
+			PhotosSetPerms(photoId, (isPublic==1), (isFriend==1), (isFamily==1), permComment, permAddMeta);
 		}
 
 		/// <summary>
@@ -3394,8 +3393,7 @@ namespace FlickrNet
 		/// <param name="isFamily">True if the photo is viewable by family, False if it is not.</param>
 		/// <param name="permComment">Who can add comments. See <see cref="PermissionComment"/> for more details.</param>
 		/// <param name="permAddMeta">Who can add metadata (notes and tags). See <see cref="PermissionAddMeta"/> for more details.</param>
-		/// <returns>True if the photo was updated successfully.</returns>
-		public bool PhotosSetPerms(string photoId, bool isPublic, bool isFriend, bool isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta)
+		public void PhotosSetPerms(string photoId, bool isPublic, bool isFriend, bool isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta)
 		{
 			NameValueCollection parameters = new NameValueCollection();
 			parameters.Add("method", "flickr.photos.setPerms");
@@ -3410,7 +3408,7 @@ namespace FlickrNet
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				return true;
+				return;
 			}
 			else
 			{
@@ -4226,9 +4224,9 @@ namespace FlickrNet
 		/// Sets the geo location for a photo.
 		/// </summary>
 		/// <param name="photoId">The ID of the photo to set to location for.</param>
-		/// <param name="latitude">The latitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
-		/// <param name="longitude">The longitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
-		public void PhotosGeoSetLocation(string photoId, decimal latitude, decimal longitude)
+		/// <param name="latitude">The latitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
+		/// <param name="longitude">The longitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
+		public void PhotosGeoSetLocation(string photoId, double latitude, double longitude)
 		{
 			PhotosGeoSetLocation(photoId, latitude, longitude, GeoAccuracy.None);
 		}
@@ -4237,10 +4235,10 @@ namespace FlickrNet
 		/// Sets the geo location for a photo.
 		/// </summary>
 		/// <param name="photoId">The ID of the photo to set to location for.</param>
-		/// <param name="latitude">The latitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
-		/// <param name="longitude">The longitude of the geo location. A decimal number ranging from -180.00 to 180.00. Decimals beyond 6 digitas will be truncated.</param>
+		/// <param name="latitude">The latitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
+		/// <param name="longitude">The longitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
 		/// <param name="accuracy">The accuracy of the photos geo location.</param>
-		public void PhotosGeoSetLocation(string photoId, decimal latitude, decimal longitude, GeoAccuracy accuracy)
+		public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy)
 		{
 			NameValueCollection parameters = new NameValueCollection();
 			parameters.Add("method", "flickr.photos.geo.setLocation");
@@ -4377,6 +4375,60 @@ namespace FlickrNet
 				throw new FlickrException(response.Error);
 			}
 		}
+
+		/// <summary>
+		/// Get permissions for a photo.
+		/// </summary>
+		/// <param name="photoId">The id of the photo to get permissions for.</param>
+		/// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
+		public GeoPermissions PhotosGeoGetPerms(string photoId)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.geo.getPerms");
+			parameters.Add("photo_id", photoId);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return new GeoPermissions(response.AllElements[0]);
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
+		/// <summary>
+		/// Set the permission for who can see geotagged photos on Flickr.
+		/// </summary>
+		/// <param name="photoId">The ID of the photo permissions to update.</param>
+		/// <param name="IsPublic"></param>
+		/// <param name="IsContact"></param>
+		/// <param name="IsFamily"></param>
+		/// <param name="IsFriend"></param>
+		public void PhotosGeoSetPerms(string photoId, bool IsPublic, bool IsContact, bool IsFamily, bool IsFriend)
+		{
+			NameValueCollection parameters = new NameValueCollection();
+			parameters.Add("method", "flickr.photos.geo.setPerms");
+			parameters.Add("photo_id", photoId);
+			parameters.Add("is_public", IsPublic?"1":"0");
+			parameters.Add("is_contact", IsContact?"1":"0");
+			parameters.Add("is_friend", IsFriend?"1":"0");
+			parameters.Add("is_family", IsFamily?"1":"0");
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
 
 		#endregion
 
