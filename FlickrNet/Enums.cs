@@ -4,6 +4,29 @@ using System.Xml.Serialization;
 namespace FlickrNet
 {
 	/// <summary>
+	/// A list of service the Flickr.Net API Supports.
+	/// </summary>
+	/// <remarks>
+	/// Not all methods are supported by all service. Behaviour of the library may be unpredictable if not using Flickr
+	/// as your service.
+	/// </remarks>
+	public enum SupportedService
+	{
+		/// <summary>
+		/// Flickr - http://www.flickr.com/services/api
+		/// </summary>
+		Flickr = 0,
+		/// <summary>
+		/// Zooomr - http://blog.zooomr.com/2006/03/27/attention-developers/
+		/// </summary>
+		Zooomr = 1,
+		/// <summary>
+		/// 23HQ = http://www.23hq.com/doc/api/
+		/// </summary>
+		TwentyThreeHQ = 2
+	}
+	
+	/// <summary>
 	/// Used to specify where all tags must be matched or any tag to be matched.
 	/// </summary>
 	public enum TagMode

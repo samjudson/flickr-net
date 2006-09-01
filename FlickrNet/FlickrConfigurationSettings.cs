@@ -37,6 +37,7 @@ namespace FlickrNet
 	/// </remarks>
 	internal class FlickrConfigurationSettings
 	{
+		#region Private Variables
 		private string _apiKey;
 		private string _apiSecret;
 		private string _apiToken;
@@ -50,7 +51,10 @@ namespace FlickrNet
 		private string _proxyDomain;
 		private string _cacheLocation;
 		private bool _cacheDisabled;
+		private SupportedService _service;
+		#endregion
 
+		#region FlickrConfigurationSettings Constructor
 		/// <summary>
 		/// Loads FlickrConfigurationSettings with the settings in the config file.
 		/// </summary>
@@ -59,63 +63,136 @@ namespace FlickrNet
 		{
 			if( configNode == null ) throw new ArgumentNullException("configNode");
 
-			if( configNode.Attributes["apiKey"] != null ) _apiKey = configNode.Attributes["apiKey"].Value;
-			if( configNode.Attributes["secret"] != null ) _apiSecret = configNode.Attributes["secret"].Value;
-			if( configNode.Attributes["token"] != null ) _apiToken = configNode.Attributes["token"].Value;
-			if( configNode.Attributes["cacheDisabled"] != null )
+			foreach(XmlAttribute attribute in configNode.Attributes)
 			{
-				try
+				switch(attribute.Name)
 				{
-					_cacheDisabled = bool.Parse(configNode.Attributes["cacheDisabled"].Value);
+					case "apiKey":
+						_apiKey = attribute.Value;
+						break;
+					case "secret":
+						_apiSecret = attribute.Value;
+						break;
+					case "token":
+						_apiToken = attribute.Value;
+						break;
+					case "cacheDisabled":
+						try
+						{
+							_cacheDisabled = bool.Parse(attribute.Value);
+							break;
+						}
+						catch(FormatException ex) 
+						{
+							throw new System.Configuration.ConfigurationException("cacheDisbled should be \"true\" or \"false\"", ex, configNode);
+						}
+					case "cacheSize":
+						try
+						{
+							_cacheSize = int.Parse(attribute.Value);
+							break;
+						}
+						catch(FormatException ex) 
+						{
+							throw new System.Configuration.ConfigurationException("cacheSize should be integer value", ex, configNode);
+						}
+					case "cacheTimeout":
+						try
+						{
+							_cacheTimeout = TimeSpan.Parse(attribute.Value);
+							break;
+						}
+						catch(FormatException ex) 
+						{
+							throw new System.Configuration.ConfigurationException("cacheTimeout should be TimeSpan value ([d:]hh:mm:ss)", ex, configNode);
+						}
+					case "cacheLocation":
+						_cacheLocation = attribute.Value;
+						break;
+
+					case "service":
+						try
+						{
+							_service = (SupportedService)Enum.Parse(typeof(SupportedService), attribute.Value, true);
+							break;
+						}
+						catch(ArgumentException ex)
+						{
+							throw new System.Configuration.ConfigurationException("service must be one of the supported services (See SupportedServices enum)", ex, configNode);
+						}
+
+					default:
+						throw new System.Configuration.ConfigurationException(String.Format("Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
 				}
-				catch(FormatException) {}
-			}
-			if( configNode.Attributes["cacheSize"] != null )
-			{
-				try
-				{
-					_cacheSize = int.Parse(configNode.Attributes["cacheSize"].Value);
-				}
-				catch(FormatException) {}
-			}
-			if( configNode.Attributes["cacheTimeout"] != null )
-			{
-				try
-				{
-					_cacheTimeout = TimeSpan.Parse(configNode.Attributes["cacheTimeout"].Value);
-				}
-				catch(FormatException) {}
 			}
 
-			if( configNode.Attributes["cacheLocation"] != null )
+			foreach(XmlNode node in configNode.ChildNodes)
 			{
-				try
+				switch(node.Name)
 				{
-					_cacheLocation = (configNode.Attributes["cacheLocation"].Value);
+					case "proxy":
+						ProcessProxyNode(node, configNode);
+						break;
+					default:
+						throw new System.Configuration.ConfigurationException(String.Format("Unknown node '{0}' in flickrNet node", node.Name), configNode);
 				}
-				catch(FormatException) {}
-			}
-			else
-			{
-				try
-				{
-					_cacheLocation = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-				}
-				catch(System.Security.SecurityException){ }
-			}
-
-			XmlNode proxy = configNode.SelectSingleNode("proxy");
-			if( proxy != null ) 
-			{
-				_proxyDefined = true;
-				_proxyAddress = proxy.Attributes["ipaddress"].Value;
-				_proxyPort = int.Parse(proxy.Attributes["port"].Value);
-				if( proxy.Attributes["username"] != null ) _proxyUsername = proxy.Attributes["username"].Value;
-				if( proxy.Attributes["password"] != null ) _proxyPassword = proxy.Attributes["password"].Value;
-				if( proxy.Attributes["domain"] != null ) _proxyDomain = proxy.Attributes["domain"].Value;
 			}
 		}
+		#endregion
 
+		#region ProcessProxyNode - Constructor Helper Method
+		private void ProcessProxyNode(XmlNode proxy, XmlNode configNode)
+		{
+			if( proxy.ChildNodes.Count > 0 )
+				throw new System.Configuration.ConfigurationException("proxy element does not support child elements");
+
+			_proxyDefined = true;
+			foreach(XmlAttribute attribute in proxy.Attributes)
+			{
+
+				switch(attribute.Name)
+				{
+					case "ipaddress":
+						_proxyAddress = attribute.Value;
+						break;
+					case "port":
+						try
+						{
+							_proxyPort = int.Parse(attribute.Value);
+						}
+						catch(FormatException ex) 
+						{
+							throw new System.Configuration.ConfigurationException("proxy port should be integer value", ex, configNode);
+						}
+						break;
+					case "username":
+						_proxyUsername = attribute.Value;
+						break;
+					case "password":
+						_proxyPassword = attribute.Value;
+						break;
+					case "domain":
+						_proxyDomain = attribute.Value;
+						break;
+					default:
+						throw new System.Configuration.ConfigurationException(String.Format("Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
+				}
+			}
+
+			if( _proxyAddress == null )
+				throw new System.Configuration.ConfigurationException("proxy ipaddress is mandatory if you specify the proxy element");
+			if( _proxyPort == 0 )
+				throw new System.Configuration.ConfigurationException("proxy port is mandatory if you specify the proxy element");
+			if( _proxyUsername != null && _proxyPassword == null )
+				throw new System.Configuration.ConfigurationException("proxy password must be specified if proxy username is specified");
+			if( _proxyUsername == null && _proxyPassword != null )
+				throw new System.Configuration.ConfigurationException("proxy username must be specified if proxy password is specified");
+			if( _proxyDomain != null && _proxyUsername == null )
+				throw new System.Configuration.ConfigurationException("proxy username/password must be specified if proxy domain is specified");
+		}
+		#endregion
+
+		#region Public Properties
 		/// <summary>
 		/// API key. Null if not present. Optional.
 		/// </summary>
@@ -169,6 +246,11 @@ namespace FlickrNet
 			get { return _cacheLocation; }
 		}
 
+		public SupportedService Service
+		{
+			get { return _service; }
+		}
+
 		/// <summary>
 		/// If the proxy is defined in the configuration section.
 		/// </summary>
@@ -216,6 +298,7 @@ namespace FlickrNet
 		{
 			get { return _proxyDomain; }
 		}
+		#endregion
 
 	}
 }

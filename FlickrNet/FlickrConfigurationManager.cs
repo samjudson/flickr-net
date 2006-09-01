@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// </summary>
 	internal class FlickrConfigurationManager : IConfigurationSectionHandler
 	{
-		private const string ConfigSection = "flickrNet";
+		private static string ConfigSection = "flickrNet";
 		private static FlickrConfigurationSettings settings;
 
 		public FlickrConfigurationManager()
@@ -22,13 +22,7 @@ namespace FlickrNet
 			{
 				if( settings == null )
 				{
-					try
-					{
-						settings = (FlickrConfigurationSettings)ConfigurationSettings.GetConfig( ConfigSection );
-					}
-					catch
-					{
-					}
+					settings = (FlickrConfigurationSettings)ConfigurationSettings.GetConfig( ConfigSection );
 				}
 				
 				return settings;
@@ -37,6 +31,7 @@ namespace FlickrNet
 
 		public object Create(object parent, object configContext, XmlNode section) 
 		{	
+			ConfigSection = section.Name;
 			return new FlickrConfigurationSettings( section );
 		}
 	}

@@ -39,54 +39,23 @@ namespace FlickrNet
 		public event UploadProgressHandler OnUploadProgress;
 		#endregion
 
-		#region [ Enums ]
-		/// <summary>
-		/// A list of service the Flickr.Net API Supports.
-		/// </summary>
-		/// <remarks>
-		/// Not all methods are supported by all service. Behaviour of the library may be unpredictable if not using Flickr
-		/// as your service.
-		/// </remarks>
-		public enum SupportedService
-		{
-			/// <summary>
-			/// Flickr - http://www.flickr.com/services/api
-			/// </summary>
-			Flickr = 0,
-			/// <summary>
-			/// Zooomr - http://blog.zooomr.com/2006/03/27/attention-developers/
-			/// </summary>
-			Zooomr = 1,
-			/// <summary>
-			/// 23HQ = http://www.23hq.com/doc/api/
-			/// </summary>
-			TwentyThreeHQ = 2
-		}
-		#endregion
-
 		#region [ Private Variables ]
-		private static SupportedService _service = SupportedService.Flickr;
+		private static bool _isServiceSet = false;
+		private static SupportedService _defaultService = SupportedService.Flickr;
 
-		/// <summary>
-		/// The current service that the Flickr API is using.
-		/// </summary>
-		public static SupportedService CurrentService
-		{
-			get { return _service; }
-			set { _service = value; }
-		}
+		private SupportedService _service = SupportedService.Flickr;
 
-		private static string BaseUrl
+		private string BaseUrl
 		{
 			get { return _baseUrl[(int)_service]; }
 		}
 
-		private static string[] _baseUrl = new string[] { 
+		private string[] _baseUrl = new string[] { 
 															"http://api.flickr.com/services/rest/", 
 															"http://beta.zooomr.com/bluenote/api/rest",
 															"http://www.23hq.com/services/rest/"};
 
-		private static string UploadUrl
+		private string UploadUrl
 		{
 			get { return _uploadUrl[(int)_service]; }
 		}
@@ -95,7 +64,7 @@ namespace FlickrNet
 															  "http://beta.zooomr.com/bluenote/api/upload",
 															  "http://www.23hq.com/services/upload/"};
 
-		private static string ReplaceUrl
+		private string ReplaceUrl
 		{
 			get { return _replaceUrl[(int)_service]; }
 		}
@@ -104,7 +73,7 @@ namespace FlickrNet
 															   "http://beta.zooomr.com/bluenote/api/replace",
 															   "http://www.23hq.com/services/replace/"};
 
-		private static string AuthUrl
+		private string AuthUrl
 		{
 			get { return _authUrl[(int)_service]; }
 		}
@@ -161,7 +130,25 @@ namespace FlickrNet
 		/// and results which include private pictures the authenticated user is allowed to see
 		/// (their own, or others).
 		/// </remarks>
+		[Obsolete("Renamed to AuthToken to be more consistent with the Flickr API")]
 		public string ApiToken 
+		{
+			get { return _apiToken; }
+			set { _apiToken = (value==null||value.Length==0?null:value); }
+		}
+
+		/// <summary>
+		/// The authentication token is required for all calls that require authentication.
+		/// A <see cref="FlickrException"/> will be raised by Flickr if the authentication token is
+		/// not set when required.
+		/// </summary>
+		/// <remarks>
+		/// It should be noted that some methods will work without the authentication token, but
+		/// will return different results if used with them (such as group pool requests, 
+		/// and results which include private pictures the authenticated user is allowed to see
+		/// (their own, or others).
+		/// </remarks>
+		public string AuthToken 
 		{
 			get { return _apiToken; }
 			set { _apiToken = (value==null||value.Length==0?null:value); }
@@ -212,6 +199,32 @@ namespace FlickrNet
 		{
 			get { return Cache.CacheSizeLimit; }
 			set { Cache.CacheSizeLimit = value; }
+		}
+
+		/// <summary>
+		/// The default service to use for new Flickr instances
+		/// </summary>
+		public static SupportedService DefaultService
+		{
+			get 
+			{
+				if( !_isServiceSet && FlickrConfigurationManager.Settings != null )
+				{
+					_defaultService = FlickrConfigurationManager.Settings.Service;
+					_isServiceSet = true;
+				}
+				return _defaultService;
+			}
+			set { _defaultService = value; _isServiceSet = true; }
+		}
+
+		/// <summary>
+		/// The current service that the Flickr API is using.
+		/// </summary>
+		public SupportedService CurrentService
+		{
+			get { return _service; }
+			set { _service = value; }
 		}
 
 		/// <summary>
@@ -303,6 +316,7 @@ namespace FlickrNet
 			ApiKey = settings.ApiKey;
 			ApiToken = settings.ApiToken;
 			ApiSecret = settings.SharedSecret;
+			CurrentService = DefaultService;
 
 			if( settings.IsProxyDefined )
 			{
@@ -895,7 +909,7 @@ namespace FlickrNet
 			if( Proxy != null ) req.Proxy = Proxy;
 			//req.Referer = "http://www.flickr.com";
 			req.KeepAlive = true;
-			req.Timeout = HttpTimeout * 100;
+			req.Timeout = HttpTimeout * 1000;
 			req.ContentType = "multipart/form-data; boundary=" + boundary + "";
 			req.Expect = "";
 
