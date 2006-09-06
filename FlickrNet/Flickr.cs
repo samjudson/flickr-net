@@ -314,7 +314,7 @@ namespace FlickrNet
 			if( settings.CacheSize != 0 ) CacheSizeLimit = settings.CacheSize;
 			if( settings.CacheTimeout != TimeSpan.MinValue ) CacheTimeout = settings.CacheTimeout;
 			ApiKey = settings.ApiKey;
-			ApiToken = settings.ApiToken;
+			AuthToken = settings.ApiToken;
 			ApiSecret = settings.SharedSecret;
 			CurrentService = DefaultService;
 
@@ -469,22 +469,22 @@ namespace FlickrNet
 		#endregion
 
 		#region [ GetResponse methods ]
-		private Response GetResponseNoCache(NameValueCollection parameters)
+		private Response GetResponseNoCache(Hashtable parameters)
 		{
 			return GetResponse(parameters, TimeSpan.MinValue);
 		}
 
-		private Response GetResponseAlwaysCache(NameValueCollection parameters)
+		private Response GetResponseAlwaysCache(Hashtable parameters)
 		{
 			return GetResponse(parameters, TimeSpan.MaxValue);
 		}
 
-		private Response GetResponseCache(NameValueCollection parameters)
+		private Response GetResponseCache(Hashtable parameters)
 		{
 			return GetResponse(parameters, Cache.CacheTimeout);
 		}
 
-		private Response GetResponse(NameValueCollection parameters, TimeSpan cacheTimeout)
+		private Response GetResponse(Hashtable parameters, TimeSpan cacheTimeout)
 		{
 			// Calulate URL 
             StringBuilder UrlStringBuilder = new StringBuilder(BaseUrl, 2 * 1024);
@@ -499,7 +499,8 @@ namespace FlickrNet
 				parameters["auth_token"] = _apiToken;
 			}
 
-			string[] keys = parameters.AllKeys;
+			string[] keys = new string[parameters.Keys.Count];
+			parameters.Keys.CopyTo(keys, 0);
 			Array.Sort(keys);
 
 			foreach(string key in keys)
@@ -507,7 +508,7 @@ namespace FlickrNet
 				if( UrlStringBuilder.Length > BaseUrl.Length + 1 ) UrlStringBuilder.Append("&");
                 UrlStringBuilder.Append(key);
                 UrlStringBuilder.Append("=");
-                UrlStringBuilder.Append(Utils.UrlEncode(parameters[key]));
+                UrlStringBuilder.Append(Utils.UrlEncode((string)parameters[key]));
                 HashStringBuilder.Append(key);
                 HashStringBuilder.Append(parameters[key]);
 			}
@@ -665,7 +666,7 @@ namespace FlickrNet
 		/// <returns>The FROB.</returns>
 		public string AuthGetFrob()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getFrob");
 			
 			FlickrNet.Response response = GetResponseNoCache(parameters);
@@ -735,9 +736,8 @@ namespace FlickrNet
 		{
 			if( _sharedSecret == null ) throw new FlickrException(0, "AuthGetToken requires signing. Please supply api key and secret.");
 
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getToken");
-			parameters.Add("api_key", _apiKey);
 			parameters.Add("frob", frob);
 
 			FlickrNet.Response response = GetResponseNoCache(parameters);
@@ -760,9 +760,8 @@ namespace FlickrNet
 		/// <returns>An instance <see cref="Auth"/> class, detailing the user and their full token.</returns>
 		public Auth AuthGetFullToken(string miniToken)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getFullToken");
-			parameters.Add("api_key", _apiKey);
 			parameters.Add("mini_token", miniToken);
 			FlickrNet.Response response = GetResponseNoCache(parameters);
 
@@ -785,9 +784,8 @@ namespace FlickrNet
 		/// <returns>The <see cref="Auth"/> object detailing the user for the token.</returns>
 		public Auth AuthCheckToken(string token)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.checkToken");
-			parameters.Add("api_key", _apiKey);
 			parameters.Add("auth_token", token);
 
 			FlickrNet.Response response = GetResponseNoCache(parameters);
@@ -915,7 +913,7 @@ namespace FlickrNet
 
 			StringBuilder sb = new StringBuilder();
             
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 		
 			if( title != null && title.Length > 0 )
 			{
@@ -945,9 +943,11 @@ namespace FlickrNet
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("auth_token", _apiToken);
 
-			string[] keys = parameters.AllKeys;
-            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024); 
+			string[] keys = new string[parameters.Keys.Count];
+			parameters.Keys.CopyTo(keys, 0);
 			Array.Sort(keys);
+
+			StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024); 
 
 			foreach(string key in keys)
 			{
@@ -1071,15 +1071,17 @@ namespace FlickrNet
 
 			StringBuilder sb = new StringBuilder();
             
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 		
 			parameters.Add("photo_id", photoId);
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("auth_token", _apiToken);
 
-			string[] keys = parameters.AllKeys;
-			StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024); 
+			string[] keys = new string[parameters.Keys.Count];
+			parameters.Keys.CopyTo(keys, 0);
 			Array.Sort(keys);
+
+			StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024); 
 
 			foreach(string key in keys)
 			{
@@ -1171,7 +1173,7 @@ namespace FlickrNet
 		/// <remarks></remarks>
 		public Blogs BlogGetList()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.blogs.getList");
 			FlickrNet.Response response = GetResponseCache(parameters);
 
@@ -1211,7 +1213,7 @@ namespace FlickrNet
 		/// <returns>True if the operation is successful.</returns>
 		public bool BlogPostPhoto(string blogId, string photoId, string title, string description, string blogPassword)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.blogs.postPhoto");
 			parameters.Add("blog_id", blogId);
 			parameters.Add("photo_id", photoId);
@@ -1240,9 +1242,8 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
 		public Contacts ContactsGetList()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.contacts.getList");
-			parameters.Add("api_key", _apiKey);
 			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
@@ -1262,7 +1263,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
 		public Contacts ContactsGetPublicList(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.contacts.getPublicList");
 			parameters.Add("user_id", userId);
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -1287,7 +1288,7 @@ namespace FlickrNet
 		/// <returns>True if the operation is successful.</returns>
 		public bool FavoritesAdd(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.favorites.add");
 			parameters.Add("photo_id", photoId);
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -1310,7 +1311,7 @@ namespace FlickrNet
 		/// <returns>True if the operation is successful.</returns>
 		public bool FavoritesRemove(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.favorites.remove");
 			parameters.Add("photo_id", photoId);
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -1366,7 +1367,7 @@ namespace FlickrNet
 		/// <returns><see cref="Photos"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
 		public Photos FavoritesGetList(string userId, int perPage, int page)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.favorites.getList");
 			if( userId != null ) parameters.Add("user_id", userId);
 			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
@@ -1406,7 +1407,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Photos"/> object containing a collection of <see cref="Photo"/> objects.</returns>
 		public Photos FavoritesGetPublicList(string userId, int perPage, int page)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.favorites.getPublicList");
 			parameters.Add("user_id", userId);
 			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
@@ -1442,7 +1443,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Category"/> instance.</returns>
 		public Category GroupsBrowse(string catId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.browse");
 			parameters.Add("cat_id", catId);
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -1487,7 +1488,7 @@ namespace FlickrNet
 		/// <returns>A list of groups matching the search criteria.</returns>
 		public GroupSearchResults GroupsSearch(string text, int page, int perPage)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.search");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("text", text);
@@ -1513,7 +1514,7 @@ namespace FlickrNet
 		/// <returns>The <see cref="GroupFullInfo"/> specified by the group id.</returns>
 		public GroupFullInfo GroupsGetInfo(string groupId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.getInfo");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("group_id", groupId);
@@ -1539,7 +1540,7 @@ namespace FlickrNet
 		/// <returns>True on a successful addition.</returns>
 		public bool GroupPoolAdd(string photoId, string groupId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.pools.add");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("group_id", groupId);
@@ -1564,7 +1565,7 @@ namespace FlickrNet
 		/// <returns>The <see cref="Context"/> of the photo in the group.</returns>
 		public Context GroupPoolGetContext(string photoId, string groupId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.pools.getContext");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("group_id", groupId);
@@ -1592,7 +1593,7 @@ namespace FlickrNet
 		/// <returns>True if the photo is successfully removed.</returns>
 		public bool GroupPoolRemove(string photoId, string groupId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.pools.remove");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("group_id", groupId);
@@ -1614,7 +1615,7 @@ namespace FlickrNet
 		/// <returns></returns>
 		public MemberGroupInfo[] GroupPoolGetGroups()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.pools.getGroups");
 			FlickrNet.Response response = GetResponseCache(parameters);
 
@@ -1687,7 +1688,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Photos"/> object containing the list of photos.</returns>
 		public Photos GroupPoolGetPhotos(string groupId, string tags, string userId, PhotoSearchExtras extras, int perPage, int page)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.groups.pools.getPhotos");
 			parameters.Add("group_id", groupId);
 			if( tags != null && tags.Length > 0 )parameters.Add("tags", tags);
@@ -1752,7 +1753,7 @@ namespace FlickrNet
 		/// <returns></returns>
 		public Photos InterestingnessGetList(DateTime date, PhotoSearchExtras extras, int perPage, int page)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.interestingness.getList");
 
 			if( date > DateTime.MinValue ) parameters.Add("date", date.ToString("yyyy-MM-dd"));
@@ -1789,7 +1790,7 @@ namespace FlickrNet
 		/// <returns></returns>
 		public string NotesAdd(string photoId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.notes.add");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("note_x", noteX.ToString());
@@ -1825,7 +1826,7 @@ namespace FlickrNet
 		/// <param name="noteText">The new text in the note.</param>
 		public void NotesEdit(string noteId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.notes.edit");
 			parameters.Add("note_id", noteId);
 			parameters.Add("note_x", noteX.ToString());
@@ -1852,7 +1853,7 @@ namespace FlickrNet
 		/// <param name="noteId">The ID of the note.</param>
 		public void NotesDelete(string noteId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.notes.delete");
 			parameters.Add("note_id", noteId);
 
@@ -1878,7 +1879,7 @@ namespace FlickrNet
 		/// <exception cref="FlickrException">A FlickrException is raised if the email address is not found.</exception>
 		public FoundUser PeopleFindByEmail(string emailAddress)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.findByEmail");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("find_email", emailAddress);
@@ -1903,7 +1904,7 @@ namespace FlickrNet
 		/// <exception cref="FlickrException">A FlickrException is raised if the email address is not found.</exception>
 		public FoundUser PeopleFindByUsername(string username)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.findByUsername");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("username", username);
@@ -1927,7 +1928,7 @@ namespace FlickrNet
 		/// <returns>The <see cref="Person"/> object containing the users details.</returns>
 		public Person PeopleGetInfo(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.getInfo");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("user_id", userId);
@@ -1950,7 +1951,7 @@ namespace FlickrNet
 		/// <returns>The <see cref="UserStatus"/> object containing the users details.</returns>
 		public UserStatus PeopleGetUploadStatus()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.getUploadStatus");
 
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -1972,7 +1973,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="PublicGroupInfo"/> instances.</returns>
 		public PublicGroupInfo[] PeopleGetPublicGroups(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.getPublicGroups");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("user_id", userId);
@@ -1996,7 +1997,7 @@ namespace FlickrNet
 		/// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
 		public Photos PeopleGetPublicPhotos(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.getPublicPhotos");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("user_id", userId);
@@ -2035,7 +2036,7 @@ namespace FlickrNet
 		/// <returns>True if the tags are added successfully.</returns>
 		public void PhotosAddTags(string photoId, string tags)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.addTags");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("tags", tags);
@@ -2060,7 +2061,7 @@ namespace FlickrNet
 		/// <param name="photoId">The ID of the photo to delete.</param>
 		public void PhotosDelete(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.delete");
 			parameters.Add("photo_id", photoId);
 
@@ -2084,7 +2085,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="AllContexts"/> class.</returns>
 		public AllContexts PhotosGetAllContexts(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getAllContexts");
 			parameters.Add("photo_id", photoId);
 
@@ -2145,7 +2146,7 @@ namespace FlickrNet
 			{
 				throw new ArgumentOutOfRangeException("count", count, "Count must be between 10 and 50.");
 			}
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPhotos");
 			if( count > 0 && !singlePhoto ) parameters.Add("count", count.ToString());
 			if( justFriends ) parameters.Add("just_friends", "1");
@@ -2234,7 +2235,7 @@ namespace FlickrNet
 		/// <returns></returns>
 		public Photos PhotosGetContactsPublicPhotos(string userId, long count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPublicPhotos");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("user_id", userId);
@@ -2263,7 +2264,7 @@ namespace FlickrNet
 		/// <returns></returns>
 		public Context PhotosGetContext(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContext");
 			parameters.Add("photo_id", photoId);
 
@@ -2349,7 +2350,7 @@ namespace FlickrNet
 		/// <returns><see cref="PhotoCounts"/> class instance.</returns>
 		public PhotoCounts PhotosGetCounts(string dates, string taken_dates)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPhotos");
 			if( dates != null && dates.Length > 0 ) parameters.Add("dates", dates);
 			if( taken_dates != null && taken_dates.Length > 0 ) parameters.Add("taken_dates", taken_dates);
@@ -2385,7 +2386,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="ExifPhoto"/> class containing the EXIF data.</returns>
 		public ExifPhoto PhotosGetExif(string photoId, string secret)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getExif");
 			parameters.Add("photo_id", photoId);
 			if( secret != null ) parameters.Add("secret", secret);
@@ -2425,7 +2426,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="PhotoInfo"/> class detailing the properties of the photo.</returns>
 		public PhotoInfo PhotosGetInfo(string photoId, string secret)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getInfo");
 			parameters.Add("photo_id", photoId);
 			if( secret != null ) parameters.Add("secret", secret);
@@ -2449,7 +2450,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
 		public PhotoPermissions PhotosGetPerms(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getPerms");
 			parameters.Add("photo_id", photoId);
 
@@ -2504,7 +2505,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
 		public Photos PhotosGetRecent(long perPage, long page, PhotoSearchExtras extras)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getRecent");
 			parameters.Add("api_key", _apiKey);
 			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
@@ -2530,7 +2531,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Sizes"/> class whose property <see cref="Sizes.SizeCollection"/> is an array of <see cref="Size"/> objects.</returns>
 		public Sizes PhotosGetSizes(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getSizes");
 			parameters.Add("photo_id", photoId);
 
@@ -2585,7 +2586,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
 		public Photos PhotosGetUntagged(int perPage, int page, PhotoSearchExtras extras)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getUntagged");
 			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
 			if( page > 0 ) parameters.Add("page", page.ToString());
@@ -2609,7 +2610,7 @@ namespace FlickrNet
 		/// <returns><see cref="Photos"/> instance containing list of photos.</returns>
 		public Photos PhotosGetNotInSet()
 		{
-			return PhotosGetNotInSet(0, 0, PhotoSearchExtras.All);
+			return PhotosGetNotInSet(new PartialSearchOptions());
 		}
 
 		/// <summary>
@@ -2620,7 +2621,7 @@ namespace FlickrNet
 		/// <returns><see cref="Photos"/> instance containing list of photos.</returns>
 		public Photos PhotosGetNotInSet(int page)
 		{
-			return PhotosGetNotInSet(0, page, PhotoSearchExtras.All);
+			return PhotosGetNotInSet(0, page, PhotoSearchExtras.None);
 		}
 
 		/// <summary>
@@ -2632,7 +2633,7 @@ namespace FlickrNet
 		/// <returns><see cref="Photos"/> instance containing list of photos.</returns>
 		public Photos PhotosGetNotInSet(int perPage, int page)
 		{
-			return PhotosGetNotInSet(perPage, page, PhotoSearchExtras.All);
+			return PhotosGetNotInSet(perPage, page, PhotoSearchExtras.None);
 		}
 
 		/// <summary>
@@ -2644,12 +2645,24 @@ namespace FlickrNet
 		/// <returns><see cref="Photos"/> instance containing list of photos.</returns>
 		public Photos PhotosGetNotInSet(int perPage, int page, PhotoSearchExtras extras)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			PartialSearchOptions options = new PartialSearchOptions();
+			options.PerPage = perPage;
+			options.Page = page;
+			options.Extras = extras;
+
+			return PhotosGetNotInSet(options);
+		}
+
+		/// <summary>
+		/// Gets a list of the authenticated users photos which are not in a set.
+		/// </summary>
+		/// <param name="options">A selection of options to filter/sort by.</param>
+		/// <returns>A collection of photos in the <see cref="Photos"/> class.</returns>
+		public Photos PhotosGetNotInSet(PartialSearchOptions options)
+		{
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getNotInSet");
-			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
-			if( page > 0 ) parameters.Add("page", page.ToString());
-			if( extras != PhotoSearchExtras.None )
-				parameters.Add("extras", Utils.ExtrasToString(extras));
+			Utils.PartialOptionsIntoArray(options, parameters);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
@@ -2669,7 +2682,7 @@ namespace FlickrNet
 		/// <returns><see cref="Licenses"/> instance.</returns>
 		public Licenses PhotosLicensesGetInfo()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.licenses.getInfo");
 			parameters.Add("api_key", _apiKey);
 
@@ -2692,7 +2705,7 @@ namespace FlickrNet
 		/// <returns>True if the tag was removed.</returns>
 		public bool PhotosRemoveTag(string tagId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.removeTag");
 			parameters.Add("tag_id", tagId);
 
@@ -3266,7 +3279,7 @@ namespace FlickrNet
 		/// <returns>A collection of photos contained within a <see cref="Photos"/> object.</returns>
 		public Photos PhotosSearch(PhotoSearchOptions options)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.search");
 			if( options.UserId != null && options.UserId.Length > 0 ) parameters.Add("user_id", options.UserId);
 			if( options.Text != null && options.Text.Length > 0 ) parameters.Add("text", options.Text);
@@ -3332,7 +3345,7 @@ namespace FlickrNet
 		/// <returns>True if the dates where updated successfully.</returns>
 		public bool PhotosSetDates(string photoId, DateTime datePosted, DateTime dateTaken, DateGranularity granularity)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setDates");
 			parameters.Add("photo_id", photoId);
 			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", datePosted.ToString("yyyy-MM-dd hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
@@ -3365,7 +3378,7 @@ namespace FlickrNet
 		/// <exception cref="FlickrException">Thrown when the photo id cannot be found.</exception>
 		public bool PhotosSetMeta(string photoId, string title, string description)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setMeta");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("title", title);
@@ -3409,7 +3422,7 @@ namespace FlickrNet
 		/// <param name="permAddMeta">Who can add metadata (notes and tags). See <see cref="PermissionAddMeta"/> for more details.</param>
 		public void PhotosSetPerms(string photoId, bool isPublic, bool isFriend, bool isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setPerms");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("is_public", (isPublic?"1":"0"));
@@ -3459,7 +3472,7 @@ namespace FlickrNet
 		/// <returns>True if the photo was updated successfully.</returns>
 		public bool PhotosSetTags(string photoId, string tags)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setTags");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("tags", tags);
@@ -3486,7 +3499,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Comment"/> objects.</returns>
 		public Comment[] PhotosCommentsGetList(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.comments.getList");
 			parameters.Add("photo_id", photoId);
 
@@ -3510,7 +3523,7 @@ namespace FlickrNet
 		/// <returns>The new ID of the created comment.</returns>
 		public string PhotosCommentsAddComment(string photoId, string commentText)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.comments.addComment");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("comment_text", commentText);
@@ -3537,7 +3550,7 @@ namespace FlickrNet
 		/// <param name="commentId">The ID of the comment to delete.</param>
 		public void PhotosCommentsDeleteComment(string commentId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.comments.deleteComment");
 			parameters.Add("comment_id", commentId);
 
@@ -3560,7 +3573,7 @@ namespace FlickrNet
 		/// <param name="commentText">The new text for the comment.</param>
 		public void PhotosCommentsEditComment(string commentId, string commentText)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.comments.editComment");
 			parameters.Add("comment_id", commentId);
 			parameters.Add("comment_text", commentText);
@@ -3586,7 +3599,7 @@ namespace FlickrNet
 		/// <param name="photoId">The ID of the photo to add.</param>
 		public void PhotosetsAddPhoto(string photosetId, string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.addPhoto");
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("photo_id", photoId);
@@ -3623,7 +3636,7 @@ namespace FlickrNet
 		/// <returns>The <see cref="Photoset"/> that is created.</returns>
 		public Photoset PhotosetsCreate(string title, string description, string primaryPhotoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.create");
 			parameters.Add("title", title);
 			parameters.Add("primary_photo_id", primaryPhotoId);
@@ -3649,7 +3662,7 @@ namespace FlickrNet
 		/// <returns>Returns true when the photoset has been deleted.</returns>
 		public bool PhotosetsDelete(string photosetId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.delete");
 			parameters.Add("photoset_id", photosetId);
 
@@ -3675,7 +3688,7 @@ namespace FlickrNet
 		/// <returns>Returns true when the photoset has been updated.</returns>
 		public bool PhotosetsEditMeta(string photosetId, string title, string description)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.editMeta");
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("title", title);
@@ -3726,7 +3739,7 @@ namespace FlickrNet
 		/// <returns>Returns true when the photoset has been updated.</returns>
 		public bool PhotosetsEditPhotos(string photosetId, string primaryPhotoId, string photoIds)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.editPhotos");
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("primary_photo_id", primaryPhotoId);
@@ -3753,7 +3766,7 @@ namespace FlickrNet
 		/// <returns><see cref="Context"/> of the specified photo.</returns>
 		public Context PhotosetsGetContext(string photoId, string photosetId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getContext");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("photoset_id", photosetId);
@@ -3782,7 +3795,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Photoset"/> instance.</returns>
 		public Photoset PhotosetsGetInfo(string photosetId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getInfo");
 			parameters.Add("photoset_id", photosetId);
 
@@ -3815,7 +3828,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Photosets"/> instance containing a collection of photosets.</returns>
 		public Photosets PhotosetsGetList(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getList");
 			if( userId != null ) parameters.Add("user_id", userId);
 
@@ -3872,7 +3885,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
 		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getPhotos");
 			parameters.Add("photoset_id", photosetId);
 			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
@@ -3910,7 +3923,7 @@ namespace FlickrNet
 		/// Any set IDs not given in the list will be set to appear at the end of the list, ordered by their IDs.</param>
 		public void PhotosetsOrderSets(string photosetIds)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.orderSets");
 			parameters.Add("photosetIds", photosetIds);
 
@@ -3936,7 +3949,7 @@ namespace FlickrNet
 		/// <param name="photoId">The ID of the photo to remove.</param>
 		public void PhotosetsRemovePhoto(string photosetId, string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.removePhoto");
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("photo_id", photoId);
@@ -3962,7 +3975,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Comment"/> objects.</returns>
 		public Comment[] PhotosetsCommentsGetList(string photosetId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.comments.getList");
 			parameters.Add("photoset_id", photosetId);
 
@@ -3986,7 +3999,7 @@ namespace FlickrNet
 		/// <returns>The new ID of the created comment.</returns>
 		public string PhotosetsCommentsAddComment(string photosetId, string commentText)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.comments.addComment");
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("comment_text", commentText);
@@ -4013,7 +4026,7 @@ namespace FlickrNet
 		/// <param name="commentId">The ID of the comment to delete.</param>
 		public void PhotosetsCommentsDeleteComment(string commentId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.comments.deleteComment");
 			parameters.Add("comment_id", commentId);
 
@@ -4036,7 +4049,7 @@ namespace FlickrNet
 		/// <param name="commentText">The new text for the comment.</param>
 		public void PhotosetsCommentsEditComment(string commentId, string commentText)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.comments.editComment");
 			parameters.Add("comment_id", commentId);
 			parameters.Add("comment_text", commentText);
@@ -4062,7 +4075,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="PhotoInfo"/> class containing only the <see cref="PhotoInfo.Tags"/> property.</returns>
 		public PhotoInfo TagsGetListPhoto(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getListPhoto");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("photo_id", photoId);
@@ -4095,7 +4108,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Tag"/> objects.</returns>
 		public Tag[] TagsGetListUser(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getListUser");
 			if( userId != null && userId.Length > 0 ) parameters.Add("user_id", userId);
 
@@ -4154,7 +4167,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Tag"/> objects.</returns>
 		public Tag[] TagsGetListUserPopular(string userId, long count)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getListUserPopular");
 			if( userId != null ) parameters.Add("user_id", userId);
 			if( count > 0 ) parameters.Add("count", count.ToString());
@@ -4184,7 +4197,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Tag"/> objects.</returns>
 		public Tag[] TagsGetRelated(string tag)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getRelated");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("tag", tag);
@@ -4209,6 +4222,41 @@ namespace FlickrNet
 
 		#endregion
 
+		#region [ Transform ]
+
+		/// <summary>
+		/// Rotates a photo on Flickr.
+		/// </summary>
+		/// <remarks>
+		/// Does not rotate the original photo.
+		/// </remarks>
+		/// <param name="photoId">The ID of the photo.</param>
+		/// <param name="degrees">The number of degrees to rotate by. Valid values are 90, 180 and 270.</param>
+		public void TransformRotate(string photoId, int degrees)
+		{
+			if( photoId == null ) 
+				throw new ArgumentNullException("photoId");
+			if( degrees != 90 && degrees != 180 && degrees != 270 )
+				throw new ArgumentException("Must be 90, 180 or 270", "degrees");
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.photos.transform.rotate");
+			parameters.Add("photo_id", photoId);
+			parameters.Add("degrees", degrees.ToString("0"));
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				return;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
+		#endregion
+
 		#region	[ Geo ]
 		/// <summary>
 		/// Returns the location data for a give photo.
@@ -4217,7 +4265,7 @@ namespace FlickrNet
 		/// <returns>Returns null if the photo has no location information, otherwise returns the location information.</returns>
 		public PhotoLocation PhotosGeoGetLocation(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.geo.getLocation");
 			parameters.Add("photo_id", photoId);
 
@@ -4254,11 +4302,12 @@ namespace FlickrNet
 		/// <param name="accuracy">The accuracy of the photos geo location.</param>
 		public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			System.Globalization.NumberFormatInfo nfi = System.Globalization.NumberFormatInfo.InvariantInfo;
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.geo.setLocation");
 			parameters.Add("photo_id", photoId);
-			parameters.Add("lat", latitude.ToString());
-			parameters.Add("lon", longitude.ToString());
+			parameters.Add("lat", latitude.ToString(nfi));
+			parameters.Add("lon", longitude.ToString(nfi));
 			if( accuracy != GeoAccuracy.None )
 				parameters.Add("accuracy", ((int)accuracy).ToString());
 
@@ -4280,7 +4329,7 @@ namespace FlickrNet
 		/// <returns>Returns true if the location information as found and removed. Returns false if no photo information was found.</returns>
 		public bool PhotosGeoRemoveLocation(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.geo.removeLocation");
 			parameters.Add("photo_id", photoId);
 
@@ -4304,30 +4353,20 @@ namespace FlickrNet
 		/// <returns>A list of photos that do not contain location information.</returns>
 		public Photos PhotosGetWithoutGeoData()
 		{
-			PhotoSearchOptions options = new PhotoSearchOptions();
+			PartialSearchOptions options = new PartialSearchOptions();
 			return PhotosGetWithoutGeoData(options);
 		}
 
 		/// <summary>
 		/// Gets a list of photos that do not contain geo location information.
 		/// </summary>
-		/// <param name="options">A limited set of options are supported. 
-		/// Unsupported arguments are ignored. 
-		/// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
+		/// <param name="options">A limited set of options are supported.</param>
 		/// <returns>A list of photos that do not contain location information.</returns>
-		public Photos PhotosGetWithoutGeoData(PhotoSearchOptions options)
+		public Photos PhotosGetWithoutGeoData(PartialSearchOptions options)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getWithoutGeoData");
-			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
-			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
-			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
-			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
-			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
-			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
-			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString());
-			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString());
-			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+			Utils.PartialOptionsIntoArray(options, parameters);
 
 			FlickrNet.Response response = GetResponseNoCache(parameters);
 			if( response.Status == ResponseStatus.OK )
@@ -4341,6 +4380,20 @@ namespace FlickrNet
 		}
 
 		/// <summary>
+		/// Gets a list of photos that do not contain geo location information.
+		/// </summary>
+		/// <param name="options">A limited set of options are supported. 
+		/// Unsupported arguments are ignored. 
+		/// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
+		/// <returns>A list of photos that do not contain location information.</returns>
+		[Obsolete("Use the PartialSearchOptions instead")]
+		public Photos PhotosGetWithoutGeoData(PhotoSearchOptions options)
+		{
+			PartialSearchOptions newOptions = new PartialSearchOptions(options);
+			return PhotosGetWithoutGeoData(newOptions);
+		}
+
+		/// <summary>
 		/// Gets a list of photos that contain geo location information.
 		/// </summary>
 		/// <remarks>
@@ -4350,7 +4403,7 @@ namespace FlickrNet
 		/// <returns>A list of photos that contain Location information.</returns>
 		public Photos PhotosGetWithGeoData()
 		{
-			PhotoSearchOptions options = new PhotoSearchOptions();
+			PartialSearchOptions options = new PartialSearchOptions();
 			return PhotosGetWithGeoData(options);
 		}
 
@@ -4365,19 +4418,27 @@ namespace FlickrNet
 		/// Unsupported arguments are ignored. 
 		/// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
 		/// <returns>A list of photos that contain Location information.</returns>
+		[Obsolete("Use the new PartialSearchOptions instead")]
 		public Photos PhotosGetWithGeoData(PhotoSearchOptions options)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			PartialSearchOptions newOptions = new PartialSearchOptions(options);
+			return PhotosGetWithGeoData(newOptions);
+		}
+		
+		/// <summary>
+		/// Gets a list of photos that contain geo location information.
+		/// </summary>
+		/// <remarks>
+		/// Note, this method doesn't actually return the location information with the photos, 
+		/// unless you specify the <see cref="PhotoSearchExtras.Geo"/> option in the <c>extras</c> parameter.
+		/// </remarks>
+		/// <param name="options">The options to filter/sort the results by.</param>
+		/// <returns>A list of photos that contain Location information.</returns>
+		public Photos PhotosGetWithGeoData(PartialSearchOptions options)
+		{
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getWithGeoData");
-			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
-			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
-			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
-			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
-			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
-			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
-			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString());
-			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString());
-			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+			Utils.PartialOptionsIntoArray(options, parameters);
 
 			FlickrNet.Response response = GetResponseNoCache(parameters);
 			if( response.Status == ResponseStatus.OK )
@@ -4397,7 +4458,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
 		public GeoPermissions PhotosGeoGetPerms(string photoId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.geo.getPerms");
 			parameters.Add("photo_id", photoId);
 
@@ -4423,7 +4484,7 @@ namespace FlickrNet
 		/// <param name="IsFriend"></param>
 		public void PhotosGeoSetPerms(string photoId, bool IsPublic, bool IsContact, bool IsFamily, bool IsFriend)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.geo.setPerms");
 			parameters.Add("photo_id", photoId);
 			parameters.Add("is_public", IsPublic?"1":"0");
@@ -4460,10 +4521,17 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="XmlElement"/> instances which is the expected response.</returns>
 		public XmlElement[] TestGeneric(string method, NameValueCollection parameters)
 		{
-			if( parameters == null ) parameters = new NameValueCollection();
-			parameters.Add("method", method);
+			Hashtable _parameters = new Hashtable();
+			if( parameters != null )
+			{
+				foreach(string key in parameters.AllKeys)
+				{
+					_parameters.Add(key, parameters[key]);
+				}
+			}
+			_parameters.Add("method", method);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(_parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4497,7 +4565,7 @@ namespace FlickrNet
 		/// </example>
 		public XmlElement[] TestEcho(string echoParameter, string echoValue)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.test.echo");
 			parameters.Add("api_key", _apiKey);
 			if( echoParameter != null && echoParameter.Length > 0 )
@@ -4531,7 +4599,7 @@ namespace FlickrNet
 		/// <returns>The <see cref="FoundUser"/> object containing the username and userid of the current user.</returns>
 		public FoundUser TestLogin()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.test.login");
 
 			FlickrNet.Response response = GetResponseCache(parameters);
@@ -4555,7 +4623,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="Uri"/> class containing the URL of the group page.</returns>
 		public Uri UrlsGetGroup(string groupId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.urls.getGroup");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("group_id", groupId);
@@ -4591,7 +4659,7 @@ namespace FlickrNet
 		/// <returns>The URL of the users photos.</returns>
 		public Uri UrlsGetUserPhotos(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.urls.getUserPhotos");
 			if( userId != null && userId.Length > 0 ) parameters.Add("user_id", userId);
 
@@ -4626,7 +4694,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="Uri"/> class containing the URL for the users profile.</returns>
 		public Uri UrlsGetUserProfile(string userId)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.urls.getUserProfile");
 			if( userId != null && userId.Length > 0 ) parameters.Add("user_id", userId);
 
@@ -4652,7 +4720,7 @@ namespace FlickrNet
 		/// <returns>The ID of the group at the specified URL on success, a null reference (Nothing in Visual Basic) if the group cannot be found.</returns>
 		public string UrlsLookupGroup(string urlToFind)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.urls.lookupGroup");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("url", urlToFind);
@@ -4686,7 +4754,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="FoundUser"/> class containing the users ID and username.</returns>
 		public FoundUser UrlsLookupUser(string urlToFind)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.urls.lookupUser");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("url", urlToFind);
@@ -4713,7 +4781,7 @@ namespace FlickrNet
 		/// <returns></returns>
 		public string[] ReflectionGetMethods()
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.reflection.getMethods");
 			parameters.Add("api_key", _apiKey);
 
@@ -4736,7 +4804,7 @@ namespace FlickrNet
 		/// <returns>Returns a <see cref="Method"/> instance for the given method name.</returns>
 		public Method ReflectionGetMethodInfo(string methodName)
 		{
-			NameValueCollection parameters = new NameValueCollection();
+			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.reflection.getMethodInfo");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("method_name", methodName);

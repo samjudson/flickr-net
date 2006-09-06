@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Collections;
 
 namespace FlickrNet
 {
@@ -120,6 +121,42 @@ namespace FlickrNet
 			}
 
 			return sb.ToString();
+		}
+
+		internal static string SortOrderToString(PhotoSearchSortOrder order)
+		{
+			switch(order)
+			{
+				case PhotoSearchSortOrder.DatePostedAsc:
+					return "date-posted-asc";
+				case PhotoSearchSortOrder.DatePostedDesc:
+					return "date-posted-desc";
+				case PhotoSearchSortOrder.DateTakenAsc:
+					return "date-taken-asc";
+				case PhotoSearchSortOrder.DateTakenDesc:
+					return "date-taken-desc";
+				case PhotoSearchSortOrder.InterestingnessAsc:
+					return "interestingness-asc";
+				case PhotoSearchSortOrder.InterestingnessDesc:
+					return "interestingness-desc";
+				case PhotoSearchSortOrder.Relevance:
+					return "relevance";
+				default:
+					return null;
+			}
+		}
+
+		internal static void PartialOptionsIntoArray(PartialSearchOptions options, Hashtable parameters)
+		{
+			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
+			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
+			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
+			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd hh:mm:ss"));
+			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
+			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
+			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString());
+			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString());
+			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
 		}
 
 		internal static void WriteInt32(Stream s, int i)

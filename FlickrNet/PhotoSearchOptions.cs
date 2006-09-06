@@ -270,28 +270,7 @@ namespace FlickrNet
 
 		internal string SortOrderString
 		{
-			get
-			{
-				switch(_sort)
-				{
-					case PhotoSearchSortOrder.DatePostedAsc:
-						return "date-posted-asc";
-					case PhotoSearchSortOrder.DatePostedDesc:
-						return "date-posted-desc";
-					case PhotoSearchSortOrder.DateTakenAsc:
-						return "date-taken-asc";
-					case PhotoSearchSortOrder.DateTakenDesc:
-						return "date-taken-desc";
-					case PhotoSearchSortOrder.InterestingnessAsc:
-						return "interestingness-asc";
-					case PhotoSearchSortOrder.InterestingnessDesc:
-						return "interestingness-desc";
-					case PhotoSearchSortOrder.Relevance:
-						return "relevance";
-					default:
-						return null;
-				}
-			}
+			get	{ return Utils.SortOrderToString(_sort); }
 		}
 	}
 
