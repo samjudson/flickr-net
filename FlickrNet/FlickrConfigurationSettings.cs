@@ -22,7 +22,7 @@ namespace FlickrNet
 	/// secret="2134123"		// optional
 	/// token="234234"			// optional
 	/// cacheSize="1234"		// optional, in bytes (defaults to 50 * 1024 * 1024 = 50MB)
-	/// cacheTimeout="[d.]hh:mm:ss"	// optional, defaults to 1 day (1.00:00:00) - day component is optional
+	/// cacheTimeout="[d.]HH:mm:ss"	// optional, defaults to 1 day (1.00:00:00) - day component is optional
 	/// // e.g. 10 minutes = 00:10:00 or 1 hour = 01:00:00 or 2 days, 12 hours = 2.12:00:00
 	/// &gt;
 	/// &lt;proxy		// proxy element is optional, but if included the attributes below are mandatory as mentioned
@@ -104,7 +104,7 @@ namespace FlickrNet
 						}
 						catch(FormatException ex) 
 						{
-							throw new System.Configuration.ConfigurationException("cacheTimeout should be TimeSpan value ([d:]hh:mm:ss)", ex, configNode);
+							throw new System.Configuration.ConfigurationException("cacheTimeout should be TimeSpan value ([d:]HH:mm:ss)", ex, configNode);
 						}
 					case "cacheLocation":
 						_cacheLocation = attribute.Value;

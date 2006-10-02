@@ -3348,10 +3348,10 @@ namespace FlickrNet
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setDates");
 			parameters.Add("photo_id", photoId);
-			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", datePosted.ToString("yyyy-MM-dd hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", datePosted.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 			if( dateTaken != DateTime.MinValue ) 
 			{
-				parameters.Add("date_taken", dateTaken.ToString("yyyy-MM-dd hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+				parameters.Add("date_taken", dateTaken.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 				parameters.Add("date_taken_granularity", granularity.ToString("d"));
 			}
 
