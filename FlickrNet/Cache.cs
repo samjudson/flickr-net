@@ -11,7 +11,15 @@ namespace FlickrNet
 	/// </summary>
 	internal sealed class Cache
 	{
+		private class CacheException : Exception
+		{
+			public CacheException(string message) : base(message)
+			{}
+
+		}
+
 		private static PersistentCache _downloads;
+
 
 		/// <summary>
 		/// A static object containing the list of cached downloaded files.
@@ -94,8 +102,13 @@ namespace FlickrNet
 					catch(System.Security.SecurityException)
 					{
 						// Permission to read application directory not provided.
+						throw new CacheException("Unable to read default cache location. Please cacheLocation in configuration file or set manually in code");
 					}
 				}
+
+				if( _cacheLocation == null )
+					throw new CacheException("Unable to determine cache location. Please set cacheLocation in configuration file or set manually in code");
+
 				return _cacheLocation;
 			}
 			set
@@ -439,7 +452,4 @@ namespace FlickrNet
 			Utils.WriteString(outputStream, output.ToString());
 		}
 	}
-
-
-
 }
