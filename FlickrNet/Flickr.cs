@@ -2525,6 +2525,76 @@ namespace FlickrNet
 		}
 
 		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags) 
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <param name="extras">A list of extra information to fetch for each returned record.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras)
+		{
+			return PhotosRecentlyUpdated(minDate, extras, 0, 0);
+		}
+
+		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags) 
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate, int perPage, int page)
+		{
+			return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, perPage, page);
+		}
+
+		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags) 
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate)
+		{
+			return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, 0, 0);
+		}
+
+		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags) 
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <param name="extras">A list of extra information to fetch for each returned record.</param>
+		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int perPage, int page)
+		{
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.photos.recentlyUpdated");
+			parameters.Add("min_date", Utils.DateToUnixTimestamp(minDate).ToString());
+			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
+			if( perPage > 0  ) parameters.Add("per_page", perPage.ToString());
+			if( page > 0 ) parameters.Add("page", page.ToString());
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Photos;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
+		}
+
+		/// <summary>
 		/// Returns the available sizes for a photo. The calling user must have permission to view the photo.
 		/// </summary>
 		/// <param name="photoId">The id of the photo to fetch size information for.</param>
