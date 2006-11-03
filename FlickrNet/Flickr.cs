@@ -3313,6 +3313,10 @@ namespace FlickrNet
 		/// <summary>
 		/// Set the date taken for a photo.
 		/// </summary>
+		/// <remarks>
+		/// All dates are assumed to be GMT. It is the developers responsibility to change dates to the local users 
+		/// timezone.
+		/// </remarks>
 		/// <param name="photoId">The id of the photo to set the date taken for.</param>
 		/// <param name="dateTaken">The date taken.</param>
 		/// <param name="granularity">The granularity of the date taken.</param>
@@ -3326,6 +3330,10 @@ namespace FlickrNet
 		/// Set the date the photo was posted (uploaded). This will affect the order in which photos
 		/// are seen in your photostream.
 		/// </summary>
+		/// <remarks>
+		/// All dates are assumed to be GMT. It is the developers responsibility to change dates to the local users 
+		/// timezone.
+		/// </remarks>
 		/// <param name="photoId">The id of the photo to set the date posted.</param>
 		/// <param name="datePosted">The new date to set the date posted too.</param>
 		/// <returns>True if the date was updated successfully.</returns>
@@ -3338,6 +3346,10 @@ namespace FlickrNet
 		/// Set the date the photo was posted (uploaded) and the date the photo was taken.
 		/// Changing the date posted will affect the order in which photos are seen in your photostream.
 		/// </summary>
+		/// <remarks>
+		/// All dates are assumed to be GMT. It is the developers responsibility to change dates to the local users 
+		/// timezone.
+		/// </remarks>
 		/// <param name="photoId">The id of the photo to set the dates.</param>
 		/// <param name="datePosted">The new date to set the date posted too.</param>
 		/// <param name="dateTaken">The new date to set the date taken too.</param>
@@ -3348,7 +3360,7 @@ namespace FlickrNet
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setDates");
 			parameters.Add("photo_id", photoId);
-			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", datePosted.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", Utils.DateToUnixTimestamp(datePosted).ToString());
 			if( dateTaken != DateTime.MinValue ) 
 			{
 				parameters.Add("date_taken", dateTaken.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
