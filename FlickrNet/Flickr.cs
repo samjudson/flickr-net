@@ -3908,6 +3908,13 @@ namespace FlickrNet
 			if( response.Status == ResponseStatus.OK )
 			{
 				if( response.Photoset.PhotoCollection == null ) return new Photo[0];
+				if( response.Photoset.OwnerId != null && response.Photoset.OwnerId.Length > 0 )
+				{
+					foreach(Photo p in response.Photoset.PhotoCollection)
+					{
+						p.UserId = response.Photoset.OwnerId;
+					}
+				}
 				return response.Photoset.PhotoCollection;
 			}
 			else
