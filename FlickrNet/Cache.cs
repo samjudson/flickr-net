@@ -297,6 +297,11 @@ namespace FlickrNet
 			string response = Utils.ReadString(inputStream);
 
 			string[] chunks = s.Split('\n');
+
+			// Corrupted cache record, so throw IOException which is then handled and returns partial cache.
+			if( chunks.Length != 2 )
+				throw new IOException("Unexpected number of chunks found");
+
 			string url = chunks[0];
 			DateTime creationTime = new DateTime(long.Parse(chunks[1]));
 			ResponseCacheItem item = new ResponseCacheItem();
@@ -311,7 +316,7 @@ namespace FlickrNet
 			ResponseCacheItem item = (ResponseCacheItem) cacheItem;
 			StringBuilder result = new StringBuilder();
 			result.Append(item.Url + "\n");
-			result.Append(item.CreationTime.Ticks + "\n");
+			result.Append(item.CreationTime.Ticks.ToString("0"));
 			Utils.WriteString(outputStream, result.ToString());
 			Utils.WriteString(outputStream, item.Response);
 		}

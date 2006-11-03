@@ -306,6 +306,9 @@ namespace FlickrNet
 				{
 					string key = Utils.ReadString(s);
 					ICacheItem val = persister.Read(s);
+					if( val == null ) // corrupt cache file 
+						return table;
+
 					table[key] = val;
 				}
 				catch(IOException)
