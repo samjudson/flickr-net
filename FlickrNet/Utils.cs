@@ -45,6 +45,8 @@ namespace FlickrNet
 		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
 		public static DateTime UnixTimestampToDate(string timestamp)
 		{
+			if( timestamp == null || timestamp.Length == 0 ) return DateTime.MinValue;
+
 			return UnixTimestampToDate(long.Parse(timestamp));
 		}
 

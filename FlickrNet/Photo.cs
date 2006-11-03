@@ -64,6 +64,7 @@ namespace FlickrNet
 
 		/// <summary>
 		/// Converts the raw lastupdate field to a <see cref="DateTime"/>.
+		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
 		/// </summary>
 		[XmlIgnore]
 		public DateTime LastUpdated
@@ -76,16 +77,35 @@ namespace FlickrNet
 		public string lastupdate_raw;
 
 		/// <remarks/>
+		[XmlAttribute("dateadded", Form = XmlSchemaForm.Unqualified)]
+		public string dateadded_raw;
+
+		/// <summary>
+		/// Converts the raw DateAdded field to a <see cref="DateTime"/>. 
+		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
+		/// </summary>
+		[XmlIgnore]
+		public DateTime DateAdded
+		{
+			get { return Utils.UnixTimestampToDate(dateadded_raw); }
+		}
+
+		/// <remarks/>
 		[XmlAttribute("datetaken", Form=XmlSchemaForm.Unqualified)]
 		public string datetaken_raw;
 
 		/// <summary>
 		/// Converts the raw datetaken field to a <see cref="DateTime"/>.
+		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
 		/// </summary>
 		[XmlIgnore]
 		public DateTime DateTaken
 		{
-			get { return System.DateTime.Parse(datetaken_raw); }
+			get 
+			{
+				if( datetaken_raw == null || datetaken_raw.Length == 0 ) return DateTime.MinValue;
+				return System.DateTime.Parse(datetaken_raw);
+			}
 		}
 
 		/// <remarks/>
