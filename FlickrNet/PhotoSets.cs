@@ -142,5 +142,38 @@ namespace FlickrNet
 		{
 			get { return _photoCollection; } set { _photoCollection = value; }
 		}
+
+		private const string photoUrl = "http://static.flickr.com/{0}/{1}_{2}{3}.{4}";
+
+		/// <summary>
+		/// The URL for the thumbnail of a photo.
+		/// </summary>
+		[XmlIgnore()]
+		public string PhotosetThumbnailUrl
+		{
+			get { return string.Format(photoUrl, Server, PrimaryPhotoId, Secret, "_t", "jpg"); }
+		}
+
+		/// <summary>
+		/// The URL for the square thumbnail of a photo.
+		/// </summary>
+		[XmlIgnore()]
+		public string PhotosetSquareThumbnailUrl
+		{
+			get { return string.Format(photoUrl, Server, PrimaryPhotoId, Secret, "_s", "jpg"); }
+		}
+
+		/// <summary>
+		/// The URL for the small copy of a photo.
+		/// </summary>
+		[XmlIgnore()]
+		public string PhotosetSmallUrl
+		{
+			get { return string.Format(photoUrl, Server, PrimaryPhotoId, Secret, "_m", "jpg"); }
+		}
+
+
+
+
 	}
 }
