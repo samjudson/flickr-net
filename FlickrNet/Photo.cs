@@ -9,45 +9,65 @@ namespace FlickrNet
 	public class Photo 
 	{
     
+		private const string photoUrl = "http://static.flickr.com/{0}/{1}_{2}{3}.{4}";
+
+		private string _photoId;
+		private string _userId;
+		private string _secret;
+		private string _server;
+		private string _title;
+		private int _isPublic;
+		private int _isFriend;
+		private int _isFamily;
+		private int _isPrimary;
+		private string _license;
+		private string _ownerName;
+		private string _iconServer;
+		private string _originalFormat;
+		private string _cleanTags;
+		private decimal _latitude;
+		private decimal _longitude;
+		private GeoAccuracy _accuracy;
+
 		/// <remarks/>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string PhotoId;
+		public string PhotoId { get { return _photoId; } set { _photoId = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("owner", Form=XmlSchemaForm.Unqualified)]
-		public string UserId;
+		public string UserId { get { return _userId; } set { _userId = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("secret", Form=XmlSchemaForm.Unqualified)]
-		public string Secret;
+		public string Secret { get { return _secret; } set { _secret = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("server", Form=XmlSchemaForm.Unqualified)]
-		public string Server;
+		public string Server { get { return _server; } set { _server = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("title", Form=XmlSchemaForm.Unqualified)]
-		public string Title;
+		public string Title { get { return _title; } set { _title = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("ispublic", Form=XmlSchemaForm.Unqualified)]
-		public int IsPublic;
+		public int IsPublic { get { return _isPublic; } set { _isPublic = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("isfriend", Form=XmlSchemaForm.Unqualified)]
-		public int IsFriend;
+		public int IsFriend { get { return _isFriend; } set { _isFriend = value; } }
     
 		/// <remarks/>
 		[XmlAttribute("isfamily", Form=XmlSchemaForm.Unqualified)]
-		public int IsFamily;
+		public int IsFamily { get { return _isFamily; } set { _isFamily = value; } }
 
 		/// <remarks/>
 		[XmlAttribute("isprimary", Form=XmlSchemaForm.Unqualified)]
-		public int IsPrimary;
+		public int IsPrimary { get { return _isPrimary; } set { _isPrimary = value; } }
 
 		/// <remarks/>
 		[XmlAttribute("license", Form=XmlSchemaForm.Unqualified)]
-		public string License;
+		public string License { get { return _license; } set { _license = value; } }
 
 		/// <remarks/>
 		[XmlAttribute("dateupload", Form=XmlSchemaForm.Unqualified)]
@@ -110,26 +130,27 @@ namespace FlickrNet
 
 		/// <remarks/>
 		[XmlAttribute("ownername", Form=XmlSchemaForm.Unqualified)]
-		public string OwnerName;
+		public string OwnerName { get { return _ownerName; } set { _ownerName = value; } }
 
 		/// <remarks/>
 		[XmlAttribute("iconserver", Form=XmlSchemaForm.Unqualified)]
-		public string IconServer;
+		public string IconServer { get { return _iconServer; } set { _iconServer = value; } }
 
 		/// <summary>
 		/// Optional extra field containing the original format (jpg, png etc) of the 
 		/// photo.
 		/// </summary>
 		[XmlAttribute("originalformat", Form=XmlSchemaForm.Unqualified)]
-		public string OriginalFormat;
+		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
+
+		[Obsolete("Renamed to CleanTags, as the tags are clean, not raw")]
+		public string RawTags { get { return _cleanTags; } set { _cleanTags = value; } }
 
 		/// <summary>
 		/// Undocumented tags attribute
 		/// </summary>
 		[XmlAttribute("tags", Form=XmlSchemaForm.Unqualified)]
-		public string RawTags;
-
-		private const string photoUrl = "http://static.flickr.com/{0}/{1}_{2}{3}.{4}";
+		public string CleanTags { get { return _cleanTags; } set { _cleanTags = value; } }
 
 		/// <summary>
 		/// The url to the web page for this photo. Uses the users userId, not their web alias, but
@@ -205,9 +226,6 @@ namespace FlickrNet
 			}
 		}
 
-		private decimal _latitude;
-		private decimal _longitude;
-
 		/// <summary>
 		/// Latitude. Will be 0 if Geo extras not specified.
 		/// </summary>
@@ -227,8 +245,6 @@ namespace FlickrNet
 			get { return _longitude; }
 			set { _longitude = value; }
 		}
-
-		private GeoAccuracy _accuracy;
 
 		/// <summary>
 		/// Geo-location accuracy. A value of None means that the information was not returned.
