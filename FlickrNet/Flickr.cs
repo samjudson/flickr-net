@@ -3334,7 +3334,7 @@ namespace FlickrNet
 			options.Text = text;
 			options.MinUploadDate = minUploadDate;
 			options.MaxUploadDate = maxUploadDate;
-			options.License = license;
+			options.AddLicense(license);
 			options.PerPage = perPage;
 			options.Page = page;
 			options.Extras = extras;
@@ -3359,7 +3359,16 @@ namespace FlickrNet
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_upload_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
 			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
-			if( options.License != 0 ) parameters.Add("license", options.License.ToString("d"));
+			if( options.Licenses.Length != 0 ) 
+			{
+				string lic = "";
+				for(int i = 0; i < options.Licenses.Length; i++)
+				{
+					if( i > 0 ) lic += ",";
+					lic += Convert.ToString(options.Licenses[i]);
+				}
+				parameters.Add("license", lic);
+			}
 			if( options.PerPage != 0 ) parameters.Add("per_page", options.PerPage.ToString());
 			if( options.Page != 0 ) parameters.Add("page", options.Page.ToString());
 			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);

@@ -143,6 +143,9 @@ namespace FlickrNet
 		[XmlAttribute("originalformat", Form=XmlSchemaForm.Unqualified)]
 		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
 
+		/// <summary>
+		/// Undocumented tags atrribute. Renamed to CleanTags.
+		/// </summary>
 		[Obsolete("Renamed to CleanTags, as the tags are clean, not raw")]
 		public string RawTags { get { return _cleanTags; } set { _cleanTags = value; } }
 
