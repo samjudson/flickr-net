@@ -299,6 +299,16 @@ namespace FlickrNet
 		{
 			return (PictureCacheItem[]) Cache.Downloads.ToArray(typeof(PictureCacheItem));
 		}
+
+		/// <summary>
+		/// Check a url for existance in the cache
+		/// </summary>
+		/// <param name="url"></param>
+		/// <returns>true if in cache</returns>
+		public static bool IsUrlCached(string url)
+		{
+			return (Cache.Downloads[url] != null);
+		}
 		#endregion
 
 		#region [ Constructors ]
