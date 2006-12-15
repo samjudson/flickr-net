@@ -40,7 +40,9 @@ namespace FlickrNet
 		#endregion
 
 		#region [ Private Variables ]
+#if !WindowsCE
 		private static bool _isServiceSet = false;
+#endif
 		private static SupportedService _defaultService = SupportedService.Flickr;
 
 		private SupportedService _service = SupportedService.Flickr;
@@ -208,14 +210,22 @@ namespace FlickrNet
 		{
 			get 
 			{
+#if !WindowsCE
 				if( !_isServiceSet && FlickrConfigurationManager.Settings != null )
 				{
 					_defaultService = FlickrConfigurationManager.Settings.Service;
 					_isServiceSet = true;
 				}
+#endif
 				return _defaultService;
 			}
-			set { _defaultService = value; _isServiceSet = true; }
+            set
+            {
+                _defaultService = value;
+#if !WindowsCE
+                _isServiceSet = true;
+#endif
+            }
 		}
 
 		/// <summary>
@@ -318,7 +328,8 @@ namespace FlickrNet
 		/// </summary>
 		public Flickr()
 		{
-			FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
+#if !WindowsCE
+            FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
 			if( settings == null ) return;
 
 			if( settings.CacheSize != 0 ) CacheSizeLimit = settings.CacheSize;
@@ -326,7 +337,7 @@ namespace FlickrNet
 			ApiKey = settings.ApiKey;
 			AuthToken = settings.ApiToken;
 			ApiSecret = settings.SharedSecret;
-			CurrentService = DefaultService;
+            CurrentService = DefaultService;
 
 			if( settings.IsProxyDefined )
 			{
@@ -353,6 +364,9 @@ namespace FlickrNet
 					// Capture SecurityException for when running in a Medium Trust environment.
 				}
 			}
+#else
+            CurrentService = DefaultService;
+#endif
 		}
 
 		/// <summary>
@@ -2154,7 +2168,7 @@ namespace FlickrNet
 		{
 			if( count != 0 && (count < 10 || count > 50) && !singlePhoto )
 			{
-				throw new ArgumentOutOfRangeException("count", count, "Count must be between 10 and 50.");
+				throw new ArgumentOutOfRangeException("count", "Count must be between 10 and 50.");
 			}
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPhotos");

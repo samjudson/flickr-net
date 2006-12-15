@@ -39,8 +39,10 @@ namespace FlickrNet
 
 			lock (this)
 			{
+#if !WindowsCE
 				while (stream != null)
 					Monitor.Wait(this);
+#endif
 
 				while (true)
 				{
@@ -77,9 +79,11 @@ namespace FlickrNet
 		{
 			lock (this)
 			{
+#if !WindowsCE
 				// Doesn't hurt to pulse. Note that waiting threads will not actually
 				// continue to execute until this critical section is exited.
 				Monitor.PulseAll(this);
+#endif
 
 				if (stream == null)
 					throw new InvalidOperationException("Tried to dispose a FileLock that was not owned");

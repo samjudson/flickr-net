@@ -1,3 +1,4 @@
+#if !WindowsCE
 using System;
 using System.Collections.Specialized ;
 using System.Xml;
@@ -302,3 +303,4 @@ namespace FlickrNet
 
 	}
 }
+#endif

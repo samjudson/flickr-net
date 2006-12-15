@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.IO.IsolatedStorage;
 using System.Collections;
 
 namespace FlickrNet
@@ -16,6 +15,7 @@ namespace FlickrNet
 		{
 		}
 
+#if !WindowsCE
 		internal static string UrlEncode(string oldString)
 		{
 			if( oldString == null ) return null;
@@ -26,6 +26,18 @@ namespace FlickrNet
 			a = a.Replace(" ", "%20");
 			return a;
 		}
+#else
+        internal static string UrlEncode(string oldString)
+        {
+            if (oldString == null) return null;
+
+            string a = oldString;
+            a = a.Replace("&", "%26");
+            a = a.Replace("=", "%3D");
+            a = a.Replace(" ", "%20");
+            return a;
+        }
+#endif
 
 		/// <summary>
 		/// Converts a <see cref="DateTime"/> object into a unix timestamp number.

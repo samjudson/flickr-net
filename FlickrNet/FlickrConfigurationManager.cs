@@ -2,6 +2,7 @@ using System;
 using System.Configuration;
 using System.Xml;
 
+#if !WindowsCE
 namespace FlickrNet
 {
 	/// <summary>
@@ -36,3 +37,4 @@ namespace FlickrNet
 		}
 	}
 }
+#endif

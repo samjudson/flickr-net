@@ -250,7 +250,7 @@ namespace FlickrNet
 			get { return _page; }
 			set 
 			{
-				if( value < 0 ) throw new ArgumentOutOfRangeException("Page", value, "Must be greater than 0");
+				if( value < 0 ) throw new ArgumentOutOfRangeException("Page", "Must be greater than 0");
 				_page = value; 
 			}
 		}

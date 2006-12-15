@@ -109,7 +109,7 @@ namespace FlickrNet
 			if( node.Attributes["authorname"] != null )
 				_authorUserName = node.Attributes["authorname"].Value;
 			if( node.Attributes["permalink"] != null )
-				_permaLink = new Uri(node.Attributes["permalink"].Value, true);
+				_permaLink = new Uri(node.Attributes["permalink"].Value);
 			if( node.Attributes["datecreate"] != null )
 				_dateCreated = Utils.UnixTimestampToDate(node.Attributes["datecreate"].Value);
 			if( node.InnerXml.Length > 0 )
