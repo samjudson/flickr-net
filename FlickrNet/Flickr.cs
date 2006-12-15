@@ -1049,7 +1049,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(uploader.Code, uploader.Message);
+				throw new FlickrException(uploader.Error);
 			}
 		}
 
@@ -1183,7 +1183,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(uploader.Code, uploader.Message);
+				throw new FlickrException(uploader.Error);
 			}
 		}
 		#endregion

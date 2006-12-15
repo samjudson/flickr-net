@@ -13,13 +13,13 @@ namespace FlickrNet
 	{
 		private ResponseStatus _status;
 		private string _photoId;
-		private int _code;
-		private string _message;
+		private string _ticketId;
+		private ResponseError _error;
 
 		/// <summary>
 		/// The status of the upload, either "ok" or "fail".
 		/// </summary>
-		[XmlElement("status", Form=XmlSchemaForm.Unqualified)]
+		[XmlAttribute("stat", Form=XmlSchemaForm.Unqualified)]
 		public ResponseStatus Status
 		{
 			get { return _status; }
@@ -37,23 +37,23 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// If the upload failed then this contains the error code.
+		/// The ticket id, if using Asynchronous uploading.
 		/// </summary>
-		[XmlElement("error", Form=XmlSchemaForm.Unqualified)]
-		public int Code
+		[XmlElement("ticketid", Form=XmlSchemaForm.Unqualified)]
+		public string TicketId
 		{
-			get { return _code; }
-			set { _code = value; }
+			get { return _ticketId; }
+			set { _ticketId = value; }
 		}
 
 		/// <summary>
-		/// If the upload failed then this contains the error description.
+		/// Contains the error returned if the upload is unsuccessful.
 		/// </summary>
-		[XmlElement("verbose", Form=XmlSchemaForm.Unqualified)]
-		public string Message
+		[XmlElement("err", Form=XmlSchemaForm.Unqualified)]
+		public ResponseError Error
 		{
-			get { return _message; }
-			set { _message = value; }
+			get { return _error; }
+			set { _error = value; }
 		}
 	}
 }

@@ -128,6 +128,12 @@ namespace FlickrNet
 	public enum ResponseStatus
 	{
 		/// <summary>
+		/// An unknown status, and the default value if not set.
+		/// </summary>
+		[XmlEnum("unknown")]
+		Unknown,
+
+		/// <summary>
 		/// The response returns "ok" on a successful execution of the method.
 		/// </summary>
 		[XmlEnum("ok")]
