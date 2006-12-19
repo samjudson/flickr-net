@@ -416,15 +416,18 @@ namespace FlickrNet
 
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
-			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
+
+            req.Method = (CurrentService==SupportedService.Zooomr?"GET":"POST");
+
+#if !WindowsCE
 			if( req.Method == "POST" ) req.ContentLength = 0;
-			//req.Method = "POST";
 			req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
 			req.KeepAlive = false;
+#endif
 
-			try
+            try
 			{
 				// Get response from the internet
 				res = (HttpWebResponse)req.GetResponse();
@@ -786,7 +789,7 @@ namespace FlickrNet
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getFullToken");
-			parameters.Add("mini_token", miniToken);
+            parameters.Add("mini_token", miniToken.Replace("-", ""));
 			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )

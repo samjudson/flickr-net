@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FlickrNet
 {
@@ -29,13 +31,27 @@ namespace FlickrNet
 #else
         internal static string UrlEncode(string oldString)
         {
-            if (oldString == null) return null;
+            if (oldString == null) return String.Empty;
+            StringBuilder sb = new StringBuilder(oldString.Length * 2);
+            Regex reg = new Regex("[a-zA-Z0-9$-_.+!*'(),]");
 
-            string a = oldString;
-            a = a.Replace("&", "%26");
-            a = a.Replace("=", "%3D");
-            a = a.Replace(" ", "%20");
-            return a;
+            foreach (char c in oldString)
+            {
+                if (reg.IsMatch(c.ToString()))
+                {
+                    sb.Append(c);
+                }
+                else
+                {
+                    sb.Append(ToHex(c));
+                }
+            }
+            return sb.ToString();
+        }
+
+        private static string ToHex(char c)
+        {
+            return ((int)c).ToString("X");
         }
 #endif
 

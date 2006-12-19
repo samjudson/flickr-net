@@ -9,10 +9,16 @@ namespace FlickrNet
 	[Serializable]
 	public class Photos 
 	{
-    
+
+        private Photo[] _photos = new Photo[0];
+
 		/// <remarks/>
-		[XmlElement("photo", Form=XmlSchemaForm.Unqualified)]
-		public PhotoCollection PhotoCollection = new PhotoCollection();
+        [XmlElement("photo", Form = XmlSchemaForm.Unqualified)]
+        public Photo[] PhotoCollection
+        {
+            get { return _photos; }
+            set { _photos = value; }
+        }
     
 		/// <remarks/>
 		[XmlAttribute("page", Form=XmlSchemaForm.Unqualified)]

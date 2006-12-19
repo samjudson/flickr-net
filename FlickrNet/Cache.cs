@@ -104,7 +104,7 @@ namespace FlickrNet
 #if !WindowsCE
 						_cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FlickrNet");
 #else
-                        _cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlickrNet");
+                        _cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FlickrNetCache");
 #endif
 					}
 					catch(System.Security.SecurityException)
