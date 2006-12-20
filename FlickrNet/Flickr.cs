@@ -3361,7 +3361,7 @@ namespace FlickrNet
 			options.Text = text;
 			options.MinUploadDate = minUploadDate;
 			options.MaxUploadDate = maxUploadDate;
-			options.AddLicense(license);
+			if( license > 0 ) options.AddLicense(license);
 			options.PerPage = perPage;
 			options.Page = page;
 			options.Extras = extras;

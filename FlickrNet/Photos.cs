@@ -58,6 +58,8 @@ namespace FlickrNet
 		/// <param name="photos">An array of <see cref="Photo"/> instances.</param>
 		public PhotoCollection(Photo[] photos)
 		{
+			if (photos == null) return;
+
 			for (int i=0; i<photos.Length; i++)
 			{
 				List.Add(photos[i]);
