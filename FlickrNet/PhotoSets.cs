@@ -47,7 +47,8 @@ namespace FlickrNet
 		private string _ownerId;
 		private string _primaryPhotoId;
 		private string _secret;
-		private int _server;
+		private string _server;
+		private string _farm;
 		private int _numberOfPhotos;
 		private string _title;
 		private string _description;
@@ -102,9 +103,18 @@ namespace FlickrNet
 		/// The server for the primary photo for the photoset.
 		/// </summary>
 		[XmlAttribute("server", Form=XmlSchemaForm.Unqualified)]
-		public int Server
+		public string Server
 		{
 			get { return _server; } set { _server = value; }
+		}
+
+		/// <summary>
+		/// The server farm for the primary photo for the photoset.
+		/// </summary>
+		[XmlAttribute("farm", Form=XmlSchemaForm.Unqualified)]
+		public string Farm
+		{
+			get { return _farm; } set { _farm = value; }
 		}
 
 		/// <summary>
@@ -143,15 +153,13 @@ namespace FlickrNet
 			get { return _photoCollection; } set { _photoCollection = value; }
 		}
 
-		private const string photoUrl = "http://static.flickr.com/{0}/{1}_{2}{3}.{4}";
-
 		/// <summary>
 		/// The URL for the thumbnail of a photo.
 		/// </summary>
 		[XmlIgnore()]
 		public string PhotosetThumbnailUrl
 		{
-			get { return string.Format(photoUrl, Server, PrimaryPhotoId, Secret, "_t", "jpg"); }
+			get { return Utils.UrlFormat(this, "_t", "jpg"); }
 		}
 
 		/// <summary>
@@ -160,7 +168,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string PhotosetSquareThumbnailUrl
 		{
-			get { return string.Format(photoUrl, Server, PrimaryPhotoId, Secret, "_s", "jpg"); }
+			get { return Utils.UrlFormat(this, "_s", "jpg"); }
 		}
 
 		/// <summary>
@@ -169,7 +177,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string PhotosetSmallUrl
 		{
-			get { return string.Format(photoUrl, Server, PrimaryPhotoId, Secret, "_m", "jpg"); }
+			get { return Utils.UrlFormat(this, "_m", "jpg"); }
 		}
 
 

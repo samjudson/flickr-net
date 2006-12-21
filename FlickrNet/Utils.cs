@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Internal class providing certain utility functions to other classes.
 	/// </summary>
-	public sealed class Utils
+	internal sealed class Utils
 	{
 		private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0);
 
@@ -60,7 +60,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="date">The date to convert.</param>
 		/// <returns>A long for the number of seconds since 1st January 1970, as per unix specification.</returns>
-		public static long DateToUnixTimestamp(DateTime date)
+		internal static long DateToUnixTimestamp(DateTime date)
 		{
 			TimeSpan ts = date - unixStartDate;
 			return (long)ts.TotalSeconds;
@@ -71,7 +71,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="timestamp">The timestamp, as a string.</param>
 		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
-		public static DateTime UnixTimestampToDate(string timestamp)
+		internal static DateTime UnixTimestampToDate(string timestamp)
 		{
 			if( timestamp == null || timestamp.Length == 0 ) return DateTime.MinValue;
 
@@ -83,7 +83,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="timestamp">The unix timestamp.</param>
 		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
-		public static DateTime UnixTimestampToDate(long timestamp)
+		internal static DateTime UnixTimestampToDate(long timestamp)
 		{
 			return unixStartDate.AddSeconds(timestamp);
 		}
@@ -93,15 +93,15 @@ namespace FlickrNet
 		/// </summary>
 		/// <example>
 		/// <code>
-        ///     PhotoSearchExtras extras = PhotoSearchExtras.DateTaken &amp; PhotoSearchExtras.IconServer;
+		///     PhotoSearchExtras extras = PhotoSearchExtras.DateTaken &amp; PhotoSearchExtras.IconServer;
 		///     string val = Utils.ExtrasToString(extras);
 		///     Console.WriteLine(val);
-        /// </code>
-        /// outputs: "date_taken,icon_server";
+		/// </code>
+		/// outputs: "date_taken,icon_server";
 		/// </example>
 		/// <param name="extras"></param>
-        /// <returns></returns>
-		public static string ExtrasToString(PhotoSearchExtras extras)
+		/// <returns></returns>
+		internal static string ExtrasToString(PhotoSearchExtras extras)
 		{
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
 			if( (extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken )
@@ -258,5 +258,29 @@ namespace FlickrNet
 			}
 			return new string(chars);
 		}
+	
+		private const string photoUrl = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
+
+		internal static string UrlFormat(Photo p, string size, string format)
+		{
+			return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
+		}
+
+		internal static string UrlFormat(PhotoInfo p, string size, string format)
+		{
+			return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
+		}
+
+		internal static string UrlFormat(Photoset p, string size, string format)
+		{
+			return UrlFormat(photoUrl, p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, format);
+		}
+
+		private static string UrlFormat(string format, params object[] parameters)
+		{
+			return String.Format(format, parameters);
+		}
+
 	}
+
 }

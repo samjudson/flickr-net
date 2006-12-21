@@ -10,7 +10,7 @@ namespace FlickrNet
 	[Serializable]
 	public class ExifPhoto
 	{
-		internal ExifPhoto(string photoId, string secret, int server, ExifTag[] array)
+		internal ExifPhoto(string photoId, string secret, string server, ExifTag[] array)
 		{
 			_photoId = photoId;
 			_secret = secret;
@@ -20,7 +20,7 @@ namespace FlickrNet
 
 		private string _photoId;
 		private string _secret;
-		private int _server;
+		private string _server;
 		private ExifTag[] _tagCollection;
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The server number for the photo.
 		/// </summary>
-		public int Server
+		public string Server
 		{
 			get { return _server; }
 		}
