@@ -6,6 +6,7 @@ namespace FlickrNet
 	/// The sort order for the <see cref="Flickr.PhotosSearch"/>,
 	/// <see cref="Flickr.PhotosGetWithGeoData"/>, <see cref="Flickr.PhotosGetWithoutGeoData"/> methods.
 	/// </summary>
+	[Serializable]
 	public enum PhotoSearchSortOrder
 	{
 		/// <summary>

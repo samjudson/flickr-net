@@ -7,6 +7,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for BoundaryBox.
 	/// </summary>
+	[Serializable]
 	public class BoundaryBox
 	{
 		private GeoAccuracy _accuracy = GeoAccuracy.Street;

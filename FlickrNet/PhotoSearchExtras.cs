@@ -15,6 +15,7 @@ namespace FlickrNet
 	/// </code>
 	/// </example>
 	[Flags]
+	[Serializable]
 	public enum PhotoSearchExtras
 	{
 		/// <summary>

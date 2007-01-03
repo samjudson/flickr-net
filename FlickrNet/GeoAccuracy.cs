@@ -9,6 +9,7 @@ namespace FlickrNet
 	/// <remarks>
 	/// Level descriptions are only approximate.
 	/// </remarks>
+	[Serializable]
 	public enum GeoAccuracy
 	{
 		/// <summary>
