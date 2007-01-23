@@ -15,6 +15,8 @@ namespace FlickrNet
 		private string _server;
 		private string _farm;
 		private string _originalFormat;
+		private int _views;
+		private int _comments;
 
 		/// <summary>
 		/// The id of the photo.
@@ -126,7 +128,19 @@ namespace FlickrNet
 		/// The number of comments the photo has.
 		/// </summary>
 		[XmlElement("comments", Form=XmlSchemaForm.Unqualified)]
-		public int CommentsCount;
+		public int CommentsCount
+		{
+			get { return _comments; } set { _comments = value; }
+		}
+
+		/// <summary>
+		/// The number of views the photo has.
+		/// </summary>
+		[XmlAttribute("views", Form=XmlSchemaForm.Unqualified)]
+		public int ViewCount
+		{
+			get { return _views; } set { _views = value; }
+		}
 
 		/// <summary>
 		/// The notes for the photo.
