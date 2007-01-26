@@ -2141,7 +2141,7 @@ namespace FlickrNet
 			parameters.Add("photo_id", photoId);
 			parameters.Add("tags", tags);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -2879,7 +2879,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photos.removeTag");
 			parameters.Add("tag_id", tagId);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3455,6 +3455,8 @@ namespace FlickrNet
 			if( options.Text != null && options.Text.Length > 0 ) parameters.Add("text", options.Text);
 			if( options.Tags != null && options.Tags.Length > 0 ) parameters.Add("tags", options.Tags);
 			if( options.TagMode != TagMode.None ) parameters.Add("tag_mode", options.TagModeString);
+			if( options.MachineTags != null && options.MachineTags.Length > 0 ) parameters.Add("machine_tags", options.MachineTags);
+			if( options.MachineTagMode != MachineTagMode.None ) parameters.Add("machine_tag_mode", options.MachineTagModeString);
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_upload_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_upload_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
 			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
@@ -3546,7 +3548,7 @@ namespace FlickrNet
 				parameters.Add("date_taken_granularity", granularity.ToString("d"));
 			}
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3575,7 +3577,7 @@ namespace FlickrNet
 			parameters.Add("title", title);
 			parameters.Add("description", description);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3622,7 +3624,7 @@ namespace FlickrNet
 			parameters.Add("perm_comment", permComment.ToString("d"));
 			parameters.Add("perm_addmeta", permAddMeta.ToString("d"));
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3668,7 +3670,7 @@ namespace FlickrNet
 			parameters.Add("photo_id", photoId);
 			parameters.Add("tags", tags);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3795,7 +3797,7 @@ namespace FlickrNet
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("photo_id", photoId);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3833,7 +3835,7 @@ namespace FlickrNet
 			parameters.Add("primary_photo_id", primaryPhotoId);
 			parameters.Add("description", description);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3857,7 +3859,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photosets.delete");
 			parameters.Add("photoset_id", photosetId);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3885,7 +3887,7 @@ namespace FlickrNet
 			parameters.Add("title", title);
 			parameters.Add("description", description);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3936,7 +3938,7 @@ namespace FlickrNet
 			parameters.Add("primary_photo_id", primaryPhotoId);
 			parameters.Add("photo_ids", photoIds);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4179,7 +4181,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photosets.orderSets");
 			parameters.Add("photosetIds", photosetIds);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4206,7 +4208,7 @@ namespace FlickrNet
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("photo_id", photoId);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4620,7 +4622,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photos.getWithoutGeoData");
 			Utils.PartialOptionsIntoArray(options, parameters);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 			if( response.Status == ResponseStatus.OK )
 			{
 				return response.Photos;
@@ -4692,7 +4694,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photos.getWithGeoData");
 			Utils.PartialOptionsIntoArray(options, parameters);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 			if( response.Status == ResponseStatus.OK )
 			{
 				return response.Photos;

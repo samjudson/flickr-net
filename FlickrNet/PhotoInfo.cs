@@ -15,8 +15,11 @@ namespace FlickrNet
 		private string _server;
 		private string _farm;
 		private string _originalFormat;
+		private string _originalSecret;
 		private int _views;
 		private int _comments;
+		private string _title;
+		private string _description;
 
 		/// <summary>
 		/// The id of the photo.
@@ -48,6 +51,13 @@ namespace FlickrNet
 		[XmlAttribute("originalformat", Form=XmlSchemaForm.Unqualified)]
 		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
 
+		/// <summary>
+		/// Optional extra field containing the original 'secret' of the 
+		/// photo used for forming the Url.
+		/// </summary>
+		[XmlAttribute("originalsecret", Form=XmlSchemaForm.Unqualified)]
+		public string OriginalSecret { get { return _originalSecret; } set { _originalSecret = value; } }
+		
 		/// <summary>
 		/// The date the photo was uploaded (or 'posted').
 		/// </summary>
@@ -89,13 +99,13 @@ namespace FlickrNet
 		/// The title of the photo.
 		/// </summary>
 		[XmlElement("title", Form=XmlSchemaForm.Unqualified)]
-		public string Title;
+		public string Title { get { return _title; } set { _title = value; } }
 
 		/// <summary>
 		/// The description of the photo.
 		/// </summary>
 		[XmlElement("description", Form=XmlSchemaForm.Unqualified)]
-		public string Description;
+		public string Description { get { return _description; } set { _description = value; } }
 
 		/// <summary>
 		/// The visibility of the photo.
@@ -442,23 +452,28 @@ namespace FlickrNet
 	[System.Serializable]
 	public class PhotoInfoTag
 	{
+		private int _machineTag;
+		private string _tagId;
+		private string _authorId;
+		private string _authorName;
+
 		/// <summary>
 		/// The id of the tag.
 		/// </summary>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string TagId;
+		public string TagId { get { return _tagId; } set { _tagId = value; } }
 
 		/// <summary>
 		/// The author id of the tag.
 		/// </summary>
 		[XmlAttribute("author", Form=XmlSchemaForm.Unqualified)]
-		public string AuthorId;
+		public string AuthorId { get { return _authorId; } set { _authorId = value; } }
 
 		/// <summary>
 		/// Author of the tag - only available if using <see cref="Flickr.TagsGetListPhoto"/>.
 		/// </summary>
 		[XmlAttribute("authorname", Form=XmlSchemaForm.Unqualified)]
-		public string AuthorName;
+		public string AuthorName  { get { return _authorName; } set { _authorName = value; } }
 
 		/// <summary>
 		/// Raw copy of the tag, as the user entered it.
@@ -467,10 +482,17 @@ namespace FlickrNet
 		public string Raw;
 
 		/// <summary>
+		/// Raw copy of the tag, as the user entered it.
+		/// </summary>
+		[XmlAttribute("machine_tag", Form=XmlSchemaForm.Unqualified)]
+		public int IsMachineTag { get { return _machineTag; } set { _machineTag = value; } }
+
+		/// <summary>
 		/// The actually tag.
 		/// </summary>
 		[XmlText()]
 		public string TagText;
+
 	}
 
 }

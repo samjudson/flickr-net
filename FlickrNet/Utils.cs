@@ -263,12 +263,18 @@ namespace FlickrNet
 
 		internal static string UrlFormat(Photo p, string size, string format)
 		{
-			return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
+			if( size == "_o" )
+				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, format);
+			else
+				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
 		}
 
 		internal static string UrlFormat(PhotoInfo p, string size, string format)
 		{
-			return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
+			if( size == "_o" )
+				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, format);
+			else
+				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
 		}
 
 		internal static string UrlFormat(Photoset p, string size, string format)

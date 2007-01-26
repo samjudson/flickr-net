@@ -23,7 +23,9 @@ namespace FlickrNet
 		private string _ownerName;
 		private string _iconServer;
 		private string _originalFormat;
+		private string _originalSecret;
 		private string _cleanTags;
+		private string _machineTags;
 		private decimal _latitude;
 		private decimal _longitude;
 		private GeoAccuracy _accuracy;
@@ -147,16 +149,29 @@ namespace FlickrNet
 		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
 
 		/// <summary>
+		/// Optional extra field containing the original 'secret' of the 
+		/// photo used for forming the Url.
+		/// </summary>
+		[XmlAttribute("originalsecret", Form=XmlSchemaForm.Unqualified)]
+		public string OriginalSecret { get { return _originalSecret; } set { _originalSecret = value; } }
+
+		/// <summary>
 		/// Undocumented tags atrribute. Renamed to CleanTags.
 		/// </summary>
 		[Obsolete("Renamed to CleanTags, as the tags are clean, not raw")]
 		public string RawTags { get { return _cleanTags; } set { _cleanTags = value; } }
 
 		/// <summary>
-		/// Undocumented tags attribute
+		/// Tags, in their clean format (exception is machine tags which retain their machine encoding).
 		/// </summary>
 		[XmlAttribute("tags", Form=XmlSchemaForm.Unqualified)]
 		public string CleanTags { get { return _cleanTags; } set { _cleanTags = value; } }
+
+		/// <summary>
+		/// Machine tags
+		/// </summary>
+		[XmlAttribute("machine_tags", Form=XmlSchemaForm.Unqualified)]
+		public string MachineTags { get { return _machineTags; } set { _machineTags = value; } }
 
 		/// <summary>
 		/// The url to the web page for this photo. Uses the users userId, not their web alias, but

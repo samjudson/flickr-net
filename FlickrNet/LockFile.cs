@@ -54,22 +54,20 @@ namespace FlickrNet
 						stream = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.None, 8, false);
 						return disposeHelper;
 					}
-					catch (IOException)
+					catch (IOException ioe)
 					{
-						Thread.Sleep(50);
-						continue;
-//						int errorCode = Marshal.GetHRForException(ioe) & 0xFFFF;
-//						switch (errorCode)
-//						{
-//							case 32:
-//							case 33:
-//							case 32 | 0x1620:
-//							case 33 | 0x1620:
-//								Thread.Sleep(50);
-//								continue;
-//							default:
-//								throw;
-//						}
+						int errorCode = SafeNativeMethods.GetErrorCode(ioe);
+						switch (errorCode)
+						{
+							case 32:
+							case 33:
+							case 32 | 0x1620:
+							case 33 | 0x1620:
+								Thread.Sleep(50);
+								continue;
+							default:
+								throw;
+						}
 					}
 				}
 			}

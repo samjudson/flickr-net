@@ -17,7 +17,10 @@ namespace FlickrNet
         public Photo[] PhotoCollection
         {
             get { return _photos; }
-            set { _photos = value; }
+			set 
+			{
+				_photos = value==null?new Photo[0]:value; 
+			}
         }
     
 		/// <remarks/>
