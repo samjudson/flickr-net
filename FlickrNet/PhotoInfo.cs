@@ -10,6 +10,8 @@ namespace FlickrNet
 	[System.Serializable]
 	public class PhotoInfo
 	{
+		private PhotoInfoTags _tags = new PhotoInfoTags();
+
 		/// <summary>
 		/// The id of the photo.
 		/// </summary>
@@ -120,7 +122,11 @@ namespace FlickrNet
 		/// The tags for the photo.
 		/// </summary>
 		[XmlElement("tags", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoTags Tags;
+		public PhotoInfoTags Tags
+		{
+			get { return _tags; }
+			set { _tags = ((value==null)?new PhotoInfoTags(): value); }
+		}
 	
 		/// <summary>
 		/// The EXIF tags for the photo.
