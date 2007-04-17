@@ -40,9 +40,7 @@ namespace FlickrNet
 		#endregion
 
 		#region [ Private Variables ]
-#if !WindowsCE
 		private static bool _isServiceSet = false;
-#endif
 		private static SupportedService _defaultService = SupportedService.Flickr;
 
 		private SupportedService _service = SupportedService.Flickr;
@@ -210,22 +208,14 @@ namespace FlickrNet
 		{
 			get 
 			{
-#if !WindowsCE
 				if( !_isServiceSet && FlickrConfigurationManager.Settings != null )
 				{
 					_defaultService = FlickrConfigurationManager.Settings.Service;
 					_isServiceSet = true;
 				}
-#endif
 				return _defaultService;
 			}
-            set
-            {
-                _defaultService = value;
-#if !WindowsCE
-                _isServiceSet = true;
-#endif
-            }
+			set { _defaultService = value; _isServiceSet = true; }
 		}
 
 		/// <summary>
@@ -309,16 +299,6 @@ namespace FlickrNet
 		{
 			return (PictureCacheItem[]) Cache.Downloads.ToArray(typeof(PictureCacheItem));
 		}
-
-		/// <summary>
-		/// Check a url for existance in the cache
-		/// </summary>
-		/// <param name="url"></param>
-		/// <returns>true if in cache</returns>
-		public static bool IsUrlCached(string url)
-		{
-			return (Cache.Downloads[url] != null);
-		}
 		#endregion
 
 		#region [ Constructors ]
@@ -328,8 +308,7 @@ namespace FlickrNet
 		/// </summary>
 		public Flickr()
 		{
-#if !WindowsCE
-            FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
+			FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
 			if( settings == null ) return;
 
 			if( settings.CacheSize != 0 ) CacheSizeLimit = settings.CacheSize;
@@ -337,7 +316,7 @@ namespace FlickrNet
 			ApiKey = settings.ApiKey;
 			AuthToken = settings.ApiToken;
 			ApiSecret = settings.SharedSecret;
-            CurrentService = DefaultService;
+			CurrentService = DefaultService;
 
 			if( settings.IsProxyDefined )
 			{
@@ -364,9 +343,6 @@ namespace FlickrNet
 					// Capture SecurityException for when running in a Medium Trust environment.
 				}
 			}
-#else
-            CurrentService = DefaultService;
-#endif
 		}
 
 		/// <summary>
@@ -416,18 +392,15 @@ namespace FlickrNet
 
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
-
-            req.Method = (CurrentService==SupportedService.Zooomr?"GET":"POST");
-
-#if !WindowsCE
+			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
 			if( req.Method == "POST" ) req.ContentLength = 0;
+			//req.Method = "POST";
 			req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
 			req.KeepAlive = false;
-#endif
 
-            try
+			try
 			{
 				// Get response from the internet
 				res = (HttpWebResponse)req.GetResponse();
@@ -789,7 +762,7 @@ namespace FlickrNet
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getFullToken");
-            parameters.Add("mini_token", miniToken.Replace("-", ""));
+			parameters.Add("mini_token", miniToken);
 			FlickrNet.Response response = GetResponseNoCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
@@ -826,79 +799,6 @@ namespace FlickrNet
 				throw new FlickrException(response.Error);
 			}
 
-		}
-		#endregion
-
-		
-		#region [ Activity ]
-		/// <summary>
-		/// Returns a list of recent activity on photos belonging to the calling user.
-		/// </summary>
-		/// <remarks>
-		/// <b>Do not poll this method more than once an hour.</b>
-		/// </remarks>
-		/// <returns>An array of <see cref="ActivityItem"/> instances.</returns>
-		public ActivityItem[] ActivityUserPhotos()
-		{
-			return ActivityUserPhotos(null);
-		}
-
-		/// <summary>
-		/// Returns a list of recent activity on photos belonging to the calling user.
-		/// </summary>
-		/// <remarks>
-		/// <b>Do not poll this method more than once an hour.</b>
-		/// </remarks>
-		/// <param name="timePeriod">The number of days or hours you want to get activity for.</param>
-		/// <param name="timeType">'d' for days, 'h' for hours.</param>
-		/// <returns>An array of <see cref="ActivityItem"/> instances.</returns>
-		public ActivityItem[] ActivityUserPhotos(int timePeriod, string timeType)
-		{
-			if( timePeriod == 0 ) 
-				throw new ArgumentOutOfRangeException("timePeriod", "Time Period should be greater than 0");
-
-			if( timeType == null ) 
-				throw new ArgumentNullException("timeType");
-
-			if( timeType != "d" && timeType != "h" )
-				throw new ArgumentOutOfRangeException("timeType", "Time type must be 'd' or 'h'");
-
-			return ActivityUserPhotos(timePeriod + timeType);
-		}
-
-		private ActivityItem[] ActivityUserPhotos(string timeframe)
-		{
-			Hashtable parameters = new Hashtable();
-			parameters.Add("method", "flickr.activity.userPhotos");
-			if( timeframe != null && timeframe.Length > 0 ) parameters.Add("timeframe", timeframe);
-			
-			FlickrNet.Response response = GetResponseNoCache(parameters);
-			if( response.Status == ResponseStatus.OK )
-			{
-				XmlNodeList list = response.AllElements[0].SelectNodes("item");
-				ActivityItem[] items = new ActivityItem[list.Count];
-				for(int i = 0; i < items.Length; i++)
-				{
-					items[i] = new ActivityItem(list[i]);
-				}
-				return items;
-			}
-			else
-			{
-				throw new FlickrException(response.Error);
-			}
-		}
-
-		/// <summary>
-		/// Returns a list of recent activity on photos commented on by the calling user.
-		/// </summary>
-		/// <remarks>
-		/// <b>Do not poll this method more than once an hour.</b>
-		/// </remarks>
-		/// <returns></returns>
-		public ActivityItem[] ActivityUserComments()
-		{
-			throw new NotImplementedException("Not yet implemented");
 		}
 		#endregion
 
@@ -1125,7 +1025,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(uploader.Error);
+				throw new FlickrException(uploader.Code, uploader.Message);
 			}
 		}
 
@@ -1259,7 +1159,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(uploader.Error);
+				throw new FlickrException(uploader.Code, uploader.Message);
 			}
 		}
 		#endregion
@@ -2141,7 +2041,7 @@ namespace FlickrNet
 			parameters.Add("photo_id", photoId);
 			parameters.Add("tags", tags);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -2244,7 +2144,7 @@ namespace FlickrNet
 		{
 			if( count != 0 && (count < 10 || count > 50) && !singlePhoto )
 			{
-				throw new ArgumentOutOfRangeException("count", "Count must be between 10 and 50.");
+				throw new ArgumentOutOfRangeException("count", count, "Count must be between 10 and 50.");
 			}
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPhotos");
@@ -2625,76 +2525,6 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// Return a list of your photos that have been recently created or which have been recently modified.
-		/// Recently modified may mean that the photo's metadata (title, description, tags) 
-		/// may have been changed or a comment has been added (or just modified somehow :-)
-		/// </summary>
-		/// <param name="minDate">The date from which modifications should be compared.</param>
-		/// <param name="extras">A list of extra information to fetch for each returned record.</param>
-		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
-		public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras)
-		{
-			return PhotosRecentlyUpdated(minDate, extras, 0, 0);
-		}
-
-		/// <summary>
-		/// Return a list of your photos that have been recently created or which have been recently modified.
-		/// Recently modified may mean that the photo's metadata (title, description, tags) 
-		/// may have been changed or a comment has been added (or just modified somehow :-)
-		/// </summary>
-		/// <param name="minDate">The date from which modifications should be compared.</param>
-		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
-		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
-		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
-		public Photos PhotosRecentlyUpdated(DateTime minDate, int perPage, int page)
-		{
-			return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, perPage, page);
-		}
-
-		/// <summary>
-		/// Return a list of your photos that have been recently created or which have been recently modified.
-		/// Recently modified may mean that the photo's metadata (title, description, tags) 
-		/// may have been changed or a comment has been added (or just modified somehow :-)
-		/// </summary>
-		/// <param name="minDate">The date from which modifications should be compared.</param>
-		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
-		public Photos PhotosRecentlyUpdated(DateTime minDate)
-		{
-			return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, 0, 0);
-		}
-
-		/// <summary>
-		/// Return a list of your photos that have been recently created or which have been recently modified.
-		/// Recently modified may mean that the photo's metadata (title, description, tags) 
-		/// may have been changed or a comment has been added (or just modified somehow :-)
-		/// </summary>
-		/// <param name="minDate">The date from which modifications should be compared.</param>
-		/// <param name="extras">A list of extra information to fetch for each returned record.</param>
-		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
-		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
-		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
-		public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int perPage, int page)
-		{
-			Hashtable parameters = new Hashtable();
-			parameters.Add("method", "flickr.photos.recentlyUpdated");
-			parameters.Add("min_date", Utils.DateToUnixTimestamp(minDate).ToString());
-			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
-			if( perPage > 0  ) parameters.Add("per_page", perPage.ToString());
-			if( page > 0 ) parameters.Add("page", page.ToString());
-
-			FlickrNet.Response response = GetResponseCache(parameters);
-
-			if( response.Status == ResponseStatus.OK )
-			{
-				return response.Photos;
-			}
-			else
-			{
-				throw new FlickrException(response.Error);
-			}
-		}
-
-		/// <summary>
 		/// Returns the available sizes for a photo. The calling user must have permission to view the photo.
 		/// </summary>
 		/// <param name="photoId">The id of the photo to fetch size information for.</param>
@@ -2879,7 +2709,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photos.removeTag");
 			parameters.Add("tag_id", tagId);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3434,7 +3264,7 @@ namespace FlickrNet
 			options.Text = text;
 			options.MinUploadDate = minUploadDate;
 			options.MaxUploadDate = maxUploadDate;
-			if( license > 0 ) options.AddLicense(license);
+			options.License = license;
 			options.PerPage = perPage;
 			options.Page = page;
 			options.Extras = extras;
@@ -3455,22 +3285,11 @@ namespace FlickrNet
 			if( options.Text != null && options.Text.Length > 0 ) parameters.Add("text", options.Text);
 			if( options.Tags != null && options.Tags.Length > 0 ) parameters.Add("tags", options.Tags);
 			if( options.TagMode != TagMode.None ) parameters.Add("tag_mode", options.TagModeString);
-			if( options.MachineTags != null && options.MachineTags.Length > 0 ) parameters.Add("machine_tags", options.MachineTags);
-			if( options.MachineTagMode != MachineTagMode.None ) parameters.Add("machine_tag_mode", options.MachineTagModeString);
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_upload_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_upload_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
 			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
-			if( options.Licenses.Length != 0 ) 
-			{
-				string lic = "";
-				for(int i = 0; i < options.Licenses.Length; i++)
-				{
-					if( i > 0 ) lic += ",";
-					lic += Convert.ToString(options.Licenses[i]);
-				}
-				parameters.Add("license", lic);
-			}
+			if( options.License != 0 ) parameters.Add("license", options.License.ToString("d"));
 			if( options.PerPage != 0 ) parameters.Add("per_page", options.PerPage.ToString());
 			if( options.Page != 0 ) parameters.Add("page", options.Page.ToString());
 			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
@@ -3494,10 +3313,6 @@ namespace FlickrNet
 		/// <summary>
 		/// Set the date taken for a photo.
 		/// </summary>
-		/// <remarks>
-		/// All dates are assumed to be GMT. It is the developers responsibility to change dates to the local users 
-		/// timezone.
-		/// </remarks>
 		/// <param name="photoId">The id of the photo to set the date taken for.</param>
 		/// <param name="dateTaken">The date taken.</param>
 		/// <param name="granularity">The granularity of the date taken.</param>
@@ -3511,10 +3326,6 @@ namespace FlickrNet
 		/// Set the date the photo was posted (uploaded). This will affect the order in which photos
 		/// are seen in your photostream.
 		/// </summary>
-		/// <remarks>
-		/// All dates are assumed to be GMT. It is the developers responsibility to change dates to the local users 
-		/// timezone.
-		/// </remarks>
 		/// <param name="photoId">The id of the photo to set the date posted.</param>
 		/// <param name="datePosted">The new date to set the date posted too.</param>
 		/// <returns>True if the date was updated successfully.</returns>
@@ -3527,10 +3338,6 @@ namespace FlickrNet
 		/// Set the date the photo was posted (uploaded) and the date the photo was taken.
 		/// Changing the date posted will affect the order in which photos are seen in your photostream.
 		/// </summary>
-		/// <remarks>
-		/// All dates are assumed to be GMT. It is the developers responsibility to change dates to the local users 
-		/// timezone.
-		/// </remarks>
 		/// <param name="photoId">The id of the photo to set the dates.</param>
 		/// <param name="datePosted">The new date to set the date posted too.</param>
 		/// <param name="dateTaken">The new date to set the date taken too.</param>
@@ -3541,14 +3348,14 @@ namespace FlickrNet
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.setDates");
 			parameters.Add("photo_id", photoId);
-			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", Utils.DateToUnixTimestamp(datePosted).ToString());
+			if( datePosted != DateTime.MinValue ) parameters.Add("date_posted", datePosted.ToString("yyyy-MM-dd hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 			if( dateTaken != DateTime.MinValue ) 
 			{
-				parameters.Add("date_taken", dateTaken.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+				parameters.Add("date_taken", dateTaken.ToString("yyyy-MM-dd hh:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 				parameters.Add("date_taken_granularity", granularity.ToString("d"));
 			}
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3577,7 +3384,7 @@ namespace FlickrNet
 			parameters.Add("title", title);
 			parameters.Add("description", description);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3624,7 +3431,7 @@ namespace FlickrNet
 			parameters.Add("perm_comment", permComment.ToString("d"));
 			parameters.Add("perm_addmeta", permAddMeta.ToString("d"));
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3670,7 +3477,7 @@ namespace FlickrNet
 			parameters.Add("photo_id", photoId);
 			parameters.Add("tags", tags);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3797,7 +3604,7 @@ namespace FlickrNet
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("photo_id", photoId);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3835,7 +3642,7 @@ namespace FlickrNet
 			parameters.Add("primary_photo_id", primaryPhotoId);
 			parameters.Add("description", description);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3859,7 +3666,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photosets.delete");
 			parameters.Add("photoset_id", photosetId);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3887,7 +3694,7 @@ namespace FlickrNet
 			parameters.Add("title", title);
 			parameters.Add("description", description);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -3938,7 +3745,7 @@ namespace FlickrNet
 			parameters.Add("primary_photo_id", primaryPhotoId);
 			parameters.Add("photo_ids", photoIds);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4044,19 +3851,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
 		public Photo[] PhotosetsGetPhotos(string photosetId)
 		{
-			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None, 0, 0);
-		}
-
-		/// <summary>
-		/// Gets a collection of photos for a photoset.
-		/// </summary>
-		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
-		/// <param name="page">The page to return, defaults to 1.</param>
-		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, int page, int perPage)
-		{
-			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None, page, perPage);
+			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None);
 		}
 
 		/// <summary>
@@ -4067,20 +3862,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
 		public Photo[] PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter)
 		{
-			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter, 0, 0);
-		}
-
-		/// <summary>
-		/// Gets a collection of photos for a photoset.
-		/// </summary>
-		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
-		/// <param name="privacyFilter">The privacy filter to search on.</param>
-		/// <param name="page">The page to return, defaults to 1.</param>
-		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter, int page, int perPage)
-		{
-			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter, page, perPage);
+			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter);
 		}
 
 		/// <summary>
@@ -4091,20 +3873,7 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
 		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras)
 		{
-			return PhotosetsGetPhotos(photosetId, extras, PrivacyFilter.None, 0, 0);
-		}
-
-		/// <summary>
-		/// Gets a collection of photos for a photoset.
-		/// </summary>
-		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
-		/// <param name="extras">The extras to return for each photo.</param>
-		/// <param name="page">The page to return, defaults to 1.</param>
-		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, int page, int perPage)
-		{
-			return PhotosetsGetPhotos(photosetId, extras, PrivacyFilter.None, page, perPage);
+			return PhotosetsGetPhotos(photosetId, extras, PrivacyFilter.None);
 		}
 
 		/// <summary>
@@ -4116,40 +3885,17 @@ namespace FlickrNet
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
 		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter)
 		{
-			return PhotosetsGetPhotos(photosetId, extras, privacyFilter, 0, 0);
-		}
-		
-		/// <summary>
-		/// Gets a collection of photos for a photoset.
-		/// </summary>
-		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
-		/// <param name="extras">The extras to return for each photo.</param>
-		/// <param name="privacyFilter">The privacy filter to search on.</param>
-		/// <param name="page">The page to return, defaults to 1.</param>
-		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage)
-		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getPhotos");
 			parameters.Add("photoset_id", photosetId);
 			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
 			if( privacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
-			if( page > 0 ) parameters.Add("page", page);
-			if( perPage > 0 ) parameters.Add("per_page", perPage);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
 				if( response.Photoset.PhotoCollection == null ) return new Photo[0];
-				if( response.Photoset.OwnerId != null && response.Photoset.OwnerId.Length > 0 )
-				{
-					foreach(Photo p in response.Photoset.PhotoCollection)
-					{
-						p.UserId = response.Photoset.OwnerId;
-					}
-				}
 				return response.Photoset.PhotoCollection;
 			}
 			else
@@ -4181,7 +3927,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photosets.orderSets");
 			parameters.Add("photosetIds", photosetIds);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4208,7 +3954,7 @@ namespace FlickrNet
 			parameters.Add("photoset_id", photosetId);
 			parameters.Add("photo_id", photoId);
 
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
@@ -4327,7 +4073,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="photoId">The id of the photo to return tags for.</param>
 		/// <returns>An instance of the <see cref="PhotoInfo"/> class containing only the <see cref="PhotoInfo.Tags"/> property.</returns>
-		public PhotoInfo TagsGetListPhoto(string photoId)
+		public PhotoInfoTag[] TagsGetListPhoto(string photoId)
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getListPhoto");
@@ -4338,7 +4084,7 @@ namespace FlickrNet
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				return response.PhotoInfo;
+				return response.PhotoInfo.Tags.TagCollection;
 			}
 			else
 			{
@@ -4622,7 +4368,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photos.getWithoutGeoData");
 			Utils.PartialOptionsIntoArray(options, parameters);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 			if( response.Status == ResponseStatus.OK )
 			{
 				return response.Photos;
@@ -4694,7 +4440,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.photos.getWithGeoData");
 			Utils.PartialOptionsIntoArray(options, parameters);
 
-			FlickrNet.Response response = GetResponseCache(parameters);
+			FlickrNet.Response response = GetResponseNoCache(parameters);
 			if( response.Status == ResponseStatus.OK )
 			{
 				return response.Photos;
