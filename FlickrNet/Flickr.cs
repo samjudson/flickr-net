@@ -850,7 +850,7 @@ namespace FlickrNet
 			parameters.Add("method", "flickr.activity.userPhotos");
 			if( timeframe != null && timeframe.Length > 0 ) parameters.Add("timeframe", timeframe);
 			
-			FlickrNet.Response response = GetResponseNoCache(parameters);
+			FlickrNet.Response response = GetResponseCache(parameters);
 			if( response.Status == ResponseStatus.OK )
 			{
 				XmlNodeList list = response.AllElements[0].SelectNodes("item");
@@ -874,9 +874,28 @@ namespace FlickrNet
 		/// <b>Do not poll this method more than once an hour.</b>
 		/// </remarks>
 		/// <returns></returns>
-		public ActivityItem[] ActivityUserComments()
+		public ActivityItem[] ActivityUserComments(int page, int perPage)
 		{
-			throw new NotImplementedException("Not yet implemented");
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.activity.userComments");
+			if( page > 0 ) parameters.Add("page", page);
+			if( perPage > 0 ) parameters.Add("per_page", perPage);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+			if( response.Status == ResponseStatus.OK )
+			{
+				XmlNodeList list = response.AllElements[0].SelectNodes("item");
+				ActivityItem[] items = new ActivityItem[list.Count];
+				for(int i = 0; i < items.Length; i++)
+				{
+					items[i] = new ActivityItem(list[i]);
+				}
+				return items;
+			}
+			else
+			{
+				throw new FlickrException(response.Error);
+			}
 		}
 		#endregion
 
