@@ -26,19 +26,31 @@ namespace FlickrNet
 		/// The id of the photo.
 		/// </summary>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string PhotoId;
+		public string PhotoId { get { return _photoId; } set { _photoId = value; } }
 
 		/// <summary>
 		/// The secret of the photo. Used to calculate the URL (amongst other things).
 		/// </summary>
 		[XmlAttribute("secret", Form=XmlSchemaForm.Unqualified)]
-		public string Secret;
+		public string Secret { get { return _secret; } set { _secret = value; } }
 
 		/// <summary>
 		/// The server on which the photo resides.
 		/// </summary>
 		[XmlAttribute("server", Form=XmlSchemaForm.Unqualified)]
-		public int Server;
+		public string Server { get { return _server; } set { _server = value; } }
+
+		/// <summary>
+		/// The server farm on which the photo resides.
+		/// </summary>
+		[XmlAttribute("farm", Form=XmlSchemaForm.Unqualified)]
+		public string Farm { get { return _farm; } set { _farm = value; } }
+
+		/// <summary>
+		/// The original format of the image (e.g. jpg, png etc).
+		/// </summary>
+		[XmlAttribute("originalformat", Form=XmlSchemaForm.Unqualified)]
+		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
 
 		/// <summary>
 		/// Optional extra field containing the original 'secret' of the 
@@ -88,13 +100,13 @@ namespace FlickrNet
 		/// The title of the photo.
 		/// </summary>
 		[XmlElement("title", Form=XmlSchemaForm.Unqualified)]
-		public string Title;
+		public string Title { get { return _title; } set { _title = value; } }
 
 		/// <summary>
 		/// The description of the photo.
 		/// </summary>
 		[XmlElement("description", Form=XmlSchemaForm.Unqualified)]
-		public string Description;
+		public string Description { get { return _description; } set { _description = value; } }
 
 		/// <summary>
 		/// The visibility of the photo.
@@ -127,7 +139,19 @@ namespace FlickrNet
 		/// The number of comments the photo has.
 		/// </summary>
 		[XmlElement("comments", Form=XmlSchemaForm.Unqualified)]
-		public int CommentsCount;
+		public int CommentsCount
+		{
+			get { return _comments; } set { _comments = value; }
+		}
+
+		/// <summary>
+		/// The number of views the photo has.
+		/// </summary>
+		[XmlAttribute("views", Form=XmlSchemaForm.Unqualified)]
+		public int ViewCount
+		{
+			get { return _views; } set { _views = value; }
+		}
 
 		/// <summary>
 		/// The notes for the photo.
@@ -175,15 +199,13 @@ namespace FlickrNet
 			get { return string.Format("http://www.flickr.com/photos/{0}/{1}/", Owner.UserId, PhotoId); }
 		}
 
-		private const string photoUrl = "http://static.flickr.com/{0}/{1}_{2}{3}.jpg";
-
 		/// <summary>
 		/// The URL for the square thumbnail for the photo.
 		/// </summary>
 		[XmlIgnore()]
 		public string SquareThumbnailUrl
 		{
-			get { return string.Format(photoUrl, Server, PhotoId, Secret, "_s"); }
+			get { return Utils.UrlFormat(this, "_s", "jpg"); }
 		}
 
 		/// <summary>
@@ -192,7 +214,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string ThumbnailUrl
 		{
-			get { return string.Format(photoUrl, Server, PhotoId, Secret, "_t"); }
+			get { return Utils.UrlFormat(this, "_t", "jpg"); }
 		}
 
 		/// <summary>
@@ -201,7 +223,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string SmallUrl
 		{
-			get { return string.Format(photoUrl, Server, PhotoId, Secret, "_m"); }
+			get { return Utils.UrlFormat(this, "_m", "jpg"); }
 		}
 
 		/// <summary>
@@ -214,7 +236,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string MediumUrl
 		{
-			get { return string.Format(photoUrl, Server, PhotoId, Secret, ""); }
+			get { return Utils.UrlFormat(this, "", "jpg"); }
 		}
 
 		/// <summary>
@@ -227,7 +249,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string LargeUrl
 		{
-			get { return string.Format(photoUrl, Server, PhotoId, Secret, "_b"); }
+			get { return Utils.UrlFormat(this, "_b", "jpg"); }
 		}
 
 		/// <summary>
@@ -244,7 +266,6 @@ namespace FlickrNet
 				return Utils.UrlFormat(this, "_o", OriginalFormat);
 			}
 		}
-
 	}
 
 	/// <summary>
