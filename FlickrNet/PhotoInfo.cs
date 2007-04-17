@@ -10,6 +10,16 @@ namespace FlickrNet
 	[System.Serializable]
 	public class PhotoInfo
 	{
+		private string _photoId;
+		private string _secret;
+		private string _server;
+		private string _farm;
+		private string _originalFormat;
+		private string _originalSecret;
+		private int _views;
+		private int _comments;
+		private string _title;
+		private string _description;
 		private PhotoInfoTags _tags = new PhotoInfoTags();
 
 		/// <summary>
@@ -29,6 +39,13 @@ namespace FlickrNet
 		/// </summary>
 		[XmlAttribute("server", Form=XmlSchemaForm.Unqualified)]
 		public int Server;
+
+		/// <summary>
+		/// Optional extra field containing the original 'secret' of the 
+		/// photo used for forming the Url.
+		/// </summary>
+		[XmlAttribute("originalsecret", Form=XmlSchemaForm.Unqualified)]
+		public string OriginalSecret { get { return _originalSecret; } set { _originalSecret = value; } }
 
 		/// <summary>
 		/// The date the photo was uploaded (or 'posted').
@@ -125,7 +142,7 @@ namespace FlickrNet
 		public PhotoInfoTags Tags
 		{
 			get { return _tags; }
-			set { _tags = ((value==null)?new PhotoInfoTags(): value); }
+			set { _tags = (value==null?new PhotoInfoTags():value); }
 		}
 	
 		/// <summary>
@@ -212,6 +229,22 @@ namespace FlickrNet
 		{
 			get { return string.Format(photoUrl, Server, PhotoId, Secret, "_b"); }
 		}
+
+		/// <summary>
+		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
+		/// </summary>
+		[XmlIgnore()]
+		public string OriginalUrl
+		{
+			get 
+			{ 
+				if( OriginalFormat == null || OriginalFormat.Length == 0 )
+					throw new InvalidOperationException("No original format information available.");
+
+				return Utils.UrlFormat(this, "_o", OriginalFormat);
+			}
+		}
+
 	}
 
 	/// <summary>
@@ -389,6 +422,7 @@ namespace FlickrNet
 	public class PhotoInfoTags
 	{
 		private PhotoInfoTag[] _tags = new PhotoInfoTag[0];
+
 		/// <summary>
 		/// A collection of tags for the photo.
 		/// </summary>
@@ -396,13 +430,7 @@ namespace FlickrNet
 		public PhotoInfoTag[] TagCollection
 		{
 			get { return _tags; }
-			set 
-			{
-				if( value == null )
-					_tags = new PhotoInfoTag[0];
-				else
-					_tags = value;
-			}
+			set { _tags = (value==null?new PhotoInfoTag[0]:value); }
 		}
 	}
 
