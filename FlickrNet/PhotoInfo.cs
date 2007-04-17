@@ -461,29 +461,40 @@ namespace FlickrNet
 	[System.Serializable]
 	public class PhotoInfoTag
 	{
+		private int _machineTag;
+		private string _tagId;
+		private string _authorId;
+		private string _authorName;
+
 		/// <summary>
 		/// The id of the tag.
 		/// </summary>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string TagId;
+		public string TagId { get { return _tagId; } set { _tagId = value; } }
 
 		/// <summary>
 		/// The author id of the tag.
 		/// </summary>
 		[XmlAttribute("author", Form=XmlSchemaForm.Unqualified)]
-		public string AuthorId;
+		public string AuthorId { get { return _authorId; } set { _authorId = value; } }
 
 		/// <summary>
 		/// Author of the tag - only available if using <see cref="Flickr.TagsGetListPhoto"/>.
 		/// </summary>
 		[XmlAttribute("authorname", Form=XmlSchemaForm.Unqualified)]
-		public string AuthorName;
+		public string AuthorName  { get { return _authorName; } set { _authorName = value; } }
 
 		/// <summary>
 		/// Raw copy of the tag, as the user entered it.
 		/// </summary>
 		[XmlAttribute("raw", Form=XmlSchemaForm.Unqualified)]
 		public string Raw;
+
+		/// <summary>
+		/// Raw copy of the tag, as the user entered it.
+		/// </summary>
+		[XmlAttribute("machine_tag", Form=XmlSchemaForm.Unqualified)]
+		public int IsMachineTag { get { return _machineTag; } set { _machineTag = value; } }
 
 		/// <summary>
 		/// The actually tag.
