@@ -125,7 +125,8 @@ namespace FlickrNet
 			}
 		}
 
-        private static long _cacheSizeLimit;
+		// Default cache size is set to 50MB
+        private static long _cacheSizeLimit = 52428800;
         private static long _cacheSize;
 
 		internal static long CacheSizeLimit
