@@ -391,20 +391,33 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="url">The URL to download.</param>
 		/// <returns>A <see cref="FlickrNet.Response"/> object.</returns>
-		private string DoGetResponse(string url)
+		private string DoGetResponse(string url, string variables)
 		{
 			HttpWebRequest req = null;
 			HttpWebResponse res = null;
 
+			if( variables.Length < 2000 )
+			{
+				url += "?" + variables;
+				variables = "";
+			}
+
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
 			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
-			if( req.Method == "POST" ) req.ContentLength = 0;
+			if( req.Method == "POST" ) req.ContentLength = variables.Length;
 
 			req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
 			req.KeepAlive = false;
+			if( variables.Length > 0 )
+			{
+				req.ContentType = "application/x-www-form-urlencoded";
+				StreamWriter sw = new StreamWriter(req.GetRequestStream());
+				sw.Write(variables);
+				sw.Close();
+			}
 
 			try
 			{
@@ -493,10 +506,10 @@ namespace FlickrNet
 		private Response GetResponse(Hashtable parameters, TimeSpan cacheTimeout)
 		{
 			// Calulate URL 
-            StringBuilder UrlStringBuilder = new StringBuilder(BaseUrl, 2 * 1024);
-            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
+			string url = BaseUrl;
 
-            UrlStringBuilder.Append("?");
+            StringBuilder UrlStringBuilder = new StringBuilder("", 2 * 1024);
+            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
 
 			parameters["api_key"] = _apiKey;
 
@@ -511,7 +524,7 @@ namespace FlickrNet
 
 			foreach(string key in keys)
 			{
-				if( UrlStringBuilder.Length > BaseUrl.Length + 1 ) UrlStringBuilder.Append("&");
+				if( UrlStringBuilder.Length > 0 ) UrlStringBuilder.Append("&");
                 UrlStringBuilder.Append(key);
                 UrlStringBuilder.Append("=");
                 UrlStringBuilder.Append(Utils.UrlEncode((string)parameters[key]));
@@ -529,19 +542,19 @@ namespace FlickrNet
                 UrlStringBuilder.Append(Md5Hash(HashStringBuilder.ToString()));
             }
 
-			string url = UrlStringBuilder.ToString();
+			string variables = UrlStringBuilder.ToString();
 			_lastRequest = url;
 			_lastResponse = string.Empty;
 
 			if( CacheDisabled )
 			{
-				string responseXml = DoGetResponse(url);
+				string responseXml = DoGetResponse(url, variables);
 				_lastResponse = responseXml;
 				return Deserialize(responseXml);
 			}
 			else
 			{
-				ResponseCacheItem cached = (ResponseCacheItem) Cache.Responses.Get(url, cacheTimeout, true);
+				ResponseCacheItem cached = (ResponseCacheItem) Cache.Responses.Get(url + "?" + variables, cacheTimeout, true);
 				if (cached != null)
 				{
 					System.Diagnostics.Debug.WriteLine("Cache hit");
@@ -551,7 +564,7 @@ namespace FlickrNet
 				else
 				{
 					System.Diagnostics.Debug.WriteLine("Cache miss");
-					string responseXml = DoGetResponse(url);
+					string responseXml = DoGetResponse(url, variables);
 					_lastResponse = responseXml;
 
 					ResponseCacheItem resCache = new ResponseCacheItem();
