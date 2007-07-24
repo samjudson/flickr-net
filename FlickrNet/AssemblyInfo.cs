@@ -58,11 +58,13 @@ using System.Runtime.InteropServices;
 //       documentation for more information on this.
 //
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("..\\..\\FlickrNet.snk")]
 [assembly: AssemblyKeyName("")]
 
+#if !WindowsCE
+[assembly: AssemblyKeyFile("..\\..\\FlickrNet.snk")]
 [assembly: AllowPartiallyTrustedCallers()]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
+#endif
 
 [assembly: CLSCompliantAttribute(true)]
 [assembly: ComVisible(false)]

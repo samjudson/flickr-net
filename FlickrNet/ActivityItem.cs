@@ -4,7 +4,7 @@ using System.Xml;
 namespace FlickrNet
 {
 	/// <summary>
-	/// Activity class used for <see cref="Flickr.ActivityUserPhotos"/>
+	/// Activity class used for <see cref="Flickr.ActivityUserPhotos()"/>
 	/// and <see cref="Flickr.ActivityUserComments"/>.
 	/// </summary>
 	public class ActivityItem
@@ -86,7 +86,7 @@ namespace FlickrNet
 		/// The number of new comments within the given time frame. 
 		/// </summary>
 		/// <remarks>
-		/// Only applicable for <see cref="Flickr.ActivityUserPhotos"/>.
+		/// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
 		public int CommentsNew
 		{
@@ -97,7 +97,7 @@ namespace FlickrNet
 		/// The number of old comments within the given time frame. 
 		/// </summary>
 		/// <remarks>
-		/// Only applicable for <see cref="Flickr.ActivityUserPhotos"/>.
+		/// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
 		public int CommentsOld
 		{
@@ -162,7 +162,7 @@ namespace FlickrNet
 		/// The number of new notes within the given time frame. 
 		/// </summary>
 		/// <remarks>
-		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos"/>.
+		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
 		public int NotesNew
 		{
@@ -173,7 +173,7 @@ namespace FlickrNet
 		/// The number of old notes within the given time frame. 
 		/// </summary>
 		/// <remarks>
-		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos"/>.
+		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
 		public int NotesOld
 		{

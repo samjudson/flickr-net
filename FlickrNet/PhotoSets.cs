@@ -32,7 +32,13 @@ namespace FlickrNet
 		public Photoset[] PhotosetCollection
 		{
 			get { return _photosetCollection; }
-			set { _photosetCollection = value;}
+			set 
+			{
+				if( value== null ) 
+					_photosetCollection = new Photoset[0];
+				else
+					_photosetCollection = value;
+			}
 		}
 	}
 
@@ -150,7 +156,14 @@ namespace FlickrNet
 		[XmlElement("photo", Form=XmlSchemaForm.Unqualified)]
 		public Photo[] PhotoCollection
 		{
-			get { return _photoCollection; } set { _photoCollection = value; }
+			get { return _photoCollection; } 
+			set 
+			{
+				if( value == null ) 
+					_photoCollection = new Photo[0];
+				else
+					_photoCollection = value; 
+			}
 		}
 
 		/// <summary>

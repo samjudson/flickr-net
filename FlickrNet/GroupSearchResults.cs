@@ -5,7 +5,7 @@ using System.Xml.XPath;
 namespace FlickrNet
 {
 	/// <summary>
-	/// Returned by <see cref="Flickr.GroupsSearch"/> methods.
+	/// Returned by <see cref="Flickr.GroupsSearch(string)"/> methods.
 	/// </summary>
 	public class GroupSearchResults
 	{

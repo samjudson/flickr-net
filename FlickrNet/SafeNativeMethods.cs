@@ -5,8 +5,10 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for SafeNativeMethods.
 	/// </summary>
+#if !WindowsCE
 	[System.Security.SuppressUnmanagedCodeSecurity()]
-	internal class SafeNativeMethods 
+#endif
+    internal class SafeNativeMethods 
 	{
 		private SafeNativeMethods()
 		{
@@ -14,7 +16,11 @@ namespace FlickrNet
 
 		internal static int GetErrorCode(System.IO.IOException ioe)
 		{
+#if !WindowsCE
 			return System.Runtime.InteropServices.Marshal.GetHRForException(ioe) & 0xFFFF;
+#else
+            return 0;
+#endif
 		}
 	}
 }

@@ -40,7 +40,9 @@ namespace FlickrNet
 		#endregion
 
 		#region [ Private Variables ]
+#if !WindowsCE
 		private static bool _isServiceSet = false;
+#endif
 		private static SupportedService _defaultService = SupportedService.Flickr;
 
 		private SupportedService _service = SupportedService.Flickr;
@@ -208,12 +210,14 @@ namespace FlickrNet
 		{
 			get 
 			{
+#if !WindowsCE
 				if( !_isServiceSet && FlickrConfigurationManager.Settings != null )
 				{
 					_defaultService = FlickrConfigurationManager.Settings.Service;
 					_isServiceSet = true;
 				}
-				return _defaultService;
+#endif
+                return _defaultService;
 			}
 			set
 			{
@@ -313,8 +317,9 @@ namespace FlickrNet
 		/// Constructor loads configuration settings from app.config or web.config file if they exist.
 		/// </summary>
 		public Flickr()
-		{
-			FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
+        {
+#if !WindowsCE
+            FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
 			if( settings == null ) return;
 
 			if( settings.CacheSize != 0 ) CacheSizeLimit = settings.CacheSize;
@@ -322,9 +327,8 @@ namespace FlickrNet
 			ApiKey = settings.ApiKey;
 			AuthToken = settings.ApiToken;
 			ApiSecret = settings.SharedSecret;
-			CurrentService = DefaultService;
 
-			if( settings.IsProxyDefined )
+            if (settings.IsProxyDefined)
 			{
 				Proxy = new WebProxy();
 				Proxy.Address = new Uri("http://" + settings.ProxyIPAddress + ":" + settings.ProxyPort);
@@ -349,7 +353,12 @@ namespace FlickrNet
 					// Capture SecurityException for when running in a Medium Trust environment.
 				}
 			}
-		}
+
+#endif
+
+
+            CurrentService = DefaultService;
+        }
 
 		/// <summary>
 		/// Create a new instance of the <see cref="Flickr"/> class with no authentication.
@@ -2257,7 +2266,7 @@ namespace FlickrNet
 		{
 			if( count != 0 && (count < 10 || count > 50) && !singlePhoto )
 			{
-				throw new ArgumentOutOfRangeException("count", count, "Count must be between 10 and 50.");
+				throw new ArgumentOutOfRangeException("count", String.Format("Count must be between 10 and 50. ({0})", count));
 			}
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPhotos");
@@ -3584,7 +3593,7 @@ namespace FlickrNet
 		/// Set the tags for a photo.
 		/// </summary>
 		/// <remarks>
-		/// This will remove all old tags and add these new ones specified. See <see cref="PhotosAddTags"/>
+		/// This will remove all old tags and add these new ones specified. See <see cref="PhotosAddTags(string, string)"/>
 		/// to just add new tags without deleting old ones.
 		/// </remarks>
 		/// <param name="photoId">The id of the photo to update.</param>
@@ -3600,7 +3609,7 @@ namespace FlickrNet
 		/// Set the tags for a photo.
 		/// </summary>
 		/// <remarks>
-		/// This will remove all old tags and add these new ones specified. See <see cref="PhotosAddTags"/>
+		/// This will remove all old tags and add these new ones specified. See <see cref="PhotosAddTags(string, string)"/>
 		/// to just add new tags without deleting old ones.
 		/// </remarks>
 		/// <param name="photoId">The id of the photo to update.</param>

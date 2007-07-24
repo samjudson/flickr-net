@@ -4,7 +4,7 @@ using System.Xml;
 namespace FlickrNet
 {
 	/// <summary>
-	/// A simple tag class, containing a tag name and optional count (for <see cref="Flickr.TagsGetListUserPopular"/>)
+	/// A simple tag class, containing a tag name and optional count (for <see cref="Flickr.TagsGetListUserPopular()"/>)
 	/// </summary>
 	public class Tag
 	{
