@@ -417,9 +417,9 @@ namespace FlickrNet
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
 			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
-			if( req.Method == "POST" ) req.ContentLength = variables.Length;
+			if( req.Method == "POST" && variables.Length > 0 ) req.ContentLength = variables.Length;
 
-			req.UserAgent = UserAgent;
+            req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
 			req.KeepAlive = false;
