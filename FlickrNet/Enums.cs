@@ -86,13 +86,13 @@ namespace FlickrNet
 		/// </summary>
 		PublicPhotos = 1,
 		/// <summary>
-		/// Show photos which are marked as private but viewable by family contacts.
-		/// </summary>
-		PrivateVisibleToFamily = 2,
-		/// <summary>
 		/// Show photos which are marked as private but viewable by friends.
 		/// </summary>
-		PrivateVisibleToFriends = 3,
+		PrivateVisibleToFriends = 2,
+		/// <summary>
+		/// Show photos which are marked as private but viewable by family contacts.
+		/// </summary>
+		PrivateVisibleToFamily = 3,
 		/// <summary>
 		/// Show photos which are marked as private but viewable by friends and family contacts.
 		/// </summary>
