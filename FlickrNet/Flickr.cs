@@ -390,7 +390,10 @@ namespace FlickrNet
 		/// the details are not found within the cache.
 		/// </summary>
 		/// <param name="url">The URL to download.</param>
+		/// <param name="variables">The query string parameters to be added to the end of the URL.</param>
 		/// <returns>A <see cref="FlickrNet.Response"/> object.</returns>
+		/// <remarks>If the final length of the URL would be greater than 2000 characters 
+		/// then they are sent as part of the body instead.</remarks>
 		private string DoGetResponse(string url, string variables)
 		{
 			HttpWebRequest req = null;
@@ -3981,8 +3984,8 @@ namespace FlickrNet
 		/// Gets a collection of photos for a photoset.
 		/// </summary>
 		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId)
 		{
 			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None, 0, 0);
 		}
@@ -3993,8 +3996,8 @@ namespace FlickrNet
 		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
 		/// <param name="page">The page to return, defaults to 1.</param>
 		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, int page, int perPage)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, int page, int perPage)
 		{
 			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None, page, perPage);
 		}
@@ -4004,8 +4007,8 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
 		/// <param name="privacyFilter">The privacy filter to search on.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter)
 		{
 			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter, 0, 0);
 		}
@@ -4017,8 +4020,8 @@ namespace FlickrNet
 		/// <param name="privacyFilter">The privacy filter to search on.</param>
 		/// <param name="page">The page to return, defaults to 1.</param>
 		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter, int page, int perPage)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter, int page, int perPage)
 		{
 			return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter, page, perPage);
 		}
@@ -4028,8 +4031,8 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
 		/// <param name="extras">The extras to return for each photo.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras)
 		{
 			return PhotosetsGetPhotos(photosetId, extras, PrivacyFilter.None, 0, 0);
 		}
@@ -4041,8 +4044,8 @@ namespace FlickrNet
 		/// <param name="extras">The extras to return for each photo.</param>
 		/// <param name="page">The page to return, defaults to 1.</param>
 		/// <param name="perPage">The number of photos to return per page.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, int page, int perPage)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, int page, int perPage)
 		{
 			return PhotosetsGetPhotos(photosetId, extras, PrivacyFilter.None, page, perPage);
 		}
@@ -4053,8 +4056,8 @@ namespace FlickrNet
 		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
 		/// <param name="extras">The extras to return for each photo.</param>
 		/// <param name="privacyFilter">The privacy filter to search on.</param>
-		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter)
+		/// <returns>A <see cref="Photoset"/> object containing the list of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter)
 		{
 			return PhotosetsGetPhotos(photosetId, extras, privacyFilter, 0, 0);
 		}
@@ -4068,7 +4071,7 @@ namespace FlickrNet
 		/// <param name="page">The page to return, defaults to 1.</param>
 		/// <param name="perPage">The number of photos to return per page.</param>
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photo[] PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage)
+		public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage)
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getPhotos");
@@ -4082,7 +4085,6 @@ namespace FlickrNet
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				if( response.Photoset.PhotoCollection == null ) return new Photo[0];
 				if( response.Photoset.OwnerId != null && response.Photoset.OwnerId.Length > 0 )
 				{
 					foreach(Photo p in response.Photoset.PhotoCollection)
@@ -4090,7 +4092,7 @@ namespace FlickrNet
 						p.UserId = response.Photoset.OwnerId;
 					}
 				}
-				return response.Photoset.PhotoCollection;
+				return response.Photoset;
 			}
 			else
 			{
