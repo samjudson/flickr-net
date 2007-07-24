@@ -233,8 +233,15 @@ namespace FlickrNet
 		/// </summary>
 		public SupportedService CurrentService
 		{
-			get { return _service; }
-			set { _service = value; }
+			get 
+			{ 
+				return _service; 
+			}
+			set 
+			{
+				_service = value; 
+				if( _service = SupportedService.Zooomr ) ServicePointManager.Expect100Continue = false;
+			}
 		}
 
 		/// <summary>
@@ -356,9 +363,8 @@ namespace FlickrNet
 
 #endif
 
-
             CurrentService = DefaultService;
-        }
+		}
 
 		/// <summary>
 		/// Create a new instance of the <see cref="Flickr"/> class with no authentication.
