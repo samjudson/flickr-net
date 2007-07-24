@@ -240,7 +240,9 @@ namespace FlickrNet
 			set 
 			{
 				_service = value; 
-				if( _service = SupportedService.Zooomr ) ServicePointManager.Expect100Continue = false;
+#if !WindowsCE
+				if( _service == SupportedService.Zooomr ) ServicePointManager.Expect100Continue = false;
+#endif
 			}
 		}
 
@@ -642,6 +644,11 @@ namespace FlickrNet
 		/// </remarks>
 		public System.IO.Stream DownloadPicture(string url)
 		{
+			if( CacheDisabled )
+			{
+				return DoDownloadPicture(url);
+			}
+
 			const int BUFFER_SIZE = 1024 * 10;
 
 			PictureCacheItem cacheItem = (PictureCacheItem) Cache.Downloads[url];
