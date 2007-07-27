@@ -425,10 +425,11 @@ namespace FlickrNet
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
 			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
-			if( req.Method == "POST" ) req.ContentLength = variables.Length;
 
 #if WindowsCE
-			if( req.ContentLength == 0 ) req.ContentLength = -1;
+			if( req.Method == "POST" && variables.Length > 0  ) req.ContentLength = variables.Length;
+#else
+			if( req.Method == "POST" ) req.ContentLength = variables.Length;
 #endif
 
             req.UserAgent = UserAgent;

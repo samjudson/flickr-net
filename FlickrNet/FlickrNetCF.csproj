@@ -59,8 +59,10 @@
   <ItemGroup>
     <Compile Include="ActivityEvent.cs" />
     <Compile Include="ActivityItem.cs" />
+    <Compile Include="ApiKeyRequiredException.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Auth.cs" />
+    <Compile Include="AuthenticationRequiredException.cs" />
     <Compile Include="Blogs.cs" />
     <Compile Include="BoundaryBox.cs" />
     <Compile Include="Cache.cs" />
@@ -72,9 +74,11 @@
     <Compile Include="Enums.cs" />
     <Compile Include="ExifPhoto.cs" />
     <Compile Include="Flickr.cs" />
+    <Compile Include="FlickrApiException.cs" />
     <Compile Include="FlickrConfigurationManager.cs" />
     <Compile Include="FlickrConfigurationSettings.cs" />
     <Compile Include="FlickrException.cs" />
+    <Compile Include="FlickrWebException.cs" />
     <Compile Include="GeoAccuracy.cs" />
     <Compile Include="GeoPermissions.cs" />
     <Compile Include="Groups.cs" />
@@ -97,7 +101,9 @@
     <Compile Include="PhotoSearchOrder.cs" />
     <Compile Include="PhotoSets.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="ResponseXmlException.cs" />
     <Compile Include="SafeNativeMethods.cs" />
+    <Compile Include="SignatureRequiredException.cs" />
     <Compile Include="Sizes.cs" />
     <Compile Include="Tags.cs" />
     <Compile Include="Uploader.cs" />
