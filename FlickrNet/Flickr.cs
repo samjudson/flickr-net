@@ -425,7 +425,11 @@ namespace FlickrNet
 			// Initialise the web request
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
 			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
-			if( req.Method == "POST" && variables.Length > 0 ) req.ContentLength = variables.Length;
+			if( req.Method == "POST" ) req.ContentLength = variables.Length;
+
+#if WindowsCE
+			if( req.ContentLength == 0 ) req.ContentLength = -1;
+#endif
 
             req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
@@ -990,7 +994,7 @@ namespace FlickrNet
 		public string UploadPicture(string filename, string title, string description, string tags)
 		{
 			Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-			return UploadPicture(stream, title, description, tags, -1, -1, -1);
+			return UploadPicture(stream, title, description, tags, -1, -1, -1, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
 		}
 
 		/// <summary>
@@ -1009,7 +1013,7 @@ namespace FlickrNet
 		public string UploadPicture(string filename, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend)
 		{
 			Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-			return UploadPicture(stream, title, description, tags, isPublic?1:0, isFamily?1:0, isFriend?1:0);
+			return UploadPicture(stream, title, description, tags, isPublic?1:0, isFamily?1:0, isFriend?1:0, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
 		}
 
 		/// <summary>
@@ -1022,8 +1026,11 @@ namespace FlickrNet
 		/// <param name="isPublic">0 for private, 1 for public.</param>
 		/// <param name="isFamily">1 if family, 0 is not.</param>
 		/// <param name="isFriend">1 if friend, 0 if not.</param>
+		/// <param name="contentType">The content type of the photo, i.e. Photo, Screenshot or Other.</param>
+		/// <param name="safetyLevel">The safety level of the photo, i.e. Safe, Moderate or Restricted.</param>
+		/// <param name="hiddenFromSearch">Is the photo hidden from public searches.</param>
 		/// <returns>The id of the photograph after successful uploading.</returns>
-		public string UploadPicture(Stream stream, string title, string description, string tags, int isPublic, int isFamily, int isFriend)
+		public string UploadPicture(Stream stream, string title, string description, string tags, int isPublic, int isFamily, int isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
 		{
 			/*
 			 * 
@@ -1073,6 +1080,18 @@ namespace FlickrNet
 			if( isFamily >= 0 )
 			{
 				parameters.Add("is_family", isFamily.ToString());
+			}
+			if( safetyLevel != SafetyLevel.None )
+			{
+				parameters.Add("safety_level", (int)safetyLevel);
+			}
+			if( contentType != ContentType.None )
+			{
+				parameters.Add("content_type", (int)contentType);
+			}
+			if( hiddenFromSearch != HiddenFromSearch.None )
+			{
+				parameters.Add("hidden", (int)hiddenFromSearch);
 			}
 
 			parameters.Add("api_key", _apiKey);

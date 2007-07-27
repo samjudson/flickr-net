@@ -50,6 +50,74 @@ namespace FlickrNet
 		Boolean
 	}
 
+	/// <summary>
+	/// What type of content is the upload representing.
+	/// </summary>
+	[Serializable]
+	public enum ContentType
+	{
+		/// <summary>
+		/// No content type specified.
+		/// </summary>
+		None = 0,
+		/// <summary>
+		/// For normal photographs.
+		/// </summary>
+		Photo = 1,
+		/// <summary>
+		/// For screenshots.
+		/// </summary>
+		Screenshot = 2,
+		/// <summary>
+		/// For other uploads, such as artwork.
+		/// </summary>
+		Other = 3
+	}
+
+	/// <summary>
+	/// Safety level of the photographic image.
+	/// </summary>
+	[Serializable]
+	public enum SafetyLevel
+	{
+		/// <summary>
+		/// No safety level specified.
+		/// </summary>
+		None = 0,
+		/// <summary>
+		/// Very safe.
+		/// </summary>
+		Safe = 1,
+		/// <summary>
+		/// Moderate
+		/// </summary>
+		Moderate = 2,
+		/// <summary>
+		/// Restricted
+		/// </summary>
+		Restricted = 3
+	}
+
+	/// <summary>
+	/// Determines weither the photo is visible in public searches. The default is 1, Visible.
+	/// </summary>
+	[Serializable]
+	public enum HiddenFromSearch
+	{
+		/// <summary>
+		/// No preference specified, defaults to your preferences on Flickr.
+		/// </summary>
+		None = 0,
+		/// <summary>
+		/// Photo is visible to public searches.
+		/// </summary>
+		Visible = 1,
+		/// <summary>
+		/// photo is hidden from public searches.
+		/// </summary>
+		Hidden = 2
+	}
+
 
 	/// <summary>
 	/// Used to specify where all tags must be matched or any tag to be matched.
