@@ -107,12 +107,22 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ApiKeyRequiredException.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
                     RelPath = "Auth.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "AuthenticationRequiredException.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
@@ -176,6 +186,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "FlickrApiException.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "FlickrConfigurationManager.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -197,6 +212,11 @@
                 <File
                     RelPath = "FlickrNet.snk"
                     BuildAction = "None"
+                />
+                <File
+                    RelPath = "FlickrWebException.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "GeoAccuracy.cs"
@@ -313,7 +333,17 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "ResponseXmlException.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "SafeNativeMethods.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "SignatureRequiredException.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Serialization;
 
 namespace FlickrNet
 {
@@ -286,6 +287,64 @@ namespace FlickrNet
 		{
 			return String.Format(format, parameters);
 		}
+
+		private static readonly Hashtable _serializers = new Hashtable();
+
+		private static XmlSerializer GetSerializer(Type type)
+		{
+			if( _serializers.ContainsKey(type.Name) )
+				return (XmlSerializer)_serializers[type.Name];
+			else
+			{
+				XmlSerializer s = new XmlSerializer(type);
+				_serializers.Add(type.Name, s);
+				return s;
+			}
+		}
+		/// <summary>
+		/// Converts the response string (in XML) into the <see cref="Response"/> object.
+		/// </summary>
+		/// <param name="responseString">The response from Flickr.</param>
+		/// <returns>A <see cref="Response"/> object containing the details of the </returns>
+		internal static Response Deserialize(string responseString)
+		{
+			XmlSerializer serializer = GetSerializer(typeof(FlickrNet.Response));
+			try
+			{
+				// Deserialise the web response into the Flickr response object
+				StringReader responseReader = new StringReader(responseString);
+				FlickrNet.Response response = (FlickrNet.Response)serializer.Deserialize(responseReader);
+				responseReader.Close();
+
+				return response;
+			}
+			catch(InvalidOperationException ex)
+			{
+				// Serialization error occurred!
+				throw new ResponseXmlException("Invalid response received from Flickr.", ex);
+			}
+		}
+
+		internal static object Deserialize(System.Xml.XmlNode node, Type type)
+		{
+			XmlSerializer serializer = GetSerializer(type);
+			try
+			{
+				// Deserialise the web response into the Flickr response object
+				System.Xml.XmlNodeReader reader = new System.Xml.XmlNodeReader(node);
+				object o = serializer.Deserialize(reader);
+				reader.Close();
+
+				return o;
+			}
+			catch(InvalidOperationException ex)
+			{
+				// Serialization error occurred!
+				throw new ResponseXmlException("Invalid response received from Flickr.", ex);
+			}
+		}
+
+
 
 	}
 

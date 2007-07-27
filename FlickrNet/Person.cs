@@ -10,8 +10,14 @@ namespace FlickrNet
 	/// method.
 	/// </summary>
 	[System.Serializable]
+	[XmlRoot("person")]
 	public class Person
 	{
+		internal static Person SerializePerson(System.Xml.XmlNode node)
+		{
+			Person p = (Person)Utils.Deserialize(node, typeof(Person));
+			return p;
+		}
 		private string _userId;
 		private int _isAdmin;
 		private int _isPro;
@@ -23,7 +29,6 @@ namespace FlickrNet
 		private PersonPhotosSummary _summary = new PersonPhotosSummary();
 		private string _photosUrl;
 		private string _profileUrl;
-		private string _mobileUrl;
 		private string _mboxHash;
 
 		/// <summary>The user id of the user.</summary>
@@ -86,13 +91,6 @@ namespace FlickrNet
 		/// </summary>
 		[XmlElement("profileurl",Form=XmlSchemaForm.Unqualified)]
 		public string ProfileUrl { get { return _profileUrl; } set { _profileUrl = value; } }
-
-		/// <summary>
-		/// The users mobile home page on Flickr
-		/// http://www.flickr.com/mod/photostream.gne?id=xxx/
-		/// </summary>
-		[XmlElement("mobileurl",Form=XmlSchemaForm.Unqualified)]
-		public string MobileUrl { get { return _mobileUrl; } set { _mobileUrl = value; } }
 
 		/// <summary>
 		/// Returns the <see cref="Uri"/> for the users Buddy Icon.

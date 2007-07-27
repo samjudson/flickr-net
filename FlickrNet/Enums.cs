@@ -85,15 +85,15 @@ namespace FlickrNet
 		/// </summary>
 		None = 0,
 		/// <summary>
-		/// Very safe.
+		/// Very safe (suitable for a global family audience).
 		/// </summary>
 		Safe = 1,
 		/// <summary>
-		/// Moderate
+		/// Moderate (the odd articstic nude is ok, but thats the limit).
 		/// </summary>
 		Moderate = 2,
 		/// <summary>
-		/// Restricted
+		/// Restricted (suitable for over 18s only).
 		/// </summary>
 		Restricted = 3
 	}

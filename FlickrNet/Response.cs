@@ -39,10 +39,6 @@ namespace FlickrNet
 		public PhotoInfo PhotoInfo;
 
 		/// <remarks/>
-		[XmlElement("person", Form=XmlSchemaForm.Unqualified)]
-		public Person Person;
-    
-		/// <remarks/>
 		[XmlElement("photoset", Form=XmlSchemaForm.Unqualified)]
 		public Photoset Photoset;
 

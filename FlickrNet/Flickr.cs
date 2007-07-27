@@ -455,10 +455,10 @@ namespace FlickrNet
 					HttpWebResponse res2 = (HttpWebResponse)ex.Response;
 					if( res2 != null )
 					{
-						throw new FlickrException((int)res2.StatusCode, res2.StatusDescription);
+						throw new FlickrWebException(String.Format("HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
 					}
 				}
-				throw new FlickrException(9999, ex.Message);
+				throw new FlickrWebException(ex.Message, ex);
 			}
 
 			string responseString = string.Empty;
@@ -497,14 +497,14 @@ namespace FlickrNet
 					HttpWebResponse res2 = (HttpWebResponse)ex.Response;
 					if( res2 != null )
 					{
-						throw new FlickrException((int)res2.StatusCode, res2.StatusDescription);
+						throw new FlickrWebException(String.Format("HTTP Error while downloading photo: {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
 					}
 				}
 				else if( ex.Status == WebExceptionStatus.Timeout )
 				{
-					throw new FlickrException(301, "Request time-out");
+					throw new FlickrWebException("The request timed-out", ex);
 				}
-				throw new FlickrException(9999, "Picture download failed (" + ex.Message + ")");
+				throw new FlickrWebException("Picture download failed (" + ex.Message + ")", ex);
 			}
 
 			return res.GetResponseStream();
@@ -529,6 +529,8 @@ namespace FlickrNet
 
 		private Response GetResponse(Hashtable parameters, TimeSpan cacheTimeout)
 		{
+			CheckApiKey();
+
 			// Calulate URL 
 			string url = BaseUrl;
 
@@ -574,7 +576,7 @@ namespace FlickrNet
 			{
 				string responseXml = DoGetResponse(url, variables);
 				_lastResponse = responseXml;
-				return Deserialize(responseXml);
+				return Utils.Deserialize(responseXml);
 			}
 			else
 			{
@@ -583,7 +585,7 @@ namespace FlickrNet
 				{
 					System.Diagnostics.Debug.WriteLine("Cache hit");
 					_lastResponse = cached.Response;
-					return Deserialize(cached.Response);
+					return Utils.Deserialize(cached.Response);
 				}
 				else
 				{
@@ -596,7 +598,7 @@ namespace FlickrNet
 					resCache.Url = url;
 					resCache.CreationTime = DateTime.UtcNow;
 
-					FlickrNet.Response response = Deserialize(responseXml);
+					FlickrNet.Response response = Utils.Deserialize(responseXml);
 
 					if( response.Status == ResponseStatus.OK )
 					{
@@ -606,30 +608,6 @@ namespace FlickrNet
 
 					return response;
 				}
-			}
-		}
-
-		/// <summary>
-		/// Converts the response string (in XML) into the <see cref="Response"/> object.
-		/// </summary>
-		/// <param name="responseString">The response from Flickr.</param>
-		/// <returns>A <see cref="Response"/> object containing the details of the </returns>
-		private static Response Deserialize(string responseString)
-		{
-			XmlSerializer serializer = _responseSerializer;
-			try
-			{
-				// Deserialise the web response into the Flickr response object
-				StringReader responseReader = new StringReader(responseString);
-				FlickrNet.Response response = (FlickrNet.Response)serializer.Deserialize(responseReader);
-				responseReader.Close();
-
-				return response;
-			}
-			catch(InvalidOperationException ex)
-			{
-				// Serialization error occurred!
-				throw new FlickrException(9998, "Invalid response received (" + ex.Message + ")");
 			}
 		}
 
@@ -724,7 +702,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -738,7 +716,7 @@ namespace FlickrNet
 		/// <returns>The url to redirect the user to.</returns>
 		public string AuthCalcUrl(string frob, AuthLevel authLevel)
 		{
-			if( _sharedSecret == null ) throw new FlickrException(0, "AuthGetToken requires signing. Please supply api key and secret.");
+			if( _sharedSecret == null ) throw new SignatureRequiredException();
 
 			string hash = _sharedSecret + "api_key" + _apiKey + "frob" + frob + "perms" + authLevel.ToString().ToLower();
 			hash = Md5Hash(hash);
@@ -763,7 +741,7 @@ namespace FlickrNet
 		/// <returns>The url to redirect the user to.</returns>
 		public string AuthCalcWebUrl(AuthLevel authLevel)
 		{
-			if( _sharedSecret == null ) throw new FlickrException(0, "AuthGetToken requires signing. Please supply api key and secret.");
+			if( _sharedSecret == null ) throw new SignatureRequiredException();
 
 			string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower();
 			hash = Md5Hash(hash);
@@ -782,7 +760,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Auth"/> object containing user and token details.</returns>
 		public Auth AuthGetToken(string frob)
 		{
-			if( _sharedSecret == null ) throw new FlickrException(0, "AuthGetToken requires signing. Please supply api key and secret.");
+			if( _sharedSecret == null ) throw new SignatureRequiredException();
 
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getToken");
@@ -796,7 +774,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -820,7 +798,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -844,7 +822,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -905,7 +883,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -936,7 +914,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -1179,7 +1157,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(uploader.Error);
+				throw new FlickrApiException(uploader.Error);
 			}
 		}
 
@@ -1313,7 +1291,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(uploader.Error);
+				throw new FlickrApiException(uploader.Error);
 			}
 		}
 		#endregion
@@ -1337,7 +1315,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1383,7 +1361,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -1406,7 +1384,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1428,7 +1406,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -1453,7 +1431,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1476,7 +1454,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1534,7 +1512,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1574,7 +1552,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -1608,7 +1586,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1657,7 +1635,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1680,7 +1658,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -1706,7 +1684,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1735,7 +1713,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1759,7 +1737,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1779,7 +1757,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1859,7 +1837,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -1924,7 +1902,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1965,7 +1943,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -1997,7 +1975,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2019,7 +1997,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -2046,7 +2024,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2071,7 +2049,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2091,11 +2069,11 @@ namespace FlickrNet
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				return response.Person;
+				return Person.SerializePerson(response.AllElements[0]);
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2116,7 +2094,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2140,7 +2118,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2164,7 +2142,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -2203,7 +2181,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2227,7 +2205,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2252,7 +2230,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -2315,7 +2293,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2407,7 +2385,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2435,7 +2413,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2517,7 +2495,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2558,7 +2536,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2593,7 +2571,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2616,7 +2594,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2674,7 +2652,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2697,7 +2675,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2754,7 +2732,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2826,7 +2804,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2848,7 +2826,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -2871,7 +2849,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3471,7 +3449,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3540,7 +3518,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3569,7 +3547,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3616,7 +3594,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3662,9 +3640,91 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
+		}
+
+		/// <summary>
+		/// Sets the content type for a photo.
+		/// </summary>
+		/// <param name="photoId">The ID of the photos to set.</param>
+		/// <param name="contentType">The new content type.</param>
+		public void PhotosSetContentType(string photoId, ContentType contentType)
+		{
+			CheckRequiresAuthentication();
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.photos.setContentType");
+			parameters.Add("photo_id", photoId);
+			parameters.Add("content_type", (int)contentType);
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+
+		/// <summary>
+		/// Set the safety level for a photo, but only set the hidden aspect.
+		/// </summary>
+		/// <param name="photoId">The ID of the photo to set the hidden property for.</param>
+		/// <param name="hidden">The new value of the hidden value.</param>
+		public void PhotosSetSafetyLevel(string photoId, HiddenFromSearch hidden)
+		{
+			PhotosSetSafetyLevel(photoId, SafetyLevel.None, hidden);
+		}
+
+		/// <summary>
+		/// Set the safety level for a photo.
+		/// </summary>
+		/// <param name="photoId">The ID of the photo to set the safety level property for.</param>
+		/// <param name="safetyLevel">The new value of the safety level value.</param>
+		public void PhotosSetSafetyLevel(string photoId, SafetyLevel safetyLevel)
+		{
+			PhotosSetSafetyLevel(photoId, safetyLevel, HiddenFromSearch.None);
+		}
+
+		/// <summary>
+		/// Sets the safety level and hidden property of a photo.
+		/// </summary>
+		/// <param name="photoId">The ID of the photos to set.</param>
+		/// <param name="safetyLevel">The new content type.</param>
+		/// <param name="hidden">The new hidden value.</param>
+		public void PhotosSetSafetyLevel(string photoId, SafetyLevel safetyLevel, HiddenFromSearch hidden)
+		{
+			CheckRequiresAuthentication();
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.photos.setSafetyLevel");
+			parameters.Add("photo_id", photoId);
+			if( safetyLevel != SafetyLevel.None ) parameters.Add("safety_level", (int)safetyLevel);
+			switch(hidden)
+			{
+				case HiddenFromSearch.Visible:
+					parameters.Add("hidden", 0);
+					break;
+				case HiddenFromSearch.Hidden:
+					parameters.Add("hidden", 1);
+					break;
+			}
+
+			FlickrNet.Response response = GetResponseNoCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
 		}
 		#endregion
 
@@ -3688,7 +3748,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3713,11 +3773,11 @@ namespace FlickrNet
 				if( node.Attributes.GetNamedItem("id") != null )
 					return node.Attributes.GetNamedItem("id").Value;
 				else
-					throw new FlickrException(9001, "Comment ID not found");
+					throw new ResponseXmlException("Comment ID not found in response Xml.");
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3739,7 +3799,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3763,7 +3823,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -3789,7 +3849,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3827,7 +3887,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3851,7 +3911,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3879,7 +3939,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3930,7 +3990,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -3961,7 +4021,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -3984,7 +4044,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 
 		}
@@ -4017,7 +4077,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4137,7 +4197,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4172,7 +4232,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4199,7 +4259,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -4224,7 +4284,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4249,11 +4309,11 @@ namespace FlickrNet
 				if( node.Attributes.GetNamedItem("id") != null )
 					return node.Attributes.GetNamedItem("id").Value;
 				else
-					throw new FlickrException(9001, "Comment ID not found");
+					throw new ResponseXmlException("Comment ID not found in response.");
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4275,7 +4335,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4299,7 +4359,78 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
+			}
+		}
+		#endregion
+
+		#region [ Prefs ]
+		/// <summary>
+		/// Gets the currently authenticated users default safety level.
+		/// </summary>
+		/// <returns></returns>
+		public SafetyLevel PrefsGetSafetyLevel()
+		{
+			CheckRequiresAuthentication();
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.prefs.getSafetyLevel");
+
+			Response res = GetResponseCache(parameters);
+			if( res.Status == ResponseStatus.OK )
+			{
+				string s = res.AllElements[0].GetAttribute("safety_level");
+				return (SafetyLevel)int.Parse(s);
+			}
+			else
+			{
+				throw new FlickrApiException(res.Error);
+			}
+		}
+
+		/// <summary>
+		/// Gets the currently authenticated users default hidden from search setting.
+		/// </summary>
+		/// <returns></returns>
+		public HiddenFromSearch PrefsGetHidden()
+		{
+			CheckRequiresAuthentication();
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.prefs.getHidden");
+
+			Response res = GetResponseCache(parameters);
+			if( res.Status == ResponseStatus.OK )
+			{
+				string s = res.AllElements[0].GetAttribute("hidden");
+				return (HiddenFromSearch)int.Parse(s);
+			}
+			else
+			{
+				throw new FlickrApiException(res.Error);
+			}
+		}
+		
+		/// <summary>
+		/// Gets the currently authenticated users default content type.
+		/// </summary>
+		/// <returns></returns>
+		public ContentType PrefsGetContentType()
+		{
+			CheckRequiresAuthentication();
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.prefs.getContentType");
+
+			Response res = GetResponseCache(parameters);
+			if( res.Status == ResponseStatus.OK )
+			{
+				string s = res.AllElements[0].GetAttribute("content_type");
+				return (ContentType)int.Parse(s);
+			}
+			else
+			{
+				throw new FlickrApiException(res.Error);
 			}
 		}
 		#endregion
@@ -4325,7 +4456,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4363,7 +4494,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4423,7 +4554,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4453,7 +4584,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4488,7 +4619,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4516,7 +4647,7 @@ namespace FlickrNet
 				if( response.Error.Code == 2 )
 					return null;
 				else
-					throw new FlickrException(response.Error);
+					throw new FlickrApiException(response.Error);
 			}
 		}
 		/// <summary>
@@ -4555,7 +4686,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4580,7 +4711,7 @@ namespace FlickrNet
 				if( response.Error.Code == 2 )
 					return false;
 				else
-					throw new FlickrException(response.Error);
+					throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4612,7 +4743,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4684,7 +4815,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4707,7 +4838,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4737,7 +4868,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4776,7 +4907,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		/// <summary>
@@ -4826,7 +4957,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4847,7 +4978,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -4876,7 +5007,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4911,7 +5042,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4946,7 +5077,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -4980,7 +5111,7 @@ namespace FlickrNet
 				if( response.Error.Code == 1 )
 					return null;
 				else
-					throw new FlickrException(response.Error);
+					throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -5004,7 +5135,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 		#endregion
@@ -5030,7 +5161,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -5054,7 +5185,7 @@ namespace FlickrNet
 			}
 			else
 			{
-				throw new FlickrException(response.Error);
+				throw new FlickrApiException(response.Error);
 			}
 		}
 
@@ -5069,6 +5200,22 @@ namespace FlickrNet
 			return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 		}
 		#endregion
+
+		private void CheckApiKey()
+		{
+			if( ApiKey == null || ApiKey.Length == 0 )
+				throw new ApiKeyRequiredException();
+		}
+		private void CheckRequiresAuthentication()
+		{
+			CheckApiKey();
+
+			if( ApiSecret == null || ApiSecret.Length == 0 )
+				throw new SignatureRequiredException();
+			if( AuthToken == null || AuthToken.Length == 0 )
+				throw new AuthenticationRequiredException();
+
+		}
 	}
 
 }
