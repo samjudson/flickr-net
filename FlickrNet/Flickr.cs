@@ -426,23 +426,25 @@ namespace FlickrNet
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
 			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
 
-#if WindowsCE
-			if( req.Method == "POST" && variables.Length > 0  ) req.ContentLength = variables.Length;
-#else
-			if( req.Method == "POST" ) req.ContentLength = variables.Length;
-#endif
+            if (req.Method == "POST") req.ContentLength = variables.Length;
 
             req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
 			req.KeepAlive = false;
-			if( variables.Length > 0 )
-			{
-				req.ContentType = "application/x-www-form-urlencoded";
-				StreamWriter sw = new StreamWriter(req.GetRequestStream());
-				sw.Write(variables);
-				sw.Close();
-			}
+            if (variables.Length > 0)
+            {
+                req.ContentType = "application/x-www-form-urlencoded";
+                StreamWriter sw = new StreamWriter(req.GetRequestStream());
+                sw.Write(variables);
+                sw.Close();
+            }
+            else
+            {
+                // This is needed in the Compact Framework
+                // See for more details: http://msdn2.microsoft.com/en-us/library/1afx2b0f.aspx
+                req.GetRequestStream().Close();
+            }
 
 			try
 			{
