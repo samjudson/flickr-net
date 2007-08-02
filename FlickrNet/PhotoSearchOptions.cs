@@ -25,6 +25,7 @@ namespace FlickrNet
 		private PhotoSearchSortOrder _sort = PhotoSearchSortOrder.None;
 		private PrivacyFilter _privacyFilter = PrivacyFilter.None;
 		private BoundaryBox _boundaryBox = new BoundaryBox();
+		private string _groupId;
 
 		/// <summary>
 		/// Creates a new instance of the search options.
@@ -85,6 +86,15 @@ namespace FlickrNet
 		{
 			get { return _userId; }
 			set { _userId = value; }
+		}
+
+		/// <summary>
+		/// The group id of the group to search within.
+		/// </summary>
+		public string GroupId
+		{
+			get { return _groupId; }
+			set { _groupId = value; }
 		}
 
 		/// <summary>

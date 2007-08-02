@@ -512,6 +512,23 @@ namespace FlickrNet
 
 			return res.GetResponseStream();
 		}
+
+		private void CheckApiKey()
+		{
+			if( ApiKey == null || ApiKey.Length == 0 )
+				throw new ApiKeyRequiredException();
+		}
+		private void CheckRequiresAuthentication()
+		{
+			CheckApiKey();
+
+			if( ApiSecret == null || ApiSecret.Length == 0 )
+				throw new SignatureRequiredException();
+			if( AuthToken == null || AuthToken.Length == 0 )
+				throw new AuthenticationRequiredException();
+
+		}
+		
 		#endregion
 
 		#region [ GetResponse methods ]
@@ -3417,6 +3434,7 @@ namespace FlickrNet
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.search");
 			if( options.UserId != null && options.UserId.Length > 0 ) parameters.Add("user_id", options.UserId);
+			if( options.GroupId != null && options.GroupId.Length > 0 ) parameters.Add("group_id", options.GroupId);
 			if( options.Text != null && options.Text.Length > 0 ) parameters.Add("text", options.Text);
 			if( options.Tags != null && options.Tags.Length > 0 ) parameters.Add("tags", options.Tags);
 			if( options.TagMode != TagMode.None ) parameters.Add("tag_mode", options.TagModeString);
@@ -5203,22 +5221,6 @@ namespace FlickrNet
 			return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 		}
 		#endregion
-
-		private void CheckApiKey()
-		{
-			if( ApiKey == null || ApiKey.Length == 0 )
-				throw new ApiKeyRequiredException();
-		}
-		private void CheckRequiresAuthentication()
-		{
-			CheckApiKey();
-
-			if( ApiSecret == null || ApiSecret.Length == 0 )
-				throw new SignatureRequiredException();
-			if( AuthToken == null || AuthToken.Length == 0 )
-				throw new AuthenticationRequiredException();
-
-		}
 	}
 
 }
