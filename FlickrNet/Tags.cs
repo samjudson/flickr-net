@@ -39,4 +39,44 @@ namespace FlickrNet
 			_count = count;
 		}
 	}
+
+	/// <summary>
+	/// Raw tags, as returned by the <see cref="Flickr.TagsGetListUserRaw(string)"/> method.
+	/// </summary>
+	public class RawTag
+	{
+		private string _cleanTag;
+		private string[] _rawTags = new string[0];
+
+		/// <summary>
+		/// An array of strings containing the raw tags returned by the method.
+		/// </summary>
+		public string[] RawTags
+		{
+			get { return _rawTags; }
+		}
+
+		/// <summary>
+		/// The clean tag.
+		/// </summary>
+		public string CleanTag
+		{
+			get { return _cleanTag; }
+		}
+		
+		internal RawTag(XmlNode node)
+		{
+			if( node.Attributes.GetNamedItem("clean") == null ) throw new ResponseXmlException("clean attribute not found");
+			_cleanTag = node.Attributes.GetNamedItem("clean").Value;
+
+			XmlNodeList list = node.SelectNodes("raw");
+			_rawTags = new string[list.Count];
+
+			for(int i = 0; i < list.Count; i++)
+			{
+				XmlNode rawNode = list[i];
+				_rawTags[i] = rawNode.InnerText;
+			}
+		}
+	}
 }

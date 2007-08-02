@@ -4580,6 +4580,47 @@ namespace FlickrNet
 		}
 
 		/// <summary>
+		/// Gets a list of 'cleaned' tags and the raw values for those tags.
+		/// </summary>
+		/// <param name="userId">The user id to return the tags for.</param>
+		/// <returns>An array of <see cref="RawTag"/> objects.</returns>
+		public RawTag[] TagsGetListUserRaw(string userId)
+		{
+			return TagsGetListUserRaw(userId, null);
+		}
+
+		/// <summary>
+		/// Gets a list of 'cleaned' tags and the raw values for a specific tag.
+		/// </summary>
+		/// <param name="userId">The user id to return the tags for.</param>
+		/// <param name="tag">The tag to return the raw version of.</param>
+		/// <returns>An array of <see cref="RawTag"/> objects.</returns>
+		public RawTag[] TagsGetListUserRaw(string userId, string tag)
+		{
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.tags.getListUserRaw");
+			if( userId != null ) parameters.Add("user_id", userId);
+			if( tag != null && tag.Length > 0 ) parameters.Add("tag", tag);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				XmlNodeList nodes = response.AllElements[0].SelectNodes("//tag");
+				RawTag[] tags = new RawTag[nodes.Count];
+				for(int i = 0; i < tags.Length; i++)
+				{
+					tags[i] = new RawTag(nodes[i]);
+				}
+				return tags;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+
+		/// <summary>
 		/// Returns a list of tags 'related' to the given tag, based on clustered usage analysis.
 		/// </summary>
 		/// <param name="tag">The tag to fetch related tags for.</param>
