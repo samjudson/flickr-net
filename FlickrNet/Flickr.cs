@@ -4582,24 +4582,23 @@ namespace FlickrNet
 		/// <summary>
 		/// Gets a list of 'cleaned' tags and the raw values for those tags.
 		/// </summary>
-		/// <param name="userId">The user id to return the tags for.</param>
 		/// <returns>An array of <see cref="RawTag"/> objects.</returns>
-		public RawTag[] TagsGetListUserRaw(string userId)
+		public RawTag[] TagsGetListUserRaw()
 		{
-			return TagsGetListUserRaw(userId, null);
+			return TagsGetListUserRaw(null);
 		}
 
 		/// <summary>
 		/// Gets a list of 'cleaned' tags and the raw values for a specific tag.
 		/// </summary>
-		/// <param name="userId">The user id to return the tags for.</param>
 		/// <param name="tag">The tag to return the raw version of.</param>
 		/// <returns>An array of <see cref="RawTag"/> objects.</returns>
-		public RawTag[] TagsGetListUserRaw(string userId, string tag)
+		public RawTag[] TagsGetListUserRaw(string tag)
 		{
+			CheckRequiresAuthentication();
+
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getListUserRaw");
-			if( userId != null ) parameters.Add("user_id", userId);
 			if( tag != null && tag.Length > 0 ) parameters.Add("tag", tag);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
