@@ -114,6 +114,8 @@ namespace FlickrNet
 			ArrayList sets = new ArrayList();
 			ArrayList groups = new ArrayList();
 
+			if( elements == null ) { _sets = new ContextSet[0]; _groups = new ContextGroup[0]; return; }
+
 			foreach(XmlElement element in elements)
 			{
 				if( element.Name == "set" )
