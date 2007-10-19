@@ -372,7 +372,7 @@ namespace FlickrNet
 		/// Create a new instance of the <see cref="Flickr"/> class with no authentication.
 		/// </summary>
 		/// <param name="apiKey">Your Flickr API Key.</param>
-		public Flickr(string apiKey) : this(apiKey, "", "")
+		public Flickr(string apiKey) : this(apiKey, null, null)
 		{
 		}
 
@@ -383,7 +383,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="apiKey">Your Flickr API Key.</param>
 		/// <param name="sharedSecret">Your Flickr Shared Secret.</param>
-		public Flickr(string apiKey, string sharedSecret) : this(apiKey, sharedSecret, "")
+		public Flickr(string apiKey, string sharedSecret) : this(apiKey, sharedSecret, null)
 		{
 		}
 
