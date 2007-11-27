@@ -130,10 +130,10 @@ namespace FlickrNet
 
 			try
 			{
-				MinimumLongitude = double.Parse(splits[0]);
-				MinimumLatitude = double.Parse(splits[1]);
-				MaximumLongitude = double.Parse(splits[2]);
-				MaximumLatitude = double.Parse(splits[3]);
+				MinimumLongitude = double.Parse(splits[0],System.Globalization.NumberFormatInfo.InvariantInfo);
+				MinimumLatitude = double.Parse(splits[1],System.Globalization.NumberFormatInfo.InvariantInfo);
+				MaximumLongitude = double.Parse(splits[2],System.Globalization.NumberFormatInfo.InvariantInfo);
+				MaximumLatitude = double.Parse(splits[3],System.Globalization.NumberFormatInfo.InvariantInfo);
 			}
 			catch(FormatException)
 			{
@@ -175,7 +175,7 @@ namespace FlickrNet
 		/// <returns>A comma seperated list of co-ordinates defining the boundary box.</returns>
 		public override string ToString()
 		{
-			return String.Format("{0},{1},{2},{3}", MinimumLongitude, MinimumLatitude, MaximumLongitude, MaximumLatitude);
+			return String.Format(System.Globalization.NumberFormatInfo.InvariantInfo, "{0},{1},{2},{3}", MinimumLongitude, MinimumLatitude, MaximumLongitude, MaximumLatitude);
 		}
 
 		/// <summary>
