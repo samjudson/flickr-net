@@ -2149,10 +2149,44 @@ namespace FlickrNet
 		/// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
 		public Photos PeopleGetPublicPhotos(string userId)
 		{
+			return PeopleGetPublicPhotos(userId, 0, 0, SafetyLevel.None, PhotoSearchExtras.None);
+		}
+
+		/// <summary>
+		/// Gets a users public photos. Excludes private photos.
+		/// </summary>
+		/// <param name="userId">The user id of the user.</param>
+		/// <param name="page">The page to return. Defaults to page 1.</param>
+		/// <param name="perPage">The number of photos to return per page. Default is 100.</param>
+		/// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
+		public Photos PeopleGetPublicPhotos(string userId, int perPage, int page)
+		{
+			return PeopleGetPublicPhotos(userId, perPage, page, SafetyLevel.None, PhotoSearchExtras.None);
+		}
+
+		/// <summary>
+		/// Gets a users public photos. Excludes private photos.
+		/// </summary>
+		/// <param name="userId">The user id of the user.</param>
+		/// <param name="page">The page to return. Defaults to page 1.</param>
+		/// <param name="perPage">The number of photos to return per page. Default is 100.</param>
+		/// <param name="extras">Which (if any) extra information to return. The default is none.</param>
+		/// <param name="safetyLevel">The safety level of the returned photos. 
+		/// Unauthenticated calls can only return Safe photos.</param>
+		/// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
+		public Photos PeopleGetPublicPhotos(string userId, int perPage, int page, SafetyLevel safetyLevel, PhotoSearchExtras extras)
+		{
+			if( !IsAuthenticated && safetyLevel > SafetyLevel.Safe )
+				throw new ArgumentException("Safety level may only be 'Safe' for unauthenticated calls", "safetyLevel");
+
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.people.getPublicPhotos");
 			parameters.Add("api_key", _apiKey);
 			parameters.Add("user_id", userId);
+			if( perPage > 0 ) parameters.Add("per_page", perPage.ToString());
+			if( page > 0 ) parameters.Add("page", page.ToString());
+			if( safetyLevel != SafetyLevel.None ) parameters.Add("safety_level", (int)safetyLevel);
+			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
