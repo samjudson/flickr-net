@@ -32,7 +32,11 @@ namespace FlickrNet
 		[XmlIgnore]
 		public DateTime TakenDate
 		{
-			get { return DateTime.Parse(raw_taken); }
+            get
+            {
+                if (raw_taken == null || raw_taken.Length == 0) return DateTime.MinValue;
+                return DateTime.Parse(raw_taken);
+            }
 		}
 
 		/// <summary>
