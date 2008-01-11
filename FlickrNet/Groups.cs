@@ -50,15 +50,17 @@ namespace FlickrNet
 		internal GroupFullInfo(XmlNode node)
 		{
 			if( node.Attributes.GetNamedItem("id") != null )
-				GroupId = node.Attributes.GetNamedItem("id").Value;
+				_groupId = node.Attributes.GetNamedItem("id").Value;
 			if( node.SelectSingleNode("name") != null )
-				GroupName = node.SelectSingleNode("name").InnerText;
+				_groupName = node.SelectSingleNode("name").InnerText;
 			if( node.SelectSingleNode("description") != null )
-				Description = node.SelectSingleNode("description").InnerXml;
-			if( node.SelectSingleNode("members") != null )
-				Members = int.Parse(node.SelectSingleNode("members").InnerText);
+				_description = node.SelectSingleNode("description").InnerXml;
+            if (node.SelectSingleNode("iconserver") != null)
+                _iconServer = node.SelectSingleNode("iconserver").InnerText;
+            if (node.SelectSingleNode("members") != null)
+				_members = int.Parse(node.SelectSingleNode("members").InnerText);
 			if( node.SelectSingleNode("privacy") != null )
-				Privacy = (PoolPrivacy)int.Parse(node.SelectSingleNode("privacy").InnerText);
+				_privacy = (PoolPrivacy)int.Parse(node.SelectSingleNode("privacy").InnerText);
 
 			if( node.SelectSingleNode("throttle") != null )
 			{
@@ -73,20 +75,47 @@ namespace FlickrNet
 			}
 		}
 
+        private string _groupId;
+        private string _groupName;
+        private string _description;
+        private long _members;
+        private string _iconServer;
+        private PoolPrivacy _privacy;
+
 		/// <remarks/>
-		public string GroupId;
+        public string GroupId
+        {
+            get { return _groupId; }
+        }
     
 		/// <remarks/>
-		public string GroupName;
+        public string GroupName
+        {
+            get { return _groupName; }
+        }
 
 		/// <remarks/>
-		public string Description;
+        public string Description
+        {
+            get { return _description; }
+        }
 
 		/// <remarks/>
-		public long Members;
-	
+        public long Members
+        {
+            get { return _members; }
+        }
+
+        public string IconServer
+        {
+            get { return _iconServer; }
+        }
+
 		/// <remarks/>
-		public PoolPrivacy Privacy;
+        public PoolPrivacy Privacy
+        {
+            get { return _privacy; }
+        }
 	
 		/// <remarks/>
 		public GroupThrottleInfo ThrottleInfo;
