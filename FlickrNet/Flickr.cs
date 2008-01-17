@@ -123,7 +123,7 @@ namespace FlickrNet
 
 		/// <summary>
 		/// The API token is required for all calls that require authentication.
-		/// A <see cref="FlickrException"/> will be raised by Flickr if the API token is
+		/// A <see cref="FlickrApiException"/> will be raised by Flickr if the API token is
 		/// not set when required.
 		/// </summary>
 		/// <remarks>
@@ -141,7 +141,7 @@ namespace FlickrNet
 
 		/// <summary>
 		/// The authentication token is required for all calls that require authentication.
-		/// A <see cref="FlickrException"/> will be raised by Flickr if the authentication token is
+		/// A <see cref="FlickrApiException"/> will be raised by Flickr if the authentication token is
 		/// not set when required.
 		/// </summary>
 		/// <remarks>
@@ -945,7 +945,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="filename">The filename of the file to open.</param>
 		/// <returns>The id of the photo on a successful upload.</returns>
-		/// <exception cref="FlickrException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
+		/// <exception cref="FlickrApiException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename)
 		{
@@ -958,7 +958,7 @@ namespace FlickrNet
 		/// <param name="filename">The filename of the file to open.</param>
 		/// <param name="title">The title of the photograph.</param>
 		/// <returns>The id of the photo on a successful upload.</returns>
-		/// <exception cref="FlickrException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
+		/// <exception cref="FlickrApiException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename, string title)
 		{
@@ -972,7 +972,7 @@ namespace FlickrNet
 		/// <param name="title">The title of the photograph.</param>
 		/// <param name="description">The description of the photograph.</param>
 		/// <returns>The id of the photo on a successful upload.</returns>
-		/// <exception cref="FlickrException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
+		/// <exception cref="FlickrApiException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename, string title, string description)
 		{
@@ -987,7 +987,7 @@ namespace FlickrNet
 		/// <param name="description">The description of the photograph.</param>
 		/// <param name="tags">A comma seperated list of the tags to assign to the photograph.</param>
 		/// <returns>The id of the photo on a successful upload.</returns>
-		/// <exception cref="FlickrException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
+		/// <exception cref="FlickrApiException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename, string title, string description, string tags)
 		{
@@ -1006,7 +1006,7 @@ namespace FlickrNet
 		/// <param name="isFriend">True if the photograph should be marked as viewable by friends contacts.</param>
 		/// <param name="isFamily">True if the photograph should be marked as viewable by family contacts.</param>
 		/// <returns>The id of the photo on a successful upload.</returns>
-		/// <exception cref="FlickrException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
+		/// <exception cref="FlickrApiException">Thrown when Flickr returns an error. see http://www.flickr.com/services/api/upload.api.html for more details.</exception>
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend)
 		{
@@ -2028,7 +2028,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="emailAddress">The email address to search on.</param>
 		/// <returns>The <see cref="FoundUser"/> object containing the matching details.</returns>
-		/// <exception cref="FlickrException">A FlickrException is raised if the email address is not found.</exception>
+		/// <exception cref="FlickrApiException">A FlickrApiException is raised if the email address is not found.</exception>
 		public FoundUser PeopleFindByEmail(string emailAddress)
 		{
 			Hashtable parameters = new Hashtable();
@@ -2053,7 +2053,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="username">The screen name or username of the user.</param>
 		/// <returns>A <see cref="FoundUser"/> class containing the userId and username of the user.</returns>
-		/// <exception cref="FlickrException">A FlickrException is raised if the email address is not found.</exception>
+		/// <exception cref="FlickrApiException">A FlickrApiException is raised if the email address is not found.</exception>
 		public FoundUser PeopleFindByUsername(string username)
 		{
 			Hashtable parameters = new Hashtable();
@@ -2908,6 +2908,75 @@ namespace FlickrNet
 		}
 
 		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags)
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <param name="extras">A list of extra information to fetch for each returned record.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras)
+		{
+			return PhotosRecentlyUpdated(minDate, extras, 0, 0);
+		}
+
+		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags)
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate, int perPage, int page)
+		{
+			return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, perPage, page);
+		}
+
+		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags)
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate)
+		{
+			return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, 0, 0);
+		}
+
+		/// <summary>
+		/// Return a list of your photos that have been recently created or which have been recently modified.
+		/// Recently modified may mean that the photo's metadata (title, description, tags)
+		/// may have been changed or a comment has been added (or just modified somehow :-)
+		/// </summary>
+		/// <param name="minDate">The date from which modifications should be compared.</param>
+		/// <param name="extras">A list of extra information to fetch for each returned record.</param>
+		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+		/// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
+		public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int perPage, int page)
+		{
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.photos.recentlyUpdated");
+			parameters.Add("min_date", Utils.DateToUnixTimestamp(minDate).ToString());
+			if( extras != PhotoSearchExtras.None ) parameters.Add("extras", Utils.ExtrasToString(extras));
+			if( perPage > 0  ) parameters.Add("per_page", perPage.ToString());
+			if( page > 0 ) parameters.Add("page", page.ToString());
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Photos;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+		/// <summary>
 		/// Search for photos containing text, rather than tags.
 		/// </summary>
 		/// <param name="userId">The user whose photos you wish to search for.</param>
@@ -3585,7 +3654,7 @@ namespace FlickrNet
 		/// <param name="title">The new title of the photograph.</param>
 		/// <param name="description">The new description of the photograph.</param>
 		/// <returns>True when the operation is successful.</returns>
-		/// <exception cref="FlickrException">Thrown when the photo id cannot be found.</exception>
+		/// <exception cref="FlickrApiException">Thrown when the photo id cannot be found.</exception>
 		public bool PhotosSetMeta(string photoId, string title, string description)
 		{
 			Hashtable parameters = new Hashtable();
