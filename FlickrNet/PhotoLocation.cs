@@ -62,7 +62,7 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// The locality for the geolocation for this photo.
+		/// The locality for the geolocation for this photo. May be null.
 		/// </summary>
 		[XmlElementAttribute("locality")]
 		public PlaceInformation Locality
@@ -70,18 +70,27 @@ namespace FlickrNet
 			get { return _locality; } set { _locality = value; }
 		}
 
+		/// <summary>
+		/// The county for the geolocation for this photo. May be null.
+		/// </summary>
 		[XmlElementAttribute("county")]
 		public PlaceInformation County
 		{
 			get { return _county; } set { _county = value; }
 		}
 
+		/// <summary>
+		/// The region for the geolocation for this photo. May be null.
+		/// </summary>
 		[XmlElementAttribute("region")]
 		public PlaceInformation Region
 		{
 			get { return _region; } set { _region = value; }
 		}
 
+		/// <summary>
+		/// The country for the geolocation for this photo. May be null.
+		/// </summary>
 		[XmlElementAttribute("country")]
 		public PlaceInformation Country
 		{
@@ -90,17 +99,29 @@ namespace FlickrNet
 
 	}
 
+	/// <summary>
+	/// Contains information about the 'Place' data for a geotagged photo.
+	/// </summary>
+	/// <remarks>
+	/// This data contains its 'place id' as well as names and place ids for its containing regions (county, region, country etc).
+	/// </remarks>
 	public class PlaceInformation
 	{
 		private string _placeId;
 		private string _placeName;
 
+		/// <summary>
+		/// The ID for this particular place.
+		/// </summary>
 		[XmlAttribute("place_id")]
 		public string PlaceId
 		{
 			get { return _placeId; } set { _placeId = value; }
 		}
 
+		/// <summary>
+		/// The name of this particular place.
+		/// </summary>
 		[XmlText()]
 		public string PlaceName
 		{

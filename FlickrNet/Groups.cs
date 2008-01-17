@@ -106,6 +106,9 @@ namespace FlickrNet
             get { return _members; }
         }
 
+		/// <summary>
+		/// The server number used for the groups icon.
+		/// </summary>
         public string IconServer
         {
             get { return _iconServer; }
