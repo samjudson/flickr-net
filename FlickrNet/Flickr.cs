@@ -4388,6 +4388,31 @@ namespace FlickrNet
 		}
 		#endregion
 
+		/// <summary>
+		/// Returns a list of places which contain the query string.
+		/// </summary>
+		/// <param name="query">The string to search for. Must not be null.</param>
+		/// <returns>An array of <see cref="Place"/> instances.</returns>
+		public Place[] PlacesFind(string query)
+		{
+			if( query == null ) throw new ArgumentNullException("query");
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.places.find");
+			parameters.Add("query", query);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Places.PlacesCollection;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+
 		#region [ Photoset Comments ]
 		/// <summary>
 		/// Gets a list of comments for a photoset.

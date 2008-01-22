@@ -151,6 +151,18 @@ namespace FlickrNet
 				sb.Append("geo");
 			}
 
+			if( (extras & PhotoSearchExtras.MachineTags) == PhotoSearchExtras.MachineTags )
+			{
+				if( sb.Length>0 ) sb.Append(",");
+				sb.Append("machine_tags");
+			}
+
+			if( (extras & PhotoSearchExtras.OriginalDimensions) == PhotoSearchExtras.OriginalDimensions )
+			{
+				if( sb.Length>0 ) sb.Append(",");
+				sb.Append("o_dims");
+			}
+
 			return sb.ToString();
 		}
 

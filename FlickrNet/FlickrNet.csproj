@@ -328,6 +328,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Place.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Response.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

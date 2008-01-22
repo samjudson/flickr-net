@@ -29,6 +29,8 @@ namespace FlickrNet
 		private decimal _latitude;
 		private decimal _longitude;
 		private GeoAccuracy _accuracy;
+		private int _originalWidth = -1;
+		private int _originalHeight = -1;
 
 		/// <remarks/>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
@@ -73,6 +75,20 @@ namespace FlickrNet
 		/// <remarks/>
 		[XmlAttribute("license", Form=XmlSchemaForm.Unqualified)]
 		public string License { get { return _license; } set { _license = value; } }
+
+		/// <summary>
+		/// The width of the original image. 
+		/// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
+		/// </summary>
+		[XmlAttribute("o_width")]
+		public int OriginalWidth { get { return _originalWidth; } set { _originalWidth = value; } }
+
+		/// <summary>
+		/// The height of the original image. 
+		/// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
+		/// </summary>
+		[XmlAttribute("o_height")]
+		public int OriginalHeight { get { return _originalHeight; } set { _originalHeight = value; } }
 
 		/// <remarks/>
 		[XmlAttribute("dateupload", Form=XmlSchemaForm.Unqualified)]

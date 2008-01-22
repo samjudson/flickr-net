@@ -63,8 +63,12 @@ namespace FlickrNet
 		/// </summary>
 		MachineTags = 512,
 		/// <summary>
+		/// Return the Dimensions of the Original Image.
+		/// </summary>
+		OriginalDimensions = 1024,
+		/// <summary>
 		/// Returns all the above information.
 		/// </summary>
-		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags
+		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions
 	}
 }

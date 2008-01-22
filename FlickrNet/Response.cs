@@ -67,6 +67,10 @@ namespace FlickrNet
 		public ContextPhoto ContextPrevPhoto;
 
 		/// <remarks/>
+		[XmlElement("places", Form=XmlSchemaForm.Unqualified)]
+		public Places Places;
+
+		/// <remarks/>
 		[XmlAttribute("stat", Form=XmlSchemaForm.Unqualified)]
 		public ResponseStatus Status;
 
