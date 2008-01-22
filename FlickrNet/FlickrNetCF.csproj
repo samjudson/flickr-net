@@ -17,10 +17,14 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FormFactorID>
     </FormFactorID>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>FlickrNet.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -100,6 +104,7 @@
     <Compile Include="PhotoSearchOptions.cs" />
     <Compile Include="PhotoSearchOrder.cs" />
     <Compile Include="PhotoSets.cs" />
+    <Compile Include="Place.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="ResponseXmlException.cs" />
     <Compile Include="SafeNativeMethods.cs" />
