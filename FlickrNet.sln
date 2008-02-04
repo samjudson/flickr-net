@@ -4,18 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNet", "FlickrNet\Flic
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 2
-		SccProjectName0 = $/FlickrNet
-		SccLocalPath0 = .
-		SccProvider0 = MSSCCI:Team\u0020Foundation\u0020Server\u0020MSSCCI\u0020Provider
-		CanCheckoutShared = true
-		SolutionUniqueID = {64FD664B-4439-4A4E-8C9B-435608F57B97}
-		SccProjectUniqueName1 = FlickrNet\\FlickrNet.csproj
-		SccLocalPath1 = .
-		CanCheckoutShared = true
-		SccProjectFilePathRelativizedFromConnection1 = FlickrNet\\
-	EndGlobalSection
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
 		Release = Release
