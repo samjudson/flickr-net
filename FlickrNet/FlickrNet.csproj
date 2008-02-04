@@ -4,9 +4,9 @@
         ProductVersion = "7.10.3077"
         SchemaVersion = "2.0"
         ProjectGuid = "{5F017126-C1FF-4996-85CC-6150E80C6AFC}"
-        SccProjectName = "$/FlickrNet"
-        SccLocalPath = ".."
-        SccProvider = "MSSCCI:Team Foundation Server MSSCCI Provider"
+        SccProjectName = ""
+        SccLocalPath = ""
+        SccProvider = ""
     >
         <Build>
             <Settings
