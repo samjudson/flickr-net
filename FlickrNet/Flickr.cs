@@ -1030,6 +1030,7 @@ namespace FlickrNet
 		/// <returns>The id of the photograph after successful uploading.</returns>
 		public string UploadPicture(Stream stream, string title, string description, string tags, int isPublic, int isFamily, int isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
 		{
+			CheckRequiresAuthentication();
 			/*
 			 * 
 			 * Modified UploadPicture code taken from the Flickr.Net library
