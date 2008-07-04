@@ -4,9 +4,6 @@
         ProductVersion = "7.10.3077"
         SchemaVersion = "2.0"
         ProjectGuid = "{5F017126-C1FF-4996-85CC-6150E80C6AFC}"
-        SccProjectName = ""
-        SccLocalPath = ""
-        SccProvider = ""
     >
         <Build>
             <Settings
@@ -244,6 +241,11 @@
                 />
                 <File
                     RelPath = "Licenses.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Location.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />

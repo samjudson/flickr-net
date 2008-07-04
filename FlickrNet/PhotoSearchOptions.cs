@@ -26,6 +26,17 @@ namespace FlickrNet
 		private PrivacyFilter _privacyFilter = PrivacyFilter.None;
 		private BoundaryBox _boundaryBox = new BoundaryBox();
 		private string _groupId;
+		private SafetyLevel _safeSearch = SafetyLevel.None;
+		private ContentTypeSearch _contentType = ContentTypeSearch.None;
+
+		private float _longitude = float.NaN;
+		private float _latitude = float.NaN;
+		private bool _hasGeo;
+		private float _radius = float.NaN;
+		private RadiusUnits _radiusUnits = RadiusUnits.None;
+		private ContactSearch _contacts = ContactSearch.None;
+		private string _woeId;
+		private string _placeId;
 
 		/// <summary>
 		/// Creates a new instance of the search options.
@@ -357,6 +368,106 @@ namespace FlickrNet
 				_boundaryBox.Accuracy = value;
 			}
 		
+		}
+
+		/// <summary>
+		/// Which type of safe search to perform.
+		/// </summary>
+		/// <remarks>
+		/// An unauthenticated search will only ever return safe photos.
+		/// </remarks>
+		public SafetyLevel SafeSearch 
+		{
+			get 
+			{
+				return _safeSearch; 
+			}
+			set 
+			 {
+				 _safeSearch = value; 
+			 }
+		}
+
+		/// <summary>
+		/// Filter your search on a particular type of content (photo, screenshot or other).
+		/// </summary>
+		public ContentTypeSearch ContentType
+		{
+			get { return _contentType; }
+			set { _contentType = value; }
+		}
+
+		/// <summary>
+		/// Specify the units to use for a Geo location based search. Default is Kilometers.
+		/// </summary>
+		public RadiusUnits RadiusUnits
+		{
+			get { return _radiusUnits; }
+			set { _radiusUnits = value; }
+		}
+
+		/// <summary>
+		/// Specify the radius of a particular geo-location search.
+		/// Maximum of 20 miles, 32 kilometers.
+		/// </summary>
+		public float Radius
+		{
+			get { return _radius; }
+			set { _radius = value; }
+		}
+
+		/// <summary>
+		/// Specify the longitude center of a geo-location search.
+		/// </summary>
+		public float Longitude
+		{
+			get { return _longitude; }
+			set { _longitude = value; }
+		}
+
+		/// <summary>
+		/// Specify the latitude center of a geo-location search.
+		/// </summary>
+		public float Latitude
+		{
+			get { return _latitude; }
+			set { _latitude = value; }
+		}
+
+		/// <summary>
+		/// Filter the search results on those that have Geolocation information.
+		/// </summary>
+		public bool HasGeo
+		{
+			get { return _hasGeo; }
+			set { _hasGeo = false; }
+		}
+
+		/// <summary>
+		/// Fitler the search results on a particular users contacts. You must set UserId for this option to be honoured.
+		/// </summary>
+		public ContactSearch Contacts
+		{
+			get { return _contacts; }
+			set { _contacts = value; }
+		}
+
+		/// <summary>
+		/// The WOE id to return photos for. This is a spatial reference.
+		/// </summary>
+		public string WoeId
+		{
+			get { return _woeId; }
+			set { _woeId = value; }
+		}
+
+		/// <summary>
+		/// The Flickr Place to return photos for.
+		/// </summary>
+		public string PlaceId
+		{
+			get { return _placeId; }
+			set { _placeId = value; }
 		}
 
 		internal string ExtrasString

@@ -87,6 +87,9 @@ namespace FlickrNet
 		[XmlElement("method", Form=XmlSchemaForm.Unqualified)]
 		public Method Method;
 
+		[XmlElement("location", Form=XmlSchemaForm.Unqualified)]
+		public Location Location;
+
 		/// <summary>
 		/// If using flickr.test.echo this contains all the other elements not covered above.
 		/// </summary>

@@ -163,6 +163,18 @@ namespace FlickrNet
 				sb.Append("o_dims");
 			}
 
+			if( (extras & PhotoSearchExtras.Views) == PhotoSearchExtras.Views )
+			{
+				if( sb.Length>0 ) sb.Append(",");
+				sb.Append("views");
+			}
+
+			if( (extras & PhotoSearchExtras.Media) == PhotoSearchExtras.Media )
+			{
+				if( sb.Length>0 ) sb.Append(",");
+				sb.Append("media");
+			}
+
 			return sb.ToString();
 		}
 

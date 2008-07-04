@@ -53,9 +53,9 @@ namespace FlickrNet
 		}
 
 		private string[] _baseUrl = new string[] { 
-															"http://api.flickr.com/services/rest/", 
-															"http://beta.zooomr.com/bluenote/api/rest",
-															"http://www.23hq.com/services/rest/"};
+													 "http://api.flickr.com/services/rest/", 
+													 "http://beta.zooomr.com/bluenote/api/rest",
+													 "http://www.23hq.com/services/rest/"};
 
 		private string UploadUrl
 		{
@@ -80,9 +80,9 @@ namespace FlickrNet
 			get { return _authUrl[(int)_service]; }
 		}
 		private static string[] _authUrl = new string[] {
-															   "http://www.flickr.com/services/auth/",
-															   "http://beta.zooomr.com/auth/",
-															   "http://www.23hq.com/services/auth/"};
+															"http://www.flickr.com/services/auth/",
+															"http://beta.zooomr.com/auth/",
+															"http://www.23hq.com/services/auth/"};
 
 		private string _apiKey;
 		private string _apiToken;
@@ -217,7 +217,7 @@ namespace FlickrNet
 					_isServiceSet = true;
 				}
 #endif
-                return _defaultService;
+				return _defaultService;
 			}
 			set
 			{
@@ -326,9 +326,9 @@ namespace FlickrNet
 		/// Constructor loads configuration settings from app.config or web.config file if they exist.
 		/// </summary>
 		public Flickr()
-        {
+		{
 #if !WindowsCE
-            FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
+			FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
 			if( settings == null ) return;
 
 			if( settings.CacheSize != 0 ) CacheSizeLimit = settings.CacheSize;
@@ -337,7 +337,7 @@ namespace FlickrNet
 			AuthToken = settings.ApiToken;
 			ApiSecret = settings.SharedSecret;
 
-            if (settings.IsProxyDefined)
+			if (settings.IsProxyDefined)
 			{
 				Proxy = new WebProxy();
 				Proxy.Address = new Uri("http://" + settings.ProxyIPAddress + ":" + settings.ProxyPort);
@@ -365,7 +365,7 @@ namespace FlickrNet
 
 #endif
 
-            CurrentService = DefaultService;
+			CurrentService = DefaultService;
 		}
 
 		/// <summary>
@@ -426,25 +426,25 @@ namespace FlickrNet
 			req = (HttpWebRequest)HttpWebRequest.Create(url);
 			req.Method = CurrentService==SupportedService.Zooomr?"GET":"POST";
 
-            if (req.Method == "POST") req.ContentLength = variables.Length;
+			if (req.Method == "POST") req.ContentLength = variables.Length;
 
-            req.UserAgent = UserAgent;
+			req.UserAgent = UserAgent;
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Timeout = HttpTimeout;
 			req.KeepAlive = false;
-            if (variables.Length > 0)
-            {
-                req.ContentType = "application/x-www-form-urlencoded";
-                StreamWriter sw = new StreamWriter(req.GetRequestStream());
-                sw.Write(variables);
-                sw.Close();
-            }
-            else
-            {
-                // This is needed in the Compact Framework
-                // See for more details: http://msdn2.microsoft.com/en-us/library/1afx2b0f.aspx
-                req.GetRequestStream().Close();
-            }
+			if (variables.Length > 0)
+			{
+				req.ContentType = "application/x-www-form-urlencoded";
+				StreamWriter sw = new StreamWriter(req.GetRequestStream());
+				sw.Write(variables);
+				sw.Close();
+			}
+			else
+			{
+				// This is needed in the Compact Framework
+				// See for more details: http://msdn2.microsoft.com/en-us/library/1afx2b0f.aspx
+				req.GetRequestStream().Close();
+			}
 
 			try
 			{
@@ -518,6 +518,15 @@ namespace FlickrNet
 			if( ApiKey == null || ApiKey.Length == 0 )
 				throw new ApiKeyRequiredException();
 		}
+
+		private void CheckSigned()
+		{
+			CheckApiKey();
+
+			if( ApiSecret == null || ApiSecret.Length == 0 )
+				throw new SignatureRequiredException();
+		}
+
 		private void CheckRequiresAuthentication()
 		{
 			CheckApiKey();
@@ -554,8 +563,8 @@ namespace FlickrNet
 			// Calulate URL 
 			string url = BaseUrl;
 
-            StringBuilder UrlStringBuilder = new StringBuilder("", 2 * 1024);
-            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
+			StringBuilder UrlStringBuilder = new StringBuilder("", 2 * 1024);
+			StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
 
 			parameters["api_key"] = _apiKey;
 
@@ -571,22 +580,22 @@ namespace FlickrNet
 			foreach(string key in keys)
 			{
 				if( UrlStringBuilder.Length > 0 ) UrlStringBuilder.Append("&");
-                UrlStringBuilder.Append(key);
-                UrlStringBuilder.Append("=");
-                UrlStringBuilder.Append(Utils.UrlEncode(Convert.ToString(parameters[key])));
-                HashStringBuilder.Append(key);
-                HashStringBuilder.Append(parameters[key]);
+				UrlStringBuilder.Append(key);
+				UrlStringBuilder.Append("=");
+				UrlStringBuilder.Append(Utils.UrlEncode(Convert.ToString(parameters[key])));
+				HashStringBuilder.Append(key);
+				HashStringBuilder.Append(parameters[key]);
 			}
 
-            if (_sharedSecret != null && _sharedSecret.Length > 0) 
-            {
-                if (UrlStringBuilder.Length > BaseUrl.Length + 1)
-                {
-                    UrlStringBuilder.Append("&");
-                }
-                UrlStringBuilder.Append("api_sig=");
-                UrlStringBuilder.Append(Md5Hash(HashStringBuilder.ToString()));
-            }
+			if (_sharedSecret != null && _sharedSecret.Length > 0) 
+			{
+				if (UrlStringBuilder.Length > BaseUrl.Length + 1)
+				{
+					UrlStringBuilder.Append("&");
+				}
+				UrlStringBuilder.Append("api_sig=");
+				UrlStringBuilder.Append(Md5Hash(HashStringBuilder.ToString()));
+			}
 
 			string variables = UrlStringBuilder.ToString();
 			_lastRequest = url;
@@ -830,6 +839,8 @@ namespace FlickrNet
 		/// <returns>The <see cref="Auth"/> object detailing the user for the token.</returns>
 		public Auth AuthCheckToken(string token)
 		{
+			CheckSigned();
+
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.checkToken");
 			parameters.Add("auth_token", token);
@@ -1104,8 +1115,8 @@ namespace FlickrNet
 
 			foreach(string key in keys)
 			{
-                HashStringBuilder.Append(key);
-                HashStringBuilder.Append(parameters[key]);
+				HashStringBuilder.Append(key);
+				HashStringBuilder.Append(parameters[key]);
 				sb.Append("--" + boundary + "\r\n");
 				sb.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
 				sb.Append("\r\n");
@@ -1115,7 +1126,7 @@ namespace FlickrNet
 			sb.Append("--" + boundary + "\r\n");
 			sb.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
 			sb.Append("\r\n");
-            sb.Append(Md5Hash(HashStringBuilder.ToString()) + "\r\n");
+			sb.Append(Md5Hash(HashStringBuilder.ToString()) + "\r\n");
 
 			// Photo
 			sb.Append("--" + boundary + "\r\n");
@@ -2507,7 +2518,7 @@ namespace FlickrNet
 			if( s.Length > 0 ) s.Remove(s.Length-2,1);
 
 			if( taken )
-                return PhotosGetCounts(null, s.ToString());
+				return PhotosGetCounts(null, s.ToString());
 			else
 				return PhotosGetCounts(s.ToString(), null);
 		}
@@ -3565,6 +3576,16 @@ namespace FlickrNet
 			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
 			if( options.BoundaryBox.IsSet ) parameters.Add("bbox", options.BoundaryBox.ToString());
 			if( options.Accuracy != GeoAccuracy.None ) parameters.Add("accuracy", options.Accuracy.ToString("d"));
+			if( options.SafeSearch != SafetyLevel.None ) parameters.Add("safe_search", options.SafeSearch.ToString("d"));
+			if( options.ContentType != ContentTypeSearch.None ) parameters.Add("content_type", options.ContentType.ToString("d"));
+			if( options.HasGeo ) parameters.Add("has_geo", "1");
+			if( !float.IsNaN(options.Latitude) ) parameters.Add("lat", options.Latitude.ToString("0.0000"));
+			if( !float.IsNaN(options.Longitude) ) parameters.Add("lon", options.Longitude.ToString("0.0000"));
+			if( !float.IsNaN(options.Radius) ) parameters.Add("radius", options.Radius.ToString("0.00"));
+			if( options.RadiusUnits != RadiusUnits.None ) parameters.Add("radius_units", (options.RadiusUnits == RadiusUnits.Miles? "mi":"km"));
+			if( options.Contacts != ContactSearch.None ) parameters.Add("contacts", (options.Contacts == ContactSearch.AllContacts?"all":"ff"));
+			if( options.WoeId != null ) parameters.Add("woe_id", options.WoeId);
+			if( options.PlaceId != null ) parameters.Add("place_id", options.PlaceId);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
@@ -4389,6 +4410,7 @@ namespace FlickrNet
 		}
 		#endregion
 
+		#region [ Places ]
 		/// <summary>
 		/// Returns a list of places which contain the query string.
 		/// </summary>
@@ -4412,7 +4434,90 @@ namespace FlickrNet
 			{
 				throw new FlickrApiException(response.Error);
 			}
+
 		}
+
+		/// <summary>
+		/// Returns a place based on the input latitude and longitude.
+		/// </summary>
+		/// <param name="latitude">The latitude, between -180 and 180.</param>
+		/// <param name="longitude">The longitude, between -90 and 90.</param>
+		/// <returns>An instance of the <see cref="Place"/> that matches the locality.</returns>
+		public Place PlacesFindByLatLon(decimal latitude, decimal longitude)
+		{
+			return PlacesFindByLatLon(latitude, longitude, GeoAccuracy.None);
+		}
+
+		/// <summary>
+		/// Returns a place based on the input latitude and longitude.
+		/// </summary>
+		/// <param name="latitude">The latitude, between -180 and 180.</param>
+		/// <param name="longitude">The longitude, between -90 and 90.</param>
+		/// <param name="accuracy">The level the locality will be for.</param>
+		/// <returns>An instance of the <see cref="Place"/> that matches the locality.</returns>
+		public Place PlacesFindByLatLon(decimal latitude, decimal longitude, GeoAccuracy accuracy)
+		{
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.places.findByLatLon");
+			parameters.Add("lat", latitude.ToString("0.000"));
+			parameters.Add("lon", longitude.ToString("0.000"));
+			if( accuracy != GeoAccuracy.None ) parameters.Add("accuracy", (int)accuracy);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Places.PlacesCollection[0];
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+
+		}
+
+		/// <summary>
+		/// Resolve a place by its place id (or WOE id).
+		/// </summary>
+		/// <param name="placeId">The place id or WOE id.</param>
+		/// <returns>A <see cref="Location"/> class.</returns>
+		public Location PlacesResolvePlaceId(string placeId)
+		{
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.places.resolvePlaceId");
+			parameters.Add("place_id", placeId);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Location;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+
+		public Location PlacesResolvePlaceUrl(string placeUrl)
+		{
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.places.resolvePlaceUrl");
+			parameters.Add("url", placeUrl);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if( response.Status == ResponseStatus.OK )
+			{
+				return response.Location;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+
+		#endregion
 
 		#region [ Photoset Comments ]
 		/// <summary>

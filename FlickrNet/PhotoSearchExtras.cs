@@ -67,8 +67,16 @@ namespace FlickrNet
 		/// </summary>
 		OriginalDimensions = 1024,
 		/// <summary>
+		/// Returns the number of views for a photo.
+		/// </summary>
+		Views = 2048,
+		/// <summary>
+		/// Returns the media type of the photo, currently either 'photo' or 'video'.
+		/// </summary>
+		Media = 4096,
+		/// <summary>
 		/// Returns all the above information.
 		/// </summary>
-		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions
+		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media
 	}
 }

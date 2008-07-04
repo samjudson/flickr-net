@@ -68,6 +68,25 @@ namespace FlickrNet
 		/// </summary>
 		public string PlaceType { get { return _placeType; } }
 
+		private string _woeId;
+		/// <summary>
+		/// The WOE id for the locality.
+		/// </summary>
+		public string WoeId { get { return _woeId; } }
+
+		private string _description;
+
+		public string Description { get { return _description; } }
+
+		public Place()
+		{
+		}
+
+		internal Place(System.Xml.XmlReader reader)
+		{
+			IXmlSerializable x = (IXmlSerializable)this;
+			x.ReadXml(reader);
+		}
 		/// <summary>
 		/// Not Implemented
 		/// </summary>
@@ -96,7 +115,14 @@ namespace FlickrNet
 			_placeId = reader.GetAttribute("place_id");
 			_placeUrl = reader.GetAttribute("place_url");
 			_placeType = reader.GetAttribute("place_type");
-			// TODO:  Add Place.ReadXml implementation
+			_woeId = reader.GetAttribute("woeid");
+
+			if( !reader.IsEmptyElement )
+			{
+				reader.MoveToContent();
+				_description = reader.ReadString();
+			}
+			
 			reader.Read();
 		}
 	}

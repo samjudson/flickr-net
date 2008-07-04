@@ -31,6 +31,9 @@ namespace FlickrNet
 		private GeoAccuracy _accuracy;
 		private int _originalWidth = -1;
 		private int _originalHeight = -1;
+		private int _views = -1;
+		private string _media;
+		private string _mediaStatus;
 
 		/// <remarks/>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
@@ -292,6 +295,38 @@ namespace FlickrNet
 			get { return _accuracy; }
 			set { _accuracy = value; }
 		}
+
+		/// <summary>
+		/// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
+		/// </summary>
+		[XmlAttribute("views", Form=XmlSchemaForm.Unqualified)]
+		public int Views
+		{
+			get { return _views; }
+			set { _views = value; }
+		}
+
+		/// <summary>
+		/// The media format for this photo. Only returned if PhotoSearchExtras.Media is set.
+		/// </summary>
+		[XmlAttribute("media", Form=XmlSchemaForm.Unqualified)]
+		public string Media
+		{
+			get { return _media; }
+			set { _media = value; }
+		}
+
+		/// <summary>
+		/// The status of the media for this photo. Only returned if PhotoSearchExtras.Media is set.
+		/// </summary>
+		[XmlAttribute("media_status", Form=XmlSchemaForm.Unqualified)]
+		public string MediaStatus
+		{
+			get { return _mediaStatus; }
+			set { _mediaStatus = value; }
+		}
+
+
 	}
 
 }
