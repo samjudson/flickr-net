@@ -87,6 +87,9 @@ namespace FlickrNet
 		[XmlElement("method", Form=XmlSchemaForm.Unqualified)]
 		public Method Method;
 
+		/// <summary>
+		/// A <see cref="Location"/> instance.
+		/// </summary>
 		[XmlElement("location", Form=XmlSchemaForm.Unqualified)]
 		public Location Location;
 

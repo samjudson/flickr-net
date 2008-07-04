@@ -4499,6 +4499,11 @@ namespace FlickrNet
 			}
 		}
 
+		/// <summary>
+		/// Turns a place URL into a Location instance.
+		/// </summary>
+		/// <param name="placeUrl">The 'URL' of the place.</param>
+		/// <returns>A <see cref="Location"/> instance.</returns>
 		public Location PlacesResolvePlaceUrl(string placeUrl)
 		{
 			Hashtable parameters = new Hashtable();

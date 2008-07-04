@@ -76,8 +76,27 @@ namespace FlickrNet
 
 		private string _description;
 
+		/// <summary>
+		/// The description of this place, where provided.
+		/// </summary>
 		public string Description { get { return _description; } }
 
+		private decimal _latitude;
+		private decimal _longitude;
+
+		/// <summary>
+		/// The latitude of this place.
+		/// </summary>
+		public decimal Latitude { get { return _latitude; } }
+
+		/// <summary>
+		/// The longitude of this place.
+		/// </summary>
+		public decimal Longitude { get { return _longitude; } }
+
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
 		public Place()
 		{
 		}
@@ -116,6 +135,16 @@ namespace FlickrNet
 			_placeUrl = reader.GetAttribute("place_url");
 			_placeType = reader.GetAttribute("place_type");
 			_woeId = reader.GetAttribute("woeid");
+			string dec = reader.GetAttribute("latitude");
+			if( dec != null && dec.Length > 0 )
+			{
+				_latitude = decimal.Parse(dec);
+			}
+			dec = reader.GetAttribute("longitude");
+			if( dec != null && dec.Length > 0 )
+			{
+				_longitude = decimal.Parse(dec);
+			}
 
 			if( !reader.IsEmptyElement )
 			{
