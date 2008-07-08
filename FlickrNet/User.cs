@@ -6,7 +6,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains details of a user
 	/// </summary>
-	[System.Serializable]
+	[Serializable]
 	public class FoundUser
 	{
 		private string _userId;
@@ -18,6 +18,7 @@ namespace FlickrNet
 		public string UserId
 		{
 			get { return _userId; }
+			set { _userId = value; }
 		}
 
 		/// <summary>
@@ -26,6 +27,11 @@ namespace FlickrNet
 		public string Username 
 		{
 			get { return _username; }
+			set { _username = value; }
+		}
+
+		public FoundUser()
+		{
 		}
 
 		internal FoundUser(string userId, string username)

@@ -5,6 +5,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Used to specify the authentication levels needed for the Auth methods.
 	/// </summary>
+	[Serializable]
 	public enum AuthLevel
 	{
 		/// <summary>
@@ -29,6 +30,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Successful authentication returns a <see cref="Auth"/> object.
 	/// </summary>
+	[Serializable]
 	public class Auth
 	{
 		private string _token;
@@ -59,6 +61,7 @@ namespace FlickrNet
 		public FoundUser User
 		{
 			get { return _user; }
+			set { _user = value; }
 		}
 
 		/// <summary>
@@ -73,7 +76,7 @@ namespace FlickrNet
 			Token = element.SelectSingleNode("token").InnerText;
 			Permissions = (AuthLevel)Enum.Parse(typeof(AuthLevel), element.SelectSingleNode("perms").InnerText, true);
 			System.Xml.XmlNode node = element.SelectSingleNode("user");
-			_user = new FoundUser(node);
+			User = new FoundUser(node);
 		}
 	}
 }
