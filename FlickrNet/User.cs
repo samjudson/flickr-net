@@ -30,6 +30,9 @@ namespace FlickrNet
 			set { _username = value; }
 		}
 
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
 		public FoundUser()
 		{
 		}

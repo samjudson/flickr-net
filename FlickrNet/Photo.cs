@@ -326,6 +326,41 @@ namespace FlickrNet
 			set { _mediaStatus = value; }
 		}
 
+		/// <summary>
+		/// A helper method which tries to guess if a large image will be available for this photograph
+		/// based on the original dimensions returned with the photo.
+		/// </summary>
+		[XmlIgnore()]
+		public bool DoesLargeExist
+		{
+			get
+			{
+				if( _originalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
+
+				if( _originalHeight > 1280 || _originalWidth > 1280 ) 
+					return true;
+				else 
+					return false;
+			}
+		}
+
+		/// <summary>
+		/// A helper method which tries to guess if a medium image will be available for this photograph
+		/// based on the original dimensions returned with the photo.
+		/// </summary>
+		[XmlIgnore()]
+		public bool DoesMediumExist
+		{
+			get
+			{
+				if( _originalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
+
+				if( _originalHeight > 500 || _originalWidth > 500 ) 
+					return true;
+				else 
+					return false;
+			}
+		}
 
 	}
 

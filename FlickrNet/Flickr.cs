@@ -478,8 +478,9 @@ namespace FlickrNet
 		/// Download a picture (or anything else actually).
 		/// </summary>
 		/// <param name="url"></param>
+		/// <param name="redirect">Allow automatic redirections.</param>
 		/// <returns></returns>
-		private Stream DoDownloadPicture(string url)
+		private Stream DoDownloadPicture(string url, bool redirect)
 		{
 			HttpWebRequest req = null;
 			HttpWebResponse res = null;
@@ -491,6 +492,7 @@ namespace FlickrNet
 				if( Proxy != null ) req.Proxy = Proxy;
 				req.Timeout = HttpTimeout;
 				req.KeepAlive = false;
+				req.AllowAutoRedirect = redirect;
 				res = (HttpWebResponse)req.GetResponse();
 			}
 			catch(WebException ex)
@@ -509,6 +511,9 @@ namespace FlickrNet
 				}
 				throw new FlickrWebException("Picture download failed (" + ex.Message + ")", ex);
 			}
+
+			System.Diagnostics.Debug.Write("Http Status Code = " + res.StatusCode);
+			if( !redirect && res.StatusCode == HttpStatusCode.Redirect ) return null;
 
 			return res.GetResponseStream();
 		}
@@ -644,6 +649,21 @@ namespace FlickrNet
 
 		#region [ DownloadPicture ]
 		/// <summary>
+		/// Downloads the picture from a internet and transfers it to a stream object. Returns null if the image does not exist.
+		/// </summary>
+		/// <param name="url">The url of the image to download.</param>
+		/// <returns>A <see cref="Stream"/> object containing the downloaded picture if the image exists, and null if it does not.</returns>
+		/// <remarks>
+		/// The method checks the download cache first to see if the picture has already 
+		/// been downloaded and if so returns the cached image. Otherwise it goes to the internet for the actual 
+		/// image.
+		/// </remarks>
+		public Stream DownloadPictureWithoutRedirect(string url)
+		{
+			return DownloadPicture(url, false);
+		}
+
+		/// <summary>
 		/// Downloads the picture from a internet and transfers it to a stream object.
 		/// </summary>
 		/// <param name="url">The url of the image to download.</param>
@@ -655,9 +675,14 @@ namespace FlickrNet
 		/// </remarks>
 		public System.IO.Stream DownloadPicture(string url)
 		{
+			return DownloadPicture(url, true);
+		}
+
+		private System.IO.Stream DownloadPicture(string url, bool redirect)
+		{
 			if( CacheDisabled )
 			{
-				return DoDownloadPicture(url);
+				return DoDownloadPicture(url, redirect);
 			}
 
 			const int BUFFER_SIZE = 1024 * 10;
@@ -670,7 +695,9 @@ namespace FlickrNet
 
 			PictureCacheItem picCache = new PictureCacheItem();
 			picCache.filename = Path.Combine(Cache.CacheLocation,Guid.NewGuid().ToString());
-			Stream read = DoDownloadPicture(url);
+			Stream read = DoDownloadPicture(url, redirect);
+			if( !redirect && read == null ) return null;
+
 			Stream write = new FileStream(picCache.filename, FileMode.Create, FileAccess.Write, FileShare.None);
 
 			byte[] buffer = new byte[BUFFER_SIZE];
