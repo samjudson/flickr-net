@@ -23,7 +23,7 @@ describe 'Place Info' do
 	
 	it 'resolve place id' do
 		# Search for newcastle
-		location = @flickrApi.PlacesResolvePlaceId 'IEcHLFCaAZwoKQ'
+		location = @flickrApi.PlacesGetInfo 'IEcHLFCaAZwoKQ', nil
 		
 		location.should_not == nil
 		location.PlaceId.to_str.should == 'IEcHLFCaAZwoKQ'
@@ -56,7 +56,7 @@ describe 'Place Info' do
 	
 	it 'resolve WOE id' do
 		# Search for newcastle
-		location = @flickrApi.PlacesResolvePlaceId '30079'
+		location = @flickrApi.PlacesResolvePlaceId nil, '30079'
 
 		location.should_not == nil
 		location.PlaceId.to_str.should == 'IEcHLFCaAZwoKQ'
@@ -78,7 +78,7 @@ describe 'Place Info' do
 	
 	it 'resolve place URL' do
 		# Search for newcastle
-		location = @flickrApi.PlacesResolvePlaceUrl '/United+Kingdom/England/Newcastle+upon+Tyne'
+		location = @flickrApi.PlacesGetInfoByUrl '/United+Kingdom/England/Newcastle+upon+Tyne'
 
 		location.should_not == nil
 		location.PlaceId.to_str.should == 'IEcHLFCaAZwoKQ'
