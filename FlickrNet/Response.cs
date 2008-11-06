@@ -90,8 +90,8 @@ namespace FlickrNet
 		/// <summary>
 		/// A <see cref="Location"/> instance.
 		/// </summary>
-		[XmlElement("location", Form=XmlSchemaForm.Unqualified)]
-		public Location Location;
+		[XmlElement("place", Form=XmlSchemaForm.Unqualified)]
+		public Place Place;
 
 		/// <summary>
 		/// If using flickr.test.echo this contains all the other elements not covered above.

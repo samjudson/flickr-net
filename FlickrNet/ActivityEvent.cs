@@ -4,8 +4,11 @@ using System.Xml;
 namespace FlickrNet
 {
 	/// <summary>
-	/// Summary description for ActivityEvent.
+	/// A user event on a photo, e.g. Comment or Favourite etc.
 	/// </summary>
+	/// <remarks>
+	/// Includes the user's Flickr ID, name, the date of the activity and its content (if a comment).
+	/// </remarks>
 	public class ActivityEvent
 	{
 		private ActivityEventType _type;
@@ -15,7 +18,7 @@ namespace FlickrNet
 		private string _content;
 
 		/// <summary>
-		/// THe <see cref="ActivityEventType"/> of the event, either Comment or Note.
+		/// The <see cref="ActivityEventType"/> of the event, either Comment or Note.
 		/// </summary>
 		public ActivityEventType EventType
 		{

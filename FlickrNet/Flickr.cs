@@ -4500,25 +4500,32 @@ namespace FlickrNet
 			{
 				throw new FlickrApiException(response.Error);
 			}
-
 		}
 
 		/// <summary>
-		/// Resolve a place by its place id (or WOE id).
+		/// Return a list of locations with public photos that are parented by a Where on Earth (WOE) or Places ID.
 		/// </summary>
-		/// <param name="placeId">The place id or WOE id.</param>
-		/// <returns>A <see cref="Location"/> class.</returns>
-		public Location PlacesResolvePlaceId(string placeId)
+		/// <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+		/// <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+		/// <returns>Returns an array of <see cref="Place"/> elements.</returns>
+		public Place[] PlacesGetChildrenWithPhotosPublic(string placeId, string woeId)
 		{
 			Hashtable parameters = new Hashtable();
-			parameters.Add("method", "flickr.places.resolvePlaceId");
+			parameters.Add("method", "flickr.places.getChildrenWithPhotosPublic");
+
+			if( (placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0 ))
+			{
+				throw new FlickrException("Both placeId and woeId cannot be null or empty.");
+			}
+
 			parameters.Add("place_id", placeId);
+			parameters.Add("woe_id", woeId);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				return response.Location;
+				return response.Places.PlacesCollection;
 			}
 			else
 			{
@@ -4527,21 +4534,29 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// Turns a place URL into a Location instance.
+		/// Get informations about a place.
 		/// </summary>
-		/// <param name="placeUrl">The 'URL' of the place.</param>
-		/// <returns>A <see cref="Location"/> instance.</returns>
-		public Location PlacesResolvePlaceUrl(string placeUrl)
+		/// <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+		/// <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+		/// <returns>The <see cref="Place"/> record for the place/woe ID.</returns>
+		public Place PlacesGetInfo(string placeId, string woeId)
 		{
 			Hashtable parameters = new Hashtable();
-			parameters.Add("method", "flickr.places.resolvePlaceUrl");
-			parameters.Add("url", placeUrl);
+			parameters.Add("method", "flickr.places.getChildrenWithPhotosPublic");
+
+			if( (placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0 ) )
+			{
+				throw new FlickrException("Both placeId and woeId cannot be null or empty.");
+			}
+
+			parameters.Add("place_id", placeId);
+			parameters.Add("woe_id", woeId);
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
 			if( response.Status == ResponseStatus.OK )
 			{
-				return response.Location;
+				return response.Place;
 			}
 			else
 			{
