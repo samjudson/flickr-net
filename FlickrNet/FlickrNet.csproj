@@ -295,6 +295,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "PhotoInfoUsage.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "PhotoLocation.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

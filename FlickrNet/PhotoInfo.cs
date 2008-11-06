@@ -21,6 +21,7 @@ namespace FlickrNet
 		private string _title;
 		private string _description;
 		private PhotoInfoTags _tags = new PhotoInfoTags();
+		private PhotoInfoUsage _usage = new PhotoInfoUsage();
 
 		/// <summary>
 		/// The id of the photo.
@@ -265,6 +266,15 @@ namespace FlickrNet
 
 				return Utils.UrlFormat(this, "_o", OriginalFormat);
 			}
+		}
+
+		/// <summary>
+		/// Allowed usage for this photo, based on the users permissions.
+		/// </summary>
+		[XmlElement("usage", Form=XmlSchemaForm.Unqualified)]
+		public PhotoInfoUsage Usage
+		{
+			get { return _usage; } set { _usage = value; }
 		}
 	}
 
