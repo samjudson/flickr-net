@@ -126,7 +126,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The number of photos in the photoset.
 		/// </summary>
-		[XmlAttribute("photos", Form=XmlSchemaForm.Unqualified)]
+		[XmlAttribute("total", Form=XmlSchemaForm.Unqualified)]
 		public int NumberOfPhotos
 		{
 			get { return _numberOfPhotos; } set { _numberOfPhotos = value; }
