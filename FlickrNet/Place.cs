@@ -138,12 +138,12 @@ namespace FlickrNet
 			string dec = reader.GetAttribute("latitude");
 			if( dec != null && dec.Length > 0 )
 			{
-				_latitude = decimal.Parse(dec);
+				_latitude = decimal.Parse(dec, System.Globalization.NumberFormatInfo.InvariantInfo);
 			}
 			dec = reader.GetAttribute("longitude");
 			if( dec != null && dec.Length > 0 )
 			{
-				_longitude = decimal.Parse(dec);
+				_longitude = decimal.Parse(dec, System.Globalization.NumberFormatInfo.InvariantInfo);
 			}
 
 			if( !reader.IsEmptyElement )
