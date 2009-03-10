@@ -440,7 +440,7 @@ namespace FlickrNet
 		public bool HasGeo
 		{
 			get { return _hasGeo; }
-			set { _hasGeo = false; }
+			set { _hasGeo = value; }
 		}
 
 		/// <summary>
