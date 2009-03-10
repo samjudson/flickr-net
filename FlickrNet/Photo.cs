@@ -34,6 +34,8 @@ namespace FlickrNet
 		private int _views = -1;
 		private string _media;
 		private string _mediaStatus;
+		private string _placeId;
+		private string _woeId;
 
 		/// <remarks/>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
@@ -277,13 +279,33 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// Longitude. Will be 0 if Geo extras not specified.
+		/// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
 		/// </summary>
 		[XmlAttribute("longitude", Form=XmlSchemaForm.Unqualified)]
 		public decimal Longitude
 		{
 			get { return _longitude; }
 			set { _longitude = value; }
+		}
+
+		/// <summary>
+		/// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
+		/// </summary>
+		[XmlAttribute("place_id", Form=XmlSchemaForm.Unqualified)]
+		public string PlaceId
+		{
+			get { return _placeId; }
+			set { _placeId = value; }
+		}
+
+		/// <summary>
+		/// The WOE (Where On Earth) ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
+		/// </summary>
+		[XmlAttribute("woeid", Form=XmlSchemaForm.Unqualified)]
+		public string WoeId
+		{
+			get { return _woeId; }
+			set { _woeId = value; }
 		}
 
 		/// <summary>

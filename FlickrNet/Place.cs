@@ -131,6 +131,7 @@ namespace FlickrNet
 		/// <param name="reader"></param>
 		void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
 		{
+			_description = reader.GetAttribute("name");
 			_placeId = reader.GetAttribute("place_id");
 			_placeUrl = reader.GetAttribute("place_url");
 			_placeType = reader.GetAttribute("place_type");
@@ -146,12 +147,6 @@ namespace FlickrNet
 				_longitude = decimal.Parse(dec, System.Globalization.NumberFormatInfo.InvariantInfo);
 			}
 
-			if( !reader.IsEmptyElement )
-			{
-				reader.MoveToContent();
-				_description = reader.ReadString();
-			}
-			
 			reader.Read();
 		}
 	}

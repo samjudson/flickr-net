@@ -4542,7 +4542,7 @@ namespace FlickrNet
 		public Place PlacesGetInfo(string placeId, string woeId)
 		{
 			Hashtable parameters = new Hashtable();
-			parameters.Add("method", "flickr.places.getChildrenWithPhotosPublic");
+			parameters.Add("method", "flickr.places.getInfo");
 
 			if( (placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0 ) )
 			{
