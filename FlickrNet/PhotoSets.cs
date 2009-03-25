@@ -1,5 +1,7 @@
 ﻿using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.IO;
+using System;
 
 namespace FlickrNet
 {
@@ -46,7 +48,7 @@ namespace FlickrNet
 	/// A set of properties for the photoset.
 	/// </summary>
 	[System.Serializable]
-	public class Photoset
+	public class Photoset : IXmlSerializable
 	{
 		private string _photosetId;
 		private string _url;
@@ -55,7 +57,6 @@ namespace FlickrNet
 		private string _secret;
 		private string _server;
 		private string _farm;
-		private int _numberOfPhotos;
 		private string _title;
 		private string _description;
 		private Photo[] _photoCollection = new Photo[0];
@@ -126,10 +127,10 @@ namespace FlickrNet
 		/// <summary>
 		/// The number of photos in the photoset.
 		/// </summary>
-		[XmlAttribute("total", Form=XmlSchemaForm.Unqualified)]
 		public int NumberOfPhotos
 		{
-			get { return _numberOfPhotos; } set { _numberOfPhotos = value; }
+			get { return _numPhotos; }
+			set { _numPhotos = value; }
 		}
 
 		/// <summary>
@@ -192,9 +193,85 @@ namespace FlickrNet
 		{
 			get { return Utils.UrlFormat(this, "_m", "jpg"); }
 		}
+		#region IXmlSerializable Members
 
+		void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
+		{
+			// TODO:  Add Photoset.WriteXml implementation
+		}
 
+		XmlSchema IXmlSerializable.GetSchema()
+		{
+			// TODO:  Add Photoset.GetSchema implementation
+			return null;
+		}
 
+		private int _numPhotos;
 
+		void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
+		{
+            _photosetId = reader.GetAttribute("id");
+            _url = reader.GetAttribute("url");
+            _ownerId = reader.GetAttribute("owner_id");
+            _primaryPhotoId = reader.GetAttribute("primary");
+            _secret = reader.GetAttribute("secret");
+            _server = reader.GetAttribute("server");
+            _farm = reader.GetAttribute("farm");
+
+            if (reader.GetAttribute("photos") != null) _numPhotos = int.Parse(reader.GetAttribute("photos"));
+			if( reader.GetAttribute("total") != null ) _numPhotos = int.Parse(reader.GetAttribute("total"));
+
+			System.Collections.ArrayList photos = new System.Collections.ArrayList();
+			XmlSerializer ser = new XmlSerializer(typeof(Photo));
+
+			if( !reader.IsEmptyElement )
+			{
+                reader.Read();
+
+                while(true)
+                {
+                    if (reader.Name == "photo")
+                    {
+                        StringReader r = new StringReader(reader.ReadOuterXml());
+                        try
+                        {
+                            Photo p = (Photo)ser.Deserialize(r);
+                            photos.Add(p);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                        continue;
+                    }
+                    if (reader.Name == "title")
+                    {
+                        _title = reader.ReadInnerXml();
+                        continue;
+                    }
+                    if (reader.Name == "description")
+                    {
+                        _description = reader.ReadInnerXml();
+                        continue;
+                    }
+                    if (reader.NodeType == System.Xml.XmlNodeType.EndElement && reader.Name == "photoset")
+                    {
+                        reader.Read();
+                    }
+                    break;
+                }
+
+                if (photos.Count > 0)
+                {
+                    _photoCollection = new Photo[photos.Count];
+                    photos.CopyTo(_photoCollection);
+                }
+                else
+                    _photoCollection = new Photo[0];
+
+			}
+		}
+
+		#endregion
 	}
 }
