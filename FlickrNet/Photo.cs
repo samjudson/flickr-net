@@ -6,7 +6,8 @@ namespace FlickrNet
 {
 	/// <remarks/>
 	[System.Serializable]
-	public class Photo 
+    [XmlRoot("photo", Namespace = "", IsNullable = false)]
+    public class Photo 
 	{
     
 		private string _photoId;
