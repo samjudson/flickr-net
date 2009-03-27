@@ -614,7 +614,9 @@ namespace FlickrNet
 			}
 			else
 			{
-				ResponseCacheItem cached = (ResponseCacheItem) Cache.Responses.Get(url + "?" + variables, cacheTimeout, true);
+				string urlComplete = url + "?" + variables;
+
+				ResponseCacheItem cached = (ResponseCacheItem) Cache.Responses.Get(urlComplete, cacheTimeout, true);
 				if (cached != null)
 				{
 					System.Diagnostics.Debug.WriteLine("Cache hit");
@@ -629,7 +631,7 @@ namespace FlickrNet
 
 					ResponseCacheItem resCache = new ResponseCacheItem();
 					resCache.Response = responseXml;
-					resCache.Url = url;
+					resCache.Url = urlComplete;
 					resCache.CreationTime = DateTime.UtcNow;
 
 					FlickrNet.Response response = Utils.Deserialize(responseXml);
@@ -637,7 +639,7 @@ namespace FlickrNet
 					if( response.Status == ResponseStatus.OK )
 					{
 						Cache.Responses.Shrink(Math.Max(0, Cache.CacheSizeLimit - responseXml.Length));
-						Cache.Responses[url] = resCache;
+						Cache.Responses[urlComplete] = resCache;
 					}
 
 					return response;
