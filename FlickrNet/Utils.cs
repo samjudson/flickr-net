@@ -369,6 +369,46 @@ namespace FlickrNet
 		}
 
 
+        internal static MemberType ParseIdToMemberType(string memberTypeId)
+        {
+            switch (memberTypeId)
+            {
+                case "1":
+                    return MemberType.Narwhal;
+                case "2":
+                    return MemberType.Member;
+                case "3":
+                    return MemberType.Moderator;
+                case "4":
+                    return MemberType.Admin;
+                default:
+                    return MemberType.NotSpecified;
+            }
+        }
+
+        internal static string MemberTypeToString(MemberType memberTypes)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if ((memberTypes & MemberType.Member) == MemberType.Member)
+                sb.Append("2");
+            if ((memberTypes & MemberType.Moderator) == MemberType.Moderator)
+            {
+                if (sb.Length > 0) sb.Append(",");
+                sb.Append("3");
+            }
+            if ((memberTypes & MemberType.Admin) == MemberType.Admin)
+            {
+                if (sb.Length > 0) sb.Append(",");
+                sb.Append("4");
+            }
+            if ((memberTypes & MemberType.Narwhal) == MemberType.Narwhal)
+            {
+                if (sb.Length > 0) sb.Append(",");
+                sb.Append("1");
+            }
+
+            return sb.ToString();
+        }
 
 	}
 

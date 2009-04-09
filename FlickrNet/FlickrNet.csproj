@@ -255,6 +255,21 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "Member.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "Members.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MemberType.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "Methods.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
