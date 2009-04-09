@@ -1722,6 +1722,35 @@ namespace FlickrNet
 				throw new FlickrApiException(response.Error);
 			}
 		}
+		public Members GroupsMemberGetList(string groupId)
+		{
+			return GroupsMemberGetList(groupId, 100, 1, MemberType.NotSpecified);
+		}
+
+		public Members GroupsMemberGetList(string groupId, int perPage, int page, MemberType memberTypes)
+		{
+			CheckRequiresAuthentication();
+
+			Hashtable parameters = new Hashtable();
+			parameters.Add("method", "flickr.groups.members.getList");
+			parameters.Add("api_key", _apiKey);
+			parameters.Add("per_page", perPage);
+			parameters.Add("page", page);
+			if (memberTypes != MemberType.NotSpecified) parameters.Add("membertypes", Utils.MemberTypeToString(memberTypes));
+			parameters.Add("group_id", groupId);
+
+			FlickrNet.Response response = GetResponseCache(parameters);
+
+			if (response.Status == ResponseStatus.OK)
+			{
+				return response.Members;
+			}
+			else
+			{
+				throw new FlickrApiException(response.Error);
+			}
+		}
+
 		#endregion
 
 		#region [ Group Pool ]
@@ -5544,6 +5573,6 @@ namespace FlickrNet
 			return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 		}
 		#endregion
-	}
 
+	}
 }
