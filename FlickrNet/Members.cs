@@ -50,7 +50,7 @@ namespace FlickrNet
 
         System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
