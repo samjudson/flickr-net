@@ -1722,11 +1722,25 @@ namespace FlickrNet
 				throw new FlickrApiException(response.Error);
 			}
 		}
+
+		/// <summary>
+		/// Get a list of group members.
+		/// </summary>
+		/// <param name="groupId">The group id to get the list of members for.</param>
+		/// <returns>A <see cref="Members"/> instance containing the first 100 members for the group.</returns>
 		public Members GroupsMemberGetList(string groupId)
 		{
 			return GroupsMemberGetList(groupId, 100, 1, MemberType.NotSpecified);
 		}
 
+		/// <summary>
+		/// Get a list of group members.
+		/// </summary>
+		/// <param name="groupId">The group id to get the list of members for.</param>
+		/// <param name="perPage">The number of members to return per page (default is 100, max is 500).</param>
+		/// <param name="page">The page of the results to return (default is 1).</param>
+		/// <param name="memberTypes">The types of members to be returned. Can be more than one.</param>
+		/// <returns>A <see cref="Members"/> instance containing the members for the group.</returns>
 		public Members GroupsMemberGetList(string groupId, int perPage, int page, MemberType memberTypes)
 		{
 			CheckRequiresAuthentication();

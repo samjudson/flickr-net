@@ -4,11 +4,17 @@ using System.Xml.Serialization;
 
 namespace FlickrNet
 {
+	/// <summary>
+	/// Details for a Flickr member, as returned by the <see cref="Flickr.GroupsMemberGetList"/> method.
+	/// </summary>
     public class Member : IXmlSerializable
     {
 
         private string _memberId;
 
+		/// <summary>
+		/// The user id for the member.
+		/// </summary>
         public string MemberId
         {
             get { return _memberId; }
@@ -17,6 +23,9 @@ namespace FlickrNet
 
         private string _username;
 
+		/// <summary>
+		/// The members name.
+		/// </summary>
         public string Username
         {
             get { return _username; }
@@ -25,6 +34,9 @@ namespace FlickrNet
 
         private string _iconServer;
 
+		/// <summary>
+		/// The icon server for the users buddy icon. See <see cref="IconUrl"/> for the complete URL.
+		/// </summary>
         public string IconServer
         {
             get { return _iconServer; }
@@ -33,7 +45,10 @@ namespace FlickrNet
 
         private string _iconFarm;
 
-        public string IconFarm
+		/// <summary>
+		/// The icon farm for the users buddy icon. See <see cref="IconUrl"/> for the complete URL.
+		/// </summary>
+		public string IconFarm
         {
             get { return _iconFarm; }
             set { _iconFarm = value; }
@@ -41,13 +56,19 @@ namespace FlickrNet
 
         private MemberType _memberType;
 
-        public MemberType MemberType
+		/// <summary>
+		/// The type of the member (basic, moderator or administrator).
+		/// </summary>
+		public MemberType MemberType
         {
             get { return _memberType; }
             set { _memberType = value; }
         }
 
-        public string IconUrl
+		/// <summary>
+		/// The icon URL for the users buddy icon. Calculated from the <see cref="IconFarm"/> and <see cref="IconServer"/>.
+		/// </summary>
+		public string IconUrl
         {
             get {
 				if (IconServer != null && IconServer.Length > 0 && IconServer != "0")

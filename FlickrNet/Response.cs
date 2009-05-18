@@ -94,7 +94,7 @@ namespace FlickrNet
         public Place Place;
 
         /// <summary>
-        /// Members returned by <see cref="Flickr.GroupsMembersGetList"/>.
+        /// Members returned by <see cref="Flickr.GroupsMemberGetList"/>.
         /// </summary>
         [XmlElement("members", Form = XmlSchemaForm.Unqualified)]
         public Members Members;

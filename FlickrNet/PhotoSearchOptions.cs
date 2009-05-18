@@ -271,7 +271,11 @@ namespace FlickrNet
 			}
 		}
 
-        public void AddLicense(LicenseType license)
+		/// <summary>
+		/// Adds a new license to the list of licenses to be searched for.
+		/// </summary>
+		/// <param name="license">The number of the license to search for.</param>
+		public void AddLicense(LicenseType license)
         {
             AddLicense((int)license);
         }

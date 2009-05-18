@@ -4,10 +4,16 @@ using System.Collections;
 
 namespace FlickrNet
 {
+	/// <summary>
+	/// A collection of members returned by the <see cref="Flickr.GroupsMemberGetList"/> method.
+	/// </summary>
     public class Members : IXmlSerializable
     {
         private int _page;
 
+		/// <summary>
+		/// The page of the results returned.
+		/// </summary>
         public int Page
         {
             get { return _page; }
@@ -16,6 +22,9 @@ namespace FlickrNet
 
         private int _pages;
 
+		/// <summary>
+		/// The total number of pages that could have been returned.
+		/// </summary>
         public int Pages
         {
             get { return _pages; }
@@ -24,6 +33,9 @@ namespace FlickrNet
 
         private int _numMembers;
 
+		/// <summary>
+		/// The total number of members in the group.
+		/// </summary>
         public int TotalMembers
         {
             get { return _numMembers; }
@@ -32,6 +44,9 @@ namespace FlickrNet
 
         private int _membersPerPage;
 
+		/// <summary>
+		/// The number of members returned per page.
+		/// </summary>
         public int MembersPerPage
         {
             get { return _membersPerPage; }
@@ -40,7 +55,9 @@ namespace FlickrNet
 
         private Member[] _members;
 
-
+		/// <summary>
+		/// A collection of <see cref="Member"/> instances for each member returned by the <see cref="Flickr.GroupsMemberGetList"/> method.
+		/// </summary>
         public Member[] MembersCollection
         {
             get { return _members; }

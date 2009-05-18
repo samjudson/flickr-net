@@ -9,13 +9,37 @@ namespace FlickrNet
     /// </summary>
     public enum LicenseType
     {
+		/// <summary>
+		/// All Rights Reserved.
+		/// </summary>
         AllRightsReserved = 0,
+		/// <summary>
+		/// Creative Commons: Attribution Non-Commercial, Share-alike License.
+		/// </summary>
         AttributionNonCommercialShareAlikeCC = 1,
+		/// <summary>
+		/// Creative Commons: Attribution Non-Commercial License.
+		/// </summary>
         AttributionNonCommercialCC = 2,
+		/// <summary>
+		/// Creative Commons: Attribution Non-Commercial, No Derivatives License.
+		/// </summary>
         AttributionNonCommercialNoDerivsCC = 3,
+		/// <summary>
+		/// Creative Commons: Attribution License.
+		/// </summary>
         AttributionCC = 4,
+		/// <summary>
+		/// Creative Commons: Attribution Share-alike License.
+		/// </summary>
         AttributionShareAlikeCC = 5,
+		/// <summary>
+		/// Creative Commons: Attribution No Derivatives License.
+		/// </summary>
         AttributionNoDerivsCC = 6,
+		/// <summary>
+		/// No Known Copyright Resitrctions (Flickr Commons).
+		/// </summary>
         NoKnownCopyrightRestrictions = 7
     }
 
