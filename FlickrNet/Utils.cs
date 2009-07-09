@@ -18,43 +18,10 @@ namespace FlickrNet
 		{
 		}
 
-#if !WindowsCE
-		internal static string UrlEncode(string oldString)
-		{
-			if( oldString == null ) return null;
-
-			string a = System.Web.HttpUtility.UrlEncode(oldString);
-			a = a.Replace("&", "%26");
-			a = a.Replace("=", "%3D");
-			a = a.Replace(" ", "%20");
-			return a;
-		}
-#else
-        internal static string UrlEncode(string oldString)
+        internal static string UrlEncode(string data)
         {
-            if (oldString == null) return String.Empty;
-            StringBuilder sb = new StringBuilder(oldString.Length * 2);
-            Regex reg = new Regex("[a-zA-Z0-9$-_.+!*'(),]");
-
-            foreach (char c in oldString)
-            {
-                if (reg.IsMatch(c.ToString()))
-                {
-                    sb.Append(c);
-                }
-                else
-                {
-                    sb.Append(ToHex(c));
-                }
-            }
-            return sb.ToString();
+            return Uri.EscapeDataString(data);
         }
-
-        private static string ToHex(char c)
-        {
-            return ((int)c).ToString("X");
-        }
-#endif
 
 		/// <summary>
 		/// Converts a <see cref="DateTime"/> object into a unix timestamp number.
