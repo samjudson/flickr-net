@@ -23,6 +23,14 @@ namespace FlickrNet
 		public Contacts Contacts;
 
 		/// <remarks/>
+		[XmlElement("collections", Form=XmlSchemaForm.Unqualified)]
+		public Collections CollectionList;
+
+		/// <remarks/>
+		[XmlElement("collection", Form=XmlSchemaForm.Unqualified)]
+		public CollectionInfo CollectionInfo;
+
+		/// <remarks/>
 		[XmlElement("photos", Form=XmlSchemaForm.Unqualified)]
 		public Photos Photos;
 
