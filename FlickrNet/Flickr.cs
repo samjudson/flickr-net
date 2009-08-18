@@ -4503,7 +4503,7 @@ namespace FlickrNet
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.orderSets");
-			parameters.Add("photosetIds", photosetIds);
+			parameters.Add("photoset_ids", photosetIds);
 
 			FlickrNet.Response response = GetResponseNoCache(parameters);
 
