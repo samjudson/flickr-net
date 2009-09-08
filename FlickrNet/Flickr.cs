@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using System.Text;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Threading;
 
 namespace FlickrNet
 {
@@ -1151,7 +1152,7 @@ namespace FlickrNet
 			if( Proxy != null ) req.Proxy = Proxy;
 			//req.Referer = "http://www.flickr.com";
 			req.KeepAlive = true;
-			req.Timeout = HttpTimeout * 1000;
+            req.Timeout = HttpTimeout;
 			req.ContentType = "multipart/form-data; boundary=" + boundary + "";
 			req.Expect = "";
 
@@ -1322,7 +1323,7 @@ namespace FlickrNet
 			if( Proxy != null ) req.Proxy = Proxy;
 			req.Referer = "http://www.flickr.com";
 			req.KeepAlive = false;
-			req.Timeout = HttpTimeout * 100;
+			req.Timeout = HttpTimeout;
 			req.ContentType = "multipart/form-data; boundary=" + boundary + "";
 
 			StringBuilder sb = new StringBuilder();
