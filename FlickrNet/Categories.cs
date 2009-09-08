@@ -74,7 +74,7 @@ namespace FlickrNet
 		/// The number of groups found within the category.
 		/// </summary>
 		[XmlAttribute("count", Form=XmlSchemaForm.Unqualified)]
-		public long GroupCount;
+		public int GroupCount;
 	}
 
 }

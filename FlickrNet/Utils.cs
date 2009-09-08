@@ -10,7 +10,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Internal class providing certain utility functions to other classes.
 	/// </summary>
-	internal sealed class Utils
+	public sealed class Utils
 	{
 		private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0);
 
@@ -18,7 +18,12 @@ namespace FlickrNet
 		{
 		}
 
-        internal static string UrlEncode(string data)
+        /// <summary>
+        /// Encodes a URL quesrystring data component.
+        /// </summary>
+        /// <param name="data">The data to encode.</param>
+        /// <returns>The URL encoded string.</returns>
+        public static string UrlEncode(string data)
         {
             return Uri.EscapeDataString(data);
         }
@@ -28,7 +33,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="date">The date to convert.</param>
 		/// <returns>A long for the number of seconds since 1st January 1970, as per unix specification.</returns>
-		internal static long DateToUnixTimestamp(DateTime date)
+		public static long DateToUnixTimestamp(DateTime date)
 		{
 			TimeSpan ts = date - unixStartDate;
 			return (long)ts.TotalSeconds;
@@ -39,7 +44,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="timestamp">The timestamp, as a string.</param>
 		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
-		internal static DateTime UnixTimestampToDate(string timestamp)
+		public static DateTime UnixTimestampToDate(string timestamp)
 		{
 			if( timestamp == null || timestamp.Length == 0 ) return DateTime.MinValue;
 
@@ -51,7 +56,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="timestamp">The unix timestamp.</param>
 		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
-		internal static DateTime UnixTimestampToDate(long timestamp)
+		public static DateTime UnixTimestampToDate(long timestamp)
 		{
 			return unixStartDate.AddSeconds(timestamp);
 		}
@@ -69,7 +74,7 @@ namespace FlickrNet
 		/// </example>
 		/// <param name="extras"></param>
 		/// <returns></returns>
-		internal static string ExtrasToString(PhotoSearchExtras extras)
+		public static string ExtrasToString(PhotoSearchExtras extras)
 		{
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
 			if( (extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken )
@@ -145,7 +150,12 @@ namespace FlickrNet
 			return sb.ToString();
 		}
 
-		internal static string SortOrderToString(PhotoSearchSortOrder order)
+        /// <summary>
+        /// Converts a <see cref="PhotoSearchSortOrder"/> into a string for use by the Flickr API.
+        /// </summary>
+        /// <param name="order">The sort order to convert.</param>
+        /// <returns>The string representative for the sort order.</returns>
+		public static string SortOrderToString(PhotoSearchSortOrder order)
 		{
 			switch(order)
 			{
@@ -168,7 +178,7 @@ namespace FlickrNet
 			}
 		}
 
-		internal static void PartialOptionsIntoArray(PartialSearchOptions options, Hashtable parameters)
+		public static void PartialOptionsIntoArray(PartialSearchOptions options, Hashtable parameters)
 		{
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());

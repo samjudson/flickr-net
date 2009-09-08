@@ -24,7 +24,7 @@ namespace FlickrNet
 		/// </summary>
 		public string CollectionId { get { return _collectionId; } }
 		/// <summary>
-		/// The number of child collections this collection contains. Call <see cref="Flickr.CollectionsGetTree"/> for children.
+		/// The number of child collections this collection contains. Call <see cref="Flickr.CollectionsGetTree()"/> for children.
 		/// </summary>
 		public int ChildCount { get { return _childCount; } }
 		/// <summary>

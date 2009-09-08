@@ -2454,7 +2454,7 @@ namespace FlickrNet
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Throws a <see cref="ArgumentOutOfRangeException"/> exception if the cound
 		/// is not between 10 and 50, or 0.</exception>
-		public Photos PhotosGetContactsPhotos(long count)
+		public Photos PhotosGetContactsPhotos(int count)
 		{
 			return PhotosGetContactsPhotos(count, false, false, false);
 		}
@@ -2473,7 +2473,7 @@ namespace FlickrNet
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Throws a <see cref="ArgumentOutOfRangeException"/> exception if the cound
 		/// is not between 10 and 50, or 0.</exception>
-		public Photos PhotosGetContactsPhotos(long count, bool justFriends, bool singlePhoto, bool includeSelf)
+		public Photos PhotosGetContactsPhotos(int count, bool justFriends, bool singlePhoto, bool includeSelf)
 		{
 			if( count != 0 && (count < 10 || count > 50) && !singlePhoto )
 			{
@@ -2525,7 +2525,7 @@ namespace FlickrNet
 		/// <param name="userId">The user ID whose contacts you wish to get photos for.</param>
 		/// <param name="count">The number of photos to return. Defaults to 10, maximum is 50.</param>
 		/// <returns>A <see cref="Photos"/> object containing details of the photos returned.</returns>
-		public Photos PhotosGetContactsPublicPhotos(string userId, long count)
+		public Photos PhotosGetContactsPublicPhotos(string userId, int count)
 		{
 			return PhotosGetContactsPublicPhotos(userId, count, false, false, false, PhotoSearchExtras.All);
 		}
@@ -2537,7 +2537,7 @@ namespace FlickrNet
 		/// <param name="count">The number of photos to return. Defaults to 10, maximum is 50.</param>
 		/// <param name="extras">A list of extra details to return for each photo.</param>
 		/// <returns>A <see cref="Photos"/> object containing details of the photos returned.</returns>
-		public Photos PhotosGetContactsPublicPhotos(string userId, long count, PhotoSearchExtras extras)
+		public Photos PhotosGetContactsPublicPhotos(string userId, int count, PhotoSearchExtras extras)
 		{
 			return PhotosGetContactsPublicPhotos(userId, count, false, false, false, extras);
 		}
@@ -2551,7 +2551,7 @@ namespace FlickrNet
 		/// <param name="singlePhoto">True to return just a single photo for each contact.</param>
 		/// <param name="includeSelf">True to include photos from the user ID specified as well.</param>
 		/// <returns></returns>
-		public Photos PhotosGetContactsPublicPhotos(string userId, long count, bool justFriends, bool singlePhoto, bool includeSelf)
+		public Photos PhotosGetContactsPublicPhotos(string userId, int count, bool justFriends, bool singlePhoto, bool includeSelf)
 		{
 			return PhotosGetContactsPublicPhotos(userId, count, justFriends, singlePhoto, includeSelf, PhotoSearchExtras.All);
 		}
@@ -2566,7 +2566,7 @@ namespace FlickrNet
 		/// <param name="includeSelf">True to include photos from the user ID specified as well.</param>
 		/// <param name="extras">A list of extra details to return for each photo.</param>
 		/// <returns></returns>
-		public Photos PhotosGetContactsPublicPhotos(string userId, long count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras)
+		public Photos PhotosGetContactsPublicPhotos(string userId, int count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras)
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getContactsPublicPhotos");
@@ -2824,7 +2824,7 @@ namespace FlickrNet
 		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
 		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
 		/// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
-		public Photos PhotosGetRecent(long perPage, long page)
+		public Photos PhotosGetRecent(int perPage, int page)
 		{
 			return PhotosGetRecent(perPage, page, PhotoSearchExtras.All);
 		}
@@ -2836,7 +2836,7 @@ namespace FlickrNet
 		/// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
 		/// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
 		/// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
-		public Photos PhotosGetRecent(long perPage, long page, PhotoSearchExtras extras)
+		public Photos PhotosGetRecent(int perPage, int page, PhotoSearchExtras extras)
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photos.getRecent");
@@ -4943,7 +4943,7 @@ namespace FlickrNet
 		/// <param name="userId">The NSID of the user to fetch the tag list for. If this argument is not specified, the currently logged in user (if any) is assumed.</param>
 		/// <param name="count">Number of popular tags to return. defaults to 10 when this argument is not present.</param>
 		/// <returns>An array of <see cref="Tag"/> objects.</returns>
-		public Tag[] TagsGetListUserPopular(string userId, long count)
+		public Tag[] TagsGetListUserPopular(string userId, int count)
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.tags.getListUserPopular");

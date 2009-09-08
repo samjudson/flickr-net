@@ -17,7 +17,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The number of photos in the current context, e.g. Group, Set or photostream.
 		/// </summary>
-		public long Count;
+		public int Count;
 		/// <summary>
 		/// The next photo in the context.
 		/// </summary>
@@ -45,7 +45,7 @@ namespace FlickrNet
 		/// The number of photos in the context.
 		/// </summary>
 		[XmlText()]
-		public long Count;
+		public int Count;
 	}
 
 	/// <summary>

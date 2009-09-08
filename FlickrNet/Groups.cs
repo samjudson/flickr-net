@@ -29,7 +29,7 @@ namespace FlickrNet
 		/// The number of memebers of the group.
 		/// </summary>
 		[XmlAttribute("members", Form=XmlSchemaForm.Unqualified)]
-		public long Members;
+		public int Members;
 	}
 
 	/// <summary>
@@ -78,7 +78,7 @@ namespace FlickrNet
         private string _groupId;
         private string _groupName;
         private string _description;
-        private long _members;
+        private int _members;
         private string _iconServer;
         private PoolPrivacy _privacy;
 
@@ -101,7 +101,7 @@ namespace FlickrNet
         }
 
 		/// <remarks/>
-        public long Members
+        public int Members
         {
             get { return _members; }
         }
@@ -291,12 +291,12 @@ namespace FlickrNet
 			get { return _isAdmin; }
 		}
 	
-		private long _numberOfPhotos;
+		private int _numberOfPhotos;
 
 		/// <summary>
 		/// The number of photos currently in the group pool.
 		/// </summary>
-		public long NumberOfPhotos
+		public int NumberOfPhotos
 		{ 
 			get { return _numberOfPhotos; }
 		}

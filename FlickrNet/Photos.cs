@@ -25,19 +25,19 @@ namespace FlickrNet
     
 		/// <remarks/>
 		[XmlAttribute("page", Form=XmlSchemaForm.Unqualified)]
-		public long PageNumber;
+		public int PageNumber;
     
 		/// <remarks/>
 		[XmlAttribute("pages", Form=XmlSchemaForm.Unqualified)]
-		public long TotalPages;
+		public int TotalPages;
     
 		/// <remarks/>
 		[XmlAttribute("perpage", Form=XmlSchemaForm.Unqualified)]
-		public long PhotosPerPage;
+		public int PhotosPerPage;
     
 		/// <remarks/>
 		[XmlAttribute("total", Form=XmlSchemaForm.Unqualified)]
-		public long TotalPhotos;
+		public int TotalPhotos;
 	}
 
 	/// <summary>
