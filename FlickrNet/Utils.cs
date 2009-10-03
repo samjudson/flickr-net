@@ -178,6 +178,11 @@ namespace FlickrNet
 			}
 		}
 
+        /// <summary>
+        /// Adds the partial options to the passed in <see cref="Hashtable"/>.
+        /// </summary>
+        /// <param name="options">The options to convert to an array.</param>
+        /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
 		public static void PartialOptionsIntoArray(PartialSearchOptions options, Hashtable parameters)
 		{
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());

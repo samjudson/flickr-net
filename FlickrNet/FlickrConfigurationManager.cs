@@ -23,7 +23,7 @@ namespace FlickrNet
 			{
 				if( settings == null )
 				{
-					settings = (FlickrConfigurationSettings)ConfigurationSettings.GetConfig( ConfigSection );
+					settings = (FlickrConfigurationSettings)ConfigurationManager.GetSection( ConfigSection );
 				}
 				
 				return settings;

@@ -414,19 +414,6 @@ namespace FlickrNet
 					Proxy.Credentials = creds;
 				}
 			}
-			else
-			{
-				// try and get default IE settings
-				try
-				{
-					Proxy = WebProxy.GetDefaultProxy();
-				}
-				catch(System.Security.SecurityException)
-				{
-					// Capture SecurityException for when running in a Medium Trust environment.
-				}
-			}
-
 #endif
 
 			CurrentService = DefaultService;
@@ -1095,8 +1082,9 @@ namespace FlickrNet
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename, string title, string description, string tags)
 		{
+            string file = Path.GetFileName(filename);
 			Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-			return UploadPicture(stream, title, description, tags, -1, -1, -1, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
+			return UploadPicture(stream, file, title, description, tags, false, false, false, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
 		}
 
 		/// <summary>
@@ -1114,14 +1102,16 @@ namespace FlickrNet
 		/// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
 		public string UploadPicture(string filename, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend)
 		{
+            string file = Path.GetFileName(filename);
 			Stream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-			return UploadPicture(stream, title, description, tags, isPublic?1:0, isFamily?1:0, isFriend?1:0, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
+			return UploadPicture(stream, file, title, description, tags, isPublic, isFamily, isFriend, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
 		}
 
 		/// <summary>
 		/// UploadPicture method that does all the uploading work.
 		/// </summary>
 		/// <param name="stream">The <see cref="Stream"/> object containing the pphoto to be uploaded.</param>
+        /// <param name="filename">The filename of the file to upload. Used as the title if title is null.</param>
 		/// <param name="title">The title of the photo (optional).</param>
 		/// <param name="description">The description of the photograph (optional).</param>
 		/// <param name="tags">The tags for the photograph (optional).</param>
@@ -1132,7 +1122,7 @@ namespace FlickrNet
 		/// <param name="safetyLevel">The safety level of the photo, i.e. Safe, Moderate or Restricted.</param>
 		/// <param name="hiddenFromSearch">Is the photo hidden from public searches.</param>
 		/// <returns>The id of the photograph after successful uploading.</returns>
-		public string UploadPicture(Stream stream, string title, string description, string tags, int isPublic, int isFamily, int isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
+        public string UploadPicture(Stream stream, string filename, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
 		{
 			CheckRequiresAuthentication();
 			/*
@@ -1172,17 +1162,17 @@ namespace FlickrNet
 			{
 				parameters.Add("tags", tags);
 			}
-			if( isPublic >= 0 )
+			if( isPublic )
 			{
-				parameters.Add("is_public", isPublic.ToString());
+				parameters.Add("is_public", "1");
 			}
-			if( isFriend >= 0 )
+			if( isFriend )
 			{
-				parameters.Add("is_friend", isFriend.ToString());
+				parameters.Add("is_friend", "1");
 			}
-			if( isFamily >= 0 )
+			if( isFamily )
 			{
-				parameters.Add("is_family", isFamily.ToString());
+				parameters.Add("is_family", "1");
 			}
 			if( safetyLevel != SafetyLevel.None )
 			{
@@ -1223,7 +1213,7 @@ namespace FlickrNet
 
 			// Photo
 			sb.Append("--" + boundary + "\r\n");
-			sb.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"image.jpeg\"\r\n");
+			sb.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + filename + "\"\r\n");
 			sb.Append("Content-Type: image/jpeg\r\n");
 			sb.Append("\r\n");
 
@@ -2470,6 +2460,7 @@ namespace FlickrNet
 		/// Ignores the count if this is true.</param>
 		/// <param name="includeSelf">If true includes yourself in the group of people to 
 		/// return photos for.</param>
+        /// <param name="extras">Optional extras that can be returned by this call.</param>
 		/// <returns>An instance of the <see cref="Photo"/> class containing the photos.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Throws a <see cref="ArgumentOutOfRangeException"/> exception if the cound

@@ -350,6 +350,9 @@ namespace FlickrNet
 			}
 		}
 
+        /// <summary>
+        /// Default constructor for the <see cref="Photo"/> class.
+        /// </summary>
         public Photo()
         {
         }
@@ -359,6 +362,10 @@ namespace FlickrNet
             Load(reader);
         }
 
+        /// <summary>
+        /// Loads a Photo class from an <see cref="XmlReader"/>.
+        /// </summary>
+        /// <param name="reader">The Xml fragment to create the <see cref="Photo"/> class from.</param>
         public void Load(XmlReader reader)
         {
             if (reader.LocalName != "photo")
@@ -468,7 +475,7 @@ namespace FlickrNet
                     case "isprimary":
                         break;
                     default:
-                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        //throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
                         break;
                 }
             }

@@ -428,6 +428,9 @@ namespace FlickrNet
 			set { _placeId = value; }
 		}
 
+        /// <summary>
+        /// True if the photo is taken from the Flickr Commons project.
+        /// </summary>
         public bool IsCommons
         {
             get { return _isCommons; }

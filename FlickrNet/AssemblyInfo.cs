@@ -61,7 +61,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyKeyName("")]
 
 #if !WindowsCE
-[assembly: AssemblyKeyFile("..\\..\\FlickrNet.snk")]
 [assembly: AllowPartiallyTrustedCallers()]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
 #endif
