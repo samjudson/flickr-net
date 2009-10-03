@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FlickrNet;
 
 namespace FlickrNetTest
 {
@@ -32,6 +33,11 @@ namespace FlickrNetTest
                     key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"SOFTWARE\FlickrNetTest");
                 key.SetValue("AuthToken", value);
             }
+        }
+
+        public static Flickr GetInstance()
+        {
+            return new Flickr(ApiKey);
         }
 
     }
