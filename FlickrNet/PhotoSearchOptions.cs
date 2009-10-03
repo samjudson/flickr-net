@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
@@ -18,7 +19,6 @@ namespace FlickrNet
 		private DateTime _maxUploadDate = DateTime.MinValue;
 		private DateTime _minTakenDate = DateTime.MinValue;
 		private DateTime _maxTakenDate = DateTime.MinValue;
-		private System.Collections.ArrayList _licenses = new System.Collections.ArrayList();
 		private PhotoSearchExtras _extras = PhotoSearchExtras.None;
 		private int _perPage = 0;
 		private int _page = 0;
@@ -37,6 +37,7 @@ namespace FlickrNet
 		private ContactSearch _contacts = ContactSearch.None;
 		private string _woeId;
 		private string _placeId;
+        private bool _isCommons;
 
 		/// <summary>
 		/// Creates a new instance of the search options.
@@ -236,69 +237,17 @@ namespace FlickrNet
 			set { _maxTakenDate = value; }
 		}
 
-		/// <summary>
-		/// Only return licenses with the selected license number.
-		/// See http://www.flickr.com/services/api/flickr.photos.licenses.getInfo.html
-		/// for more details on the numbers to use.
-		/// </summary>
-		[Obsolete("Use AddLicense/RemoveLicense to add/remove licenses")]
-		public int License
-		{
-			get 
-			{
-				if( _licenses.Count == 0 )
-					return 0;
-				else
-					return (int)_licenses[0];
-			}
-			set 
-			{
-				if( _licenses.Count == 0 )
-					_licenses.Add(value);
-				else
-					_licenses[0] = value;
-			}
-		}
+        private List<LicenseType> _licenses = new List<LicenseType>();
 
-		/// <summary>
-		/// Returns a copy of the licenses to be searched for.
-		/// </summary>
-		public int[] Licenses
-		{
-			get 
-			{
-				return (int[])_licenses.ToArray(typeof(int));
-			}
-		}
-
-		/// <summary>
-		/// Adds a new license to the list of licenses to be searched for.
-		/// </summary>
-		/// <param name="license">The number of the license to search for.</param>
-		public void AddLicense(LicenseType license)
+        /// <summary>
+        /// The licenses you wish to search for.
+        /// </summary>
+        public List<LicenseType> Licenses
         {
-            AddLicense((int)license);
+            get { return _licenses; }
         }
 
-		/// <summary>
-		/// Adds a new license to the list of licenses to be searched for.
-		/// </summary>
-		/// <param name="license">The number of the license to search for.</param>
-		public void AddLicense(int license)
-		{
-			if( !_licenses.Contains(license) ) _licenses.Add(license);
-		}
-
-		/// <summary>
-		/// Removes a license from the list of licenses to be searched for.
-		/// </summary>
-		/// <param name="license">The number of the license to remove.</param>
-		public void RemoveLicense(int license)
-		{
-			if( _licenses.Contains(license) ) _licenses.Remove(license);
-		}
-
-		/// <summary>
+        /// <summary>
 		/// Optional extras to return, defaults to all. See <see cref="PhotoSearchExtras"/> for more details.
 		/// </summary>
 		public PhotoSearchExtras Extras
@@ -478,6 +427,12 @@ namespace FlickrNet
 			get { return _placeId; }
 			set { _placeId = value; }
 		}
+
+        public bool IsCommons
+        {
+            get { return _isCommons; }
+            set { _isCommons = value; }
+        }
 
 		internal string ExtrasString
 		{

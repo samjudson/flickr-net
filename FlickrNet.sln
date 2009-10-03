@@ -3,6 +3,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNet", "FlickrNet\Flic
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrTest", "FlickrTest\FlickrTest.csproj", "{A91D6F9E-8BCF-4727-B3D2-FD959616D11E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -13,6 +17,10 @@ Global
 		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Debug.Build.0 = Debug|.NET
 		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Release.ActiveCfg = Release|.NET
 		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Release.Build.0 = Release|.NET
+		{A91D6F9E-8BCF-4727-B3D2-FD959616D11E}.Debug.ActiveCfg = Debug|.NET
+		{A91D6F9E-8BCF-4727-B3D2-FD959616D11E}.Debug.Build.0 = Debug|.NET
+		{A91D6F9E-8BCF-4727-B3D2-FD959616D11E}.Release.ActiveCfg = Release|.NET
+		{A91D6F9E-8BCF-4727-B3D2-FD959616D11E}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

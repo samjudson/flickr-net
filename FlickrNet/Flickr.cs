@@ -2443,7 +2443,7 @@ namespace FlickrNet
 		/// <returns>An instance of the <see cref="Photo"/> class containing the photos.</returns>
 		public Photos PhotosGetContactsPhotos()
 		{
-			return PhotosGetContactsPhotos(0, false, false, false);
+			return PhotosGetContactsPhotos(0, false, false, false, PhotoSearchExtras.None);
 		}
 
 		/// <summary>
@@ -2457,7 +2457,7 @@ namespace FlickrNet
 		/// is not between 10 and 50, or 0.</exception>
 		public Photos PhotosGetContactsPhotos(int count)
 		{
-			return PhotosGetContactsPhotos(count, false, false, false);
+			return PhotosGetContactsPhotos(count, false, false, false, PhotoSearchExtras.None);
 		}
 
 		/// <summary>
@@ -2474,7 +2474,7 @@ namespace FlickrNet
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Throws a <see cref="ArgumentOutOfRangeException"/> exception if the cound
 		/// is not between 10 and 50, or 0.</exception>
-		public Photos PhotosGetContactsPhotos(int count, bool justFriends, bool singlePhoto, bool includeSelf)
+		public Photos PhotosGetContactsPhotos(int count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras)
 		{
 			if( count != 0 && (count < 10 || count > 50) && !singlePhoto )
 			{
@@ -2486,6 +2486,7 @@ namespace FlickrNet
 			if( justFriends ) parameters.Add("just_friends", "1");
 			if( singlePhoto ) parameters.Add("single_photo", "1");
 			if( includeSelf ) parameters.Add("include_self", "1");
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
@@ -3154,7 +3155,7 @@ namespace FlickrNet
 		/// <param name="text">The text you want to search for in titles and descriptions.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearchText(string userId, string text, int license)
+		public Photos PhotosSearchText(string userId, string text, LicenseType license)
 		{
 			return PhotosSearch(userId, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
 		}
@@ -3167,7 +3168,7 @@ namespace FlickrNet
 		/// <param name="license">The license type to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearchText(string userId, string text, int license, PhotoSearchExtras extras)
+        public Photos PhotosSearchText(string userId, string text, LicenseType license, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(userId, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
 		}
@@ -3199,7 +3200,7 @@ namespace FlickrNet
 		/// <param name="text">The text you want to search for in titles and descriptions.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearchText(string text, int license)
+        public Photos PhotosSearchText(string text, LicenseType license)
 		{
 			return PhotosSearch(null, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
 		}
@@ -3211,7 +3212,7 @@ namespace FlickrNet
 		/// <param name="license">The license type to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearchText(string text, int license, PhotoSearchExtras extras)
+        public Photos PhotosSearchText(string text, LicenseType license, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(null, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
 		}
@@ -3244,7 +3245,7 @@ namespace FlickrNet
 		/// <param name="license">The license type to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string[] tags, int license, PhotoSearchExtras extras)
+        public Photos PhotosSearch(string[] tags, LicenseType license, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
 		}
@@ -3255,7 +3256,7 @@ namespace FlickrNet
 		/// <param name="tags">An array of tags to search for.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string[] tags, int license)
+        public Photos PhotosSearch(string[] tags, LicenseType license)
 		{
 			return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
 		}
@@ -3344,7 +3345,7 @@ namespace FlickrNet
 		/// <param name="tags">An array of tags to search for.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string[] tags, int license)
+        public Photos PhotosSearch(string userId, string[] tags, LicenseType license)
 		{
 			return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
 		}
@@ -3357,7 +3358,7 @@ namespace FlickrNet
 		/// <param name="license">The license type to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string[] tags, int license, PhotoSearchExtras extras)
+        public Photos PhotosSearch(string userId, string[] tags, LicenseType license, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
 		}
@@ -3434,7 +3435,7 @@ namespace FlickrNet
 		/// <param name="page">The page number to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, int license, int perPage, int page, PhotoSearchExtras extras)
+        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, LicenseType license, int perPage, int page, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(userId, String.Join(",", tags), tagMode, text, minUploadDate, maxUploadDate, license, perPage, page, extras);
 		}
@@ -3452,7 +3453,7 @@ namespace FlickrNet
 		/// <param name="perPage">Number of photos to return per page.</param>
 		/// <param name="page">The page number to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, int license, int perPage, int page)
+        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, LicenseType license, int perPage, int page)
 		{
 			return PhotosSearch(userId, String.Join(",", tags), tagMode, text, minUploadDate, maxUploadDate, license, perPage, page, PhotoSearchExtras.All);
 		}
@@ -3466,7 +3467,7 @@ namespace FlickrNet
 		/// <param name="license">The license type to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string tags, int license, PhotoSearchExtras extras)
+        public Photos PhotosSearch(string tags, LicenseType license, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
 		}
@@ -3477,7 +3478,7 @@ namespace FlickrNet
 		/// <param name="tags">A comma seperated list of tags to search for.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string tags, int license)
+        public Photos PhotosSearch(string tags, LicenseType license)
 		{
 			return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
 		}
@@ -3566,7 +3567,7 @@ namespace FlickrNet
 		/// <param name="tags">A comma seperated list of tags to search for.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string tags, int license)
+        public Photos PhotosSearch(string userId, string tags, LicenseType license)
 		{
 			return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
 		}
@@ -3579,7 +3580,7 @@ namespace FlickrNet
 		/// <param name="license">The license type to return.</param>
 		/// <param name="extras">Optional extras to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string tags, int license, PhotoSearchExtras extras)
+        public Photos PhotosSearch(string userId, string tags, LicenseType license, PhotoSearchExtras extras)
 		{
 			return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
 		}
@@ -3658,7 +3659,7 @@ namespace FlickrNet
 		/// <param name="maxUploadDate">The maxmimum upload date.</param>
 		/// <param name="license">The license type to return.</param>
 		/// <returns>A <see cref="Photos"/> instance.</returns>
-		public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, int license, int perPage, int page, PhotoSearchExtras extras)
+		public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, LicenseType license, int perPage, int page, PhotoSearchExtras extras)
 		{
 			PhotoSearchOptions options = new PhotoSearchOptions();
 			options.UserId = userId;
@@ -3667,7 +3668,7 @@ namespace FlickrNet
 			options.Text = text;
 			options.MinUploadDate = minUploadDate;
 			options.MaxUploadDate = maxUploadDate;
-			if( license > 0 ) options.AddLicense(license);
+			if( license > 0 ) options.Licenses.Add(license);
 			options.PerPage = perPage;
 			options.Page = page;
 			options.Extras = extras;
@@ -3695,16 +3696,11 @@ namespace FlickrNet
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_upload_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
 			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
-			if( options.Licenses.Length != 0 ) 
+			if( options.Licenses.Count != 0 ) 
 			{
-				string lic = "";
-				for(int i = 0; i < options.Licenses.Length; i++)
-				{
-					if( i > 0 ) lic += ",";
-					lic += Convert.ToString(options.Licenses[i]);
-				}
-				parameters.Add("license", lic);
-			}
+                string[] licenseArray = options.Licenses.ConvertAll<string>(delegate(LicenseType license) { return ((int)license).ToString(); }).ToArray();
+                parameters.Add("license", String.Join(",", licenseArray));
+            }
 			if( options.PerPage != 0 ) parameters.Add("per_page", options.PerPage.ToString());
 			if( options.Page != 0 ) parameters.Add("page", options.Page.ToString());
 			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
@@ -3722,6 +3718,7 @@ namespace FlickrNet
 			if( options.Contacts != ContactSearch.None ) parameters.Add("contacts", (options.Contacts == ContactSearch.AllContacts?"all":"ff"));
 			if( options.WoeId != null ) parameters.Add("woe_id", options.WoeId);
 			if( options.PlaceId != null ) parameters.Add("place_id", options.PlaceId);
+            if (options.IsCommons) parameters.Add("is_commons", "1");
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 

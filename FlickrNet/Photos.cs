@@ -2,48 +2,129 @@
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <remarks/>
 	[Serializable]
-	public class Photos 
+	public class Photos : List<Photo>, IXmlSerializable
 	{
-
-        private Photo[] _photos = new Photo[0];
+        //private Photo[] _photos = new Photo[0];
 
 		/// <remarks/>
-        [XmlElement("photo", Form = XmlSchemaForm.Unqualified)]
+        [Obsolete("Photos class now inherits from List<Photo>. Iterate Photos class directly")]
         public Photo[] PhotoCollection
         {
-            get { return _photos; }
-			set 
-			{
-				_photos = value==null?new Photo[0]:value; 
-			}
+            get { return this.ToArray(); }
         }
+
+        private int _totalPhotos;
+        private int _pageNumber;
+        private int _totalPages;
+        private int _photosPerPage;
+
+		/// <remarks/>
+        [Obsolete("User new Page property")]
+        public int PageNumber
+        {
+            get { return _pageNumber; }
+            set { _pageNumber = value; }
+        }
+
+        /// <remarks/>
+        public int Page { get { return _pageNumber; } set { _pageNumber = value; } }
     
 		/// <remarks/>
-		[XmlAttribute("page", Form=XmlSchemaForm.Unqualified)]
-		public int PageNumber;
-    
+        [Obsolete("User new Pages property")]
+        public int TotalPages
+        {
+            get { return _totalPages; }
+            set { _totalPages = value; }
+        }
+
+        /// <remarks/>
+        public int Pages
+        {
+            get { return _totalPages; }
+            set { _totalPages = value; }
+        }
+
+        /// <remarks/>
+        public int PhotosPerPage
+        {
+            get { return _photosPerPage; }
+            set { _photosPerPage = value; }
+        }
+
+
 		/// <remarks/>
-		[XmlAttribute("pages", Form=XmlSchemaForm.Unqualified)]
-		public int TotalPages;
-    
-		/// <remarks/>
-		[XmlAttribute("perpage", Form=XmlSchemaForm.Unqualified)]
-		public int PhotosPerPage;
-    
-		/// <remarks/>
-		[XmlAttribute("total", Form=XmlSchemaForm.Unqualified)]
-		public int TotalPhotos;
-	}
+        public int TotalPhotos
+        {
+            get { return _totalPhotos; }
+            set { _totalPhotos = value; }
+        }
+
+        #region IXmlSerializable Members
+
+        XmlSchema IXmlSerializable.GetSchema()
+        {
+            return null;
+        }
+
+        void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "photos")
+                throw new FlickrException("Unknown element found: " + reader.LocalName);
+
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "total":
+                        TotalPhotos = int.Parse(reader.Value);
+                        break;
+                    case "perpage":
+                        PhotosPerPage = int.Parse(reader.Value);
+                        break;
+                    case "page":
+                        Page = int.Parse(reader.Value);
+                        break;
+                    case "pages":
+                        Pages = int.Parse(reader.Value);
+                        break;
+                    default:
+                        throw new Exception("Unknown element: " + reader.Name + "=" + reader.Value);
+
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName == "photo")
+            {
+                Add(new Photo(reader));
+            }
+
+            // Skip to next element (if any)
+            reader.Skip();
+
+        }
+
+        void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
+        {
+            
+        }
+
+        #endregion
+    }
 
 	/// <summary>
 	/// A collection of <see cref="Photo"/> instances.
 	/// </summary>
 	[System.Serializable]
+    [Obsolete("User List<Photo> now")]
 	public class PhotoCollection : CollectionBase
 	{
 	

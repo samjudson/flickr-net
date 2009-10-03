@@ -2,6 +2,7 @@
 using System.Xml.Schema;
 using System.IO;
 using System;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
@@ -48,7 +49,7 @@ namespace FlickrNet
 	/// A set of properties for the photoset.
 	/// </summary>
 	[System.Serializable]
-	public class Photoset : IXmlSerializable
+	public class Photoset : List<Photo>, IXmlSerializable
 	{
 		private string _photosetId;
 		private string _url;
@@ -59,12 +60,10 @@ namespace FlickrNet
 		private string _farm;
 		private string _title;
 		private string _description;
-		private Photo[] _photoCollection = new Photo[0];
 
 		/// <summary>
 		/// The ID of the photoset.
 		/// </summary>
-		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
 		public string PhotosetId
 		{
 			get { return _photosetId; } set { _photosetId = value; }
@@ -73,7 +72,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL of the photoset.
 		/// </summary>
-		[XmlAttribute("url", Form=XmlSchemaForm.Unqualified)]
 		public string Url
 		{
 			get { return _url; } set { _url = value; }
@@ -82,7 +80,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The ID of the owner of the photoset.
 		/// </summary>
-		[XmlAttribute("owner", Form=XmlSchemaForm.Unqualified)]
 		public string OwnerId
 		{
 			get { return _ownerId; } set { _ownerId = value; }
@@ -91,7 +88,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The photo ID of the primary photo of the photoset.
 		/// </summary>
-		[XmlAttribute("primary", Form=XmlSchemaForm.Unqualified)]
 		public string PrimaryPhotoId
 		{
 			get { return _primaryPhotoId; } set { _primaryPhotoId = value; }
@@ -100,7 +96,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The secret for the primary photo for the photoset.
 		/// </summary>
-		[XmlAttribute("secret", Form=XmlSchemaForm.Unqualified)]
 		public string Secret
 		{
 			get { return _secret; } set { _secret = value; }
@@ -109,7 +104,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The server for the primary photo for the photoset.
 		/// </summary>
-		[XmlAttribute("server", Form=XmlSchemaForm.Unqualified)]
 		public string Server
 		{
 			get { return _server; } set { _server = value; }
@@ -118,7 +112,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The server farm for the primary photo for the photoset.
 		/// </summary>
-		[XmlAttribute("farm", Form=XmlSchemaForm.Unqualified)]
 		public string Farm
 		{
 			get { return _farm; } set { _farm = value; }
@@ -136,7 +129,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The title of the photoset.
 		/// </summary>
-		[XmlElement("title", Form=XmlSchemaForm.Unqualified)]
 		public string Title
 		{
 			get { return _title; } set { _title = value; }
@@ -145,7 +137,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The description of the photoset.
 		/// </summary>
-		[XmlElement("description", Form=XmlSchemaForm.Unqualified)]
 		public string Description
 		{
 			get { return _description; } set { _description = value; }
@@ -154,17 +145,9 @@ namespace FlickrNet
 		/// <summary>
 		/// An array of photo objects in the photoset.
 		/// </summary>
-		[XmlElement("photo", Form=XmlSchemaForm.Unqualified)]
 		public Photo[] PhotoCollection
 		{
-			get { return _photoCollection; } 
-			set 
-			{
-				if( value == null ) 
-					_photoCollection = new Photo[0];
-				else
-					_photoCollection = value; 
-			}
+			get { return this.ToArray(); } 
 		}
 
 		/// <summary>
@@ -193,16 +176,17 @@ namespace FlickrNet
 		{
 			get { return Utils.UrlFormat(this, "_m", "jpg"); }
 		}
+
 		#region IXmlSerializable Members
 
 		void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
 		{
-			// TODO:  Add Photoset.WriteXml implementation
+			
 		}
 
 		XmlSchema IXmlSerializable.GetSchema()
 		{
-			// TODO:  Add Photoset.GetSchema implementation
+			
 			return null;
 		}
 
@@ -221,7 +205,6 @@ namespace FlickrNet
             if (reader.GetAttribute("photos") != null) _numPhotos = int.Parse(reader.GetAttribute("photos"));
 			if( reader.GetAttribute("total") != null ) _numPhotos = int.Parse(reader.GetAttribute("total"));
 
-			System.Collections.ArrayList photos = new System.Collections.ArrayList();
 			XmlSerializer ser = new XmlSerializer(typeof(Photo));
 
 			if( !reader.IsEmptyElement )
@@ -236,7 +219,7 @@ namespace FlickrNet
                         try
                         {
                             Photo p = (Photo)ser.Deserialize(r);
-                            photos.Add(p);
+                            Add(p);
                         }
                         catch (Exception ex)
                         {
@@ -260,14 +243,6 @@ namespace FlickrNet
                     }
                     break;
                 }
-
-                if (photos.Count > 0)
-                {
-                    _photoCollection = new Photo[photos.Count];
-                    photos.CopyTo(_photoCollection);
-                }
-                else
-                    _photoCollection = new Photo[0];
 
 			}
 		}
