@@ -1162,18 +1162,11 @@ namespace FlickrNet
 			{
 				parameters.Add("tags", tags);
 			}
-			if( isPublic )
-			{
-				parameters.Add("is_public", "1");
-			}
-			if( isFriend )
-			{
-				parameters.Add("is_friend", "1");
-			}
-			if( isFamily )
-			{
-				parameters.Add("is_family", "1");
-			}
+
+			parameters.Add("is_public", isPublic?"1":"0");
+			parameters.Add("is_friend", isFriend?"1":"0");
+			parameters.Add("is_family", isFamily?"1":"0");
+
 			if( safetyLevel != SafetyLevel.None )
 			{
 				parameters.Add("safety_level", (int)safetyLevel);
