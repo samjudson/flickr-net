@@ -77,6 +77,10 @@
     <Compile Include="BoundaryBox.cs" />
     <Compile Include="Cache.cs" />
     <Compile Include="Categories.cs" />
+    <Compile Include="Collection.cs" />
+    <Compile Include="CollectionInfo.cs" />
+    <Compile Include="Collections.cs" />
+    <Compile Include="CollectionSet.cs" />
     <Compile Include="Comments.cs" />
     <Compile Include="Contacts.cs" />
     <Compile Include="Context.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Groups.cs" />
     <Compile Include="GroupSearchResults.cs" />
     <Compile Include="Licenses.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="LockFile.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="Members.cs" />
