@@ -276,7 +276,33 @@ namespace FlickrNet
 		{
 			get { return _usage; } set { _usage = value; }
 		}
-	}
+
+        /// <summary>
+        /// Is the currently authenticated user (if any) allowed to blog this photo.
+        /// </summary>
+        /// <remarks>Will always return false for unauthenticated calls.</remarks>
+        public bool CanBlog
+        {
+            get { return Usage.CanBlog == 1; }
+        }
+
+        /// <summary>
+        /// Is the currently authenticated user (if any) allowed to download this photo.
+        /// </summary>
+        public bool CanDownload
+        {
+            get { return Usage.CanDownload == 1; }
+        }
+
+        /// <summary>
+        /// Is the currently authenticated user (if any) allowed to print this photo.
+        /// </summary>
+        /// <remarks>Will always return false for unauthenticated calls.</remarks>
+        public bool CanPrint
+        {
+            get { return Usage.CanPrint == 1; }
+        }
+    }
 
 	/// <summary>
 	/// The information about the owner of a photo.

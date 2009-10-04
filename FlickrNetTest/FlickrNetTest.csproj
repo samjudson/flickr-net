@@ -45,6 +45,7 @@
     <Compile Include="FlickrPhotoSetGetPhotos.cs" />
     <Compile Include="FlickrPhotosetsGetList.cs" />
     <Compile Include="FlickrPhotosGetContactsPhotos.cs" />
+    <Compile Include="PhotoInfoCanBlogTest.cs" />
     <Compile Include="PhotoOwnerNameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData.cs" />
