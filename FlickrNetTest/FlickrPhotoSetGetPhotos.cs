@@ -42,7 +42,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestBasicGetPhotos()
         {
             Photoset set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
 
@@ -50,7 +50,25 @@ namespace FlickrNetTest
 
             Assert.AreEqual(8, set.NumberOfPhotos, "NumberOfPhotos should be 8.");
             Assert.AreEqual(8, set.PhotoCollection.Length, "Should be 8 photos returned.");
+        }
 
+        [TestMethod]
+        public void TestMachineTags()
+        {
+            Photoset set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
+
+            bool machineTagsFound = false;
+
+            foreach (Photo p in set)
+            {
+                if (!String.IsNullOrEmpty(p.MachineTags))
+                {
+                    machineTagsFound = true;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(machineTagsFound, "No machine tags were found in the photoset");
         }
     }
 }
