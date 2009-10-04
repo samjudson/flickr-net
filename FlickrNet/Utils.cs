@@ -298,14 +298,17 @@ namespace FlickrNet
 
 		private static XmlSerializer GetSerializer(Type type)
 		{
-			if( _serializers.ContainsKey(type.Name) )
-				return (XmlSerializer)_serializers[type.Name];
-			else
-			{
-				XmlSerializer s = new XmlSerializer(type);
-				_serializers.Add(type.Name, s);
-				return s;
-			}
+            lock (_serializers)
+            {
+                if (_serializers.ContainsKey(type.Name))
+                    return (XmlSerializer)_serializers[type.Name];
+                else
+                {
+                    XmlSerializer s = new XmlSerializer(type);
+                    _serializers.Add(type.Name, s);
+                    return s;
+                }
+            }
 		}
 		/// <summary>
 		/// Converts the response string (in XML) into the <see cref="Response"/> object.
