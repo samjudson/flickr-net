@@ -62,11 +62,11 @@ namespace FlickrNet
 		/// </summary>
 		public string PlaceUrl { get { return _placeUrl; } }
 
-		private string _placeType;
+		private PlaceType _placeType;
 		/// <summary>
 		/// The 'type' of this place, e.g. Region, Country etc.
 		/// </summary>
-		public string PlaceType { get { return _placeType; } }
+        public PlaceType PlaceType { get { return _placeType; } }
 
 		private string _woeId;
 		/// <summary>
@@ -134,7 +134,7 @@ namespace FlickrNet
 			_description = reader.GetAttribute("name");
 			_placeId = reader.GetAttribute("place_id");
 			_placeUrl = reader.GetAttribute("place_url");
-			_placeType = reader.GetAttribute("place_type");
+			_placeType = (PlaceType)Enum.Parse(typeof(PlaceType), reader.GetAttribute("place_type"), true);
 			_woeId = reader.GetAttribute("woeid");
 			string dec = reader.GetAttribute("latitude");
 			if( dec != null && dec.Length > 0 )
@@ -146,6 +146,13 @@ namespace FlickrNet
 			{
 				_longitude = decimal.Parse(dec, System.Globalization.NumberFormatInfo.InvariantInfo);
 			}
+
+            if (!reader.IsEmptyElement)
+            {
+                reader.Read();
+                _description = reader.Value;
+                reader.Read();
+            }
 
 			reader.Read();
 		}

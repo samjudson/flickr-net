@@ -266,6 +266,7 @@
     <Compile Include="Place.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PlaceType.cs" />
     <Compile Include="Response.cs">
       <SubType>Code</SubType>
     </Compile>

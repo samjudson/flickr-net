@@ -4661,6 +4661,33 @@ namespace FlickrNet
 			}
 		}
 
+        public Places PlacesPlacesForUser(PlaceType placeType)
+        {
+            CheckRequiresAuthentication();
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.places.placesForUser");
+
+            //if ((placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0))
+            //{
+            //    throw new FlickrException("Both placeId and woeId cannot be null or empty.");
+            //}
+
+            parameters.Add("place_type_id", (int)placeType);
+            //parameters.Add("woe_id", woeId);
+
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return response.Places;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+
 		#endregion
 
 		#region [ Photoset Comments ]
@@ -5640,5 +5667,5 @@ namespace FlickrNet
 		}
 		#endregion
 
-	}
+    }
 }
