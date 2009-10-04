@@ -2,11 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using FlickrNet;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlickrNetTest
 {
+    [TestClass]
     public class AuthHelper
     {
+        /// <summary>
+        /// This method will authenticate the current user, and then store the AuthToken in the 
+        /// </summary>
+        [TestMethod]
+        [Ignore]
         public void Auth()
         {
             Flickr f = new Flickr(TestData.ApiKey, TestData.SharedSecret);

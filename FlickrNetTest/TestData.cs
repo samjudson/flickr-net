@@ -40,5 +40,10 @@ namespace FlickrNetTest
             return new Flickr(ApiKey);
         }
 
+
+        internal static Flickr GetAuthInstance()
+        {
+            return new Flickr(ApiKey, SharedSecret, AuthToken);
+        }
     }
 }
