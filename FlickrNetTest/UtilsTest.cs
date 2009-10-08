@@ -71,6 +71,43 @@ namespace FlickrNetTest
         //
         #endregion
 
+        [TestMethod()]
+        public void TestUnixTimestampToDateString()
+        {
+            DateTime returnedDate = Utils.UnixTimestampToDate("1230813420");
+            DateTime expectedDate = new DateTime(2009, 1, 1, 12, 37, 0);
+
+            Assert.AreEqual(expectedDate, returnedDate);
+        }
+
+        [TestMethod()]
+        public void TestUnixTimestampToDateLong()
+        {
+            DateTime returnedDate = Utils.UnixTimestampToDate(1230813420);
+            DateTime expectedDate = new DateTime(2009, 1, 1, 12, 37, 0);
+
+            Assert.AreEqual(expectedDate, returnedDate);
+        }
+
+        [TestMethod()]
+        public void TestDateToUnixTimestamp()
+        {
+            DateTime testDate = new DateTime(2009, 1, 1, 12, 37, 0);
+            long expectedResult = 1230813420;
+            long actualResult = Utils.DateToUnixTimestamp(testDate);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [TestMethod()]
+        public void TestUnixTimestampeToDateInvalid()
+        {
+            string invalidTimestamp = "kjhkjh0987";
+            DateTime expectedResult = DateTime.MinValue;
+            DateTime actualResult = Utils.UnixTimestampToDate(invalidTimestamp);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
 
 
         /// <summary>

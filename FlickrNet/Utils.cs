@@ -47,8 +47,9 @@ namespace FlickrNet
 		public static DateTime UnixTimestampToDate(string timestamp)
 		{
 			if( timestamp == null || timestamp.Length == 0 ) return DateTime.MinValue;
-
-			return UnixTimestampToDate(long.Parse(timestamp));
+            long seconds;
+            if (!long.TryParse(timestamp, out seconds)) return DateTime.MinValue;
+			return UnixTimestampToDate(seconds);
 		}
 
 		/// <summary>
