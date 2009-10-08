@@ -7,14 +7,14 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for FlickrPhotoSetGetPhotos
+    /// Summary description for FlickrPhotosGetContactsPhotos
     /// </summary>
     [TestClass]
-    public class FlickrPhotoSetGetPhotos
+    public class PhotosGetContactsPhotos
     {
-        Flickr f = new Flickr(TestData.ApiKey);
+        Flickr f = TestData.GetAuthInstance();
 
-        public FlickrPhotoSetGetPhotos()
+        public PhotosGetContactsPhotos()
         {
             Flickr.CacheDisabled = true;
         }
@@ -42,33 +42,40 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestBasicGetPhotos()
+        [ExpectedException(typeof(SignatureRequiredException))]
+        public void TestGetContactsPhotosSignatureRequired()
         {
-            Photoset set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
-
-            Console.WriteLine(f.LastResponse);
-
-            Assert.AreEqual(8, set.NumberOfPhotos, "NumberOfPhotos should be 8.");
-            Assert.AreEqual(8, set.PhotoCollection.Length, "Should be 8 photos returned.");
+            Flickr f = TestData.GetInstance();
+            f.PhotosGetContactsPhotos();
         }
 
         [TestMethod]
-        public void TestMachineTags()
+        public void TestGetContactsPhotosBasic()
         {
-            Photoset set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
+            Photos photos = f.PhotosGetContactsPhotos(10);
 
-            bool machineTagsFound = false;
+            Console.WriteLine(f.LastResponse);
 
-            foreach (Photo p in set)
+            Assert.IsTrue(photos.Count > 0, "Should return some photos");
+            Assert.AreEqual(10, photos.Count, "Should return 10 photos");
+
+        }
+
+        [TestMethod]
+        public void TestGetContactsPhotosExtras()
+        {
+            Photos photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
+
+            Console.WriteLine(f.LastResponse);
+
+            Assert.IsTrue(photos.Count > 0, "Should return some photos");
+            Assert.AreEqual(10, photos.Count, "Should return 10 photos");
+
+            foreach (Photo p in photos)
             {
-                if (!String.IsNullOrEmpty(p.MachineTags))
-                {
-                    machineTagsFound = true;
-                    break;
-                }
+                Assert.IsNotNull(p.OwnerName, "OwnerName should not be null");
+                Assert.AreNotEqual(default(DateTime), p.DateTaken, "DateTaken should not be default DateTime");
             }
-
-            Assert.IsTrue(machineTagsFound, "No machine tags were found in the photoset");
         }
     }
 }

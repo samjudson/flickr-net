@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
@@ -22,6 +23,12 @@ namespace FlickrNet
 		private string _description;
 		private PhotoInfoTags _tags = new PhotoInfoTags();
 		private PhotoInfoUsage _usage = new PhotoInfoUsage();
+
+        private PhotoFavourite[] _favorites = new PhotoFavourite[0];
+
+        [XmlElement("person")]
+        public PhotoFavourite[] Favorites { get { return _favorites; } set { _favorites = value; } }
+
 
 		/// <summary>
 		/// The id of the photo.

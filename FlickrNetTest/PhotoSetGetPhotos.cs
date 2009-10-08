@@ -7,14 +7,14 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for FlickrPhotosGetContactsPhotos
+    /// Summary description for FlickrPhotoSetGetPhotos
     /// </summary>
     [TestClass]
-    public class FlickrPhotosGetContactsPhotos
+    public class PhotoSetGetPhotos
     {
-        Flickr f = new Flickr(TestData.ApiKey, TestData.SharedSecret, TestData.AuthToken);
+        Flickr f = new Flickr(TestData.ApiKey);
 
-        public FlickrPhotosGetContactsPhotos()
+        public PhotoSetGetPhotos()
         {
             Flickr.CacheDisabled = true;
         }
@@ -42,26 +42,33 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestBasicGetPhotos()
         {
-            Photos photos = f.PhotosGetContactsPhotos(10);
+            Photoset set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
 
             Console.WriteLine(f.LastResponse);
 
-            Assert.IsTrue(photos.Count > 0, "Should return some photos");
-            Assert.AreEqual(10, photos.Count, "Should return 10 photos");
-
+            Assert.AreEqual(8, set.NumberOfPhotos, "NumberOfPhotos should be 8.");
+            Assert.AreEqual(8, set.PhotoCollection.Length, "Should be 8 photos returned.");
         }
 
         [TestMethod]
-        public void TestMethodExtras()
+        public void TestMachineTags()
         {
-            Photos photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
+            Photoset set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
 
-            Console.WriteLine(f.LastResponse);
+            bool machineTagsFound = false;
 
-            Assert.IsTrue(photos.Count > 0, "Should return some photos");
-            Assert.AreEqual(10, photos.Count, "Should return 10 photos");
+            foreach (Photo p in set)
+            {
+                if (!String.IsNullOrEmpty(p.MachineTags))
+                {
+                    machineTagsFound = true;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(machineTagsFound, "No machine tags were found in the photoset");
         }
     }
 }

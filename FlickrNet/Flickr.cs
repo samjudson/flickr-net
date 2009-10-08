@@ -654,14 +654,14 @@ namespace FlickrNet
 			}
 
 			string variables = UrlStringBuilder.ToString();
-			_lastRequest = url;
+			_lastRequest = url + "?" + variables;
 			_lastResponse = string.Empty;
 
 			if( CacheDisabled )
 			{
 				string responseXml = DoGetResponse(url, variables);
 				_lastResponse = responseXml;
-				return Utils.Deserialize(responseXml);
+				return Utils.Deserialize<Response>(responseXml);
 			}
 			else
 			{
@@ -672,7 +672,7 @@ namespace FlickrNet
 				{
 					System.Diagnostics.Debug.WriteLine("Cache hit");
 					_lastResponse = cached.Response;
-					return Utils.Deserialize(cached.Response);
+                    return Utils.Deserialize<Response>(cached.Response);
 				}
 				else
 				{
@@ -685,7 +685,7 @@ namespace FlickrNet
 					resCache.Url = urlComplete;
 					resCache.CreationTime = DateTime.UtcNow;
 
-					FlickrNet.Response response = Utils.Deserialize(responseXml);
+                    FlickrNet.Response response = Utils.Deserialize<Response>(responseXml);
 
 					if( response.Status == ResponseStatus.OK )
 					{
@@ -3989,6 +3989,32 @@ namespace FlickrNet
 				throw new FlickrApiException(response.Error);
 			}
 		}
+
+        public PhotoFavourite[] PhotosGetFavorites(string photoId)
+        {
+            return PhotosGetFavorites(photoId, 0, 0);
+        }
+
+        public PhotoFavourite[] PhotosGetFavorites(string photoId, int perPage, int page)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.photos.getFavorites");
+            parameters.Add("photo_id", photoId);
+            if (page > 0) parameters.Add("page", page);
+            if (perPage > 0) parameters.Add("per_page", perPage);
+
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return response.PhotoInfo.Favorites;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
 		#endregion
 
 		#region [ Photos Comments ]
@@ -5659,6 +5685,7 @@ namespace FlickrNet
 			return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 		}
 		#endregion
+
 
     }
 }

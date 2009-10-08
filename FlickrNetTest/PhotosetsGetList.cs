@@ -10,11 +10,11 @@ namespace FlickrNetTest
     /// Summary description for FlickrPhotosetsGetList
     /// </summary>
     [TestClass]
-    public class FlickrPhotosetsGetList
+    public class PhotosetsGetList
     {
         Flickr f = new Flickr(TestData.ApiKey);
 
-        public FlickrPhotosetsGetList()
+        public PhotosetsGetList()
         {
             Flickr.CacheDisabled = true;
         }

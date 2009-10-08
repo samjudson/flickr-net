@@ -315,14 +315,14 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="responseString">The response from Flickr.</param>
 		/// <returns>A <see cref="Response"/> object containing the details of the </returns>
-		internal static Response Deserialize(string responseString)
+		internal static T Deserialize<T>(string serializedObject)
 		{
-			XmlSerializer serializer = GetSerializer(typeof(FlickrNet.Response));
+			XmlSerializer serializer = GetSerializer(typeof(T));
 			try
 			{
 				// Deserialise the web response into the Flickr response object
-				StringReader responseReader = new StringReader(responseString);
-				FlickrNet.Response response = (FlickrNet.Response)serializer.Deserialize(responseReader);
+				StringReader responseReader = new StringReader(serializedObject);
+				T response = (T)serializer.Deserialize(responseReader);
 				responseReader.Close();
 
 				return response;

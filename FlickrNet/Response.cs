@@ -107,7 +107,7 @@ namespace FlickrNet
         [XmlElement("members", Form = XmlSchemaForm.Unqualified)]
         public Members Members;
 
-		/// <summary>
+        /// <summary>
 		/// If using flickr.test.echo this contains all the other elements not covered above.
 		/// </summary>
 		/// <remarks>

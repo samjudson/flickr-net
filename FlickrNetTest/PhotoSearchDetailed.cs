@@ -10,11 +10,11 @@ namespace FlickrNetTest
     /// Summary description for FlickrPhotoSearchDetailed
     /// </summary>
     [TestClass]
-    public class FlickrPhotoSearchDetailed
+    public class PhotoSearchDetailed
     {
         Flickr f = new Flickr(TestData.ApiKey);
 
-        public FlickrPhotoSearchDetailed()
+        public PhotoSearchDetailed()
         {
             Flickr.CacheDisabled = true;
         }

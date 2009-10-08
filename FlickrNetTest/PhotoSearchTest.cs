@@ -12,7 +12,7 @@ namespace FlickrNetTest
     ///to contain all FlickrNet.Flickr Unit Tests
     ///</summary>
     [TestClass()]
-    public class FlickrPhotoSearchTest
+    public class PhotoSearchTest
     {
         private TestContext testContextInstance;
 

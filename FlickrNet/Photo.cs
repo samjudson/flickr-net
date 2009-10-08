@@ -482,10 +482,7 @@ namespace FlickrNet
 
             // skip any children and move to next node.
             reader.Skip();
-
         }
-
-
 
         #region IXmlSerializable Members
 

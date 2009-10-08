@@ -40,14 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthHelper.cs" />
-    <Compile Include="FlickrPhotoSearchDetailed.cs" />
-    <Compile Include="FlickrPhotoSearchTest.cs" />
-    <Compile Include="FlickrPhotoSetGetPhotos.cs" />
-    <Compile Include="FlickrPhotosetsGetList.cs" />
-    <Compile Include="FlickrPhotosGetContactsPhotos.cs" />
+    <Compile Include="PhotoSearchDetailed.cs" />
+    <Compile Include="PhotoSearchTest.cs" />
+    <Compile Include="PhotosetsGetList.cs" />
+    <Compile Include="PhotosGetContactsPhotos.cs" />
     <Compile Include="PhotoInfoCanBlogTest.cs" />
     <Compile Include="PhotoOwnerNameTest.cs" />
     <Compile Include="PhotosetsOrderSets.cs" />
+    <Compile Include="PhotosGetFavouritesTests.cs" />
     <Compile Include="PhotoTagsTest.cs" />
     <Compile Include="PlacesForUserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +61,9 @@
       <Project>{5F017126-C1FF-4996-85CC-6150E80C6AFC}</Project>
       <Name>FlickrNet</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PhotoSetGetPhotos.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>

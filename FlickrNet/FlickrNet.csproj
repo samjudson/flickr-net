@@ -227,6 +227,7 @@
     <Compile Include="Person.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PhotoFavourite.cs" />
     <Compile Include="Photo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -236,6 +237,7 @@
     <Compile Include="PhotoDates.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PhotoFavourites.cs" />
     <Compile Include="PhotoInfo.cs">
       <SubType>Code</SubType>
     </Compile>
