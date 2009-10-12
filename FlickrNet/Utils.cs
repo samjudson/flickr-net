@@ -46,10 +46,15 @@ namespace FlickrNet
 		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
 		public static DateTime UnixTimestampToDate(string timestamp)
 		{
-			if( timestamp == null || timestamp.Length == 0 ) return DateTime.MinValue;
-            long seconds;
-            if (!long.TryParse(timestamp, out seconds)) return DateTime.MinValue;
-			return UnixTimestampToDate(seconds);
+			if( String.IsNullOrEmpty(timestamp) ) return DateTime.MinValue;
+            try
+            {
+                return UnixTimestampToDate(Int64.Parse(timestamp));
+            }
+            catch (FormatException)
+            {
+                return DateTime.MinValue;
+            }
 		}
 
 		/// <summary>
@@ -314,7 +319,8 @@ namespace FlickrNet
 		/// <summary>
 		/// Converts the response string (in XML) into the <see cref="Response"/> object.
 		/// </summary>
-		/// <param name="responseString">The response from Flickr.</param>
+        /// <param name="serializedObject">The response from Flickr.</param>
+        /// <typeparam name="T">The type of the class to serialize to.</typeparam>
 		/// <returns>A <see cref="Response"/> object containing the details of the </returns>
 		internal static T Deserialize<T>(string serializedObject)
 		{

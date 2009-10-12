@@ -6,18 +6,37 @@ using System.Xml;
 
 namespace FlickrNet
 {
+    /// <summary>
+    /// Details of the favourites for a photo.
+    /// </summary>
     public class PhotoFavourite: IXmlSerializable
     {
+        /// <summary>
+        /// The Flickr User ID of the user who favourited the photo.
+        /// </summary>
         public string UserId { get; set; }
 
+        /// <summary>
+        /// The user name of the user who favourited the photo.
+        /// </summary>
         public string UserName { get; set; }
 
+        /// <summary>
+        /// The date the hoto was favourited.
+        /// </summary>
         public DateTime FavoriteDate { get; set; }
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public PhotoFavourite()
         {
         }
 
+        /// <summary>
+        /// The serializing constructor, used by the internal classes to construct a new class.
+        /// </summary>
+        /// <param name="reader"></param>
         public PhotoFavourite(XmlReader reader)
         {
             LoadXml(reader);

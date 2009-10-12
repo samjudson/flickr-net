@@ -110,6 +110,8 @@
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoCounts.cs" />
     <Compile Include="PhotoDates.cs" />
+    <Compile Include="PhotoFavourite.cs" />
+    <Compile Include="PhotoFavourites.cs" />
     <Compile Include="PhotoInfo.cs" />
     <Compile Include="PhotoInfoUsage.cs" />
     <Compile Include="PhotoLocation.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="PhotoSearchOrder.cs" />
     <Compile Include="PhotoSets.cs" />
     <Compile Include="Place.cs" />
+    <Compile Include="PlaceType.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="ResponseXmlException.cs" />
     <Compile Include="SafeNativeMethods.cs" />

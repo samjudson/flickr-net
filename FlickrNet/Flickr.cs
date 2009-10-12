@@ -3990,11 +3990,23 @@ namespace FlickrNet
 			}
 		}
 
+        /// <summary>
+        /// Gets the first page of favourites for the given photo id.
+        /// </summary>
+        /// <param name="photoId">The ID of the photo to return the favourites for.</param>
+        /// <returns>An array of favourites for photos.</returns>
         public PhotoFavourite[] PhotosGetFavorites(string photoId)
         {
             return PhotosGetFavorites(photoId, 0, 0);
         }
 
+        /// <summary>
+        /// Get the list of favourites for a photo.
+        /// </summary>
+        /// <param name="photoId">The photo ID of the photo.</param>
+        /// <param name="perPage">How many favourites to return per page. Default is 10.</param>
+        /// <param name="page">The page to return. Default is 1.</param>
+        /// <returns>An array of favourites for photos.</returns>
         public PhotoFavourite[] PhotosGetFavorites(string photoId, int perPage, int page)
         {
             Hashtable parameters = new Hashtable();
@@ -4680,6 +4692,11 @@ namespace FlickrNet
 			}
 		}
 
+        /// <summary>
+        /// Gets the places of a particular type that the authenticated user has geotagged photos.
+        /// </summary>
+        /// <param name="placeType">The type of places to return.</param>
+        /// <returns>The list of places of that type.</returns>
         public Places PlacesPlacesForUser(PlaceType placeType)
         {
             CheckRequiresAuthentication();
