@@ -26,9 +26,11 @@ namespace FlickrNet
 		private string _username;
 		private string _realname;
 		private string _location;
+        private string _gender;
 		private PersonPhotosSummary _summary = new PersonPhotosSummary();
 		private string _photosUrl;
 		private string _profileUrl;
+        private string _mobileUrl;
 		private string _mboxHash;
 
 		/// <summary>The user id of the user.</summary>
@@ -51,12 +53,16 @@ namespace FlickrNet
 		/// 0 = free acouunt, 1 = pro account holder.</summary>
 		[XmlAttribute("iconserver", Form=XmlSchemaForm.Unqualified)]
 		public int IconServer { get { return _iconServer; } set { _iconServer = value; } }
-	
-		/// <summary>No idea what purpose this field serves.</summary>
-		[XmlAttribute("iconfarm", Form=XmlSchemaForm.Unqualified)]
-		public int IconFarm { get { return _iconFarm; } set { _iconFarm = value; } }
-	
-		/// <summary>The users username, also known as their screenname.</summary>
+
+        /// <summary>No idea what purpose this field serves.</summary>
+        [XmlAttribute("iconfarm", Form = XmlSchemaForm.Unqualified)]
+        public int IconFarm { get { return _iconFarm; } set { _iconFarm = value; } }
+
+        /// <summary>No idea what purpose this field serves.</summary>
+        [XmlAttribute("gender", Form = XmlSchemaForm.Unqualified)]
+        public string Gender { get { return _gender; } set { _gender = value; } }
+
+        /// <summary>The users username, also known as their screenname.</summary>
 		[XmlElement("username", Form=XmlSchemaForm.Unqualified)]
 		public string UserName { get { return _username; } set { _username = value; } }
 	
@@ -91,6 +97,13 @@ namespace FlickrNet
 		/// </summary>
 		[XmlElement("profileurl",Form=XmlSchemaForm.Unqualified)]
 		public string ProfileUrl { get { return _profileUrl; } set { _profileUrl = value; } }
+
+        /// <summary>
+        /// The users profile location on Flickr
+        /// http://m.flickr.com/photostream.gne?id=ID
+        /// </summary>
+        [XmlElement("mobileurl", Form = XmlSchemaForm.Unqualified)]
+        public string MobileUrl { get { return _mobileUrl; } set { _mobileUrl = value; } }
 
 		/// <summary>
 		/// Returns the <see cref="Uri"/> for the users Buddy Icon.
