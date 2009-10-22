@@ -49,16 +49,15 @@ namespace FlickrNet
 		[XmlAttribute("ispro", Form=XmlSchemaForm.Unqualified)]
 		public int IsPro { get { return _isPro; } set { _isPro = value; } }
 	
-		/// <summary>Does the user posses a pro account.
-		/// 0 = free acouunt, 1 = pro account holder.</summary>
+		/// <summary>The server that will serve up the users Buddy Icon.</summary>
 		[XmlAttribute("iconserver", Form=XmlSchemaForm.Unqualified)]
 		public int IconServer { get { return _iconServer; } set { _iconServer = value; } }
 
-        /// <summary>No idea what purpose this field serves.</summary>
+        /// <summary>The server farm that will serve up the users Buddy Icon.</summary>
         [XmlAttribute("iconfarm", Form = XmlSchemaForm.Unqualified)]
         public int IconFarm { get { return _iconFarm; } set { _iconFarm = value; } }
 
-        /// <summary>No idea what purpose this field serves.</summary>
+        /// <summary>The gender of the user on Flickr. May be null, or X for unspecified.</summary>
         [XmlAttribute("gender", Form = XmlSchemaForm.Unqualified)]
         public string Gender { get { return _gender; } set { _gender = value; } }
 
