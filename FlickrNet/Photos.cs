@@ -104,7 +104,8 @@ namespace FlickrNet
 
             while (reader.LocalName == "photo")
             {
-                Add(new Photo(reader));
+                Photo p = new Photo(reader);
+                if( !String.IsNullOrEmpty(p.PhotoId) ) Add(p);
             }
 
             // Skip to next element (if any)

@@ -49,6 +49,8 @@
     <Compile Include="PhotoOwnerNameTest.cs" />
     <Compile Include="PhotosetsOrderSets.cs" />
     <Compile Include="PhotosGetFavouritesTests.cs" />
+    <Compile Include="PhotosSearchInterestingTests.cs" />
+    <Compile Include="PhotosSerializationTests.cs" />
     <Compile Include="PhotoTagsTest.cs" />
     <Compile Include="PlacesForUserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -378,6 +378,11 @@ namespace FlickrNet
                 {
                     case "id":
                         PhotoId = reader.Value;
+                        if (String.IsNullOrEmpty(reader.Value))
+                        {
+                            reader.Skip();
+                            return;
+                        }
                         break;
                     case "owner":
                         UserId = reader.Value;
