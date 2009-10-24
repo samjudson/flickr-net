@@ -70,5 +70,25 @@ namespace FlickrNetTest
 
             Assert.IsTrue(machineTagsFound, "No machine tags were found in the photoset");
         }
+
+        [TestMethod]
+        public void TestPhotosetFilterMedia()
+        {
+            // http://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
+            // Set contains videos and photos
+            Photoset theset = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
+
+            foreach (Photo p in theset)
+            {
+                Assert.AreEqual("video", p.Media, "Should be video");
+            }
+
+            Photoset theset2 = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Photos);
+            foreach (Photo p in theset2)
+            {
+                Assert.AreEqual("photo", p.Media, "Should be video");
+            }
+
+        }
     }
 }

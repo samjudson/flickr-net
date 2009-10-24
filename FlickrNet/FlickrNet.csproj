@@ -206,6 +206,7 @@
     <Compile Include="LockFile.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MediaType.cs" />
     <Compile Include="Member.cs">
       <SubType>Code</SubType>
     </Compile>

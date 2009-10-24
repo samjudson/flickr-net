@@ -4463,8 +4463,8 @@ namespace FlickrNet
 		{
 			return PhotosetsGetPhotos(photosetId, extras, privacyFilter, 0, 0);
 		}
-		
-		/// <summary>
+
+				/// <summary>
 		/// Gets a collection of photos for a photoset.
 		/// </summary>
 		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
@@ -4473,7 +4473,22 @@ namespace FlickrNet
 		/// <param name="page">The page to return, defaults to 1.</param>
 		/// <param name="perPage">The number of photos to return per page.</param>
 		/// <returns>An array of <see cref="Photo"/> instances.</returns>
-		public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage)
+        public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage)
+        {
+            return PhotosetsGetPhotos(photosetId, extras, privacyFilter, page, perPage, MediaType.None);
+        }
+
+		/// <summary>
+		/// Gets a collection of photos for a photoset.
+		/// </summary>
+		/// <param name="photosetId">The ID of the photoset to return photos for.</param>
+		/// <param name="extras">The extras to return for each photo.</param>
+		/// <param name="privacyFilter">The privacy filter to search on.</param>
+		/// <param name="page">The page to return, defaults to 1.</param>
+		/// <param name="perPage">The number of photos to return per page.</param>
+        /// <param name="media">Filter on the type of media.</param>
+		/// <returns>An array of <see cref="Photo"/> instances.</returns>
+		public Photoset PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage, MediaType media)
 		{
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.photosets.getPhotos");
@@ -4482,6 +4497,7 @@ namespace FlickrNet
 			if( privacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
 			if( page > 0 ) parameters.Add("page", page);
 			if( perPage > 0 ) parameters.Add("per_page", perPage);
+            if (media != MediaType.None) parameters.Add("media", (media == MediaType.All ? "all" : (media == MediaType.Photos ? "photos" : (media == MediaType.Videos ? "videos" : ""))));
 
 			FlickrNet.Response response = GetResponseCache(parameters);
 
