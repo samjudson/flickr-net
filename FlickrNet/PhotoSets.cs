@@ -197,6 +197,7 @@ namespace FlickrNet
             _photosetId = reader.GetAttribute("id");
             _url = reader.GetAttribute("url");
             _ownerId = reader.GetAttribute("owner_id");
+            if (String.IsNullOrEmpty(_ownerId)) _ownerId = reader.GetAttribute("owner");
             _primaryPhotoId = reader.GetAttribute("primary");
             _secret = reader.GetAttribute("secret");
             _server = reader.GetAttribute("server");

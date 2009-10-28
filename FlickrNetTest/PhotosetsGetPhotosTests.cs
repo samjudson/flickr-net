@@ -90,5 +90,18 @@ namespace FlickrNetTest
             }
 
         }
+
+        [TestMethod]
+        public void TestPhotosetGetPhotosWebUrl()
+        {
+            Photoset theset = f.PhotosetsGetPhotos("72157618515066456");
+
+            foreach(Photo p in theset)
+            {
+                string url = "http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
+                Assert.AreEqual(url, p.WebUrl);
+            }
+
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace FlickrNetTest
 
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestPhotoSearchDetailed()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "applestore";
@@ -106,6 +106,43 @@ namespace FlickrNetTest
                 Assert.IsTrue(photo.Tags.Count > 0, "Should be some tags");
                 Assert.IsTrue(photo.Tags.Contains("test"), "At least one should be 'test'");
             }
+        }
+
+        [TestMethod]
+        public void TestPhotoSearchPerPage()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "microsoft";
+            o.Licenses.Add(LicenseType.AttributionCC);
+            o.Licenses.Add(LicenseType.AttributionNoDerivsCC);
+            o.Licenses.Add(LicenseType.AttributionNonCommercialCC);
+            o.Licenses.Add(LicenseType.AttributionNonCommercialNoDerivsCC);
+            o.Licenses.Add(LicenseType.AttributionNonCommercialShareAlikeCC);
+            o.Licenses.Add(LicenseType.AttributionShareAlikeCC);
+
+            o.MinUploadDate = DateTime.Today.AddDays(-2);
+            o.MaxUploadDate = DateTime.Today.AddDays(-1);
+
+            o.PerPage = 1;
+
+            Photos photos = f.PhotosSearch(o);
+
+            int totalPhotos1 = photos.TotalPhotos;
+
+            o.PerPage = 10;
+
+            photos = f.PhotosSearch(o);
+
+            int totalPhotos2 = photos.TotalPhotos;
+
+            o.PerPage = 100;
+
+            photos = f.PhotosSearch(o);
+
+            int totalPhotos3 = photos.TotalPhotos;
+
+            Assert.AreEqual(totalPhotos1, totalPhotos2, "Total Photos 1 & 2 should be equal");
+            Assert.AreEqual(totalPhotos2, totalPhotos3, "Total Photos 1 & 2 should be equal");
         }
 
 

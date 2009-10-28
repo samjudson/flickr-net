@@ -850,6 +850,8 @@ namespace FlickrNet
 		/// <returns>The url to redirect the user to.</returns>
 		public string AuthCalcWebUrl(AuthLevel authLevel)
 		{
+            CheckApiKey();
+
 			if( _sharedSecret == null ) throw new SignatureRequiredException();
 
 			string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower();
@@ -869,7 +871,7 @@ namespace FlickrNet
 		/// <returns>A <see cref="Auth"/> object containing user and token details.</returns>
 		public Auth AuthGetToken(string frob)
 		{
-			if( _sharedSecret == null ) throw new SignatureRequiredException();
+            if (_sharedSecret == null) throw new SignatureRequiredException();
 
 			Hashtable parameters = new Hashtable();
 			parameters.Add("method", "flickr.auth.getToken");
@@ -4374,6 +4376,10 @@ namespace FlickrNet
 
 			if( response.Status == ResponseStatus.OK )
 			{
+                foreach (Photoset set in response.Photosets.PhotosetCollection)
+                {
+                    set.OwnerId = userId;
+                }
 				return response.Photosets;
 			}
 			else
