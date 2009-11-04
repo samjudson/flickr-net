@@ -58,20 +58,20 @@ namespace FlickrNet
             if (node.SelectSingleNode("iconserver") != null)
                 _iconServer = node.SelectSingleNode("iconserver").InnerText;
             if (node.SelectSingleNode("members") != null)
-				_members = int.Parse(node.SelectSingleNode("members").InnerText);
+                _members = int.Parse(node.SelectSingleNode("members").InnerText, System.Globalization.CultureInfo.InvariantCulture);
 			if( node.SelectSingleNode("privacy") != null )
-				_privacy = (PoolPrivacy)int.Parse(node.SelectSingleNode("privacy").InnerText);
+                _privacy = (PoolPrivacy)int.Parse(node.SelectSingleNode("privacy").InnerText, System.Globalization.CultureInfo.InvariantCulture);
 
 			if( node.SelectSingleNode("throttle") != null )
 			{
 				XmlNode throttle = node.SelectSingleNode("throttle");
 				ThrottleInfo = new GroupThrottleInfo();
 				if( throttle.Attributes.GetNamedItem("count") != null )
-					ThrottleInfo.Count = int.Parse(throttle.Attributes.GetNamedItem("count").Value);
+                    ThrottleInfo.Count = int.Parse(throttle.Attributes.GetNamedItem("count").Value, System.Globalization.CultureInfo.InvariantCulture);
 				if( throttle.Attributes.GetNamedItem("mode") != null )
 					ThrottleInfo.setMode(throttle.Attributes.GetNamedItem("mode").Value);
 				if( throttle.Attributes.GetNamedItem("remaining") != null )
-					ThrottleInfo.Remaining = int.Parse(throttle.Attributes.GetNamedItem("remaining").Value);
+                    ThrottleInfo.Remaining = int.Parse(throttle.Attributes.GetNamedItem("remaining").Value, System.Globalization.CultureInfo.InvariantCulture);
 			}
 		}
 

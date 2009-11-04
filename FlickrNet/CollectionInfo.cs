@@ -77,7 +77,7 @@ namespace FlickrNet
 							_collectionId = reader.Value;
 							break;
 						case "child_count":
-							_childCount = int.Parse(reader.Value);
+                            _childCount = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
 							break;
 						case "datecreate":
 							_dateCreated = Utils.UnixTimestampToDate(reader.Value);

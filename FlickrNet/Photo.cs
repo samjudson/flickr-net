@@ -421,7 +421,7 @@ namespace FlickrNet
                         DateAdded = Utils.UnixTimestampToDate(reader.Value);
                         break;
                     case "license":
-                        License = (LicenseType)int.Parse(reader.Value);
+                        License = (LicenseType)int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "ownername":
                         OwnerName = reader.Value;
@@ -442,25 +442,25 @@ namespace FlickrNet
                         WoeId = reader.Value;
                         break;
                     case "accuracy":
-                        Accuracy = (GeoAccuracy)int.Parse(reader.Value);
+                        Accuracy = (GeoAccuracy)int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "latitude":
-                        Latitude = decimal.Parse(reader.Value);
+                        Latitude = decimal.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "longitude":
-                        Longitude = decimal.Parse(reader.Value);
+                        Longitude = decimal.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "machine_tags":
                         MachineTags = reader.Value;
                         break;
                     case "o_width":
-                        OriginalWidth = int.Parse(reader.Value);
+                        OriginalWidth = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "o_height":
-                        OriginalHeight = int.Parse(reader.Value);
+                        OriginalHeight = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "views":
-                        Views = int.Parse(reader.Value);
+                        Views = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "media":
                         Media = reader.Value;

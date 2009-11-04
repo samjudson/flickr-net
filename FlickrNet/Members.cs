@@ -74,10 +74,10 @@ namespace FlickrNet
         {
             //<members page="1" pages="1" perpage="100" total="33">
 
-            if (reader.GetAttribute("page") != null) _page = int.Parse(reader.GetAttribute("page"));
-            if (reader.GetAttribute("pages") != null) _pages = int.Parse(reader.GetAttribute("pages"));
-            if (reader.GetAttribute("perpage") != null) _membersPerPage = int.Parse(reader.GetAttribute("perpage"));
-            if (reader.GetAttribute("total") != null) _numMembers = int.Parse(reader.GetAttribute("total"));
+            if (reader.GetAttribute("page") != null) _page = int.Parse(reader.GetAttribute("page"), System.Globalization.CultureInfo.InvariantCulture);
+            if (reader.GetAttribute("pages") != null) _pages = int.Parse(reader.GetAttribute("pages"), System.Globalization.CultureInfo.InvariantCulture);
+            if (reader.GetAttribute("perpage") != null) _membersPerPage = int.Parse(reader.GetAttribute("perpage"), System.Globalization.CultureInfo.InvariantCulture);
+            if (reader.GetAttribute("total") != null) _numMembers = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
 
             ArrayList list = new ArrayList();
 

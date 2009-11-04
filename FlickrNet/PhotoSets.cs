@@ -74,7 +74,12 @@ namespace FlickrNet
 		/// </summary>
 		public string Url
 		{
-			get { return _url; } set { _url = value; }
+            get
+            {
+                if (String.IsNullOrEmpty(_url)) _url = String.Format("http://www.flickr.com/photos/{0}/sets/{1}/", _ownerId, _photosetId);
+                return _url;
+            }
+            set { _url = value; }
 		}
 
 		/// <summary>
@@ -203,8 +208,8 @@ namespace FlickrNet
             _server = reader.GetAttribute("server");
             _farm = reader.GetAttribute("farm");
 
-            if (reader.GetAttribute("photos") != null) _numPhotos = int.Parse(reader.GetAttribute("photos"));
-			if( reader.GetAttribute("total") != null ) _numPhotos = int.Parse(reader.GetAttribute("total"));
+            if (reader.GetAttribute("photos") != null) _numPhotos = int.Parse(reader.GetAttribute("photos"), System.Globalization.CultureInfo.InvariantCulture);
+            if (reader.GetAttribute("total") != null) _numPhotos = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
 
 			XmlSerializer ser = new XmlSerializer(typeof(Photo));
 

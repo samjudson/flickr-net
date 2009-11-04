@@ -145,6 +145,38 @@ namespace FlickrNetTest
             Assert.AreEqual(totalPhotos2, totalPhotos3, "Total Photos 1 & 2 should be equal");
         }
 
+        [TestMethod]
+        public void TestPhotoSearchBoundaryBox()
+        {
+            BoundaryBox b = new BoundaryBox(103.675997, 1.339811, 103.689456, 1.357764, GeoAccuracy.World);
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.BoundaryBox = b;
+            o.Accuracy = b.Accuracy;
+            o.MinUploadDate = DateTime.Now.AddYears(-1);
+            o.MaxUploadDate = DateTime.Now;
+
+            Photos ps = f.PhotosSearch(o);
+
+            foreach (Photo p in ps)
+            {
+                Console.WriteLine(p.PhotoId + " = " + p.Title);
+            }
+
+        }
+
+        [TestMethod]
+        public void TestPhotoSearchLatCulture()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("nb-NO");
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.HasGeo = true;
+            o.Extras |= PhotoSearchExtras.Geo;
+            o.Tags = "colorful";
+            o.PerPage = 10;
+
+            Photos photos = f.PhotosSearch(o);
+        }
 
     }
 }

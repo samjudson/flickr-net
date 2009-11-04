@@ -83,16 +83,16 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "total":
-                        TotalPhotos = int.Parse(reader.Value);
+                        TotalPhotos = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "perpage":
-                        PhotosPerPage = int.Parse(reader.Value);
+                        PhotosPerPage = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "page":
-                        Page = int.Parse(reader.Value);
+                        Page = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "pages":
-                        Pages = int.Parse(reader.Value);
+                        Pages = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     default:
                         throw new Exception("Unknown element: " + reader.Name + "=" + reader.Value);

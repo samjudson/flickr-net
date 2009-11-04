@@ -4864,7 +4864,7 @@ namespace FlickrNet
 			if( res.Status == ResponseStatus.OK )
 			{
 				string s = res.AllElements[0].GetAttribute("safety_level");
-				return (SafetyLevel)int.Parse(s);
+                return (SafetyLevel)int.Parse(s, System.Globalization.CultureInfo.InvariantCulture);
 			}
 			else
 			{
@@ -4887,7 +4887,7 @@ namespace FlickrNet
 			if( res.Status == ResponseStatus.OK )
 			{
 				string s = res.AllElements[0].GetAttribute("hidden");
-				return (HiddenFromSearch)int.Parse(s);
+                return (HiddenFromSearch)int.Parse(s, System.Globalization.CultureInfo.InvariantCulture);
 			}
 			else
 			{
@@ -4910,7 +4910,7 @@ namespace FlickrNet
 			if( res.Status == ResponseStatus.OK )
 			{
 				string s = res.AllElements[0].GetAttribute("content_type");
-				return (ContentType)int.Parse(s);
+                return (ContentType)int.Parse(s, System.Globalization.CultureInfo.InvariantCulture);
 			}
 			else
 			{

@@ -52,11 +52,13 @@ namespace FlickrNetTest
 
             foreach (Photoset set in photosets.PhotosetCollection)
             {
+                Assert.IsNotNull(set.OwnerId, "OwnerId should not be null");
                 Assert.IsTrue(set.NumberOfPhotos > 0, "NumberOfPhotos should be greater than zero");
                 Assert.IsNotNull(set.Title, "Title should not be null");
                 Assert.IsNotNull(set.Description, "Description should not be null");
                 Assert.AreEqual(TestData.TestUserId, set.OwnerId);
 
+                //PhotosetsGetList does not return the photos for a set.
                 Assert.AreEqual(0, set.Count);
                 Assert.AreEqual(0, set.PhotoCollection.Length);
             }
@@ -72,7 +74,7 @@ namespace FlickrNetTest
             foreach (Photoset set in photosets.PhotosetCollection)
             {
                 Assert.IsNotNull(set.Url);
-                Assert.AreEqual("http://www.flickr.com/photos/" + TestData.TestUserId + "/photoset/" + set.PhotosetId, set.Url);
+                Assert.AreEqual("http://www.flickr.com/photos/" + TestData.TestUserId + "/sets/" + set.PhotosetId + "/", set.Url);
             }
         }
     }

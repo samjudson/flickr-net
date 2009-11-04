@@ -28,7 +28,7 @@ namespace FlickrNet
 
 		void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
 		{
-			int count = int.Parse(reader.GetAttribute("total"));
+            int count = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
 			if( count == 0 ) return;
 
 			_places = new Place[count];

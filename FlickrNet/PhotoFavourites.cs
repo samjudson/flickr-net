@@ -62,16 +62,16 @@ namespace FlickrNet
                         PhotoId = reader.Value;
                         break;
                     case "page":
-                        Page = int.Parse(reader.Value);
+                        Page = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "pages":
-                        Pages = int.Parse(reader.Value);
+                        Pages = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "perpage":
-                        PerPage = int.Parse(reader.Value);
+                        PerPage = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "total":
-                        Total = int.Parse(reader.Value);
+                        Total = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     default:
                         break;

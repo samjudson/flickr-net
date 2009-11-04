@@ -159,7 +159,7 @@ namespace FlickrNet
 					case "port":
 						try
 						{
-							_proxyPort = int.Parse(attribute.Value);
+                            _proxyPort = int.Parse(attribute.Value, System.Globalization.CultureInfo.InvariantCulture);
 						}
 						catch(FormatException ex) 
 						{
