@@ -15,6 +15,8 @@ namespace FlickrNetTest
         // http://www.flickr.com/photos/samjudson/5890800 - Grey Street
         public const string FavouritedPhotoId = "5890800";
 
+        // FLOWERS
+        public const string GroupId = "13378274@N00";
 
         // Test user is Sam Judson (i.e. Me)
         public const string TestUserId = "41888973@N00";
