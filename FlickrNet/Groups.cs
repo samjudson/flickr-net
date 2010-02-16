@@ -51,7 +51,14 @@ namespace FlickrNet
 		{
 			if( node.Attributes.GetNamedItem("id") != null )
 				_groupId = node.Attributes.GetNamedItem("id").Value;
-			if( node.SelectSingleNode("name") != null )
+
+            if (node.Attributes.GetNamedItem("iconserver") != null)
+                _iconServer = node.Attributes["iconserver"].Value;
+
+            if (node.Attributes.GetNamedItem("iconfarm") != null)
+                _iconFarm = node.Attributes["iconfarm"].Value;
+
+            if (node.SelectSingleNode("name") != null)
 				_groupName = node.SelectSingleNode("name").InnerText;
 			if( node.SelectSingleNode("description") != null )
 				_description = node.SelectSingleNode("description").InnerXml;
@@ -80,6 +87,7 @@ namespace FlickrNet
         private string _description;
         private int _members;
         private string _iconServer;
+        private string _iconFarm;
         private PoolPrivacy _privacy;
 
 		/// <remarks/>
@@ -112,6 +120,16 @@ namespace FlickrNet
         public string IconServer
         {
             get { return _iconServer; }
+        }
+
+        public string IconFarm
+        {
+            get { return _iconFarm; }
+        }
+
+        public string GroupIconUrl
+        {
+            get { return String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId); }
         }
 
 		/// <remarks/>
