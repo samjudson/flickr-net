@@ -129,7 +129,17 @@ namespace FlickrNet
 
         public string GroupIconUrl
         {
-            get { return String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId); }
+            get
+            {
+                if (String.IsNullOrEmpty(IconServer) || IconServer == "0")
+                {
+                    return "http://www.flickr.com/images/buddyicon.jpg";
+                }
+                else
+                {
+                    return String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId);
+                }
+            }
         }
 
 		/// <remarks/>
