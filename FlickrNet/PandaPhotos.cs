@@ -4,22 +4,42 @@ using System.Text;
 
 namespace FlickrNet
 {
+    /// <summary>
+    /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos"/> methods.
+    /// </summary>
     public class PandaPhotos: List<Photo>, IFlickrParsable
     {
+        /// <summary>
+        /// The number of seconds the application developer should wait before calling this panda again.
+        /// </summary>
         public int Interval { get; set; }
+
+        /// <summary>
+        /// When the list of photos from this panda was last updated.
+        /// </summary>
         public DateTime LastUpdated { get; set; }
+
+        /// <summary>
+        /// The total number of photos returned.
+        /// </summary>
         public int Total { get; set; }
+
+        /// <summary>
+        /// The pands that returned this set of photos.
+        /// </summary>
         public string PandaName { get; set; }
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public PandaPhotos()
         {
         }
 
-        public void Load(System.Xml.XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photos")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);
-
 
             while (reader.MoveToNextAttribute())
             {

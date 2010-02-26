@@ -187,6 +187,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Flickr_Auth.cs" />
+    <Compile Include="Flickr_Collections.cs" />
     <Compile Include="Flickr_GetResponse.cs" />
     <Compile Include="Flickr_Panda.cs" />
     <Compile Include="Flickr_Photos.cs" />

@@ -1,12 +1,13 @@
 using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Xml;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <remarks/>
-	[System.Serializable]
-	public class Collection
+	public class Collection : IFlickrParsable
 	{
 		private string _CollectionId;
 		private string _title;
@@ -14,43 +15,30 @@ namespace FlickrNet
 		private string _iconlarge;
 		private string _iconsmall;
 
-		private CollectionSet[] _sets = new CollectionSet[0];
-		private Collection[] _collections = new Collection[0];
+        private List<CollectionSet> _subsets = new List<CollectionSet>();
+        private List<Collection> _subcollections = new List<Collection>();
 
 		/// <remarks/>
-		[XmlAttribute("id", Form = XmlSchemaForm.Unqualified)]
 		public string CollectionId { get { return _CollectionId; } set { _CollectionId = value; } }
 
 		/// <remarks/>
-		[XmlAttribute("title", Form = XmlSchemaForm.Unqualified)]
 		public string Title { get { return _title; } set { _title = value; } }
 
 		/// <remarks/>
-		[XmlAttribute("description", Form = XmlSchemaForm.Unqualified)]
 		public string Description { get { return _description; } set { _description = value; } }
 
 		/// <remarks/>
-		[XmlAttribute("iconlarge", Form = XmlSchemaForm.Unqualified)]
 		public string IconLarge { get { return _iconlarge; } set { _iconlarge = value; } }
 
 		/// <remarks/>
-		[XmlAttribute("iconsmall", Form = XmlSchemaForm.Unqualified)]
 		public string IconSmall { get { return _iconsmall; } set { _iconsmall = value; } }
 
 		/// <summary>
 		/// An array of <see cref="CollectionSet"/> objects.
 		/// </summary>
-		[XmlElement("set", Form = XmlSchemaForm.Unqualified)]
 		public CollectionSet[] Sets
 		{
-			get { return _sets; }
-			set
-			{
-				if (value == null)
-					_sets = new CollectionSet[0];
-				else
-					_sets = value;
-			}
+			get { return _subsets.ToArray(); }
 		}
 
 		/// <summary>
@@ -59,14 +47,61 @@ namespace FlickrNet
 		[XmlElement("collection", Form = XmlSchemaForm.Unqualified)]
 		public Collection[] Collections
 		{
-			get { return _collections; }
-			set
-			{
-				if (value == null)
-					_collections = new Collection[0];
-				else
-					_collections = value;
-			}
+			get { return _subcollections.ToArray(); }
 		}
-	}
+
+        public void Load(XmlReader reader)
+        {
+            if (reader.LocalName != "collection")
+                throw new FlickrException("Unknown element found: " + reader.LocalName);
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        CollectionId = reader.Value;
+                        break;
+                    case "title":
+                        Title = reader.Value;
+                        break;
+                    case "description":
+                        Description = reader.Value;
+                        break;
+                    case "iconlarge":
+                        IconLarge = reader.Value;
+                        break;
+                    case "iconsmall":
+                        IconSmall = reader.Value;
+                        break;
+                    default:
+                        throw new Exception("Unknown element: " + reader.Name + "=" + reader.Value);
+
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName == "collection" || reader.LocalName == "set")
+            {
+                if (reader.LocalName == "collection")
+                {
+                    Collection c = new Collection();
+                    c.Load(reader);
+                    _subcollections.Add(c);
+
+                }
+                else
+                {
+                    CollectionSet s = new CollectionSet();
+                    s.Load(reader);
+                    _subsets.Add(s);
+                }
+            }
+
+            // Skip to next element (if any)
+            reader.Skip();
+
+        }
+    }
 }

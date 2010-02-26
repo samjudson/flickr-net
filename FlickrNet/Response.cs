@@ -24,14 +24,6 @@ namespace FlickrNet
 		public Contacts Contacts;
 
 		/// <remarks/>
-		[XmlElement("collections", Form=XmlSchemaForm.Unqualified)]
-		public Collections CollectionList;
-
-		/// <remarks/>
-		[XmlElement("collection", Form=XmlSchemaForm.Unqualified)]
-		public CollectionInfo CollectionInfo;
-
-		/// <remarks/>
 		[XmlElement("photos", Form=XmlSchemaForm.Unqualified)]
 		public Photos Photos;
 
@@ -118,31 +110,6 @@ namespace FlickrNet
 		[XmlAnyElement(), NonSerialized()]
 		public XmlElement[] AllElements;
 
-        public static T Load<T>(string response)
-        {
-            StringReader sr = new StringReader(response);
-            XmlTextReader reader = new XmlTextReader(sr);
-
-            reader.Read();
-
-            if (reader.Name != "response")
-                throw new ResponseXmlException(String.Format("response Element expected at root of xml response but '{0}' found", reader.Name));
-
-            switch (reader.GetAttribute("stat"))
-            {
-                case "ok":
-                    string s = reader.ReadInnerXml();
-                    return Utils.Deserialize<T>(s);
-                case "":
-                case null:
-                    throw new ResponseXmlException("No 'stat' attribute found on response element.");
-                default:
-                    reader.ReadToDescendant("err");
-                    string s2 = reader.ReadOuterXml();
-                    ResponseError error = Utils.Deserialize<ResponseError>(s2);
-                    throw new FlickrApiException(error);
-            }
-        }
 	}
 
 	/// <summary>

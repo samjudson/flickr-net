@@ -1,13 +1,14 @@
 using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// Summary description for CollectionInfo.
 	/// </summary>
-	public class CollectionInfo : IXmlSerializable
+	public class CollectionInfo : IFlickrParsable
 	{
 		private string _title;
 		private string _description;
@@ -18,6 +19,8 @@ namespace FlickrNet
 		private string _iconSmall;
 		private string _server;
 		private string _secret;
+
+        private List<Photo> _iconPhotos = new List<Photo>();
 
 		/// <summary>
 		/// The ID for the collection.
@@ -56,70 +59,73 @@ namespace FlickrNet
 		/// </summary>
 		public string Title { get { return _title; } }
 
-		void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
-		{
-		}
+        public Photo[] IconPhotos { get { return _iconPhotos.ToArray(); } }
 
-		XmlSchema IXmlSerializable.GetSchema()
-		{
-			return null;
-		}
+        public void Load(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "collection")
+                throw new FlickrException("Unknown element found: " + reader.LocalName);
 
-		void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
-		{
-			if( reader.MoveToFirstAttribute() )
-			{
-				do
-				{
-					switch(reader.Name)
-					{
-						case "id":
-							_collectionId = reader.Value;
-							break;
-						case "child_count":
-                            _childCount = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
-							break;
-						case "datecreate":
-							_dateCreated = Utils.UnixTimestampToDate(reader.Value);
-							break;
-						case "iconlarge":
-							_iconLarge = reader.Value;
-							break;
-						case "iconsmall":
-							_iconSmall = reader.Value;
-							break;
-						case "server":
-							_server = reader.Value;
-							break;
-						case "secret":
-							_secret = reader.Value;
-							break;
-						default:
-							System.Diagnostics.Debug.WriteLine("Unknown attribute: " + reader.Name + ", " + reader.Value);
-							break;
-					}
-				}
-				while(reader.MoveToNextAttribute());
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.Name)
+                {
+                    case "id":
+                        _collectionId = reader.Value;
+                        break;
+                    case "child_count":
+                        _childCount = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        break;
+                    case "datecreate":
+                        _dateCreated = Utils.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "iconlarge":
+                        _iconLarge = reader.Value;
+                        break;
+                    case "iconsmall":
+                        _iconSmall = reader.Value;
+                        break;
+                    case "server":
+                        _server = reader.Value;
+                        break;
+                    case "secret":
+                        _secret = reader.Value;
+                        break;
+                    default:
+                        System.Diagnostics.Debug.WriteLine("Unknown attribute: " + reader.Name + ", " + reader.Value);
+                        break;
+                }
+            }
 
-				while(reader.Read())
-				{
-					switch(reader.Name)
-					{
-						case "title":
-							_title = reader.ReadString();
-							break;
-						case "description":
-							_description = reader.ReadString();
-							break;
-						case "iconphotos":
-							reader.Skip();
-							reader.Read();
-							return;
-						default:
-							throw new ApplicationException("Unknown element found in response stream: " + reader.Name);
-					}
-				}
-			}
-		}
+            while (reader.Read())
+            {
+                switch (reader.Name)
+                {
+                    case "title":
+                        _title = reader.ReadString();
+                        break;
+                    case "description":
+                        _description = reader.ReadString();
+                        break;
+                    case "iconphotos":
+                        reader.Read();
+
+                        while (reader.LocalName == "photo")
+                        {
+                            Photo p = new Photo();
+                            p.Load(reader);
+
+                            _iconPhotos.Add(p);
+                        }
+                        reader.Read();
+                        return;
+                    default:
+                        throw new ApplicationException("Unknown element found in response stream: " + reader.Name);
+                }
+            }
+
+            reader.Skip();
+
+        }
 	}
 }
