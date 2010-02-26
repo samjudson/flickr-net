@@ -1,31 +1,32 @@
 using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <remarks/>
-	[System.Serializable]
-	public class Collections
+	public class CollectionList : List<Collection>, IFlickrParsable
 	{
-		private Collection[] _collections = new Collection[0];
+        public void Load(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "collections")
+                throw new FlickrException("Unknown element found: " + reader.LocalName);
 
-		/// <summary>
-		/// An array of <see cref="Collection"/> objects.
-		/// </summary>
-		[XmlElement("collection", Form = XmlSchemaForm.Unqualified)]
-		public Collection[] CollectionList
-		{
-			get { return _collections; }
-			set
-			{
-				if (value == null)
-					_collections = new Collection[0];
-				else
-					_collections = value;
-			}
-		}
-	}
+            reader.Read();
+
+            while (reader.LocalName == "collection")
+            {
+                Collection c = new Collection();
+                c.Load(reader);
+                Add(c);
+            }
+
+            // Skip to next element (if any)
+            reader.Skip();
+
+        }
+    }
 
 
 }
