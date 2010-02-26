@@ -2,6 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.IO;
 
 namespace FlickrNet
 {
@@ -116,6 +117,32 @@ namespace FlickrNet
 		/// </remarks>
 		[XmlAnyElement(), NonSerialized()]
 		public XmlElement[] AllElements;
+
+        public static T Load<T>(string response)
+        {
+            StringReader sr = new StringReader(response);
+            XmlTextReader reader = new XmlTextReader(sr);
+
+            reader.Read();
+
+            if (reader.Name != "response")
+                throw new ResponseXmlException(String.Format("response Element expected at root of xml response but '{0}' found", reader.Name));
+
+            switch (reader.GetAttribute("stat"))
+            {
+                case "ok":
+                    string s = reader.ReadInnerXml();
+                    return Utils.Deserialize<T>(s);
+                case "":
+                case null:
+                    throw new ResponseXmlException("No 'stat' attribute found on response element.");
+                default:
+                    reader.ReadToDescendant("err");
+                    string s2 = reader.ReadOuterXml();
+                    ResponseError error = Utils.Deserialize<ResponseError>(s2);
+                    throw new FlickrApiException(error);
+            }
+        }
 	}
 
 	/// <summary>
@@ -140,6 +167,16 @@ namespace FlickrNet
 		/// </summary>
 		[XmlAttribute("msg", Form=XmlSchemaForm.Unqualified)]
 		public string Message;
+
+        public ResponseError()
+        {
+        }
+
+        public ResponseError(int code, string message)
+        {
+            Code = code;
+            Message = message;
+        }
 	}
 
 	/// <summary>

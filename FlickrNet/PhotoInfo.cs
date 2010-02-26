@@ -30,7 +30,7 @@ namespace FlickrNet
         /// The favourites for this photo. Used by <see cref="Flickr.PhotosGetFavorites(string,int,int)"/>
         /// </summary>
         [XmlElement("person")]
-        public PhotoFavourite[] Favorites { get { return _favorites; } set { _favorites = value; } }
+        public PhotoFavourite[] Favorites { get { return _favorites; } set { _favorites = value ?? new PhotoFavourite[0]; } }
 
 
 		/// <summary>

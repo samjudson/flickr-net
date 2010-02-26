@@ -9,7 +9,7 @@ namespace FlickrNet
     /// <summary>
     /// The collection of favourites for a photo.
     /// </summary>
-    public class PhotoFavourites : List<PhotoFavourite>, IXmlSerializable
+    public class PhotoFavourites : List<PhotoFavourite>, IXmlSerializable, IFlickrParsable
     {
         /// <summary>
         /// The ID of the photo.
@@ -49,10 +49,10 @@ namespace FlickrNet
         /// <param name="reader"></param>
         public PhotoFavourites(XmlReader reader)
         {
-            Loader(reader);
+            Load(reader);
         }
 
-        private void Loader(XmlReader reader)
+        public void Load(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
             {
@@ -77,6 +77,17 @@ namespace FlickrNet
                         break;
                 }
             }
+
+            reader.Read();
+
+            while (reader.LocalName == "person")
+            {
+                Add(new PhotoFavourite(reader));
+            }
+
+            // Skip to next element (if any)
+            reader.Skip();
+
         }
 
         #region IXmlSerializable Members
@@ -88,7 +99,7 @@ namespace FlickrNet
 
         void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
         {
-            Loader(reader);
+            Load(reader);
         }
 
         void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)

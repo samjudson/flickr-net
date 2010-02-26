@@ -216,5 +216,33 @@ namespace FlickrNetTest
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
+
+        [TestMethod]
+        public void ParseDateWithGranularityOK()
+        {
+            string d = "2010-01-17 12:43:23";
+            DateTime d2 = Utils.ParseDateWithGranularity(d);
+
+            Assert.AreEqual(2010, d2.Year);
+            Assert.AreEqual(1, d2.Month);
+            Assert.AreEqual(17, d2.Day);
+            Assert.AreEqual(12, d2.Hour);
+            Assert.AreEqual(43, d2.Minute);
+            Assert.AreEqual(23, d2.Second);
+        }
+
+        [TestMethod]
+        public void ParseDateWithGranularityZeroMonth()
+        {
+            string d = "2010-00-01 00:00:00";
+            DateTime d2 = Utils.ParseDateWithGranularity(d);
+
+            Assert.AreEqual(2010, d2.Year);
+            Assert.AreEqual(1, d2.Month);
+            Assert.AreEqual(1, d2.Day);
+            Assert.AreEqual(0, d2.Hour);
+            Assert.AreEqual(0, d2.Minute);
+            Assert.AreEqual(0, d2.Second);
+        }
     }
 }

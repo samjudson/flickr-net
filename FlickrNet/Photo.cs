@@ -413,7 +413,7 @@ namespace FlickrNet
                         break;
                     case "datetaken":
                         //e.g. 2007-11-04 08:55:18
-                        DateTaken = DateTime.ParseExact(reader.Value, "yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+                        DateTaken = Utils.ParseDateWithGranularity(reader.Value);
                         break;
                     case "datetakengranularity":
                         break;

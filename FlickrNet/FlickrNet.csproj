@@ -164,6 +164,7 @@
     <Compile Include="Enums.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExceptionHandler.cs" />
     <Compile Include="ExifPhoto.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -185,6 +186,10 @@
     <Compile Include="FlickrWebException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Flickr_Auth.cs" />
+    <Compile Include="Flickr_GetResponse.cs" />
+    <Compile Include="Flickr_Panda.cs" />
+    <Compile Include="Flickr_Photos.cs" />
     <Compile Include="GeoAccuracy.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -197,6 +202,7 @@
     <Compile Include="GroupSearchResults.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IFlickrParsable.cs" />
     <Compile Include="Licenses.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -219,6 +225,7 @@
     <Compile Include="Methods.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PandaPhotos.cs" />
     <Compile Include="PartialSearchOptions.cs">
       <SubType>Code</SubType>
     </Compile>

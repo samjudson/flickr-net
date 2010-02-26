@@ -66,22 +66,25 @@ namespace FlickrNetTest
         public void TestGetFavouritesNoFavourites()
         {
             // No favourites
-            PhotoFavourite[] favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
+            PhotoFavourites favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
 
-            Assert.AreEqual(0, favs.Length, "Should have no favourites");
+            Console.WriteLine(f.LastRequest);
+            Console.WriteLine(f.LastResponse);
+
+            Assert.AreEqual(0, favs.Count, "Should have no favourites");
 
         }
 
         [TestMethod]
         public void TestGetFavouritesHasFavourites()
         {
-            PhotoFavourite[] favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 500, 1);
+            PhotoFavourites favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 500, 1);
 
-            Assert.IsNotNull(favs, "Should not be null");
+            Assert.IsNotNull(favs, "PhotoFavourites instance should not be null.");
 
-            Assert.IsTrue(favs.Length > 0, "Should have favourites");
+            Assert.IsTrue(favs.Count > 0, "PhotoFavourites.Count should not be zero.");
 
-            Assert.AreEqual(50, favs.Length, "Should be 50 favourites listed (maximum returned)");
+            Assert.AreEqual(50, favs.Count, "Should be 50 favourites listed (maximum returned)");
 
             foreach (PhotoFavourite p in favs)
             {
@@ -89,9 +92,29 @@ namespace FlickrNetTest
                 Assert.IsFalse(String.IsNullOrEmpty(p.UserName), "Should have a user name.");
                 Assert.AreNotEqual(default(DateTime), p.FavoriteDate, "Favourite Date should not be default Date value");
                 Assert.IsTrue(p.FavoriteDate < DateTime.Now, "Favourite Date should be in the past.");
-
             }
+        }
 
+        [TestMethod]
+        public void TestGetFavouritesPaging()
+        {
+            PhotoFavourites favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 1);
+
+            Assert.AreEqual(10, favs.Count, "PhotoFavourites.Count should be 10.");
+            Assert.AreEqual(10, favs.PerPage, "PhotoFavourites.PerPage should be 10");
+            Assert.AreEqual(1, favs.Page, "PhotoFavourites.Page should be 1.");
+            Assert.AreEqual(241, favs.Total, "PhotoFavourites.Total should equal 241.");
+            Assert.AreEqual(25, favs.Pages, "PhotoFavourites.Pages should equal 25.");
+        }
+
+        [TestMethod]
+        public void TestGetFavouritesPagingTwo()
+        {
+            PhotoFavourites favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 2);
+
+            Assert.AreEqual(10, favs.Count, "PhotoFavourites.Count should be 10.");
+            Assert.AreEqual(10, favs.PerPage, "PhotoFavourites.PerPage should be 10");
+            Assert.AreEqual(2, favs.Page, "PhotoFavourites.Page should be 2.");
         }
     }
 }

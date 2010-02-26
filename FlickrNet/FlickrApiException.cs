@@ -7,13 +7,19 @@ namespace FlickrNet
 	/// </summary>
 	public class FlickrApiException : FlickrException
 	{
-		private int code;
-		private string msg = "";
+		private int _code;
+		private string _message = String.Empty;
+
+        public FlickrApiException(int code, string message)
+        {
+            _code = code;
+            _message = message;
+        }
 
 		internal FlickrApiException(ResponseError error)
 		{
-			code = error.Code;
-			msg = error.Message;
+			_code = error.Code;
+			_message = error.Message;
 		}
 
 		/// <summary>
@@ -21,7 +27,7 @@ namespace FlickrNet
 		/// </summary>
 		public int Code
 		{
-			get { return code; }
+			get { return _code; }
 		}
 
 		/// <summary>
@@ -29,7 +35,7 @@ namespace FlickrNet
 		/// </summary>
 		public string Verbose
 		{
-			get { return msg; }
+			get { return _message; }
 		}
 		
 		/// <summary>
@@ -39,7 +45,7 @@ namespace FlickrNet
 		{
 			get
 			{
-				return msg + " (" + code + ")";
+				return _message + " (" + _code + ")";
 			}
 		}
 	}

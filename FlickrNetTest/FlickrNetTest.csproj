@@ -67,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GroupPoolGetPhotosTests.cs" />
+    <Compile Include="GroupsGetInfoTest.cs" />
+    <Compile Include="PandaGetListTest.cs" />
+    <Compile Include="PhotoInfoDateTakenGranualityTest.cs" />
     <Compile Include="PhotosetsGetPhotosTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />

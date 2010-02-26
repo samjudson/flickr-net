@@ -4,6 +4,7 @@ using System.Collections;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
+using System.Xml;
 
 namespace FlickrNet
 {
@@ -402,6 +403,32 @@ namespace FlickrNet
             return sb.ToString();
         }
 
-	}
+        public static string Md5Hash(string unhashed)
+        {
+            System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider();
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(unhashed);
+            byte[] hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+        }
+
+
+
+        public  static DateTime ParseDateWithGranularity(string date)
+        {
+            DateTime output;
+
+            string format = "yyyy-MM-dd HH:mm:ss";
+            bool ableToParse = DateTime.TryParseExact(date, format, System.Globalization.DateTimeFormatInfo.InvariantInfo, System.Globalization.DateTimeStyles.None, out output);
+            if (!ableToParse)
+            {
+                if (Regex.IsMatch(date, @"^\d{4}-00-01 00:00:00$"))
+                {
+                    output = new DateTime(int.Parse(date.Substring(0, 4)), 1, 1);
+                }
+            }
+
+            return output;
+        }
+    }
 
 }
