@@ -5,7 +5,7 @@ using System.Text;
 namespace FlickrNet
 {
     /// <summary>
-    /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos"/> methods.
+    /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos(string)"/> methods.
     /// </summary>
     public class PandaPhotos: List<Photo>, IFlickrParsable
     {

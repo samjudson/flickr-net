@@ -15,18 +15,15 @@ namespace FlickrNet
 		private string _description;
 
 		/// <remarks/>
-		[XmlAttribute("id", Form = XmlSchemaForm.Unqualified)]
 		public string SetId { get { return _SetId; } set { _SetId = value; } }
 
 		/// <remarks/>
-		[XmlAttribute("title", Form = XmlSchemaForm.Unqualified)]
 		public string Title { get { return _title; } set { _title = value; } }
 
 		/// <remarks/>
-		[XmlAttribute("description", Form = XmlSchemaForm.Unqualified)]
 		public string Description { get { return _description; } set { _description = value; } }
 
-        public void Load(XmlReader reader)
+        void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "set")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);

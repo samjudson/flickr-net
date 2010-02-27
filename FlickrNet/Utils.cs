@@ -403,6 +403,11 @@ namespace FlickrNet
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Generates an MD5 Hash of the passed in string.
+        /// </summary>
+        /// <param name="unhashed">The unhashed string.</param>
+        /// <returns>The MD5 hash string.</returns>
         public static string Md5Hash(string unhashed)
         {
             System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider();
@@ -411,8 +416,11 @@ namespace FlickrNet
             return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
         }
 
-
-
+        /// <summary>
+        /// Parses a date which may contain only a vald year component.
+        /// </summary>
+        /// <param name="date">The date, as a string, to be parsed.</param>
+        /// <returns>The parsed <see cref="DateTime"/>.</returns>
         public  static DateTime ParseDateWithGranularity(string date)
         {
             DateTime output;

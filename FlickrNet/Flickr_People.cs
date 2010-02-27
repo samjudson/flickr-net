@@ -184,6 +184,10 @@ namespace FlickrNet
             }
         }
 
+        /// <summary>
+        /// Gets the photos containing the authenticated user. Requires that the AuthToken has been set.
+        /// </summary>
+        /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
         public PeoplePhotos PeopleGetPhotosOf()
         {
             CheckRequiresAuthentication();
@@ -191,21 +195,47 @@ namespace FlickrNet
             return PeopleGetPhotosOf("me", PhotoSearchExtras.None, 0, 0);
         }
 
+        /// <summary>
+        /// Gets the photos containing the specified user.
+        /// </summary>
+        /// <param name="userId">The user ID to get photos of.</param>
+        /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
         public PeoplePhotos PeopleGetPhotosOf(string userId)
         {
             return PeopleGetPhotosOf(userId, PhotoSearchExtras.None, 0, 0);
         }
 
+        /// <summary>
+        /// Gets the photos containing the specified user.
+        /// </summary>
+        /// <param name="userId">The user ID to get photos of.</param>
+        /// <param name="extras">A list of extras to return for each photo.</param>
+        /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
         public PeoplePhotos PeopleGetPhotosOf(string userId, PhotoSearchExtras extras)
         {
             return PeopleGetPhotosOf(userId, extras, 0, 0);
         }
 
+        /// <summary>
+        /// Gets the photos containing the specified user.
+        /// </summary>
+        /// <param name="userId">The user ID to get photos of.</param>
+        /// <param name="perPage">The number of photos to return per page.</param>
+        /// <param name="page">The page of photos to return. Default is 1.</param>
+        /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
         public PeoplePhotos PeopleGetPhotosOf(string userId, int perPage, int page)
         {
             return PeopleGetPhotosOf(userId, PhotoSearchExtras.None, perPage, page);
         }
 
+        /// <summary>
+        /// Gets the photos containing the specified user.
+        /// </summary>
+        /// <param name="userId">The user ID to get photos of.</param>
+        /// <param name="extras">A list of extras to return for each photo.</param>
+        /// <param name="perPage">The number of photos to return per page.</param>
+        /// <param name="page">The page of photos to return. Default is 1.</param>
+        /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
         public PeoplePhotos PeopleGetPhotosOf(string userId, PhotoSearchExtras extras, int perPage, int page)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();

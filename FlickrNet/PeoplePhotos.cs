@@ -5,10 +5,20 @@ using System.Text;
 namespace FlickrNet
 {
     /// <summary>
-    /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos"/> methods.
+    /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos(string)"/> methods.
     /// </summary>
     public class PeoplePhotos : List<Photo>, IFlickrParsable
     {
+        /// <summary>
+        /// Only populate for authenticated calls to <see cref="Flickr.PeopleGetPhotosOf()"/>
+        /// </summary>
+        public int Pages { get; set; }
+
+        /// <summary>
+        /// Only populate for authenticated calls to <see cref="Flickr.PeopleGetPhotosOf()"/>
+        /// </summary>
+        public int Total { get; set; }
+
         /// <summary>
         /// The number of seconds the application developer should wait before calling this panda again.
         /// </summary>
@@ -46,8 +56,14 @@ namespace FlickrNet
                     case "page":
                         Page = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
+                    case "pages":
+                        Pages = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        break;
                     case "has_next_page":
                         HasNextPage = (reader.Value == "1");
+                        break;
+                    case "total":
+                        Total = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     default:
                         throw new Exception("Unknown element: " + reader.Name + "=" + reader.Value);

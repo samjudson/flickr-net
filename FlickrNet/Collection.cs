@@ -50,7 +50,7 @@ namespace FlickrNet
 			get { return _subcollections.ToArray(); }
 		}
 
-        public void Load(XmlReader reader)
+        void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "collection")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);
@@ -87,14 +87,14 @@ namespace FlickrNet
                 if (reader.LocalName == "collection")
                 {
                     Collection c = new Collection();
-                    c.Load(reader);
+                    ((IFlickrParsable)c).Load(reader);
                     _subcollections.Add(c);
 
                 }
                 else
                 {
                     CollectionSet s = new CollectionSet();
-                    s.Load(reader);
+                    ((IFlickrParsable)s).Load(reader);
                     _subsets.Add(s);
                 }
             }

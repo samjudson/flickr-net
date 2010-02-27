@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <remarks/>
 	public class Collections : List<Collection>, IFlickrParsable
 	{
-        public void Load(System.Xml.XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "collections")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);
@@ -18,7 +18,7 @@ namespace FlickrNet
             while (reader.LocalName == "collection")
             {
                 Collection c = new Collection();
-                c.Load(reader);
+                ((IFlickrParsable)c).Load(reader);
                 Add(c);
             }
 

@@ -74,11 +74,32 @@ namespace FlickrNetTest
 
         [TestMethod()]
         [ExpectedException(typeof(SignatureRequiredException))]
-        public void PeopleGetPhotosOfAuthRequireed()
+        public void PeopleGetPhotosOfAuthRequired()
         {
             Flickr f = TestData.GetInstance();
 
             PeoplePhotos p = f.PeopleGetPhotosOf();
+        }
+
+        [TestMethod()]
+        public void PeopleGetPhotosOfMe()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            try
+            {
+
+                PeoplePhotos p = f.PeopleGetPhotosOf();
+
+                Assert.IsNotNull(p, "PeoplePhotos should not be null.");
+                Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
+                Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
+            }
+            finally
+            {
+                Console.WriteLine(f.LastRequest);
+                Console.WriteLine(f.LastResponse);
+            }
         }
     }
 }

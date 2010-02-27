@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Xml.Serialization;
 using System.Xml;
 
 namespace FlickrNet
@@ -9,7 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// The collection of favourites for a photo.
     /// </summary>
-    public class PhotoFavourites : List<PhotoFavourite>, IXmlSerializable, IFlickrParsable
+    public class PhotoFavourites : List<PhotoFavourite>, IFlickrParsable
     {
         /// <summary>
         /// The ID of the photo.
@@ -36,23 +35,7 @@ namespace FlickrNet
         /// </summary>
         public int Pages { get; set; }
 
-        /// <summary>
-        /// The default constructor.
-        /// </summary>
-        public PhotoFavourites()
-        {
-        }
-
-        /// <summary>
-        /// The serializing constructor, used by the internal classes to construct a new class.
-        /// </summary>
-        /// <param name="reader"></param>
-        public PhotoFavourites(XmlReader reader)
-        {
-            Load(reader);
-        }
-
-        public void Load(XmlReader reader)
+        void IFlickrParsable.Load(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
             {
@@ -90,23 +73,5 @@ namespace FlickrNet
 
         }
 
-        #region IXmlSerializable Members
-
-        System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
-        {
-            return null;
-        }
-
-        void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
-        {
-            Load(reader);
-        }
-
-        void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
-        {
-            
-        }
-
-        #endregion
     }
 }

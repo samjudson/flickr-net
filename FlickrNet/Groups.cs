@@ -122,11 +122,17 @@ namespace FlickrNet
             get { return _iconServer; }
         }
 
+        /// <summary>
+        /// The server farm for the group icon. If zero then the group uses the default icon.
+        /// </summary>
         public string IconFarm
         {
             get { return _iconFarm; }
         }
 
+        /// <summary>
+        /// The url for the group's icon. 
+        /// </summary>
         public string GroupIconUrl
         {
             get

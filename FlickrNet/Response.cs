@@ -135,10 +135,18 @@ namespace FlickrNet
 		[XmlAttribute("msg", Form=XmlSchemaForm.Unqualified)]
 		public string Message;
 
+        /// <summary>
+        /// The default constructor for a response error.
+        /// </summary>
         public ResponseError()
         {
         }
 
+        /// <summary>
+        /// Constructor for a response error using the error code and message returned by Flickr.
+        /// </summary>
+        /// <param name="code">The error code returned by Flickr.</param>
+        /// <param name="message">The error message returned by Flickr.</param>
         public ResponseError(int code, string message)
         {
             Code = code;

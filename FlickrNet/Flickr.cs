@@ -419,11 +419,20 @@ namespace FlickrNet
 
         private static readonly Uri baseUri = new Uri("http://api.flickr.com/services/rest/");
 
+        /// <summary>
+        /// The base URL for all Flickr REST method calls.
+        /// </summary>
         public static Uri BaseUri
         {
             get { return baseUri; }
         }
 
+        /// <summary>
+        /// Calculates the Flickr method cal URL based on the passed in parameters, and also generates the signature if required.
+        /// </summary>
+        /// <param name="parameters">A Dictionary containing a list of parameters to add to the method call.</param>
+        /// <param name="includeSignature">Boolean use to decide whether to generate the api call signature as well.</param>
+        /// <returns>The <see cref="Uri"/> for the method call.</returns>
         public Uri CalculateUri(Dictionary<string, object> parameters, bool includeSignature)
         {
             if (includeSignature)
