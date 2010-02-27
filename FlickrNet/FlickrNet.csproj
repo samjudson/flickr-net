@@ -190,6 +190,7 @@
     <Compile Include="Flickr_Collections.cs" />
     <Compile Include="Flickr_GetResponse.cs" />
     <Compile Include="Flickr_Panda.cs" />
+    <Compile Include="Flickr_People.cs" />
     <Compile Include="Flickr_Photos.cs" />
     <Compile Include="GeoAccuracy.cs">
       <SubType>Code</SubType>
@@ -230,6 +231,7 @@
     <Compile Include="PartialSearchOptions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PeoplePhotos.cs" />
     <Compile Include="PersistentCache.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace FlickrNet
 {
 	/// <remarks/>
-	public class CollectionList : List<Collection>, IFlickrParsable
+	public class Collections : List<Collection>, IFlickrParsable
 	{
         public void Load(System.Xml.XmlReader reader)
         {

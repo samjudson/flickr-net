@@ -71,6 +71,7 @@
     <Compile Include="GroupPoolGetPhotosTests.cs" />
     <Compile Include="GroupsGetInfoTest.cs" />
     <Compile Include="PandaGetListTest.cs" />
+    <Compile Include="PeopleGetPhotosOfTests.cs" />
     <Compile Include="PhotoInfoDateTakenGranualityTest.cs" />
     <Compile Include="PhotosetsGetPhotosTests.cs" />
   </ItemGroup>
