@@ -2435,35 +2435,38 @@ namespace FlickrNet
 			}
 		}
 
+        public Places PlacesPlacesForUser()
+        {
+            return PlacesPlacesForUser(PlaceType.Continent, null, null, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+        }
+
+        public Places PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId)
+        {
+            return PlacesPlacesForUser(placeType, woeId, placeId, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+        }
+
         /// <summary>
         /// Gets the places of a particular type that the authenticated user has geotagged photos.
         /// </summary>
         /// <param name="placeType">The type of places to return.</param>
         /// <returns>The list of places of that type.</returns>
-        public Places PlacesPlacesForUser(PlaceType placeType)
+        public Places PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId, int threshold, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
         {
             CheckRequiresAuthentication();
-            Hashtable parameters = new Hashtable();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.places.placesForUser");
 
-            //if ((placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0))
-            //{
-            //    throw new FlickrException("Both placeId and woeId cannot be null or empty.");
-            //}
-
             parameters.Add("place_type_id", (int)placeType);
-            //parameters.Add("woe_id", woeId);
+            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (threshold > 0) parameters.Add("threshold", threshold);
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", Utils.DateToUnixTimestamp(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", Utils.DateToUnixTimestamp(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", Utils.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", Utils.DateToUnixTimestamp(maxUploadDate));
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Places;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Places>(parameters);
         }
 
 

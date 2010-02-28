@@ -1,54 +1,43 @@
 using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
+using System.Xml;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Places : IXmlSerializable
+	public class Places : List<Place>, IFlickrParsable
 	{
-		private Place[] _places = new Place[0];
+        public int Total { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Place[] PlacesCollection { get { return _places; } set { _places = value; } }
+		public Place[] PlacesCollection { get { return this.ToArray(); } }
 
-		void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
 		{
-			throw new NotImplementedException();
-		}
-
-		XmlSchema IXmlSerializable.GetSchema()
-		{
-			return null;
-		}
-
-		void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
-		{
-            int count = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
-			if( count == 0 ) return;
-
-			_places = new Place[count];
+            int Total = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
 
 			reader.Read();
 
-			for(int i = 0; i < count; i++)
-			{
-				_places[i] = new Place();
-				IXmlSerializable ser = (IXmlSerializable)_places[i];
-				ser.ReadXml(reader);
-			}
+            while (reader.LocalName == "place")
+            {
+                Place p = new Place();
+                ((IFlickrParsable)p).Load(reader);
+                Add(p);
+            }
 
-			reader.Read();
+            reader.Skip();
 		}
 	}
 	/// <summary>
 	/// Summary description for Place.
 	/// </summary>
-	public class Place : IXmlSerializable
+    public class Place : IFlickrParsable
 	{
 		private string _placeId;
 		/// <summary>
@@ -94,42 +83,23 @@ namespace FlickrNet
 		/// </summary>
 		public decimal Longitude { get { return _longitude; } }
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public Place()
-		{
-		}
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public Place()
+        {
+        }
 
-		internal Place(System.Xml.XmlReader reader)
-		{
-			IXmlSerializable x = (IXmlSerializable)this;
-			x.ReadXml(reader);
-		}
-		/// <summary>
-		/// Not Implemented
-		/// </summary>
-		/// <exception cref="NotImplementedException"/>
-		/// <param name="writer"></param>
-		void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Always returns null.
-		/// </summary>
-		/// <returns></returns>
-		System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
-		{
-			return null;
-		}
+        internal Place(XmlReader reader)
+        {
+            ((IFlickrParsable)this).Load(reader);
+        }
 
 		/// <summary>
 		/// Serializes the XML to an instance.
 		/// </summary>
 		/// <param name="reader"></param>
-		void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
 		{
 			_description = reader.GetAttribute("name");
 			_placeId = reader.GetAttribute("place_id");
@@ -154,7 +124,7 @@ namespace FlickrNet
                 reader.Read();
             }
 
-			reader.Read();
+			reader.Skip();
 		}
 	}
 }

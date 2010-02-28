@@ -62,27 +62,46 @@ namespace FlickrNetTest
         public void TestGetPlacesAuthenticationRequired()
         {
             Flickr f = TestData.GetInstance();
-            f.PlacesPlacesForUser(PlaceType.None);
+            f.PlacesPlacesForUser();
         }
 
         [TestMethod]
-        public void TestGetPlacesBasic()
+        public void TestPlacesForUserContinent()
         {
             Flickr f = TestData.GetAuthInstance();
-            Places places = f.PlacesPlacesForUser(PlaceType.Continent);
+            Places places = f.PlacesPlacesForUser();
 
             Console.WriteLine(f.LastResponse);
 
-            foreach (Place place in places.PlacesCollection)
+            foreach (Place place in places)
             {
-                Assert.IsNotNull(place.PlaceId, "PlaceId should not be null");
-                Assert.IsNotNull(place.Description, "Description should not be null");
-                Assert.AreEqual(PlaceType.Continent, place.PlaceType, "PlaceType should be continent");
+                Assert.IsNotNull(place.PlaceId, "PlaceId should not be null.");
+                Assert.IsNotNull(place.WoeId, "WoeId should not be null.");
+                Assert.IsNotNull(place.Description, "Description should not be null.");
+                Assert.AreEqual(PlaceType.Continent, place.PlaceType, "PlaceType should be continent.");
             }
 
-            foreach (Place place in places.PlacesCollection)
+            Assert.AreEqual("lkyV7jSbBZTkl7Wkqg", places[0].PlaceId);
+            Assert.AreEqual("Europe", places[0].Description);
+            Assert.AreEqual("6AQKCGmbBZQfMthgkA", places[1].PlaceId);
+            Assert.AreEqual("North America", places[1].Description);
+        }
+
+        [TestMethod]
+        public void TestPlacesForUserRegions()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            // Test place ID of 'lkyV7jSbBZTkl7Wkqg' is Europe
+            Places p = f.PlacesPlacesForUser(PlaceType.Region, null, "lkyV7jSbBZTkl7Wkqg");
+
+            foreach (Place place in p)
             {
-                Console.WriteLine(place.PlaceId + " = " + place.Description);
+                Assert.IsNotNull(place.PlaceId, "PlaceId should not be null.");
+                Assert.IsNotNull(place.WoeId, "WoeId should not be null.");
+                Assert.IsNotNull(place.Description, "Description should not be null.");
+                Assert.IsNotNull(place.PlaceUrl, "PlaceUrl should not be null");
+                Assert.AreEqual(PlaceType.Region, place.PlaceType, "PlaceType should be Region.");
             }
         }
     }
