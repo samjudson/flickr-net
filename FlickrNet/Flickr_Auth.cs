@@ -66,15 +66,9 @@ namespace FlickrNet
 
         /// <summary>
         /// Calculates the URL to redirect the user to Flickr web site for
-        /// auehtntication. Used by Web applications. 
+        /// authentication. Used by Web applications. 
         /// See <see cref="AuthGetFrob"/> for example code.
         /// </summary>
-        /// <remarks>
-        /// The Flickr web site provides 'tiny urls' that can be used in place
-        /// of this URL when you specify your return url in the API key page.
-        /// It is recommended that you use these instead as they do not include
-        /// your API or shared secret.
-        /// </remarks>
         /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
         /// <returns>The url to redirect the user to.</returns>
         public string AuthCalcWebUrl(AuthLevel authLevel)
@@ -86,6 +80,27 @@ namespace FlickrNet
             string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower();
             hash = Utils.Md5Hash(hash);
             string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower();
+            url += "&api_sig=" + hash;
+
+            return url;
+        }
+
+        /// <summary>
+        /// Calculates the URL to redirect the user to Flickr mobile web site for
+        /// authentication. Used by Mobile Web applications. 
+        /// See <see cref="AuthGetFrob"/> for example code.
+        /// </summary>
+        /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
+        /// <returns>The url to redirect the user to.</returns>
+        public string AuthCalcMobileUrl(AuthLevel authLevel)
+        {
+            CheckApiKey();
+
+            if (_sharedSecret == null) throw new SignatureRequiredException();
+
+            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower();
+            hash = Utils.Md5Hash(hash);
+            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower();
             url += "&api_sig=" + hash;
 
             return url;
@@ -110,6 +125,7 @@ namespace FlickrNet
             if (response.Status == ResponseStatus.OK)
             {
                 Auth auth = new Auth(response.AllElements[0]);
+                AuthToken = auth.Token;
                 return auth;
             }
             else
@@ -134,6 +150,7 @@ namespace FlickrNet
             if (response.Status == ResponseStatus.OK)
             {
                 Auth auth = new Auth(response.AllElements[0]);
+                AuthToken = auth.Token;
                 return auth;
             }
             else
