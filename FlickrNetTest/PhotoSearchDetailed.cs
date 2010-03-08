@@ -53,7 +53,7 @@ namespace FlickrNetTest
             o.Extras = PhotoSearchExtras.All;
             Photos photos = f.PhotosSearch(o);
 
-            Assert.AreEqual(10, photos.PhotosPerPage);
+            Assert.AreEqual(10, photos.PerPage);
             Assert.AreEqual(1, photos.Page);
 
             Console.WriteLine(f.LastResponse);
@@ -96,9 +96,9 @@ namespace FlickrNetTest
 
             Photos photos = f.PhotosSearch(o);
 
-            Assert.IsTrue(photos.TotalPhotos > 0);
+            Assert.IsTrue(photos.Total > 0);
             Assert.IsTrue(photos.Pages > 0);
-            Assert.AreEqual(10, photos.PhotosPerPage);
+            Assert.AreEqual(10, photos.PerPage);
             Assert.AreEqual(1, photos.Page);
 
             foreach (Photo photo in photos)
@@ -127,19 +127,19 @@ namespace FlickrNetTest
 
             Photos photos = f.PhotosSearch(o);
 
-            int totalPhotos1 = photos.TotalPhotos;
+            int totalPhotos1 = photos.Total;
 
             o.PerPage = 10;
 
             photos = f.PhotosSearch(o);
 
-            int totalPhotos2 = photos.TotalPhotos;
+            int totalPhotos2 = photos.Total;
 
             o.PerPage = 100;
 
             photos = f.PhotosSearch(o);
 
-            int totalPhotos3 = photos.TotalPhotos;
+            int totalPhotos3 = photos.Total;
 
             Assert.AreEqual(totalPhotos1, totalPhotos2, "Total Photos 1 & 2 should be equal");
             Assert.AreEqual(totalPhotos2, totalPhotos3, "Total Photos 1 & 2 should be equal");

@@ -44,18 +44,18 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestBasicGetPhotos()
         {
-            Photoset set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
+            PhotosetPhotos set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
 
             Console.WriteLine(f.LastResponse);
 
-            Assert.AreEqual(8, set.NumberOfPhotos, "NumberOfPhotos should be 8.");
-            Assert.AreEqual(8, set.PhotoCollection.Length, "Should be 8 photos returned.");
+            Assert.AreEqual(8, set.Total, "NumberOfPhotos should be 8.");
+            Assert.AreEqual(8, set.Count, "Should be 8 photos returned.");
         }
 
         [TestMethod]
         public void TestMachineTags()
         {
-            Photoset set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
+            PhotosetPhotos set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
 
             bool machineTagsFound = false;
 
@@ -76,17 +76,17 @@ namespace FlickrNetTest
         {
             // http://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
             // Set contains videos and photos
-            Photoset theset = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
+            PhotosetPhotos theset = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
 
             foreach (Photo p in theset)
             {
-                Assert.AreEqual("video", p.Media, "Should be video");
+                Assert.AreEqual("video", p.Media, "Should be video.");
             }
 
-            Photoset theset2 = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Photos);
+            PhotosetPhotos theset2 = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Photos);
             foreach (Photo p in theset2)
             {
-                Assert.AreEqual("photo", p.Media, "Should be video");
+                Assert.AreEqual("photo", p.Media, "Should be photo.");
             }
 
         }
@@ -94,14 +94,15 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestPhotosetGetPhotosWebUrl()
         {
-            Photoset theset = f.PhotosetsGetPhotos("72157618515066456");
+            PhotosetPhotos theset = f.PhotosetsGetPhotos("72157618515066456");
 
             foreach(Photo p in theset)
             {
+                Assert.IsNotNull(p.UserId, "UserId should not be null.");
+                Assert.AreNotEqual(String.Empty, p.UserId, "UserId should not be an empty string.");
                 string url = "http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
                 Assert.AreEqual(url, p.WebUrl);
             }
-
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 namespace FlickrNet
 {
     /// <summary>
-    /// Used by <see cref="Flickr.PlacesPlacesForUser"/>.
+    /// Used by <see cref="Flickr.PlacesPlacesForUser()"/>.
     /// </summary>
     public enum PlaceType
     {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
@@ -190,7 +191,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="options">The options to convert to an array.</param>
         /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
-		public static void PartialOptionsIntoArray(PartialSearchOptions options, Hashtable parameters)
+		public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, object> parameters)
 		{
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());

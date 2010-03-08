@@ -140,7 +140,7 @@ namespace FlickrNet
             {
                 throw new ArgumentOutOfRangeException("count", String.Format("Count must be between 10 and 50. ({0})", count));
             }
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getContactsPhotos");
             if (count > 0 && !singlePhoto) parameters.Add("count", count.ToString());
             if (justFriends) parameters.Add("just_friends", "1");
@@ -148,16 +148,7 @@ namespace FlickrNet
             if (includeSelf) parameters.Add("include_self", "1");
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -230,7 +221,7 @@ namespace FlickrNet
         /// <returns></returns>
         public Photos PhotosGetContactsPublicPhotos(string userId, int count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getContactsPublicPhotos");
             parameters.Add("api_key", _apiKey);
             parameters.Add("user_id", userId);
@@ -240,16 +231,7 @@ namespace FlickrNet
             if (includeSelf) parameters.Add("include_self", "1");
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -486,9 +468,9 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
-        public Photos PhotosGetRecent(int perPage, int page)
+        public Photos PhotosGetRecent(int page, int perPage)
         {
-            return PhotosGetRecent(perPage, page, PhotoSearchExtras.All);
+            return PhotosGetRecent(page, perPage, PhotoSearchExtras.All);
         }
 
         /// <summary>
@@ -498,25 +480,16 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
-        public Photos PhotosGetRecent(int perPage, int page, PhotoSearchExtras extras)
+        public Photos PhotosGetRecent(int page, int perPage, PhotoSearchExtras extras)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getRecent");
             parameters.Add("api_key", _apiKey);
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -567,9 +540,9 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
-        public Photos PhotosGetUntagged(int perPage, int page)
+        public Photos PhotosGetUntagged(int page, int perPage)
         {
-            return PhotosGetUntagged(perPage, page, PhotoSearchExtras.All);
+            return PhotosGetUntagged(page, perPage, PhotoSearchExtras.All);
         }
 
         /// <summary>
@@ -579,24 +552,15 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns>A <see cref="Photos"/> class containing the list of photos.</returns>
-        public Photos PhotosGetUntagged(int perPage, int page, PhotoSearchExtras extras)
+        public Photos PhotosGetUntagged(int page, int perPage, PhotoSearchExtras extras)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getUntagged");
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -616,7 +580,7 @@ namespace FlickrNet
         /// <returns><see cref="Photos"/> instance containing list of photos.</returns>
         public Photos PhotosGetNotInSet(int page)
         {
-            return PhotosGetNotInSet(0, page, PhotoSearchExtras.None);
+            return PhotosGetNotInSet(page, 0, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -626,9 +590,9 @@ namespace FlickrNet
         /// <param name="perPage">Number of photos per page.</param>
         /// <param name="page">The page number to return.</param>
         /// <returns><see cref="Photos"/> instance containing list of photos.</returns>
-        public Photos PhotosGetNotInSet(int perPage, int page)
+        public Photos PhotosGetNotInSet(int page, int perPage)
         {
-            return PhotosGetNotInSet(perPage, page, PhotoSearchExtras.None);
+            return PhotosGetNotInSet(page, perPage, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -638,7 +602,7 @@ namespace FlickrNet
         /// <param name="page">The page number to return.</param>
         /// <param name="extras"><see cref="PhotoSearchExtras"/> enumeration.</param>
         /// <returns><see cref="Photos"/> instance containing list of photos.</returns>
-        public Photos PhotosGetNotInSet(int perPage, int page, PhotoSearchExtras extras)
+        public Photos PhotosGetNotInSet(int page, int perPage, PhotoSearchExtras extras)
         {
             PartialSearchOptions options = new PartialSearchOptions();
             options.PerPage = perPage;
@@ -655,20 +619,11 @@ namespace FlickrNet
         /// <returns>A collection of photos in the <see cref="Photos"/> class.</returns>
         public Photos PhotosGetNotInSet(PartialSearchOptions options)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getNotInSet");
             Utils.PartialOptionsIntoArray(options, parameters);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -738,9 +693,9 @@ namespace FlickrNet
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
-        public Photos PhotosRecentlyUpdated(DateTime minDate, int perPage, int page)
+        public Photos PhotosRecentlyUpdated(DateTime minDate, int page, int perPage)
         {
-            return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, perPage, page);
+            return PhotosRecentlyUpdated(minDate, PhotoSearchExtras.None, page, perPage);
         }
 
         /// <summary>
@@ -765,575 +720,16 @@ namespace FlickrNet
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <returns>Returns a <see cref="Photos"/> instance containing the list of photos.</returns>
-        public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int perPage, int page)
+        public Photos PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int page, int perPage)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.recentlyUpdated");
             parameters.Add("min_date", Utils.DateToUnixTimestamp(minDate).ToString());
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-        }
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="userId">The user whose photos you wish to search for.</param>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string userId, string text)
-        {
-            return PhotosSearch(userId, "", 0, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="userId">The user whose photos you wish to search for.</param>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string userId, string text, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, "", 0, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="userId">The user whose photos you wish to search for.</param>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string userId, string text, LicenseType license)
-        {
-            return PhotosSearch(userId, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="userId">The user whose photos you wish to search for.</param>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string userId, string text, LicenseType license, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string text, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, "", 0, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string text)
-        {
-            return PhotosSearch(null, "", 0, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string text, LicenseType license)
-        {
-            return PhotosSearch(null, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos containing text, rather than tags.
-        /// </summary>
-        /// <param name="text">The text you want to search for in titles and descriptions.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearchText(string text, LicenseType license, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, "", 0, text, DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos containing an array of tags.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos containing an array of tags.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags)
-        {
-            return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos containing an array of tags.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, LicenseType license, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos containing an array of tags.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, LicenseType license)
-        {
-            return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, TagMode tagMode, string text, int perPage, int page)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, TagMode tagMode, string text, int perPage, int page, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, TagMode tagMode, string text)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string[] tags, TagMode tagMode, string text, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, LicenseType license)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, LicenseType license, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, int perPage, int page)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, int perPage, int page, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="minUploadDate">The minimum upload date.</param>
-        /// <param name="maxUploadDate">The maxmimum upload date.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, LicenseType license, int perPage, int page, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, String.Join(",", tags), tagMode, text, minUploadDate, maxUploadDate, license, perPage, page, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">An array of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="minUploadDate">The minimum upload date.</param>
-        /// <param name="maxUploadDate">The maxmimum upload date.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string[] tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, LicenseType license, int perPage, int page)
-        {
-            return PhotosSearch(userId, String.Join(",", tags), tagMode, text, minUploadDate, maxUploadDate, license, perPage, page, PhotoSearchExtras.All);
-        }
-
-        // PhotoSearch - tags versions
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string tags, LicenseType license, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string tags, LicenseType license)
-        {
-            return PhotosSearch(null, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string tags, TagMode tagMode, string text, int perPage, int page)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string tags, TagMode tagMode, string text, int perPage, int page, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string tags, TagMode tagMode, string text)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string tags, TagMode tagMode, string text, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(null, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, LicenseType license)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, LicenseType license, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, 0, "", DateTime.MinValue, DateTime.MinValue, license, 0, 0, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text, int perPage, int page)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text, int perPage, int page, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, perPage, page, extras);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, PhotoSearchExtras.All);
-        }
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text, PhotoSearchExtras extras)
-        {
-            return PhotosSearch(userId, tags, tagMode, text, DateTime.MinValue, DateTime.MinValue, 0, 0, 0, extras);
-        }
-
-        // Actual PhotoSearch function
-
-        /// <summary>
-        /// Search for photos.
-        /// </summary>
-        /// <param name="userId">The ID of the user to search the photos of.</param>
-        /// <param name="tags">A comma seperated list of tags to search for.</param>
-        /// <param name="tagMode">Match all tags, or any tag.</param>
-        /// <param name="text">Text to search for in photo title or description.</param>
-        /// <param name="perPage">Number of photos to return per page.</param>
-        /// <param name="page">The page number to return.</param>
-        /// <param name="extras">Optional extras to return.</param>
-        /// <param name="minUploadDate">The minimum upload date.</param>
-        /// <param name="maxUploadDate">The maxmimum upload date.</param>
-        /// <param name="license">The license type to return.</param>
-        /// <returns>A <see cref="Photos"/> instance.</returns>
-        public Photos PhotosSearch(string userId, string tags, TagMode tagMode, string text, DateTime minUploadDate, DateTime maxUploadDate, LicenseType license, int perPage, int page, PhotoSearchExtras extras)
-        {
-            PhotoSearchOptions options = new PhotoSearchOptions();
-            options.UserId = userId;
-            options.Tags = tags;
-            options.TagMode = tagMode;
-            options.Text = text;
-            options.MinUploadDate = minUploadDate;
-            options.MaxUploadDate = maxUploadDate;
-            if (license > 0) options.Licenses.Add(license);
-            options.PerPage = perPage;
-            options.Page = page;
-            options.Extras = extras;
-
-            return PhotosSearch(options);
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -1343,7 +739,7 @@ namespace FlickrNet
         /// <returns>A collection of photos contained within a <see cref="Photos"/> object.</returns>
         public Photos PhotosSearch(PhotoSearchOptions options)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.search");
             if (options.UserId != null && options.UserId.Length > 0) parameters.Add("user_id", options.UserId);
             if (options.GroupId != null && options.GroupId.Length > 0) parameters.Add("group_id", options.GroupId);
@@ -1380,16 +776,7 @@ namespace FlickrNet
             if (options.PlaceId != null) parameters.Add("place_id", options.PlaceId);
             if (options.IsCommons) parameters.Add("is_commons", "1");
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>

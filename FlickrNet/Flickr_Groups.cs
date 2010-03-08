@@ -1,0 +1,326 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections;
+
+namespace FlickrNet
+{
+    public partial class Flickr
+    {
+        /// <summary>
+        /// Browse the group category tree, finding groups and sub-categories.
+        /// </summary>
+        /// <returns>A <see cref="Category"/> instance.</returns>
+        public Category GroupsBrowse()
+        {
+            return GroupsBrowse(null);
+        }
+
+        /// <summary>
+        /// Browse the group category tree, finding groups and sub-categories.
+        /// </summary>
+        /// <param name="catId">The category id to fetch a list of groups and sub-categories for. If not specified, it defaults to zero, the root of the category tree.</param>
+        /// <returns>A <see cref="Category"/> instance.</returns>
+        public Category GroupsBrowse(string catId)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.browse");
+            if (!String.IsNullOrEmpty(catId)) parameters.Add("cat_id", catId);
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return response.Category;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Search the list of groups on Flickr for the text.
+        /// </summary>
+        /// <param name="text">The text to search for.</param>
+        /// <returns>A list of groups matching the search criteria.</returns>
+        public GroupSearchResults GroupsSearch(string text)
+        {
+            return GroupsSearch(text, 0, 0);
+        }
+
+        /// <summary>
+        /// Search the list of groups on Flickr for the text.
+        /// </summary>
+        /// <param name="text">The text to search for.</param>
+        /// <param name="page">The page of the results to return.</param>
+        /// <returns>A list of groups matching the search criteria.</returns>
+        public GroupSearchResults GroupsSearch(string text, int page)
+        {
+            return GroupsSearch(text, page, 0);
+        }
+
+        /// <summary>
+        /// Search the list of groups on Flickr for the text.
+        /// </summary>
+        /// <param name="text">The text to search for.</param>
+        /// <param name="page">The page of the results to return.</param>
+        /// <param name="perPage">The number of groups to list per page.</param>
+        /// <returns>A list of groups matching the search criteria.</returns>
+        public GroupSearchResults GroupsSearch(string text, int page, int perPage)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.search");
+            parameters.Add("api_key", _apiKey);
+            parameters.Add("text", text);
+            if (page > 0) parameters.Add("page", page.ToString());
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
+
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return new GroupSearchResults(response.AllElements[0]);
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="GroupFullInfo"/> object containing details about a group.
+        /// </summary>
+        /// <param name="groupId">The id of the group to return.</param>
+        /// <returns>The <see cref="GroupFullInfo"/> specified by the group id.</returns>
+        public GroupFullInfo GroupsGetInfo(string groupId)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.getInfo");
+            parameters.Add("api_key", _apiKey);
+            parameters.Add("group_id", groupId);
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return new GroupFullInfo(response.AllElements[0]);
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Get a list of group members.
+        /// </summary>
+        /// <param name="groupId">The group id to get the list of members for.</param>
+        /// <returns>A <see cref="Members"/> instance containing the first 100 members for the group.</returns>
+        public Members GroupsMembersGetList(string groupId)
+        {
+            return GroupsMembersGetList(groupId, 0, 0, MemberType.NotSpecified);
+        }
+
+        /// <summary>
+        /// Get a list of the members of a group. 
+        /// </summary>
+        /// <remarks>
+        /// The call must be signed on behalf of a Flickr member, and the ability to see the group membership will be determined by the Flickr member's group privileges.
+        /// </remarks>
+        /// <param name="groupId">Return a list of members for this group. The group must be viewable by the Flickr member on whose behalf the API call is made.</param>
+        /// <param name="page">The page of the results to return (default is 1).</param>
+        /// <param name="perPage">The number of members to return per page (default is 100, max is 500).</param>
+        /// <param name="memberTypes">The types of members to be returned. Can be more than one.</param>
+        /// <returns>A <see cref="Members"/> instance containing the members for the group.</returns>
+        public Members GroupsMembersGetList(string groupId, int page, int perPage, MemberType memberTypes)
+        {
+            CheckRequiresAuthentication();
+
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.members.getList");
+            parameters.Add("api_key", _apiKey);
+            if( page > 0 ) parameters.Add("page", page);
+            if( perPage > 0 ) parameters.Add("per_page", perPage);
+            if (memberTypes != MemberType.NotSpecified) parameters.Add("membertypes", Utils.MemberTypeToString(memberTypes));
+            parameters.Add("group_id", groupId);
+
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return response.Members;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Adds a photo to a pool you have permission to add photos to.
+        /// </summary>
+        /// <param name="photoId">The id of one of your photos to be added.</param>
+        /// <param name="groupId">The id of a group you are a member of.</param>
+        /// <returns>True on a successful addition.</returns>
+        public bool GroupsPoolsAdd(string photoId, string groupId)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.pools.add");
+            parameters.Add("photo_id", photoId);
+            parameters.Add("group_id", groupId);
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Gets the context for a photo from within a group. This provides the
+        /// id and thumbnail url for the next and previous photos in the group.
+        /// </summary>
+        /// <param name="photoId">The Photo ID for the photo you want the context for.</param>
+        /// <param name="groupId">The group ID for the group you want the context to be relevant to.</param>
+        /// <returns>The <see cref="Context"/> of the photo in the group.</returns>
+        public Context GroupsPoolsGetContext(string photoId, string groupId)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.pools.getContext");
+            parameters.Add("photo_id", photoId);
+            parameters.Add("group_id", groupId);
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                Context context = new Context();
+                context.Count = response.ContextCount.Count;
+                context.NextPhoto = response.ContextNextPhoto;
+                context.PreviousPhoto = response.ContextPrevPhoto;
+                return context;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Remove a picture from a group.
+        /// </summary>
+        /// <param name="photoId">The id of one of your pictures you wish to remove.</param>
+        /// <param name="groupId">The id of the group to remove the picture from.</param>
+        /// <returns>True if the photo is successfully removed.</returns>
+        public bool GroupsPoolsRemove(string photoId, string groupId)
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.pools.remove");
+            parameters.Add("photo_id", photoId);
+            parameters.Add("group_id", groupId);
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of groups to which you can add photos.
+        /// </summary>
+        /// <returns></returns>
+        public MemberGroupInfo[] GroupsPoolsGetGroups()
+        {
+            Hashtable parameters = new Hashtable();
+            parameters.Add("method", "flickr.groups.pools.getGroups");
+            FlickrNet.Response response = GetResponseCache(parameters);
+
+            if (response.Status == ResponseStatus.OK)
+            {
+                return MemberGroupInfo.GetMemberGroupInfo(response.AllElements[0]);
+            }
+            else
+            {
+                throw new FlickrApiException(response.Error);
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of photos for a given group.
+        /// </summary>
+        /// <param name="groupId">The group ID for the group.</param>
+        /// <returns>A <see cref="Photos"/> object containing the list of photos.</returns>
+        public Photos GroupsPoolsGetPhotos(string groupId)
+        {
+            return GroupsPoolsGetPhotos(groupId, null, null, PhotoSearchExtras.All, 0, 0);
+        }
+
+        /// <summary>
+        /// Gets a list of photos for a given group.
+        /// </summary>
+        /// <param name="groupId">The group ID for the group.</param>
+        /// <param name="tags">Space seperated list of tags that photos returned must have.</param>
+        /// <returns>A <see cref="Photos"/> object containing the list of photos.</returns>
+        public Photos GroupsPoolsGetPhotos(string groupId, string tags)
+        {
+            return GroupsPoolsGetPhotos(groupId, tags, null, PhotoSearchExtras.All, 0, 0);
+        }
+
+        /// <summary>
+        /// Gets a list of photos for a given group.
+        /// </summary>
+        /// <param name="groupId">The group ID for the group.</param>
+        /// <param name="perPage">The number of photos per page.</param>
+        /// <param name="page">The page to return.</param>
+        /// <returns>A <see cref="Photos"/> object containing the list of photos.</returns>
+        public Photos GroupsPoolsGetPhotos(string groupId, int page, int perPage)
+        {
+            return GroupsPoolsGetPhotos(groupId, null, null, PhotoSearchExtras.All, page, perPage);
+        }
+
+        /// <summary>
+        /// Gets a list of photos for a given group.
+        /// </summary>
+        /// <param name="groupId">The group ID for the group.</param>
+        /// <param name="tags">Space seperated list of tags that photos returned must have.</param>
+        /// <param name="perPage">The number of photos per page.</param>
+        /// <param name="page">The page to return.</param>
+        /// <returns>A <see cref="Photos"/> object containing the list of photos.</returns>
+        public Photos GroupsPoolsGetPhotos(string groupId, string tags, int page, int perPage)
+        {
+            return GroupsPoolsGetPhotos(groupId, tags, null, PhotoSearchExtras.All, page, perPage);
+        }
+
+        /// <summary>
+        /// Gets a list of photos for a given group.
+        /// </summary>
+        /// <param name="groupId">The group ID for the group.</param>
+        /// <param name="tags">Space seperated list of tags that photos returned must have.
+        /// Currently only supports 1 tag at a time.</param>
+        /// <param name="userId">The group member to return photos for.</param>
+        /// <param name="extras">The <see cref="PhotoSearchExtras"/> specifying which extras to return. All other overloads default to returning all extras.</param>
+        /// <param name="perPage">The number of photos per page.</param>
+        /// <param name="page">The page to return.</param>
+        /// <returns>A <see cref="Photos"/> object containing the list of photos.</returns>
+        public Photos GroupsPoolsGetPhotos(string groupId, string tags, string userId, PhotoSearchExtras extras, int page, int perPage)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("method", "flickr.groups.pools.getPhotos");
+            parameters.Add("group_id", groupId);
+            if (tags != null && tags.Length > 0) parameters.Add("tags", tags);
+            if (page > 0) parameters.Add("page", page.ToString());
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
+            if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+
+            return GetResponseCache<Photos>(parameters);
+        }
+    }
+}

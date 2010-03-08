@@ -124,7 +124,7 @@ namespace FlickrNet
                         while (reader.LocalName == "photo")
                         {
                             Photo p = new Photo();
-                            p.Load(reader);
+                            ((IFlickrParsable)p).Load(reader);
 
                             _iconPhotos.Add(p);
                         }

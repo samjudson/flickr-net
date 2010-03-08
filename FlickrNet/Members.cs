@@ -5,7 +5,7 @@ using System.Collections;
 namespace FlickrNet
 {
 	/// <summary>
-	/// A collection of members returned by the <see cref="Flickr.GroupsMemberGetList(string)"/> method.
+	/// A collection of members returned by the <see cref="Flickr.GroupsMembersGetList(string)"/> method.
 	/// </summary>
     public class Members : IXmlSerializable
     {
@@ -56,7 +56,7 @@ namespace FlickrNet
         private Member[] _members;
 
 		/// <summary>
-		/// A collection of <see cref="Member"/> instances for each member returned by the <see cref="Flickr.GroupsMemberGetList(string)"/> method.
+		/// A collection of <see cref="Member"/> instances for each member returned by the <see cref="Flickr.GroupsMembersGetList(string)"/> method.
 		/// </summary>
         public Member[] MembersCollection
         {

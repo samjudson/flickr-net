@@ -143,9 +143,9 @@ namespace FlickrNet
         /// <param name="page">The page to return. Defaults to page 1.</param>
         /// <param name="perPage">The number of photos to return per page. Default is 100.</param>
         /// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
-        public Photos PeopleGetPublicPhotos(string userId, int perPage, int page)
+        public Photos PeopleGetPublicPhotos(string userId, int page, int perPage)
         {
-            return PeopleGetPublicPhotos(userId, perPage, page, SafetyLevel.None, PhotoSearchExtras.None);
+            return PeopleGetPublicPhotos(userId, page, perPage, SafetyLevel.None, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -158,12 +158,12 @@ namespace FlickrNet
         /// <param name="safetyLevel">The safety level of the returned photos. 
         /// Unauthenticated calls can only return Safe photos.</param>
         /// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
-        public Photos PeopleGetPublicPhotos(string userId, int perPage, int page, SafetyLevel safetyLevel, PhotoSearchExtras extras)
+        public Photos PeopleGetPublicPhotos(string userId, int page, int perPage, SafetyLevel safetyLevel, PhotoSearchExtras extras)
         {
             if (!IsAuthenticated && safetyLevel > SafetyLevel.Safe)
                 throw new ArgumentException("Safety level may only be 'Safe' for unauthenticated calls", "safetyLevel");
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.people.getPublicPhotos");
             parameters.Add("api_key", _apiKey);
             parameters.Add("user_id", userId);
@@ -172,16 +172,7 @@ namespace FlickrNet
             if (safetyLevel != SafetyLevel.None) parameters.Add("safety_level", (int)safetyLevel);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photos;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Photos>(parameters);
         }
 
         /// <summary>
@@ -223,9 +214,9 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The page of photos to return. Default is 1.</param>
         /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
-        public PeoplePhotos PeopleGetPhotosOf(string userId, int perPage, int page)
+        public PeoplePhotos PeopleGetPhotosOf(string userId, int page, int perPage)
         {
-            return PeopleGetPhotosOf(userId, PhotoSearchExtras.None, perPage, page);
+            return PeopleGetPhotosOf(userId, PhotoSearchExtras.None, page, perPage);
         }
 
         /// <summary>
@@ -236,7 +227,7 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The page of photos to return. Default is 1.</param>
         /// <returns>A list of photos in the <see cref="PeoplePhotos"/> class.</returns>
-        public PeoplePhotos PeopleGetPhotosOf(string userId, PhotoSearchExtras extras, int perPage, int page)
+        public PeoplePhotos PeopleGetPhotosOf(string userId, PhotoSearchExtras extras, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.people.getPhotosOf");

@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace FlickrNet
 {
 	/// <summary>
-	/// Details for a Flickr member, as returned by the <see cref="Flickr.GroupsMemberGetList(string)"/> method.
+	/// Details for a Flickr member, as returned by the <see cref="Flickr.GroupsMembersGetList(string)"/> method.
 	/// </summary>
     public class Member : IXmlSerializable
     {

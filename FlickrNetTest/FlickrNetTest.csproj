@@ -66,14 +66,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogTests.cs" />
     <Compile Include="CollectionGetInfoTest.cs" />
     <Compile Include="CollectionGetTreeTest.cs" />
+    <Compile Include="ContactsTests.cs" />
+    <Compile Include="FavouritesGetPublicListTests.cs" />
     <Compile Include="GroupPoolGetPhotosTests.cs" />
     <Compile Include="GroupsGetInfoTest.cs" />
     <Compile Include="PandaGetListTest.cs" />
     <Compile Include="PeopleGetPhotosOfTests.cs" />
     <Compile Include="PhotoInfoDateTakenGranualityTest.cs" />
     <Compile Include="PhotosetsGetPhotosTests.cs" />
+    <Compile Include="ReflectionMethodTests.cs" />
+    <Compile Include="StatsGetDomainsTests.cs" />
+    <Compile Include="StatsGetPopularPhotosTests.cs" />
+    <Compile Include="StatsGetReferrerTests.cs" />
+    <Compile Include="StatsGetTotalViewsTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>

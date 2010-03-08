@@ -20,14 +20,6 @@ namespace FlickrNet
 		public Blogs Blogs;
 
 		/// <remarks/>
-		[XmlElement("contacts", Form=XmlSchemaForm.Unqualified)]
-		public Contacts Contacts;
-
-		/// <remarks/>
-		[XmlElement("photos", Form=XmlSchemaForm.Unqualified)]
-		public Photos Photos;
-
-		/// <remarks/>
 		[XmlElement("category", Form=XmlSchemaForm.Unqualified)]
 		public Category Category;
 
@@ -95,7 +87,7 @@ namespace FlickrNet
         public Place Place;
 
         /// <summary>
-        /// Members returned by <see cref="Flickr.GroupsMemberGetList(string)"/>.
+        /// Members returned by <see cref="Flickr.GroupsMembersGetList(string)"/>.
         /// </summary>
         [XmlElement("members", Form = XmlSchemaForm.Unqualified)]
         public Members Members;

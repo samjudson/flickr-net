@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPandGetPhotos()
+        public void TestPandaGetPhotos()
         {
             Flickr f = TestData.GetInstance();
             PandaPhotos photos = null;

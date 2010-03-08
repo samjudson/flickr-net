@@ -27,8 +27,8 @@ namespace FlickrNet
 	{
 		/// <summary>
 		/// The ID Flickr has assigned to the blog. Use this to post to the blog using 
-        /// <see cref="Flickr.BlogPostPhoto(string, string, string, string)"/> or 
-        /// <see cref="Flickr.BlogPostPhoto(string, string, string, string, string)"/>. 
+        /// <see cref="Flickr.BlogsPostPhoto(string, string, string, string)"/> or 
+        /// <see cref="Flickr.BlogsPostPhoto(string, string, string, string, string)"/>. 
 		/// </summary>
 		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
 		public string BlogId;

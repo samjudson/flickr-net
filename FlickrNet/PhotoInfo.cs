@@ -24,15 +24,6 @@ namespace FlickrNet
 		private PhotoInfoTags _tags = new PhotoInfoTags();
 		private PhotoInfoUsage _usage = new PhotoInfoUsage();
 
-        private PhotoFavourite[] _favorites = new PhotoFavourite[0];
-
-        /// <summary>
-        /// The favourites for this photo. Used by <see cref="Flickr.PhotosGetFavorites(string,int,int)"/>
-        /// </summary>
-        [XmlElement("person")]
-        public PhotoFavourite[] Favorites { get { return _favorites; } set { _favorites = value ?? new PhotoFavourite[0]; } }
-
-
 		/// <summary>
 		/// The id of the photo.
 		/// </summary>

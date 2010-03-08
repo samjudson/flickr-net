@@ -65,7 +65,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            Photos photos = f.GroupPoolGetPhotos(TestData.GroupId);
+            Photos photos = f.GroupsPoolsGetPhotos(TestData.GroupId);
 
             Assert.IsNotNull(photos, "Photos should not be null");
             Assert.IsTrue(photos.Count > 0, "Should be more than 0 photos returned");

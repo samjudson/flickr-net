@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <remarks/>
 	[System.Serializable]
     [XmlRoot("photo")]
-    public class Photo : IXmlSerializable
+    public class Photo : IXmlSerializable, IFlickrParsable
 	{
 
 		private string _photoId;
@@ -357,16 +357,18 @@ namespace FlickrNet
         {
         }
 
-        internal Photo(XmlReader reader)
+        void IFlickrParsable.Load(XmlReader reader)
         {
-            Load(reader);
+            DoLoad(reader);
+
+            reader.Skip();
         }
 
         /// <summary>
-        /// Loads a Photo class from an <see cref="XmlReader"/>.
+        /// Protected method that does the actual initialization of the Photo instance. Should be called by subclasses of the Photo class.
         /// </summary>
-        /// <param name="reader">The Xml fragment to create the <see cref="Photo"/> class from.</param>
-        public void Load(XmlReader reader)
+        /// <param name="reader">The reader containing the XML to be parsed.</param>
+        protected void DoLoad(XmlReader reader)
         {
             if (reader.LocalName != "photo")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);
@@ -380,7 +382,6 @@ namespace FlickrNet
                         PhotoId = reader.Value;
                         if (String.IsNullOrEmpty(reader.Value))
                         {
-                            reader.Skip();
                             return;
                         }
                         break;
@@ -485,8 +486,6 @@ namespace FlickrNet
                 }
             }
 
-            // skip any children and move to next node.
-            reader.Skip();
         }
 
         #region IXmlSerializable Members
@@ -498,7 +497,7 @@ namespace FlickrNet
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            Load(reader);
+            ((IFlickrParsable)this).Load(reader);
         }
 
         void IXmlSerializable.WriteXml(XmlWriter writer)
@@ -507,6 +506,7 @@ namespace FlickrNet
         }
 
         #endregion
+
     }
 
 }

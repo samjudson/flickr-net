@@ -58,9 +58,9 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The age to return.</param>
         /// <returns>A list of photos for the panda.</returns>
-        public PandaPhotos PandaGetPhotos(string pandaName, int perPage, int page)
+        public PandaPhotos PandaGetPhotos(string pandaName, int page, int perPage)
         {
-            return PandaGetPhotos(pandaName, PhotoSearchExtras.None, perPage, page);
+            return PandaGetPhotos(pandaName, PhotoSearchExtras.None, page, perPage);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The age to return.</param>
         /// <returns>A list of photos for the panda.</returns>
-        public PandaPhotos PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int perPage, int page)
+        public PandaPhotos PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string,object>();
             parameters.Add("method", "flickr.panda.getPhotos");

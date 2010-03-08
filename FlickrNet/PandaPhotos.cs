@@ -67,7 +67,8 @@ namespace FlickrNet
 
             while (reader.LocalName == "photo")
             {
-                Photo p = new Photo(reader);
+                Photo p = new Photo();
+                ((IFlickrParsable)p).Load(reader);
                 if (!String.IsNullOrEmpty(p.PhotoId)) Add(p);
             }
 

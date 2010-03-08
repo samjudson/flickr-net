@@ -10,7 +10,7 @@ namespace FlickrNet
 	/// The context of the current photo, as returned by
 	/// <see cref="Flickr.PhotosGetContext"/>,
 	/// <see cref="Flickr.PhotosetsGetContext"/>
-	///  and <see cref="Flickr.GroupPoolGetContext"/> methods.
+	///  and <see cref="Flickr.GroupsPoolsGetContext"/> methods.
 	/// </summary>
 	public class Context
 	{

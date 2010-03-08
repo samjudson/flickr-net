@@ -72,7 +72,7 @@ namespace FlickrNetTest
             Photos ps = f.PhotosSearch(o);
 
             Assert.IsNotNull(ps, "Photos should not be null");
-            Assert.AreEqual(500, ps.PhotosPerPage, "PhotosPerPage should be 500");
+            Assert.AreEqual(500, ps.PerPage, "PhotosPerPage should be 500");
             Assert.AreEqual(500, ps.Count, "Count should be 500 as well");
         }
     }

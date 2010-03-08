@@ -11,6 +11,9 @@ namespace FlickrNet
 	/// </summary>
 	public class Places : List<Place>, IFlickrParsable
 	{
+        /// <summary>
+        /// The total number of places that match the calling request.
+        /// </summary>
         public int Total { get; set; }
 
 		/// <summary>
@@ -39,36 +42,30 @@ namespace FlickrNet
 	/// </summary>
     public class Place : IFlickrParsable
 	{
-		private string _placeId;
 		/// <summary>
 		/// The unique id for this place.
 		/// </summary>
-		public string PlaceId { get { return _placeId; } }
+        public string PlaceId { get; set; }
 
-		private string _placeUrl;
 		/// <summary>
 		/// The web page URL that corresponds to this place.
 		/// </summary>
-		public string PlaceUrl { get { return _placeUrl; } }
+        public string PlaceUrl { get; set; }
 
-		private PlaceType _placeType;
 		/// <summary>
 		/// The 'type' of this place, e.g. Region, Country etc.
 		/// </summary>
-        public PlaceType PlaceType { get { return _placeType; } }
+        public PlaceType PlaceType { get; set; }
 
-		private string _woeId;
 		/// <summary>
 		/// The WOE id for the locality.
 		/// </summary>
-		public string WoeId { get { return _woeId; } }
-
-		private string _description;
+        public string WoeId { get; set; }
 
 		/// <summary>
 		/// The description of this place, where provided.
 		/// </summary>
-		public string Description { get { return _description; } }
+        public string Description { get; set; }
 
 		private decimal _latitude;
 		private decimal _longitude;
@@ -101,11 +98,11 @@ namespace FlickrNet
 		/// <param name="reader"></param>
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
 		{
-			_description = reader.GetAttribute("name");
-			_placeId = reader.GetAttribute("place_id");
-			_placeUrl = reader.GetAttribute("place_url");
-			_placeType = (PlaceType)Enum.Parse(typeof(PlaceType), reader.GetAttribute("place_type"), true);
-			_woeId = reader.GetAttribute("woeid");
+			Description = reader.GetAttribute("name");
+			PlaceId = reader.GetAttribute("place_id");
+			PlaceUrl = reader.GetAttribute("place_url");
+			PlaceType = (PlaceType)Enum.Parse(typeof(PlaceType), reader.GetAttribute("place_type"), true);
+			WoeId = reader.GetAttribute("woeid");
 			string dec = reader.GetAttribute("latitude");
 			if( dec != null && dec.Length > 0 )
 			{
@@ -120,7 +117,7 @@ namespace FlickrNet
             if (!reader.IsEmptyElement)
             {
                 reader.Read();
-                _description = reader.Value;
+                Description = reader.Value;
                 reader.Read();
             }
 

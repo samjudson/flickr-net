@@ -82,13 +82,13 @@ namespace FlickrNetTest
             o.Tags = "Test";
             Photos photos = f.PhotosSearch(o);
 
-            Assert.IsTrue(photos.TotalPhotos > 0, "Total Photos should be greater than zero.");
+            Assert.IsTrue(photos.Total > 0, "Total Photos should be greater than zero.");
             Assert.IsTrue(photos.Pages > 0, "Pages should be greaters than zero.");
-            Assert.AreEqual(100, photos.PhotosPerPage, "PhotosPerPage should be 100.");
+            Assert.AreEqual(100, photos.PerPage, "PhotosPerPage should be 100.");
             Assert.AreEqual(1, photos.Page, "Page should be 1.");
 
             Assert.IsTrue(photos.Count > 0, "Photos.Count should be greater than 0.");
-            Assert.AreEqual(photos.PhotosPerPage, photos.Count);
+            Assert.AreEqual(photos.PerPage, photos.Count);
         }
 
         [TestMethod]
@@ -99,13 +99,13 @@ namespace FlickrNetTest
             o.Tags = "Test";
             Photos photos = f.PhotosSearch(o);
 
-            Assert.IsTrue(photos.TotalPhotos > 0, "TotalPhotos should be greater than 0.");
+            Assert.IsTrue(photos.Total > 0, "TotalPhotos should be greater than 0.");
             Assert.IsTrue(photos.Pages > 0, "TotalPages should be greater than 0.");
-            Assert.AreEqual(10, photos.PhotosPerPage, "PhotosPerPage should be 10.");
+            Assert.AreEqual(10, photos.PerPage, "PhotosPerPage should be 10.");
             Assert.AreEqual(1, photos.Page, "PageNumber should be 1.");
 
             Assert.IsTrue(photos.Count > 0, "PhotoCollection Length should be greater than 0.");
-            Assert.AreEqual(photos.PhotosPerPage, photos.Count);
+            Assert.AreEqual(photos.PerPage, photos.Count);
         }
 
         [TestMethod]
@@ -286,14 +286,14 @@ namespace FlickrNetTest
 
             Photos photos = f.PhotosSearch(o);
 
-            Assert.AreEqual(10, photos.PhotosPerPage, "Per page is not 10");
+            Assert.AreEqual(10, photos.PerPage, "Per page is not 10");
 
             o.PerPage = 50;
             photos = f.PhotosSearch(o);
-            Assert.AreEqual(50, photos.PhotosPerPage, "Per page has not changed?");
+            Assert.AreEqual(50, photos.PerPage, "Per page has not changed?");
 
             photos = f.PhotosSearch(o);
-            Assert.AreEqual(50, photos.PhotosPerPage, "Per page has changed!");
+            Assert.AreEqual(50, photos.PerPage, "Per page has changed!");
         }
 
         [TestMethod]

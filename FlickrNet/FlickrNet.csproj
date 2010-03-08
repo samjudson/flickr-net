@@ -128,6 +128,8 @@
     <Compile Include="Blogs.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BlogService.cs" />
+    <Compile Include="BlogServices.cs" />
     <Compile Include="BoundaryBox.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -161,6 +163,27 @@
     <Compile Include="DateGranularity.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Flickr_Activity.cs" />
+    <Compile Include="Flickr_Blogs.cs" />
+    <Compile Include="Flickr_Contacts.cs" />
+    <Compile Include="Flickr_Favorites.cs" />
+    <Compile Include="Flickr_Groups.cs" />
+    <Compile Include="Flickr_Interestingness.cs" />
+    <Compile Include="Flickr_Notes.cs" />
+    <Compile Include="Flickr_PhotosComments.cs" />
+    <Compile Include="Flickr_Photosets.cs" />
+    <Compile Include="Flickr_PhotosGeo.cs" />
+    <Compile Include="Flickr_PhotosMisc.cs" />
+    <Compile Include="Flickr_Prefs.cs" />
+    <Compile Include="Flickr_Tags.cs" />
+    <Compile Include="Flickr_Urls.cs" />
+    <Compile Include="GeoContext.cs" />
+    <Compile Include="NoResponse.cs" />
+    <Compile Include="PhotosetPhotos.cs" />
+    <Compile Include="PopularitySort.cs" />
+    <Compile Include="PopularPhoto.cs" />
+    <Compile Include="PopularPhotos.cs" />
+    <Compile Include="StatReferrer.cs" />
     <Compile Include="Enums.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -192,6 +215,10 @@
     <Compile Include="Flickr_Panda.cs" />
     <Compile Include="Flickr_People.cs" />
     <Compile Include="Flickr_Photos.cs" />
+    <Compile Include="Flickr_Places.cs" />
+    <Compile Include="Flickr_Reflection.cs" />
+    <Compile Include="Flickr_Stats.cs" />
+    <Compile Include="Flickr_Test.cs" />
     <Compile Include="GeoAccuracy.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -295,6 +322,11 @@
     <Compile Include="Sizes.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StatDomain.cs" />
+    <Compile Include="StatDomains.cs" />
+    <Compile Include="StatReferrers.cs" />
+    <Compile Include="Stats.cs" />
+    <Compile Include="StatViews.cs" />
     <Compile Include="Tags.cs">
       <SubType>Code</SubType>
     </Compile>

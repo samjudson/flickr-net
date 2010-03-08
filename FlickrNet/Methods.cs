@@ -2,29 +2,27 @@ using System;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// Summary description for Methods.
 	/// </summary>
-	public class Methods
+	public class Methods : List<string>, IFlickrParsable
 	{
-		private Methods()
-		{
-		}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            reader.Read();
 
-		internal static string[] GetMethods(XmlElement element)
-		{
-			XmlNodeList nodes = element.SelectNodes("method");
-			string[] _methods = new string[nodes.Count];
-			for(int i = 0; i < nodes.Count; i++)
-			{
-				_methods[i] = nodes[i].Value;
-			}
-			return _methods;
-		}
-	}
+            while (reader.LocalName == "method")
+            {
+                Add(reader.ReadElementContentAsString());
+            }
+
+            reader.Skip();
+        }
+    }
 
 	/// <summary>
 	/// A method supported by the Flickr API.
@@ -33,104 +31,248 @@ namespace FlickrNet
 	/// See <a href="http://www.flickr.com/services/api">Flickr API Documentation</a> for a complete list
 	/// of methods.
 	/// </remarks>
-	[Serializable]
-	public class Method
+	public class Method: IFlickrParsable
 	{
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public Method()
-		{
-		}
-
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public Method()
+        {
+            Arguments = new List<MethodArgument>();
+            Errors = new List<MethodError>();
+        }
 		/// <summary>
 		/// The name of the method.
 		/// </summary>
-		[XmlAttribute("name", Form=XmlSchemaForm.Unqualified)]
-		public string Name;
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Does the method require the call to be authenticated.
+        /// </summary>
+        public bool NeedsLogin { get; set; }
+
+        /// <summary>
+        /// Does the method request the call to be signed.
+        /// </summary>
+        public bool NeedsSigning { get; set; }
+
+        /// <summary>
+        /// The minimum level of permissions required for this method call.
+        /// </summary>
+        public MethodPermissions RequiredPermissions { get; set; }
 
 		/// <summary>
 		/// The description of the method.
 		/// </summary>
-		[XmlElement("description", Form=XmlSchemaForm.Unqualified)]
-		public string Description;
+        public string Description { get; set; }
 
 		/// <summary>
 		/// An example response for the method.
 		/// </summary>
-		[XmlElement("response", Form=XmlSchemaForm.Unqualified)]
-		public string Response;
+        public string Response { get; set; }
 
 		/// <summary>
 		/// An explanation of the example response for the method.
 		/// </summary>
-		[XmlElement("explanation", Form=XmlSchemaForm.Unqualified)]
-		public string Explanation;
+       public string Explanation { get; set; }
 
 		/// <summary>
 		/// The arguments of the method.
 		/// </summary>
-		[XmlElement("arguments", Form=XmlSchemaForm.Unqualified)]
-		public Arguments Arguments;
+        public List<MethodArgument> Arguments { get; set; }
 
 		/// <summary>
 		/// The possible errors that could be returned by the method.
 		/// </summary>
-		[XmlArray()]
-		[XmlArrayItem("error", typeof(MethodError), Form=XmlSchemaForm.Unqualified)]
-		public MethodError[] Errors;
+        public List<MethodError> Errors { get; set; }
 
-	}
 
-	/// <summary>
-	/// An instance containing a collection of <see cref="Argument"/> instances.
-	/// </summary>
-	[Serializable]
-	public class Arguments
-	{
-		/// <summary>
-		/// A collection of <see cref="Argument"/> instances.
-		/// </summary>
-		[XmlElement("argument", Form=XmlSchemaForm.Unqualified)]
-		public Argument[] ArgumentCollection;
-	}
+        #region IFlickrParsable Members
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            if (reader.LocalName != "method")
+                throw new XmlException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "name":
+                        Name = reader.Value;
+                        break;
+                    case "needslogin":
+                        NeedsLogin = reader.Value == "1";
+                        break;
+                    case "needssigning":
+                        NeedsSigning = reader.Value == "1";
+                        break;
+                    case "requiredperms":
+                        RequiredPermissions = (MethodPermissions)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName != "method")
+            {
+                switch (reader.LocalName)
+                {
+                    case "description":
+                        Description = reader.ReadElementContentAsString();
+                        break;
+                    case "response":
+                        Response = reader.ReadElementContentAsString();
+                        break;
+                    case "explanation":
+                        Explanation = reader.ReadElementContentAsString();
+                        break;
+                }
+            }
+
+            reader.ReadToFollowing("argument");
+
+            while (reader.LocalName == "argument")
+            {
+                MethodArgument a = new MethodArgument();
+                ((IFlickrParsable)a).Load(reader);
+                Arguments.Add(a);
+            }
+            reader.ReadToFollowing("error");
+
+            while (reader.LocalName == "error")
+            {
+                MethodError e = new MethodError();
+                ((IFlickrParsable)e).Load(reader);
+                Errors.Add(e);
+            }
+            reader.Read();
+
+            reader.Skip();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// An enumeration listing the permission levels required for calling the Flickr API methods.
+    /// </summary>
+    public enum MethodPermissions
+    {
+        /// <summary>
+        /// No permissions required.
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// A minimum of 'read' permissions required.
+        /// </summary>
+        Read = 1,
+        /// <summary>
+        /// A minimum of 'write' permissions required.
+        /// </summary>
+        Write = 2
+    }
 
 	/// <summary>
 	/// An argument for a method.
 	/// </summary>
-	[Serializable]
-	public class Argument
+	public class MethodArgument : IFlickrParsable
 	{
 		/// <summary>
 		/// The name of the argument.
 		/// </summary>
-		[XmlElement("name")]
-		public string ArgumentName;
+        public string Name { get; set; }
 
 		/// <summary>
 		/// Is the argument optional or not.
 		/// </summary>
-		[XmlElement("optional")]
-		public int Optional;
+        public bool IsOptional { get; set; }
 
 		/// <summary>
 		/// The description of the argument.
 		/// </summary>
-		[XmlText()]
-		public string ArgumentDescription;
-	}
+        public string Description { get; set; }
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            if (reader.LocalName != "argument")
+                return;
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "name":
+                        Name = reader.Value;
+                        break;
+                    case "optional":
+                        IsOptional = reader.Value == "1";
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+
+                       
+                }
+            }
+
+            reader.Read();
+
+            Description = reader.ReadContentAsString();
+
+            reader.Read();
+        }
+    }
 
 	/// <summary>
 	/// A possible error that a method can return.
 	/// </summary>
-	[Serializable]
-	public class MethodError
+	public class MethodError : IFlickrParsable
 	{
 		/// <summary>
 		/// The code for the error.
 		/// </summary>
-		[XmlElement("code")]
-		public int Code;
+        public int Code { get; set; }
 
-	}
+        /// <summary>
+        /// The message for a method error.
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// The description of a method error.
+        /// </summary>
+        public string Description { get; set; }
+
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            if (reader.LocalName != "error")
+                return;
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "code":
+                        Code = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "message":
+                        Message = reader.Value;
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            Description = reader.ReadContentAsString();
+
+            reader.Read();
+
+        }
+    }
 }
