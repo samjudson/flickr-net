@@ -44,47 +44,47 @@ namespace FlickrNet
 		/// <summary>
 		/// The name of the method.
 		/// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Does the method require the call to be authenticated.
         /// </summary>
-        public bool NeedsLogin { get; set; }
+        public bool NeedsLogin { get; private set; }
 
         /// <summary>
         /// Does the method request the call to be signed.
         /// </summary>
-        public bool NeedsSigning { get; set; }
+        public bool NeedsSigning { get; private set; }
 
         /// <summary>
         /// The minimum level of permissions required for this method call.
         /// </summary>
-        public MethodPermission RequiredPermissions { get; set; }
+        public MethodPermission RequiredPermissions { get; private set; }
 
 		/// <summary>
 		/// The description of the method.
 		/// </summary>
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
 		/// <summary>
 		/// An example response for the method.
 		/// </summary>
-        public string Response { get; set; }
+        public string Response { get; private set; }
 
 		/// <summary>
 		/// An explanation of the example response for the method.
 		/// </summary>
-       public string Explanation { get; set; }
+       public string Explanation { get; private set; }
 
 		/// <summary>
 		/// The arguments of the method.
 		/// </summary>
-        public System.Collections.ObjectModel.Collection<MethodArgument> Arguments { get; set; }
+        public System.Collections.ObjectModel.Collection<MethodArgument> Arguments { get; private set; }
 
 		/// <summary>
 		/// The possible errors that could be returned by the method.
 		/// </summary>
-        public System.Collections.ObjectModel.Collection<MethodError> Errors { get; set; }
+        public System.Collections.ObjectModel.Collection<MethodError> Errors { get; private set; }
 
 
         #region IFlickrParsable Members
@@ -111,7 +111,7 @@ namespace FlickrNet
                         RequiredPermissions = (MethodPermission)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 
@@ -212,7 +212,7 @@ namespace FlickrNet
                         IsOptional = reader.Value == "1";
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
 
                        
                 }
@@ -263,7 +263,7 @@ namespace FlickrNet
                         Message = reader.Value;
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

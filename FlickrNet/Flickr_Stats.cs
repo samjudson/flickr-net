@@ -198,6 +198,9 @@ namespace FlickrNet
 
             parameters.Add("method", "flickr.stats.getPhotosetDomains");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
+            if (!String.IsNullOrEmpty(photosetId)) parameters.Add("photoset_id", photosetId);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<StatDomainCollection>(parameters);
         }
@@ -296,7 +299,7 @@ namespace FlickrNet
         /// <returns>The referrers.</returns>
         public StatReferrerCollection StatsGetPhotoReferrers(DateTime date, string domain, string photoId)
         {
-            return StatsGetPhotoReferrers(date, domain, null, 0, 0);
+            return StatsGetPhotoReferrers(date, domain, photoId, 0, 0);
         }
 
         /// <summary>
@@ -571,7 +574,7 @@ namespace FlickrNet
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
         public PopularPhotoCollection StatsGetPopularPhotos(DateTime date, int page, int perPage)
         {
-            return StatsGetPopularPhotos(DateTime.MinValue, PopularitySort.None, page, perPage);
+            return StatsGetPopularPhotos(date, PopularitySort.None, page, perPage);
         }
 
         /// <summary>

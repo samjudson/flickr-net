@@ -5,6 +5,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Exception thrown is no API key is supplied.
 	/// </summary>
+    [Serializable]
 	public class ApiKeyRequiredException : FlickrException
 	{
 		/// <summary>

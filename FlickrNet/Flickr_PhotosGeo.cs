@@ -57,7 +57,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="photoId">The ID of the photo to return the location information for.</param>
         /// <returns>Returns null if the photo has no location information, otherwise returns the location information.</returns>
-        public PhotoLocation PhotosGeoGetLocation(string photoId)
+        public PlaceInfo PhotosGeoGetLocation(string photoId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getLocation");
@@ -114,8 +114,6 @@ namespace FlickrNet
         /// <param name="accuracy">The accuracy of the photos geo location.</param>
         public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy)
         {
-            System.Globalization.NumberFormatInfo nfi = System.Globalization.NumberFormatInfo.InvariantInfo;
-
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setLocation");
             parameters.Add("photo_id", photoId);

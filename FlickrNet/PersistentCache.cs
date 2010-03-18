@@ -59,18 +59,6 @@ namespace FlickrNet
 			}
 		}
 
-		public int Count
-		{
-			get
-			{
-				using (lockFile.Acquire())
-				{
-					Refresh();
-					return dataTable.Count;
-				}
-			}
-		}
-
 		/// <summary>
 		/// Gets the maximum size for the persistent cache.
 		/// </summary>
@@ -185,7 +173,7 @@ namespace FlickrNet
 			}
 		}
 
-		private bool Expired(DateTime test, TimeSpan age)
+		private static bool Expired(DateTime test, TimeSpan age)
 		{
 			if (age == TimeSpan.MinValue)
 				return true;

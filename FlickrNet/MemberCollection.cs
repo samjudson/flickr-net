@@ -39,8 +39,6 @@ namespace FlickrNet
             if (reader.GetAttribute("perpage") != null) PerPage = int.Parse(reader.GetAttribute("perpage"), System.Globalization.CultureInfo.InvariantCulture);
             if (reader.GetAttribute("total") != null) Total = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
 
-            ArrayList list = new ArrayList();
-
             while (reader.Read())
             {
                 if (reader.Name == "member")

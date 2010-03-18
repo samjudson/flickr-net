@@ -57,7 +57,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "category")
-                throw new Exception("Unknown element found: " + reader.LocalName);
+                throw new ParsingException("Unknown element found: " + reader.LocalName);
 
             while (reader.MoveToNextAttribute())
             {
@@ -73,7 +73,7 @@ namespace FlickrNet
                         PathIds = reader.Value;
                         break;
                     default:
-                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
 
                 }
             }
@@ -125,7 +125,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "category")
-                throw new Exception("Unknown element found: " + reader.LocalName);
+                throw new ParsingException("Unknown element found: " + reader.LocalName);
 
             while (reader.MoveToNextAttribute())
             {
@@ -141,7 +141,7 @@ namespace FlickrNet
                         GroupCount = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
 
                 }
             }

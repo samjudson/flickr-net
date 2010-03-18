@@ -74,7 +74,7 @@ namespace FlickrNetTest
             Assert.AreEqual("Global Collection", info.Title, "Title should be 'Global Collection'.");
             Assert.AreEqual("3629", info.Server, "Server should be 3629.");
 
-            Assert.AreEqual(12, info.IconPhotos.Length, "IconPhotos.Length should be 12.");
+            Assert.AreEqual(12, info.IconPhotos.Count, "IconPhotos.Length should be 12.");
 
             Assert.AreEqual("Tires", info.IconPhotos[0].Title, "The first IconPhoto Title should be 'Tires'.");
         }

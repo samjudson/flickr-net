@@ -55,7 +55,7 @@ namespace FlickrNet
                         DomainName = reader.Value;
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

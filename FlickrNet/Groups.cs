@@ -226,7 +226,7 @@ namespace FlickrNet
 		/// </summary>
         public GroupThrottleMode Mode { get; private set; }
 
-        private GroupThrottleMode ParseMode(string mode)
+        private static GroupThrottleMode ParseMode(string mode)
 		{
 			switch(mode)
 			{

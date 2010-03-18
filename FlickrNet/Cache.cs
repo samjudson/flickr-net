@@ -120,7 +120,6 @@ namespace FlickrNet
 
 		// Default cache size is set to 50MB
         private static long _cacheSizeLimit = 52428800;
-        private static long _cacheSize;
 
 		internal static long CacheSizeLimit
 		{
@@ -133,19 +132,6 @@ namespace FlickrNet
                 _cacheSizeLimit = value;
 			}
 		}
-
-		internal static long CacheSize
-		{
-			get 
-			{
-                return _cacheSize;
-			}
-			set 
-			{
-                _cacheSize = value;
-			}
-		}
-
 
 		// Default cache timeout is 1 hour
 		private static TimeSpan _cachetimeout = new TimeSpan(0, 1, 0, 0, 0);
@@ -381,6 +367,7 @@ namespace FlickrNet
     /// <summary>
     /// An internal class used for catching caching exceptions.
     /// </summary>
+    [Serializable]
     public class CacheException : Exception
     {
         /// <summary>

@@ -52,7 +52,7 @@ namespace FlickrNet
                         Pages = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
 
                 }
             }
@@ -109,7 +109,7 @@ namespace FlickrNet
                         EighteenPlus = reader.Value == "1";
                         break;
                     default:
-                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
 
                 }
             }

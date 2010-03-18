@@ -77,7 +77,7 @@ namespace FlickrNetTest
                 Assert.IsNotNull(coll.IconSmall, "IconSmall should not be null.");
                 Assert.IsNotNull(coll.IconLarge, "IconLarge should not be null.");
 
-                Assert.AreNotEqual(0, coll.Sets.Length + coll.Collections.Length, "Should be either some sets or some collections.");
+                Assert.AreNotEqual(0, coll.Sets.Count + coll.Collections.Count, "Should be either some sets or some collections.");
 
                 foreach (CollectionSet set in coll.Sets)
                 {

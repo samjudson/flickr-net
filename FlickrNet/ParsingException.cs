@@ -10,6 +10,7 @@ namespace FlickrNet
     /// <remarks>
     /// Usually because an unexpected element or attribute was encountered.
     /// </remarks>
+    [Serializable]
     public class ParsingException : FlickrException
     {
         /// <summary>

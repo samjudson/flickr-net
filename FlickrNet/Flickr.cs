@@ -47,15 +47,18 @@ namespace FlickrNet
 
 		private SupportedService _service = SupportedService.Flickr;
 
-		private string BaseUrl
-		{
-			get { return _baseUrl[(int)_service]; }
-		}
+        /// <summary>
+        /// The base URL for all Flickr REST method calls.
+        /// </summary>
+        public Uri BaseUri
+        {
+            get { return _baseUri[(int)_service]; }
+        }
 
-		private string[] _baseUrl = new string[] { 
-													 "http://api.flickr.com/services/rest/", 
-													 "http://beta.zooomr.com/bluenote/api/rest",
-													 "http://www.23hq.com/services/rest/"};
+		private readonly Uri[] _baseUri = new Uri[] { 
+													 new Uri("http://api.flickr.com/services/rest/"), 
+													 new Uri("http://beta.zooomr.com/bluenote/api/rest"),
+													 new Uri("http://www.23hq.com/services/rest/")};
 
 		private string UploadUrl
 		{
@@ -182,14 +185,6 @@ namespace FlickrNet
 		{
 			get { return Cache.CacheLocation; }
 			set { Cache.CacheLocation = value; }
-		}
-
-		/// <summary>
-		/// Gets the current size of the Cache.
-		/// </summary>
-		public static long CacheSize
-		{
-			get { return Cache.CacheSize; }
 		}
 
 		/// <summary>
@@ -427,16 +422,6 @@ namespace FlickrNet
 
 		}
 
-        private static readonly Uri baseUri = new Uri("http://api.flickr.com/services/rest/");
-
-        /// <summary>
-        /// The base URL for all Flickr REST method calls.
-        /// </summary>
-        public static Uri BaseUri
-        {
-            get { return baseUri; }
-        }
-
         /// <summary>
         /// Calculates the Flickr method cal URL based on the passed in parameters, and also generates the signature if required.
         /// </summary>
@@ -463,7 +448,7 @@ namespace FlickrNet
                 url.AppendFormat("{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value));
             }
 
-            return new Uri(BaseUri, url.ToString());
+            return new Uri(BaseUri, new Uri(url.ToString(), UriKind.Relative));
         }
 
 

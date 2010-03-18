@@ -45,7 +45,7 @@ namespace FlickrNet
                         Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

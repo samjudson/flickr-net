@@ -1,11 +1,13 @@
 using System;
+using System.Security.Permissions;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// Exception thrown when the Flickr API returned a specifi error code.
 	/// </summary>
-	public class FlickrApiException : FlickrException
+    [Serializable]
+    public class FlickrApiException : FlickrException
 	{
 		private int _code;
 		private string _message = String.Empty;
@@ -59,6 +61,10 @@ namespace FlickrNet
         protected FlickrApiException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
             : base(info, context)
         {
+            if (info == null) throw new ArgumentNullException("info");
+
+            _code = info.GetInt32("Code");
+            _message = info.GetString("Verbose");
         }
 
 		/// <summary>
@@ -87,5 +93,21 @@ namespace FlickrNet
 				return _message + " (" + _code + ")";
 			}
 		}
+
+        /// <summary>
+        /// When overridden in a derived class, sets the <see cref="System.Runtime.Serialization.SerializationInfo"/> with information about the exception.
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+        {
+            if (info == null) throw new ArgumentNullException("info");
+
+            info.AddValue("Code", _code);
+            info.AddValue("Verbose", _message);
+
+            base.GetObjectData(info, context);
+        }
 	}
 }

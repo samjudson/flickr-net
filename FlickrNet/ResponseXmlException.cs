@@ -5,7 +5,8 @@ namespace FlickrNet
 	/// <summary>
 	/// Exception thrown when an error parsing the returned XML.
 	/// </summary>
-	public class ResponseXmlException : FlickrException
+    [Serializable]
+    public class ResponseXmlException : FlickrException
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="ResponseXmlException"/> class.

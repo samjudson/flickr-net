@@ -2,6 +2,7 @@ using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -20,7 +21,7 @@ namespace FlickrNet
 		private string _server;
 		private string _secret;
 
-        private List<Photo> _iconPhotos = new List<Photo>();
+        private Collection<Photo> _iconPhotos = new Collection<Photo>();
 
 		/// <summary>
 		/// The ID for the collection.
@@ -70,7 +71,7 @@ namespace FlickrNet
         /// <summary>
         /// An array of the 12 photos used to create a collection's mosaic.
         /// </summary>
-        public Photo[] IconPhotos { get { return _iconPhotos.ToArray(); } }
+        public Collection<Photo> IconPhotos { get { return _iconPhotos; } }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

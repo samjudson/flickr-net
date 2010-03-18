@@ -217,7 +217,12 @@ namespace FlickrNet
 		/// <remarks>
 		/// Will be null if the photo has no location information stored on Flickr.
 		/// </remarks>
-        public PhotoLocation Location { get; private set; }
+        public PlaceInfo Location { get; private set; }
+
+        /// <summary>
+        /// Who has permissions to see the geo-location data for this photo.
+        /// </summary>
+        public GeoPermissions GeoPermissions { get; private set; }
 
 		/// <summary>
 		/// The Web url for flickr web page for this photo.
@@ -380,6 +385,14 @@ namespace FlickrNet
                         break;
                     case "urls":
                         ParseUrls(reader);
+                        break;
+                    case "location":
+                        Location = new PlaceInfo();
+                        ((IFlickrParsable)Location).Load(reader);
+                        break;
+                    case "geoperms":
+                        GeoPermissions = new GeoPermissions();
+                        ((IFlickrParsable)GeoPermissions).Load(reader);
                         break;
                     default:
                         throw new ParsingException("Unknown element found: " + reader.LocalName);
@@ -666,7 +679,7 @@ namespace FlickrNet
                         Height = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 
@@ -738,7 +751,7 @@ namespace FlickrNet
                         IsMachineTag = (reader.Value == "1");
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 
@@ -778,7 +791,7 @@ namespace FlickrNet
                         UrlType = reader.Value;
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

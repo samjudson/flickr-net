@@ -53,7 +53,7 @@ namespace FlickrNet
                         PerPage = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 
@@ -189,7 +189,7 @@ namespace FlickrNet
                         PhotosUploaded = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

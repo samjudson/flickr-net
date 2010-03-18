@@ -23,11 +23,6 @@ namespace FlickrNet
         public bool IsAdmin { get; private set; }
 
         /// <summary>
-        /// The number of photos currently in the group pool.
-        /// </summary>
-        public int NumberOfPhotos { get; private set; }
-
-        /// <summary>
         /// The privacy of the pool (see <see cref="PoolPrivacy"/>).
         /// </summary>
         public PoolPrivacy Privacy { get; private set; }

@@ -266,11 +266,11 @@ namespace FlickrNet
                             switch (reader.LocalName)
                             {
                                 case "created":
-                                    if (reader.Value != "")
+                                    if (!String.IsNullOrEmpty(reader.Value))
                                         SetsCreated = reader.ReadContentAsInt();
                                     break;
                                 case "remaining":
-                                    if (reader.Value != "" && reader.Value != "lots")
+                                    if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
                                         SetsRemaining = reader.ReadContentAsInt();
                                     break;
                                 default:
@@ -308,11 +308,11 @@ namespace FlickrNet
                             switch (reader.LocalName)
                             {
                                 case "uploaded":
-                                    if (reader.Value != "")
+                                    if (!String.IsNullOrEmpty(reader.Value))
                                         VideosUploaded = reader.ReadContentAsInt();
                                     break;
                                 case "remaining":
-                                    if (reader.Value != "" && reader.Value != "lots")
+                                    if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
                                         VideosRemaining = reader.ReadContentAsInt();
                                     break;
                                 default:

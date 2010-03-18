@@ -90,6 +90,23 @@ namespace FlickrNetTest
             Assert.IsNotNull(p.IsContact, "IsContact should not be null.");
             Assert.IsNotNull(p.IsIgnored, "IsIgnored should not be null.");
             Assert.IsNotNull(p.IsFriend, "IsFriend should not be null.");
+
+            Assert.IsNotNull(p.PhotosSummary, "PhotosSummary should not be null.");
+        }
+
+        [TestMethod]
+        public void TestPersonGetInfoSelf()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            Auth a = f.AuthCheckToken(f.AuthToken);
+
+            Person p = f.PeopleGetInfo(a.User.UserId);
+
+            Assert.IsNotNull(p.MailboxSha1Hash, "MailboxSha1Hash should not be null.");
+            Assert.IsNotNull(p.PhotosSummary, "PhotosSummary should not be null.");
+            Assert.AreNotEqual(0, p.PhotosSummary.Views, "PhotosSummary.Views should not be zero.");
+
         }
     }
 }

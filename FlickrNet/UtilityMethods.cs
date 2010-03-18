@@ -265,15 +265,6 @@ namespace FlickrNet
 			}
 		}
 
-		internal static void WriteAsciiString(Stream s, string str)
-		{
-			WriteInt32(s, str.Length);
-			foreach (char c in str)
-			{
-				s.WriteByte((byte) (c & 0x7F));
-			}
-		}
-
 		internal static int ReadInt32(Stream s)
 		{
 			int i = 0, b;
@@ -303,20 +294,6 @@ namespace FlickrNet
 			return new string(chars);
 		}
 
-		internal static string ReadAsciiString(Stream s)
-		{
-			int len = ReadInt32(s);
-			char[] chars = new char[len];
-			for (int i = 0; i < len; i++)
-			{
-				int c = s.ReadByte();
-				if (c == -1)
-					throw new IOException("Unexpected EOF encountered");
-				chars[i] = (char) (c & 0x7F);
-			}
-			return new string(chars);
-		}
-	
 		private const string photoUrl = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
 
 		internal static string UrlFormat(Photo p, string size, string format)

@@ -86,7 +86,7 @@ namespace FlickrNet
                         MediaType = reader.Value == "photo" ? MediaType.Photos : MediaType.Videos;
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

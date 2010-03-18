@@ -50,6 +50,16 @@ namespace FlickrNet
         public decimal Longitude { get; private set; }
 
         /// <summary>
+        /// The accuracy of the location information, if this information is about a photo.
+        /// </summary>
+        public GeoAccuracy? Accuracy { get; private set; }
+
+        /// <summary>
+        /// The context of the location, if this information is about a photo.
+        /// </summary>
+        public GeoContext? Context { get; private set; }
+
+        /// <summary>
         /// The timezone for the place.
         /// </summary>
         public string TimeZone { get; private set; }
@@ -58,6 +68,11 @@ namespace FlickrNet
         /// Does this place have shape data for it.
         /// </summary>
         public bool HasShapeData { get; private set; }
+
+        /// <summary>
+        /// The neighbourhood for this location. May be null.
+        /// </summary>
+        public Place Neighbourhood { get; private set; }
 
         /// <summary>
         /// Details about the place's locality. May be null.
@@ -118,6 +133,12 @@ namespace FlickrNet
                     case "longitude":
                         Longitude = reader.ReadContentAsDecimal();
                         break;
+                    case "accuracy":
+                        Accuracy = (GeoAccuracy)reader.ReadContentAsInt();
+                        break;
+                    case "context":
+                        Context = (GeoContext)reader.ReadContentAsInt();
+                        break;
                     case "timezone":
                         TimeZone = reader.Value;
                         break;
@@ -135,6 +156,10 @@ namespace FlickrNet
             {
                 switch (reader.LocalName)
                 {
+                    case "neighbourhood":
+                        Neighbourhood = new Place();
+                        ((IFlickrParsable)Neighbourhood).Load(reader);
+                        break;
                     case "locality":
                         Locality = new Place();
                         ((IFlickrParsable)Locality).Load(reader);

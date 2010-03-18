@@ -187,6 +187,18 @@ namespace FlickrNetTest
 
         }
 
+        [TestMethod]
+        public void PhotosGetInfoTestLocation()
+        {
+            string photoId = "4268756940";
+
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoInfo info = f.PhotosGetInfo(photoId);
+
+            Assert.IsNotNull(info.Location);
+        }
+
 
         [TestMethod]
         public void PhotosGetExifTest()

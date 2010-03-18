@@ -15,11 +15,6 @@ namespace FlickrNet
 		/// <remarks/>
         public string UserId { get; private set; }
     
-		/// <summary>Is the user an administrator. 
-		/// 1 = admin, 0 = normal user.</summary>
-		/// <remarks></remarks>
-        public bool IsAdmin { get; private set; }
-
 		/// <summary>Does the user posses a pro account.
 		/// 0 = free acouunt, 1 = pro account holder.</summary>
         public bool IsPro { get; private set; }
@@ -201,6 +196,9 @@ namespace FlickrNet
                         PhotosSummary = new PersonPhotosSummary();
                         ((IFlickrParsable)PhotosSummary).Load(reader);
                         break;
+                    case "mbox_sha1sum":
+                        MailboxSha1Hash = reader.ReadElementContentAsString();
+                        break;
                     default:
                         throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
                 }
@@ -244,6 +242,9 @@ namespace FlickrNet
                         break;
                     case "count":
                         PhotoCount = reader.ReadElementContentAsInt();
+                        break;
+                    case "views":
+                        Views = reader.ReadElementContentAsInt();
                         break;
                     default:
                         throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");

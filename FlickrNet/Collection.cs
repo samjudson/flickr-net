@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -13,8 +14,8 @@ namespace FlickrNet
 		private string _iconlarge;
 		private string _iconsmall;
 
-        private List<CollectionSet> _subsets = new List<CollectionSet>();
-        private List<Collection> _subcollections = new List<Collection>();
+        private Collection<CollectionSet> _subsets = new Collection<CollectionSet>();
+        private Collection<Collection> _subcollections = new Collection<Collection>();
 
 		/// <remarks/>
 		public string CollectionId { get { return _CollectionId; } set { _CollectionId = value; } }
@@ -34,17 +35,17 @@ namespace FlickrNet
 		/// <summary>
 		/// An array of <see cref="CollectionSet"/> objects.
 		/// </summary>
-		public CollectionSet[] Sets
+		public Collection<CollectionSet> Sets
 		{
-			get { return _subsets.ToArray(); }
+			get { return _subsets; }
 		}
 
 		/// <summary>
 		/// An array of <see cref="Collection"/> objects.
 		/// </summary>
-		public Collection[] Collections
+        public Collection<Collection> Collections
 		{
-			get { return _subcollections.ToArray(); }
+			get { return _subcollections; }
 		}
 
         void IFlickrParsable.Load(XmlReader reader)

@@ -63,18 +63,6 @@ namespace FlickrNet
         /// </remarks>
         public int? PhotoCount { get; private set; }
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public Place()
-        {
-        }
-
-        internal Place(XmlReader reader)
-        {
-            ((IFlickrParsable)this).Load(reader);
-        }
-
 		/// <summary>
 		/// Serializes the XML to an instance.
 		/// </summary>

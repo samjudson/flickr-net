@@ -115,7 +115,9 @@ namespace FlickrNet
 
             string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(UploadUrl);
+            Uri uploadUri = new Uri(UploadUrl);
+
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
             req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
             req.Method = "POST";
             if (Proxy != null) req.Proxy = Proxy;
@@ -279,7 +281,9 @@ namespace FlickrNet
         {
             string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.NumberFormatInfo.InvariantInfo);
 
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(ReplaceUrl);
+            Uri replaceUri = new Uri(ReplaceUrl);
+
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(replaceUri);
             req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
             req.Method = "POST";
             if (Proxy != null) req.Proxy = Proxy;

@@ -11,11 +11,6 @@ namespace FlickrNet
     public sealed class PhotoComment : IFlickrParsable
     {
         /// <summary>
-        /// The photo id associated with this comment.
-        /// </summary>
-        public string PhotoId { get; private set; }
-
-        /// <summary>
         /// The comment id of this comment.
         /// </summary>
         public string CommentId { get; private set; }

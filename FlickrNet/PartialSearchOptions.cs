@@ -14,8 +14,8 @@ namespace FlickrNet
 		private DateTime _maxTakenDate = DateTime.MinValue;
 		private PhotoSearchExtras _extras = PhotoSearchExtras.None;
 		private PhotoSearchSortOrder _sort = PhotoSearchSortOrder.None;
-		private int _perPage = 0;
-		private int _page = 0;
+		private int _perPage;
+		private int _page;
 		private PrivacyFilter _privacyFilter = PrivacyFilter.None;
 		#endregion
 

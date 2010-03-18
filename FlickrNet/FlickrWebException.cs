@@ -5,7 +5,8 @@ namespace FlickrNet
 	/// <summary>
 	/// Exception thrown when a communication error occurs with a web call.
 	/// </summary>
-	public class FlickrWebException : FlickrException
+    [Serializable]
+    public class FlickrWebException : FlickrException
 	{
         /// <summary>
         /// Initializes a new instance of the <see cref="FlickrWebException"/> class.

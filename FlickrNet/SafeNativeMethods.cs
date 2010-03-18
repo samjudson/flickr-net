@@ -17,6 +17,9 @@ namespace FlickrNet
 		internal static int GetErrorCode(System.IO.IOException ioe)
 		{
 #if !WindowsCE
+            System.Security.Permissions.SecurityPermission permission = new System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityPermissionFlag.UnmanagedCode);
+            permission.Demand();
+
 			return System.Runtime.InteropServices.Marshal.GetHRForException(ioe) & 0xFFFF;
 #else
             return 0;

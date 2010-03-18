@@ -244,5 +244,15 @@ namespace FlickrNetTest
             Assert.AreEqual(0, d2.Minute);
             Assert.AreEqual(0, d2.Second);
         }
+
+        [TestMethod]
+        public void TestUri()
+        {
+            Uri u = new Uri("/Test", UriKind.Relative);
+
+            Uri u2 = new Uri(new Uri("http://www.test.com"), u);
+
+            Console.WriteLine(u2.AbsoluteUri);
+        }
     }
 }

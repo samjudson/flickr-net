@@ -119,7 +119,7 @@ namespace FlickrNet
                         Title = reader.Value;
                         break;
                     case "url":
-                        Url = new Uri(new Uri("http://www.flickr.com"), reader.Value);
+                        Url = new Uri(new Uri("http://www.flickr.com"), new Uri(reader.Value, UriKind.Relative));
                         break;
                     case "thumb":
                         Thumbnail = new Uri(reader.Value);

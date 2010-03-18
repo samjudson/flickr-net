@@ -16,11 +16,6 @@ namespace FlickrNet
             return GetResponse<T>(parameters, TimeSpan.MinValue);
         }
 
-        private T GetResponseAlwaysCache<T>(Dictionary<string, string> parameters) where T : IFlickrParsable, new()
-        {
-            return GetResponse<T>(parameters, TimeSpan.MaxValue);
-        }
-
         private T GetResponseCache<T>(Dictionary<string, string> parameters) where T : IFlickrParsable, new()
         {
             return GetResponse<T>(parameters, Cache.CacheTimeout);
@@ -105,15 +100,9 @@ namespace FlickrNet
         /// the details are not found within the cache.
         /// </summary>
         /// <param name="url">The URL to download.</param>
-        /// <param name="variables">The query string parameters to be added to the end of the URL.</param>
         /// <returns>A string containing the response XML.</returns>
         /// <remarks>If the final length of the URL would be greater than 2000 characters 
         /// then they are sent as part of the body instead.</remarks>
-        private string DoGetResponse(string url, string variables)
-        {
-            return DoGetResponse(new Uri(url + "?" + variables));
-        }
-
         private string DoGetResponse(Uri url)
         {
             HttpWebRequest req = null;

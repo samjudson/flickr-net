@@ -21,8 +21,8 @@ namespace FlickrNet
 		private DateTime _minTakenDate = DateTime.MinValue;
 		private DateTime _maxTakenDate = DateTime.MinValue;
 		private PhotoSearchExtras _extras = PhotoSearchExtras.None;
-		private int _perPage = 0;
-		private int _page = 0;
+		private int _perPage;
+		private int _page;
 		private PhotoSearchSortOrder _sort = PhotoSearchSortOrder.None;
 		private PrivacyFilter _privacyFilter = PrivacyFilter.None;
 		private BoundaryBox _boundaryBox = new BoundaryBox();

@@ -86,7 +86,7 @@ namespace FlickrNet
                         Service = reader.Value;
                         break;
                     default:
-                        throw new Exception("Unknown element: " + reader.Name + "=" + reader.Value);
+                        throw new ParsingException("Unknown element: " + reader.Name + "=" + reader.Value);
 
                 }
             }
