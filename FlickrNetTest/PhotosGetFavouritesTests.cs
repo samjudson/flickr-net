@@ -103,8 +103,8 @@ namespace FlickrNetTest
             Assert.AreEqual(10, favs.Count, "PhotoFavourites.Count should be 10.");
             Assert.AreEqual(10, favs.PerPage, "PhotoFavourites.PerPage should be 10");
             Assert.AreEqual(1, favs.Page, "PhotoFavourites.Page should be 1.");
-            Assert.AreEqual(241, favs.Total, "PhotoFavourites.Total should equal 241.");
-            Assert.AreEqual(25, favs.Pages, "PhotoFavourites.Pages should equal 25.");
+            Assert.IsTrue(favs.Total > 100, "PhotoFavourites.Total should be greater than 100.");
+            Assert.IsTrue(favs.Pages > 10, "PhotoFavourites.Pages should be greater than 10.");
         }
 
         [TestMethod]

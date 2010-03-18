@@ -76,6 +76,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FlickrWebException))]
         public void TestGenericTestNull()
         {
             Flickr f = TestData.GetAuthInstance();

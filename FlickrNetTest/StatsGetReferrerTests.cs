@@ -115,7 +115,7 @@ namespace FlickrNetTest
 
             Flickr f = TestData.GetAuthInstance();
 
-            StatReferrerCollection referrers = f.StatsGetPhotostreamReferrers(DateTime.Today.AddDays(-1), domain, 0, 0);
+            StatReferrerCollection referrers = f.StatsGetPhotostreamReferrers(DateTime.Today.AddDays(-2), domain, 0, 0);
 
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 

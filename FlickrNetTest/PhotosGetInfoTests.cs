@@ -79,7 +79,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, info.Rotation);
             Assert.AreEqual("9d3d4bf24a", info.OriginalSecret);
             Assert.AreEqual("jpg", info.OriginalFormat);
-            Assert.AreEqual(87, info.ViewCount);
+            Assert.IsTrue(info.ViewCount > 87, "ViewCount should be greater than 87.");
             Assert.AreEqual(MediaType.Photos, info.Media);
 
             Assert.AreEqual("12. Sudoku", info.Title);
@@ -143,7 +143,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, info.Rotation);
             Assert.AreEqual("9d3d4bf24a", info.OriginalSecret);
             Assert.AreEqual("jpg", info.OriginalFormat);
-            Assert.AreEqual(87, info.ViewCount);
+            Assert.IsTrue(info.ViewCount > 87, "ViewCount should be greater than 87.");
             Assert.AreEqual(MediaType.Photos, info.Media);
 
             Assert.AreEqual("12. Sudoku", info.Title);

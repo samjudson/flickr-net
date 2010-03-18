@@ -13,7 +13,7 @@ namespace FlickrNetTest
         /// This method will authenticate the current user, and then store the AuthToken in the 
         /// </summary>
         [TestMethod]
-        //[Ignore]
+        [Ignore]
         public void Auth()
         {
             Flickr f = new Flickr(TestData.ApiKey, TestData.SharedSecret);
