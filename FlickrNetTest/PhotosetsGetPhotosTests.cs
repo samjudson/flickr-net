@@ -44,7 +44,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestBasicGetPhotos()
         {
-            PhotosetPhotos set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
+            PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
 
             Console.WriteLine(f.LastResponse);
 
@@ -55,7 +55,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestMachineTags()
         {
-            PhotosetPhotos set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
+            PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
 
             bool machineTagsFound = false;
 
@@ -76,14 +76,14 @@ namespace FlickrNetTest
         {
             // http://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
             // Set contains videos and photos
-            PhotosetPhotos theset = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
+            PhotosetPhotoCollection theset = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
 
             foreach (Photo p in theset)
             {
                 Assert.AreEqual("video", p.Media, "Should be video.");
             }
 
-            PhotosetPhotos theset2 = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Photos);
+            PhotosetPhotoCollection theset2 = f.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Photos);
             foreach (Photo p in theset2)
             {
                 Assert.AreEqual("photo", p.Media, "Should be photo.");
@@ -94,7 +94,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestPhotosetGetPhotosWebUrl()
         {
-            PhotosetPhotos theset = f.PhotosetsGetPhotos("72157618515066456");
+            PhotosetPhotoCollection theset = f.PhotosetsGetPhotos("72157618515066456");
 
             foreach(Photo p in theset)
             {

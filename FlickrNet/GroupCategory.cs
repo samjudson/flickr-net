@@ -13,7 +13,7 @@ namespace FlickrNet
         /// </summary>
         public GroupCategory()
         {
-            SubCategories = new List<SubCategory>();
+            Subcategories = new List<Subcategory>();
             Groups = new List<Group>();
         }
 
@@ -45,9 +45,9 @@ namespace FlickrNet
 		public string PathIds;
 
 		/// <summary>
-		/// An array of <see cref="SubCategory"/> items.
+		/// An array of <see cref="Subcategory"/> items.
 		/// </summary>
-        public List<SubCategory> SubCategories { get; private set; }
+        public List<Subcategory> Subcategories { get; private set; }
 
 		/// <summary>
 		/// An array of <see cref="Group"/> items, listing the groups within this category.
@@ -84,9 +84,9 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "subcat")
                 {
-                    SubCategory c = new SubCategory();
+                    Subcategory c = new Subcategory();
                     ((IFlickrParsable)c).Load(reader);
-                    SubCategories.Add(c);
+                    Subcategories.Add(c);
 
                 }
                 else
@@ -105,17 +105,17 @@ namespace FlickrNet
 	/// <summary>
 	/// Holds details of a sub category, including its id, name and the number of groups in it.
 	/// </summary>
-	public class SubCategory: IFlickrParsable
+	public class Subcategory: IFlickrParsable
 	{
 		/// <summary>
 		/// The id of the category.
 		/// </summary>
-        public string SubCategoryId { get; private set; }
+        public string SubcategoryId { get; private set; }
     
 		/// <summary>
 		/// The name of the category.
 		/// </summary>
-		public string SubCategoryName;
+		public string SubcategoryName;
     
 		/// <summary>
 		/// The number of groups found within the category.
@@ -132,10 +132,10 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "id":
-                        SubCategoryId = reader.Value;
+                        SubcategoryId = reader.Value;
                         break;
                     case "name":
-                        SubCategoryName = reader.Value;
+                        SubcategoryName = reader.Value;
                         break;
                     case "count":
                         GroupCount = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);

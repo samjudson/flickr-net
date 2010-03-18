@@ -68,7 +68,7 @@ namespace FlickrNet
                         UserName = reader.Value;
                         break;
                     case "dateadded":
-                        DateAdded = Utils.UnixTimestampToDate(reader.Value);
+                        DateAdded = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "commentid":
                         CommentId = reader.Value;

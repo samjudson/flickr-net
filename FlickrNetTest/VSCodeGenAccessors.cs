@@ -51,9 +51,9 @@ internal class BaseAccessor {
 [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TestTools.UnitTestGeneration", "1.0.0.0")]
 internal class FlickrNet_UtilsAccessor : BaseAccessor {
     
-    protected static Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType m_privateType = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType(typeof(global::FlickrNet.Utils));
+    protected static Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType m_privateType = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateType(typeof(global::FlickrNet.UtilityMethods));
     
-    internal FlickrNet_UtilsAccessor(global::FlickrNet.Utils target) : 
+    internal FlickrNet_UtilsAccessor(global::FlickrNet.UtilityMethods target) : 
             base(target, m_privateType) {
     }
     
@@ -87,10 +87,10 @@ internal class FlickrNet_UtilsAccessor : BaseAccessor {
         }
     }
     
-    internal static global::FlickrNet.Utils CreatePrivate() {
+    internal static global::FlickrNet.UtilityMethods CreatePrivate() {
         object[] args = new object[0];
-        Microsoft.VisualStudio.TestTools.UnitTesting.PrivateObject priv_obj = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateObject(typeof(global::FlickrNet.Utils), new System.Type[0], args);
-        return ((global::FlickrNet.Utils)(priv_obj.Target));
+        Microsoft.VisualStudio.TestTools.UnitTesting.PrivateObject priv_obj = new Microsoft.VisualStudio.TestTools.UnitTesting.PrivateObject(typeof(global::FlickrNet.UtilityMethods), new System.Type[0], args);
+        return ((global::FlickrNet.UtilityMethods)(priv_obj.Target));
     }
     
     internal static void WriteInt32(global::System.IO.Stream s, int i) {
@@ -198,19 +198,19 @@ internal class FlickrNet_UtilsAccessor : BaseAccessor {
         return ret;
     }
     
-    internal static global::FlickrNet.MemberType ParseIdToMemberType(string memberTypeId) {
+    internal static global::FlickrNet.MemberTypes ParseIdToMemberType(string memberTypeId) {
         object[] args = new object[] {
                 memberTypeId};
-        global::FlickrNet.MemberType ret = ((global::FlickrNet.MemberType)(m_privateType.InvokeStatic("ParseIdToMemberType", new System.Type[] {
+        global::FlickrNet.MemberTypes ret = ((global::FlickrNet.MemberTypes)(m_privateType.InvokeStatic("ParseIdToMemberType", new System.Type[] {
                     typeof(string)}, args)));
         return ret;
     }
     
-    internal static string MemberTypeToString(global::FlickrNet.MemberType memberTypes) {
+    internal static string MemberTypeToString(global::FlickrNet.MemberTypes memberTypes) {
         object[] args = new object[] {
                 memberTypes};
         string ret = ((string)(m_privateType.InvokeStatic("MemberTypeToString", new System.Type[] {
-                    typeof(global::FlickrNet.MemberType)}, args)));
+                    typeof(global::FlickrNet.MemberTypes)}, args)));
         return ret;
     }
 }

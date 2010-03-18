@@ -147,7 +147,7 @@ namespace FlickrNet
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("accuracy", (int)accuracy);
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if( perPage > 0 ) parameters.Add("per_page", perPage);
             if (page > 0) parameters.Add("page", page);
 
@@ -188,7 +188,7 @@ namespace FlickrNet
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getWithoutGeoData");
-            Utils.PartialOptionsIntoArray(options, parameters);
+            UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -252,7 +252,7 @@ namespace FlickrNet
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getWithGeoData");
-            Utils.PartialOptionsIntoArray(options, parameters);
+            UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
             return GetResponseCache<PhotoCollection>(parameters);
         }

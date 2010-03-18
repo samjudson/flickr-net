@@ -58,10 +58,10 @@ namespace FlickrNet
                         Count = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "fromdate":
-                        FromDate = Utils.UnixTimestampToDate(reader.Value);
+                        FromDate = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "todate":
-                        ToDate = Utils.UnixTimestampToDate(reader.Value);
+                        ToDate = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
                         throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);

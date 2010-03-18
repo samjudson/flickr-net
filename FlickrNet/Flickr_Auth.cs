@@ -51,7 +51,7 @@ namespace FlickrNet
             if (_sharedSecret == null) throw new SignatureRequiredException();
 
             string hash = _sharedSecret + "api_key" + _apiKey + "frob" + frob + "perms" + authLevel.ToString().ToLower();
-            hash = Utils.Md5Hash(hash);
+            hash = UtilityMethods.MD5Hash(hash);
             string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower() + "&frob=" + frob;
             url += "&api_sig=" + hash;
 
@@ -72,7 +72,7 @@ namespace FlickrNet
             CheckSigned();
 
             string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
-            hash = Utils.Md5Hash(hash);
+            hash = UtilityMethods.MD5Hash(hash);
             string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
             url += "&api_sig=" + hash;
 
@@ -93,7 +93,7 @@ namespace FlickrNet
             CheckSigned();
 
             string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
-            hash = Utils.Md5Hash(hash);
+            hash = UtilityMethods.MD5Hash(hash);
             string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
             url += "&api_sig=" + hash;
 

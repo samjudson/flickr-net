@@ -55,7 +55,7 @@ namespace FlickrNet
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
             if (extras != PhotoSearchExtras.None)
-                parameters.Add("extras", Utils.ExtrasToString(extras));
+                parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }

@@ -92,7 +92,7 @@ namespace FlickrNet
         /// <summary>
         /// The maximum bandwidth (in kilobytes) that the user can use each month.
         /// </summary>
-        public long BandwidthMaxKb { get; private set; }
+        public long BandwidthMaxKB { get; private set; }
 
         /// <summary>
         /// The remaining bandwidth (in bytes) that the user can use this month.
@@ -102,7 +102,7 @@ namespace FlickrNet
         /// <summary>
         /// The remaining bandwidth (in kilobytes) that the user can use this month.
         /// </summary>
-        public long BandwidthRemainingKb { get; private set; }
+        public long BandwidthRemainingKB { get; private set; }
 
         /// <summary>
         /// The number of bytes of the current months bandwidth that the user has used.
@@ -112,7 +112,7 @@ namespace FlickrNet
         /// <summary>
         /// The number of kilobytes of the current months bandwidth that the user has used.
         /// </summary>
-        public long BandwidthUsedKb { get; private set; }
+        public long BandwidthUsedKB { get; private set; }
 
         /// <summary>
         /// Is the upload bandwidth unlimited (i.e. a Pro user).
@@ -127,12 +127,12 @@ namespace FlickrNet
         /// <summary>
         /// The maximum filesize (in kilobytes) that the user is allowed to upload.
         /// </summary>
-        public long FileSizeMaxKb { get; private set; }
+        public long FileSizeMaxKB { get; private set; }
 
         /// <summary>
         /// The maximum filesize (in MB) that the user is allowed to upload.
         /// </summary>
-        public long FileSizeMaxMb { get; private set; }
+        public long FileSizeMaxMB { get; private set; }
 
         /// <summary>
         /// The maximum filesize (in bytes) that the user is allowed to upload.
@@ -142,12 +142,12 @@ namespace FlickrNet
         /// <summary>
         /// The maximum filesize (in kilobytes) that the user is allowed to upload.
         /// </summary>
-        public long VideoSizeMaxKb { get; private set; }
+        public long VideoSizeMaxKB { get; private set; }
 
         /// <summary>
         /// The maximum filesize (in MB) that the user is allowed to upload.
         /// </summary>
-        public long VideoSizeMaxMb { get; private set; }
+        public long VideoSizeMaxMB { get; private set; }
 
         /// <summary>
         /// The number of sets the user has created. Will be null for Pro users.
@@ -214,20 +214,20 @@ namespace FlickrNet
                                     BandwidthMax = reader.ReadContentAsLong();
                                     break;
                                 case "maxkb":
-                                    BandwidthMaxKb = reader.ReadContentAsLong();
+                                    BandwidthMaxKB = reader.ReadContentAsLong();
                                     break;
                                 case "used":
                                 case "usedbytes":
                                     BandwidthUsed = reader.ReadContentAsLong();
                                     break;
                                 case "usedkb":
-                                    BandwidthUsedKb = reader.ReadContentAsLong();
+                                    BandwidthUsedKB = reader.ReadContentAsLong();
                                     break;
                                 case "remainingbytes":
                                     BandwidthRemaining = reader.ReadContentAsLong();
                                     break;
                                 case "remainingkb":
-                                    BandwidthRemainingKb = reader.ReadContentAsLong();
+                                    BandwidthRemainingKB = reader.ReadContentAsLong();
                                     break;
                                 case "unlimited":
                                     IsUnlimited = reader.Value == "1";
@@ -248,10 +248,10 @@ namespace FlickrNet
                                     FileSizeMax = reader.ReadContentAsLong();
                                     break;
                                 case "maxkb":
-                                    FileSizeMaxKb = reader.ReadContentAsLong();
+                                    FileSizeMaxKB = reader.ReadContentAsLong();
                                     break;
                                 case "maxmb":
-                                    FileSizeMaxMb = reader.ReadContentAsLong();
+                                    FileSizeMaxMB = reader.ReadContentAsLong();
                                     break;
                                 default:
                                     throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
@@ -289,10 +289,10 @@ namespace FlickrNet
                                     VideoSizeMax = reader.ReadContentAsLong();
                                     break;
                                 case "maxkb":
-                                    VideoSizeMaxKb = reader.ReadContentAsLong();
+                                    VideoSizeMaxKB = reader.ReadContentAsLong();
                                     break;
                                 case "maxmb":
-                                    VideoSizeMaxMb = reader.ReadContentAsLong();
+                                    VideoSizeMaxMB = reader.ReadContentAsLong();
                                     break;
                                 default:
                                     throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

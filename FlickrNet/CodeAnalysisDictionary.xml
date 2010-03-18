@@ -4,11 +4,17 @@
     <Recognized>
       <Word>Flickr</Word>
       <Word>Blog</Word>
+      <Word>Blogs</Word>
       <Word>Permalink</Word>
       <Word>Exif</Word>
       <Word>Frob</Word>
       <Word>Prefs</Word>
       <Word>Photostream</Word>
+      <Word>Persister</Word>
+      <Word>Parsable</Word>
+      <Word>Zooomr</Word>
+      <Word>Neighbourhood</Word>
+      <Word>Sha</Word>
     </Recognized>
   </Words>
 </Dictionary>

@@ -118,9 +118,9 @@ namespace FlickrNet
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.comments.getRecentForContacts");
-            if (dateLastComment != DateTime.MinValue) parameters.Add("date_lastcomment", Utils.DateToUnixTimestamp(dateLastComment));
+            if (dateLastComment != DateTime.MinValue) parameters.Add("date_lastcomment", UtilityMethods.DateToUnixTimestamp(dateLastComment));
             if (contactsFilter != null && contactsFilter.Length > 0) parameters.Add("contacts_filter", String.Join(",", contactsFilter));
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 

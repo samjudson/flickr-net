@@ -31,14 +31,14 @@ namespace FlickrNet
 		/// <summary>
 		/// 
 		/// </summary>
-		public delegate void UploadProgressHandler(object sender, UploadProgressEventArgs e);
+		public delegate void UploadProgressEventHandler(object sender, UploadProgressEventArgs e);
 
 		/// <summary>
 		/// UploadProgressHandler is fired during a synchronous upload process to signify that 
 		/// a segment of uploading has been completed. This is approximately 50 bytes. The total
 		/// uploaded is recorded in the <see cref="UploadProgressEventArgs"/> class.
 		/// </summary>
-		public event UploadProgressHandler OnUploadProgress;
+		public event UploadProgressEventHandler OnUploadProgress;
 		#endregion
 
 		#region [ Private Variables ]
@@ -97,7 +97,7 @@ namespace FlickrNet
 		private WebProxy _proxy;// = WebProxy.GetDefaultProxy();
 
 		// Static serializers
-		private static XmlSerializer _uploaderSerializer = new XmlSerializer(typeof(FlickrNet.Uploader));
+		private static XmlSerializer _uploaderSerializer = new XmlSerializer(typeof(FlickrNet.UploadResponse));
 
 		#endregion
 
@@ -442,7 +442,7 @@ namespace FlickrNet
                 StringBuilder sb = new StringBuilder(ApiSecret);
                 foreach (KeyValuePair<string, object> pair in sorted) { sb.Append(pair.Key); sb.Append(pair.Value); }
 
-                parameters.Add("api_sig", Utils.Md5Hash(sb.ToString()));
+                parameters.Add("api_sig", UtilityMethods.MD5Hash(sb.ToString()));
             }
 
             StringBuilder url = new StringBuilder();

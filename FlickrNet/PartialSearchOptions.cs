@@ -167,12 +167,12 @@ namespace FlickrNet
 
 		internal string ExtrasString
 		{
-			get { return Utils.ExtrasToString(Extras); }
+			get { return UtilityMethods.ExtrasToString(Extras); }
 		}
 
 		internal string SortOrderString
 		{
-			get	{ return Utils.SortOrderToString(SortOrder); }
+			get	{ return UtilityMethods.SortOrderToString(SortOrder); }
 		}
 
 	}

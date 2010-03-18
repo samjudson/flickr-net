@@ -55,7 +55,7 @@ namespace FlickrNet
                         PandaName = reader.Value;
                         break;
                     case "lastupdate":
-                        LastUpdated = Utils.UnixTimestampToDate(reader.Value);
+                        LastUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
                         throw new Exception("Unknown element: " + reader.Name + "=" + reader.Value);

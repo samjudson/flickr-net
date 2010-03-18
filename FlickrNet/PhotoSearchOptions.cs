@@ -33,7 +33,7 @@ namespace FlickrNet
 		private float _latitude = float.NaN;
 		private bool _hasGeo;
 		private float _radius = float.NaN;
-		private RadiusUnits _radiusUnits = RadiusUnits.None;
+		private RadiusUnit _radiusUnits = RadiusUnit.None;
 		private ContactSearch _contacts = ContactSearch.None;
 		private string _woeId;
 		private string _placeId;
@@ -358,7 +358,7 @@ namespace FlickrNet
 		/// <summary>
 		/// Specify the units to use for a Geo location based search. Default is Kilometers.
 		/// </summary>
-		public RadiusUnits RadiusUnits
+		public RadiusUnit RadiusUnits
 		{
 			get { return _radiusUnits; }
 			set { _radiusUnits = value; }
@@ -439,12 +439,12 @@ namespace FlickrNet
 
 		internal string ExtrasString
 		{
-			get { return Utils.ExtrasToString(Extras); }
+			get { return UtilityMethods.ExtrasToString(Extras); }
 		}
 
 		internal string SortOrderString
 		{
-			get	{ return Utils.SortOrderToString(_sort); }
+			get	{ return UtilityMethods.SortOrderToString(_sort); }
 		}
 	}
 

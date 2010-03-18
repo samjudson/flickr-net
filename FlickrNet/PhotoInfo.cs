@@ -58,10 +58,10 @@ namespace FlickrNet
 		public DateTime DateUploaded { get; private set; }
 
 		/// <summary>
-		/// Is the photo a favourite of the current authorised user. 
+		/// Is the photo a favorite of the current authorised user. 
 		/// Will be 0 if the user is not authorised.
 		/// </summary>
-        public bool IsFavourite { get; private set; }
+        public bool IsFavorite { get; private set; }
 
 		/// <summary>
 		/// The license of the photo.
@@ -238,7 +238,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string SquareThumbnailUrl
 		{
-			get { return Utils.UrlFormat(this, "_s", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
 		}
 
 		/// <summary>
@@ -247,7 +247,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string ThumbnailUrl
 		{
-			get { return Utils.UrlFormat(this, "_t", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
 		}
 
 		/// <summary>
@@ -256,7 +256,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string SmallUrl
 		{
-			get { return Utils.UrlFormat(this, "_m", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
 		}
 
 		/// <summary>
@@ -269,7 +269,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string MediumUrl
 		{
-			get { return Utils.UrlFormat(this, "", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
 		}
 
 		/// <summary>
@@ -282,7 +282,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string LargeUrl
 		{
-			get { return Utils.UrlFormat(this, "_b", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
 		}
 
 		/// <summary>
@@ -296,7 +296,7 @@ namespace FlickrNet
 				if( OriginalFormat == null || OriginalFormat.Length == 0 )
 					throw new InvalidOperationException("No original format information available.");
 
-				return Utils.UrlFormat(this, "_o", OriginalFormat);
+				return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
 			}
 		}
 
@@ -328,10 +328,10 @@ namespace FlickrNet
                         OriginalSecret = reader.Value;
                         break;
                     case "dateuploaded":
-                        DateUploaded = Utils.UnixTimestampToDate(reader.Value);
+                        DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "isfavorite":
-                        IsFavourite = (reader.Value == "1");
+                        IsFavorite = (reader.Value == "1");
                         break;
                     case "license":
                         License = (LicenseType)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
@@ -533,16 +533,16 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "posted":
-                        DatePosted = Utils.UnixTimestampToDate(reader.Value);
+                        DatePosted = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "taken":
-                        DateTaken = Utils.ParseDateWithGranularity(reader.Value);
+                        DateTaken = UtilityMethods.ParseDateWithGranularity(reader.Value);
                         break;
                     case "takengranularity":
                         DateTakenGranularity = (DateGranularity)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "lastupdate":
-                        DateLastUpdated = Utils.UnixTimestampToDate(reader.Value);
+                        DateLastUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

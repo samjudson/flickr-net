@@ -67,7 +67,7 @@ namespace FlickrNet
                         Permalink = new Uri(reader.Value);
                         break;
                     case "datecreate":
-                        DateCreated = Utils.UnixTimestampToDate(reader.Value);
+                        DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

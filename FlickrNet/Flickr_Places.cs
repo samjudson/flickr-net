@@ -141,10 +141,10 @@ namespace FlickrNet
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (threshold > 0) parameters.Add("threshold", threshold);
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", Utils.DateToUnixTimestamp(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", Utils.DateToUnixTimestamp(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", Utils.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", Utils.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToUnixTimestamp(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToUnixTimestamp(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }

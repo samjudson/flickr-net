@@ -64,7 +64,7 @@ namespace FlickrNetTest
         public void CollectionGetTreeRoot()
         {
             Flickr f = TestData.GetAuthInstance();
-            Collections tree = f.CollectionsGetTree();
+            CollectionCollection tree = f.CollectionsGetTree();
 
             Assert.IsNotNull(tree, "CollectionList should not be null.");
             Assert.AreNotEqual(0, tree.Count, "CollectionList.Count should not be zero.");

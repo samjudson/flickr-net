@@ -220,8 +220,8 @@ namespace FlickrNet
 	{
 		public override ICacheItem Read(Stream inputStream)
 		{
-			string s = Utils.ReadString(inputStream);
-			string response = Utils.ReadString(inputStream);
+			string s = UtilityMethods.ReadString(inputStream);
+			string response = UtilityMethods.ReadString(inputStream);
 
 			string[] chunks = s.Split('\n');
 
@@ -244,8 +244,8 @@ namespace FlickrNet
 			StringBuilder result = new StringBuilder();
 			result.Append(item.Url + "\n");
 			result.Append(item.CreationTime.Ticks.ToString("0"));
-			Utils.WriteString(outputStream, result.ToString());
-			Utils.WriteString(outputStream, item.Response);
+			UtilityMethods.WriteString(outputStream, result.ToString());
+			UtilityMethods.WriteString(outputStream, item.Response);
 		}
 	}
 
@@ -355,7 +355,7 @@ namespace FlickrNet
 	{
 		public override ICacheItem Read(Stream inputStream)
 		{
-			string s = Utils.ReadString(inputStream);
+			string s = UtilityMethods.ReadString(inputStream);
 
 			string[] chunks = s.Split('\n');
 			string url = chunks[0];
@@ -381,7 +381,7 @@ namespace FlickrNet
 			output.Append(pci.filename + "\n");
 			output.Append(pci.fileSize + "\n");
 
-			Utils.WriteString(outputStream, output.ToString());
+			UtilityMethods.WriteString(outputStream, output.ToString());
 		}
 	}
 }

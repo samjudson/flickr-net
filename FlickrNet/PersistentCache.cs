@@ -299,12 +299,12 @@ namespace FlickrNet
 		private Hashtable Load(Stream s)
 		{
 			Hashtable table = new Hashtable();
-			int itemCount = Utils.ReadInt32(s);
+			int itemCount = UtilityMethods.ReadInt32(s);
 			for (int i = 0; i < itemCount; i++)
 			{
 				try
 				{
-					string key = Utils.ReadString(s);
+					string key = UtilityMethods.ReadString(s);
 					ICacheItem val = persister.Read(s);
 					if( val == null ) // corrupt cache file 
 						return table;
@@ -321,10 +321,10 @@ namespace FlickrNet
 
 		private void Store(Stream s, Hashtable table)
 		{
-			Utils.WriteInt32(s, table.Count);
+			UtilityMethods.WriteInt32(s, table.Count);
 			foreach (DictionaryEntry entry in table)
 			{
-				Utils.WriteString(s, (string) entry.Key);
+				UtilityMethods.WriteString(s, (string) entry.Key);
 				persister.Write(s, (ICacheItem) entry.Value);
 			}
 		}

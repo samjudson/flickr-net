@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// The response returned by the <see cref="Flickr.TestEcho"/> method.
     /// </summary>
-    public class EchoResponse: Dictionary<string, object>, IFlickrParsable
+    public class EchoResponseDictionary: Dictionary<string, object>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

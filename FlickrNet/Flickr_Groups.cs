@@ -37,7 +37,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="text">The text to search for.</param>
         /// <returns>A list of groups matching the search criteria.</returns>
-        public GroupSearchResults GroupsSearch(string text)
+        public GroupSearchResultCollection GroupsSearch(string text)
         {
             return GroupsSearch(text, 0, 0);
         }
@@ -48,7 +48,7 @@ namespace FlickrNet
         /// <param name="text">The text to search for.</param>
         /// <param name="page">The page of the results to return.</param>
         /// <returns>A list of groups matching the search criteria.</returns>
-        public GroupSearchResults GroupsSearch(string text, int page)
+        public GroupSearchResultCollection GroupsSearch(string text, int page)
         {
             return GroupsSearch(text, page, 0);
         }
@@ -60,7 +60,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return.</param>
         /// <param name="perPage">The number of groups to list per page.</param>
         /// <returns>A list of groups matching the search criteria.</returns>
-        public GroupSearchResults GroupsSearch(string text, int page, int perPage)
+        public GroupSearchResultCollection GroupsSearch(string text, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.groups.search");
@@ -69,7 +69,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page.ToString());
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
 
-            return GetResponseCache<GroupSearchResults>(parameters);
+            return GetResponseCache<GroupSearchResultCollection>(parameters);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace FlickrNet
         /// <returns>A <see cref="MemberCollection"/> instance containing the first 100 members for the group.</returns>
         public MemberCollection GroupsMembersGetList(string groupId)
         {
-            return GroupsMembersGetList(groupId, 0, 0, MemberType.NotSpecified);
+            return GroupsMembersGetList(groupId, 0, 0, MemberTypes.NotSpecified);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace FlickrNet
         /// <param name="perPage">The number of members to return per page (default is 100, max is 500).</param>
         /// <param name="memberTypes">The types of members to be returned. Can be more than one.</param>
         /// <returns>A <see cref="MemberCollection"/> instance containing the members for the group.</returns>
-        public MemberCollection GroupsMembersGetList(string groupId, int page, int perPage, MemberType memberTypes)
+        public MemberCollection GroupsMembersGetList(string groupId, int page, int perPage, MemberTypes memberTypes)
         {
             CheckRequiresAuthentication();
 
@@ -116,7 +116,7 @@ namespace FlickrNet
             parameters.Add("api_key", _apiKey);
             if( page > 0 ) parameters.Add("page", page);
             if( perPage > 0 ) parameters.Add("per_page", perPage);
-            if (memberTypes != MemberType.NotSpecified) parameters.Add("membertypes", Utils.MemberTypeToString(memberTypes));
+            if (memberTypes != MemberTypes.NotSpecified) parameters.Add("membertypes", UtilityMethods.MemberTypeToString(memberTypes));
             parameters.Add("group_id", groupId);
 
             return GetResponseCache<MemberCollection>(parameters);
@@ -244,7 +244,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page.ToString());
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }

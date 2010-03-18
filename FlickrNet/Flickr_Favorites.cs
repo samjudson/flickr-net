@@ -112,9 +112,9 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.favorites.getPublicList");
             parameters.Add("user_id", userId);
-            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", Utils.DateToUnixTimestamp(minFavoriteDate));
-            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", Utils.DateToUnixTimestamp(maxFavoriteDate));
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
+            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
 

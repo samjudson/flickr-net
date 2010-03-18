@@ -73,7 +73,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string,object>();
             parameters.Add("method", "flickr.panda.getPhotos");
             parameters.Add("panda_name", pandaName);
-            if( extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if( extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if( perPage > 0 ) parameters.Add("per_page", perPage);
             if( page > 0 ) parameters.Add("page", page);
 

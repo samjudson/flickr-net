@@ -190,7 +190,7 @@ namespace FlickrNet
                         Privacy = (PoolPrivacy)reader.ReadElementContentAsInt();
                         break;
                     case "blast":
-                        BlastDateAdded = Utils.UnixTimestampToDate(reader.GetAttribute("date_blast_added"));
+                        BlastDateAdded = UtilityMethods.UnixTimestampToDate(reader.GetAttribute("date_blast_added"));
                         BlastUserId = reader.GetAttribute("user_id");
                         BlastHtml = reader.ReadElementContentAsString();
                         break;

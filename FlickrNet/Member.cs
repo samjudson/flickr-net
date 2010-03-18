@@ -18,7 +18,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The members name.
 		/// </summary>
-        public string Username { get; private set; }
+        public string UserName { get; private set; }
 
 		/// <summary>
 		/// The icon server for the users buddy icon. See <see cref="IconUrl"/> for the complete URL.
@@ -33,7 +33,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The type of the member (basic, moderator or administrator).
 		/// </summary>
-		public MemberType MemberType { get; private set; }
+		public MemberTypes MemberType { get; private set; }
 
 		/// <summary>
 		/// The icon URL for the users buddy icon. Calculated from the <see cref="IconFarm"/> and <see cref="IconServer"/>.
@@ -57,10 +57,10 @@ namespace FlickrNet
         {
             //<member nsid="123456@N01" username="foo" iconserver="1" iconfarm="1" membertype="2"/>
             MemberId = reader.GetAttribute("nsid");
-            Username = reader.GetAttribute("username");
+            UserName = reader.GetAttribute("username");
             IconServer = reader.GetAttribute("iconserver");
             IconFarm = reader.GetAttribute("iconfarm");
-            MemberType = Utils.ParseIdToMemberType(reader.GetAttribute("membertype"));
+            MemberType = UtilityMethods.ParseIdToMemberType(reader.GetAttribute("membertype"));
         }
     }
 }

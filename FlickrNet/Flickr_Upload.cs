@@ -181,7 +181,7 @@ namespace FlickrNet
             sb.Append("--" + boundary + "\r\n");
             sb.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
             sb.Append("\r\n");
-            sb.Append(Utils.Md5Hash(HashStringBuilder.ToString()) + "\r\n");
+            sb.Append(UtilityMethods.MD5Hash(HashStringBuilder.ToString()) + "\r\n");
 
             // Photo
             sb.Append("--" + boundary + "\r\n");
@@ -236,9 +236,9 @@ namespace FlickrNet
 
             StringReader str = new StringReader(s);
 
-            FlickrNet.Uploader uploader = (FlickrNet.Uploader)serializer.Deserialize(str);
+            FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
 
-            if (uploader.Status == ResponseStatus.OK)
+            if (uploader.Status == ResponseStatus.Ok)
             {
                 return uploader.PhotoId;
             }
@@ -315,7 +315,7 @@ namespace FlickrNet
             sb.Append("--" + boundary + "\r\n");
             sb.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
             sb.Append("\r\n");
-            sb.Append(Utils.Md5Hash(HashStringBuilder.ToString()) + "\r\n");
+            sb.Append(UtilityMethods.MD5Hash(HashStringBuilder.ToString()) + "\r\n");
 
             // Photo
             sb.Append("--" + boundary + "\r\n");
@@ -370,9 +370,9 @@ namespace FlickrNet
 
             StringReader str = new StringReader(s);
 
-            FlickrNet.Uploader uploader = (FlickrNet.Uploader)serializer.Deserialize(str);
+            FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
 
-            if (uploader.Status == ResponseStatus.OK)
+            if (uploader.Status == ResponseStatus.Ok)
             {
                 return uploader.PhotoId;
             }

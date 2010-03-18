@@ -118,7 +118,7 @@ namespace FlickrNet
 	/// The units of a radius search
 	/// </summary>
 	[Serializable]
-	public enum RadiusUnits
+	public enum RadiusUnit
 	{
 		/// <summary>
 		/// The radius units are unspecified.

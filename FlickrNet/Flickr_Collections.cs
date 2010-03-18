@@ -29,7 +29,7 @@ namespace FlickrNet
         /// Gets a tree of collection. Requires authentication.
         /// </summary>
         /// <returns>An array of <see cref="Collection"/> instances.</returns>
-        public Collections CollectionsGetTree()
+        public CollectionCollection CollectionsGetTree()
         {
             return CollectionsGetTree(null, null);
         }
@@ -40,7 +40,7 @@ namespace FlickrNet
         /// <param name="collectionId ">The ID of the collection to fetch a tree for, or zero to fetch the root collection.</param>
         /// <param name="userId">The ID of the user to fetch the tree for, or null if using the authenticated user.</param>
         /// <returns>An array of <see cref="Collection"/> instances.</returns>
-        public Collections CollectionsGetTree(string collectionId, string userId)
+        public CollectionCollection CollectionsGetTree(string collectionId, string userId)
         {
             if (String.IsNullOrEmpty(userId)) CheckRequiresAuthentication();
 
@@ -49,7 +49,7 @@ namespace FlickrNet
             if (collectionId != null) parameters.Add("collection_id", collectionId);
             if (userId != null) parameters.Add("user_id", userId);
 
-            return GetResponseCache<Collections>(parameters);
+            return GetResponseCache<CollectionCollection>(parameters);
         }
 
     }

@@ -12,11 +12,11 @@ namespace FlickrNet
 	/// <summary>
 	/// Internal class providing certain utility functions to other classes.
 	/// </summary>
-	public sealed class Utils
+	public sealed class UtilityMethods
 	{
 		private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0);
 
-		private Utils()
+		private UtilityMethods()
 		{
 		}
 
@@ -167,17 +167,17 @@ namespace FlickrNet
 		{
 			switch(order)
 			{
-				case PhotoSearchSortOrder.DatePostedAsc:
+				case PhotoSearchSortOrder.DatePostedAscending:
 					return "date-posted-asc";
-				case PhotoSearchSortOrder.DatePostedDesc:
+				case PhotoSearchSortOrder.DatePostedDescending:
 					return "date-posted-desc";
-				case PhotoSearchSortOrder.DateTakenAsc:
+				case PhotoSearchSortOrder.DateTakenAscending:
 					return "date-taken-asc";
-				case PhotoSearchSortOrder.DateTakenDesc:
+				case PhotoSearchSortOrder.DateTakenDescending:
 					return "date-taken-desc";
-				case PhotoSearchSortOrder.InterestingnessAsc:
+				case PhotoSearchSortOrder.InterestingnessAscending:
 					return "interestingness-asc";
-				case PhotoSearchSortOrder.InterestingnessDesc:
+				case PhotoSearchSortOrder.InterestingnessDescending:
 					return "interestingness-desc";
 				case PhotoSearchSortOrder.Relevance:
 					return "relevance";
@@ -193,8 +193,8 @@ namespace FlickrNet
         /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
 		public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, object> parameters)
 		{
-			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
-			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
+			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
+			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
 			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss"));
 			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss"));
 			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
@@ -302,39 +302,39 @@ namespace FlickrNet
 			return String.Format(format, parameters);
 		}
 
-        internal static MemberType ParseIdToMemberType(string memberTypeId)
+        internal static MemberTypes ParseIdToMemberType(string memberTypeId)
         {
             switch (memberTypeId)
             {
                 case "1":
-                    return MemberType.Narwhal;
+                    return MemberTypes.Narwhal;
                 case "2":
-                    return MemberType.Member;
+                    return MemberTypes.Member;
                 case "3":
-                    return MemberType.Moderator;
+                    return MemberTypes.Moderator;
                 case "4":
-                    return MemberType.Admin;
+                    return MemberTypes.Admin;
                 default:
-                    return MemberType.NotSpecified;
+                    return MemberTypes.NotSpecified;
             }
         }
 
-        internal static string MemberTypeToString(MemberType memberTypes)
+        internal static string MemberTypeToString(MemberTypes memberTypes)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            if ((memberTypes & MemberType.Member) == MemberType.Member)
+            if ((memberTypes & MemberTypes.Member) == MemberTypes.Member)
                 sb.Append("2");
-            if ((memberTypes & MemberType.Moderator) == MemberType.Moderator)
+            if ((memberTypes & MemberTypes.Moderator) == MemberTypes.Moderator)
             {
                 if (sb.Length > 0) sb.Append(",");
                 sb.Append("3");
             }
-            if ((memberTypes & MemberType.Admin) == MemberType.Admin)
+            if ((memberTypes & MemberTypes.Admin) == MemberTypes.Admin)
             {
                 if (sb.Length > 0) sb.Append(",");
                 sb.Append("4");
             }
-            if ((memberTypes & MemberType.Narwhal) == MemberType.Narwhal)
+            if ((memberTypes & MemberTypes.Narwhal) == MemberTypes.Narwhal)
             {
                 if (sb.Length > 0) sb.Append(",");
                 sb.Append("1");
@@ -346,12 +346,12 @@ namespace FlickrNet
         /// <summary>
         /// Generates an MD5 Hash of the passed in string.
         /// </summary>
-        /// <param name="unhashed">The unhashed string.</param>
+        /// <param name="data">The unhashed string.</param>
         /// <returns>The MD5 hash string.</returns>
-        public static string Md5Hash(string unhashed)
+        public static string MD5Hash(string data)
         {
             System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(unhashed);
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
             byte[] hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
             return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
         }

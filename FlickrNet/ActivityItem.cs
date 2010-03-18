@@ -54,7 +54,7 @@ namespace FlickrNet
 		/// <remarks>
 		/// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
-		public int CommentsNew { get; private set; }
+		public int NewComments { get; private set; }
 
 		/// <summary>
 		/// The number of old comments within the given time frame. 
@@ -62,7 +62,7 @@ namespace FlickrNet
 		/// <remarks>
 		/// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
-		public int CommentsOld { get; private set; }
+		public int OldComments { get; private set; }
 
 		/// <summary>
 		/// The number of comments on the item. 
@@ -111,7 +111,7 @@ namespace FlickrNet
 		/// <remarks>
 		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
-		public int? NotesNew { get; private set; }
+		public int? NewNotes { get; private set; }
 
 		/// <summary>
 		/// The number of old notes within the given time frame. 
@@ -119,7 +119,7 @@ namespace FlickrNet
 		/// <remarks>
 		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
 		/// </remarks>
-		public int? NotesOld { get; private set; }
+		public int? OldNotes { get; private set; }
 
 		/// <summary>
 		/// The number of comments on the photo.
@@ -170,10 +170,10 @@ namespace FlickrNet
                         Farm = reader.Value;
                         break;
                     case "commentsnew":
-                        CommentsNew = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        NewComments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "commentsold":
-                        CommentsOld = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        OldComments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "comments":
                         Comments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
@@ -191,10 +191,10 @@ namespace FlickrNet
                         PrimaryPhotoId = reader.Value;
                         break;
                     case "notesnew":
-                        NotesNew = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        NewNotes = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "notesold":
-                        NotesOld = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        OldNotes = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "notes":
                         Notes = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);

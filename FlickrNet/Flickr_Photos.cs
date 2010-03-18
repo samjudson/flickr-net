@@ -117,7 +117,7 @@ namespace FlickrNet
             if (justFriends) parameters.Add("just_friends", "1");
             if (singlePhoto) parameters.Add("single_photo", "1");
             if (includeSelf) parameters.Add("include_self", "1");
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -200,7 +200,7 @@ namespace FlickrNet
             if (justFriends) parameters.Add("just_friends", "1");
             if (singlePhoto) parameters.Add("single_photo", "1");
             if (includeSelf) parameters.Add("include_self", "1");
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -269,13 +269,13 @@ namespace FlickrNet
             if (dates != null && dates.Length > 0)
             {
                 Array.Sort<DateTime>(dates);
-                dateString = String.Join(",", new List<DateTime>(dates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return Utils.DateToUnixTimestamp(d).ToString(); })).ToArray());
+                dateString = String.Join(",", new List<DateTime>(dates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
             }
 
             if (takenDates != null && takenDates.Length > 0)
             {
                 Array.Sort<DateTime>(takenDates);
-                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return Utils.DateToUnixTimestamp(d).ToString(); })).ToArray());
+                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
             }
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -397,7 +397,7 @@ namespace FlickrNet
             parameters.Add("api_key", _apiKey);
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -459,7 +459,7 @@ namespace FlickrNet
             parameters.Add("method", "flickr.photos.getUntagged");
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -522,7 +522,7 @@ namespace FlickrNet
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getNotInSet");
-            Utils.PartialOptionsIntoArray(options, parameters);
+            UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -607,8 +607,8 @@ namespace FlickrNet
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.recentlyUpdated");
-            parameters.Add("min_date", Utils.DateToUnixTimestamp(minDate).ToString());
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            parameters.Add("min_date", UtilityMethods.DateToUnixTimestamp(minDate).ToString());
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
 
@@ -631,8 +631,8 @@ namespace FlickrNet
             if (options.TagMode != TagMode.None) parameters.Add("tag_mode", options.TagModeString);
             if (options.MachineTags != null && options.MachineTags.Length > 0) parameters.Add("machine_tags", options.MachineTags);
             if (options.MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", options.MachineTagModeString);
-            if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", Utils.DateToUnixTimestamp(options.MinUploadDate).ToString());
-            if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", Utils.DateToUnixTimestamp(options.MaxUploadDate).ToString());
+            if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
+            if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
             if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
             if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
             if (options.Licenses.Count != 0)
@@ -653,7 +653,7 @@ namespace FlickrNet
             if (!float.IsNaN(options.Latitude)) parameters.Add("lat", options.Latitude.ToString("0.0000"));
             if (!float.IsNaN(options.Longitude)) parameters.Add("lon", options.Longitude.ToString("0.0000"));
             if (!float.IsNaN(options.Radius)) parameters.Add("radius", options.Radius.ToString("0.00"));
-            if (options.RadiusUnits != RadiusUnits.None) parameters.Add("radius_units", (options.RadiusUnits == RadiusUnits.Miles ? "mi" : "km"));
+            if (options.RadiusUnits != RadiusUnit.None) parameters.Add("radius_units", (options.RadiusUnits == RadiusUnit.Miles ? "mi" : "km"));
             if (options.Contacts != ContactSearch.None) parameters.Add("contacts", (options.Contacts == ContactSearch.AllContacts ? "all" : "ff"));
             if (options.WoeId != null) parameters.Add("woe_id", options.WoeId);
             if (options.PlaceId != null) parameters.Add("place_id", options.PlaceId);
@@ -712,7 +712,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.setDates");
             parameters.Add("photo_id", photoId);
-            if (datePosted != DateTime.MinValue) parameters.Add("date_posted", Utils.DateToUnixTimestamp(datePosted).ToString());
+            if (datePosted != DateTime.MinValue) parameters.Add("date_posted", UtilityMethods.DateToUnixTimestamp(datePosted).ToString());
             if (dateTaken != DateTime.MinValue)
             {
                 parameters.Add("date_taken", dateTaken.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));

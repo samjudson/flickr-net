@@ -125,7 +125,7 @@ namespace FlickrNet
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
             if (safetyLevel != SafetyLevel.None) parameters.Add("safety_level", (int)safetyLevel);
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -187,7 +187,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.people.getPhotosOf");
             parameters.Add("user_id", userId);
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage);
             if (page > 0) parameters.Add("page", page);
 

@@ -18,7 +18,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.reflection.getMethods");
 
-            return GetResponseNoCache<Methods>(parameters).ToArray();
+            return GetResponseNoCache<MethodCollection>(parameters).ToArray();
         }
 
         /// <summary>

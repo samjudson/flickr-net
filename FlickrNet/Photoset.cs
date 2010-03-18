@@ -79,7 +79,7 @@ namespace FlickrNet
         /// </summary>
         public string PhotosetThumbnailUrl
         {
-            get { return Utils.UrlFormat(this, "_t", "jpg"); }
+            get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace FlickrNet
         /// </summary>
         public string PhotosetSquareThumbnailUrl
         {
-            get { return Utils.UrlFormat(this, "_s", "jpg"); }
+            get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace FlickrNet
         /// </summary>
         public string PhotosetSmallUrl
         {
-            get { return Utils.UrlFormat(this, "_m", "jpg"); }
+            get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
         }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

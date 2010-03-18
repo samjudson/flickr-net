@@ -157,7 +157,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DateTakenAsc;
+            o.SortOrder = PhotoSearchSortOrder.DateTakenAscending;
             o.Extras = PhotoSearchExtras.DateTaken;
 
             PhotoCollection p = f.PhotosSearch(o);
@@ -176,7 +176,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DateTakenDesc;
+            o.SortOrder = PhotoSearchSortOrder.DateTakenDescending;
             o.Extras = PhotoSearchExtras.DateTaken;
 
             PhotoCollection p = f.PhotosSearch(o);
@@ -195,7 +195,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DatePostedAsc;
+            o.SortOrder = PhotoSearchSortOrder.DatePostedAscending;
             o.Extras = PhotoSearchExtras.DateUploaded;
 
             PhotoCollection p = f.PhotosSearch(o);
@@ -214,7 +214,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DatePostedDesc;
+            o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;
             o.Extras = PhotoSearchExtras.DateUploaded;
 
             PhotoCollection p = f.PhotosSearch(o);
@@ -232,7 +232,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DatePostedDesc;
+            o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;
             o.Extras = PhotoSearchExtras.License;
 
             PhotoCollection photos = f.PhotosSearch(o);
@@ -248,15 +248,15 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DatePostedDesc;
-            o.Licenses.Add(LicenseType.AttributionNoDerivsCC);
+            o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;
+            o.Licenses.Add(LicenseType.AttributionNoDerivativesCC);
             o.Extras = PhotoSearchExtras.License;
 
             PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {
-                Assert.AreEqual(LicenseType.AttributionNoDerivsCC, photo.License);
+                Assert.AreEqual(LicenseType.AttributionNoDerivativesCC, photo.License);
             }
         }
 
@@ -265,7 +265,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
-            o.SortOrder = PhotoSearchSortOrder.DatePostedDesc;
+            o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;
             o.Licenses.Add(LicenseType.NoKnownCopyrightRestrictions);
             o.Extras = PhotoSearchExtras.License;
 

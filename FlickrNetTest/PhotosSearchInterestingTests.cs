@@ -65,7 +65,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
             PhotoSearchOptions o = new PhotoSearchOptions();
-            o.SortOrder = PhotoSearchSortOrder.InterestingnessDesc;
+            o.SortOrder = PhotoSearchSortOrder.InterestingnessDescending;
             o.Tags = "colorful";
             o.PerPage = 500;
 

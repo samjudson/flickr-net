@@ -57,10 +57,10 @@ namespace FlickrNet
         /// </summary>
         /// <param name="parameters">A dictionary of extra parameters to pass in. Note, the "method" and "api_key" parameters will always be passed in.</param>
         /// <returns></returns>
-        public EchoResponse TestEcho(Dictionary<string, object> parameters)
+        public EchoResponseDictionary TestEcho(Dictionary<string, object> parameters)
         {
             parameters.Add("method", "flickr.test.echo");
-            return GetResponseNoCache<EchoResponse>(parameters);
+            return GetResponseNoCache<EchoResponseDictionary>(parameters);
         }
     }
 }

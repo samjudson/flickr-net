@@ -74,7 +74,7 @@ namespace FlickrNetTest
         [TestMethod()]
         public void TestUnixTimestampToDateString()
         {
-            DateTime returnedDate = Utils.UnixTimestampToDate("1230813420");
+            DateTime returnedDate = UtilityMethods.UnixTimestampToDate("1230813420");
             DateTime expectedDate = new DateTime(2009, 1, 1, 12, 37, 0);
 
             Assert.AreEqual(expectedDate, returnedDate);
@@ -83,7 +83,7 @@ namespace FlickrNetTest
         [TestMethod()]
         public void TestUnixTimestampToDateLong()
         {
-            DateTime returnedDate = Utils.UnixTimestampToDate(1230813420);
+            DateTime returnedDate = UtilityMethods.UnixTimestampToDate(1230813420);
             DateTime expectedDate = new DateTime(2009, 1, 1, 12, 37, 0);
 
             Assert.AreEqual(expectedDate, returnedDate);
@@ -94,7 +94,7 @@ namespace FlickrNetTest
         {
             DateTime testDate = new DateTime(2009, 1, 1, 12, 37, 0);
             long expectedResult = 1230813420;
-            long actualResult = Utils.DateToUnixTimestamp(testDate);
+            long actualResult = UtilityMethods.DateToUnixTimestamp(testDate);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -104,7 +104,7 @@ namespace FlickrNetTest
         {
             string invalidTimestamp = "kjhkjh0987";
             DateTime expectedResult = DateTime.MinValue;
-            DateTime actualResult = Utils.UnixTimestampToDate(invalidTimestamp);
+            DateTime actualResult = UtilityMethods.UnixTimestampToDate(invalidTimestamp);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -121,7 +121,7 @@ namespace FlickrNetTest
             string expected = String.Empty;
             string actual;
 
-            actual = FlickrNet.Utils.ExtrasToString(extras);
+            actual = FlickrNet.UtilityMethods.ExtrasToString(extras);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
@@ -134,7 +134,7 @@ namespace FlickrNetTest
             string expected = "tags";
             string actual;
 
-            actual = FlickrNet.Utils.ExtrasToString(extras);
+            actual = FlickrNet.UtilityMethods.ExtrasToString(extras);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
@@ -147,7 +147,7 @@ namespace FlickrNetTest
             string expected = "original_format,tags";
             string actual;
 
-            actual = FlickrNet.Utils.ExtrasToString(extras);
+            actual = FlickrNet.UtilityMethods.ExtrasToString(extras);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
@@ -164,7 +164,7 @@ namespace FlickrNetTest
             string expected = String.Empty;
             string actual;
 
-            actual = FlickrNet.Utils.UrlEncode(data);
+            actual = FlickrNet.UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
@@ -180,7 +180,7 @@ namespace FlickrNetTest
             string expected = "A%26B";
             string actual;
 
-            actual = FlickrNet.Utils.UrlEncode(data);
+            actual = FlickrNet.UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
@@ -196,7 +196,7 @@ namespace FlickrNetTest
             string expected = "A%2BB";
             string actual;
 
-            actual = FlickrNet.Utils.UrlEncode(data);
+            actual = FlickrNet.UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
@@ -212,7 +212,7 @@ namespace FlickrNetTest
             string expected = "A%20B";
             string actual;
 
-            actual = FlickrNet.Utils.UrlEncode(data);
+            actual = FlickrNet.UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
@@ -221,7 +221,7 @@ namespace FlickrNetTest
         public void ParseDateWithGranularityOK()
         {
             string d = "2010-01-17 12:43:23";
-            DateTime d2 = Utils.ParseDateWithGranularity(d);
+            DateTime d2 = UtilityMethods.ParseDateWithGranularity(d);
 
             Assert.AreEqual(2010, d2.Year);
             Assert.AreEqual(1, d2.Month);
@@ -235,7 +235,7 @@ namespace FlickrNetTest
         public void ParseDateWithGranularityZeroMonth()
         {
             string d = "2010-00-01 00:00:00";
-            DateTime d2 = Utils.ParseDateWithGranularity(d);
+            DateTime d2 = UtilityMethods.ParseDateWithGranularity(d);
 
             Assert.AreEqual(2010, d2.Year);
             Assert.AreEqual(1, d2.Month);

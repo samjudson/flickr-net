@@ -17,15 +17,15 @@ namespace FlickrNet
 		/// <summary>
 		/// Creative Commons: Attribution Non-Commercial, Share-alike License.
 		/// </summary>
-        AttributionNonCommercialShareAlikeCC = 1,
+        AttributionNoncommercialShareAlikeCC = 1,
 		/// <summary>
 		/// Creative Commons: Attribution Non-Commercial License.
 		/// </summary>
-        AttributionNonCommercialCC = 2,
+        AttributionNoncommercialCC = 2,
 		/// <summary>
 		/// Creative Commons: Attribution Non-Commercial, No Derivatives License.
 		/// </summary>
-        AttributionNonCommercialNoDerivsCC = 3,
+        AttributionNoncommercialNoDerivativesCC = 3,
 		/// <summary>
 		/// Creative Commons: Attribution License.
 		/// </summary>
@@ -37,7 +37,7 @@ namespace FlickrNet
 		/// <summary>
 		/// Creative Commons: Attribution No Derivatives License.
 		/// </summary>
-        AttributionNoDerivsCC = 6,
+        AttributionNoDerivativesCC = 6,
 		/// <summary>
 		/// No Known Copyright Resitrctions (Flickr Commons).
 		/// </summary>

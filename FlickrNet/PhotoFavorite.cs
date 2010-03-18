@@ -46,7 +46,7 @@ namespace FlickrNet
                         UserName = reader.Value;
                         break;
                     case "favedate":
-                        FavoriteDate = Utils.UnixTimestampToDate(reader.Value);
+                        FavoriteDate = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
                         break;

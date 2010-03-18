@@ -69,7 +69,7 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "created":
-                        DateCreated = Utils.UnixTimestampToDate(reader.Value);
+                        DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "alpha":
                         Alpha = reader.ReadContentAsDouble();

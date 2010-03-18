@@ -73,9 +73,9 @@ namespace FlickrNetTest
             Assert.AreEqual("a4283bac01", info.Secret);
             Assert.AreEqual("2795", info.Server);
             Assert.AreEqual("3", info.Farm);
-            Assert.AreEqual(Utils.UnixTimestampToDate("1263291891"), info.DateUploaded);
-            Assert.AreEqual(false, info.IsFavourite);
-            Assert.AreEqual(LicenseType.AttributionNonCommercialShareAlikeCC, info.License);
+            Assert.AreEqual(UtilityMethods.UnixTimestampToDate("1263291891"), info.DateUploaded);
+            Assert.AreEqual(false, info.IsFavorite);
+            Assert.AreEqual(LicenseType.AttributionNoncommercialShareAlikeCC, info.License);
             Assert.AreEqual(0, info.Rotation);
             Assert.AreEqual("9d3d4bf24a", info.OriginalSecret);
             Assert.AreEqual("jpg", info.OriginalFormat);
@@ -137,9 +137,9 @@ namespace FlickrNetTest
             Assert.AreEqual("a4283bac01", info.Secret);
             Assert.AreEqual("2795", info.Server);
             Assert.AreEqual("3", info.Farm);
-            Assert.AreEqual(Utils.UnixTimestampToDate("1263291891"), info.DateUploaded);
-            Assert.AreEqual(false, info.IsFavourite);
-            Assert.AreEqual(LicenseType.AttributionNonCommercialShareAlikeCC, info.License);
+            Assert.AreEqual(UtilityMethods.UnixTimestampToDate("1263291891"), info.DateUploaded);
+            Assert.AreEqual(false, info.IsFavorite);
+            Assert.AreEqual(LicenseType.AttributionNoncommercialShareAlikeCC, info.License);
             Assert.AreEqual(0, info.Rotation);
             Assert.AreEqual("9d3d4bf24a", info.OriginalSecret);
             Assert.AreEqual("jpg", info.OriginalFormat);

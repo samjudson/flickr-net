@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for Methods.
 	/// </summary>
-	public class Methods : List<string>, IFlickrParsable
+	public class MethodCollection : List<string>, IFlickrParsable
 	{
         void IFlickrParsable.Load(XmlReader reader)
         {

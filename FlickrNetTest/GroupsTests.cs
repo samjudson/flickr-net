@@ -70,7 +70,7 @@ namespace FlickrNetTest
             Assert.AreEqual("/", cat.CategoryName, "CategoryName should be '/'.");
             Assert.AreEqual("/", cat.Path, "Path should be '/'.");
             Assert.AreEqual("", cat.PathIds, "PathIds should be empty string.");
-            Assert.AreEqual(0, cat.SubCategories.Count, "No sub categories should be returned.");
+            Assert.AreEqual(0, cat.Subcategories.Count, "No sub categories should be returned.");
             Assert.AreEqual(0, cat.Groups.Count, "No groups should be returned.");
         }
 
@@ -79,7 +79,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            GroupSearchResults results = f.GroupsSearch("Flowers");
+            GroupSearchResultCollection results = f.GroupsSearch("Flowers");
 
             Assert.IsNotNull(results, "GroupSearchResults should not be null.");
             Assert.AreNotEqual(0, results.Count, "Count should not be zero.");

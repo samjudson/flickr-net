@@ -88,7 +88,7 @@ namespace FlickrNet
                         _childCount = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "datecreate":
-                        _dateCreated = Utils.UnixTimestampToDate(reader.Value);
+                        _dateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "iconlarge":
                         _iconLarge = reader.Value;

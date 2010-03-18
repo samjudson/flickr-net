@@ -114,10 +114,10 @@ namespace FlickrNetTest
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
             o.Licenses.Add(LicenseType.AttributionCC);
-            o.Licenses.Add(LicenseType.AttributionNoDerivsCC);
-            o.Licenses.Add(LicenseType.AttributionNonCommercialCC);
-            o.Licenses.Add(LicenseType.AttributionNonCommercialNoDerivsCC);
-            o.Licenses.Add(LicenseType.AttributionNonCommercialShareAlikeCC);
+            o.Licenses.Add(LicenseType.AttributionNoDerivativesCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialNoDerivativesCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialShareAlikeCC);
             o.Licenses.Add(LicenseType.AttributionShareAlikeCC);
 
             o.MinUploadDate = DateTime.Today.AddDays(-2);

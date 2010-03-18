@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// Information returned by the UploadPicture url.
 	/// </summary>
 	[XmlRoot("rsp")]
-	public class Uploader
+	public class UploadResponse
 	{
 		private ResponseStatus _status;
 		private string _photoId;
@@ -114,7 +114,7 @@ namespace FlickrNet
         /// The response returns "ok" on a successful execution of the method.
         /// </summary>
         [XmlEnum("ok")]
-        OK,
+        Ok,
         /// <summary>
         /// The response returns "fail" if there is an error, such as invalid API key or login failure.
         /// </summary>

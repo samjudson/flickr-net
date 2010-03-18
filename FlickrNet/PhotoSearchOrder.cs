@@ -16,27 +16,27 @@ namespace FlickrNet
 		/// <summary>
 		/// Sort by date uploaded (posted).
 		/// </summary>
-		DatePostedAsc,
+		DatePostedAscending,
 		/// <summary>
 		/// Sort by date uploaded (posted) in descending order.
 		/// </summary>
-		DatePostedDesc,
+		DatePostedDescending,
 		/// <summary>
 		/// Sort by date taken.
 		/// </summary>
-		DateTakenAsc,
+		DateTakenAscending,
 		/// <summary>
 		/// Sort by date taken in descending order.
 		/// </summary>
-		DateTakenDesc,
+		DateTakenDescending,
 		/// <summary>
 		/// Sort by interestingness.
 		/// </summary>
-		InterestingnessAsc,
+		InterestingnessAscending,
 		/// <summary>
 		/// Sort by interestingness in descending order.
 		/// </summary>
-		InterestingnessDesc,
+		InterestingnessDescending,
 		/// <summary>
 		/// Sort by relevance
 		/// </summary>

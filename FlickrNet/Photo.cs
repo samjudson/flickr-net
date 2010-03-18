@@ -182,7 +182,7 @@ namespace FlickrNet
 		/// </summary>
 		public string SquareThumbnailUrl
 		{
-			get { return Utils.UrlFormat(this, "_s", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
 		}
 
 		/// <summary>
@@ -190,7 +190,7 @@ namespace FlickrNet
 		/// </summary>
 		public string ThumbnailUrl
 		{
-			get { return Utils.UrlFormat(this, "_t", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
 		}
 
 		/// <summary>
@@ -198,7 +198,7 @@ namespace FlickrNet
 		/// </summary>
 		public string SmallUrl
 		{
-			get { return Utils.UrlFormat(this, "_m", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
 		}
 
 		/// <summary>
@@ -208,7 +208,7 @@ namespace FlickrNet
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
 		public string MediumUrl
 		{
-			get { return Utils.UrlFormat(this, "", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
 		}
 
 		/// <summary>
@@ -218,7 +218,7 @@ namespace FlickrNet
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
 		public string LargeUrl
 		{
-			get { return Utils.UrlFormat(this, "_b", "jpg"); }
+			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
 		}
 
 		/// <summary>
@@ -231,7 +231,7 @@ namespace FlickrNet
 				if( OriginalFormat == null || OriginalFormat.Length == 0 )
 					throw new InvalidOperationException("No original format information available.");
 
-				return Utils.UrlFormat(this, "_o", OriginalFormat);
+				return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
 			}
 		}
 
@@ -414,12 +414,12 @@ namespace FlickrNet
                         break;
                     case "datetaken":
                         //e.g. 2007-11-04 08:55:18
-                        DateTaken = Utils.ParseDateWithGranularity(reader.Value);
+                        DateTaken = UtilityMethods.ParseDateWithGranularity(reader.Value);
                         break;
                     case "datetakengranularity":
                         break;
                     case "dateupload":
-                        DateAdded = Utils.UnixTimestampToDate(reader.Value);
+                        DateAdded = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "license":
                         License = (LicenseType)int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
@@ -428,7 +428,7 @@ namespace FlickrNet
                         OwnerName = reader.Value;
                         break;
                     case "lastupdate":
-                        LastUpdated = Utils.UnixTimestampToDate(reader.Value);
+                        LastUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "originalformat":
                         OriginalFormat = reader.Value;

@@ -54,7 +54,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getCollectionDomains");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", collectionId);
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
@@ -110,7 +110,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotoDomains");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             if (!String.IsNullOrEmpty(photoId)) parameters.Add("photo_id", photoId);
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
@@ -142,7 +142,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotostreamDomains");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
@@ -197,7 +197,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotosetDomains");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
 
             return GetResponseCache<StatDomainCollection>(parameters);
         }
@@ -215,7 +215,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getCollectionStats");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("collection_id", collectionId);
 
             return GetResponseCache<Stats>(parameters);
@@ -234,7 +234,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotoStats");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("photo_id", photoId);
 
             return GetResponseCache<Stats>(parameters);
@@ -252,7 +252,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getCollectionStats");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
 
             return GetResponseCache<Stats>(parameters);
         }
@@ -270,7 +270,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getCollectionStats");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("photoset_id", photosetId);
 
             return GetResponseCache<Stats>(parameters);
@@ -329,7 +329,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotoReferrers");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
             if (!String.IsNullOrEmpty(photoId)) parameters.Add("photo_id", photoId);
             if (page > 0) parameters.Add("page", page);
@@ -391,7 +391,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotosetReferrers");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
             if (!String.IsNullOrEmpty(photosetId)) parameters.Add("photoset_id", photosetId);
             if (page > 0) parameters.Add("page", page);
@@ -453,7 +453,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getCollectionReferrers");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
             if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", collectionId);
             if (page > 0) parameters.Add("page", page);
@@ -488,7 +488,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
 
             parameters.Add("method", "flickr.stats.getPhotostreamReferrers");
-            parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
@@ -516,7 +516,7 @@ namespace FlickrNet
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.stats.getTotalViews");
-            if (date != DateTime.MinValue) parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            if (date != DateTime.MinValue) parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
 
             return GetResponseCache<StatViews>(parameters);
         }
@@ -588,7 +588,7 @@ namespace FlickrNet
 
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.stats.getPopularPhotos");
-            if (date != DateTime.MinValue) parameters.Add("date", Utils.DateToUnixTimestamp(date));
+            if (date != DateTime.MinValue) parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             if (sort != PopularitySort.None) parameters.Add("sort", sort.ToString("G").ToLower());
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);

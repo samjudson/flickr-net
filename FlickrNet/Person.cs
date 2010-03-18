@@ -75,7 +75,7 @@ namespace FlickrNet
         public string RealName { get; private set; }
 	
 		/// <summary>The SHA1 hash of the users email address - used for FOAF networking.</summary>
-        public string MailBoxSha1Hash { get; private set; }
+        public string MailboxSha1Hash { get; private set; }
 	
 		/// <summary>Consists of your current location followed by country.</summary>
 		/// <example>e.g. Newcastle, UK.</example>
@@ -237,10 +237,10 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "firstdatetaken":
-                        FirstTakenDate = Utils.ParseDateWithGranularity(reader.ReadElementContentAsString());
+                        FirstTakenDate = UtilityMethods.ParseDateWithGranularity(reader.ReadElementContentAsString());
                         break;
                     case "firstdate":
-                        FirstDate = Utils.UnixTimestampToDate(reader.ReadElementContentAsString());
+                        FirstDate = UtilityMethods.UnixTimestampToDate(reader.ReadElementContentAsString());
                         break;
                     case "count":
                         PhotoCount = reader.ReadElementContentAsInt();
