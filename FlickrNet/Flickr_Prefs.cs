@@ -15,7 +15,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getSafetyLevel");
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
@@ -35,7 +35,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getHidden");
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
@@ -55,7 +55,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getContentType");
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);

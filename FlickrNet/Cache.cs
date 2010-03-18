@@ -230,7 +230,7 @@ namespace FlickrNet
 				throw new IOException("Unexpected number of chunks found");
 
 			string url = chunks[0];
-			DateTime creationTime = new DateTime(long.Parse(chunks[1]));
+            DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberFormatInfo.InvariantInfo));
 			ResponseCacheItem item = new ResponseCacheItem();
 			item.Url = url;
 			item.CreationTime = creationTime;
@@ -243,7 +243,7 @@ namespace FlickrNet
 			ResponseCacheItem item = (ResponseCacheItem) cacheItem;
 			StringBuilder result = new StringBuilder();
 			result.Append(item.Url + "\n");
-			result.Append(item.CreationTime.Ticks.ToString("0"));
+			result.Append(item.CreationTime.Ticks.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 			UtilityMethods.WriteString(outputStream, result.ToString());
 			UtilityMethods.WriteString(outputStream, item.Response);
 		}
@@ -329,8 +329,8 @@ namespace FlickrNet
 					return null;
 				else
 				{
-					int begin = url.LastIndexOf("/");
-					int end = url.IndexOf("_");
+					int begin = url.LastIndexOf("/", StringComparison.OrdinalIgnoreCase);
+					int end = url.IndexOf("_", StringComparison.OrdinalIgnoreCase);
 
 					return url.Substring(begin + 1, (end - begin) - 1);
 				}
@@ -359,9 +359,9 @@ namespace FlickrNet
 
 			string[] chunks = s.Split('\n');
 			string url = chunks[0];
-			DateTime creationTime = new DateTime(long.Parse(chunks[1]));
+			DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberFormatInfo.InvariantInfo));
 			string filename = chunks[2];
-			long fileSize = long.Parse(chunks[3]);
+            long fileSize = long.Parse(chunks[3], System.Globalization.NumberFormatInfo.InvariantInfo);
 
 			PictureCacheItem pci = new PictureCacheItem();
 			pci.url = url;

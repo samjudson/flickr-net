@@ -174,7 +174,7 @@ namespace FlickrNet
 		/// </summary>
 		public string WebUrl
 		{
-			get { return string.Format("http://www.flickr.com/photos/{0}/{1}/", UserId, PhotoId); }
+            get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", UserId, PhotoId); }
 		}
 
 		/// <summary>

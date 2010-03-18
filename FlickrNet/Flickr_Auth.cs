@@ -30,7 +30,7 @@ namespace FlickrNet
         /// <returns>The FROB.</returns>
         public string AuthGetFrob()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFrob");
 
             UnknownResponse response = GetResponseNoCache<UnknownResponse>(parameters);
@@ -50,9 +50,9 @@ namespace FlickrNet
         {
             if (_sharedSecret == null) throw new SignatureRequiredException();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "frob" + frob + "perms" + authLevel.ToString().ToLower();
+            string hash = _sharedSecret + "api_key" + _apiKey + "frob" + frob + "perms" + UtilityMethods.AuthLevelToString(authLevel);
             hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower() + "&frob=" + frob;
+            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel) + "&frob=" + frob;
             url += "&api_sig=" + hash;
 
             return url;
@@ -71,9 +71,9 @@ namespace FlickrNet
 
             CheckSigned();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
             hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
             url += "&api_sig=" + hash;
 
             return url;
@@ -92,9 +92,9 @@ namespace FlickrNet
 
             CheckSigned();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
             hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
             url += "&api_sig=" + hash;
 
             return url;
@@ -111,7 +111,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getToken");
             parameters.Add("frob", frob);
 
@@ -130,7 +130,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFullToken");
             parameters.Add("mini_token", miniToken.Replace("-", ""));
 
@@ -149,7 +149,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.checkToken");
             parameters.Add("auth_token", token);
 

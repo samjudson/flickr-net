@@ -432,24 +432,24 @@ namespace FlickrNet
         /// <param name="parameters">A Dictionary containing a list of parameters to add to the method call.</param>
         /// <param name="includeSignature">Boolean use to decide whether to generate the api call signature as well.</param>
         /// <returns>The <see cref="Uri"/> for the method call.</returns>
-        public Uri CalculateUri(Dictionary<string, object> parameters, bool includeSignature)
+        public Uri CalculateUri(Dictionary<string, string> parameters, bool includeSignature)
         {
             if (includeSignature)
             {
-                SortedDictionary<string, object> sorted = new SortedDictionary<string, object>();
-                foreach (KeyValuePair<string, object> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
+                SortedDictionary<string, string> sorted = new SortedDictionary<string, string>();
+                foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
 
                 StringBuilder sb = new StringBuilder(ApiSecret);
-                foreach (KeyValuePair<string, object> pair in sorted) { sb.Append(pair.Key); sb.Append(pair.Value); }
+                foreach (KeyValuePair<string, string> pair in sorted) { sb.Append(pair.Key); sb.Append(pair.Value); }
 
                 parameters.Add("api_sig", UtilityMethods.MD5Hash(sb.ToString()));
             }
 
             StringBuilder url = new StringBuilder();
             url.Append("?");
-            foreach (KeyValuePair<string, object> pair in parameters)
+            foreach (KeyValuePair<string, string> pair in parameters)
             {
-                url.AppendFormat("{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value.ToString()));
+                url.AppendFormat("{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value));
             }
 
             return new Uri(BaseUri, url.ToString());

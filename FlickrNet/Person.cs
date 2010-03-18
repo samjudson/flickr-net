@@ -118,7 +118,7 @@ namespace FlickrNet
 				if( String.IsNullOrEmpty(IconServer) || IconServer == "0" )
 					return new Uri("http://www.flickr.com/images/buddyicon.jpg");
 				else
-					return new Uri(String.Format("http://static.flickr.com/{0}/buddyicons/{1}.jpg", IconServer, UserId));
+                    return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://static.flickr.com/{0}/buddyicons/{1}.jpg", IconServer, UserId));
 			}
 		}
 

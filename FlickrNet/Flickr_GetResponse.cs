@@ -11,22 +11,22 @@ namespace FlickrNet
     public partial class Flickr
     {
 
-        private T GetResponseNoCache<T>(Dictionary<string, object> parameters) where T : IFlickrParsable, new()
+        private T GetResponseNoCache<T>(Dictionary<string, string> parameters) where T : IFlickrParsable, new()
         {
             return GetResponse<T>(parameters, TimeSpan.MinValue);
         }
 
-        private T GetResponseAlwaysCache<T>(Dictionary<string, object> parameters) where T : IFlickrParsable, new()
+        private T GetResponseAlwaysCache<T>(Dictionary<string, string> parameters) where T : IFlickrParsable, new()
         {
             return GetResponse<T>(parameters, TimeSpan.MaxValue);
         }
 
-        private T GetResponseCache<T>(Dictionary<string, object> parameters) where T : IFlickrParsable, new()
+        private T GetResponseCache<T>(Dictionary<string, string> parameters) where T : IFlickrParsable, new()
         {
             return GetResponse<T>(parameters, Cache.CacheTimeout);
         }
 
-        private T GetResponse<T>(Dictionary<string, object> parameters, TimeSpan cacheTimeout) where T : IFlickrParsable, new()
+        private T GetResponse<T>(Dictionary<string, string> parameters, TimeSpan cacheTimeout) where T : IFlickrParsable, new()
         {
             CheckApiKey();
 
@@ -163,7 +163,7 @@ namespace FlickrNet
                     HttpWebResponse res2 = (HttpWebResponse)ex.Response;
                     if (res2 != null)
                     {
-                        throw new FlickrWebException(String.Format("HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
+                        throw new FlickrWebException(String.Format(System.Globalization.CultureInfo.InvariantCulture,"HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
                     }
                 }
                 throw new FlickrWebException(ex.Message, ex);

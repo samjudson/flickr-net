@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to add.</param>
         public void PhotosetsAddPhoto(string photosetId, string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.addPhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
@@ -43,7 +43,7 @@ namespace FlickrNet
         /// <returns>The <see cref="Photoset"/> that is created.</returns>
         public Photoset PhotosetsCreate(string title, string description, string primaryPhotoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.create");
             parameters.Add("title", title);
             parameters.Add("primary_photo_id", primaryPhotoId);
@@ -58,7 +58,7 @@ namespace FlickrNet
         /// <param name="photosetId">The ID of the photoset to delete.</param>
         public void PhotosetsDelete(string photosetId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.delete");
             parameters.Add("photoset_id", photosetId);
 
@@ -73,7 +73,7 @@ namespace FlickrNet
         /// <param name="description">The new description for the photoset.</param>
         public void PhotosetsEditMeta(string photosetId, string title, string description)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.editMeta");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("title", title);
@@ -112,7 +112,7 @@ namespace FlickrNet
         /// <param name="photoIds">An comma seperated list of photo IDs.</param>
         public void PhotosetsEditPhotos(string photosetId, string primaryPhotoId, string photoIds)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.editPhotos");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("primary_photo_id", primaryPhotoId);
@@ -129,7 +129,7 @@ namespace FlickrNet
         /// <returns><see cref="Context"/> of the specified photo.</returns>
         public Context PhotosetsGetContext(string photoId, string photosetId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getContext");
             parameters.Add("photo_id", photoId);
             parameters.Add("photoset_id", photosetId);
@@ -144,7 +144,7 @@ namespace FlickrNet
         /// <returns>A <see cref="Photoset"/> instance.</returns>
         public Photoset PhotosetsGetInfo(string photosetId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getInfo");
             parameters.Add("photoset_id", photosetId);
 
@@ -167,7 +167,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public PhotosetCollection PhotosetsGetList(string userId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getList");
             if (userId != null) parameters.Add("user_id", userId);
 
@@ -287,13 +287,13 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Photo"/> instances.</returns>
         public PhotosetPhotoCollection PhotosetsGetPhotos(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage, MediaType media)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getPhotos");
             parameters.Add("photoset_id", photosetId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (privacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
-            if (page > 0) parameters.Add("page", page);
-            if (perPage > 0) parameters.Add("per_page", perPage);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (media != MediaType.None) parameters.Add("media", (media == MediaType.All ? "all" : (media == MediaType.Photos ? "photos" : (media == MediaType.Videos ? "videos" : ""))));
 
             return GetResponseCache<PhotosetPhotoCollection>(parameters);
@@ -318,7 +318,7 @@ namespace FlickrNet
         /// Any set IDs not given in the list will be set to appear at the end of the list, ordered by their IDs.</param>
         public void PhotosetsOrderSets(string photosetIds)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.orderSets");
             parameters.Add("photoset_ids", photosetIds);
 
@@ -335,7 +335,7 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to remove.</param>
         public void PhotosetsRemovePhoto(string photosetId, string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.removePhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
@@ -350,7 +350,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="PhotoComment"/> objects.</returns>
         public PhotosetCommentCollection PhotosetsCommentsGetList(string photosetId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string,object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.getList");
             parameters.Add("photoset_id", photosetId);
 
@@ -365,7 +365,7 @@ namespace FlickrNet
         /// <returns>The new ID of the created comment.</returns>
         public string PhotosetsCommentsAddComment(string photosetId, string commentText)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.addComment");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("comment_text", commentText);
@@ -382,7 +382,7 @@ namespace FlickrNet
         /// <param name="commentId">The ID of the comment to delete.</param>
         public void PhotosetsCommentsDeleteComment(string commentId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.deleteComment");
             parameters.Add("comment_id", commentId);
 
@@ -396,7 +396,7 @@ namespace FlickrNet
         /// <param name="commentText">The new text for the comment.</param>
         public void PhotosetsCommentsEditComment(string commentId, string commentText)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.editComment");
             parameters.Add("comment_id", commentId);
             parameters.Add("comment_text", commentText);

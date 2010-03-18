@@ -90,7 +90,7 @@ namespace FlickrNet
 					case "cacheSize":
 						try
 						{
-							_cacheSize = int.Parse(attribute.Value);
+                            _cacheSize = int.Parse(attribute.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
 							break;
 						}
 						catch(FormatException ex) 
@@ -123,7 +123,7 @@ namespace FlickrNet
 						}
 
 					default:
-                        throw new System.Configuration.ConfigurationErrorsException(String.Format("Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
+                        throw new System.Configuration.ConfigurationErrorsException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
 				}
 			}
 
@@ -135,7 +135,7 @@ namespace FlickrNet
 						ProcessProxyNode(node, configNode);
 						break;
 					default:
-                        throw new System.Configuration.ConfigurationErrorsException(String.Format("Unknown node '{0}' in flickrNet node", node.Name), configNode);
+                        throw new System.Configuration.ConfigurationErrorsException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown node '{0}' in flickrNet node", node.Name), configNode);
 				}
 			}
 		}
@@ -176,7 +176,7 @@ namespace FlickrNet
 						_proxyDomain = attribute.Value;
 						break;
 					default:
-                        throw new System.Configuration.ConfigurationErrorsException(String.Format("Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
+                        throw new System.Configuration.ConfigurationErrorsException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
 				}
 			}
 

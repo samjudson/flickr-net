@@ -14,7 +14,7 @@ namespace FlickrNet
         /// <returns>An array of panda names.</returns>
         public string[] PandaGetList()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getList");
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
@@ -70,12 +70,12 @@ namespace FlickrNet
         /// <returns>A list of photos for the panda.</returns>
         public PandaPhotoCollection PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, object> parameters = new Dictionary<string,object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getPhotos");
             parameters.Add("panda_name", pandaName);
             if( extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if( perPage > 0 ) parameters.Add("per_page", perPage);
-            if( page > 0 ) parameters.Add("page", page);
+            if( perPage > 0 ) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<PandaPhotoCollection>(parameters);
         }

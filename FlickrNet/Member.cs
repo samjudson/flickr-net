@@ -38,16 +38,16 @@ namespace FlickrNet
 		/// <summary>
 		/// The icon URL for the users buddy icon. Calculated from the <see cref="IconFarm"/> and <see cref="IconServer"/>.
 		/// </summary>
-		public string IconUrl
+		public Uri IconUrl
         {
             get {
 				if (IconServer != null && IconServer.Length > 0 && IconServer != "0")
 				{
-					return String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, MemberId);
+					return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, MemberId));
 				}
 				else
 				{
-					return "http://www.flickr.com/images/buddyicon.jpg";
+					return new Uri("http://www.flickr.com/images/buddyicon.jpg");
 				}
             }
         }

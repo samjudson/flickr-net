@@ -16,7 +16,7 @@ namespace FlickrNet
         {
             if (query == null) throw new ArgumentNullException("query");
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.find");
             parameters.Add("query", query);
 
@@ -43,11 +43,11 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Place"/> that matches the locality.</returns>
         public Place PlacesFindByLatLon(decimal latitude, decimal longitude, GeoAccuracy accuracy)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.findByLatLon");
-            parameters.Add("lat", latitude.ToString("0.000"));
-            parameters.Add("lon", longitude.ToString("0.000"));
-            if (accuracy != GeoAccuracy.None) parameters.Add("accuracy", (int)accuracy);
+            parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (accuracy != GeoAccuracy.None) parameters.Add("accuracy", ((int)accuracy).ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<PlaceCollection>(parameters)[0];
         }
@@ -60,7 +60,7 @@ namespace FlickrNet
         /// <returns>Returns an array of <see cref="Place"/> elements.</returns>
         public PlaceCollection PlacesGetChildrenWithPhotosPublic(string placeId, string woeId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getChildrenWithPhotosPublic");
 
             if ((placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0))
@@ -82,7 +82,7 @@ namespace FlickrNet
         /// <returns>The <see cref="Place"/> record for the place/woe ID.</returns>
         public PlaceInfo PlacesGetInfo(string placeId, string woeId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getInfo");
 
             if (String.IsNullOrEmpty(placeId) &&  String.IsNullOrEmpty(woeId))
@@ -134,13 +134,13 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForUser");
 
-            parameters.Add("place_type_id", (int)placeType);
+            parameters.Add("place_type_id", placeType.ToString("D"));
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (threshold > 0) parameters.Add("threshold", threshold);
+            if (threshold > 0) parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToUnixTimestamp(minTakenDate));
             if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToUnixTimestamp(maxTakenDate));
             if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", UtilityMethods.DateToUnixTimestamp(minUploadDate));

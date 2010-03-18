@@ -21,9 +21,9 @@ namespace FlickrNet
         /// <param name="method">The method name, e.g. "flickr.test.null".</param>
         /// <param name="parameters">A list of parameters. Note, api_key is added by default and is not included. Can be null.</param>
         /// <returns>An array of <see cref="XmlElement"/> instances which is the expected response.</returns>
-        public UnknownResponse TestGeneric(string method, Dictionary<string, object> parameters)
+        public UnknownResponse TestGeneric(string method, Dictionary<string, string> parameters)
         {
-            if (parameters == null) parameters = new Dictionary<string, object>();
+            if (parameters == null) parameters = new Dictionary<string, string>();
 
             parameters.Add("method", method);
             return GetResponseNoCache<UnknownResponse>(parameters);
@@ -35,7 +35,7 @@ namespace FlickrNet
         /// <returns>The <see cref="FoundUser"/> object containing the username and userid of the current user.</returns>
         public FoundUser TestLogin()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.test.login");
 
             return GetResponseCache<FoundUser>(parameters);
@@ -46,7 +46,7 @@ namespace FlickrNet
         /// </summary>
         public void TestNull()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.test.null");
 
             GetResponseNoCache<NoResponse>(parameters);
@@ -57,7 +57,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="parameters">A dictionary of extra parameters to pass in. Note, the "method" and "api_key" parameters will always be passed in.</param>
         /// <returns></returns>
-        public EchoResponseDictionary TestEcho(Dictionary<string, object> parameters)
+        public EchoResponseDictionary TestEcho(Dictionary<string, string> parameters)
         {
             parameters.Add("method", "flickr.test.echo");
             return GetResponseNoCache<EchoResponseDictionary>(parameters);

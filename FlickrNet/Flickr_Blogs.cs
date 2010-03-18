@@ -17,7 +17,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.blogs.getList");
             return GetResponseCache<BlogCollection>(parameters);
         }
@@ -28,7 +28,7 @@ namespace FlickrNet
         /// <returns></returns>
         public BlogServiceCollection BlogsGetServices()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.blogs.getServices");
 
             return GetResponseCache<BlogServiceCollection>(parameters);
@@ -58,7 +58,7 @@ namespace FlickrNet
         /// <param name="blogPassword">The password of the blog if it is not already stored in flickr.</param>
         public void BlogsPostPhoto(string blogId, string photoId, string title, string description, string blogPassword)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.blogs.postPhoto");
             parameters.Add("blog_id", blogId);
             parameters.Add("photo_id", photoId);

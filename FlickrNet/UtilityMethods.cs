@@ -21,6 +21,29 @@ namespace FlickrNet
 		}
 
         /// <summary>
+        /// Converts <see cref="AuthLevel"/> to a string.
+        /// </summary>
+        /// <param name="level">The level to convert.</param>
+        /// <returns></returns>
+        public static string AuthLevelToString(AuthLevel level)
+        {
+            switch (level)
+            {
+                case AuthLevel.Delete:
+                    return "delete";
+                case AuthLevel.Read:
+                    return "read";
+                case AuthLevel.Write:
+                    return "write";
+                case AuthLevel.None:
+                    return "none";
+                default:
+                    return "";
+
+            }
+        }
+
+        /// <summary>
         /// Encodes a URL quesrystring data component.
         /// </summary>
         /// <param name="data">The data to encode.</param>
@@ -35,10 +58,10 @@ namespace FlickrNet
 		/// </summary>
 		/// <param name="date">The date to convert.</param>
 		/// <returns>A long for the number of seconds since 1st January 1970, as per unix specification.</returns>
-		public static long DateToUnixTimestamp(DateTime date)
+		public static string DateToUnixTimestamp(DateTime date)
 		{
 			TimeSpan ts = date - unixStartDate;
-			return (long)ts.TotalSeconds;
+			return ts.TotalSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo);
 		}
 
 		/// <summary>
@@ -51,7 +74,7 @@ namespace FlickrNet
 			if( String.IsNullOrEmpty(timestamp) ) return DateTime.MinValue;
             try
             {
-                return UnixTimestampToDate(Int64.Parse(timestamp));
+                return UnixTimestampToDate(Int64.Parse(timestamp, System.Globalization.NumberFormatInfo.InvariantInfo));
             }
             catch (FormatException)
             {
@@ -187,20 +210,40 @@ namespace FlickrNet
 		}
 
         /// <summary>
+        /// Converts a <see cref="PopularitySort"/> enum to a string.
+        /// </summary>
+        /// <param name="sortOrder">The value to convert.</param>
+        /// <returns></returns>
+        public static string SortOrderToString(PopularitySort sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case PopularitySort.Comments:
+                    return "comments";
+                case PopularitySort.Favorites:
+                    return "favorites";
+                case PopularitySort.Views:
+                    return "views";
+                default:
+                    return "";
+            }
+        }
+
+        /// <summary>
         /// Adds the partial options to the passed in <see cref="Hashtable"/>.
         /// </summary>
         /// <param name="options">The options to convert to an array.</param>
         /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
-		public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, object> parameters)
+		public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, string> parameters)
 		{
 			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
 			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
-			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss"));
-			if( options.MaxTakenDate != DateTime.MinValue ) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss"));
+			if( options.MinTakenDate != DateTime.MinValue ) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+            if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
 			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
 			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
-			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString());
-			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString());
+			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
 		}
 
@@ -299,7 +342,7 @@ namespace FlickrNet
 
 		private static string UrlFormat(string format, params object[] parameters)
 		{
-			return String.Format(format, parameters);
+			return String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
 		}
 
         internal static MemberTypes ParseIdToMemberType(string memberTypeId)
@@ -353,7 +396,7 @@ namespace FlickrNet
             System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider();
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
             byte[] hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
-            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLowerInvariant();
         }
 
         /// <summary>
@@ -371,12 +414,13 @@ namespace FlickrNet
             {
                 if (Regex.IsMatch(date, @"^\d{4}-00-01 00:00:00$"))
                 {
-                    output = new DateTime(int.Parse(date.Substring(0, 4)), 1, 1);
+                    output = new DateTime(int.Parse(date.Substring(0, 4), System.Globalization.NumberFormatInfo.InvariantInfo), 1, 1);
                 }
             }
 
             return output;
         }
+
     }
 
 }

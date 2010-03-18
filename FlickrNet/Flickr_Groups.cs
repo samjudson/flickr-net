@@ -26,7 +26,7 @@ namespace FlickrNet
         /// <returns>A <see cref="GroupCategory"/> instance.</returns>
         public GroupCategory GroupsBrowse(string catId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.browse");
             if (!String.IsNullOrEmpty(catId)) parameters.Add("cat_id", catId);
             return GetResponseCache<GroupCategory>(parameters);
@@ -62,12 +62,12 @@ namespace FlickrNet
         /// <returns>A list of groups matching the search criteria.</returns>
         public GroupSearchResultCollection GroupsSearch(string text, int page, int perPage)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.search");
             parameters.Add("api_key", _apiKey);
             parameters.Add("text", text);
-            if (page > 0) parameters.Add("page", page.ToString());
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<GroupSearchResultCollection>(parameters);
         }
@@ -79,7 +79,7 @@ namespace FlickrNet
         /// <returns>The <see cref="GroupFullInfo"/> specified by the group id.</returns>
         public GroupFullInfo GroupsGetInfo(string groupId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.getInfo");
             parameters.Add("api_key", _apiKey);
             parameters.Add("group_id", groupId);
@@ -111,11 +111,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.members.getList");
             parameters.Add("api_key", _apiKey);
-            if( page > 0 ) parameters.Add("page", page);
-            if( perPage > 0 ) parameters.Add("per_page", perPage);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (memberTypes != MemberTypes.NotSpecified) parameters.Add("membertypes", UtilityMethods.MemberTypeToString(memberTypes));
             parameters.Add("group_id", groupId);
 
@@ -130,7 +130,7 @@ namespace FlickrNet
         /// <returns>True on a successful addition.</returns>
         public void GroupsPoolsAdd(string photoId, string groupId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.add");
             parameters.Add("photo_id", photoId);
             parameters.Add("group_id", groupId);
@@ -146,7 +146,7 @@ namespace FlickrNet
         /// <returns>The <see cref="Context"/> of the photo in the group.</returns>
         public Context GroupsPoolsGetContext(string photoId, string groupId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getContext");
             parameters.Add("photo_id", photoId);
             parameters.Add("group_id", groupId);
@@ -160,7 +160,7 @@ namespace FlickrNet
         /// <param name="groupId">The id of the group to remove the picture from.</param>
         public void GroupsPoolsRemove(string photoId, string groupId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.remove");
             parameters.Add("photo_id", photoId);
             parameters.Add("group_id", groupId);
@@ -173,7 +173,7 @@ namespace FlickrNet
         /// <returns></returns>
         public MemberGroupInfoCollection GroupsPoolsGetGroups()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getGroups");
             return GetResponseCache<MemberGroupInfoCollection>(parameters);
         }
@@ -237,12 +237,12 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing the list of photos.</returns>
         public PhotoCollection GroupsPoolsGetPhotos(string groupId, string tags, string userId, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getPhotos");
             parameters.Add("group_id", groupId);
             if (tags != null && tags.Length > 0) parameters.Add("tags", tags);
-            if (page > 0) parameters.Add("page", page.ToString());
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 

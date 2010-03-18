@@ -52,11 +52,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.contacts.getList");
             if (!String.IsNullOrEmpty(filter)) parameters.Add("filter", filter);
-            if (page > 0) parameters.Add("page", page);
-            if (perPage > 0) parameters.Add("per_page", perPage);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<ContactCollection>(parameters);
         }
@@ -116,7 +116,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.contacts.getListRecentlyUploaded");
             if( dateLastUpdated != DateTime.MinValue) parameters.Add("date_last_updated", UtilityMethods.DateToUnixTimestamp(dateLastUpdated));
@@ -145,11 +145,11 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
         public ContactCollection ContactsGetPublicList(string userId, int page, int perPage)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.contacts.getPublicList");
             parameters.Add("user_id", userId);
-            if (page > 0) parameters.Add("page", page);
-            if (perPage > 0) parameters.Add("per_page", perPage);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             return GetResponseCache<ContactCollection>(parameters);
         }
 

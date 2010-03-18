@@ -37,7 +37,7 @@ namespace FlickrNet
         {
             if (reader.LocalName != "stats")
             {
-                throw new ParsingException(String.Format("Unknown element '{0}' found in Flickr response.", reader.LocalName));
+                throw new ParsingException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown element '{0}' found in Flickr response.", reader.LocalName));
             }
 
             while (reader.Read() && reader.LocalName != "stats")
@@ -60,7 +60,7 @@ namespace FlickrNet
                         CollectionViews = int.Parse(reader.GetAttribute("views"), System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new ParsingException(String.Format("Unknown element '{0}' found in Flickr response.", reader.LocalName));
+                        throw new ParsingException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown element '{0}' found in Flickr response.", reader.LocalName));
                 }
             }
 

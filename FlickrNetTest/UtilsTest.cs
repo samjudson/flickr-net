@@ -93,8 +93,8 @@ namespace FlickrNetTest
         public void TestDateToUnixTimestamp()
         {
             DateTime testDate = new DateTime(2009, 1, 1, 12, 37, 0);
-            long expectedResult = 1230813420;
-            long actualResult = UtilityMethods.DateToUnixTimestamp(testDate);
+            string expectedResult = "1230813420";
+            string actualResult = UtilityMethods.DateToUnixTimestamp(testDate);
 
             Assert.AreEqual(expectedResult, actualResult);
         }

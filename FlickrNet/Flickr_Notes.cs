@@ -20,13 +20,13 @@ namespace FlickrNet
         /// <returns></returns>
         public string PhotosNotesAdd(string photoId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.notes.add");
             parameters.Add("photo_id", photoId);
-            parameters.Add("note_x", noteX.ToString());
-            parameters.Add("note_y", noteY.ToString());
-            parameters.Add("note_w", noteWidth.ToString());
-            parameters.Add("note_h", noteHeight.ToString());
+            parameters.Add("note_x", noteX.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("note_y", noteY.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("note_w", noteWidth.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("note_h", noteHeight.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("note_text", noteText);
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
@@ -46,13 +46,13 @@ namespace FlickrNet
         /// <param name="noteText">The new text in the note.</param>
         public void PhotosNotesEdit(string noteId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.notes.edit");
             parameters.Add("note_id", noteId);
-            parameters.Add("note_x", noteX.ToString());
-            parameters.Add("note_y", noteY.ToString());
-            parameters.Add("note_w", noteWidth.ToString());
-            parameters.Add("note_h", noteHeight.ToString());
+            parameters.Add("note_x", noteX.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("note_y", noteY.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("note_w", noteWidth.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("note_h", noteHeight.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("note_text", noteText);
 
             GetResponseCache<NoResponse>(parameters);
@@ -64,7 +64,7 @@ namespace FlickrNet
         /// <param name="noteId">The ID of the note.</param>
         public void PhotosNotesDelete(string noteId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.notes.delete");
             parameters.Add("note_id", noteId);
 

@@ -23,7 +23,7 @@ namespace FlickrNet
         {
             get
             {
-                if (String.IsNullOrEmpty(_url)) _url = String.Format("http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
+                if (String.IsNullOrEmpty(_url)) _url = String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
                 return _url;
             }
             private set { _url = value; }

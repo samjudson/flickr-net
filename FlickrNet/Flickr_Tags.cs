@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoInfo"/> class containing only the <see cref="PhotoInfo.Tags"/> property.</returns>
         public PhotoInfoTag[] TagsGetListPhoto(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListPhoto");
             parameters.Add("api_key", _apiKey);
             parameters.Add("photo_id", photoId);
@@ -40,7 +40,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
         public TagCollection TagsGetListUser(string userId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUser");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -88,10 +88,10 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
         public TagCollection TagsGetListUserPopular(string userId, int count)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUserPopular");
             if (userId != null) parameters.Add("user_id", userId);
-            if (count > 0) parameters.Add("count", count.ToString());
+            if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<TagCollection>(parameters);
         }
@@ -114,7 +114,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUserRaw");
             if (tag != null && tag.Length > 0) parameters.Add("tag", tag);
 
@@ -128,7 +128,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
         public TagCollection TagsGetRelated(string tag)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getRelated");
             parameters.Add("api_key", _apiKey);
             parameters.Add("tag", tag);

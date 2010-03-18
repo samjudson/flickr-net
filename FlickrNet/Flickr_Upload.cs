@@ -113,7 +113,7 @@ namespace FlickrNet
              * 
              * */
 
-            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(UploadUrl);
             req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
@@ -277,7 +277,7 @@ namespace FlickrNet
         /// <returns>The id of the photograph after successful uploading.</returns>
         public string ReplacePicture(Stream stream, string photoId)
         {
-            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.NumberFormatInfo.InvariantInfo);
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(ReplaceUrl);
             req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";

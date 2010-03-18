@@ -22,11 +22,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.batchCorrectLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            parameters.Add("accuracy", (int)accuracy);
+            parameters.Add("accuracy", accuracy.ToString("D"));
             parameters.Add("place_id", placeId);
             parameters.Add("woe_id", woeId);
 
@@ -43,7 +43,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.correctLocation");
             parameters.Add("photo_id", photoId);
             parameters.Add("place_id", placeId);
@@ -59,7 +59,7 @@ namespace FlickrNet
         /// <returns>Returns null if the photo has no location information, otherwise returns the location information.</returns>
         public PhotoLocation PhotosGeoGetLocation(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getLocation");
             parameters.Add("photo_id", photoId);
 
@@ -85,11 +85,11 @@ namespace FlickrNet
         /// <param name="context">ontext is a numeric value representing the photo's geotagginess beyond latitude and longitude. For example, you may wish to indicate that a photo was taken "indoors" or "outdoors". </param>
         public void PhotosGeoSetContext(string photoId, GeoContext context)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.photos.geo.setContext");
             parameters.Add("photo_id", photoId);
-            parameters.Add("context", (int)context);
+            parameters.Add("context", context.ToString("D"));
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -116,13 +116,13 @@ namespace FlickrNet
         {
             System.Globalization.NumberFormatInfo nfi = System.Globalization.NumberFormatInfo.InvariantInfo;
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setLocation");
             parameters.Add("photo_id", photoId);
-            parameters.Add("lat", latitude.ToString(nfi));
-            parameters.Add("lon", longitude.ToString(nfi));
+            parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (accuracy != GeoAccuracy.None)
-                parameters.Add("accuracy", ((int)accuracy).ToString());
+                parameters.Add("accuracy", accuracy.ToString("D"));
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -141,15 +141,15 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.photos.geo.photosForLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            parameters.Add("accuracy", (int)accuracy);
+            parameters.Add("accuracy", accuracy.ToString("D"));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if( perPage > 0 ) parameters.Add("per_page", perPage);
-            if (page > 0) parameters.Add("page", page);
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseNoCache<PhotoCollection>(parameters);
 
@@ -162,7 +162,7 @@ namespace FlickrNet
         /// <returns>Returns true if the location information as found and removed. Returns false if no photo information was found.</returns>
         public void PhotosGeoRemoveLocation(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.removeLocation");
             parameters.Add("photo_id", photoId);
 
@@ -186,7 +186,7 @@ namespace FlickrNet
         /// <returns>A list of photos that do not contain location information.</returns>
         public PhotoCollection PhotosGetWithoutGeoData(PartialSearchOptions options)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getWithoutGeoData");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -250,7 +250,7 @@ namespace FlickrNet
         /// <returns>A list of photos that contain Location information.</returns>
         public PhotoCollection PhotosGetWithGeoData(PartialSearchOptions options)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getWithGeoData");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -264,7 +264,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
         public GeoPermissions PhotosGeoGetPerms(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getPerms");
             parameters.Add("photo_id", photoId);
 
@@ -281,7 +281,7 @@ namespace FlickrNet
         /// <param name="isFriend"></param>
         public void PhotosGeoSetPerms(string photoId, bool isPublic, bool isContact, bool isFamily, bool isFriend)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setPerms");
             parameters.Add("photo_id", photoId);
             parameters.Add("is_public", isPublic ? "1" : "0");

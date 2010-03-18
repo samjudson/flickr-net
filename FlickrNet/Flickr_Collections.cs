@@ -17,7 +17,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.collections.getInfo");
             parameters.Add("collection_id", collectionId);
 
@@ -44,7 +44,7 @@ namespace FlickrNet
         {
             if (String.IsNullOrEmpty(userId)) CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.collections.getTree");
             if (collectionId != null) parameters.Add("collection_id", collectionId);
             if (userId != null) parameters.Add("user_id", userId);

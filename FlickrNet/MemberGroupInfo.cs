@@ -60,7 +60,7 @@ namespace FlickrNet
                 }
                 else
                 {
-                    return new Uri(String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId));
+                    return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId));
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace FlickrNet
         /// </summary>
         public Uri GroupUrl
         {
-            get { return new Uri(String.Format("http://www.flickr.com/groups/{0}/", GroupId)); }
+            get { return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/groups/{0}/", GroupId)); }
         }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

@@ -27,7 +27,7 @@ namespace FlickrNet
         /// <returns>True if the tags are added successfully.</returns>
         public void PhotosAddTags(string photoId, string tags)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.addTags");
             parameters.Add("photo_id", photoId);
             parameters.Add("tags", tags);
@@ -43,7 +43,7 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to delete.</param>
         public void PhotosDelete(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.delete");
             parameters.Add("photo_id", photoId);
 
@@ -58,7 +58,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="AllContexts"/> class.</returns>
         public AllContexts PhotosGetAllContexts(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getAllContexts");
             parameters.Add("photo_id", photoId);
 
@@ -109,11 +109,11 @@ namespace FlickrNet
 
             if (count != 0 && (count < 10 || count > 50) && !singlePhoto)
             {
-                throw new ArgumentOutOfRangeException("count", String.Format("Count must be between 10 and 50. ({0})", count));
+                throw new ArgumentOutOfRangeException("count", String.Format(System.Globalization.CultureInfo.InvariantCulture, "Count must be between 10 and 50. ({0})", count));
             }
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getContactsPhotos");
-            if (count > 0 && !singlePhoto) parameters.Add("count", count.ToString());
+            if (count > 0 && !singlePhoto) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (justFriends) parameters.Add("just_friends", "1");
             if (singlePhoto) parameters.Add("single_photo", "1");
             if (includeSelf) parameters.Add("include_self", "1");
@@ -192,11 +192,11 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PhotosGetContactsPublicPhotos(string userId, int count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getContactsPublicPhotos");
             parameters.Add("api_key", _apiKey);
             parameters.Add("user_id", userId);
-            if (count > 0) parameters.Add("count", count.ToString());
+            if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (justFriends) parameters.Add("just_friends", "1");
             if (singlePhoto) parameters.Add("single_photo", "1");
             if (includeSelf) parameters.Add("include_self", "1");
@@ -212,7 +212,7 @@ namespace FlickrNet
         /// <returns></returns>
         public Context PhotosGetContext(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getContext");
             parameters.Add("photo_id", photoId);
 
@@ -278,7 +278,7 @@ namespace FlickrNet
                 takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
             }
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getCounts");
             if (dateString != null && dateString.Length > 0) parameters.Add("dates", dateString);
             if (takenDateString != null && takenDateString.Length > 0) parameters.Add("taken_dates", takenDateString);
@@ -305,7 +305,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="ExifTagCollection"/> class containing the EXIF data.</returns>
         public ExifTagCollection PhotosGetExif(string photoId, string secret)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getExif");
             parameters.Add("photo_id", photoId);
             if (secret != null) parameters.Add("secret", secret);
@@ -331,7 +331,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoInfo"/> class detailing the properties of the photo.</returns>
         public PhotoInfo PhotosGetInfo(string photoId, string secret)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getInfo");
             parameters.Add("photo_id", photoId);
             if (secret != null) parameters.Add("secret", secret);
@@ -346,7 +346,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
         public PhotoPermissions PhotosGetPerms(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getPerms");
             parameters.Add("photo_id", photoId);
 
@@ -392,11 +392,11 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetRecent(int page, int perPage, PhotoSearchExtras extras)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getRecent");
             parameters.Add("api_key", _apiKey);
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
-            if (page > 0) parameters.Add("page", page.ToString());
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
@@ -409,7 +409,7 @@ namespace FlickrNet
         /// <returns>A list of <see cref="Size"/> objects.</returns>
         public SizeCollection PhotosGetSizes(string photoId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getSizes");
             parameters.Add("photo_id", photoId);
 
@@ -455,10 +455,10 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged(int page, int perPage, PhotoSearchExtras extras)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getUntagged");
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
-            if (page > 0) parameters.Add("page", page.ToString());
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             return GetResponseCache<PhotoCollection>(parameters);
@@ -520,7 +520,7 @@ namespace FlickrNet
         /// <returns>A collection of photos in the <see cref="PhotoCollection"/> class.</returns>
         public PhotoCollection PhotosGetNotInSet(PartialSearchOptions options)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getNotInSet");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -533,7 +533,7 @@ namespace FlickrNet
         /// <returns><see cref="LicenseCollection"/> instance.</returns>
         public LicenseCollection PhotosLicensesGetInfo()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.licenses.getInfo");
             parameters.Add("api_key", _apiKey);
 
@@ -547,7 +547,7 @@ namespace FlickrNet
         /// <returns>True if the tag was removed.</returns>
         public void PhotosRemoveTag(string tagId)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.removeTag");
             parameters.Add("tag_id", tagId);
 
@@ -605,12 +605,12 @@ namespace FlickrNet
         /// <returns>Returns a <see cref="PhotoCollection"/> instance containing the list of photos.</returns>
         public PhotoCollection PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.recentlyUpdated");
-            parameters.Add("min_date", UtilityMethods.DateToUnixTimestamp(minDate).ToString());
+            parameters.Add("min_date", UtilityMethods.DateToUnixTimestamp(minDate));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString());
-            if (page > 0) parameters.Add("page", page.ToString());
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -622,7 +622,7 @@ namespace FlickrNet
         /// <returns>A collection of photos contained within a <see cref="PhotoCollection"/> object.</returns>
         public PhotoCollection PhotosSearch(PhotoSearchOptions options)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.search");
             if (options.UserId != null && options.UserId.Length > 0) parameters.Add("user_id", options.UserId);
             if (options.GroupId != null && options.GroupId.Length > 0) parameters.Add("group_id", options.GroupId);
@@ -637,11 +637,11 @@ namespace FlickrNet
             if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
             if (options.Licenses.Count != 0)
             {
-                string[] licenseArray = options.Licenses.ConvertAll<string>(delegate(LicenseType license) { return ((int)license).ToString(); }).ToArray();
+                string[] licenseArray = options.Licenses.ConvertAll<string>(delegate(LicenseType license) { return license.ToString("d"); }).ToArray();
                 parameters.Add("license", String.Join(",", licenseArray));
             }
-            if (options.PerPage != 0) parameters.Add("per_page", options.PerPage.ToString());
-            if (options.Page != 0) parameters.Add("page", options.Page.ToString());
+            if (options.PerPage != 0) parameters.Add("per_page", options.PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (options.Page != 0) parameters.Add("page", options.Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (options.Extras != PhotoSearchExtras.None) parameters.Add("extras", options.ExtrasString);
             if (options.SortOrder != PhotoSearchSortOrder.None) parameters.Add("sort", options.SortOrderString);
             if (options.PrivacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
@@ -650,9 +650,9 @@ namespace FlickrNet
             if (options.SafeSearch != SafetyLevel.None) parameters.Add("safe_search", options.SafeSearch.ToString("d"));
             if (options.ContentType != ContentTypeSearch.None) parameters.Add("content_type", options.ContentType.ToString("d"));
             if (options.HasGeo) parameters.Add("has_geo", "1");
-            if (!float.IsNaN(options.Latitude)) parameters.Add("lat", options.Latitude.ToString("0.0000"));
-            if (!float.IsNaN(options.Longitude)) parameters.Add("lon", options.Longitude.ToString("0.0000"));
-            if (!float.IsNaN(options.Radius)) parameters.Add("radius", options.Radius.ToString("0.00"));
+            if (!float.IsNaN(options.Latitude)) parameters.Add("lat", options.Latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (!float.IsNaN(options.Longitude)) parameters.Add("lon", options.Longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (!float.IsNaN(options.Radius)) parameters.Add("radius", options.Radius.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (options.RadiusUnits != RadiusUnit.None) parameters.Add("radius_units", (options.RadiusUnits == RadiusUnit.Miles ? "mi" : "km"));
             if (options.Contacts != ContactSearch.None) parameters.Add("contacts", (options.Contacts == ContactSearch.AllContacts ? "all" : "ff"));
             if (options.WoeId != null) parameters.Add("woe_id", options.WoeId);
@@ -709,7 +709,7 @@ namespace FlickrNet
         /// <returns>True if the dates where updated successfully.</returns>
         public void PhotosSetDates(string photoId, DateTime datePosted, DateTime dateTaken, DateGranularity granularity)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setDates");
             parameters.Add("photo_id", photoId);
             if (datePosted != DateTime.MinValue) parameters.Add("date_posted", UtilityMethods.DateToUnixTimestamp(datePosted).ToString());
@@ -732,7 +732,7 @@ namespace FlickrNet
         /// <exception cref="FlickrApiException">Thrown when the photo id cannot be found.</exception>
         public void PhotosSetMeta(string photoId, string title, string description)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setMeta");
             parameters.Add("photo_id", photoId);
             parameters.Add("title", title);
@@ -766,7 +766,7 @@ namespace FlickrNet
         /// <param name="permAddMeta">Who can add metadata (notes and tags). See <see cref="PermissionAddMeta"/> for more details.</param>
         public void PhotosSetPerms(string photoId, bool isPublic, bool isFriend, bool isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setPerms");
             parameters.Add("photo_id", photoId);
             parameters.Add("is_public", (isPublic ? "1" : "0"));
@@ -804,7 +804,7 @@ namespace FlickrNet
         /// <param name="tags">An comma-seperated list of tags.</param>
         public void PhotosSetTags(string photoId, string tags)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setTags");
             parameters.Add("photo_id", photoId);
             parameters.Add("tags", tags);
@@ -821,10 +821,10 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setContentType");
             parameters.Add("photo_id", photoId);
-            parameters.Add("content_type", (int)contentType);
+            parameters.Add("content_type", contentType.ToString("D"));
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -859,17 +859,17 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setSafetyLevel");
             parameters.Add("photo_id", photoId);
-            if (safetyLevel != SafetyLevel.None) parameters.Add("safety_level", (int)safetyLevel);
+            if (safetyLevel != SafetyLevel.None) parameters.Add("safety_level", safetyLevel.ToString("D"));
             switch (hidden)
             {
                 case HiddenFromSearch.Visible:
-                    parameters.Add("hidden", 0);
+                    parameters.Add("hidden", "0");
                     break;
                 case HiddenFromSearch.Hidden:
-                    parameters.Add("hidden", 1);
+                    parameters.Add("hidden", "1");
                     break;
             }
 
@@ -895,11 +895,11 @@ namespace FlickrNet
         /// <returns>An array of favourites for photos.</returns>
         public PhotoFavoriteCollection PhotosGetFavorites(string photoId, int perPage, int page)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getFavorites");
             parameters.Add("photo_id", photoId);
-            if (page > 0) parameters.Add("page", page);
-            if (perPage > 0) parameters.Add("per_page", perPage);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<PhotoFavoriteCollection>(parameters);
 

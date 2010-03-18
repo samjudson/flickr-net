@@ -28,7 +28,7 @@ namespace FlickrNet
         {
             if (reader.LocalName != "stats")
             {
-                throw new System.Xml.XmlException(String.Format("Unknown element '{0}' found in Flickr Response.", reader.LocalName));
+                throw new System.Xml.XmlException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown element '{0}' found in Flickr Response.", reader.LocalName));
             }
 
             while (reader.MoveToNextAttribute())

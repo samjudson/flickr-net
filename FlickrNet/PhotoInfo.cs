@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Xml.Serialization;
-using System.Xml.Schema;
 using System.Collections.Generic;
 
 namespace FlickrNet
@@ -8,7 +6,6 @@ namespace FlickrNet
 	/// <summary>
     /// Detailed information returned by <see cref="Flickr.PhotosGetInfo(string)"/> or <see cref="Flickr.PhotosGetInfo(string, string)"/> methods.
 	/// </summary>
-	[System.Serializable]
 	public class PhotoInfo : IFlickrParsable
 	{
         /// <summary>
@@ -220,22 +217,19 @@ namespace FlickrNet
 		/// <remarks>
 		/// Will be null if the photo has no location information stored on Flickr.
 		/// </remarks>
-		[XmlElement("location", Form=XmlSchemaForm.Unqualified)]
 		public PhotoLocation Location;
 
 		/// <summary>
 		/// The Web url for flickr web page for this photo.
 		/// </summary>
-		[XmlIgnore()]
 		public string WebUrl
 		{
-			get { return string.Format("http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId); }
+            get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId); }
 		}
 
 		/// <summary>
 		/// The URL for the square thumbnail for the photo.
 		/// </summary>
-		[XmlIgnore()]
 		public string SquareThumbnailUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
@@ -244,7 +238,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the thumbnail for the photo.
 		/// </summary>
-		[XmlIgnore()]
 		public string ThumbnailUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
@@ -253,7 +246,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the small version of this photo.
 		/// </summary>
-		[XmlIgnore()]
 		public string SmallUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
@@ -266,7 +258,6 @@ namespace FlickrNet
 		/// There is no guarentee that this size of the image actually exists.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
 		/// </remarks>
-		[XmlIgnore()]
 		public string MediumUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
@@ -279,7 +270,6 @@ namespace FlickrNet
 		/// There is no guarentee that this size of the image actually exists.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
 		/// </remarks>
-		[XmlIgnore()]
 		public string LargeUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
@@ -288,7 +278,6 @@ namespace FlickrNet
 		/// <summary>
 		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
 		/// </summary>
-		[XmlIgnore()]
 		public string OriginalUrl
 		{
 			get 
@@ -582,7 +571,6 @@ namespace FlickrNet
 	/// <summary>
 	/// A class containing information about a note on a photo.
 	/// </summary>
-    [System.Serializable]
     public class PhotoInfoNote : IFlickrParsable
 	{
 		/// <summary>
