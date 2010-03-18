@@ -10,20 +10,6 @@ namespace FlickrNet
 {
     public partial class Flickr
     {
-        private Response GetResponseNoCache(Hashtable parameters)
-        {
-            return GetResponse(parameters, TimeSpan.MinValue);
-        }
-
-        private Response GetResponseAlwaysCache(Hashtable parameters)
-        {
-            return GetResponse(parameters, TimeSpan.MaxValue);
-        }
-
-        private Response GetResponseCache(Hashtable parameters)
-        {
-            return GetResponse(parameters, Cache.CacheTimeout);
-        }
 
         private T GetResponseNoCache<T>(Dictionary<string, object> parameters) where T : IFlickrParsable, new()
         {
@@ -114,91 +100,13 @@ namespace FlickrNet
 
         }
 
-        private Response GetResponse(Hashtable parameters, TimeSpan cacheTimeout)
-        {
-            // This is now the 'old' Get Response. The new one uses generics to get the correct response object.
-            CheckApiKey();
-
-            // Calulate URL 
-            string url = BaseUrl;
-
-            StringBuilder UrlStringBuilder = new StringBuilder("", 2 * 1024);
-            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
-
-            parameters["api_key"] = _apiKey;
-
-            if (_apiToken != null && _apiToken.Length > 0)
-            {
-                parameters["auth_token"] = _apiToken;
-            }
-
-            string[] keys = new string[parameters.Keys.Count];
-            parameters.Keys.CopyTo(keys, 0);
-            Array.Sort(keys);
-
-            foreach (string key in keys)
-            {
-                if (UrlStringBuilder.Length > 0) UrlStringBuilder.Append("&");
-                UrlStringBuilder.Append(key);
-                UrlStringBuilder.Append("=");
-                UrlStringBuilder.Append(Utils.UrlEncode(Convert.ToString(parameters[key])));
-                HashStringBuilder.Append(key);
-                HashStringBuilder.Append(parameters[key]);
-            }
-
-            if (_sharedSecret != null && _sharedSecret.Length > 0)
-            {
-                if (UrlStringBuilder.Length > BaseUrl.Length + 1)
-                {
-                    UrlStringBuilder.Append("&");
-                }
-                UrlStringBuilder.Append("api_sig=");
-                UrlStringBuilder.Append(Utils.Md5Hash(HashStringBuilder.ToString()));
-            }
-
-            string variables = UrlStringBuilder.ToString();
-            _lastRequest = url + "?" + variables;
-            _lastResponse = string.Empty;
-
-            if (CacheDisabled)
-            {
-                string responseXml = DoGetResponse(url, variables);
-                _lastResponse = responseXml;
-                return Utils.Deserialize<Response>(responseXml);
-            }
-
-            string urlComplete = url + "?" + variables;
-
-            ResponseCacheItem cached = (ResponseCacheItem)Cache.Responses.Get(urlComplete, cacheTimeout, true);
-            if (cached != null)
-            {
-                _lastResponse = cached.Response;
-                return Utils.Deserialize<Response>(cached.Response);
-            }
-
-            string responseXmlString = DoGetResponse(url, variables);
-            _lastResponse = responseXmlString;
-
-            ResponseCacheItem resCache = new ResponseCacheItem();
-            resCache.Response = responseXmlString;
-            resCache.Url = urlComplete;
-            resCache.CreationTime = DateTime.UtcNow;
-
-            Response response = Utils.Deserialize<Response>(responseXmlString);
-
-            Cache.Responses.Shrink(Math.Max(0, Cache.CacheSizeLimit - responseXmlString.Length));
-            Cache.Responses[urlComplete] = resCache;
-
-            return response;
-        }
-
         /// <summary>
         /// A private method which performs the actual HTTP web request if
         /// the details are not found within the cache.
         /// </summary>
         /// <param name="url">The URL to download.</param>
         /// <param name="variables">The query string parameters to be added to the end of the URL.</param>
-        /// <returns>A <see cref="FlickrNet.Response"/> object.</returns>
+        /// <returns>A string containing the response XML.</returns>
         /// <remarks>If the final length of the URL would be greater than 2000 characters 
         /// then they are sent as part of the body instead.</remarks>
         private string DoGetResponse(string url, string variables)

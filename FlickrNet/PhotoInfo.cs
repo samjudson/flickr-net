@@ -9,179 +9,210 @@ namespace FlickrNet
     /// Detailed information returned by <see cref="Flickr.PhotosGetInfo(string)"/> or <see cref="Flickr.PhotosGetInfo(string, string)"/> methods.
 	/// </summary>
 	[System.Serializable]
-	public class PhotoInfo
+	public class PhotoInfo : IFlickrParsable
 	{
-		private string _photoId;
-		private string _secret;
-		private string _server;
-		private string _farm;
-		private string _originalFormat;
-		private string _originalSecret;
-		private int _views;
-		private int _comments;
-		private string _title;
-		private string _description;
-		private PhotoInfoTags _tags = new PhotoInfoTags();
-		private PhotoInfoUsage _usage = new PhotoInfoUsage();
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public PhotoInfo()
+        {
+            Notes = new List<PhotoInfoNote>();
+            Tags = new List<PhotoInfoTag>();
+            Urls = new List<PhotoInfoUrl>();
+        }
 
-		/// <summary>
+        /// <summary>
 		/// The id of the photo.
 		/// </summary>
-		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string PhotoId { get { return _photoId; } set { _photoId = value; } }
+        public string PhotoId { get; private set; }
 
 		/// <summary>
 		/// The secret of the photo. Used to calculate the URL (amongst other things).
 		/// </summary>
-		[XmlAttribute("secret", Form=XmlSchemaForm.Unqualified)]
-		public string Secret { get { return _secret; } set { _secret = value; } }
+        public string Secret { get; private set; }
 
 		/// <summary>
 		/// The server on which the photo resides.
 		/// </summary>
-		[XmlAttribute("server", Form=XmlSchemaForm.Unqualified)]
-		public string Server { get { return _server; } set { _server = value; } }
+        public string Server { get; private set; }
 
 		/// <summary>
 		/// The server farm on which the photo resides.
 		/// </summary>
-		[XmlAttribute("farm", Form=XmlSchemaForm.Unqualified)]
-		public string Farm { get { return _farm; } set { _farm = value; } }
+        public string Farm { get; private set; }
 
 		/// <summary>
 		/// The original format of the image (e.g. jpg, png etc).
 		/// </summary>
-		[XmlAttribute("originalformat", Form=XmlSchemaForm.Unqualified)]
-		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
+        public string OriginalFormat { get; private set; }
 
 		/// <summary>
 		/// Optional extra field containing the original 'secret' of the 
 		/// photo used for forming the Url.
 		/// </summary>
-		[XmlAttribute("originalsecret", Form=XmlSchemaForm.Unqualified)]
-		public string OriginalSecret { get { return _originalSecret; } set { _originalSecret = value; } }
+        public string OriginalSecret { get; private set; }
 
 		/// <summary>
 		/// The date the photo was uploaded (or 'posted').
 		/// </summary>
-		[XmlIgnore()]
-		public DateTime DateUploaded
-		{
-			get { return Utils.UnixTimestampToDate(dateuploaded_raw); }
-		}
-
-		/// <summary>
-		/// The raw value for when the photo was uploaded.
-		/// </summary>
-		[XmlAttribute("dateuploaded", Form=XmlSchemaForm.Unqualified)]
-		public string dateuploaded_raw;
+		public DateTime DateUploaded { get; private set; }
 
 		/// <summary>
 		/// Is the photo a favourite of the current authorised user. 
 		/// Will be 0 if the user is not authorised.
 		/// </summary>
-		[XmlAttribute("isfavorite", Form=XmlSchemaForm.Unqualified)]
-		public int IsFavourite;
+        public bool IsFavourite { get; private set; }
 
 		/// <summary>
 		/// The license of the photo.
 		/// </summary>
-		[XmlAttribute("license", Form=XmlSchemaForm.Unqualified)]
-		public int License;
+        public LicenseType License { get; private set; }
 
-		/// <summary>
-		/// The owner of the photo.
-		/// </summary>
-		/// <remarks>
-		/// See <see cref="PhotoInfoOwner"/> for more details.
-		/// </remarks>
-		[XmlElement("owner", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoOwner Owner;
+        /// <summary>
+        /// The number of views the photo has.
+        /// </summary>
+        public int ViewCount { get; private set; }
+
+        /// <summary>
+        /// The rotational information for this photo - in degrees.
+        /// </summary>
+        public int Rotation { get; private set; }
+
+        /// <summary>
+        /// The media type for this item.
+        /// </summary>
+        public MediaType Media { get; private set; }
+
+        /// <summary>
+        /// The NSID of the owner of this item.
+        /// </summary>
+        public string OwnerUserId { get; private set; }
+
+        /// <summary>
+        /// The username of the owner of this item.
+        /// </summary>
+        public string OwnerUserName { get; private set; }
+
+        /// <summary>
+        /// The real name of the owner of this item.
+        /// </summary>
+        public string OwnerRealName { get; private set; }
+
+        /// <summary>
+        /// The location of the owner of this photo.
+        /// </summary>
+        public string OwnerLocation { get; private set; }
 
 		/// <summary>
 		/// The title of the photo.
 		/// </summary>
-		[XmlElement("title", Form=XmlSchemaForm.Unqualified)]
-		public string Title { get { return _title; } set { _title = value; } }
+        public string Title { get; private set; }
 
 		/// <summary>
 		/// The description of the photo.
 		/// </summary>
-		[XmlElement("description", Form=XmlSchemaForm.Unqualified)]
-		public string Description { get { return _description; } set { _description = value; } }
+        public string Description { get; private set; }
 
-		/// <summary>
-		/// The visibility of the photo.
-		/// </summary>
-		/// <remarks>
-		/// See <see cref="PhotoInfoVisibility"/> for more details.
-		/// </remarks>
-		[XmlElement("visibility", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoVisibility Visibility;
+        /// <summary>
+        /// Is the photo visible to the public.
+        /// </summary>
+        public bool IsPublic { get; private set; }
 
-		/// <summary>
-		/// The permissions of the photo.
-		/// </summary>
-		/// <remarks>
-		/// See <see cref="PhotoInfoPermissions"/> for more details.
-		/// </remarks>
-		[XmlElement("permissions", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoPermissions Permissions;
+        /// <summary>
+        /// Is the photo visible to contacts marked as friends.
+        /// </summary>
+        public bool IsFriend { get; private set; }
 
-		/// <summary>
-		/// The editability of the photo.
-		/// </summary>
-		/// <remarks>
-		/// See <see cref="PhotoInfoEditability"/> for more details.
-		/// </remarks>
-		[XmlElement("editability", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoEditability Editability;
+        /// <summary>
+        /// Is the photo visible to contacts marked as family.
+        /// </summary>
+        public bool IsFamily { get; private set; }
+
+        /// <summary>
+        /// Can the authorized user add new comments.
+        /// </summary>
+        /// <remarks>
+        /// "1" = true, "0" = false.
+        /// </remarks>
+        public bool CanComment { get; private set; }
+
+        /// <summary>
+        /// Can the authorized user add new meta data (tags and notes).
+        /// </summary>
+        /// <remarks>
+        /// "1" = true, "0" = false.
+        /// </remarks>
+        public bool CanAddMeta { get; private set; }
+
+        /// <summary>
+        /// Specifies if the user allows blogging of this photos. 1 = Yes, 0 = No.
+        /// </summary>
+        public bool CanBlog { get; private set; }
+
+        /// <summary>
+        /// Specifies if the user allows downloading of this photos. 1 = Yes, 0 = No.
+        /// </summary>
+        public bool CanDownload { get; private set; }
+
+        /// <summary>
+        /// Specifies if the user allows printing of this photos. 1 = Yes, 0 = No.
+        /// </summary>
+        public bool CanPrint { get; private set; }
+
+        /// <summary>
+        /// Does the user allow sharing of this photo.
+        /// </summary>
+        public bool CanShare { get; private set; }
 
 		/// <summary>
 		/// The number of comments the photo has.
 		/// </summary>
-		[XmlElement("comments", Form=XmlSchemaForm.Unqualified)]
-		public int CommentsCount
-		{
-			get { return _comments; } set { _comments = value; }
-		}
-
-		/// <summary>
-		/// The number of views the photo has.
-		/// </summary>
-		[XmlAttribute("views", Form=XmlSchemaForm.Unqualified)]
-		public int ViewCount
-		{
-			get { return _views; } set { _views = value; }
-		}
+		public int CommentsCount  { get; private set; }
 
 		/// <summary>
 		/// The notes for the photo.
 		/// </summary>
-		[XmlElement("notes", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoNotes Notes;
+        public List<PhotoInfoNote> Notes { get; private set; }
 
-		/// <summary>
-		/// The tags for the photo.
-		/// </summary>
-		[XmlElement("tags", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoTags Tags
-		{
-			get { return _tags; }
-			set { _tags = (value==null?new PhotoInfoTags():value); }
-		}
-	
-		/// <summary>
-		/// The EXIF tags for the photo.
-		/// </summary>
-		[XmlElement("exif", Form=XmlSchemaForm.Unqualified)]
-		public ExifTag[] ExifTagCollection;
+        /// <summary>
+        /// The tags for the photo.
+        /// </summary>
+        public List<PhotoInfoTag> Tags { get; private set; }
 
-		/// <summary>
-		/// The dates (uploaded and taken dates) for the photo.
-		/// </summary>
-		[XmlElement("dates", Form=XmlSchemaForm.Unqualified)]
-		public PhotoDates Dates;
+        /// <summary>
+        /// The urls for this photo.
+        /// </summary>
+        public List<PhotoInfoUrl> Urls { get; private set; }
+
+        /// <summary>
+        /// The date the photo was posted/uploaded.
+        /// </summary>
+        public DateTime DatePosted { get; private set; }
+
+        /// <summary>
+        /// The date the photo was taken.
+        /// </summary>
+        public DateTime DateTaken { get; private set; }
+
+        /// <summary>
+        /// The date the photo was last updated.
+        /// </summary>
+        public DateTime DateLastUpdated { get; private set; }
+
+        /// <summary>
+        /// The granularity of the date taken data.
+        /// </summary>
+        public DateGranularity DateTakenGranularity { get; set; }
+
+        /// <summary>
+        /// Who has permissions to add comments to this photo.
+        /// </summary>
+        public PermissionComment? PermissionComment;
+
+        /// <summary>
+        /// Who has permissions to add meta data (tags and notes) to this photo.
+        /// </summary>
+        public PermissionAddMeta? PermissionAddMeta;
 
 		/// <summary>
 		/// The location information of this photo, if available.
@@ -198,7 +229,7 @@ namespace FlickrNet
 		[XmlIgnore()]
 		public string WebUrl
 		{
-			get { return string.Format("http://www.flickr.com/photos/{0}/{1}/", Owner.UserId, PhotoId); }
+			get { return string.Format("http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId); }
 		}
 
 		/// <summary>
@@ -269,275 +300,506 @@ namespace FlickrNet
 			}
 		}
 
-		/// <summary>
-		/// Allowed usage for this photo, based on the users permissions.
-		/// </summary>
-		[XmlElement("usage", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoUsage Usage
-		{
-			get { return _usage; } set { _usage = value; }
-		}
-
-        /// <summary>
-        /// Is the currently authenticated user (if any) allowed to blog this photo.
-        /// </summary>
-        /// <remarks>Will always return false for unauthenticated calls.</remarks>
-        public bool CanBlog
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
-            get { return Usage.CanBlog == 1; }
+            if (reader.LocalName != "photo")
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        PhotoId = reader.Value;
+                        break;
+                    case "secret":
+                        Secret = reader.Value;
+                        break;
+                    case "server":
+                        Server = reader.Value;
+                        break;
+                    case "farm":
+                        Farm = reader.Value;
+                        break;
+                    case "originalformat":
+                        OriginalFormat = reader.Value;
+                        break;
+                    case "originalsecret":
+                        OriginalSecret = reader.Value;
+                        break;
+                    case "dateuploaded":
+                        DateUploaded = Utils.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "isfavorite":
+                        IsFavourite = (reader.Value == "1");
+                        break;
+                    case "license":
+                        License = (LicenseType)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "views":
+                        ViewCount = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "rotation":
+                        Rotation = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "media":
+                        Media = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName != "photo")
+            {
+                switch (reader.LocalName)
+                {
+                    case "owner":
+                        ParseOwner(reader);
+                        break;
+                    case "title":
+                        Title = reader.ReadElementContentAsString();
+                        break;
+                    case "description":
+                        Description = reader.ReadElementContentAsString();
+                        break;
+                    case "visibility":
+                        ParseVisibility(reader);
+                        break;
+                    case "permissions":
+                        ParsePermissions(reader);
+                        break;
+                    case "editability":
+                        ParseEditability(reader);
+                        break;
+                    case "dates":
+                        ParseDates(reader);
+                        break;
+                    case "usage":
+                        ParseUsage(reader);
+                        break;
+                    case "comments":
+                        CommentsCount = reader.ReadElementContentAsInt();
+                        break;
+                    case "notes":
+                        ParseNotes(reader);
+                        break;
+                    case "tags":
+                        ParseTags(reader);
+                        break;
+                    case "urls":
+                        ParseUrls(reader);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element found: " + reader.LocalName);
+
+                }
+            }
+
+            reader.Skip();
         }
 
-        /// <summary>
-        /// Is the currently authenticated user (if any) allowed to download this photo.
-        /// </summary>
-        public bool CanDownload
+        private void ParseUrls(System.Xml.XmlReader reader)
         {
-            get { return Usage.CanDownload == 1; }
+            reader.Read();
+
+            while (reader.LocalName == "url")
+            {
+                PhotoInfoUrl url = new PhotoInfoUrl();
+                ((IFlickrParsable)url).Load(reader);
+                Urls.Add(url);
+            }
         }
 
-        /// <summary>
-        /// Is the currently authenticated user (if any) allowed to print this photo.
-        /// </summary>
-        /// <remarks>Will always return false for unauthenticated calls.</remarks>
-        public bool CanPrint
+        private void ParseTags(System.Xml.XmlReader reader)
         {
-            get { return Usage.CanPrint == 1; }
+            reader.Read();
+
+            while (reader.LocalName == "tag")
+            {
+                PhotoInfoTag tag = new PhotoInfoTag();
+                ((IFlickrParsable)tag).Load(reader);
+                Tags.Add(tag);
+            }
+        }
+
+        private void ParseNotes(System.Xml.XmlReader reader)
+        {
+            reader.Read();
+
+            while (reader.LocalName == "note")
+            {
+                PhotoInfoNote note = new PhotoInfoNote();
+                ((IFlickrParsable)note).Load(reader);
+                Notes.Add(note);
+            }
+        }
+
+        private void ParseUsage(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "canblog":
+                        CanBlog = reader.Value == "1";
+                        break;
+                    case "candownload":
+                        CanDownload = reader.Value == "1";
+                        break;
+                    case "canprint":
+                        CanPrint = reader.Value == "1";
+                        break;
+                    case "canshare":
+                        CanShare = reader.Value == "1";
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void ParseVisibility(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "isfamily":
+                        IsFamily = reader.Value == "1";
+                        break;
+                    case "ispublic":
+                        IsPublic = reader.Value == "1";
+                        break;
+                    case "isfriend":
+                        IsFriend = reader.Value == "1";
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void ParseEditability(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "cancomment":
+                        CanComment = (reader.Value == "1");
+                        break;
+                    case "canaddmeta":
+                        CanAddMeta = (reader.Value == "1");
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void ParsePermissions(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "permcomment":
+                        PermissionComment = (PermissionComment)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "permaddmeta":
+                        PermissionAddMeta = (PermissionAddMeta)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void ParseDates(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "posted":
+                        DatePosted = Utils.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "taken":
+                        DateTaken = Utils.ParseDateWithGranularity(reader.Value);
+                        break;
+                    case "takengranularity":
+                        DateTakenGranularity = (DateGranularity)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "lastupdate":
+                        DateLastUpdated = Utils.UnixTimestampToDate(reader.Value);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void ParseOwner(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "nsid":
+                        OwnerUserId = reader.Value;
+                        break;
+                    case "username":
+                        OwnerUserName = reader.Value;
+                        break;
+                    case "realname":
+                        OwnerRealName = reader.Value;
+                        break;
+                    case "location":
+                        OwnerLocation = reader.Value;
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
         }
     }
 
 	/// <summary>
-	/// The information about the owner of a photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoOwner
-	{
-		/// <summary>
-		/// The id of the own of the photo.
-		/// </summary>
-		[XmlAttribute("nsid", Form=XmlSchemaForm.Unqualified)]
-		public string UserId;
-
-		/// <summary>
-		/// The username of the owner of the photo.
-		/// </summary>
-		[XmlAttribute("username", Form=XmlSchemaForm.Unqualified)]
-		public string UserName;
-
-		/// <summary>
-		/// The real name (as stored on Flickr) of the owner of the photo.
-		/// </summary>
-		[XmlAttribute("realname", Form=XmlSchemaForm.Unqualified)]
-		public string RealName;
-
-		/// <summary>
-		/// The location (as stored on Flickr) of the owner of the photo.
-		/// </summary>
-		[XmlAttribute("location", Form=XmlSchemaForm.Unqualified)]
-		public string Location;
-	}
-
-	/// <summary>
-	/// The visibility of the photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoVisibility
-	{
-		/// <summary>
-		/// Is the photo visible to the public.
-		/// </summary>
-		[XmlAttribute("ispublic", Form=XmlSchemaForm.Unqualified)]
-		public int IsPublic;
-
-		/// <summary>
-		/// Is the photo visible to contacts marked as friends.
-		/// </summary>
-		[XmlAttribute("isfriend", Form=XmlSchemaForm.Unqualified)]
-		public int IsFriend;
-
-		/// <summary>
-		/// Is the photo visible to contacts marked as family.
-		/// </summary>
-		[XmlAttribute("isfamily", Form=XmlSchemaForm.Unqualified)]
-		public int IsFamily;
-	}
-
-	/// <summary>
-	/// Who has permissions to add information to this photo (comments, tag and notes).
-	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoPermissions
-	{
-		/// <summary>
-		/// Who has permissions to add comments to this photo.
-		/// </summary>
-		[XmlAttribute("permcomment", Form=XmlSchemaForm.Unqualified)]
-		public PermissionComment PermissionComment;
-
-		/// <summary>
-		/// Who has permissions to add meta data (tags and notes) to this photo.
-		/// </summary>
-		[XmlAttribute("permaddmeta", Form=XmlSchemaForm.Unqualified)]
-		public PermissionAddMeta PermissionAddMeta;
-	}
-
-	/// <summary>
-	/// Information about who can edit the details of a photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoEditability 
-	{
-		/// <summary>
-		/// Can the authorized user add new comments.
-		/// </summary>
-		/// <remarks>
-		/// "1" = true, "0" = false.
-		/// </remarks>
-		[XmlAttribute("cancomment", Form=XmlSchemaForm.Unqualified)]
-		public string CanComment;
-
-		/// <summary>
-		/// Can the authorized user add new meta data (tags and notes).
-		/// </summary>
-		/// <remarks>
-		/// "1" = true, "0" = false.
-		/// </remarks>
-		[XmlAttribute("canaddmeta", Form=XmlSchemaForm.Unqualified)]
-		public string CanAddMeta;
-	}
-
-	/// <summary>
-	/// A class containing information about the notes for a photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoNotes
-	{
-		/// <summary>
-		/// A collection of notes for this photo.
-		/// </summary>
-		[XmlElement("note", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoNote[] NoteCollection;
-	}
-
-	/// <summary>
 	/// A class containing information about a note on a photo.
 	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoNote
+    [System.Serializable]
+    public class PhotoInfoNote : IFlickrParsable
 	{
 		/// <summary>
 		/// The notes unique ID.
 		/// </summary>
-		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
 		public string NoteId;
 
 		/// <summary>
 		/// The User ID of the user who wrote the note.
 		/// </summary>
-		[XmlAttribute("author", Form=XmlSchemaForm.Unqualified)]
 		public string AuthorId;
 
 		/// <summary>
 		/// The name of the user who wrote the note.
 		/// </summary>
-		[XmlAttribute("authorname", Form=XmlSchemaForm.Unqualified)]
 		public string AuthorName;
 
 		/// <summary>
 		/// The x (left) position of the top left corner of the note.
 		/// </summary>
-		[XmlAttribute("x", Form=XmlSchemaForm.Unqualified)]
-		public int XPosition;
+        public int XPosition { get; private set; }
 
 		/// <summary>
 		/// The y (top) position of the top left corner of the note.
 		/// </summary>
-		[XmlAttribute("y", Form=XmlSchemaForm.Unqualified)]
-		public int YPosition;
+        public int YPosition { get; private set; }
 
 		/// <summary>
 		/// The width of the note.
 		/// </summary>
-		[XmlAttribute("w", Form=XmlSchemaForm.Unqualified)]
-		public int Width;
+		public int Width { get; private set; }
 
 		/// <summary>
 		/// The height of the note.
 		/// </summary>
-		[XmlAttribute("h", Form=XmlSchemaForm.Unqualified)]
-		public int Height;
+        public int Height { get; private set; }
 
 		/// <summary>
 		/// The text of the note.
 		/// </summary>
-		[XmlText()]
-		public string NoteText;
-	}
+        public string NoteText { get; private set; }
 
-	/// <summary>
-	/// A class containing a collection of tags for the photo.
-	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoTags
-	{
-		private PhotoInfoTag[] _tags = new PhotoInfoTag[0];
+        /// <summary>
+        /// The <see cref="System.Drawing.Size"/> of this note. Derived from <see cref="Width"/> and <see cref="Height"/>.
+        /// </summary>
+        public System.Drawing.Size Size
+        {
+            get
+            {
+                return new System.Drawing.Size(Width, Height);
+            }
+        }
 
-		/// <summary>
-		/// A collection of tags for the photo.
-		/// </summary>
-		[XmlElement("tag", Form=XmlSchemaForm.Unqualified)]
-		public PhotoInfoTag[] TagCollection
-		{
-			get { return _tags; }
-			set { _tags = (value==null?new PhotoInfoTag[0]:value); }
-		}
-	}
+        /// <summary>
+        /// The location of this note on the medium sized thumbnail of this photo. Derived from <see cref="XPosition"/> and <see cref="YPosition"/>.
+        /// </summary>
+        public System.Drawing.Point Location
+        {
+            get
+            {
+                return new System.Drawing.Point(XPosition, YPosition);
+            }
+        }
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "note")
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        NoteId = reader.Value;
+                        break;
+                    case "author":
+                        AuthorId = reader.Value;
+                        break;
+                    case "authorname":
+                        AuthorName = reader.Value;
+                        break;
+                    case "x":
+                        XPosition = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "y":
+                        YPosition = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "w":
+                        Width = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "h":
+                        Height = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            NoteText = reader.ReadContentAsString();
+
+            reader.Skip();
+        }
+    }
 
 	/// <summary>
 	/// The details of a tag of a photo.
 	/// </summary>
-	[System.Serializable]
-	public class PhotoInfoTag
+	public class PhotoInfoTag : IFlickrParsable
 	{
-		private int _machineTag;
-		private string _tagId;
-		private string _authorId;
-		private string _authorName;
-
 		/// <summary>
 		/// The id of the tag.
 		/// </summary>
-		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string TagId { get { return _tagId; } set { _tagId = value; } }
+        public string TagId { get; private set; }
 
 		/// <summary>
 		/// The author id of the tag.
 		/// </summary>
-		[XmlAttribute("author", Form=XmlSchemaForm.Unqualified)]
-		public string AuthorId { get { return _authorId; } set { _authorId = value; } }
+        public string AuthorId { get; private set; }
 
 		/// <summary>
-		/// Author of the tag - only available if using <see cref="Flickr.TagsGetListPhoto"/>.
+		/// The real name of the author of the tag.
 		/// </summary>
-		[XmlAttribute("authorname", Form=XmlSchemaForm.Unqualified)]
-		public string AuthorName  { get { return _authorName; } set { _authorName = value; } }
-
-		/// <summary>
-		/// Raw copy of the tag, as the user entered it.
-		/// </summary>
-		[XmlAttribute("raw", Form=XmlSchemaForm.Unqualified)]
-		public string Raw;
+        public string AuthorName { get; private set; }
 
 		/// <summary>
 		/// Raw copy of the tag, as the user entered it.
 		/// </summary>
-		[XmlAttribute("machine_tag", Form=XmlSchemaForm.Unqualified)]
-		public int IsMachineTag { get { return _machineTag; } set { _machineTag = value; } }
+        public string Raw { get; private set; }
+
+		/// <summary>
+		/// Is the tag a machine tag.
+		/// </summary>
+        public bool IsMachineTag { get; private set; }
 
 		/// <summary>
 		/// The actually tag.
 		/// </summary>
-		[XmlText()]
-		public string TagText;
-	}
+        public string TagText { get; private set; }
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "tag")
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        TagId = reader.Value;
+                        break;
+                    case "author":
+                        AuthorId = reader.Value;
+                        break;
+                    case "authorname":
+                        AuthorName = reader.Value;
+                        break;
+                    case "raw":
+                        Raw = reader.Value;
+                        break;
+                    case "machine_tag":
+                        IsMachineTag = (reader.Value == "1");
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            TagText = reader.ReadContentAsString();
+
+            reader.Skip();
+        }
+    }
+
+    /// <summary>
+    /// The details of a tag of a photo.
+    /// </summary>
+    public class PhotoInfoUrl : IFlickrParsable
+    {
+        /// <summary>
+        /// The id of the tag.
+        /// </summary>
+        public string Url { get; private set; }
+
+        /// <summary>
+        /// The author id of the tag.
+        /// </summary>
+        public string UrlType { get; private set; }
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "url")
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "type":
+                        UrlType = reader.Value;
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            Url = reader.ReadContentAsString();
+
+            reader.Skip();
+        }
+    }
 
 }

@@ -20,7 +20,7 @@ namespace FlickrNet
         /// <returns></returns>
         public string PhotosNotesAdd(string photoId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.notes.add");
             parameters.Add("photo_id", photoId);
             parameters.Add("note_x", noteX.ToString());
@@ -29,20 +29,10 @@ namespace FlickrNet
             parameters.Add("note_h", noteHeight.ToString());
             parameters.Add("note_text", noteText);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                foreach (XmlElement element in response.AllElements)
-                {
-                    return element.Attributes["id", ""].Value;
-                }
-                return string.Empty;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@id");
+            return nav == null ? null : nav.Value;
         }
 
         /// <summary>
@@ -56,7 +46,7 @@ namespace FlickrNet
         /// <param name="noteText">The new text in the note.</param>
         public void PhotosNotesEdit(string noteId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.notes.edit");
             parameters.Add("note_id", noteId);
             parameters.Add("note_x", noteX.ToString());
@@ -65,16 +55,7 @@ namespace FlickrNet
             parameters.Add("note_h", noteHeight.ToString());
             parameters.Add("note_text", noteText);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -83,20 +64,11 @@ namespace FlickrNet
         /// <param name="noteId">The ID of the note.</param>
         public void PhotosNotesDelete(string noteId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.notes.delete");
             parameters.Add("note_id", noteId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseCache<NoResponse>(parameters);
         }
     }
 }

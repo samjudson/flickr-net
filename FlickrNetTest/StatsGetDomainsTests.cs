@@ -65,7 +65,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            StatDomains domains = f.StatsGetCollectionDomains(DateTime.Today.AddDays(-2));
+            StatDomainCollection domains = f.StatsGetCollectionDomains(DateTime.Today.AddDays(-2));
 
             Assert.IsNotNull(domains, "StatDomains should not be null.");
             Assert.AreEqual(domains.Total, domains.Count, "StatDomains.Count should be the same as StatDomains.Total");
@@ -76,7 +76,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            StatDomains domains = f.StatsGetPhotoDomains(DateTime.Today.AddDays(-2));
+            StatDomainCollection domains = f.StatsGetPhotoDomains(DateTime.Today.AddDays(-2));
 
             Assert.IsNotNull(domains, "StatDomains should not be null.");
             Assert.AreNotEqual(0, domains.Count, "StatDomains.Count should not be zero.");

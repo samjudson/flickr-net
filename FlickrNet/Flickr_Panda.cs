@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Xml.XPath;
 
 namespace FlickrNet
 {
@@ -13,21 +14,17 @@ namespace FlickrNet
         /// <returns>An array of panda names.</returns>
         public string[] PandaGetList()
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.panda.getList");
 
-            Response response = GetResponseCache(parameters);
-            if (response.Status == ResponseStatus.OK)
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
+
+            List<string> pandas = new List<string>();
+            foreach (XPathNavigator n in response.GetXPathNavigator().Select("//panda/text()"))
             {
-                List<string> pandas = new List<string>();
-                foreach (System.Xml.XmlNode node in response.AllElements[0].ChildNodes)
-                    pandas.Add(node.InnerText);
-                return pandas.ToArray();
+                pandas.Add(n.Value);
             }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return pandas.ToArray();
         }
 
         /// <summary>
@@ -35,7 +32,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="pandaName">The name of the panda to return photos for.</param>
         /// <returns>A list of photos for the panda.</returns>
-        public PandaPhotos PandaGetPhotos(string pandaName)
+        public PandaPhotoCollection PandaGetPhotos(string pandaName)
         {
             return PandaGetPhotos(pandaName, PhotoSearchExtras.None, 0, 0);
         }
@@ -46,7 +43,7 @@ namespace FlickrNet
         /// <param name="pandaName">The name of the panda to return photos for.</param>
         /// <param name="extras">The extras to return with the photos.</param>
         /// <returns>A list of photos for the panda.</returns>
-        public PandaPhotos PandaGetPhotos(string pandaName, PhotoSearchExtras extras)
+        public PandaPhotoCollection PandaGetPhotos(string pandaName, PhotoSearchExtras extras)
         {
             return PandaGetPhotos(pandaName, extras, 0, 0);
         }
@@ -58,7 +55,7 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The age to return.</param>
         /// <returns>A list of photos for the panda.</returns>
-        public PandaPhotos PandaGetPhotos(string pandaName, int page, int perPage)
+        public PandaPhotoCollection PandaGetPhotos(string pandaName, int page, int perPage)
         {
             return PandaGetPhotos(pandaName, PhotoSearchExtras.None, page, perPage);
         }
@@ -71,7 +68,7 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The age to return.</param>
         /// <returns>A list of photos for the panda.</returns>
-        public PandaPhotos PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage)
+        public PandaPhotoCollection PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string,object>();
             parameters.Add("method", "flickr.panda.getPhotos");
@@ -80,7 +77,7 @@ namespace FlickrNet
             if( perPage > 0 ) parameters.Add("per_page", perPage);
             if( page > 0 ) parameters.Add("page", page);
 
-            return GetResponseCache<PandaPhotos>(parameters);
+            return GetResponseCache<PandaPhotoCollection>(parameters);
         }
     }
 }

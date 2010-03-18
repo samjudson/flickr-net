@@ -12,23 +12,14 @@ namespace FlickrNet
         /// Gets a list of comments for a photo.
         /// </summary>
         /// <param name="photoId">The id of the photo to return the comments for.</param>
-        /// <returns>An array of <see cref="Comment"/> objects.</returns>
-        public Comment[] PhotosCommentsGetList(string photoId)
+        /// <returns>An list of <see cref="PhotoComment"/> objects.</returns>
+        public PhotoCommentCollection PhotosCommentsGetList(string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string,object>();
             parameters.Add("method", "flickr.photos.comments.getList");
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return PhotoComments.GetComments(response.AllElements[0]);
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache < PhotoCommentCollection>(parameters);
         }
 
         /// <summary>
@@ -39,25 +30,15 @@ namespace FlickrNet
         /// <returns>The new ID of the created comment.</returns>
         public string PhotosCommentsAddComment(string photoId, string commentText)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string,object>();
             parameters.Add("method", "flickr.photos.comments.addComment");
             parameters.Add("photo_id", photoId);
             parameters.Add("comment_text", commentText);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNode node = response.AllElements[0];
-                if (node.Attributes.GetNamedItem("id") != null)
-                    return node.Attributes.GetNamedItem("id").Value;
-                else
-                    throw new ResponseXmlException("Comment ID not found in response Xml.");
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@id");
+            return nav == null ? null : nav.Value;
         }
 
         /// <summary>
@@ -66,20 +47,11 @@ namespace FlickrNet
         /// <param name="commentId">The ID of the comment to delete.</param>
         public void PhotosCommentsDeleteComment(string commentId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.comments.deleteComment");
             parameters.Add("comment_id", commentId);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -89,28 +61,20 @@ namespace FlickrNet
         /// <param name="commentText">The new text for the comment.</param>
         public void PhotosCommentsEditComment(string commentId, string commentText)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.comments.editComment");
             parameters.Add("comment_id", commentId);
             parameters.Add("comment_text", commentText);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
+            GetResponseNoCache<NoResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
         }
 
         /// <summary>
         /// Return the list of photos belonging to your contacts that have been commented on recently.
         /// </summary>
         /// <returns></returns>
-        public Photos PhotosCommentsGetRecentForContacts()
+        public PhotoCollection PhotosCommentsGetRecentForContacts()
         {
             return PhotosCommentsGetRecentForContacts(DateTime.MinValue, null, PhotoSearchExtras.None, 0, 0);
         }
@@ -121,7 +85,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns></returns>
-        public Photos PhotosCommentsGetRecentForContacts(int page, int perPage)
+        public PhotoCollection PhotosCommentsGetRecentForContacts(int page, int perPage)
         {
             return PhotosCommentsGetRecentForContacts(DateTime.MinValue, null, PhotoSearchExtras.None, page, perPage);
         }
@@ -134,7 +98,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns></returns>
-        public Photos PhotosCommentsGetRecentForContacts(DateTime dateLastComment, PhotoSearchExtras extras, int page, int perPage)
+        public PhotoCollection PhotosCommentsGetRecentForContacts(DateTime dateLastComment, PhotoSearchExtras extras, int page, int perPage)
         {
             return PhotosCommentsGetRecentForContacts(dateLastComment, null, extras, page, perPage);
         }
@@ -148,7 +112,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns></returns>
-        public Photos PhotosCommentsGetRecentForContacts(DateTime dateLastComment, string[] contactsFilter, PhotoSearchExtras extras, int page, int perPage)
+        public PhotoCollection PhotosCommentsGetRecentForContacts(DateTime dateLastComment, string[] contactsFilter, PhotoSearchExtras extras, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -160,7 +124,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<Photos>(parameters);
+            return GetResponseCache<PhotoCollection>(parameters);
         }
     }
 }

@@ -37,8 +37,8 @@ namespace FlickrNet
         /// Get a list of the currently logger in users favourites.
         /// Requires authentication.
         /// </summary>
-        /// <returns><see cref="Photos"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
-        public Photos FavoritesGetList()
+        /// <returns><see cref="PhotoCollection"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
+        public PhotoCollection FavoritesGetList()
         {
             return FavoritesGetList(null, 0, 0);
         }
@@ -49,8 +49,8 @@ namespace FlickrNet
         /// </summary>
         /// <param name="perPage">Number of photos to include per page.</param>
         /// <param name="page">The page to download this time.</param>
-        /// <returns><see cref="Photos"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
-        public Photos FavoritesGetList(int page, int perPage)
+        /// <returns><see cref="PhotoCollection"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
+        public PhotoCollection FavoritesGetList(int page, int perPage)
         {
             return FavoritesGetList(null, page, perPage);
         }
@@ -59,8 +59,8 @@ namespace FlickrNet
         /// Get a list of favourites for the specified user.
         /// </summary>
         /// <param name="userId">The user id of the user whose favourites you wish to retrieve.</param>
-        /// <returns><see cref="Photos"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
-        public Photos FavoritesGetList(string userId)
+        /// <returns><see cref="PhotoCollection"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
+        public PhotoCollection FavoritesGetList(string userId)
         {
             return FavoritesGetList(userId, 0, 0);
         }
@@ -71,8 +71,8 @@ namespace FlickrNet
         /// <param name="userId">The user id of the user whose favourites you wish to retrieve.</param>
         /// <param name="perPage">Number of photos to include per page.</param>
         /// <param name="page">The page to download this time.</param>
-        /// <returns><see cref="Photos"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
-        public Photos FavoritesGetList(string userId, int page, int perPage)
+        /// <returns><see cref="PhotoCollection"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
+        public PhotoCollection FavoritesGetList(string userId, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.favorites.getList");
@@ -80,7 +80,7 @@ namespace FlickrNet
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
 
-            return GetResponseCache<Photos>(parameters);
+            return GetResponseCache<PhotoCollection>(parameters);
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace FlickrNet
         /// <remarks>This function difers from <see cref="Flickr.FavoritesGetList(string)"/> in that the user id 
         /// is not optional.</remarks>
         /// <param name="userId">The is of the user whose favourites you wish to return.</param>
-        /// <returns>A <see cref="Photos"/> object containing a collection of <see cref="Photo"/> objects.</returns>
-        public Photos FavoritesGetPublicList(string userId)
+        /// <returns>A <see cref="PhotoCollection"/> object containing a collection of <see cref="Photo"/> objects.</returns>
+        public PhotoCollection FavoritesGetPublicList(string userId)
         {
             return FavoritesGetPublicList(userId, DateTime.MinValue, DateTime.MinValue, PhotoSearchExtras.None, 0, 0);
         }
@@ -101,24 +101,24 @@ namespace FlickrNet
         /// <remarks>This function difers from <see cref="Flickr.FavoritesGetList(string)"/> in that the user id 
         /// is not optional.</remarks>
         /// <param name="userId">The is of the user whose favourites you wish to return.</param>
-        /// <param name="minFavDate">Minimum date that a photo was favorited on.</param>
-        /// <param name="maxFavDate">Maximum date that a photo was favorited on. </param>
+        /// <param name="minFavoriteDate">Minimum date that a photo was favorited on.</param>
+        /// <param name="maxFavoriteDate">Maximum date that a photo was favorited on. </param>
         /// <param name="extras">The extras to return for each photo.</param>
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The specific page to return.</param>
-        /// <returns>A <see cref="Photos"/> object containing a collection of <see cref="Photo"/> objects.</returns>
-        public Photos FavoritesGetPublicList(string userId, DateTime minFavDate, DateTime maxFavDate, PhotoSearchExtras extras, int page, int perPage)
+        /// <returns>A <see cref="PhotoCollection"/> object containing a collection of <see cref="Photo"/> objects.</returns>
+        public PhotoCollection FavoritesGetPublicList(string userId, DateTime minFavoriteDate, DateTime maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.favorites.getPublicList");
             parameters.Add("user_id", userId);
-            if (minFavDate != DateTime.MinValue) parameters.Add("min_fav_date", Utils.DateToUnixTimestamp(minFavDate));
-            if (maxFavDate != DateTime.MinValue) parameters.Add("max_fav_date", Utils.DateToUnixTimestamp(maxFavDate));
+            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", Utils.DateToUnixTimestamp(minFavoriteDate));
+            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", Utils.DateToUnixTimestamp(maxFavoriteDate));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", Utils.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString());
             if (page > 0) parameters.Add("page", page.ToString());
 
-            return GetResponseCache<Photos>(parameters);
+            return GetResponseCache<PhotoCollection>(parameters);
         }
         #endregion
 

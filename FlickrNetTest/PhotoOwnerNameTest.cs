@@ -70,7 +70,7 @@ namespace FlickrNetTest
             o.Extras = PhotoSearchExtras.OwnerName;
 
             Flickr f = TestData.GetInstance();
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.IsNotNull(photos[0].OwnerName);
            
@@ -80,7 +80,7 @@ namespace FlickrNetTest
         public void TestPhotosGetContactsPublicPhotos()
         {
             Flickr f = TestData.GetInstance();
-            Photos photos = f.PhotosGetContactsPublicPhotos(TestData.TestUserId, PhotoSearchExtras.OwnerName);
+            PhotoCollection photos = f.PhotosGetContactsPublicPhotos(TestData.TestUserId, PhotoSearchExtras.OwnerName);
 
             Console.WriteLine(f.LastResponse);
 

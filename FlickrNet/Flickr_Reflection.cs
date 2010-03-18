@@ -18,7 +18,7 @@ namespace FlickrNet
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.reflection.getMethods");
 
-            return GetResponseCache<Methods>(parameters).ToArray();
+            return GetResponseNoCache<Methods>(parameters).ToArray();
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace FlickrNet
             parameters.Add("api_key", _apiKey);
             parameters.Add("method_name", methodName);
 
-            return GetResponseCache<Method>(parameters);
+            return GetResponseNoCache<Method>(parameters);
         }
 
     }

@@ -7,37 +7,6 @@ using System.Xml;
 namespace FlickrNet
 {
 	/// <summary>
-	/// 
-	/// </summary>
-	public class Places : List<Place>, IFlickrParsable
-	{
-        /// <summary>
-        /// The total number of places that match the calling request.
-        /// </summary>
-        public int Total { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Place[] PlacesCollection { get { return this.ToArray(); } }
-
-        void IFlickrParsable.Load(System.Xml.XmlReader reader)
-		{
-            int Total = int.Parse(reader.GetAttribute("total"), System.Globalization.CultureInfo.InvariantCulture);
-
-			reader.Read();
-
-            while (reader.LocalName == "place")
-            {
-                Place p = new Place();
-                ((IFlickrParsable)p).Load(reader);
-                Add(p);
-            }
-
-            reader.Skip();
-		}
-	}
-	/// <summary>
 	/// Summary description for Place.
 	/// </summary>
     public class Place : IFlickrParsable
@@ -45,40 +14,50 @@ namespace FlickrNet
 		/// <summary>
 		/// The unique id for this place.
 		/// </summary>
-        public string PlaceId { get; set; }
+        public string PlaceId { get; private set; }
 
 		/// <summary>
 		/// The web page URL that corresponds to this place.
 		/// </summary>
-        public string PlaceUrl { get; set; }
+        public string PlaceUrl { get; private set; }
 
 		/// <summary>
 		/// The 'type' of this place, e.g. Region, Country etc.
 		/// </summary>
-        public PlaceType PlaceType { get; set; }
+        public PlaceType PlaceType { get; private set; }
 
 		/// <summary>
 		/// The WOE id for the locality.
 		/// </summary>
-        public string WoeId { get; set; }
+        public string WoeId { get; private set; }
 
 		/// <summary>
 		/// The description of this place, where provided.
 		/// </summary>
-        public string Description { get; set; }
-
-		private decimal _latitude;
-		private decimal _longitude;
+        public string Description { get; private set; }
 
 		/// <summary>
 		/// The latitude of this place.
 		/// </summary>
-		public decimal Latitude { get { return _latitude; } }
+        public decimal Latitude { get; private set; }
 
 		/// <summary>
 		/// The longitude of this place.
 		/// </summary>
-		public decimal Longitude { get { return _longitude; } }
+        public decimal Longitude { get; private set; }
+
+        /// <summary>
+        /// The timezone for the place.
+        /// </summary>
+        public string TimeZone { get; private set; }
+
+        /// <summary>
+        /// The number of photos the calling user has for this place.
+        /// </summary>
+        /// <remarks>
+        /// Only returned for <see cref="Flickr.PlacesPlacesForUser()"/>.
+        /// </remarks>
+        public int? PhotoCount { get; private set; }
 
         /// <summary>
         /// Default constructor.
@@ -98,30 +77,64 @@ namespace FlickrNet
 		/// <param name="reader"></param>
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
 		{
-			Description = reader.GetAttribute("name");
-			PlaceId = reader.GetAttribute("place_id");
-			PlaceUrl = reader.GetAttribute("place_url");
-			PlaceType = (PlaceType)Enum.Parse(typeof(PlaceType), reader.GetAttribute("place_type"), true);
-			WoeId = reader.GetAttribute("woeid");
-			string dec = reader.GetAttribute("latitude");
-			if( dec != null && dec.Length > 0 )
-			{
-				_latitude = decimal.Parse(dec, System.Globalization.NumberFormatInfo.InvariantInfo);
-			}
-			dec = reader.GetAttribute("longitude");
-			if( dec != null && dec.Length > 0 )
-			{
-				_longitude = decimal.Parse(dec, System.Globalization.NumberFormatInfo.InvariantInfo);
-			}
-
-            if (!reader.IsEmptyElement)
+            while (reader.MoveToNextAttribute())
             {
-                reader.Read();
-                Description = reader.Value;
-                reader.Read();
+                switch (reader.LocalName)
+                {
+                    case "name":
+                        Description = reader.Value;
+                        break;
+                    case "place_id":
+                        PlaceId = reader.Value;
+                        break;
+                    case "place_url":
+                        PlaceUrl = reader.Value;
+                        break;
+                    case "place_type_id":
+                        PlaceType = (PlaceType)reader.ReadContentAsInt();
+                        break;
+                    case "place_type":
+                        PlaceType = (PlaceType)Enum.Parse(typeof(PlaceType), reader.Value, true);
+                        break;
+                    case "woeid":
+                        WoeId = reader.Value;
+                        break;
+                    case "latitude":
+                        Latitude = reader.ReadContentAsDecimal();
+                        break;
+                    case "longitude":
+                        Longitude = reader.ReadContentAsDecimal();
+                        break;
+                    case "timezone":
+                        TimeZone = reader.Value;
+                        break;
+                    case "photo_count":
+                        PhotoCount = reader.ReadContentAsInt();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
             }
 
-			reader.Skip();
+            reader.Read();
+
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                if (reader.NodeType == XmlNodeType.Text)
+                {
+                    Description = reader.ReadContentAsString();
+                }
+                else
+                {
+                    switch (reader.LocalName)
+                    {
+                        default:
+                            throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                    }
+                }
+            }
+
+			reader.Read();
 		}
 	}
 }

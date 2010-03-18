@@ -40,122 +40,83 @@ namespace FlickrNet
 	/// The reason for a <see cref="Group"/> and <see cref="GroupFullInfo"/> are due to xml serialization
 	/// incompatabilities.
 	/// </remarks>
-	[System.Serializable]
-	public class GroupFullInfo
+	public class GroupFullInfo : IFlickrParsable
 	{
-		internal GroupFullInfo()
-		{
-		}
-
-		internal GroupFullInfo(XmlNode node)
-		{
-			if( node.Attributes.GetNamedItem("id") != null )
-				_groupId = node.Attributes.GetNamedItem("id").Value;
-
-            if (node.Attributes.GetNamedItem("iconserver") != null)
-                _iconServer = node.Attributes["iconserver"].Value;
-
-            if (node.Attributes.GetNamedItem("iconfarm") != null)
-                _iconFarm = node.Attributes["iconfarm"].Value;
-
-            if (node.SelectSingleNode("name") != null)
-				_groupName = node.SelectSingleNode("name").InnerText;
-			if( node.SelectSingleNode("description") != null )
-				_description = node.SelectSingleNode("description").InnerXml;
-            if (node.SelectSingleNode("iconserver") != null)
-                _iconServer = node.SelectSingleNode("iconserver").InnerText;
-            if (node.SelectSingleNode("members") != null)
-                _members = int.Parse(node.SelectSingleNode("members").InnerText, System.Globalization.CultureInfo.InvariantCulture);
-			if( node.SelectSingleNode("privacy") != null )
-                _privacy = (PoolPrivacy)int.Parse(node.SelectSingleNode("privacy").InnerText, System.Globalization.CultureInfo.InvariantCulture);
-
-			if( node.SelectSingleNode("throttle") != null )
-			{
-				XmlNode throttle = node.SelectSingleNode("throttle");
-				ThrottleInfo = new GroupThrottleInfo();
-				if( throttle.Attributes.GetNamedItem("count") != null )
-                    ThrottleInfo.Count = int.Parse(throttle.Attributes.GetNamedItem("count").Value, System.Globalization.CultureInfo.InvariantCulture);
-				if( throttle.Attributes.GetNamedItem("mode") != null )
-					ThrottleInfo.setMode(throttle.Attributes.GetNamedItem("mode").Value);
-				if( throttle.Attributes.GetNamedItem("remaining") != null )
-                    ThrottleInfo.Remaining = int.Parse(throttle.Attributes.GetNamedItem("remaining").Value, System.Globalization.CultureInfo.InvariantCulture);
-			}
-		}
-
-        private string _groupId;
-        private string _groupName;
-        private string _description;
-        private int _members;
-        private string _iconServer;
-        private string _iconFarm;
-        private PoolPrivacy _privacy;
-
 		/// <remarks/>
-        public string GroupId
-        {
-            get { return _groupId; }
-        }
+        public string GroupId { get; private set; }
     
 		/// <remarks/>
-        public string GroupName
-        {
-            get { return _groupName; }
-        }
+        public string GroupName { get; private set; }
 
 		/// <remarks/>
-        public string Description
-        {
-            get { return _description; }
-        }
+        public string Description { get; private set; }
 
 		/// <remarks/>
-        public int Members
-        {
-            get { return _members; }
-        }
+        public int Members { get; private set; }
 
 		/// <summary>
 		/// The server number used for the groups icon.
 		/// </summary>
-        public string IconServer
-        {
-            get { return _iconServer; }
-        }
+        public string IconServer { get; private set; }
 
         /// <summary>
         /// The server farm for the group icon. If zero then the group uses the default icon.
         /// </summary>
-        public string IconFarm
-        {
-            get { return _iconFarm; }
-        }
+        public string IconFarm { get; private set; }
+
+        /// <summary>
+        /// The language that the group information has been returned in.
+        /// </summary>
+        public string Language { get; private set; }
+
+        /// <summary>
+        /// Is this group's pool moderated.
+        /// </summary>
+        public bool IsPoolModerated { get; private set; }
+
+        /// <summary>
+        /// The HTML for the group's 'Blast' (the banner seen on the group home page).
+        /// </summary>
+        public string BlastHtml { get; set; }
+
+        /// <summary>
+        /// The User ID for the user who last set the group's 'Blast' (the banner seen on the group home page).
+        /// </summary>
+        public string BlastUserId { get; set; }
+
+        /// <summary>
+        /// The date the group's 'Blast' (the banner seen on the group home page) was last updated.
+        /// </summary>
+        public DateTime? BlastDateAdded { get; set; }
 
         /// <summary>
         /// The url for the group's icon. 
         /// </summary>
-        public string GroupIconUrl
+        public Uri GroupIconUrl
         {
             get
             {
                 if (String.IsNullOrEmpty(IconServer) || IconServer == "0")
                 {
-                    return "http://www.flickr.com/images/buddyicon.jpg";
+                    return new Uri("http://www.flickr.com/images/buddyicon.jpg");
                 }
                 else
                 {
-                    return String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId);
+                    return new Uri(String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, GroupId));
                 }
             }
         }
 
 		/// <remarks/>
-        public PoolPrivacy Privacy
-        {
-            get { return _privacy; }
-        }
+        public PoolPrivacy Privacy { get; private set; }
 	
 		/// <remarks/>
-		public GroupThrottleInfo ThrottleInfo;
+        public GroupThrottleInfo ThrottleInfo { get; private set; }
+
+        /// <summary>
+        /// The restrictions that apply to new items added to this group's pool.
+        /// </summary>
+        public GroupInfoRestrictions Restrictions { get; private set; }
 
 		/// <summary>
 		/// Methods for automatically converting a <see cref="GroupFullInfo"/> object into
@@ -183,45 +144,105 @@ namespace FlickrNet
 			return (Group)this;
 		}
 
-	}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "nsid":
+                    case "id":
+                        GroupId = reader.Value;
+                        break;
+                    case "iconserver":
+                        IconServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        IconFarm = reader.Value;
+                        break;
+                    case "lang":
+                        Language = reader.Value;
+                        break;
+                    case "ispoolmoderated":
+                        IsPoolModerated = reader.Value == "1";
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName != "group")
+            {
+                switch (reader.LocalName)
+                {
+                    case "name":
+                        GroupName = reader.ReadElementContentAsString();
+                        break;
+                    case "description":
+                        Description = reader.ReadElementContentAsString();
+                        break;
+                    case "members":
+                        Members = reader.ReadElementContentAsInt();
+                        break;
+                    case "privacy":
+                        Privacy = (PoolPrivacy)reader.ReadElementContentAsInt();
+                        break;
+                    case "blast":
+                        BlastDateAdded = Utils.UnixTimestampToDate(reader.GetAttribute("date_blast_added"));
+                        BlastUserId = reader.GetAttribute("user_id");
+                        BlastHtml = reader.ReadElementContentAsString();
+                        break;
+                    case "throttle":
+                        ThrottleInfo = new GroupThrottleInfo();
+                        ((IFlickrParsable)ThrottleInfo).Load(reader);
+                        break;
+                    case "restrictions":
+                        Restrictions = new GroupInfoRestrictions();
+                        ((IFlickrParsable)Restrictions).Load(reader);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+
+                }
+            }
+
+            reader.Read();
+        }
+    }
 
 	/// <summary>
 	/// Throttle information about a group (i.e. posting limit)
 	/// </summary>
-	public class GroupThrottleInfo
+	public class GroupThrottleInfo : IFlickrParsable
 	{
 		/// <summary>
 		/// The number of posts in each period allowed to this group.
 		/// </summary>
-		public int Count;
+        public int Count { get; private set; }
 
 		/// <summary>
 		/// The posting limit mode for a group.
 		/// </summary>
-		public GroupThrottleMode Mode;
+        public GroupThrottleMode Mode { get; private set; }
 
-		internal void setMode(string mode)
+        private GroupThrottleMode ParseMode(string mode)
 		{
 			switch(mode)
 			{
 				case "day":
-					Mode = GroupThrottleMode.PerDay;
-					break;
+					return GroupThrottleMode.PerDay;
 				case "week":
-					Mode = GroupThrottleMode.PerWeek;
-					break;
+                    return GroupThrottleMode.PerWeek;
 				case "month":
-					Mode = GroupThrottleMode.PerMonth;
-					break;
+                    return GroupThrottleMode.PerMonth;
 				case "ever":
-					Mode = GroupThrottleMode.Ever;
-					break;
+                    return GroupThrottleMode.Ever;
 				case "none":
-					Mode = GroupThrottleMode.NoLimit;
-					break;
+                    return GroupThrottleMode.NoLimit;
 				case "disabled":
-					Mode = GroupThrottleMode.Disabled;
-					break;
+                    return GroupThrottleMode.Disabled;
 				default:
 					throw new ArgumentException(string.Format("Unknown mode found {0}", mode), "mode");
 			}
@@ -230,8 +251,113 @@ namespace FlickrNet
 		/// <summary>
 		/// The number of remainging posts allowed by this user. If unauthenticated then this will be zero.
 		/// </summary>
-		public int Remaining;
-	}
+		public int Remaining { get; private set; }
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "count":
+                        Count = reader.ReadContentAsInt();
+                        break;
+                    case "mode":
+                        Mode = ParseMode(reader.Value);
+                        break;
+                    case "remaining":
+                        Remaining = reader.ReadContentAsInt();
+                        break;
+                }
+            }
+            reader.Read();
+        }
+    }
+
+    /// <summary>
+    /// The restrictions that apply to a group's pool.
+    /// </summary>
+    public class GroupInfoRestrictions : IFlickrParsable
+    {
+        /// <summary>
+        /// Are photos allowed to be added to this pool.
+        /// </summary>
+        public bool PhotosAccepted { get; private set; }
+        /// <summary>
+        /// Are videos allowed to be added to this pool.
+        /// </summary>
+        public bool VideosAccepted { get; private set; }
+
+        /// <summary>
+        /// Are Photo/Video images allowed to be added to this pool.
+        /// </summary>
+        public bool ImagesAccepted { get; private set; }
+        /// <summary>
+        /// Are Screenshots/Screencasts allowed to be added to this pool.
+        /// </summary>
+        public bool ScreenshotsAccepted { get; private set; }
+        /// <summary>
+        /// Are Illustrations/Art/Animation/CGI allowed to be added to this pool.
+        /// </summary>
+        public bool ArtIllustrationsAccepted { get; private set; }
+
+        /// <summary>
+        /// Are safe items allowed to be added to this pool.
+        /// </summary>
+        public bool SafeItemsAccepted { get; private set; }
+        /// <summary>
+        /// Are moderated items allowed to be added to this pool.
+        /// </summary>
+        public bool ModeratedItemsAccepted { get; private set; }
+        /// <summary>
+        /// Are restricted items allowed to be added to this pool.
+        /// </summary>
+        public bool RestrictedItemsAccepted { get; private set; }
+        /// <summary>
+        /// Must the item have geo information.
+        /// </summary>
+        public bool GeoInfoRequired { get; set; }
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "photos_ok":
+                        PhotosAccepted = reader.Value == "1";
+                        break;
+                    case "videos_ok":
+                        VideosAccepted = reader.Value == "1";
+                        break;
+                    case "images_ok":
+                        ImagesAccepted = reader.Value == "1";
+                        break;
+                    case "screens_ok":
+                        ScreenshotsAccepted = reader.Value == "1";
+                        break;
+                    case "art_ok":
+                        ArtIllustrationsAccepted = reader.Value == "1";
+                        break;
+                    case "safe_ok":
+                        SafeItemsAccepted = reader.Value == "1";
+                        break;
+                    case "moderate_ok":
+                        ModeratedItemsAccepted = reader.Value == "1";
+                        break;
+                    case "resitricted_ok":
+                        RestrictedItemsAccepted = reader.Value == "1";
+                        break;
+                    case "has_geo":
+                        GeoInfoRequired = reader.Value == "1";
+                        break;
+                }
+            }
+
+            reader.Read();
+        }
+    }
+
 
 	/// <summary>
 	/// The posting limit most for a group.
@@ -265,218 +391,5 @@ namespace FlickrNet
 
 	}
 
-	/// <summary>
-	/// Information about a group the authenticated user is a member of.
-	/// </summary>
-	public class MemberGroupInfo
-	{
-		internal static MemberGroupInfo[] GetMemberGroupInfo(XmlNode node)
-		{
-			XmlNodeList list = node.SelectNodes("//group");
-			MemberGroupInfo[] infos = new MemberGroupInfo[list.Count];
-			for(int i = 0; i < infos.Length; i++)
-			{
-				infos[i] = new MemberGroupInfo(list[i]);
-			}
-			return infos;
-		}
-
-		internal MemberGroupInfo(XmlNode node)
-		{
-			if( node.Attributes["nsid"] != null )
-				_groupId = node.Attributes["nsid"].Value;
-			if( node.Attributes["name"] != null )
-				_groupName = node.Attributes["name"].Value;
-			if( node.Attributes["admin"] != null )
-				_isAdmin = node.Attributes["admin"].Value=="1";
-			if( node.Attributes["privacy"] != null )
-				_privacy = (PoolPrivacy)Enum.Parse(typeof(PoolPrivacy),node.Attributes["privacy"].Value, true);
-			if( node.Attributes["photos"] != null )
-				_numberOfPhotos = Int32.Parse(node.Attributes["photos"].Value);
-			if( node.Attributes["iconserver"] != null )
-				_iconServer = node.Attributes["iconserver"].Value;
-		}
-
-		private string _groupId;
-
-		/// <summary>
-		/// Property which returns the group id for the group.
-		/// </summary>
-		public string GroupId
-		{
-			get { return _groupId; }
-		}
-
-		private string _groupName;
-
-		/// <summary>The group name.</summary>
-		public string GroupName
-		{
-			get { return _groupName; }
-		}
-
-		private bool _isAdmin;
-
-		/// <summary>
-		/// True if the user is the admin for the group, false if they are not.
-		/// </summary>
-		public bool IsAdmin
-		{
-			get { return _isAdmin; }
-		}
-	
-		private int _numberOfPhotos;
-
-		/// <summary>
-		/// The number of photos currently in the group pool.
-		/// </summary>
-		public int NumberOfPhotos
-		{ 
-			get { return _numberOfPhotos; }
-		}
-
-		private PoolPrivacy _privacy;
-
-		/// <summary>
-		/// The privacy of the pool (see <see cref="PoolPrivacy"/>).
-		/// </summary>
-		public PoolPrivacy Privacy
-		{
-			get { return _privacy; }
-		}
-
-		private string _iconServer;
-
-		/// <summary>
-		/// The server number for the group icon.
-		/// </summary>
-		public string IconServer
-		{
-			get { return _iconServer; }
-		}
-
-		/// <summary>
-		/// The URL for the group icon.
-		/// </summary>
-		public Uri GroupIconUrl
-		{
-			get { return new Uri(String.Format("http://static.flickr.com/{0}/buddyicons/{1}.jpg", IconServer, GroupId)); }
-		}
-
-		/// <summary>
-		/// The URL for the group web page.
-		/// </summary>
-		public Uri GroupUrl
-		{
-			get { return new Uri(String.Format("http://www.flickr.com/groups/{0}/", GroupId)); }
-		}
-
-	}
-
-	/// <summary>
-	/// Information about public groups for a user.
-	/// </summary>
-	[System.Serializable]
-	public class PublicGroupInfo
-	{
-		internal static PublicGroupInfo[] GetPublicGroupInfo(XmlNode node)
-		{
-			XmlNodeList list = node.SelectNodes("//group");
-			PublicGroupInfo[] infos = new PublicGroupInfo[list.Count];
-			for(int i = 0; i < infos.Length; i++)
-			{
-				infos[i] = new PublicGroupInfo(list[i]);
-			}
-			return infos;
-		}
-
-		internal PublicGroupInfo(XmlNode node)
-		{
-			if( node.Attributes["nsid"] != null )
-				_groupId = node.Attributes["nsid"].Value;
-			if( node.Attributes["name"] != null )
-				_groupName = node.Attributes["name"].Value;
-			if( node.Attributes["admin"] != null )
-				_isAdmin = node.Attributes["admin"].Value=="1";
-			if( node.Attributes["eighteenplus"] != null )
-				_isEighteenPlus = node.Attributes["eighteenplus"].Value=="1";
-		}
-
-		private string _groupId;
-    
-		/// <summary>
-		/// Property which returns the group id for the group.
-		/// </summary>
-		public string GroupId
-		{
-			get { return _groupId; }
-		}
-
-		private string _groupName;
-
-		/// <summary>The group name.</summary>
-		public string GroupName
-		{
-			get { return _groupName; }
-		}
-
-		private bool _isAdmin;
-
-		/// <summary>
-		/// True if the user is the admin for the group, false if they are not.
-		/// </summary>
-		public bool IsAdmin
-		{
-			get { return _isAdmin; }
-		}
-
-		private bool _isEighteenPlus;
-	
-		/// <summary>
-		/// Will contain 1 if the group is restricted to people who are 18 years old or over, 0 if it is not.
-		/// </summary>
-		public bool EighteenPlus
-		{
-			get { return _isEighteenPlus; }
-		}
-
-		/// <summary>
-		/// The URL for the group web page.
-		/// </summary>
-		public Uri GroupUrl
-		{
-			get { return new Uri(String.Format("http://www.flickr.com/groups/{0}/", GroupId)); }
-		}
-	}
-
-	/// <summary>
-	/// The various pricay settings for a group.
-	/// </summary>
-	[System.Serializable]
-	public enum PoolPrivacy
-	{
-		/// <summary>
-		/// No privacy setting specified.
-		/// </summary>
-		[XmlEnum("0")]
-		None = 0,
-
-		/// <summary>
-		/// The group is a private group. You cannot view pictures or posts until you are a 
-		/// member. The group is also invite only.
-		/// </summary>
-		[XmlEnum("1")]
-		Private = 1,
-		/// <summary>
-		/// A public group where you can see posts and photos in the group. The group is however invite only.
-		/// </summary>
-		[XmlEnum("2")]
-		InviteOnlyPublic = 2,
-		/// <summary>
-		/// A public group.
-		/// </summary>
-		[XmlEnum("3")]
-		OpenPublic = 3
-	}
 
 }

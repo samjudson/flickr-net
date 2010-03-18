@@ -4,14 +4,29 @@ using System.Text;
 
 namespace FlickrNet
 {
+    /// <summary>
+    /// A list of photos contained within a photoset.
+    /// </summary>
     public class PhotosetPhotos: List<Photo>, IFlickrParsable
     {
+        /// <summary>
+        /// The id for the photoset.
+        /// </summary>
         public string PhotosetId { get; private set; }
 
+        /// <summary>
+        /// The ID of the primary photo for this photoset. May be contained within the list.
+        /// </summary>
         public string PrimaryPhotoId { get; private set; }
 
+        /// <summary>
+        /// The NSID of the owner of this photoset.
+        /// </summary>
         public string OwnerId { get; private set; }
 
+        /// <summary>
+        /// The real name of the owner of this photoset.
+        /// </summary>
         public string OwnerName { get; private set; }
 
         /// <summary>

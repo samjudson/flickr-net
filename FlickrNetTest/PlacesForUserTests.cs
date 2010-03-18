@@ -58,6 +58,39 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        public void PlacesFindBasicTest()
+        {
+            var places = TestData.GetInstance().PlacesFind("Newcastle");
+
+            Assert.IsNotNull(places);
+            Assert.AreNotEqual(0, places.Count);
+        }
+
+        [TestMethod]
+        public void PlacesFindNewcastleTest()
+        {
+            var places = TestData.GetInstance().PlacesFind("Newcastle upon Tyne");
+
+            Assert.IsNotNull(places);
+            Assert.AreEqual(1, places.Count);
+
+            Console.WriteLine(places[0].Latitude);
+            Console.WriteLine(places[0].Longitude);
+        }
+
+        [TestMethod]
+        public void PlacesFindByLatLongNewcastleTest()
+        {
+            decimal lat = 54.977M;
+            decimal lon = -1.612M;
+
+            var place = TestData.GetInstance().PlacesFindByLatLon(lat, lon);
+
+            Assert.IsNotNull(place);
+            Assert.AreEqual("Haymarket, Newcastle upon Tyne, England, GB, United Kingdom", place.Description);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void TestGetPlacesAuthenticationRequired()
         {
@@ -69,7 +102,7 @@ namespace FlickrNetTest
         public void TestPlacesForUserContinent()
         {
             Flickr f = TestData.GetAuthInstance();
-            Places places = f.PlacesPlacesForUser();
+            PlaceCollection places = f.PlacesPlacesForUser();
 
             Console.WriteLine(f.LastResponse);
 
@@ -93,7 +126,7 @@ namespace FlickrNetTest
             Flickr f = TestData.GetAuthInstance();
 
             // Test place ID of 'lkyV7jSbBZTkl7Wkqg' is Europe
-            Places p = f.PlacesPlacesForUser(PlaceType.Region, null, "lkyV7jSbBZTkl7Wkqg");
+            PlaceCollection p = f.PlacesPlacesForUser(PlaceType.Region, null, "lkyV7jSbBZTkl7Wkqg");
 
             foreach (Place place in p)
             {
@@ -103,6 +136,29 @@ namespace FlickrNetTest
                 Assert.IsNotNull(place.PlaceUrl, "PlaceUrl should not be null");
                 Assert.AreEqual(PlaceType.Region, place.PlaceType, "PlaceType should be Region.");
             }
+        }
+
+        [TestMethod]
+        public void PlacesGetInfoBasicTest()
+        {
+            var f = TestData.GetInstance();
+            var placeId = "IEcHLFCaAZwoKQ";
+            PlaceInfo p = f.PlacesGetInfo(placeId, null);
+
+            Console.WriteLine(f.LastResponse);
+            Assert.IsNotNull(p);
+            Assert.AreEqual(placeId, p.PlaceId);
+            Assert.AreEqual("30079", p.WoeId);
+            Assert.AreEqual(PlaceType.Locality, p.PlaceType);
+            Assert.AreEqual("Newcastle upon Tyne, England, United Kingdom", p.Description);
+
+            Assert.IsTrue(p.HasShapeData);
+            Assert.IsNotNull(p.ShapeData);
+            Assert.AreEqual(0.00015, p.ShapeData.Alpha);
+            Assert.AreEqual(1, p.ShapeData.PolyLines.Count);
+            Assert.AreEqual(91, p.ShapeData.PolyLines[0].Count);
+            Assert.AreEqual(55.018703460693, p.ShapeData.PolyLines[0][90].X);
+            Assert.AreEqual(-1.6715459823608, p.ShapeData.PolyLines[0][90].Y);
         }
     }
 }

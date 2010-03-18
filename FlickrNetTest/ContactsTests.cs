@@ -65,7 +65,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            Contacts contacts = f.ContactsGetPublicList(TestData.TestUserId);
+            ContactCollection contacts = f.ContactsGetPublicList(TestData.TestUserId);
 
             Assert.IsNotNull(contacts, "Contacts should not be null.");
 
@@ -78,7 +78,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            Contacts contacts = f.ContactsGetListRecentlyUploaded(DateTime.Now.AddDays(-1), null);
+            ContactCollection contacts = f.ContactsGetListRecentlyUploaded(DateTime.Now.AddDays(-1), null);
 
             Console.WriteLine(f.LastResponse);
 
@@ -90,7 +90,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            Contacts contacts = f.ContactsGetList(null, 0, 0);
+            ContactCollection contacts = f.ContactsGetList(null, 0, 0);
 
             Console.WriteLine(f.LastResponse);
 

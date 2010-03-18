@@ -31,38 +31,22 @@ namespace FlickrNet
 	/// Successful authentication returns a <see cref="Auth"/> object.
 	/// </summary>
 	[Serializable]
-	public class Auth
+	public class Auth : IFlickrParsable
 	{
-		private string _token;
-		private AuthLevel _permissions;
-		private FoundUser _user;
-
 		/// <summary>
 		/// The authentication token returned by the <see cref="Flickr.AuthGetToken"/> or <see cref="Flickr.AuthCheckToken"/> methods.
 		/// </summary>
-		public string Token
-		{
-			get { return _token; }
-			set { _token = value; }
-		}
+		public string Token { get; private set; }
 
 		/// <summary>
 		/// The permissions the current token allows the application to perform.
 		/// </summary>
-		public AuthLevel Permissions
-		{
-			get { return _permissions; }
-			set { _permissions = value; }
-		}
+		public AuthLevel Permissions { get; private set; }
 
 		/// <summary>
 		/// The <see cref="User"/> object associated with the token. Readonly.
 		/// </summary>
-		public FoundUser User
-		{
-			get { return _user; }
-			set { _user = value; }
-		}
+		public FoundUser User { get; private set; }
 
 		/// <summary>
 		/// Creates a new instance of the <see cref="Auth"/> class.
@@ -71,12 +55,28 @@ namespace FlickrNet
 		{
 		}
 
-		internal Auth(System.Xml.XmlElement element)
-		{
-			Token = element.SelectSingleNode("token").InnerText;
-			Permissions = (AuthLevel)Enum.Parse(typeof(AuthLevel), element.SelectSingleNode("perms").InnerText, true);
-			System.Xml.XmlNode node = element.SelectSingleNode("user");
-			User = new FoundUser(node);
-		}
-	}
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            reader.Read();
+
+            while (reader.LocalName != "auth")
+            {
+                switch (reader.LocalName)
+                {
+                    case "token":
+                        Token = reader.ReadElementContentAsString();
+                        break;
+                    case "perms":
+                        Permissions = (AuthLevel)Enum.Parse(typeof(AuthLevel), reader.ReadElementContentAsString(), true);
+                        break;
+                    case "user":
+                        User = new FoundUser();
+                        ((IFlickrParsable)User).Load(reader);
+                        break;
+                    default:
+                        throw new ParsingException(String.Format("Unknown element '{0}' found in Flickr response.", reader.LocalName));
+                }
+            }
+        }
+    }
 }

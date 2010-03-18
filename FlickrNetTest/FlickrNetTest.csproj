@@ -54,7 +54,7 @@
     <Compile Include="PhotoTagsTest.cs" />
     <Compile Include="PlacesForUserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagsGetListRaw.cs" />
+    <Compile Include="TagsTests.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="UtilsTest.cs" />
     <Compile Include="VSCodeGenAccessors.cs" />
@@ -66,22 +66,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityTests.cs" />
+    <Compile Include="AuthTests.cs" />
     <Compile Include="BlogTests.cs" />
     <Compile Include="CollectionGetInfoTest.cs" />
     <Compile Include="CollectionGetTreeTest.cs" />
     <Compile Include="ContactsTests.cs" />
     <Compile Include="FavouritesGetPublicListTests.cs" />
+    <Compile Include="GeoTests.cs" />
     <Compile Include="GroupPoolGetPhotosTests.cs" />
-    <Compile Include="GroupsGetInfoTest.cs" />
+    <Compile Include="GroupsTests.cs" />
+    <Compile Include="GroupsPoolsGetGroupsTests.cs" />
+    <Compile Include="InterestingnessGetListTests.cs" />
     <Compile Include="PandaGetListTest.cs" />
     <Compile Include="PeopleGetPhotosOfTests.cs" />
+    <Compile Include="PeopleTests.cs" />
     <Compile Include="PhotoInfoDateTakenGranualityTest.cs" />
+    <Compile Include="PhotosCommentsGetListTests.cs" />
+    <Compile Include="PhotosetCommentsGetListTests.cs" />
     <Compile Include="PhotosetsGetPhotosTests.cs" />
+    <Compile Include="PhotosGetCountTests.cs" />
+    <Compile Include="PhotosGetInfoTests.cs" />
+    <Compile Include="PhotosTests.cs" />
+    <Compile Include="PrefsTests.cs" />
     <Compile Include="ReflectionMethodTests.cs" />
     <Compile Include="StatsGetDomainsTests.cs" />
     <Compile Include="StatsGetPopularPhotosTests.cs" />
     <Compile Include="StatsGetReferrerTests.cs" />
     <Compile Include="StatsGetTotalViewsTest.cs" />
+    <Compile Include="TestTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>

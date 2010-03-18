@@ -6,29 +6,22 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains details of a user
 	/// </summary>
-	[Serializable]
-	public class FoundUser
+	public class FoundUser : IFlickrParsable
 	{
-		private string _userId;
-		private string _username;
-
 		/// <summary>
 		/// The ID of the found user.
 		/// </summary>
-		public string UserId
-		{
-			get { return _userId; }
-			set { _userId = value; }
-		}
+		public string UserId { get; private set; }
 
 		/// <summary>
 		/// The username of the found user.
 		/// </summary>
-		public string Username 
-		{
-			get { return _username; }
-			set { _username = value; }
-		}
+		public string UserName { get; private set; }
+
+        /// <summary>
+        /// The full name of the user. Only returned by <see cref="Flickr.AuthGetToken"/>.
+        /// </summary>
+        public string FullName { get; private set; }
 
 		/// <summary>
 		/// Default constructor.
@@ -37,117 +30,303 @@ namespace FlickrNet
 		{
 		}
 
-		internal FoundUser(string userId, string username)
-		{
-			_userId = userId;
-			_username = username;
-		}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            if (reader.LocalName != "user")
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
 
-		internal FoundUser(XmlNode node)
-		{
-			if( node.Attributes["nsid"] != null )
-				_userId = node.Attributes["nsid"].Value;
-			if( node.Attributes["id"] != null )
-				_userId = node.Attributes["id"].Value;
-			if( node.Attributes["username"] != null )
-				_username = node.Attributes["username"].Value;
-			if( node.SelectSingleNode("username") != null )
-				_username = node.SelectSingleNode("username").InnerText;
-		}
-	}
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "nsid":
+                    case "id":
+                        UserId = reader.Value;
+                        break;
+                    case "username":
+                        UserName = reader.Value;
+                        break;
+                    case "fullname":
+                        FullName = reader.Value;
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            if (reader.NodeType != XmlNodeType.EndElement)
+            {
+                UserName = reader.ReadElementContentAsString();
+                reader.Skip();
+            }
+        }
+    }
 
 	/// <summary>
 	/// The upload status of the user, as returned by <see cref="Flickr.PeopleGetUploadStatus"/>.
 	/// </summary>
-	[System.Serializable]
-	public class UserStatus
+	public class UserStatus : IFlickrParsable
 	{
-		private bool _isPro;
-		private string _userId;
-		private string _username;
-		private long _bandwidthMax;
-		private long _bandwidthUsed;
-		private long _filesizeMax;
-
-		internal UserStatus(XmlNode node)
-		{
-			if( node == null ) 
-				throw new ArgumentNullException("node");
-
-			if( node.Attributes["id"] != null )
-				_userId = node.Attributes["id"].Value;
-			if( node.Attributes["nsid"] != null )
-				_userId = node.Attributes["nsid"].Value;
-			if( node.Attributes["ispro"] != null )
-				_isPro = node.Attributes["ispro"].Value=="1";
-			if( node.SelectSingleNode("username") != null )
-				_username = node.SelectSingleNode("username").InnerText;
-			XmlNode bandwidth = node.SelectSingleNode("bandwidth");
-			if( bandwidth != null )
-			{
-				_bandwidthMax = Convert.ToInt64(bandwidth.Attributes["max"].Value);
-				_bandwidthUsed = Convert.ToInt64(bandwidth.Attributes["used"].Value);
-			}
-			XmlNode filesize = node.SelectSingleNode("filesize");
-			if( filesize != null )
-			{
-				_filesizeMax = Convert.ToInt64(filesize.Attributes["max"].Value);
-			}
-		}
 		/// <summary>
 		/// The id of the user object.
 		/// </summary>
-		public string UserId
-		{
-			get { return _userId; }
-		}
+		public string UserId { get; private set; }
 
 		/// <summary>
 		/// The Username of the selected user.
 		/// </summary>
-		public string UserName
-		{
-			get { return _username; }
-		}
+		public string UserName { get; private set; }
 
 		/// <summary>
 		/// Is the current user a Pro account.
 		/// </summary>
-		public bool IsPro
-		{
-			get { return _isPro; }
-		}
+		public bool IsPro { get; private set; }
 
-		/// <summary>
-		/// The maximum bandwidth (in bytes) that the user can use each month.
-		/// </summary>
-		public long BandwidthMax
-		{
-			get { return _bandwidthMax; }
-		}
+        /// <summary>
+        /// The maximum bandwidth (in bytes) that the user can use each month.
+        /// </summary>
+        public long BandwidthMax { get; private set; }
 
-		/// <summary>
-		/// The number of bytes of the current months bandwidth that the user has used.
-		/// </summary>
-		public long BandwidthUsed
-		{
-			get { return _bandwidthUsed; }
-		}
+        /// <summary>
+        /// The maximum bandwidth (in kilobytes) that the user can use each month.
+        /// </summary>
+        public long BandwidthMaxKb { get; private set; }
 
-		/// <summary>
-		/// The maximum filesize (in bytes) that the user is allowed to upload.
-		/// </summary>
-		public long FilesizeMax
-		{
-			get { return _filesizeMax; }
-		}
+        /// <summary>
+        /// The remaining bandwidth (in bytes) that the user can use this month.
+        /// </summary>
+        public long BandwidthRemaining { get; private set; }
 
-		/// <summary>
+        /// <summary>
+        /// The remaining bandwidth (in kilobytes) that the user can use this month.
+        /// </summary>
+        public long BandwidthRemainingKb { get; private set; }
+
+        /// <summary>
+        /// The number of bytes of the current months bandwidth that the user has used.
+        /// </summary>
+        public long BandwidthUsed { get; private set; }
+
+        /// <summary>
+        /// The number of kilobytes of the current months bandwidth that the user has used.
+        /// </summary>
+        public long BandwidthUsedKb { get; private set; }
+
+        /// <summary>
+        /// Is the upload bandwidth unlimited (i.e. a Pro user).
+        /// </summary>
+        public bool IsUnlimited { get; private set; }
+
+        /// <summary>
+        /// The maximum filesize (in bytes) that the user is allowed to upload.
+        /// </summary>
+        public long FileSizeMax { get; private set; }
+
+        /// <summary>
+        /// The maximum filesize (in kilobytes) that the user is allowed to upload.
+        /// </summary>
+        public long FileSizeMaxKb { get; private set; }
+
+        /// <summary>
+        /// The maximum filesize (in MB) that the user is allowed to upload.
+        /// </summary>
+        public long FileSizeMaxMb { get; private set; }
+
+        /// <summary>
+        /// The maximum filesize (in bytes) that the user is allowed to upload.
+        /// </summary>
+        public long VideoSizeMax { get; private set; }
+
+        /// <summary>
+        /// The maximum filesize (in kilobytes) that the user is allowed to upload.
+        /// </summary>
+        public long VideoSizeMaxKb { get; private set; }
+
+        /// <summary>
+        /// The maximum filesize (in MB) that the user is allowed to upload.
+        /// </summary>
+        public long VideoSizeMaxMb { get; private set; }
+
+        /// <summary>
+        /// The number of sets the user has created. Will be null for Pro users.
+        /// </summary>
+        public int? SetsCreated { get; private set; }
+
+        /// <summary>
+        /// The number of sets the user can still created. Will be null for Pro users.
+        /// </summary>
+        public int? SetsRemaining { get; private set; }
+
+        /// <summary>
+        /// The number of videos the user has uploaded. Will be null or zero for Pro users.
+        /// </summary>
+        public int? VideosUploaded { get; private set; }
+
+        /// <summary>
+        /// The number of videos the user can upload. Will be null for Pro users.
+        /// </summary>
+        public int? VideosRemaining { get; private set; }
+
+        /// <summary>
 		/// <see cref="Double"/> representing the percentage bandwidth used so far. Will range from 0 to 1.
 		/// </summary>
 		public Double PercentageUsed
 		{
 			get { return BandwidthUsed * 1.0 / BandwidthMax; }
 		}
-	}
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                    case "nsid":
+                        UserId = reader.LocalName;
+                        break;
+                    case "ispro":
+                        IsPro = reader.Value == "1";
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName != "user")
+            {
+                switch (reader.LocalName)
+                {
+                    case "username":
+                        UserName = reader.ReadElementContentAsString();
+                        break;
+                    case "bandwidth":
+                        while (reader.MoveToNextAttribute())
+                        {
+                            switch (reader.LocalName)
+                            {
+                                case "maxbytes":
+                                case "max":
+                                    BandwidthMax = reader.ReadContentAsLong();
+                                    break;
+                                case "maxkb":
+                                    BandwidthMaxKb = reader.ReadContentAsLong();
+                                    break;
+                                case "used":
+                                case "usedbytes":
+                                    BandwidthUsed = reader.ReadContentAsLong();
+                                    break;
+                                case "usedkb":
+                                    BandwidthUsedKb = reader.ReadContentAsLong();
+                                    break;
+                                case "remainingbytes":
+                                    BandwidthRemaining = reader.ReadContentAsLong();
+                                    break;
+                                case "remainingkb":
+                                    BandwidthRemainingKb = reader.ReadContentAsLong();
+                                    break;
+                                case "unlimited":
+                                    IsUnlimited = reader.Value == "1";
+                                    break;
+                                default:
+                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                            }
+                        }
+                        reader.Read();
+                        break;
+                    case "filesize":
+                        while (reader.MoveToNextAttribute())
+                        {
+                            switch (reader.LocalName)
+                            {
+                                case "maxbytes":
+                                case "max":
+                                    FileSizeMax = reader.ReadContentAsLong();
+                                    break;
+                                case "maxkb":
+                                    FileSizeMaxKb = reader.ReadContentAsLong();
+                                    break;
+                                case "maxmb":
+                                    FileSizeMaxMb = reader.ReadContentAsLong();
+                                    break;
+                                default:
+                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                            }
+                        }
+                        reader.Read();
+                        break;
+
+                    case "sets":
+                        while (reader.MoveToNextAttribute())
+                        {
+                            switch (reader.LocalName)
+                            {
+                                case "created":
+                                    if (reader.Value != "")
+                                        SetsCreated = reader.ReadContentAsInt();
+                                    break;
+                                case "remaining":
+                                    if (reader.Value != "" && reader.Value != "lots")
+                                        SetsRemaining = reader.ReadContentAsInt();
+                                    break;
+                                default:
+                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                            }
+                        }
+                        reader.Read();
+                        break;
+
+                    case "videosize":
+                        while (reader.MoveToNextAttribute())
+                        {
+                            switch (reader.LocalName)
+                            {
+                                case "maxbytes":
+                                    VideoSizeMax = reader.ReadContentAsLong();
+                                    break;
+                                case "maxkb":
+                                    VideoSizeMaxKb = reader.ReadContentAsLong();
+                                    break;
+                                case "maxmb":
+                                    VideoSizeMaxMb = reader.ReadContentAsLong();
+                                    break;
+                                default:
+                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                            }
+                        }
+                        reader.Read();
+                        break;
+
+
+                    case "videos":
+                        while (reader.MoveToNextAttribute())
+                        {
+                            switch (reader.LocalName)
+                            {
+                                case "uploaded":
+                                    if (reader.Value != "")
+                                        VideosUploaded = reader.ReadContentAsInt();
+                                    break;
+                                case "remaining":
+                                    if (reader.Value != "" && reader.Value != "lots")
+                                        VideosRemaining = reader.ReadContentAsInt();
+                                    break;
+                                default:
+                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                            }
+                        }
+                        reader.Read();
+                        break;
+
+
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
+        }
+    }
 }

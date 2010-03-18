@@ -30,18 +30,12 @@ namespace FlickrNet
         /// <returns>The FROB.</returns>
         public string AuthGetFrob()
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.auth.getFrob");
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.AllElements[0].InnerText;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            UnknownResponse response = GetResponseNoCache<UnknownResponse>(parameters);
+
+            return response.GetXPathNavigator().SelectSingleNode("frob").Value;
         }
 
         /// <summary>
@@ -75,11 +69,11 @@ namespace FlickrNet
         {
             CheckApiKey();
 
-            if (_sharedSecret == null) throw new SignatureRequiredException();
+            CheckSigned();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower();
+            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
             hash = Utils.Md5Hash(hash);
-            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower();
+            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
             url += "&api_sig=" + hash;
 
             return url;
@@ -96,11 +90,11 @@ namespace FlickrNet
         {
             CheckApiKey();
 
-            if (_sharedSecret == null) throw new SignatureRequiredException();
+            CheckSigned();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower();
+            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
             hash = Utils.Md5Hash(hash);
-            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower();
+            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + authLevel.ToString().ToLower(System.Globalization.CultureInfo.InvariantCulture);
             url += "&api_sig=" + hash;
 
             return url;
@@ -115,23 +109,15 @@ namespace FlickrNet
         /// <returns>A <see cref="Auth"/> object containing user and token details.</returns>
         public Auth AuthGetToken(string frob)
         {
-            if (_sharedSecret == null) throw new SignatureRequiredException();
+            CheckSigned();
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.auth.getToken");
             parameters.Add("frob", frob);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                Auth auth = new Auth(response.AllElements[0]);
-                AuthToken = auth.Token;
-                return auth;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            Auth auth = GetResponseNoCache<Auth>(parameters);
+            AuthToken = auth.Token;
+            return auth;
         }
 
         /// <summary>
@@ -142,21 +128,15 @@ namespace FlickrNet
         /// <returns>An instance <see cref="Auth"/> class, detailing the user and their full token.</returns>
         public Auth AuthGetFullToken(string miniToken)
         {
-            Hashtable parameters = new Hashtable();
+            CheckSigned();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.auth.getFullToken");
             parameters.Add("mini_token", miniToken.Replace("-", ""));
-            FlickrNet.Response response = GetResponseNoCache(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                Auth auth = new Auth(response.AllElements[0]);
-                AuthToken = auth.Token;
-                return auth;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            Auth auth = GetResponseNoCache<Auth>(parameters);
+            AuthToken = auth.Token;
+            return auth;
         }
 
         /// <summary>
@@ -169,21 +149,11 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.auth.checkToken");
             parameters.Add("auth_token", token);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                Auth auth = new Auth(response.AllElements[0]);
-                return auth;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            return GetResponseNoCache<Auth>(parameters);
         }
 
     }

@@ -198,24 +198,6 @@ internal class FlickrNet_UtilsAccessor : BaseAccessor {
         return ret;
     }
     
-    internal static global::FlickrNet.Response Deserialize(string responseString) {
-        object[] args = new object[] {
-                responseString};
-        global::FlickrNet.Response ret = ((global::FlickrNet.Response)(m_privateType.InvokeStatic("Deserialize", new System.Type[] {
-                    typeof(string)}, args)));
-        return ret;
-    }
-    
-    internal static object Deserialize(global::System.Xml.XmlNode node, global::System.Type type) {
-        object[] args = new object[] {
-                node,
-                type};
-        object ret = ((object)(m_privateType.InvokeStatic("Deserialize", new System.Type[] {
-                    typeof(global::System.Xml.XmlNode),
-                    typeof(global::System.Type)}, args)));
-        return ret;
-    }
-    
     internal static global::FlickrNet.MemberType ParseIdToMemberType(string memberTypeId) {
         object[] args = new object[] {
                 memberTypeId};

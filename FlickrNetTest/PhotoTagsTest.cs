@@ -68,7 +68,7 @@ namespace FlickrNetTest
             o.PerPage = 10;
             o.Extras = PhotoSearchExtras.Tags;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo p in photos)
             {

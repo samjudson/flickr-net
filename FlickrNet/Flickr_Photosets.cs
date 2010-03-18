@@ -15,21 +15,12 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to add.</param>
         public void PhotosetsAddPhoto(string photosetId, string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.addPhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -52,47 +43,26 @@ namespace FlickrNet
         /// <returns>The <see cref="Photoset"/> that is created.</returns>
         public Photoset PhotosetsCreate(string title, string description, string primaryPhotoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.create");
             parameters.Add("title", title);
             parameters.Add("primary_photo_id", primaryPhotoId);
             parameters.Add("description", description);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photoset;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            return GetResponseNoCache<Photoset>(parameters);
         }
 
         /// <summary>
         /// Deletes the specified photoset.
         /// </summary>
         /// <param name="photosetId">The ID of the photoset to delete.</param>
-        /// <returns>Returns true when the photoset has been deleted.</returns>
-        public bool PhotosetsDelete(string photosetId)
+        public void PhotosetsDelete(string photosetId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.delete");
             parameters.Add("photoset_id", photosetId);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return true;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -101,26 +71,15 @@ namespace FlickrNet
         /// <param name="photosetId">The ID of the photoset to update.</param>
         /// <param name="title">The new title for the photoset.</param>
         /// <param name="description">The new description for the photoset.</param>
-        /// <returns>Returns true when the photoset has been updated.</returns>
-        public bool PhotosetsEditMeta(string photosetId, string title, string description)
+        public void PhotosetsEditMeta(string photosetId, string title, string description)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.editMeta");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("title", title);
             parameters.Add("description", description);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return true;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -134,10 +93,9 @@ namespace FlickrNet
         /// <param name="photosetId">The ID of the photoset to update.</param>
         /// <param name="primaryPhotoId">The ID of the new primary photo for the photoset.</param>
         /// <param name="photoIds">An array of photo IDs.</param>
-        /// <returns>Returns true when the photoset has been updated.</returns>
-        public bool PhotosetsEditPhotos(string photosetId, string primaryPhotoId, string[] photoIds)
+        public void PhotosetsEditPhotos(string photosetId, string primaryPhotoId, string[] photoIds)
         {
-            return PhotosetsEditPhotos(photosetId, primaryPhotoId, string.Join(",", photoIds));
+            PhotosetsEditPhotos(photosetId, primaryPhotoId, string.Join(",", photoIds));
         }
 
 
@@ -152,26 +110,15 @@ namespace FlickrNet
         /// <param name="photosetId">The ID of the photoset to update.</param>
         /// <param name="primaryPhotoId">The ID of the new primary photo for the photoset.</param>
         /// <param name="photoIds">An comma seperated list of photo IDs.</param>
-        /// <returns>Returns true when the photoset has been updated.</returns>
-        public bool PhotosetsEditPhotos(string photosetId, string primaryPhotoId, string photoIds)
+        public void PhotosetsEditPhotos(string photosetId, string primaryPhotoId, string photoIds)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.editPhotos");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("primary_photo_id", primaryPhotoId);
             parameters.Add("photo_ids", photoIds);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return true;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -182,26 +129,12 @@ namespace FlickrNet
         /// <returns><see cref="Context"/> of the specified photo.</returns>
         public Context PhotosetsGetContext(string photoId, string photosetId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.getContext");
             parameters.Add("photo_id", photoId);
             parameters.Add("photoset_id", photosetId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                Context c = new Context();
-                c.Count = response.ContextCount.Count;
-                c.NextPhoto = response.ContextNextPhoto;
-                c.PreviousPhoto = response.ContextPrevPhoto;
-
-                return c;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<Context>(parameters);
         }
 
         /// <summary>
@@ -211,28 +144,18 @@ namespace FlickrNet
         /// <returns>A <see cref="Photoset"/> instance.</returns>
         public Photoset PhotosetsGetInfo(string photosetId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.getInfo");
             parameters.Add("photoset_id", photosetId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Photoset;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            return GetResponseCache<Photoset>(parameters);
         }
 
         /// <summary>
         /// Gets a list of the currently authenticated users photosets.
         /// </summary>
-        /// <returns>A <see cref="Photosets"/> instance containing a collection of photosets.</returns>
-        public Photosets PhotosetsGetList()
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList()
         {
             return PhotosetsGetList(null);
         }
@@ -241,27 +164,19 @@ namespace FlickrNet
         /// Gets a list of the specified users photosets.
         /// </summary>
         /// <param name="userId">The ID of the user to return the photosets of.</param>
-        /// <returns>A <see cref="Photosets"/> instance containing a collection of photosets.</returns>
-        public Photosets PhotosetsGetList(string userId)
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList(string userId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.getList");
             if (userId != null) parameters.Add("user_id", userId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
+            PhotosetCollection photosets = GetResponseCache<PhotosetCollection>(parameters);
+            foreach(Photoset photoset in photosets)
             {
-                foreach (Photoset set in response.Photosets.PhotosetCollection)
-                {
-                    set.OwnerId = userId;
-                }
-                return response.Photosets;
+                photoset.OwnerId = userId;
             }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return photosets;
         }
 
         /// <summary>
@@ -403,20 +318,11 @@ namespace FlickrNet
         /// Any set IDs not given in the list will be set to appear at the end of the list, ordered by their IDs.</param>
         public void PhotosetsOrderSets(string photosetIds)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.orderSets");
             parameters.Add("photoset_ids", photosetIds);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -429,44 +335,26 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to remove.</param>
         public void PhotosetsRemovePhoto(string photosetId, string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.removePhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
         /// Gets a list of comments for a photoset.
         /// </summary>
         /// <param name="photosetId">The id of the photoset to return the comments for.</param>
-        /// <returns>An array of <see cref="Comment"/> objects.</returns>
-        public Comment[] PhotosetsCommentsGetList(string photosetId)
+        /// <returns>An array of <see cref="PhotoComment"/> objects.</returns>
+        public PhotosetCommentCollection PhotosetsCommentsGetList(string photosetId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string,object>();
             parameters.Add("method", "flickr.photosets.comments.getList");
             parameters.Add("photoset_id", photosetId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return PhotoComments.GetComments(response.AllElements[0]);
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<PhotosetCommentCollection>(parameters);
         }
 
         /// <summary>
@@ -477,25 +365,15 @@ namespace FlickrNet
         /// <returns>The new ID of the created comment.</returns>
         public string PhotosetsCommentsAddComment(string photosetId, string commentText)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.comments.addComment");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("comment_text", commentText);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
+            UnknownResponse response = GetResponseNoCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNode node = response.AllElements[0];
-                if (node.Attributes.GetNamedItem("id") != null)
-                    return node.Attributes.GetNamedItem("id").Value;
-                else
-                    throw new ResponseXmlException("Comment ID not found in response.");
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@id");
+            return nav == null ? null : nav.Value;
         }
 
         /// <summary>
@@ -504,20 +382,11 @@ namespace FlickrNet
         /// <param name="commentId">The ID of the comment to delete.</param>
         public void PhotosetsCommentsDeleteComment(string commentId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.comments.deleteComment");
             parameters.Add("comment_id", commentId);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -527,21 +396,12 @@ namespace FlickrNet
         /// <param name="commentText">The new text for the comment.</param>
         public void PhotosetsCommentsEditComment(string commentId, string commentText)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photosets.comments.editComment");
             parameters.Add("comment_id", commentId);
             parameters.Add("comment_text", commentText);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
 

@@ -6,68 +6,57 @@ namespace FlickrNet
 	/// <summary>
 	/// Permissions for the selected photo.
 	/// </summary>
-	[System.Serializable]
-	public class GeoPermissions
+	public class GeoPermissions : IFlickrParsable
 	{
-		private string _photoId;
-		private bool _isPublic;
-		private bool _isContact;
-		private bool _isFriend;
-		private bool _isFamily;
-
-		internal GeoPermissions(XmlElement element)
-		{
-			if( element.Attributes.GetNamedItem("id") != null )
-				_photoId = element.Attributes.GetNamedItem("id").Value;
-			if( element.Attributes.GetNamedItem("ispublic") != null )
-				_isPublic = element.Attributes.GetNamedItem("ispublic").Value=="1";
-			if( element.Attributes.GetNamedItem("iscontact") != null )
-				_isContact = element.Attributes.GetNamedItem("iscontact").Value=="1";
-			if( element.Attributes.GetNamedItem("isfamily") != null )
-				_isFamily = element.Attributes.GetNamedItem("isfamily").Value=="1";
-			if( element.Attributes.GetNamedItem("isfriend") != null )
-				_isFriend = element.Attributes.GetNamedItem("isfriend").Value=="1";
-		}
-
 		/// <summary>
 		/// The ID for the photo whose permissions these are.
 		/// </summary>
-		public string PhotoId
-		{
-			get { return _photoId; }
-		}
+		public string PhotoId { get; private set; }
 
 		/// <summary>
 		/// Are the general unwashed (public) allowed to see the Geo Location information for this photo.
 		/// </summary>
-		public bool IsPublic
-		{
-			get { return _isPublic; }
-		}
+		public bool IsPublic { get; private set; }
     
 		/// <summary>
 		/// Are contacts allowed to see the Geo Location information for this photo.
 		/// </summary>
-		public bool IsContact
-		{
-			get { return _isContact; }
-		}
+		public bool IsContact { get; private set; }
     
 		/// <summary>
 		/// Are friends allowed to see the Geo Location information for this photo.
 		/// </summary>
-		public bool IsFriend
-		{
-			get { return _isFriend; }
-		}
+		public bool IsFriend { get; private set; }
     
 		/// <summary>
 		/// Are family allowed to see the Geo Location information for this photo.
 		/// </summary>
-		public bool IsFamily
-		{
-			get { return _isFamily; }
-		}
+		public bool IsFamily { get; private set; }
 
-	}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        PhotoId = reader.Value;
+                        break;
+                    case "ispublic":
+                        IsPublic = reader.Value == "1";
+                        break;
+                    case "iscontact":
+                        IsContact = reader.Value == "1";
+                        break;
+                    case "isfamily":
+                        IsFamily = reader.Value == "1";
+                        break;
+                    case "isfriend":
+                        IsFriend = reader.Value == "1";
+                        break;
+                }
+            }
+            reader.Read();
+        }
+    }
 }

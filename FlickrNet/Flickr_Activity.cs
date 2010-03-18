@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <b>Do not poll this method more than once an hour.</b>
         /// </remarks>
         /// <returns>An array of <see cref="ActivityItem"/> instances.</returns>
-        public ActivityItem[] ActivityUserPhotos()
+        public ActivityItemCollection ActivityUserPhotos()
         {
             return ActivityUserPhotos(null);
         }
@@ -29,7 +29,7 @@ namespace FlickrNet
         /// <param name="timePeriod">The number of days or hours you want to get activity for.</param>
         /// <param name="timeType">'d' for days, 'h' for hours.</param>
         /// <returns>An array of <see cref="ActivityItem"/> instances.</returns>
-        public ActivityItem[] ActivityUserPhotos(int timePeriod, string timeType)
+        public ActivityItemCollection ActivityUserPhotos(int timePeriod, string timeType)
         {
             if (timePeriod == 0)
                 throw new ArgumentOutOfRangeException("timePeriod", "Time Period should be greater than 0");
@@ -43,27 +43,15 @@ namespace FlickrNet
             return ActivityUserPhotos(timePeriod + timeType);
         }
 
-        private ActivityItem[] ActivityUserPhotos(string timeframe)
+        private ActivityItemCollection ActivityUserPhotos(string timeframe)
         {
-            Hashtable parameters = new Hashtable();
+            CheckRequiresAuthentication();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.activity.userPhotos");
             if (timeframe != null && timeframe.Length > 0) parameters.Add("timeframe", timeframe);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNodeList list = response.AllElements[0].SelectNodes("item");
-                ActivityItem[] items = new ActivityItem[list.Count];
-                for (int i = 0; i < items.Length; i++)
-                {
-                    items[i] = new ActivityItem(list[i]);
-                }
-                return items;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<ActivityItemCollection>(parameters);
         }
 
         /// <summary>
@@ -73,28 +61,16 @@ namespace FlickrNet
         /// <b>Do not poll this method more than once an hour.</b>
         /// </remarks>
         /// <returns></returns>
-        public ActivityItem[] ActivityUserComments(int page, int perPage)
+        public ActivityItemCollection ActivityUserComments(int page, int perPage)
         {
-            Hashtable parameters = new Hashtable();
+            CheckRequiresAuthentication();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.activity.userComments");
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNodeList list = response.AllElements[0].SelectNodes("item");
-                ActivityItem[] items = new ActivityItem[list.Count];
-                for (int i = 0; i < items.Length; i++)
-                {
-                    items[i] = new ActivityItem(list[i]);
-                }
-                return items;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<ActivityItemCollection>(parameters);
         }
 
 

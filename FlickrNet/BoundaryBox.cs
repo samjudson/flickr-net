@@ -10,7 +10,7 @@ namespace FlickrNet
 	public class BoundaryBox
 	{
 		private GeoAccuracy _accuracy = GeoAccuracy.Street;
-		private bool _isSet = false;
+		private bool _isSet;
 
 		private double _minimumLat = -90;
 		private double _minimumLon = -180;
@@ -197,7 +197,7 @@ namespace FlickrNet
 		/// <summary>
 		/// Example boundary box for the USA (excludes Hawaii and Alaska).
 		/// </summary>
-		public static BoundaryBox USA
+		public static BoundaryBox Usa
 		{
 			get { return new BoundaryBox(-130.429687, 22.43134, -58.535156, 49.382373); }
 		}

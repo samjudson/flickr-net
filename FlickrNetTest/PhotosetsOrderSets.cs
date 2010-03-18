@@ -63,10 +63,10 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestOrderSets()
         {
-            Photosets mySets = f.PhotosetsGetList();
+            PhotosetCollection mySets = f.PhotosetsGetList();
 
             List<string> setIds = new List<string>();
-            foreach (Photoset myset in mySets.PhotosetCollection)
+            foreach (Photoset myset in mySets)
             {
                 setIds.Add(myset.PhotosetId);
             }
@@ -78,10 +78,10 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestOrderSets2()
         {
-            Photosets mySets = f.PhotosetsGetList();
+            PhotosetCollection mySets = f.PhotosetsGetList();
 
             List<string> setIds = new List<string>();
-            foreach (Photoset myset in mySets.PhotosetCollection)
+            foreach (Photoset myset in mySets)
             {
                 setIds.Add(myset.PhotosetId);
             }

@@ -15,28 +15,20 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoInfo"/> class containing only the <see cref="PhotoInfo.Tags"/> property.</returns>
         public PhotoInfoTag[] TagsGetListPhoto(string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.tags.getListPhoto");
             parameters.Add("api_key", _apiKey);
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.PhotoInfo.Tags.TagCollection;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            PhotoInfo info = GetResponseCache<PhotoInfo>(parameters);
+            return info.Tags.ToArray();
         }
 
         /// <summary>
         /// Get the tag list for a given user (or the currently logged in user).
         /// </summary>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetListUser()
+        public TagCollection TagsGetListUser()
         {
             return TagsGetListUser(null);
         }
@@ -46,36 +38,23 @@ namespace FlickrNet
         /// </summary>
         /// <param name="userId">The NSID of the user to fetch the tag list for. If this argument is not specified, the currently logged in user (if any) is assumed.</param>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetListUser(string userId)
+        public TagCollection TagsGetListUser(string userId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.tags.getListUser");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNodeList nodes = response.AllElements[0].SelectNodes("//tag");
-                Tag[] tags = new Tag[nodes.Count];
-                for (int i = 0; i < tags.Length; i++)
-                {
-                    tags[i] = new Tag(nodes[i]);
-                }
-                return tags;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<TagCollection>(parameters);
         }
 
         /// <summary>
         /// Get the popular tags for a given user (or the currently logged in user).
         /// </summary>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetListUserPopular()
+        public TagCollection TagsGetListUserPopular()
         {
+            CheckRequiresAuthentication();
+
             return TagsGetListUserPopular(null, 0);
         }
 
@@ -84,8 +63,10 @@ namespace FlickrNet
         /// </summary>
         /// <param name="count">Number of popular tags to return. defaults to 10 when this argument is not present.</param>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetListUserPopular(int count)
+        public TagCollection TagsGetListUserPopular(int count)
         {
+            CheckRequiresAuthentication();
+
             return TagsGetListUserPopular(null, count);
         }
 
@@ -94,7 +75,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="userId">The NSID of the user to fetch the tag list for. If this argument is not specified, the currently logged in user (if any) is assumed.</param>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetListUserPopular(string userId)
+        public TagCollection TagsGetListUserPopular(string userId)
         {
             return TagsGetListUserPopular(userId, 0);
         }
@@ -105,36 +86,21 @@ namespace FlickrNet
         /// <param name="userId">The NSID of the user to fetch the tag list for. If this argument is not specified, the currently logged in user (if any) is assumed.</param>
         /// <param name="count">Number of popular tags to return. defaults to 10 when this argument is not present.</param>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetListUserPopular(string userId, int count)
+        public TagCollection TagsGetListUserPopular(string userId, int count)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.tags.getListUserPopular");
             if (userId != null) parameters.Add("user_id", userId);
             if (count > 0) parameters.Add("count", count.ToString());
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNodeList nodes = response.AllElements[0].SelectNodes("//tag");
-                Tag[] tags = new Tag[nodes.Count];
-                for (int i = 0; i < tags.Length; i++)
-                {
-                    tags[i] = new Tag(nodes[i]);
-                }
-                return tags;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<TagCollection>(parameters);
         }
 
         /// <summary>
         /// Gets a list of 'cleaned' tags and the raw values for those tags.
         /// </summary>
         /// <returns>An array of <see cref="RawTag"/> objects.</returns>
-        public RawTag[] TagsGetListUserRaw()
+        public RawTagCollection TagsGetListUserRaw()
         {
             return TagsGetListUserRaw(null);
         }
@@ -144,30 +110,15 @@ namespace FlickrNet
         /// </summary>
         /// <param name="tag">The tag to return the raw version of.</param>
         /// <returns>An array of <see cref="RawTag"/> objects.</returns>
-        public RawTag[] TagsGetListUserRaw(string tag)
+        public RawTagCollection TagsGetListUserRaw(string tag)
         {
             CheckRequiresAuthentication();
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.tags.getListUserRaw");
             if (tag != null && tag.Length > 0) parameters.Add("tag", tag);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNodeList nodes = response.AllElements[0].SelectNodes("//tag");
-                RawTag[] tags = new RawTag[nodes.Count];
-                for (int i = 0; i < tags.Length; i++)
-                {
-                    tags[i] = new RawTag(nodes[i]);
-                }
-                return tags;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<RawTagCollection>(parameters);
         }
 
         /// <summary>
@@ -175,29 +126,14 @@ namespace FlickrNet
         /// </summary>
         /// <param name="tag">The tag to fetch related tags for.</param>
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
-        public Tag[] TagsGetRelated(string tag)
+        public TagCollection TagsGetRelated(string tag)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.tags.getRelated");
             parameters.Add("api_key", _apiKey);
             parameters.Add("tag", tag);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                XmlNodeList nodes = response.AllElements[0].SelectNodes("//tag");
-                Tag[] tags = new Tag[nodes.Count];
-                for (int i = 0; i < tags.Length; i++)
-                {
-                    tags[i] = new Tag(nodes[i]);
-                }
-                return tags;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<TagCollection>(parameters);
         }
     }
 }

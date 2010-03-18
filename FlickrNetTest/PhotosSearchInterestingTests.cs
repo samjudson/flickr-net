@@ -69,7 +69,7 @@ namespace FlickrNetTest
             o.Tags = "colorful";
             o.PerPage = 500;
 
-            Photos ps = f.PhotosSearch(o);
+            PhotoCollection ps = f.PhotosSearch(o);
 
             Assert.IsNotNull(ps, "Photos should not be null");
             Assert.AreEqual(500, ps.PerPage, "PhotosPerPage should be 500");

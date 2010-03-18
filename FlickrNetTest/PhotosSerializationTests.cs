@@ -72,9 +72,8 @@ namespace FlickrNetTest
                     <photo id=""3662960087"" owner=""18499405@N00"" secret=""9f8fcf9269"" server=""3379"" farm=""4"" title=""gecko closeup"" ispublic=""1"" isfriend=""0"" isfamily=""0"" dateupload=""1246050291"" tags=""reptile jinaacom geckocloseup geckoanatomy jinaajinahibrahim"" latitude=""1.45"" />
                     </photos>";
 
-            Photos photos = new Photos();
+            PhotoCollection photos = new PhotoCollection();
 
-            XmlSerializer ser = new XmlSerializer(typeof(Response));
             StringReader sr = new StringReader(xml);
             XmlTextReader reader = new XmlTextReader(sr);
             reader.WhitespaceHandling = WhitespaceHandling.Significant;

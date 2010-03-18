@@ -8,15 +8,27 @@ namespace FlickrNet
 	[Serializable]
 	public class FlickrException : Exception
 	{
-		internal FlickrException()
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+		public FlickrException()
 		{
 		}
 
-		internal FlickrException(string message) : base(message)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+		public FlickrException(string message) : base(message)
 		{
 		}
 
-		internal FlickrException(string message, Exception innerException) : base(message, innerException)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
+		public FlickrException(string message, Exception innerException) : base(message, innerException)
 		{
 		}
 	}

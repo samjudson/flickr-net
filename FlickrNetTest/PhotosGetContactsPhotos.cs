@@ -52,7 +52,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestGetContactsPhotosBasic()
         {
-            Photos photos = f.PhotosGetContactsPhotos(10);
+            PhotoCollection photos = f.PhotosGetContactsPhotos(10);
 
             Console.WriteLine(f.LastResponse);
 
@@ -64,7 +64,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestGetContactsPhotosExtras()
         {
-            Photos photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
+            PhotoCollection photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
 
             Console.WriteLine(f.LastResponse);
 

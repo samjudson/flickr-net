@@ -9,84 +9,86 @@ namespace FlickrNet
 	/// <remarks>
 	/// Includes the user's Flickr ID, name, the date of the activity and its content (if a comment).
 	/// </remarks>
-	public class ActivityEvent
+	public class ActivityEvent : IFlickrParsable
 	{
-		private ActivityEventType _type;
-		private string _userId;
-		private string _userName;
-		private DateTime _dateAdded;
-		private string _content;
-
 		/// <summary>
 		/// The <see cref="ActivityEventType"/> of the event, either Comment or Note.
 		/// </summary>
-		public ActivityEventType EventType
-		{
-			get { return _type; }
-		}
+		public ActivityEventType EventType { get; private set; }
 
 		/// <summary>
 		/// The user id of the user who made the comment or note.
 		/// </summary>
-		public string UserId
-		{
-			get { return _userId; }
-		}
+		public string UserId { get; private set; }
 
 		/// <summary>
 		/// The screen name of the user who made the comment or note.
 		/// </summary>
-		public string UserName
-		{
-			get { return _userName; }
-		}
+		public string UserName { get; private set; }
 
 		/// <summary>
 		/// The date the note or comment was added.
 		/// </summary>
-		public DateTime DateAdded
-		{
-			get { return _dateAdded; }
-		}
+		public DateTime DateAdded { get; private set; }
 
 		/// <summary>
 		/// The text of the note or comment.
 		/// </summary>
-		public string Value
-		{
-			get { return _content; }
-		}
+		public string Value { get; private set; }
 
-		internal ActivityEvent(XmlNode eventNode)
-		{
-			XmlNode node;
+        /// <summary>
+        /// If this event is a comment then this is the ID of the comment.
+        /// </summary>
+        public string CommentId { get; private set; }
 
-			node = eventNode.Attributes.GetNamedItem("type");
-			if( node == null ) 
-				_type = ActivityEventType.Unknown;
-			else if( node.Value == "comment" )
-				_type = ActivityEventType.Comment;
-			else if( node.Value == "note" )
-				_type = ActivityEventType.Note;
-			else if( node.Value == "fave" )
-				_type = ActivityEventType.Favourite;
-			else
-				_type = ActivityEventType.Unknown;
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "type":
+                        switch (reader.Value)
+                        {
+                            case "fave":
+                                EventType = ActivityEventType.Favorite;
+                                break;
+                            case "note":
+                                EventType = ActivityEventType.Note;
+                                break;
+                            case "comment":
+                                EventType = ActivityEventType.Comment;
+                                break;
+                        }
+                        break;
+                    case "user":
+                        UserId = reader.Value;
+                        break;
+                    case "username":
+                        UserName = reader.Value;
+                        break;
+                    case "dateadded":
+                        DateAdded = Utils.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "commentid":
+                        CommentId = reader.Value;
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
 
-			node = eventNode.Attributes.GetNamedItem("user");
-			if( node != null ) _userId = node.Value;
+                }
+            }
+            
+            reader.Read();
 
-			node = eventNode.Attributes.GetNamedItem("username");
-			if( node != null ) _userName = node.Value;
+            if (reader.NodeType == XmlNodeType.Text)
+            {
+                Value = reader.ReadContentAsString();
+                reader.Read();
+            }
+        }
 
-			node = eventNode.Attributes.GetNamedItem("dateadded");
-			if( node != null ) _dateAdded = Utils.UnixTimestampToDate(node.Value);
-
-			node = eventNode.FirstChild;
-			if( node != null && node.NodeType == XmlNodeType.Text ) _content = node.Value;
-
-		}
-	}
+    }
 
 	/// <summary>
 	/// The type of the <see cref="ActivityEvent"/>.
@@ -108,6 +110,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The event is a favourite.
 		/// </summary>
-		Favourite
+		Favorite
 	}
 }

@@ -14,24 +14,14 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Uri"/> class containing the URL of the group page.</returns>
         public Uri UrlsGetGroup(string groupId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.urls.getGroup");
-            parameters.Add("api_key", _apiKey);
             parameters.Add("group_id", groupId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                if (response.AllElements[0] != null && response.AllElements[0].Attributes["url"] != null)
-                    return new Uri(response.AllElements[0].Attributes["url"].Value);
-                else
-                    return null;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@url");
+            return nav == null ? null : new Uri(nav.Value);
         }
 
         /// <summary>
@@ -40,6 +30,8 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Uri"/> class containing the URL for the users photos.</returns>
         public Uri UrlsGetUserPhotos()
         {
+            CheckRequiresAuthentication();
+
             return UrlsGetUserPhotos(null);
         }
 
@@ -50,23 +42,14 @@ namespace FlickrNet
         /// <returns>The URL of the users photos.</returns>
         public Uri UrlsGetUserPhotos(string userId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.urls.getUserPhotos");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                if (response.AllElements[0] != null && response.AllElements[0].Attributes["url"] != null)
-                    return new Uri(response.AllElements[0].Attributes["url"].Value);
-                else
-                    return null;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@url");
+            return nav == null ? null : new Uri(nav.Value);
         }
 
         /// <summary>
@@ -75,6 +58,8 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Uri"/> class containing the URL for the users profile.</returns>
         public Uri UrlsGetUserProfile()
         {
+            CheckRequiresAuthentication();
+
             return UrlsGetUserProfile(null);
         }
 
@@ -85,23 +70,14 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Uri"/> class containing the URL for the users profile.</returns>
         public Uri UrlsGetUserProfile(string userId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.urls.getUserProfile");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                if (response.AllElements[0] != null && response.AllElements[0].Attributes["url"] != null)
-                    return new Uri(response.AllElements[0].Attributes["url"].Value);
-                else
-                    return null;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@url");
+            return nav == null ? null : new Uri(nav.Value);
         }
 
         /// <summary>
@@ -111,31 +87,15 @@ namespace FlickrNet
         /// <returns>The ID of the group at the specified URL on success, a null reference (Nothing in Visual Basic) if the group cannot be found.</returns>
         public string UrlsLookupGroup(string urlToFind)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.urls.lookupGroup");
             parameters.Add("api_key", _apiKey);
             parameters.Add("url", urlToFind);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            if (response.Status == ResponseStatus.OK)
-            {
-                if (response.AllElements[0] != null && response.AllElements[0].Attributes["id"] != null)
-                {
-                    return response.AllElements[0].Attributes["id"].Value;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                if (response.Error.Code == 1)
-                    return null;
-                else
-                    throw new FlickrApiException(response.Error);
-            }
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@id");
+            return nav == null ? null : nav.Value;
         }
 
         /// <summary>
@@ -145,21 +105,12 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="FoundUser"/> class containing the users ID and username.</returns>
         public FoundUser UrlsLookupUser(string urlToFind)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.urls.lookupUser");
             parameters.Add("api_key", _apiKey);
             parameters.Add("url", urlToFind);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return new FoundUser(response.AllElements[0]);
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<FoundUser>(parameters);
         }
     }
 }

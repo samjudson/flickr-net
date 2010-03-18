@@ -302,67 +302,6 @@ namespace FlickrNet
 			return String.Format(format, parameters);
 		}
 
-		private static readonly Hashtable _serializers = new Hashtable();
-
-		private static XmlSerializer GetSerializer(Type type)
-		{
-            lock (_serializers)
-            {
-                if (_serializers.ContainsKey(type.Name))
-                    return (XmlSerializer)_serializers[type.Name];
-                else
-                {
-                    XmlSerializer s = new XmlSerializer(type);
-                    _serializers.Add(type.Name, s);
-                    return s;
-                }
-            }
-		}
-		/// <summary>
-		/// Converts the response string (in XML) into the <see cref="Response"/> object.
-		/// </summary>
-        /// <param name="serializedObject">The response from Flickr.</param>
-        /// <typeparam name="T">The type of the class to serialize to.</typeparam>
-		/// <returns>A <see cref="Response"/> object containing the details of the </returns>
-		internal static T Deserialize<T>(string serializedObject)
-		{
-			XmlSerializer serializer = GetSerializer(typeof(T));
-			try
-			{
-				// Deserialise the web response into the Flickr response object
-				StringReader responseReader = new StringReader(serializedObject);
-				T response = (T)serializer.Deserialize(responseReader);
-				responseReader.Close();
-
-				return response;
-			}
-			catch(InvalidOperationException ex)
-			{
-				// Serialization error occurred!
-				throw new ResponseXmlException("Invalid response received from Flickr.", ex);
-			}
-		}
-
-		internal static object Deserialize(System.Xml.XmlNode node, Type type)
-		{
-			XmlSerializer serializer = GetSerializer(type);
-			try
-			{
-				// Deserialise the web response into the Flickr response object
-				System.Xml.XmlNodeReader reader = new System.Xml.XmlNodeReader(node);
-				object o = serializer.Deserialize(reader);
-				reader.Close();
-
-				return o;
-			}
-			catch(InvalidOperationException ex)
-			{
-				// Serialization error occurred!
-				throw new ResponseXmlException("Invalid response received from Flickr.", ex);
-			}
-		}
-
-
         internal static MemberType ParseIdToMemberType(string memberTypeId)
         {
             switch (memberTypeId)

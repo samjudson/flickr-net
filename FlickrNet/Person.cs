@@ -9,169 +9,248 @@ namespace FlickrNet
 	/// The <see cref="Person"/> class contains details returned by the <see cref="Flickr.PeopleGetInfo"/>
 	/// method.
 	/// </summary>
-	[System.Serializable]
-	[XmlRoot("person")]
-	public class Person
+	public class Person : IFlickrParsable
 	{
-		internal static Person SerializePerson(System.Xml.XmlNode node)
-		{
-			Person p = (Person)Utils.Deserialize(node, typeof(Person));
-			return p;
-		}
-		private string _userId;
-		private int _isAdmin;
-		private int _isPro;
-		private int _iconServer;
-		private int _iconFarm;
-		private string _username;
-		private string _realname;
-		private string _location;
-        private string _gender;
-		private PersonPhotosSummary _summary = new PersonPhotosSummary();
-		private string _photosUrl;
-		private string _profileUrl;
-        private string _mobileUrl;
-		private string _mboxHash;
-
 		/// <summary>The user id of the user.</summary>
 		/// <remarks/>
-		[XmlAttribute("nsid", Form=XmlSchemaForm.Unqualified)]
-		public string UserId { get { return _userId; } set { _userId = value; } }
+        public string UserId { get; private set; }
     
 		/// <summary>Is the user an administrator. 
 		/// 1 = admin, 0 = normal user.</summary>
 		/// <remarks></remarks>
-		[XmlAttribute("isadmin", Form=XmlSchemaForm.Unqualified)]
-		public int IsAdmin { get { return _isAdmin; } set { _isAdmin = value; } }
+        public bool IsAdmin { get; private set; }
 
 		/// <summary>Does the user posses a pro account.
 		/// 0 = free acouunt, 1 = pro account holder.</summary>
-		[XmlAttribute("ispro", Form=XmlSchemaForm.Unqualified)]
-		public int IsPro { get { return _isPro; } set { _isPro = value; } }
+        public bool IsPro { get; private set; }
 	
 		/// <summary>The server that will serve up the users Buddy Icon.</summary>
-		[XmlAttribute("iconserver", Form=XmlSchemaForm.Unqualified)]
-		public int IconServer { get { return _iconServer; } set { _iconServer = value; } }
+        public string IconServer { get; private set; }
 
         /// <summary>The server farm that will serve up the users Buddy Icon.</summary>
-        [XmlAttribute("iconfarm", Form = XmlSchemaForm.Unqualified)]
-        public int IconFarm { get { return _iconFarm; } set { _iconFarm = value; } }
+        public string IconFarm { get; private set; }
 
         /// <summary>The gender of the user on Flickr. May be null, or X for unspecified.</summary>
-        [XmlAttribute("gender", Form = XmlSchemaForm.Unqualified)]
-        public string Gender { get { return _gender; } set { _gender = value; } }
+        public string Gender { get; private set; }
+
+        /// <summary>
+        /// Is the person ignored by the calling user. Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsIgnored { get; private set; }
+
+        /// <summary>
+        /// Is the person a contact of the calling user. Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsContact { get; private set; }
+
+        /// <summary>
+        /// Is the person a friend of the calling user. Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsFriend { get; private set; }
+
+        /// <summary>
+        /// Is the person family of the calling user. Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsFamily { get; private set; }
+
+        /// <summary>
+        /// Has the person marked the calling user as a contact.  Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsReverseContact { get; private set; }
+
+        /// <summary>
+        /// Has the person marked the calling user as a friend.  Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsReverseFriend { get; private set; }
+
+        /// <summary>
+        /// Has the person marked the calling user as family.  Will be null if not an authenticated call.
+        /// </summary>
+        public bool? IsReverseFamily { get; private set; }
 
         /// <summary>The users username, also known as their screenname.</summary>
-		[XmlElement("username", Form=XmlSchemaForm.Unqualified)]
-		public string UserName { get { return _username; } set { _username = value; } }
+        public string UserName { get; private set; }
 	
 		/// <summary>The users real name, as entered in their profile.</summary>
-		[XmlElement("realname", Form=XmlSchemaForm.Unqualified)]
-		public string RealName { get { return _realname; } set { _realname = value; } }
+        public string RealName { get; private set; }
 	
 		/// <summary>The SHA1 hash of the users email address - used for FOAF networking.</summary>
-		[XmlElement("mbox_sha1sum", Form=XmlSchemaForm.Unqualified)]
-		public string MailBoxSha1Hash { get { return _mboxHash; } set { _mboxHash = value; } }
+        public string MailBoxSha1Hash { get; private set; }
 	
 		/// <summary>Consists of your current location followed by country.</summary>
 		/// <example>e.g. Newcastle, UK.</example>
-		[XmlElement("location", Form=XmlSchemaForm.Unqualified)]
-		public string Location { get { return _location; } set { _location = value; } }
+        public string Location { get; private set; }
 
 		/// <summary>Sub element containing a summary of the users photo information.</summary>
 		/// <remarks/>
-		[XmlElement("photos", Form=XmlSchemaForm.Unqualified)]
-		public PersonPhotosSummary PhotosSummary { get { return _summary; } set { _summary = value; } }
+        public PersonPhotosSummary PhotosSummary { get; private set; }
+
+        /// <summary>
+        /// The users URL alias, if any.
+        /// </summary>
+        public string PathAlias { get; private set; }
 
 		/// <summary>
 		/// The users photo location on Flickr
 		/// http://www.flickr.com/photos/username/
 		/// </summary>
-		[XmlElement("photosurl",Form=XmlSchemaForm.Unqualified)]
-		public string PhotosUrl { get { return _photosUrl; } set { _photosUrl = value; } }
+        public Uri PhotosUrl { get; private set; }
 
 		/// <summary>
 		/// The users profile location on Flickr
 		/// http://www.flickr.com/people/username/
 		/// </summary>
-		[XmlElement("profileurl",Form=XmlSchemaForm.Unqualified)]
-		public string ProfileUrl { get { return _profileUrl; } set { _profileUrl = value; } }
+        public Uri ProfileUrl { get; private set; }
 
         /// <summary>
         /// The users profile location on Flickr
         /// http://m.flickr.com/photostream.gne?id=ID
         /// </summary>
-        [XmlElement("mobileurl", Form = XmlSchemaForm.Unqualified)]
-        public string MobileUrl { get { return _mobileUrl; } set { _mobileUrl = value; } }
+        public Uri MobileUrl { get; private set; }
 
 		/// <summary>
 		/// Returns the <see cref="Uri"/> for the users Buddy Icon.
 		/// </summary>
-		[XmlIgnore()]
 		public Uri BuddyIconUrl
 		{
 			get
 			{
-				if( IconServer == 0 )
+				if( String.IsNullOrEmpty(IconServer) || IconServer == "0" )
 					return new Uri("http://www.flickr.com/images/buddyicon.jpg");
 				else
 					return new Uri(String.Format("http://static.flickr.com/{0}/buddyicons/{1}.jpg", IconServer, UserId));
 			}
 		}
-	}
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                    case "nsid":
+                        UserId = reader.LocalName;
+                        break;
+                    case "ispro":
+                        IsPro = reader.Value == "1";
+                        break;
+                    case "iconserver":
+                        IconServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        IconFarm = reader.Value;
+                        break;
+                    case "path_alias":
+                        PathAlias = reader.Value;
+                        break;
+                    case "gender":
+                        Gender = reader.Value;
+                        break;
+                    case "ignored":
+                        IsIgnored = reader.Value == "1";
+                        break;
+                    case "contact":
+                        IsContact = reader.Value == "1";
+                        break;
+                    case "friend":
+                        IsFriend = reader.Value == "1";
+                        break;
+                    case "family":
+                        IsFamily = reader.Value == "1";
+                        break;
+                    case "revcontact":
+                        IsReverseContact = reader.Value == "1";
+                        break;
+                    case "revfriend":
+                        IsReverseFriend = reader.Value == "1";
+                        break;
+                    case "revfamily":
+                        IsReverseFamily = reader.Value == "1";
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+
+            while (reader.LocalName != "person")
+            {
+                switch (reader.LocalName)
+                {
+                    case "username":
+                        UserName = reader.ReadElementContentAsString();
+                        break;
+                    case "location":
+                        Location = reader.ReadElementContentAsString();
+                        break;
+                    case "realname":
+                        RealName = reader.ReadElementContentAsString();
+                        break;
+                    case "photosurl":
+                        PhotosUrl = new Uri(reader.ReadElementContentAsString());
+                        break;
+                    case "profileurl":
+                        ProfileUrl = new Uri(reader.ReadElementContentAsString());
+                        break;
+                    case "mobileurl":
+                        MobileUrl = new Uri(reader.ReadElementContentAsString());
+                        break;
+                    case "photos":
+                        PhotosSummary = new PersonPhotosSummary();
+                        ((IFlickrParsable)PhotosSummary).Load(reader);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
+
+        }
+    }
 
 	/// <summary>
 	/// A summary of a users photos.
 	/// </summary>
-	[System.Serializable]
-	public class PersonPhotosSummary
+	public class PersonPhotosSummary : IFlickrParsable
 	{
-		private int _photoCount;
-		private int _views;
-
 		/// <summary>The first date the user uploaded a picture, converted into <see cref="DateTime"/> format.</summary>
-		[XmlIgnore()]
-		public DateTime FirstDate
-		{
-			get { return Utils.UnixTimestampToDate(firstdate_raw); }
-		}
+		public DateTime FirstDate { get; private set; }
 
 		/// <summary>The first date the user took a picture, converted into <see cref="DateTime"/> format.</summary>
-		[XmlIgnore()]
-		public DateTime FirstTakenDate
-		{
-			get 
-			{
-				if( firsttakendate_raw == null || firsttakendate_raw.Length == 0 ) return DateTime.MinValue;
-				return System.DateTime.Parse(firsttakendate_raw);
-			}
-		}
+		public DateTime FirstTakenDate { get; private set; }
+
+        /// <summary>The total number of photos for the user.</summary>
+		/// <remarks/>
+		public int PhotoCount { get; private set; }
 
 		/// <summary>The total number of photos for the user.</summary>
 		/// <remarks/>
-		[XmlElement("count", Form=XmlSchemaForm.Unqualified)]
-		public int PhotoCount
-		{
-			get { return _photoCount; }
-			set { _photoCount = value; }
-		}
+		public int Views { get; private set; }
 
-		/// <summary>The total number of photos for the user.</summary>
-		/// <remarks/>
-		[XmlElement("views", Form=XmlSchemaForm.Unqualified)]
-		public int Views
-		{
-			get { return _views; }
-			set { _views = value; }
-		}
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            reader.Read();
 
-		/// <remarks>The unix timestamp of the date the first photo was uploaded.</remarks>
-		[XmlElement("firstdate", Form=XmlSchemaForm.Unqualified)]
-		public string firstdate_raw;
+            while (reader.LocalName != "photos")
+            {
+                switch (reader.LocalName)
+                {
+                    case "firstdatetaken":
+                        FirstTakenDate = Utils.ParseDateWithGranularity(reader.ReadElementContentAsString());
+                        break;
+                    case "firstdate":
+                        FirstDate = Utils.UnixTimestampToDate(reader.ReadElementContentAsString());
+                        break;
+                    case "count":
+                        PhotoCount = reader.ReadElementContentAsInt();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
 
-		/// <remarks>The date the first photo was taken.</remarks>
-		[XmlElement("firsttakendate", Form=XmlSchemaForm.Unqualified)]
-		public string firsttakendate_raw;
-
-	}
+            reader.Read();
+        }
+    }
 }

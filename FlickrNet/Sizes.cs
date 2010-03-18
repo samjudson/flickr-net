@@ -1,87 +1,97 @@
 ﻿using System.Xml.Serialization;
 using System.Xml.Schema;
+using System.Collections.Generic;
+using System;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// Collection of <see cref="Size"/> items for a given photograph.
 	/// </summary>
-	[System.Serializable]
-	public class Sizes
+	public class SizeCollection : List<Size>, IFlickrParsable
 	{
-		private Size[] _sizeCollection = new Size[0];
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            reader.Read();
 
-		/// <summary>
-		/// The size collection contains an array of <see cref="Size"/> items.
-		/// </summary>
-		[XmlElement("size", Form=XmlSchemaForm.Unqualified)]
-		public Size[] SizeCollection
-		{
-			get { return _sizeCollection; }
-			set { _sizeCollection = value; }
-		}
-	}
+            while (reader.LocalName == "size")
+            {
+                Size size = new Size();
+                ((IFlickrParsable)size).Load(reader);
+                Add(size);
+            }
+
+            reader.Skip();
+        }
+    }
 
 	/// <summary>
 	/// Contains details about all the sizes available for a given photograph.
 	/// </summary>
-	[System.Serializable]
-	public class Size
+	public class Size : IFlickrParsable
 	{
-		private string _label;
-		private int _width;
-		private int _height;
-		private string _source;
-		private string _url;
-
 		/// <summary>
 		/// The label for the size, such as "Thumbnail", "Small", "Medium", "Large" and "Original".
 		/// </summary>
-		[XmlAttribute("label", Form=XmlSchemaForm.Unqualified)]
-		public string Label
-		{
-			get { return _label; }
-			set { _label = value; }
-		}
+		public string Label { get; private set; }
     
         /// <summary>
         /// The width of the resulting image, in pixels
         /// </summary>
-		[XmlAttribute("width", Form=XmlSchemaForm.Unqualified)]
-		public int Width
-		{
-			get { return _width; }
-			set { _width = value; }
-		}
+		public int Width { get; private set; }
     
 		/// <summary>
 		/// The height of the resulting image, in pixels
 		/// </summary>
-		[XmlAttribute("height", Form=XmlSchemaForm.Unqualified)]
-		public int Height
-		{
-			get { return _height; }
-			set { _height = value; }
-		}
+		public int Height { get; private set; }
     
 		/// <summary>
 		/// The source url of the image.
 		/// </summary>
-		[XmlAttribute("source", Form=XmlSchemaForm.Unqualified)]
-		public string Source
-		{
-			get { return _source; }
-			set { _source = value; }
-		}
+		public Uri Source { get; private set; }
     
 		/// <summary>
 		/// The url to the photographs web page for this particular size.
 		/// </summary>
-		[XmlAttribute("url", Form=XmlSchemaForm.Unqualified)]
-		public string Url
-		{
-			get { return _url; }
-			set { _url = value; }
-		}
-	}
+		public Uri Url { get; private set; }
+
+        /// <summary>
+        /// The media type of this size.
+        /// </summary>
+        public MediaType MediaType { get; set; }
+
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "label":
+                        Label = reader.Value;
+                        break;
+                    case "width":
+                        Width = reader.ReadContentAsInt() ;
+                        break;
+                    case "height":
+                        Height = reader.ReadContentAsInt();
+                        break;
+                    case "source":
+                        Source = new Uri(reader.Value);
+                        break;
+                    case "url":
+                        Url = new Uri(reader.Value);
+                        break;
+                    case "media":
+                        MediaType = reader.Value == "photo" ? MediaType.Photos : MediaType.Videos;
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
+        }
+
+    }
 }

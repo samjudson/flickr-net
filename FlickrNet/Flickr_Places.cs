@@ -12,25 +12,15 @@ namespace FlickrNet
         /// </summary>
         /// <param name="query">The string to search for. Must not be null.</param>
         /// <returns>An array of <see cref="Place"/> instances.</returns>
-        public Place[] PlacesFind(string query)
+        public PlaceCollection PlacesFind(string query)
         {
             if (query == null) throw new ArgumentNullException("query");
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.places.find");
             parameters.Add("query", query);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Places.PlacesCollection;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
-
+            return GetResponseCache<PlaceCollection>(parameters);
         }
 
         /// <summary>
@@ -53,22 +43,13 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Place"/> that matches the locality.</returns>
         public Place PlacesFindByLatLon(decimal latitude, decimal longitude, GeoAccuracy accuracy)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.places.findByLatLon");
             parameters.Add("lat", latitude.ToString("0.000"));
             parameters.Add("lon", longitude.ToString("0.000"));
             if (accuracy != GeoAccuracy.None) parameters.Add("accuracy", (int)accuracy);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Places.PlacesCollection[0];
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<PlaceCollection>(parameters)[0];
         }
 
         /// <summary>
@@ -77,9 +58,9 @@ namespace FlickrNet
         /// <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
         /// <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
         /// <returns>Returns an array of <see cref="Place"/> elements.</returns>
-        public Place[] PlacesGetChildrenWithPhotosPublic(string placeId, string woeId)
+        public PlaceCollection PlacesGetChildrenWithPhotosPublic(string placeId, string woeId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.places.getChildrenWithPhotosPublic");
 
             if ((placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0))
@@ -87,19 +68,10 @@ namespace FlickrNet
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
 
-            parameters.Add("place_id", placeId);
-            parameters.Add("woe_id", woeId);
+            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Places.PlacesCollection;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<PlaceCollection>(parameters);
         }
 
         /// <summary>
@@ -108,36 +80,27 @@ namespace FlickrNet
         /// <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
         /// <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
         /// <returns>The <see cref="Place"/> record for the place/woe ID.</returns>
-        public Place PlacesGetInfo(string placeId, string woeId)
+        public PlaceInfo PlacesGetInfo(string placeId, string woeId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.places.getInfo");
 
-            if ((placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0))
+            if (String.IsNullOrEmpty(placeId) &&  String.IsNullOrEmpty(woeId))
             {
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
 
-            parameters.Add("place_id", placeId);
-            parameters.Add("woe_id", woeId);
+            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return response.Place;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<PlaceInfo>(parameters);
         }
 
         /// <summary>
         /// Gets the places of a particular type that the authenticated user has geotagged photos.
         /// </summary>
         /// <returns>The list of places of that type.</returns>
-        public Places PlacesPlacesForUser()
+        public PlaceCollection PlacesPlacesForUser()
         {
             return PlacesPlacesForUser(PlaceType.Continent, null, null, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
@@ -149,7 +112,7 @@ namespace FlickrNet
         /// <param name="woeId">A Where on Earth identifier to use to filter photo clusters.</param>
         /// <param name="placeId">A Flickr Places identifier to use to filter photo clusters. </param>
         /// <returns>The list of places of that type.</returns>
-        public Places PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId)
+        public PlaceCollection PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId)
         {
             return PlacesPlacesForUser(placeType, woeId, placeId, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
@@ -167,7 +130,7 @@ namespace FlickrNet
         /// <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. </param>
         /// <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. </param>
         /// <returns>The list of places of that type.</returns>
-        public Places PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId, int threshold, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
+        public PlaceCollection PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId, int threshold, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
         {
             CheckRequiresAuthentication();
 
@@ -183,7 +146,7 @@ namespace FlickrNet
             if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", Utils.DateToUnixTimestamp(minUploadDate));
             if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", Utils.DateToUnixTimestamp(maxUploadDate));
 
-            return GetResponseCache<Places>(parameters);
+            return GetResponseCache<PlaceCollection>(parameters);
         }
 
     }

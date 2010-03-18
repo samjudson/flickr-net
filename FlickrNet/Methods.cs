@@ -59,7 +59,7 @@ namespace FlickrNet
         /// <summary>
         /// The minimum level of permissions required for this method call.
         /// </summary>
-        public MethodPermissions RequiredPermissions { get; set; }
+        public MethodPermission RequiredPermissions { get; set; }
 
 		/// <summary>
 		/// The description of the method.
@@ -108,7 +108,7 @@ namespace FlickrNet
                         NeedsSigning = reader.Value == "1";
                         break;
                     case "requiredperms":
-                        RequiredPermissions = (MethodPermissions)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        RequiredPermissions = (MethodPermission)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
@@ -160,7 +160,7 @@ namespace FlickrNet
     /// <summary>
     /// An enumeration listing the permission levels required for calling the Flickr API methods.
     /// </summary>
-    public enum MethodPermissions
+    public enum MethodPermission
     {
         /// <summary>
         /// No permissions required.

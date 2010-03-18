@@ -61,11 +61,30 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        public void BlogsGetListTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            BlogCollection blogs = f.BlogsGetList();
+
+            Assert.IsNotNull(blogs, "Blogs should not be null.");
+
+            foreach (Blog blog in blogs)
+            {
+                Assert.IsNotNull(blog.BlogId, "BlogId should not be null.");
+                Assert.IsNotNull(blog.NeedsPassword, "NeedsPassword should not be null.");
+                Assert.IsNotNull(blog.BlogName, "BlogName should not be null.");
+                Assert.IsNotNull(blog.BlogUrl, "BlogUrl should not be null.");
+                Assert.IsNotNull(blog.Service, "Service should not be null.");
+            }
+        }
+
+        [TestMethod]
         public void BlogGetServicesTest()
         {
             Flickr f = TestData.GetInstance();
 
-            BlogServices services = f.BlogsGetServices();
+            BlogServiceCollection services = f.BlogsGetServices();
 
             Assert.IsNotNull(services, "BlogServices should not be null.");
             Assert.AreNotEqual(0, services.Count, "BlogServices.Count should not be zero.");

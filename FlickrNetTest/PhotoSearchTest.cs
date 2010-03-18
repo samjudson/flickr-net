@@ -80,7 +80,7 @@ namespace FlickrNetTest
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "Test";
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.IsTrue(photos.Total > 0, "Total Photos should be greater than zero.");
             Assert.IsTrue(photos.Pages > 0, "Pages should be greaters than zero.");
@@ -97,7 +97,7 @@ namespace FlickrNetTest
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.PerPage = 10;
             o.Tags = "Test";
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.IsTrue(photos.Total > 0, "TotalPhotos should be greater than 0.");
             Assert.IsTrue(photos.Pages > 0, "TotalPages should be greater than 0.");
@@ -116,7 +116,7 @@ namespace FlickrNetTest
             o.Tags = "Test";
             o.Extras = PhotoSearchExtras.Tags;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {
@@ -133,7 +133,7 @@ namespace FlickrNetTest
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.UserId = TestData.TestUserId;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {
@@ -160,7 +160,7 @@ namespace FlickrNetTest
             o.SortOrder = PhotoSearchSortOrder.DateTakenAsc;
             o.Extras = PhotoSearchExtras.DateTaken;
 
-            Photos p = f.PhotosSearch(o);
+            PhotoCollection p = f.PhotosSearch(o);
 
             for (int i = 1; i < p.Count; i++)
             {
@@ -179,7 +179,7 @@ namespace FlickrNetTest
             o.SortOrder = PhotoSearchSortOrder.DateTakenDesc;
             o.Extras = PhotoSearchExtras.DateTaken;
 
-            Photos p = f.PhotosSearch(o);
+            PhotoCollection p = f.PhotosSearch(o);
 
             for (int i = 1; i < p.Count; i++)
             {
@@ -198,7 +198,7 @@ namespace FlickrNetTest
             o.SortOrder = PhotoSearchSortOrder.DatePostedAsc;
             o.Extras = PhotoSearchExtras.DateUploaded;
 
-            Photos p = f.PhotosSearch(o);
+            PhotoCollection p = f.PhotosSearch(o);
 
             for (int i = 1; i < p.Count; i++)
             {
@@ -217,7 +217,7 @@ namespace FlickrNetTest
             o.SortOrder = PhotoSearchSortOrder.DatePostedDesc;
             o.Extras = PhotoSearchExtras.DateUploaded;
 
-            Photos p = f.PhotosSearch(o);
+            PhotoCollection p = f.PhotosSearch(o);
 
             for (int i = 1; i < p.Count; i++)
             {
@@ -235,7 +235,7 @@ namespace FlickrNetTest
             o.SortOrder = PhotoSearchSortOrder.DatePostedDesc;
             o.Extras = PhotoSearchExtras.License;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {
@@ -252,7 +252,7 @@ namespace FlickrNetTest
             o.Licenses.Add(LicenseType.AttributionNoDerivsCC);
             o.Extras = PhotoSearchExtras.License;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {
@@ -269,7 +269,7 @@ namespace FlickrNetTest
             o.Licenses.Add(LicenseType.NoKnownCopyrightRestrictions);
             o.Extras = PhotoSearchExtras.License;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {
@@ -284,7 +284,7 @@ namespace FlickrNetTest
             o.Tags = "microsoft";
             o.PerPage = 10;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.AreEqual(10, photos.PerPage, "Per page is not 10");
 
@@ -304,7 +304,7 @@ namespace FlickrNetTest
             o.PerPage = 10;
             o.Page = 3;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.AreEqual(3, photos.Page);
         }
@@ -318,7 +318,7 @@ namespace FlickrNetTest
             o.PerPage = 10;
             o.Extras = PhotoSearchExtras.License;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             foreach (Photo photo in photos)
             {

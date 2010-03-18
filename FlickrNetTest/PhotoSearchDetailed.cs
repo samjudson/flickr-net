@@ -51,7 +51,7 @@ namespace FlickrNetTest
             //o.Text = "Apple Store";
             o.PerPage = 10;
             o.Extras = PhotoSearchExtras.All;
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.AreEqual(10, photos.PerPage);
             Assert.AreEqual(1, photos.Page);
@@ -94,7 +94,7 @@ namespace FlickrNetTest
             o.Tags = "Test";
             o.Extras = PhotoSearchExtras.Tags;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.IsTrue(photos.Total > 0);
             Assert.IsTrue(photos.Pages > 0);
@@ -125,7 +125,7 @@ namespace FlickrNetTest
 
             o.PerPage = 1;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
 
             int totalPhotos1 = photos.Total;
 
@@ -155,7 +155,7 @@ namespace FlickrNetTest
             o.MinUploadDate = DateTime.Now.AddYears(-1);
             o.MaxUploadDate = DateTime.Now;
 
-            Photos ps = f.PhotosSearch(o);
+            PhotoCollection ps = f.PhotosSearch(o);
 
             foreach (Photo p in ps)
             {
@@ -175,7 +175,7 @@ namespace FlickrNetTest
             o.Tags = "colorful";
             o.PerPage = 10;
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
         }
 
     }

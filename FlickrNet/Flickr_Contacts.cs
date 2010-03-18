@@ -11,8 +11,8 @@ namespace FlickrNet
         /// Gets a list of contacts for the logged in user.
         /// Requires authentication.
         /// </summary>
-        /// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
-        public Contacts ContactsGetList()
+        /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
+        public ContactCollection ContactsGetList()
         {
             return ContactsGetList(null, 0, 0);
         }
@@ -23,8 +23,8 @@ namespace FlickrNet
         /// </summary>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of contacts to return per page. If this argument is omitted, it defaults to 1000. The maximum allowed value is 1000.</param>
-        /// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
-        public Contacts ContactsGetList(int page, int perPage)
+        /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
+        public ContactCollection ContactsGetList(int page, int perPage)
         {
             return ContactsGetList(null, page, perPage);
         }
@@ -34,8 +34,8 @@ namespace FlickrNet
         /// Requires authentication.
         /// </summary>
         /// <param name="filter">An optional filter of the results. The following values are valid: "friends", "family", "both", "neither".</param>
-        /// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
-        public Contacts ContactsGetList(string filter)
+        /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
+        public ContactCollection ContactsGetList(string filter)
         {
             return ContactsGetList(filter, 0, 0);
         }
@@ -47,8 +47,8 @@ namespace FlickrNet
         /// <param name="filter">An optional filter of the results. The following values are valid: "friends", "family", "both", "neither".</param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of contacts to return per page. If this argument is omitted, it defaults to 1000. The maximum allowed value is 1000.</param>
-        /// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
-        public Contacts ContactsGetList(string filter, int page, int perPage)
+        /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
+        public ContactCollection ContactsGetList(string filter, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -58,7 +58,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<Contacts>(parameters);
+            return GetResponseCache<ContactCollection>(parameters);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace FlickrNet
         /// This method is still considered experimental. We don't plan for it to change or to go away but so long as this notice is present you should write your code accordingly.
         /// </remarks>
         /// <returns>List of contacts for the authenticated user.</returns>
-        public Contacts ContactsGetListRecentlyUploaded()
+        public ContactCollection ContactsGetListRecentlyUploaded()
         {
             return ContactsGetListRecentlyUploaded(DateTime.MinValue, null);
         }
@@ -83,7 +83,7 @@ namespace FlickrNet
         /// "ff" friends and family, and "all" all your contacts.
         /// Default value is "all".</param>
         /// <returns>List of contacts for the authenticated user.</returns>
-        public Contacts ContactsGetListRecentlyUploaded(string filter)
+        public ContactCollection ContactsGetListRecentlyUploaded(string filter)
         {
             return ContactsGetListRecentlyUploaded(DateTime.MinValue, filter);
         }
@@ -96,7 +96,7 @@ namespace FlickrNet
         /// </remarks>
         /// <param name="dateLastUpdated">Limits the resultset to contacts that have uploaded photos since this date. The default offset is (1) hour and the maximum (24) hours.</param>
         /// <returns>List of contacts for the authenticated user.</returns>
-        public Contacts ContactsGetListRecentlyUploaded(DateTime dateLastUpdated)
+        public ContactCollection ContactsGetListRecentlyUploaded(DateTime dateLastUpdated)
         {
             return ContactsGetListRecentlyUploaded(dateLastUpdated, null);
         }
@@ -112,7 +112,7 @@ namespace FlickrNet
         /// "ff" friends and family, and "all" all your contacts.
         /// Default value is "all".</param>
         /// <returns>List of contacts for the authenticated user.</returns>
-        public Contacts ContactsGetListRecentlyUploaded(DateTime dateLastUpdated, string filter)
+        public ContactCollection ContactsGetListRecentlyUploaded(DateTime dateLastUpdated, string filter)
         {
             CheckRequiresAuthentication();
 
@@ -122,7 +122,7 @@ namespace FlickrNet
             if( dateLastUpdated != DateTime.MinValue) parameters.Add("date_last_updated", Utils.DateToUnixTimestamp(dateLastUpdated));
             if( !String.IsNullOrEmpty(filter) ) parameters.Add("filter", filter);
 
-            return GetResponseNoCache<Contacts>(parameters);
+            return GetResponseNoCache<ContactCollection>(parameters);
 
         }
 
@@ -130,8 +130,8 @@ namespace FlickrNet
         /// Gets a list of the given users contact, or those that are publically avaiable.
         /// </summary>
         /// <param name="userId">The Id of the user who's contacts you want to return.</param>
-        /// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
-        public Contacts ContactsGetPublicList(string userId)
+        /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
+        public ContactCollection ContactsGetPublicList(string userId)
         {
             return ContactsGetPublicList(userId, 0, 0);
         }
@@ -142,15 +142,15 @@ namespace FlickrNet
         /// <param name="userId">The Id of the user who's contacts you want to return.</param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of contacts to return per page. If this argument is omitted, it defaults to 1000. The maximum allowed value is 1000.</param>
-        /// <returns>An instance of the <see cref="Contacts"/> class containing the list of contacts.</returns>
-        public Contacts ContactsGetPublicList(string userId, int page, int perPage)
+        /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
+        public ContactCollection ContactsGetPublicList(string userId, int page, int perPage)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.contacts.getPublicList");
             parameters.Add("user_id", userId);
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
-            return GetResponseCache<Contacts>(parameters);
+            return GetResponseCache<ContactCollection>(parameters);
         }
 
     }

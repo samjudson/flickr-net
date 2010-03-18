@@ -15,19 +15,16 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.prefs.getSafetyLevel");
 
-            Response res = GetResponseCache(parameters);
-            if (res.Status == ResponseStatus.OK)
-            {
-                string s = res.AllElements[0].GetAttribute("safety_level");
-                return (SafetyLevel)int.Parse(s, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                throw new FlickrApiException(res.Error);
-            }
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
+
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@safety_level");
+            if (nav == null)
+                throw new ParsingException("Unable to find safety level in returned XML.");
+
+            return (SafetyLevel)int.Parse(nav.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>
@@ -38,19 +35,16 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.prefs.getHidden");
 
-            Response res = GetResponseCache(parameters);
-            if (res.Status == ResponseStatus.OK)
-            {
-                string s = res.AllElements[0].GetAttribute("hidden");
-                return (HiddenFromSearch)int.Parse(s, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                throw new FlickrApiException(res.Error);
-            }
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
+
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@hidden");
+            if (nav == null)
+                throw new ParsingException("Unable to find hidden preference in returned XML.");
+
+            return (HiddenFromSearch)int.Parse(nav.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>
@@ -61,19 +55,16 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.prefs.getContentType");
 
-            Response res = GetResponseCache(parameters);
-            if (res.Status == ResponseStatus.OK)
-            {
-                string s = res.AllElements[0].GetAttribute("content_type");
-                return (ContentType)int.Parse(s, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                throw new FlickrApiException(res.Error);
-            }
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
+
+            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@content_type");
+            if (nav == null)
+                throw new ParsingException("Unable to find content type preference in returned XML.");
+
+            return (ContentType)int.Parse(nav.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
         }
     }
 }

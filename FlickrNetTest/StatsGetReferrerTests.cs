@@ -67,7 +67,7 @@ namespace FlickrNetTest
 
             Flickr f = TestData.GetAuthInstance();
 
-            StatReferrers referrers = f.StatsGetPhotoReferrers(DateTime.Today.AddDays(-1), domain, null, 0, 0);
+            StatReferrerCollection referrers = f.StatsGetPhotoReferrers(DateTime.Today.AddDays(-1), domain, null, 0, 0);
 
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 
@@ -91,7 +91,7 @@ namespace FlickrNetTest
 
             Flickr f = TestData.GetAuthInstance();
 
-            StatReferrers referrers = f.StatsGetPhotosetReferrers(DateTime.Today.AddDays(-1), domain, null, 0, 0);
+            StatReferrerCollection referrers = f.StatsGetPhotosetReferrers(DateTime.Today.AddDays(-1), domain, null, 0, 0);
 
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 
@@ -115,7 +115,7 @@ namespace FlickrNetTest
 
             Flickr f = TestData.GetAuthInstance();
 
-            StatReferrers referrers = f.StatsGetPhotostreamReferrers(DateTime.Today.AddDays(-1), domain, 0, 0);
+            StatReferrerCollection referrers = f.StatsGetPhotostreamReferrers(DateTime.Today.AddDays(-1), domain, 0, 0);
 
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 
@@ -139,7 +139,7 @@ namespace FlickrNetTest
 
             Flickr f = TestData.GetAuthInstance();
 
-            StatReferrers referrers = f.StatsGetCollectionReferrers(DateTime.Today.AddDays(-1), domain, null, 0, 0);
+            StatReferrerCollection referrers = f.StatsGetCollectionReferrers(DateTime.Today.AddDays(-1), domain, null, 0, 0);
 
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 

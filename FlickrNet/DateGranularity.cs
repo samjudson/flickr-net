@@ -19,6 +19,11 @@ namespace FlickrNet
 		/// <summary>
 		/// The date specified is the year the photograph was taken.
 		/// </summary>
-		YearOnly = 6
+		YearOnly = 6,
+        /// <summary>
+        /// The date is an approximation only and only the year is likely to be supplied.
+        /// </summary>
+        Circa = 8
+
 	}
 }

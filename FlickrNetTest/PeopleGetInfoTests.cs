@@ -69,6 +69,11 @@ namespace FlickrNetTest
             Console.WriteLine(f.LastResponse);
             Assert.IsNotNull(p, "Person object should be returned");
             Assert.IsNull(p.Gender, "Gender should be null as not authenticated.");
+
+            Assert.IsNull(p.IsReverseContact, "IsReverseContact should not be null.");
+            Assert.IsNull(p.IsContact, "IsContact should be null.");
+            Assert.IsNull(p.IsIgnored, "IsIgnored should be null.");
+            Assert.IsNull(p.IsFriend, "IsFriend should be null.");
         }
 
         [TestMethod]
@@ -80,6 +85,11 @@ namespace FlickrNetTest
             Console.WriteLine(f.LastResponse);
             Assert.IsNotNull(p, "Person object should be returned");
             Assert.AreEqual("F", p.Gender, "Gender of M should be returned");
+        
+            Assert.IsNotNull(p.IsReverseContact, "IsReverseContact should not be null.");
+            Assert.IsNotNull(p.IsContact, "IsContact should not be null.");
+            Assert.IsNotNull(p.IsIgnored, "IsIgnored should not be null.");
+            Assert.IsNotNull(p.IsFriend, "IsFriend should not be null.");
         }
     }
 }

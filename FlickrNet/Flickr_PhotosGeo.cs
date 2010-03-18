@@ -59,21 +59,19 @@ namespace FlickrNet
         /// <returns>Returns null if the photo has no location information, otherwise returns the location information.</returns>
         public PhotoLocation PhotosGeoGetLocation(string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.geo.getLocation");
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-            if (response.Status == ResponseStatus.OK)
+            try
             {
-                return response.PhotoInfo.Location;
+                PhotoInfo info = GetResponseCache<PhotoInfo>(parameters);
+                return info.Location;
             }
-            else
+            catch (FlickrApiException ex)
             {
-                if (response.Error.Code == 2)
-                    return null;
-                else
-                    throw new FlickrApiException(response.Error);
+                if (ex.Code == 2) return null;
+                throw;
             }
         }
 
@@ -117,7 +115,8 @@ namespace FlickrNet
         public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy)
         {
             System.Globalization.NumberFormatInfo nfi = System.Globalization.NumberFormatInfo.InvariantInfo;
-            Hashtable parameters = new Hashtable();
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.geo.setLocation");
             parameters.Add("photo_id", photoId);
             parameters.Add("lat", latitude.ToString(nfi));
@@ -125,15 +124,7 @@ namespace FlickrNet
             if (accuracy != GeoAccuracy.None)
                 parameters.Add("accuracy", ((int)accuracy).ToString());
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
@@ -146,7 +137,7 @@ namespace FlickrNet
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <returns></returns>
-        public Photos PhotosGeoPhotosForLocation(double latitude, double longitude, GeoAccuracy accuracy, PhotoSearchExtras extras, int perPage, int page)
+        public PhotoCollection PhotosGeoPhotosForLocation(double latitude, double longitude, GeoAccuracy accuracy, PhotoSearchExtras extras, int perPage, int page)
         {
             CheckRequiresAuthentication();
 
@@ -160,7 +151,7 @@ namespace FlickrNet
             if( perPage > 0 ) parameters.Add("per_page", perPage);
             if (page > 0) parameters.Add("page", page);
 
-            return GetResponseNoCache<Photos>(parameters);
+            return GetResponseNoCache<PhotoCollection>(parameters);
 
         }
 
@@ -169,31 +160,20 @@ namespace FlickrNet
         /// </summary>
         /// <param name="photoId">The photo ID of the photo to remove information from.</param>
         /// <returns>Returns true if the location information as found and removed. Returns false if no photo information was found.</returns>
-        public bool PhotosGeoRemoveLocation(string photoId)
+        public void PhotosGeoRemoveLocation(string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.geo.removeLocation");
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                return true;
-            }
-            else
-            {
-                if (response.Error.Code == 2)
-                    return false;
-                else
-                    throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
         /// <summary>
         /// Gets a list of photos that do not contain geo location information.
         /// </summary>
         /// <returns>A list of photos that do not contain location information.</returns>
-        public Photos PhotosGetWithoutGeoData()
+        public PhotoCollection PhotosGetWithoutGeoData()
         {
             PartialSearchOptions options = new PartialSearchOptions();
             return PhotosGetWithoutGeoData(options);
@@ -204,13 +184,13 @@ namespace FlickrNet
         /// </summary>
         /// <param name="options">A limited set of options are supported.</param>
         /// <returns>A list of photos that do not contain location information.</returns>
-        public Photos PhotosGetWithoutGeoData(PartialSearchOptions options)
+        public PhotoCollection PhotosGetWithoutGeoData(PartialSearchOptions options)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getWithoutGeoData");
             Utils.PartialOptionsIntoArray(options, parameters);
 
-            return GetResponseCache<Photos>(parameters);
+            return GetResponseCache<PhotoCollection>(parameters);
         }
 
         /// <summary>
@@ -221,7 +201,7 @@ namespace FlickrNet
         /// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
         /// <returns>A list of photos that do not contain location information.</returns>
         [Obsolete("Use the PartialSearchOptions instead")]
-        public Photos PhotosGetWithoutGeoData(PhotoSearchOptions options)
+        public PhotoCollection PhotosGetWithoutGeoData(PhotoSearchOptions options)
         {
             PartialSearchOptions newOptions = new PartialSearchOptions(options);
             return PhotosGetWithoutGeoData(newOptions);
@@ -235,7 +215,7 @@ namespace FlickrNet
         /// unless you specify the <see cref="PhotoSearchExtras.Geo"/> option in the <c>extras</c> parameter.
         /// </remarks>
         /// <returns>A list of photos that contain Location information.</returns>
-        public Photos PhotosGetWithGeoData()
+        public PhotoCollection PhotosGetWithGeoData()
         {
             PartialSearchOptions options = new PartialSearchOptions();
             return PhotosGetWithGeoData(options);
@@ -253,7 +233,7 @@ namespace FlickrNet
         /// See http://www.flickr.com/services/api/flickr.photos.getWithGeoData.html for supported properties.</param>
         /// <returns>A list of photos that contain Location information.</returns>
         [Obsolete("Use the new PartialSearchOptions instead")]
-        public Photos PhotosGetWithGeoData(PhotoSearchOptions options)
+        public PhotoCollection PhotosGetWithGeoData(PhotoSearchOptions options)
         {
             PartialSearchOptions newOptions = new PartialSearchOptions(options);
             return PhotosGetWithGeoData(newOptions);
@@ -268,13 +248,13 @@ namespace FlickrNet
         /// </remarks>
         /// <param name="options">The options to filter/sort the results by.</param>
         /// <returns>A list of photos that contain Location information.</returns>
-        public Photos PhotosGetWithGeoData(PartialSearchOptions options)
+        public PhotoCollection PhotosGetWithGeoData(PartialSearchOptions options)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.getWithGeoData");
             Utils.PartialOptionsIntoArray(options, parameters);
 
-            return GetResponseCache<Photos>(parameters);
+            return GetResponseCache<PhotoCollection>(parameters);
         }
 
         /// <summary>
@@ -284,50 +264,32 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
         public GeoPermissions PhotosGeoGetPerms(string photoId)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.geo.getPerms");
             parameters.Add("photo_id", photoId);
 
-            FlickrNet.Response response = GetResponseCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return new GeoPermissions(response.AllElements[0]);
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            return GetResponseCache<GeoPermissions>(parameters);
         }
 
         /// <summary>
         /// Set the permission for who can see geotagged photos on Flickr.
         /// </summary>
         /// <param name="photoId">The ID of the photo permissions to update.</param>
-        /// <param name="IsPublic"></param>
-        /// <param name="IsContact"></param>
-        /// <param name="IsFamily"></param>
-        /// <param name="IsFriend"></param>
-        public void PhotosGeoSetPerms(string photoId, bool IsPublic, bool IsContact, bool IsFamily, bool IsFriend)
+        /// <param name="isPublic"></param>
+        /// <param name="isContact"></param>
+        /// <param name="isFamily"></param>
+        /// <param name="isFriend"></param>
+        public void PhotosGeoSetPerms(string photoId, bool isPublic, bool isContact, bool isFamily, bool isFriend)
         {
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.geo.setPerms");
             parameters.Add("photo_id", photoId);
-            parameters.Add("is_public", IsPublic ? "1" : "0");
-            parameters.Add("is_contact", IsContact ? "1" : "0");
-            parameters.Add("is_friend", IsFriend ? "1" : "0");
-            parameters.Add("is_family", IsFamily ? "1" : "0");
+            parameters.Add("is_public", isPublic ? "1" : "0");
+            parameters.Add("is_contact", isContact ? "1" : "0");
+            parameters.Add("is_friend", isFriend ? "1" : "0");
+            parameters.Add("is_family", isFamily ? "1" : "0");
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
     }

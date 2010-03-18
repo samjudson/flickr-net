@@ -24,7 +24,6 @@ namespace FlickrNet
 
             // Skip to next element (if any)
             reader.Skip();
-
         }
     }
 

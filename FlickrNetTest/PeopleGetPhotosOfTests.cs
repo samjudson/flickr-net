@@ -65,7 +65,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            PeoplePhotos p = f.PeopleGetPhotosOf(TestData.TestUserId);
+            PeoplePhotoCollection p = f.PeopleGetPhotosOf(TestData.TestUserId);
 
             Assert.IsNotNull(p, "PeoplePhotos should not be null.");
             Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
@@ -78,7 +78,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            PeoplePhotos p = f.PeopleGetPhotosOf();
+            PeoplePhotoCollection p = f.PeopleGetPhotosOf();
         }
 
         [TestMethod()]
@@ -89,7 +89,7 @@ namespace FlickrNetTest
             try
             {
 
-                PeoplePhotos p = f.PeopleGetPhotosOf();
+                PeoplePhotoCollection p = f.PeopleGetPhotosOf();
 
                 Assert.IsNotNull(p, "PeoplePhotos should not be null.");
                 Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");

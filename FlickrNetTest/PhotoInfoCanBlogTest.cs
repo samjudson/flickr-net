@@ -69,11 +69,11 @@ namespace FlickrNetTest
 
             Flickr f = TestData.GetInstance();
 
-            Photos photos = f.PhotosSearch(o);
+            PhotoCollection photos = f.PhotosSearch(o);
             PhotoInfo info = f.PhotosGetInfo(photos[0].PhotoId);
 
-            Assert.IsFalse(info.CanBlog);
-            Assert.IsTrue(info.CanDownload);
+            Assert.AreEqual(false, info.CanBlog);
+            Assert.AreEqual(true, info.CanDownload);
         }
     }
 }

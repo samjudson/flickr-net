@@ -103,8 +103,7 @@ namespace FlickrNet
                         _secret = reader.Value;
                         break;
                     default:
-                        System.Diagnostics.Debug.WriteLine("Unknown attribute: " + reader.Name + ", " + reader.Value);
-                        break;
+                        throw new ParsingException("Unknown attribute: " + reader.Name + ", " + reader.Value);
                 }
             }
 
@@ -131,7 +130,7 @@ namespace FlickrNet
                         reader.Read();
                         return;
                     default:
-                        throw new ApplicationException("Unknown element found in response stream: " + reader.Name);
+                        throw new ParsingException("Unknown element found in response stream: " + reader.Name);
                 }
             }
 

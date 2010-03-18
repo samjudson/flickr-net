@@ -1,165 +1,120 @@
 using System;
 using System.Xml;
-using System.Xml.XPath;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// Returned by <see cref="Flickr.GroupsSearch(string)"/> methods.
 	/// </summary>
-	public class GroupSearchResults
+	public class GroupSearchResults : List<GroupSearchResult>, IFlickrParsable
 	{
-		private int page;
-
 		/// <summary>
 		/// The current page that the group search results represents.
 		/// </summary>
-		public int Page { get { return page; } }
-
-		private int pages;
+        public int Page { get; private set; }
 
 		/// <summary>
 		/// The total number of pages this search would return.
 		/// </summary>
-		public int Pages { get { return pages; } }
-
-		private int perPage;
+        public int Pages { get; private set; }
 
 		/// <summary>
 		/// The number of groups returned per photo.
 		/// </summary>
-		public int PerPage { get { return perPage; } }
+        public int PerPage { get; private set; }
 
-		private int total;
 		/// <summary>
 		/// The total number of groups that where returned for the search.
 		/// </summary>
-		public int Total { get { return total; } }
+        public int Total { get; private set; }
 
-		private GroupSearchResultCollection groups = new GroupSearchResultCollection();
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            if (reader.LocalName != "groups")
+                throw new FlickrException("Unknown element found: " + reader.LocalName);
 
-		/// <summary>
-		/// The collection of groups returned for this search.
-		/// </summary>
-		/// <example>
-		/// The following code iterates through the list of groups returned:
-		/// <code>
-		/// GroupSearchResults results = flickr.GroupsSearch("test");
-		/// foreach(GroupSearchResult result in results.Groups)
-		/// {
-		///		Console.WriteLine(result.GroupName);
-		/// }
-		/// </code>
-		/// </example>
-		public GroupSearchResultCollection Groups { get { return groups; } }
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "page":
+                        Page = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "perpage":
+                    case "per_page":
+                        PerPage = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "total":
+                        Total = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "pages":
+                        Pages = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
 
-		internal GroupSearchResults(XmlElement element)
-		{
-			page = Convert.ToInt32(element.GetAttribute("page"));
-			pages = Convert.ToInt32(element.GetAttribute("pages"));
-			perPage = Convert.ToInt32(element.GetAttribute("perpage"));
-			total = Convert.ToInt32(element.GetAttribute("total"));
+                }
+            }
 
-			XmlNodeList gs = element.SelectNodes("group");
-			groups.Clear();
-			for(int i = 0; i < gs.Count; i++)
-			{
-				groups.Add(new GroupSearchResult(gs[i]));
-			}
-		}
-	}
+            reader.Read();
 
-	/// <summary>
-	/// Collection containing list of GroupSearchResult instances
-	/// </summary>
-	public class GroupSearchResultCollection : System.Collections.CollectionBase
-	{
-		/// <summary>
-		/// Method for adding a new <see cref="GroupSearchResult"/> to the collection.
-		/// </summary>
-		/// <param name="result"></param>
-		public void Add(GroupSearchResult result)
-		{
-			List.Add(result);
-		}
+            while (reader.LocalName == "group")
+            {
+                GroupSearchResult r = new GroupSearchResult();
+                ((IFlickrParsable)r).Load(reader);
+                Add(r);
+            }
 
-		/// <summary>
-		/// Method for adding a collection of <see cref="GroupSearchResult"/> objects (contained within a
-		/// <see cref="GroupSearchResults"/> collection) to this collection.
-		/// </summary>
-		/// <param name="results"></param>
-		public void AddRange(GroupSearchResultCollection results)
-		{
-			foreach(GroupSearchResult result in results)
-				List.Add(result);
-		}
+            // Skip to next element (if any)
+            reader.Skip();
 
-		/// <summary>
-		/// Return a particular <see cref="GroupSearchResult"/> based on the index.
-		/// </summary>
-		public GroupSearchResult this[int index]
-		{
-			get { return (GroupSearchResult)List[index]; }
-			set { List[index] = value; }
-		}
-
-		/// <summary>
-		/// Removes the selected result from the collection.
-		/// </summary>
-		/// <param name="result">The result to remove.</param>
-		public void Remove(GroupSearchResult result)
-		{
-			List.Remove(result);
-		}
-
-		/// <summary>
-		/// Checks if the collection contains the result.
-		/// </summary>
-		/// <param name="result">The result to see if the collection contains.</param>
-		/// <returns>Returns true if the collecton contains the result, otherwise false.</returns>
-		public bool Contains(GroupSearchResult result)
-		{
-			return List.Contains(result);
-		}
-
-		/// <summary>
-		/// Copies the current collection to an array of <see cref="GroupSearchResult"/> objects.
-		/// </summary>
-		/// <param name="array"></param>
-		/// <param name="index"></param>
-		public void CopyTo(GroupSearchResult[] array, int index)
-		{
-			List.CopyTo(array, index);
-		}
-	}
+        }
+    }
 
 	/// <summary>
 	/// A class which encapsulates a single group search result.
 	/// </summary>
-	public class GroupSearchResult
+	public class GroupSearchResult : IFlickrParsable
 	{
-		private string _groupId;
-		private string _groupName;
-		private bool _eighteen;
-
 		/// <summary>
 		/// The group id for the result.
 		/// </summary>
-		public string GroupId { get { return _groupId; } }
+        public string GroupId { get; private set; }
 		/// <summary>
 		/// The group name for the result.
 		/// </summary>
-		public string GroupName { get { return _groupName; } }
+        public string GroupName { get; private set; }
 		/// <summary>
 		/// True if the group is an over eighteen (adult) group only.
 		/// </summary>
-		public bool EighteenPlus { get { return _eighteen; } }
+        public bool EighteenPlus { get; private set; }
 
-		internal GroupSearchResult(XmlNode node)
-		{
-			_groupId = node.Attributes["nsid"].Value;
-			_groupName = node.Attributes["name"].Value;
-			_eighteen = Convert.ToInt32(node.Attributes["eighteenplus"].Value)==1;
-		}
-	}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            if (reader.LocalName != "group")
+                throw new FlickrException("Unknown element found: " + reader.LocalName);
+
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "nsid":
+                        GroupId = reader.Value;
+                        break;
+                    case "name":
+                        GroupName = reader.Value;
+                        break;
+                    case "eighteenplus":
+                        EighteenPlus = reader.Value == "1";
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+
+                }
+            }
+
+            reader.Skip();
+        }
+    }
 }

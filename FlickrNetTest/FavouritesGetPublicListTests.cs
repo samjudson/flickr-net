@@ -66,7 +66,7 @@ namespace FlickrNetTest
             string userId = "77788903@N00";
             Flickr f = TestData.GetInstance();
 
-            Photos p = f.FavoritesGetPublicList(userId);
+            PhotoCollection p = f.FavoritesGetPublicList(userId);
 
             Assert.IsNotNull(p, "Photos should not be null instance.");
             Assert.AreNotEqual(0, p.Count, "Photos.Count should be greater than zero.");

@@ -121,7 +121,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(method, "Method should not be null");
             Assert.AreEqual("flickr.reflection.getMethodInfo", method.Name, "Method name not set correctly");
 
-            Assert.AreEqual(MethodPermissions.None, method.RequiredPermissions);
+            Assert.AreEqual(MethodPermission.None, method.RequiredPermissions);
 
             Assert.AreEqual(2, method.Arguments.Count, "There should be two arguments");
             Assert.AreEqual("api_key", method.Arguments[0].Name, "First argument should be api_key.");

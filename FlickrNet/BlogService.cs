@@ -23,7 +23,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "service")
-                throw new XmlException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
 
             while (reader.MoveToNextAttribute())
             {
@@ -33,7 +33,7 @@ namespace FlickrNet
                         Id = reader.Value;
                         break;
                     default:
-                        throw new Exception("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 

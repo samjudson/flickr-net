@@ -22,20 +22,12 @@ namespace FlickrNet
             if (degrees != 90 && degrees != 180 && degrees != 270)
                 throw new ArgumentException("Must be 90, 180 or 270", "degrees");
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("method", "flickr.photos.transform.rotate");
             parameters.Add("photo_id", photoId);
             parameters.Add("degrees", degrees.ToString("0"));
 
-            FlickrNet.Response response = GetResponseNoCache(parameters);
-            if (response.Status == ResponseStatus.OK)
-            {
-                return;
-            }
-            else
-            {
-                throw new FlickrApiException(response.Error);
-            }
+            GetResponseNoCache<NoResponse>(parameters);
         }
 
     }

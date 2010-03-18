@@ -44,34 +44,30 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestPhotosetsGetListBasic()
         {
-            Photosets photosets = f.PhotosetsGetList(TestData.TestUserId);
+            PhotosetCollection photosets = f.PhotosetsGetList(TestData.TestUserId);
 
-            Assert.IsTrue(photosets.PhotosetCollection.Length > 0, "Should be at least one photoset");
+            Assert.IsTrue(photosets.Count > 0, "Should be at least one photoset");
 
             Console.WriteLine(f.LastResponse);
 
-            foreach (Photoset set in photosets.PhotosetCollection)
+            foreach (Photoset set in photosets)
             {
                 Assert.IsNotNull(set.OwnerId, "OwnerId should not be null");
                 Assert.IsTrue(set.NumberOfPhotos > 0, "NumberOfPhotos should be greater than zero");
                 Assert.IsNotNull(set.Title, "Title should not be null");
                 Assert.IsNotNull(set.Description, "Description should not be null");
                 Assert.AreEqual(TestData.TestUserId, set.OwnerId);
-
-                //PhotosetsGetList does not return the photos for a set.
-                Assert.AreEqual(0, set.Count);
-                Assert.AreEqual(0, set.PhotoCollection.Length);
             }
         }
 
         [TestMethod]
         public void TestPhotosetsGetListWebUrl()
         {
-            Photosets photosets = f.PhotosetsGetList(TestData.TestUserId);
+            PhotosetCollection photosets = f.PhotosetsGetList(TestData.TestUserId);
 
-            Assert.IsTrue(photosets.PhotosetCollection.Length > 0, "Should be at least one photoset");
+            Assert.IsTrue(photosets.Count > 0, "Should be at least one photoset");
 
-            foreach (Photoset set in photosets.PhotosetCollection)
+            foreach (Photoset set in photosets)
             {
                 Assert.IsNotNull(set.Url);
                 Assert.AreEqual("http://www.flickr.com/photos/" + TestData.TestUserId + "/sets/" + set.PhotosetId + "/", set.Url);

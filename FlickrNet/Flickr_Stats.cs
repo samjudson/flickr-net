@@ -11,7 +11,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <returns></returns>
-        public StatDomains StatsGetCollectionDomains(DateTime date)
+        public StatDomainCollection StatsGetCollectionDomains(DateTime date)
         {
             return StatsGetCollectionDomains(date, null, 0, 0);
         }
@@ -22,7 +22,7 @@ namespace FlickrNet
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <param name="collectionId">The id of the collection to get stats for. If not provided, stats for all collections will be returned.</param>
         /// <returns></returns>
-        public StatDomains StatsGetCollectionDomains(DateTime date, string collectionId)
+        public StatDomainCollection StatsGetCollectionDomains(DateTime date, string collectionId)
         {
             return StatsGetCollectionDomains(date, collectionId, 0, 0);
         }
@@ -34,7 +34,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetCollectionDomains(DateTime date, int page, int perPage)
+        public StatDomainCollection StatsGetCollectionDomains(DateTime date, int page, int perPage)
         {
             return StatsGetCollectionDomains(date, null, page, perPage);
         }
@@ -47,7 +47,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetCollectionDomains(DateTime date, string collectionId, int page, int perPage)
+        public StatDomainCollection StatsGetCollectionDomains(DateTime date, string collectionId, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -59,7 +59,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatDomains>(parameters);
+            return GetResponseCache<StatDomainCollection>(parameters);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotoDomains(DateTime date)
+        public StatDomainCollection StatsGetPhotoDomains(DateTime date)
         {
             return StatsGetPhotoDomains(date, null, 0, 0);
         }
@@ -78,7 +78,7 @@ namespace FlickrNet
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <param name="photoId">The id of the photo to get stats for. If not provided, stats for all photos will be returned.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotoDomains(DateTime date, string photoId)
+        public StatDomainCollection StatsGetPhotoDomains(DateTime date, string photoId)
         {
             return StatsGetPhotoDomains(date, photoId, 0, 0);
         }
@@ -90,7 +90,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotoDomains(DateTime date, int page, int perPage)
+        public StatDomainCollection StatsGetPhotoDomains(DateTime date, int page, int perPage)
         {
             return StatsGetPhotoDomains(date, null, page, perPage);
         }
@@ -103,7 +103,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotoDomains(DateTime date, string photoId, int page, int perPage)
+        public StatDomainCollection StatsGetPhotoDomains(DateTime date, string photoId, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -115,7 +115,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatDomains>(parameters);
+            return GetResponseCache<StatDomainCollection>(parameters);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotostreamDomains(DateTime date)
+        public StatDomainCollection StatsGetPhotostreamDomains(DateTime date)
         {
             return StatsGetPhotostreamDomains(date, 0, 0);
         }
@@ -135,7 +135,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotostreamDomains(DateTime date, int page, int perPage)
+        public StatDomainCollection StatsGetPhotostreamDomains(DateTime date, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -146,7 +146,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatDomains>(parameters);
+            return GetResponseCache<StatDomainCollection>(parameters);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotosetDomains(DateTime date)
+        public StatDomainCollection StatsGetPhotosetDomains(DateTime date)
         {
             return StatsGetPhotosetDomains(date, null, 0, 0);
         }
@@ -165,7 +165,7 @@ namespace FlickrNet
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.</param>
         /// <param name="photosetId">The id of the photoset to get stats for. If not provided, stats for all sets will be returned.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotosetDomains(DateTime date, string photosetId)
+        public StatDomainCollection StatsGetPhotosetDomains(DateTime date, string photosetId)
         {
             return StatsGetPhotosetDomains(date, photosetId, 0, 0);
         }
@@ -177,7 +177,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotosetDomains(DateTime date, int page, int perPage)
+        public StatDomainCollection StatsGetPhotosetDomains(DateTime date, int page, int perPage)
         {
             return StatsGetPhotosetDomains(date, null, page, perPage);
         }
@@ -190,7 +190,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns></returns>
-        public StatDomains StatsGetPhotosetDomains(DateTime date, string photosetId, int page, int perPage)
+        public StatDomainCollection StatsGetPhotosetDomains(DateTime date, string photosetId, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -199,7 +199,7 @@ namespace FlickrNet
             parameters.Add("method", "flickr.stats.getPhotosetDomains");
             parameters.Add("date", Utils.DateToUnixTimestamp(date));
 
-            return GetResponseCache<StatDomains>(parameters);
+            return GetResponseCache<StatDomainCollection>(parameters);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace FlickrNet
         /// <param name="date">The date to return stats for.</param>
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotoReferrers(DateTime date, string domain)
+        public StatReferrerCollection StatsGetPhotoReferrers(DateTime date, string domain)
         {
             return StatsGetPhotoReferrers(date, domain, null, 0, 0);
         }
@@ -294,7 +294,7 @@ namespace FlickrNet
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <param name="photoId">The photo to return referrers for. If missing then referrers for all photos will be returned.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotoReferrers(DateTime date, string domain, string photoId)
+        public StatReferrerCollection StatsGetPhotoReferrers(DateTime date, string domain, string photoId)
         {
             return StatsGetPhotoReferrers(date, domain, null, 0, 0);
         }
@@ -307,7 +307,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotoReferrers(DateTime date, string domain, int page, int perPage)
+        public StatReferrerCollection StatsGetPhotoReferrers(DateTime date, string domain, int page, int perPage)
         {
             return StatsGetPhotoReferrers(date, domain, null, page, perPage);
         }
@@ -322,7 +322,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotoReferrers(DateTime date, string domain, string photoId, int page, int perPage)
+        public StatReferrerCollection StatsGetPhotoReferrers(DateTime date, string domain, string photoId, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -335,7 +335,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatReferrers>(parameters);
+            return GetResponseCache<StatReferrerCollection>(parameters);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace FlickrNet
         /// <param name="date">The date to return stats for.</param>
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotosetReferrers(DateTime date, string domain)
+        public StatReferrerCollection StatsGetPhotosetReferrers(DateTime date, string domain)
         {
             return StatsGetPhotosetReferrers(date, domain, null, 0, 0);
         }
@@ -356,7 +356,7 @@ namespace FlickrNet
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <param name="photosetId">The photoset to return referrers for. If missing then referrers for all photosets will be returned.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotosetReferrers(DateTime date, string domain, string photosetId)
+        public StatReferrerCollection StatsGetPhotosetReferrers(DateTime date, string domain, string photosetId)
         {
             return StatsGetPhotosetReferrers(date, domain, photosetId, 0, 0);
         }
@@ -370,7 +370,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotosetReferrers(DateTime date, string domain, int page, int perPage)
+        public StatReferrerCollection StatsGetPhotosetReferrers(DateTime date, string domain, int page, int perPage)
         {
             return StatsGetPhotosetReferrers(date, domain, null, page, perPage);
         }
@@ -384,7 +384,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotosetReferrers(DateTime date, string domain, string photosetId, int page, int perPage)
+        public StatReferrerCollection StatsGetPhotosetReferrers(DateTime date, string domain, string photosetId, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -397,7 +397,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatReferrers>(parameters);
+            return GetResponseCache<StatReferrerCollection>(parameters);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace FlickrNet
         /// <param name="date">The date to return stats for.</param>
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetCollectionReferrers(DateTime date, string domain)
+        public StatReferrerCollection StatsGetCollectionReferrers(DateTime date, string domain)
         {
             return StatsGetCollectionReferrers(date, domain, null, 0, 0);
         }
@@ -418,7 +418,7 @@ namespace FlickrNet
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <param name="collectionId">The collection to return referrers for. If missing then referrers for all photosets will be returned.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetCollectionReferrers(DateTime date, string domain, string collectionId)
+        public StatReferrerCollection StatsGetCollectionReferrers(DateTime date, string domain, string collectionId)
         {
             return StatsGetCollectionReferrers(date, domain, collectionId, 0, 0);
         }
@@ -431,7 +431,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetCollectionReferrers(DateTime date, string domain, int page, int perPage)
+        public StatReferrerCollection StatsGetCollectionReferrers(DateTime date, string domain, int page, int perPage)
         {
             return StatsGetCollectionReferrers(date, domain, null, page, perPage);
         }
@@ -446,7 +446,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetCollectionReferrers(DateTime date, string domain, string collectionId, int page, int perPage)
+        public StatReferrerCollection StatsGetCollectionReferrers(DateTime date, string domain, string collectionId, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -459,7 +459,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatReferrers>(parameters);
+            return GetResponseCache<StatReferrerCollection>(parameters);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace FlickrNet
         /// <param name="date">The date to return stats for.</param>
         /// <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotostreamReferrers(DateTime date, string domain)
+        public StatReferrerCollection StatsGetPhotostreamReferrers(DateTime date, string domain)
         {
             return StatsGetPhotostreamReferrers(date, domain, 0, 0);
         }
@@ -481,7 +481,7 @@ namespace FlickrNet
         /// <param name="page">The page of the results to return. Default is 1.</param>
         /// <param name="perPage">The number of referrers to return per page. The default is 25 and the maximum is 100.</param>
         /// <returns>The referrers.</returns>
-        public StatReferrers StatsGetPhotostreamReferrers(DateTime date, string domain, int page, int perPage)
+        public StatReferrerCollection StatsGetPhotostreamReferrers(DateTime date, string domain, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -493,7 +493,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<StatReferrers>(parameters);
+            return GetResponseCache<StatReferrerCollection>(parameters);
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace FlickrNet
         /// List the photos with the most views, comments or favorites.
         /// </summary>
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
-        public PopularPhotos StatsGetPopularPhotos()
+        public PopularPhotoCollection StatsGetPopularPhotos()
         {
             return StatsGetPopularPhotos(DateTime.MinValue, PopularitySort.None, 0, 0);
         }
@@ -535,7 +535,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="date">Stats will be returned for this date. A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day. If no date is provided, all time view counts will be returned.</param>
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
-        public PopularPhotos StatsGetPopularPhotos(DateTime date)
+        public PopularPhotoCollection StatsGetPopularPhotos(DateTime date)
         {
             return StatsGetPopularPhotos(date, PopularitySort.None, 0, 0);
         }
@@ -545,7 +545,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="sort">The order in which to sort returned photos. Defaults to views. The possible values are views, comments and favorites. </param>
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
-        public PopularPhotos StatsGetPopularPhotos(PopularitySort sort)
+        public PopularPhotoCollection StatsGetPopularPhotos(PopularitySort sort)
         {
             return StatsGetPopularPhotos(DateTime.MinValue, sort, 0, 0);
         }
@@ -557,7 +557,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
-        public PopularPhotos StatsGetPopularPhotos(PopularitySort sort, int page, int perPage)
+        public PopularPhotoCollection StatsGetPopularPhotos(PopularitySort sort, int page, int perPage)
         {
             return StatsGetPopularPhotos(DateTime.MinValue, sort, page, perPage);
         }
@@ -569,7 +569,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
-        public PopularPhotos StatsGetPopularPhotos(DateTime date, int page, int perPage)
+        public PopularPhotoCollection StatsGetPopularPhotos(DateTime date, int page, int perPage)
         {
             return StatsGetPopularPhotos(DateTime.MinValue, PopularitySort.None, page, perPage);
         }
@@ -582,7 +582,7 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
         /// <returns>A list of <see cref="PopularPhoto"/> instances.</returns>
-        public PopularPhotos StatsGetPopularPhotos(DateTime date, PopularitySort sort, int page, int perPage)
+        public PopularPhotoCollection StatsGetPopularPhotos(DateTime date, PopularitySort sort, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -593,7 +593,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page);
             if (perPage > 0) parameters.Add("per_page", perPage);
 
-            return GetResponseCache<PopularPhotos>(parameters);
+            return GetResponseCache<PopularPhotoCollection>(parameters);
         }
 
     }

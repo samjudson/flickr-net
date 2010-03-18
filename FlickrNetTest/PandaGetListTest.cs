@@ -79,7 +79,7 @@ namespace FlickrNetTest
         public void TestPandaGetPhotos()
         {
             Flickr f = TestData.GetInstance();
-            PandaPhotos photos = null;
+            PandaPhotoCollection photos = null;
 
             try
             {

@@ -21,12 +21,6 @@ namespace FlickrNet
             _message = message;
         }
 
-		internal FlickrApiException(ResponseError error)
-		{
-			_code = error.Code;
-			_message = error.Message;
-		}
-
 		/// <summary>
 		/// Get the code of the Flickr error.
 		/// </summary>

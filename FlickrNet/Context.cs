@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace FlickrNet
 {
@@ -12,136 +13,177 @@ namespace FlickrNet
 	/// <see cref="Flickr.PhotosetsGetContext"/>
 	///  and <see cref="Flickr.GroupsPoolsGetContext"/> methods.
 	/// </summary>
-	public class Context
+	public class Context : IFlickrParsable
 	{
 		/// <summary>
 		/// The number of photos in the current context, e.g. Group, Set or photostream.
 		/// </summary>
-		public int Count;
+        public int Count { get; private set; }
 		/// <summary>
 		/// The next photo in the context.
 		/// </summary>
-		public ContextPhoto NextPhoto;
+        public ContextPhoto NextPhoto { get; private set; }
 		/// <summary>
 		/// The previous photo in the context.
 		/// </summary>
-		public ContextPhoto PreviousPhoto;
-	}
+        public ContextPhoto PreviousPhoto { get; private set; }
 
-	/// <summary>
-	/// Temporary class used to excapsulate the context count property.
-	/// </summary>
-	[System.Serializable]
-	public class ContextCount
-	{
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public ContextCount()
-		{
-		}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (reader.LocalName)
+                {
+                    case "count":
+                        Count = reader.ReadElementContentAsInt();
+                        break;
+                    case "prevphoto":
+                        PreviousPhoto = new ContextPhoto();
+                        ((IFlickrParsable)PreviousPhoto).Load(reader);
+                        break;
+                    case "nextphoto":
+                        NextPhoto = new ContextPhoto();
+                        ((IFlickrParsable)PreviousPhoto).Load(reader);
+                        break;
 
-		/// <summary>
-		/// The number of photos in the context.
-		/// </summary>
-		[XmlText()]
-		public int Count;
-	}
+                }
+            }
+        }
+    }
 
 	/// <summary>
 	/// The next (or previous) photo in the current context.
 	/// </summary>
-	[System.Serializable]
-	public class ContextPhoto
+	public class ContextPhoto : IFlickrParsable
 	{
 		/// <summary>
 		/// The id of the next photo. Will be "0" if this photo is the last.
 		/// </summary>
-		[XmlAttribute("id", Form=XmlSchemaForm.Unqualified)]
-		public string PhotoId;
+        public string PhotoId { get; private set; }
 
 		/// <summary>
 		/// The secret for the photo.
 		/// </summary>
-		[XmlAttribute("secret", Form=XmlSchemaForm.Unqualified)]
-		public string Secret;
+        public string Secret { get; private set; }
+
+        /// <summary>
+        /// The server for this photo.
+        /// </summary>
+        public string Server { get; private set; }
+
+        /// <summary>
+        /// The web server farm for this photos images.
+        /// </summary>
+        public string Farm { get; private set; }
 
 		/// <summary>
 		/// The title of the next photo in context.
 		/// </summary>
-		[XmlAttribute("title", Form=XmlSchemaForm.Unqualified)]
-		public string Title;
+        public string Title { get; private set; }
 
 		/// <summary>
 		/// The URL, in the given context, for the next or previous photo.
 		/// </summary>
-		[XmlAttribute("url", Form=XmlSchemaForm.Unqualified)]
-		public string Url;
+        public Uri Url { get; private set; }
 
 		/// <summary>
 		/// The URL for the thumbnail of the photo.
 		/// </summary>
-		[XmlAttribute("thumb", Form=XmlSchemaForm.Unqualified)]
-		public string Thumbnail;
-	}
+        public Uri Thumbnail { get; private set; }
+
+        /// <summary>
+        /// The media type of this item.
+        /// </summary>
+        public MediaType MediaType { get; set; }
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        PhotoId = reader.Value;
+                        break;
+                    case "secret":
+                        Secret = reader.Value;
+                        break;
+                    case "server":
+                        Server = reader.Value;
+                        break;
+                    case "farm":
+                        Farm = reader.Value;
+                        break;
+                    case "title":
+                        Title = reader.Value;
+                        break;
+                    case "url":
+                        Url = new Uri(new Uri("http://www.flickr.com"), reader.Value);
+                        break;
+                    case "thumb":
+                        Thumbnail = new Uri(reader.Value);
+                        break;
+                    case "media":
+                        MediaType = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
+                        break;
+
+                }
+            }
+
+            reader.Read();
+        }
+    }
 
 	/// <summary>
 	/// All contexts that a photo is in.
 	/// </summary>
-	public class AllContexts
+	public class AllContexts : IFlickrParsable
 	{
-		private ContextSet[] _sets;
-		private ContextGroup[] _groups;
-
 		/// <summary>
 		/// An array of <see cref="ContextSet"/> objects for the current photo.
 		/// </summary>
-		public ContextSet[] Sets
-		{
-			get { return _sets; }
-		}
+		public List<ContextSet> Sets { get; private set; }
 
 		/// <summary>
 		/// An array of <see cref="ContextGroup"/> objects for the current photo.
 		/// </summary>
-		public ContextGroup[] Groups
-		{
-			get { return _groups; }
-		}
+		public List<ContextGroup> Groups { get; private set; }
 
-		internal AllContexts(XmlElement[] elements)
-		{
-			ArrayList sets = new ArrayList();
-			ArrayList groups = new ArrayList();
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public AllContexts()
+        {
+            Sets = new List<ContextSet>();
+            Groups = new List<ContextGroup>();
+        }
 
-			if( elements == null ) { _sets = new ContextSet[0]; _groups = new ContextGroup[0]; return; }
-
-			foreach(XmlElement element in elements)
-			{
-				if( element.Name == "set" )
-				{
-					ContextSet aset = new ContextSet();
-					aset.PhotosetId = element.Attributes["id"].Value;
-					aset.Title = element.Attributes["title"].Value;
-					sets.Add(aset);
-				}
-
-				if( element.Name == "pool" )
-				{
-					ContextGroup agroup = new ContextGroup();
-					agroup.GroupId = element.Attributes["id"].Value;
-					agroup.Title = element.Attributes["title"].Value;
-					groups.Add(agroup);
-				}
-			}
-
-			_sets = new ContextSet[sets.Count];
-			sets.CopyTo(_sets);
-
-			_groups = new ContextGroup[groups.Count];
-			groups.CopyTo(_groups);
-		}
-	}
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (reader.LocalName)
+                {
+                    case "set":
+                        ContextSet set = new ContextSet();
+                        set.PhotosetId = reader.GetAttribute("id");
+                        set.Title = reader.GetAttribute("title");
+                        Sets.Add(set);
+                        reader.Read();
+                        break;
+                    case "pool":
+                        ContextGroup group = new ContextGroup();
+                        group.GroupId = reader.GetAttribute("id");
+                        group.Title = reader.GetAttribute("title");
+                        Groups.Add(group);
+                        reader.Read();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
 
 	/// <summary>
 	/// A set context for a photo.
@@ -151,11 +193,11 @@ namespace FlickrNet
 		/// <summary>
 		/// The Photoset ID of the set the selected photo is in.
 		/// </summary>
-		public string PhotosetId;
+        public string PhotosetId { get; internal set; }
 		/// <summary>
 		/// The title of the set the selected photo is in.
 		/// </summary>
-		public string Title;
+        public string Title { get; internal set; }
 	}
 
 	/// <summary>
@@ -166,10 +208,10 @@ namespace FlickrNet
 		/// <summary>
 		/// The Group ID for the group that the selected photo is in.
 		/// </summary>
-		public string GroupId;
+        public string GroupId { get; internal set; }
 		/// <summary>
 		/// The title of the group that then selected photo is in.
 		/// </summary>
-		public string Title;
+        public string Title { get; internal set; }
 	}
 }

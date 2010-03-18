@@ -66,7 +66,7 @@ namespace FlickrNetTest
         public void TestGetFavouritesNoFavourites()
         {
             // No favourites
-            PhotoFavourites favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
+            PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
 
             Console.WriteLine(f.LastRequest);
             Console.WriteLine(f.LastResponse);
@@ -78,7 +78,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestGetFavouritesHasFavourites()
         {
-            PhotoFavourites favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 500, 1);
+            PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 500, 1);
 
             Assert.IsNotNull(favs, "PhotoFavourites instance should not be null.");
 
@@ -86,7 +86,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual(50, favs.Count, "Should be 50 favourites listed (maximum returned)");
 
-            foreach (PhotoFavourite p in favs)
+            foreach (PhotoFavorite p in favs)
             {
                 Assert.IsFalse(String.IsNullOrEmpty(p.UserId), "Should have a user ID.");
                 Assert.IsFalse(String.IsNullOrEmpty(p.UserName), "Should have a user name.");
@@ -98,7 +98,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestGetFavouritesPaging()
         {
-            PhotoFavourites favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 1);
+            PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 1);
 
             Assert.AreEqual(10, favs.Count, "PhotoFavourites.Count should be 10.");
             Assert.AreEqual(10, favs.PerPage, "PhotoFavourites.PerPage should be 10");
@@ -110,7 +110,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void TestGetFavouritesPagingTwo()
         {
-            PhotoFavourites favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 2);
+            PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 2);
 
             Assert.AreEqual(10, favs.Count, "PhotoFavourites.Count should be 10.");
             Assert.AreEqual(10, favs.PerPage, "PhotoFavourites.PerPage should be 10");
