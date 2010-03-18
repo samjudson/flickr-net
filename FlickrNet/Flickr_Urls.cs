@@ -84,13 +84,23 @@ namespace FlickrNet
         /// Returns a group NSID, given the url to a group's page or photo pool.
         /// </summary>
         /// <param name="urlToFind">The url to the group's page or photo pool.</param>
-        /// <returns>The ID of the group at the specified URL on success, a null reference (Nothing in Visual Basic) if the group cannot be found.</returns>
+        /// <returns>The ID of the group found.</returns>
         public string UrlsLookupGroup(string urlToFind)
+        {
+            return UrlsLookupGroup(new Uri(urlToFind));
+        }
+
+        /// <summary>
+        /// Returns a group NSID, given the url to a group's page or photo pool.
+        /// </summary>
+        /// <param name="urlToFind">The url to the group's page or photo pool.</param>
+        /// <returns>The ID of the group at the specified URL on success, a null reference (Nothing in Visual Basic) if the group cannot be found.</returns>
+        public string UrlsLookupGroup(Uri urlToFind)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGroup");
             parameters.Add("api_key", _apiKey);
-            parameters.Add("url", urlToFind);
+            parameters.Add("url", urlToFind.AbsoluteUri);
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
@@ -105,10 +115,20 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="FoundUser"/> class containing the users ID and username.</returns>
         public FoundUser UrlsLookupUser(string urlToFind)
         {
+            return UrlsLookupUser(new Uri(urlToFind));
+        }
+
+        /// <summary>
+        /// Returns a user NSID, given the url to a user's photos or profile.
+        /// </summary>
+        /// <param name="urlToFind">Thr url to the user's profile or photos page.</param>
+        /// <returns>An instance of the <see cref="FoundUser"/> class containing the users ID and username.</returns>
+        public FoundUser UrlsLookupUser(Uri urlToFind)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupUser");
             parameters.Add("api_key", _apiKey);
-            parameters.Add("url", urlToFind);
+            parameters.Add("url", urlToFind.AbsoluteUri);
 
             return GetResponseCache<FoundUser>(parameters);
         }

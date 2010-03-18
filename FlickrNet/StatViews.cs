@@ -10,7 +10,7 @@ namespace FlickrNet
     /// <remarks>
     /// Used by <see cref="Flickr.StatsGetTotalViews(DateTime)"/>.
     /// </remarks>
-    public class StatViews : IFlickrParsable
+    public sealed class StatViews : IFlickrParsable
     {
         /// <summary>
         /// The total number of views for this account.

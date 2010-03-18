@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of <see cref="Place"/> items.
     /// </summary>
-    public class PlaceCollection : List<Place>, IFlickrParsable
+    public sealed class PlaceCollection : System.Collections.ObjectModel.Collection<Place>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

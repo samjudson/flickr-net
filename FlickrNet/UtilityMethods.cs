@@ -358,7 +358,7 @@ namespace FlickrNet
                 case "4":
                     return MemberTypes.Admin;
                 default:
-                    return MemberTypes.NotSpecified;
+                    return MemberTypes.None;
             }
         }
 

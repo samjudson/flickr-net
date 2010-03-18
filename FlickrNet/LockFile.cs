@@ -21,7 +21,7 @@ namespace FlickrNet
 	///		// protected operations
 	/// }
 	/// </summary>
-	internal class LockFile
+	internal class LockFile : IDisposable
 	{
 		private readonly string filepath;
 		private readonly DisposeHelper disposeHelper;
@@ -115,6 +115,10 @@ namespace FlickrNet
 			}
 		}
 
-		
-	}
+        public void Dispose()
+        {
+            if (disposeHelper != null) disposeHelper.Dispose();
+            if (stream != null) stream.Dispose();
+        }
+    }
 }

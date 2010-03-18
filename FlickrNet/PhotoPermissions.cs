@@ -6,7 +6,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Permissions for the selected photo.
 	/// </summary>
-	public class PhotoPermissions : IFlickrParsable
+    public sealed class PhotoPermissions : IFlickrParsable
 	{
 		/// <remarks/>
 		public string PhotoId { get; private set; }

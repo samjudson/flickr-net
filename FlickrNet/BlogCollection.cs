@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
 	/// <summary>
 	/// Contains a list of <see cref="Blog"/> items for the user.
 	/// </summary>
-	public class BlogCollection: List<Blog>, IFlickrParsable
+    public sealed class BlogCollection : Collection<Blog>, IFlickrParsable
 	{
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -30,7 +31,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Provides details of a specific blog, as configured by the user.
 	/// </summary>
-	public class Blog: IFlickrParsable
+    public sealed class Blog : IFlickrParsable
 	{
 		/// <summary>
 		/// The ID Flickr has assigned to the blog. Use this to post to the blog using 
@@ -47,7 +48,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL of the blog website.
 		/// </summary>
-        public string BlogUrl { get; set; }
+        public Uri BlogUrl { get; set; }
 
 		/// <summary>
 		/// If Flickr stores the password for this then this will be 0, meaning you do not need to pass in the
@@ -76,7 +77,7 @@ namespace FlickrNet
                         BlogName = reader.Value;
                         break;
                     case "url":
-                        BlogUrl = reader.Value;
+                        BlogUrl = new Uri(reader.Value);
                         break;
                     case "needspassword":
                         NeedsPassword = reader.Value == "1";

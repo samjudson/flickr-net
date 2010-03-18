@@ -70,7 +70,8 @@ namespace FlickrNetTest
             foreach (Photoset set in photosets)
             {
                 Assert.IsNotNull(set.Url);
-                Assert.AreEqual("http://www.flickr.com/photos/" + TestData.TestUserId + "/sets/" + set.PhotosetId + "/", set.Url);
+                Uri expectedUrl = new Uri("http://www.flickr.com/photos/" + TestData.TestUserId + "/sets/" + set.PhotosetId + "/");
+                Assert.AreEqual(expectedUrl, set.Url);
             }
         }
     }

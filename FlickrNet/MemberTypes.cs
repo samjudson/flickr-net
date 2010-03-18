@@ -12,7 +12,7 @@ namespace FlickrNet
 		/// <summary>
 		/// No member type has been specified (all should be returned).
 		/// </summary>
-        NotSpecified,
+        None,
 		/// <summary>
 		/// A basic member.
 		/// </summary>

@@ -6,16 +6,16 @@ namespace FlickrNet
 	/// <summary>
     /// Detailed information returned by <see cref="Flickr.PhotosGetInfo(string)"/> or <see cref="Flickr.PhotosGetInfo(string, string)"/> methods.
 	/// </summary>
-	public class PhotoInfo : IFlickrParsable
+    public sealed class PhotoInfo : IFlickrParsable
 	{
         /// <summary>
         /// Default constructor.
         /// </summary>
         public PhotoInfo()
         {
-            Notes = new List<PhotoInfoNote>();
-            Tags = new List<PhotoInfoTag>();
-            Urls = new List<PhotoInfoUrl>();
+            Notes = new System.Collections.ObjectModel.Collection<PhotoInfoNote>();
+            Tags = new System.Collections.ObjectModel.Collection<PhotoInfoTag>();
+            Urls = new System.Collections.ObjectModel.Collection<PhotoInfoUrl>();
         }
 
         /// <summary>
@@ -169,17 +169,17 @@ namespace FlickrNet
 		/// <summary>
 		/// The notes for the photo.
 		/// </summary>
-        public List<PhotoInfoNote> Notes { get; private set; }
+        public System.Collections.ObjectModel.Collection<PhotoInfoNote> Notes { get; private set; }
 
         /// <summary>
         /// The tags for the photo.
         /// </summary>
-        public List<PhotoInfoTag> Tags { get; private set; }
+        public System.Collections.ObjectModel.Collection<PhotoInfoTag> Tags { get; private set; }
 
         /// <summary>
         /// The urls for this photo.
         /// </summary>
-        public List<PhotoInfoUrl> Urls { get; private set; }
+        public System.Collections.ObjectModel.Collection<PhotoInfoUrl> Urls { get; private set; }
 
         /// <summary>
         /// The date the photo was posted/uploaded.
@@ -204,12 +204,12 @@ namespace FlickrNet
         /// <summary>
         /// Who has permissions to add comments to this photo.
         /// </summary>
-        public PermissionComment? PermissionComment;
+        public PermissionComment? PermissionComment { get; private set; }
 
         /// <summary>
         /// Who has permissions to add meta data (tags and notes) to this photo.
         /// </summary>
-        public PermissionAddMeta? PermissionAddMeta;
+        public PermissionAddMeta? PermissionAddMeta { get; private set; }
 
 		/// <summary>
 		/// The location information of this photo, if available.
@@ -217,7 +217,7 @@ namespace FlickrNet
 		/// <remarks>
 		/// Will be null if the photo has no location information stored on Flickr.
 		/// </remarks>
-		public PhotoLocation Location;
+        public PhotoLocation Location { get; private set; }
 
 		/// <summary>
 		/// The Web url for flickr web page for this photo.
@@ -571,22 +571,22 @@ namespace FlickrNet
 	/// <summary>
 	/// A class containing information about a note on a photo.
 	/// </summary>
-    public class PhotoInfoNote : IFlickrParsable
+    public sealed class PhotoInfoNote : IFlickrParsable
 	{
 		/// <summary>
 		/// The notes unique ID.
 		/// </summary>
-		public string NoteId;
+        public string NoteId { get; private set; }
 
 		/// <summary>
 		/// The User ID of the user who wrote the note.
 		/// </summary>
-		public string AuthorId;
+        public string AuthorId { get; private set; }
 
 		/// <summary>
 		/// The name of the user who wrote the note.
 		/// </summary>
-		public string AuthorName;
+        public string AuthorName { get; private set; }
 
 		/// <summary>
 		/// The x (left) position of the top left corner of the note.
@@ -681,7 +681,7 @@ namespace FlickrNet
 	/// <summary>
 	/// The details of a tag of a photo.
 	/// </summary>
-	public class PhotoInfoTag : IFlickrParsable
+    public sealed class PhotoInfoTag : IFlickrParsable
 	{
 		/// <summary>
 		/// The id of the tag.
@@ -753,12 +753,12 @@ namespace FlickrNet
     /// <summary>
     /// The details of a tag of a photo.
     /// </summary>
-    public class PhotoInfoUrl : IFlickrParsable
+    public sealed class PhotoInfoUrl : IFlickrParsable
     {
         /// <summary>
-        /// The id of the tag.
+        /// The url for the photoset.
         /// </summary>
-        public string Url { get; private set; }
+        public Uri Url { get; private set; }
 
         /// <summary>
         /// The author id of the tag.
@@ -784,7 +784,7 @@ namespace FlickrNet
 
             reader.Read();
 
-            Url = reader.ReadContentAsString();
+            Url = new Uri(reader.ReadContentAsString());
 
             reader.Skip();
         }

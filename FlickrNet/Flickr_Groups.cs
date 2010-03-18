@@ -93,7 +93,7 @@ namespace FlickrNet
         /// <returns>A <see cref="MemberCollection"/> instance containing the first 100 members for the group.</returns>
         public MemberCollection GroupsMembersGetList(string groupId)
         {
-            return GroupsMembersGetList(groupId, 0, 0, MemberTypes.NotSpecified);
+            return GroupsMembersGetList(groupId, 0, 0, MemberTypes.None);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace FlickrNet
             parameters.Add("api_key", _apiKey);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (memberTypes != MemberTypes.NotSpecified) parameters.Add("membertypes", UtilityMethods.MemberTypeToString(memberTypes));
+            if (memberTypes != MemberTypes.None) parameters.Add("membertypes", UtilityMethods.MemberTypeToString(memberTypes));
             parameters.Add("group_id", groupId);
 
             return GetResponseCache<MemberCollection>(parameters);

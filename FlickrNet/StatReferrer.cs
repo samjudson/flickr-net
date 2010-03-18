@@ -8,12 +8,12 @@ namespace FlickrNet
     /// The referrer details returned by <see cref="Flickr.StatsGetCollectionReferrers(DateTime, string, string, int, int)"/>, <see cref="Flickr.StatsGetPhotoReferrers(DateTime, string, string, int, int)"/>,
     /// <see cref="Flickr.StatsGetPhotosetReferrers(DateTime, string, string, int, int)"/> and <see cref="Flickr.StatsGetPhotostreamReferrers(DateTime, string, int, int)"/>.
     /// </summary>
-    public class StatReferrer: IFlickrParsable
+    public sealed class StatReferrer : IFlickrParsable
     {
         /// <summary>
         /// The url that the referrer referred from.
         /// </summary>
-        public string Url { get; set; }
+        public Uri Url { get; set; }
         /// <summary>
         /// The number of times that URL was referred from.
         /// </summary>
@@ -34,7 +34,7 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "url":
-                        Url = reader.Value;
+                        Url = new Uri(reader.Value);
                         break;
                     case "searchterm":
                         SearchTerm = reader.Value;

@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of popular photos as returned by <see cref="Flickr.StatsGetPopularPhotos(DateTime, PopularitySort, int, int)"/>
     /// </summary>
-    public class PopularPhotoCollection: List<PopularPhoto>, IFlickrParsable
+    public sealed class PopularPhotoCollection : System.Collections.ObjectModel.Collection<PopularPhoto>, IFlickrParsable
     {
         /// <summary>
         /// The page of the results returned. Will be 1 even if no results are returned.

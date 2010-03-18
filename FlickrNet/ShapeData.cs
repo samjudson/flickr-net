@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -11,15 +12,15 @@ namespace FlickrNet
     /// <remarks>
     /// See <a href="http://code.flickr.com/blog/2008/10/30/the-shape-of-alpha/">http://code.flickr.com/blog/2008/10/30/the-shape-of-alpha/</a> for more details.
     /// </remarks>
-    public class ShapeData : IFlickrParsable
+    public sealed class ShapeData : IFlickrParsable
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
         public ShapeData()
         {
-            PolyLines = new List<List<PointD>>();
-            Urls = new List<Uri>();
+            PolyLines = new Collection<Collection<PointD>>();
+            Urls = new Collection<Uri>();
         }
 
         /// <summary>
@@ -55,12 +56,12 @@ namespace FlickrNet
         /// <summary>
         /// A list of polylines making up the shape. Each polyline is itself a list of points.
         /// </summary>
-        public List<List<PointD>> PolyLines { get; private set; }
+        public Collection<Collection<PointD>> PolyLines { get; private set; }
 
         /// <summary>
         /// A list of urls for the shapefiles.
         /// </summary>
-        public List<Uri> Urls { get; private set; }
+        public Collection<Uri> Urls { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -101,7 +102,7 @@ namespace FlickrNet
                         reader.Read();
                         while (reader.LocalName == "polyline")
                         {
-                            List<PointD> polyline = new List<PointD>();
+                            Collection<PointD> polyline = new Collection<PointD>();
                             string polystring = reader.ReadElementContentAsString();
                             string[] points = polystring.Split(' ');
                             foreach (string point in points)
@@ -128,15 +129,18 @@ namespace FlickrNet
     /// </summary>
     public struct PointD
     {
+        private double _x;
+        private double _y;
+
         /// <summary>
         /// The X position of the point.
         /// </summary>
-        public double X;
+        public double X { get { return _x; } private set { _x = value; } }
 
         /// <summary>
         /// The Y position of the point.
         /// </summary>
-        public double Y;
+        public double Y { get { return _y; } private set { _y = value; } }
 
         /// <summary>
         /// Default constructor.
@@ -145,8 +149,8 @@ namespace FlickrNet
         /// <param name="y"></param>
         public PointD(double x, double y)
         {
-            X = x;
-            Y = y;
+            _x = x;
+            _y = y;
         }
     }
 }

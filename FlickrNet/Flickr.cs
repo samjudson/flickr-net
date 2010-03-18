@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
+    /// <summary>
 	/// The main Flickr class.
 	/// </summary>
 	/// <remarks>
@@ -31,14 +31,12 @@ namespace FlickrNet
 		/// <summary>
 		/// 
 		/// </summary>
-		public delegate void UploadProgressEventHandler(object sender, UploadProgressEventArgs e);
-
 		/// <summary>
 		/// UploadProgressHandler is fired during a synchronous upload process to signify that 
 		/// a segment of uploading has been completed. This is approximately 50 bytes. The total
 		/// uploaded is recorded in the <see cref="UploadProgressEventArgs"/> class.
 		/// </summary>
-		public event UploadProgressEventHandler OnUploadProgress;
+		public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
 		#endregion
 
 		#region [ Private Variables ]
@@ -298,6 +296,19 @@ namespace FlickrNet
 			Cache.FlushCache();
 		}
 
+        /// <summary>
+        /// Clears the cache for a particular URL.
+        /// </summary>
+        /// <param name="url">The URL to remove from the cache.</param>
+        /// <remarks>
+        /// The URL can either be an image URL for a downloaded picture, or
+        /// a request URL (see <see cref="LastRequest"/> for getting the last URL).
+        /// </remarks>
+        public static void FlushCache(string url)
+        {
+            FlushCache(new Uri(url));
+        }
+
 		/// <summary>
 		/// Clears the cache for a particular URL.
 		/// </summary>
@@ -306,7 +317,7 @@ namespace FlickrNet
 		/// The URL can either be an image URL for a downloaded picture, or
 		/// a request URL (see <see cref="LastRequest"/> for getting the last URL).
 		/// </remarks>
-		public static void FlushCache(string url)
+		public static void FlushCache(Uri url)
 		{
 			Cache.FlushCache(url);
 		}

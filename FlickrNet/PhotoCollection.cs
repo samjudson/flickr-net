@@ -8,8 +8,7 @@ using System.Xml;
 namespace FlickrNet
 {
 	/// <remarks/>
-	[Serializable]
-	public class PhotoCollection : List<Photo>, IXmlSerializable, IFlickrParsable
+    public sealed class PhotoCollection : System.Collections.ObjectModel.Collection<Photo>, IFlickrParsable
 	{
         /// <remarks/>
         public int Page { get; set; }
@@ -65,23 +64,5 @@ namespace FlickrNet
 
         }
 
-        #region IXmlSerializable Members
-
-        XmlSchema IXmlSerializable.GetSchema()
-        {
-            return null;
-        }
-
-        void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
-        {
-            ((IFlickrParsable)this).Load(reader);
-        }
-
-        void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
-        {
-            
-        }
-
-        #endregion
     }
 }

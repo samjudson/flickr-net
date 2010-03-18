@@ -9,7 +9,7 @@ namespace FlickrNet
     /// <summary>
     /// Details of the blog services supported by Flickr. e.g. Twitter, Blogger etc.
     /// </summary>
-    public class BlogService : IFlickrParsable
+    public sealed class BlogService : IFlickrParsable
     {
         /// <summary>
         /// The unique ID for the blog service supported by Flickr.

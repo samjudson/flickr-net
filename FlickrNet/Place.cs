@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for Place.
 	/// </summary>
-    public class Place : IFlickrParsable
+    public sealed class Place : IFlickrParsable
 	{
 		/// <summary>
 		/// The unique id for this place.
@@ -19,6 +19,10 @@ namespace FlickrNet
 		/// <summary>
 		/// The web page URL that corresponds to this place.
 		/// </summary>
+        /// <remarks>
+        /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
+        /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string PlaceUrl { get; private set; }
 
 		/// <summary>

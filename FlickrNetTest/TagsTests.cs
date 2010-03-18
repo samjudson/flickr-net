@@ -119,7 +119,7 @@ namespace FlickrNetTest
             var tags = TestData.GetInstance().TagsGetListPhoto(TestData.PhotoId);
 
             Assert.IsNotNull(tags, "tags should not be null.");
-            Assert.AreNotEqual(0, tags.Length, "Length should be greater than zero.");
+            Assert.AreNotEqual(0, tags.Count, "Length should be greater than zero.");
 
             foreach (var tag in tags)
             {

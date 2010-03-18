@@ -6,7 +6,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Permissions for the selected photo.
 	/// </summary>
-	public class GeoPermissions : IFlickrParsable
+	public sealed class GeoPermissions : IFlickrParsable
 	{
 		/// <summary>
 		/// The ID for the photo whose permissions these are.

@@ -7,7 +7,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Details for a Flickr member, as returned by the <see cref="Flickr.GroupsMembersGetList(string)"/> method.
 	/// </summary>
-    public class Member : IFlickrParsable
+    public sealed class Member : IFlickrParsable
     {
 
 		/// <summary>

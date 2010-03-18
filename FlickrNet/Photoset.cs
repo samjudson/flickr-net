@@ -7,9 +7,9 @@ namespace FlickrNet
     /// <summary>
     /// A set of properties for the photoset.
     /// </summary>
-    public class Photoset : IFlickrParsable
+    public sealed class Photoset : IFlickrParsable
     {
-        private string _url;
+        private Uri _url;
 
         /// <summary>
         /// The ID of the photoset.
@@ -19,11 +19,11 @@ namespace FlickrNet
         /// <summary>
         /// The URL of the photoset.
         /// </summary>
-        public string Url
+        public Uri Url
         {
             get
             {
-                if (String.IsNullOrEmpty(_url)) _url = String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
+                if (_url == null) _url = new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId));
                 return _url;
             }
             private set { _url = value; }
@@ -111,7 +111,7 @@ namespace FlickrNet
                         PhotosetId = reader.Value;
                         break;
                     case "url":
-                        Url = reader.Value;
+                        Url = new Uri(reader.Value);
                         break;
                     case "owner_id":
                     case "owner":

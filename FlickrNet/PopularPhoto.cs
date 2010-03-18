@@ -24,7 +24,7 @@ namespace FlickrNet
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
-            DoLoad(reader);
+            Load(reader);
 
             reader.Read();
 

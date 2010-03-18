@@ -8,7 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// The collection of favourites for a photo.
     /// </summary>
-    public class PhotoFavoriteCollection : List<PhotoFavorite>, IFlickrParsable
+    public sealed class PhotoFavoriteCollection : System.Collections.ObjectModel.Collection<PhotoFavorite>, IFlickrParsable
     {
         /// <summary>
         /// The ID of the photo.

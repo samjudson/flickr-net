@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// The details of a referring domain. Used in the Flickr Stats API.
     /// </summary>
-    public class StatDomain : IFlickrParsable
+    public sealed class StatDomain : IFlickrParsable
     {
         /// <summary>
         /// The name of the referring domain.

@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <summary>
 	/// A collection of members returned by the <see cref="Flickr.GroupsMembersGetList(string)"/> method.
 	/// </summary>
-    public class MemberCollection : List<Member>, IFlickrParsable
+    public sealed class MemberCollection : System.Collections.ObjectModel.Collection<Member>, IFlickrParsable
     {
 		/// <summary>
 		/// The page of the results returned.

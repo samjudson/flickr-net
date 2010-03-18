@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// The stats returned by <see cref="Flickr.StatsGetPhotoStats"/>, <see cref="Flickr.StatsGetPhotostreamStats"/>, <see cref="Flickr.StatsGetPhotosetStats"/> and <see cref="Flickr.StatsGetCollectionStats"/>
     /// </summary>
-    public class Stats: IFlickrParsable
+    public sealed class Stats : IFlickrParsable
     {
         /// <summary>
         /// The number of views the object in question has had (either Photostream, Collection, Photo or Photoset).

@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of referrers.
     /// </summary>
-    public class StatReferrerCollection: List<StatReferrer>, IFlickrParsable
+    public sealed class StatReferrerCollection : System.Collections.ObjectModel.Collection<StatReferrer>, IFlickrParsable
     {
         /// <summary>
         /// The page of this set of results.

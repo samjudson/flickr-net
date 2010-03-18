@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Collection of <see cref="Size"/> items for a given photograph.
 	/// </summary>
-	public class SizeCollection : List<Size>, IFlickrParsable
+    public sealed class SizeCollection : System.Collections.ObjectModel.Collection<Size>, IFlickrParsable
 	{
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -28,7 +28,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains details about all the sizes available for a given photograph.
 	/// </summary>
-	public class Size : IFlickrParsable
+    public sealed class Size : IFlickrParsable
 	{
 		/// <summary>
 		/// The label for the size, such as "Thumbnail", "Small", "Medium", "Large" and "Original".

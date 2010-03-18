@@ -13,7 +13,7 @@ namespace FlickrNet
 	/// protected by the lockFile.  Private methods should
 	/// not acquire the lockFile as it is not reentrant.
 	/// </summary>
-	internal sealed class PersistentCache
+	internal sealed class PersistentCache : IDisposable
 	{
 		// The in-memory representation of the cache.
 		// Use SortedList instead of Hashtable only to maintain backward 
@@ -336,5 +336,14 @@ namespace FlickrNet
 				return ((ICacheItem)x).CreationTime.CompareTo(((ICacheItem)y).CreationTime);
 			}
 		}
-	}
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if (lockFile != null) lockFile.Dispose();
+        }
+
+        #endregion
+    }
 }

@@ -8,7 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of the blog services that Flickr aupports. 
     /// </summary>
-    public class BlogServiceCollection : List<BlogService>, IFlickrParsable
+    public sealed class BlogServiceCollection : System.Collections.ObjectModel.Collection<BlogService>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

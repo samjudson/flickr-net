@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <summary>
 	/// 
 	/// </summary>
-	public class CollectionSet : IFlickrParsable
+    public sealed class CollectionSet : IFlickrParsable
 	{
 		private string _SetId;
 		private string _title;

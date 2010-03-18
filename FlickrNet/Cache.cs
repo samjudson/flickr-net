@@ -11,13 +11,6 @@ namespace FlickrNet
 	/// </summary>
 	internal sealed class Cache
 	{
-		private class CacheException : Exception
-		{
-			public CacheException(string message) : base(message)
-			{}
-
-		}
-
 		private static PersistentCache _downloads;
 
 
@@ -166,10 +159,10 @@ namespace FlickrNet
 			set { _cachetimeout = value; }
 		}
 		
-		internal static void FlushCache(string url)
+		internal static void FlushCache(Uri url)
 		{
-			Responses[url] = null;
-			Downloads[url] = null;
+			Responses[url.AbsoluteUri] = null;
+			Downloads[url.AbsoluteUri] = null;
 		}
 
 		internal static void FlushCache()
@@ -184,7 +177,7 @@ namespace FlickrNet
 	/// A cache item containing details of a REST response from Flickr.
 	/// </summary>
 	[Serializable]
-	public class ResponseCacheItem : ICacheItem
+    public sealed class ResponseCacheItem : ICacheItem
 	{
 		private string url;
 		private string response;
@@ -295,7 +288,7 @@ namespace FlickrNet
 	/// Contains details of image held with the Flickr.Net cache.
 	/// </summary>
 	[Serializable]
-	public class PictureCacheItem : ICacheItem
+    public sealed class PictureCacheItem : ICacheItem
 	{
 		#region [ Internal Variables ]
 		internal string url;
@@ -384,4 +377,48 @@ namespace FlickrNet
 			UtilityMethods.WriteString(outputStream, output.ToString());
 		}
 	}
+
+    /// <summary>
+    /// An internal class used for catching caching exceptions.
+    /// </summary>
+    public class CacheException : Exception
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheException"/> class.
+        /// </summary>
+        public CacheException()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheException"/> class with a specified error message.
+        /// </summary>
+        /// <param name="message"></param>
+        public CacheException(string message)
+            : base(message)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
+        public CacheException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CacheException"/> class with serialized data.
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        protected CacheException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+            : base(info, context)
+        {
+        }
+    }
 }

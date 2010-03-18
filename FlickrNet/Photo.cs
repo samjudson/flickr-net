@@ -1,15 +1,12 @@
 using System;
-using System.Xml.Serialization;
-using System.Xml.Schema;
 using System.Xml;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
 	/// <remarks/>
-	[System.Serializable]
-    [XmlRoot("photo")]
-    public class Photo : IXmlSerializable, IFlickrParsable
+    public class Photo : IFlickrParsable
 	{
 
 		private string _photoId;
@@ -40,12 +37,12 @@ namespace FlickrNet
 		private string _placeId;
 		private string _woeId;
 
-        private List<string> _tags = new List<string>();
+        private Collection<string> _tags = new Collection<string>();
 
         /// <summary>
         /// The list of clean tags for the photograph.
         /// </summary>
-        public List<string> Tags
+        public Collection<string> Tags
         {
             get { return _tags; }
         }
@@ -122,7 +119,6 @@ namespace FlickrNet
 		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
 		/// </summary>
         
-		[XmlIgnore]
 		public DateTime DateAdded
 		{
             get { return _dateAdded; } 
@@ -135,7 +131,6 @@ namespace FlickrNet
 		/// Converts the raw datetaken field to a <see cref="DateTime"/>.
 		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
 		/// </summary>
-        [XmlIgnore]
         public DateTime DateTaken
         {
             get { return _dateTaken; }
@@ -247,7 +242,6 @@ namespace FlickrNet
 		/// <summary>
 		/// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
 		/// </summary>
-		[XmlAttribute("longitude", Form=XmlSchemaForm.Unqualified)]
 		public decimal Longitude
 		{
 			get { return _longitude; }
@@ -257,7 +251,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
 		/// </summary>
-		[XmlAttribute("place_id", Form=XmlSchemaForm.Unqualified)]
 		public string PlaceId
 		{
 			get { return _placeId; }
@@ -267,7 +260,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The WOE (Where On Earth) ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
 		/// </summary>
-		[XmlAttribute("woeid", Form=XmlSchemaForm.Unqualified)]
 		public string WoeId
 		{
 			get { return _woeId; }
@@ -277,7 +269,6 @@ namespace FlickrNet
 		/// <summary>
 		/// Geo-location accuracy. A value of None means that the information was not returned.
 		/// </summary>
-		[XmlAttribute("accuracy", Form=XmlSchemaForm.Unqualified)]
 		public GeoAccuracy Accuracy
 		{
 			get { return _accuracy; }
@@ -287,7 +278,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
 		/// </summary>
-		[XmlAttribute("views", Form=XmlSchemaForm.Unqualified)]
 		public int Views
 		{
 			get { return _views; }
@@ -297,7 +287,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The media format for this photo. Only returned if PhotoSearchExtras.Media is set.
 		/// </summary>
-		[XmlAttribute("media", Form=XmlSchemaForm.Unqualified)]
 		public string Media
 		{
 			get { return _media; }
@@ -307,7 +296,6 @@ namespace FlickrNet
 		/// <summary>
 		/// The status of the media for this photo. Only returned if PhotoSearchExtras.Media is set.
 		/// </summary>
-		[XmlAttribute("media_status", Form=XmlSchemaForm.Unqualified)]
 		public string MediaStatus
 		{
 			get { return _mediaStatus; }
@@ -318,7 +306,6 @@ namespace FlickrNet
 		/// A helper method which tries to guess if a large image will be available for this photograph
 		/// based on the original dimensions returned with the photo.
 		/// </summary>
-		[XmlIgnore()]
 		public bool DoesLargeExist
 		{
 			get
@@ -336,7 +323,6 @@ namespace FlickrNet
 		/// A helper method which tries to guess if a medium image will be available for this photograph
 		/// based on the original dimensions returned with the photo.
 		/// </summary>
-		[XmlIgnore()]
 		public bool DoesMediumExist
 		{
 			get
@@ -359,7 +345,7 @@ namespace FlickrNet
 
         void IFlickrParsable.Load(XmlReader reader)
         {
-            DoLoad(reader);
+            Load(reader);
 
             reader.Skip();
         }
@@ -368,7 +354,7 @@ namespace FlickrNet
         /// Protected method that does the actual initialization of the Photo instance. Should be called by subclasses of the Photo class.
         /// </summary>
         /// <param name="reader">The reader containing the XML to be parsed.</param>
-        protected void DoLoad(XmlReader reader)
+        protected void Load(XmlReader reader)
         {
             if (reader.LocalName != "photo")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);
@@ -410,7 +396,10 @@ namespace FlickrNet
                         IsFriend = (reader.Value == "1");
                         break;
                     case "tags":
-                        Tags.AddRange(reader.Value.Split(' '));
+                        foreach (string tag in reader.Value.Split(' '))
+                        {
+                            Tags.Add(tag);
+                        }
                         break;
                     case "datetaken":
                         //e.g. 2007-11-04 08:55:18
@@ -487,26 +476,5 @@ namespace FlickrNet
             }
 
         }
-
-        #region IXmlSerializable Members
-
-        XmlSchema IXmlSerializable.GetSchema()
-        {
-            return null;
-        }
-
-        void IXmlSerializable.ReadXml(XmlReader reader)
-        {
-            ((IFlickrParsable)this).Load(reader);
-        }
-
-        void IXmlSerializable.WriteXml(XmlWriter writer)
-        {
-            
-        }
-
-        #endregion
-
     }
-
 }

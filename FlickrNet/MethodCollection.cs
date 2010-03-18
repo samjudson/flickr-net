@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for Methods.
 	/// </summary>
-	public class MethodCollection : List<string>, IFlickrParsable
+    public sealed class MethodCollection : System.Collections.ObjectModel.Collection<string>, IFlickrParsable
 	{
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -31,15 +31,15 @@ namespace FlickrNet
 	/// See <a href="http://www.flickr.com/services/api">Flickr API Documentation</a> for a complete list
 	/// of methods.
 	/// </remarks>
-	public class Method: IFlickrParsable
+    public sealed class Method : IFlickrParsable
 	{
         /// <summary>
         /// Default constructor.
         /// </summary>
         public Method()
         {
-            Arguments = new List<MethodArgument>();
-            Errors = new List<MethodError>();
+            Arguments = new System.Collections.ObjectModel.Collection<MethodArgument>();
+            Errors = new System.Collections.ObjectModel.Collection<MethodError>();
         }
 		/// <summary>
 		/// The name of the method.
@@ -79,12 +79,12 @@ namespace FlickrNet
 		/// <summary>
 		/// The arguments of the method.
 		/// </summary>
-        public List<MethodArgument> Arguments { get; set; }
+        public System.Collections.ObjectModel.Collection<MethodArgument> Arguments { get; set; }
 
 		/// <summary>
 		/// The possible errors that could be returned by the method.
 		/// </summary>
-        public List<MethodError> Errors { get; set; }
+        public System.Collections.ObjectModel.Collection<MethodError> Errors { get; set; }
 
 
         #region IFlickrParsable Members
@@ -179,22 +179,22 @@ namespace FlickrNet
 	/// <summary>
 	/// An argument for a method.
 	/// </summary>
-	public class MethodArgument : IFlickrParsable
+    public sealed class MethodArgument : IFlickrParsable
 	{
 		/// <summary>
 		/// The name of the argument.
 		/// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
 		/// <summary>
 		/// Is the argument optional or not.
 		/// </summary>
-        public bool IsOptional { get; set; }
+        public bool IsOptional { get; private set; }
 
 		/// <summary>
 		/// The description of the argument.
 		/// </summary>
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -229,7 +229,7 @@ namespace FlickrNet
 	/// <summary>
 	/// A possible error that a method can return.
 	/// </summary>
-	public class MethodError : IFlickrParsable
+    public sealed class MethodError : IFlickrParsable
 	{
 		/// <summary>
 		/// The code for the error.

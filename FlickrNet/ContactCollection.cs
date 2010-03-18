@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains a list of <see cref="Contact"/> items for a given user.
 	/// </summary>
-	public class ContactCollection : List<Contact>, IFlickrParsable
+    public sealed class ContactCollection : System.Collections.ObjectModel.Collection<Contact>, IFlickrParsable
 	{
         /// <summary>
         /// The total number of contacts that match the calling query.
@@ -75,7 +75,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains details of a contact for a particular user.
 	/// </summary>
-    public class Contact : IFlickrParsable
+    public sealed class Contact : IFlickrParsable
 	{
 		/// <summary>
 		/// The user id of the contact.

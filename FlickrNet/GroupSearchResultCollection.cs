@@ -7,7 +7,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Returned by <see cref="Flickr.GroupsSearch(string)"/> methods.
 	/// </summary>
-	public class GroupSearchResultCollection : List<GroupSearchResult>, IFlickrParsable
+    public sealed class GroupSearchResultCollection : System.Collections.ObjectModel.Collection<GroupSearchResult>, IFlickrParsable
 	{
 		/// <summary>
 		/// The current page that the group search results represents.
@@ -75,7 +75,7 @@ namespace FlickrNet
 	/// <summary>
 	/// A class which encapsulates a single group search result.
 	/// </summary>
-	public class GroupSearchResult : IFlickrParsable
+	public sealed class GroupSearchResult : IFlickrParsable
 	{
 		/// <summary>
 		/// The group id for the result.

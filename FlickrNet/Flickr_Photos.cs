@@ -637,8 +637,12 @@ namespace FlickrNet
             if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
             if (options.Licenses.Count != 0)
             {
-                string[] licenseArray = options.Licenses.ConvertAll<string>(delegate(LicenseType license) { return license.ToString("d"); }).ToArray();
-                parameters.Add("license", String.Join(",", licenseArray));
+                List<string> licenseArray = new List<string>();
+                foreach (LicenseType license in options.Licenses)
+                {
+                    licenseArray.Add(license.ToString("d"));
+                }
+                parameters.Add("license", String.Join(",", licenseArray.ToArray()));
             }
             if (options.PerPage != 0) parameters.Add("per_page", options.PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (options.Page != 0) parameters.Add("page", options.Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));

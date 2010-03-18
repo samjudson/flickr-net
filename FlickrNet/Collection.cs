@@ -1,13 +1,11 @@
 using System;
-using System.Xml.Serialization;
-using System.Xml.Schema;
 using System.Xml;
 using System.Collections.Generic;
 
 namespace FlickrNet
 {
 	/// <remarks/>
-	public class Collection : IFlickrParsable
+	public sealed class Collection : IFlickrParsable
 	{
 		private string _CollectionId;
 		private string _title;
@@ -44,7 +42,6 @@ namespace FlickrNet
 		/// <summary>
 		/// An array of <see cref="Collection"/> objects.
 		/// </summary>
-		[XmlElement("collection", Form = XmlSchemaForm.Unqualified)]
 		public Collection[] Collections
 		{
 			get { return _subcollections.ToArray(); }

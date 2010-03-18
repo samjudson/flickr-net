@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <summary>
 	/// The information about the number of photos a user has.
 	/// </summary>
-	public class PhotoCountCollection : List<PhotoCount>, IFlickrParsable
+    public sealed class PhotoCountCollection : System.Collections.ObjectModel.Collection<PhotoCount>, IFlickrParsable
 	{
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -33,7 +33,7 @@ namespace FlickrNet
 	/// <summary>
 	/// The specifics of a particular count.
 	/// </summary>
-	public class PhotoCount : IFlickrParsable
+    public sealed class PhotoCount : IFlickrParsable
 	{
 		/// <summary>Total number of photos between the FromDate and the ToDate.</summary>
 		/// <remarks/>

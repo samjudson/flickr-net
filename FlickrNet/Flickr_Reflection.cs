@@ -13,12 +13,12 @@ namespace FlickrNet
         /// <remarks>
         /// Note: Not all methods might be supported by the FlickrNet Library.</remarks>
         /// <returns></returns>
-        public string[] ReflectionGetMethods()
+        public MethodCollection ReflectionGetMethods()
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.reflection.getMethods");
 
-            return GetResponseNoCache<MethodCollection>(parameters).ToArray();
+            return GetResponseNoCache<MethodCollection>(parameters);
         }
 
         /// <summary>

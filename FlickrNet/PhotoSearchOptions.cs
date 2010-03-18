@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -237,12 +238,12 @@ namespace FlickrNet
 			set { _maxTakenDate = value; }
 		}
 
-        private List<LicenseType> _licenses = new List<LicenseType>();
+        private Collection<LicenseType> _licenses = new Collection<LicenseType>();
 
         /// <summary>
         /// The licenses you wish to search for.
         /// </summary>
-        public List<LicenseType> Licenses
+        public Collection<LicenseType> Licenses
         {
             get { return _licenses; }
         }

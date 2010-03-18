@@ -8,8 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// Information about public groups for a user.
     /// </summary>
-    [System.Serializable]
-    public class PublicGroupInfo : IFlickrParsable
+    public sealed class PublicGroupInfo : IFlickrParsable
     {
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace FlickrNet
     /// <summary>
     /// Contains the raw response from Flickr when an unknown method has been called. Used by <see cref="Flickr.TestGeneric"/>.
     /// </summary>
-    public class UnknownResponse : IFlickrParsable
+    public sealed class UnknownResponse : IFlickrParsable
     {
         /// <summary>
         /// The response from Flickr.

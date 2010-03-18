@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <remarks>
 	/// Includes the user's Flickr ID, name, the date of the activity and its content (if a comment).
 	/// </remarks>
-	public class ActivityEvent : IFlickrParsable
+	public sealed class ActivityEvent : IFlickrParsable
 	{
 		/// <summary>
 		/// The <see cref="ActivityEventType"/> of the event, either Comment or Note.

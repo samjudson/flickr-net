@@ -8,7 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of referring domains.
     /// </summary>
-    public class StatDomainCollection: List<StatDomain>, IFlickrParsable
+    public sealed class StatDomainCollection : System.Collections.ObjectModel.Collection<StatDomain>, IFlickrParsable
     {
         /// <summary>
         /// The page of this set of results.

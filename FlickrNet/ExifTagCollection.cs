@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <summary>
 	/// EXIF data for the selected photo.
 	/// </summary>
-	public class ExifTagCollection : List<ExifTag>, IFlickrParsable
+    public sealed class ExifTagCollection : System.Collections.ObjectModel.Collection<ExifTag>, IFlickrParsable
 	{
 		/// <summary>
 		/// The Photo ID for the photo whose EXIF data this is.

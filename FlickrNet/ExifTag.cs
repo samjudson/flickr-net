@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// Details of an individual EXIF tag.
     /// </summary>
-    public class ExifTag : IFlickrParsable
+    public sealed class ExifTag : IFlickrParsable
     {
         /// <summary>
         /// The type of EXIF data, e.g. EXIF, TIFF, GPS etc.

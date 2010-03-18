@@ -1,13 +1,14 @@
 using System;
 using System.Xml;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
     /// <summary>
     /// List containing <see cref="Tag"/> items.
     /// </summary>
-    public class TagCollection : List<Tag>, IFlickrParsable
+    public sealed class TagCollection : System.Collections.ObjectModel.Collection<Tag>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -27,7 +28,7 @@ namespace FlickrNet
     /// <summary>
 	/// A simple tag class, containing a tag name and optional count (for <see cref="Flickr.TagsGetListUserPopular()"/>)
 	/// </summary>
-	public class Tag : IFlickrParsable
+    public sealed class Tag : IFlickrParsable
 	{
 		/// <summary>
 		/// The name of the tag.
@@ -65,7 +66,7 @@ namespace FlickrNet
     /// <summary>
     /// List containing <see cref="RawTag"/> items.
     /// </summary>
-    public class RawTagCollection : List<RawTag>, IFlickrParsable
+    public sealed class RawTagCollection : System.Collections.ObjectModel.Collection<RawTag>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -85,20 +86,20 @@ namespace FlickrNet
 	/// <summary>
 	/// Raw tags, as returned by the <see cref="Flickr.TagsGetListUserRaw(string)"/> method.
 	/// </summary>
-	public class RawTag : IFlickrParsable
+    public sealed class RawTag : IFlickrParsable
 	{
         /// <summary>
         /// Default constructor.
         /// </summary>
         public RawTag()
         {
-            RawTags = new List<string>();
+            RawTags = new Collection<string>();
         }
 
 		/// <summary>
 		/// An array of strings containing the raw tags returned by the method.
 		/// </summary>
-		public List<string> RawTags { get; private set; }
+        public Collection<string> RawTags { get; private set; }
 
 		/// <summary>
 		/// The clean tag.

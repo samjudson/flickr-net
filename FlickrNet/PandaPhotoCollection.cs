@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos(string)"/> methods.
     /// </summary>
-    public class PandaPhotoCollection: List<Photo>, IFlickrParsable
+    public sealed class PandaPhotoCollection : System.Collections.ObjectModel.Collection<Photo>, IFlickrParsable
     {
         /// <summary>
         /// The number of seconds the application developer should wait before calling this panda again.

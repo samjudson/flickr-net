@@ -7,7 +7,7 @@ namespace FlickrNet
 	/// <summary>
 	/// A list of <see cref="PhotoComment"/> items.
 	/// </summary>
-	public class PhotoCommentCollection: List<PhotoComment>, IFlickrParsable
+    public sealed class PhotoCommentCollection : System.Collections.ObjectModel.Collection<PhotoComment>, IFlickrParsable
 	{
         /// <summary>
         /// The ID of photo for these comments.

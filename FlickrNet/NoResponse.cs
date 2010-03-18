@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// Used by the FlickrNet library when Flickr does not return anything in the body of a response, e.g. for update methods.
     /// </summary>
-    public class NoResponse : IFlickrParsable
+    public sealed class NoResponse : IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

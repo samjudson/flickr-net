@@ -48,7 +48,7 @@ namespace FlickrNet
 	/// A class which encapsulates a single property, an array of
 	/// <see cref="License"/> objects in its <see cref="LicenseCollection"/> property.
 	/// </summary>
-	public class LicenseCollection : List<License>, IFlickrParsable
+    public sealed class LicenseCollection : System.Collections.ObjectModel.Collection<License>, IFlickrParsable
 	{
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -68,7 +68,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Details of a particular license available from Flickr.
 	/// </summary>
-	public class License : IFlickrParsable
+    public sealed class License : IFlickrParsable
 	{
 		/// <summary>
         ///     The ID of the license. Used by <see cref="Flickr.PhotosGetInfo(string)"/> and 
@@ -80,7 +80,7 @@ namespace FlickrNet
         public string LicenseName { get; private set; }
 
 		/// <summary>The URL for the license text.</summary>
-        public string LicenseUrl { get; private set; }
+        public Uri LicenseUrl { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -95,7 +95,7 @@ namespace FlickrNet
                         LicenseName = reader.Value;
                         break;
                     case "url":
-                        LicenseUrl = reader.Value;
+                        LicenseUrl = new Uri(reader.Value);
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

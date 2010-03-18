@@ -6,7 +6,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains details of a user
 	/// </summary>
-	public class FoundUser : IFlickrParsable
+	public sealed class FoundUser : IFlickrParsable
 	{
 		/// <summary>
 		/// The ID of the found user.
@@ -67,7 +67,7 @@ namespace FlickrNet
 	/// <summary>
 	/// The upload status of the user, as returned by <see cref="Flickr.PeopleGetUploadStatus"/>.
 	/// </summary>
-	public class UserStatus : IFlickrParsable
+    public sealed class UserStatus : IFlickrParsable
 	{
 		/// <summary>
 		/// The id of the user object.

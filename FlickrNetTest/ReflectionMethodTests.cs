@@ -66,10 +66,10 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            string[] methodNames = f.ReflectionGetMethods();
+            MethodCollection methodNames = f.ReflectionGetMethods();
 
             Assert.IsNotNull(methodNames, "Should not be null");
-            Assert.AreNotEqual(0, methodNames.Length, "Should return some method names.");
+            Assert.AreNotEqual(0, methodNames.Count, "Should return some method names.");
             Assert.IsNotNull(methodNames[0], "First item should not be null");
 
         }
@@ -79,10 +79,10 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            string[] methodNames = f.ReflectionGetMethods();
+            MethodCollection methodNames = f.ReflectionGetMethods();
 
             Assert.IsNotNull(methodNames, "Should not be null");
-            Assert.AreNotEqual(0, methodNames.Length, "Should return some method names.");
+            Assert.AreNotEqual(0, methodNames.Count, "Should return some method names.");
             Assert.IsNotNull(methodNames[0], "First item should not be null");
 
             Type type = typeof(Flickr);

@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// The <see cref="Person"/> class contains details returned by the <see cref="Flickr.PeopleGetInfo"/>
 	/// method.
 	/// </summary>
-	public class Person : IFlickrParsable
+    public sealed class Person : IFlickrParsable
 	{
 		/// <summary>The user id of the user.</summary>
 		/// <remarks/>
@@ -212,7 +212,7 @@ namespace FlickrNet
 	/// <summary>
 	/// A summary of a users photos.
 	/// </summary>
-	public class PersonPhotosSummary : IFlickrParsable
+    public sealed class PersonPhotosSummary : IFlickrParsable
 	{
 		/// <summary>The first date the user uploaded a picture, converted into <see cref="DateTime"/> format.</summary>
 		public DateTime FirstDate { get; private set; }

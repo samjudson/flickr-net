@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A collection of photos returned by the <see cref="Flickr.PandaGetPhotos(string)"/> methods.
     /// </summary>
-    public class PeoplePhotoCollection : List<Photo>, IFlickrParsable
+    public sealed class PeoplePhotoCollection : System.Collections.ObjectModel.Collection<Photo>, IFlickrParsable
     {
         /// <summary>
         /// Only populate for authenticated calls to <see cref="Flickr.PeopleGetPhotosOf()"/>

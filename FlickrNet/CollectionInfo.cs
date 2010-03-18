@@ -8,7 +8,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for CollectionInfo.
 	/// </summary>
-	public class CollectionInfo : IFlickrParsable
+    public sealed class CollectionInfo : IFlickrParsable
 	{
 		private string _title;
 		private string _description;

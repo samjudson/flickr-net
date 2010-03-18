@@ -8,7 +8,7 @@ namespace FlickrNet
     /// Contains the details of a comment made on a photo.
     /// returned by the <see cref="Flickr.PhotosCommentsGetList"/> method.
     /// </summary>
-    public class PhotoComment : IFlickrParsable
+    public sealed class PhotoComment : IFlickrParsable
     {
         /// <summary>
         /// The photo id associated with this comment.

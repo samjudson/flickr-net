@@ -8,7 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// Detailed information about a place. Returned by <see cref="Flickr.PlacesGetInfo"/>.
     /// </summary>
-    public class PlaceInfo : IFlickrParsable
+    public sealed class PlaceInfo : IFlickrParsable
     {
 		/// <summary>
 		/// The unique id for this place.
@@ -18,6 +18,10 @@ namespace FlickrNet
 		/// <summary>
 		/// The web page URL that corresponds to this place.
 		/// </summary>
+        /// <remarks>
+        /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
+        /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string PlaceUrl { get; private set; }
 
 		/// <summary>

@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// List containing <see cref="PublicGroupInfo"/> items.
     /// </summary>
-    public class PublicGroupInfoCollection : List<PublicGroupInfo>, IFlickrParsable
+    public sealed class PublicGroupInfoCollection : System.Collections.ObjectModel.Collection<PublicGroupInfo>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

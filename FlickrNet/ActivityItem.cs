@@ -8,14 +8,14 @@ namespace FlickrNet
 	/// Activity class used for <see cref="Flickr.ActivityUserPhotos()"/>
 	/// and <see cref="Flickr.ActivityUserComments"/>.
 	/// </summary>
-	public class ActivityItem : IFlickrParsable
+	public sealed class ActivityItem : IFlickrParsable
 	{
         /// <summary>
         /// Default constructor.
         /// </summary>
         public ActivityItem()
         {
-            Events = new List<ActivityEvent>();
+            Events = new System.Collections.ObjectModel.Collection<ActivityEvent>();
         }
 
 		/// <summary>
@@ -137,7 +137,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The events that comprise this activity item.
 		/// </summary>
-		public List<ActivityEvent> Events { get; private set; }
+		public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; private set; }
 
 		void IFlickrParsable.Load(XmlReader reader)
 		{

@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of photos contained within a photoset.
     /// </summary>
-    public class PhotosetPhotoCollection: List<Photo>, IFlickrParsable
+    public sealed class PhotosetPhotoCollection : System.Collections.ObjectModel.Collection<Photo>, IFlickrParsable
     {
         /// <summary>
         /// The id for the photoset.

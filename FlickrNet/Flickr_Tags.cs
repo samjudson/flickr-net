@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -13,7 +14,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="photoId">The id of the photo to return tags for.</param>
         /// <returns>An instance of the <see cref="PhotoInfo"/> class containing only the <see cref="PhotoInfo.Tags"/> property.</returns>
-        public PhotoInfoTag[] TagsGetListPhoto(string photoId)
+        public Collection<PhotoInfoTag> TagsGetListPhoto(string photoId)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListPhoto");
@@ -21,7 +22,7 @@ namespace FlickrNet
             parameters.Add("photo_id", photoId);
 
             PhotoInfo info = GetResponseCache<PhotoInfo>(parameters);
-            return info.Tags.ToArray();
+            return info.Tags;
         }
 
         /// <summary>

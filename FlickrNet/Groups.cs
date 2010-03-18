@@ -10,26 +10,25 @@ namespace FlickrNet
 	/// </summary>
 	/// <remarks>Used by <see cref="Flickr.GroupsBrowse()"/> and
 	/// <see cref="Flickr.GroupsBrowse(string)"/>.</remarks>
-	[System.Serializable]
 	public class Group
 	{
 		/// <summary>
 		/// The id of the group.
 		/// </summary>
-		[XmlAttribute("nsid", Form=XmlSchemaForm.Unqualified)]
-		public string GroupId;
+        [XmlAttribute("nsid", Form = XmlSchemaForm.Unqualified)]
+        public string GroupId { get; internal set; }
     
 		/// <summary>
 		/// The name of the group
 		/// </summary>
 		[XmlAttribute("name", Form=XmlSchemaForm.Unqualified)]
-		public string GroupName;
+        public string GroupName { get; internal set; }
 
 		/// <summary>
 		/// The number of memebers of the group.
 		/// </summary>
 		[XmlAttribute("members", Form=XmlSchemaForm.Unqualified)]
-		public int Members;
+        public int Members { get; internal set; }
 	}
 
 	/// <summary>
@@ -40,7 +39,7 @@ namespace FlickrNet
 	/// The reason for a <see cref="Group"/> and <see cref="GroupFullInfo"/> are due to xml serialization
 	/// incompatabilities.
 	/// </remarks>
-	public class GroupFullInfo : IFlickrParsable
+	public sealed class GroupFullInfo : IFlickrParsable
 	{
 		/// <remarks/>
         public string GroupId { get; private set; }
@@ -215,7 +214,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Throttle information about a group (i.e. posting limit)
 	/// </summary>
-	public class GroupThrottleInfo : IFlickrParsable
+	public sealed class GroupThrottleInfo : IFlickrParsable
 	{
 		/// <summary>
 		/// The number of posts in each period allowed to this group.
@@ -277,7 +276,7 @@ namespace FlickrNet
     /// <summary>
     /// The restrictions that apply to a group's pool.
     /// </summary>
-    public class GroupInfoRestrictions : IFlickrParsable
+    public sealed class GroupInfoRestrictions : IFlickrParsable
     {
         /// <summary>
         /// Are photos allowed to be added to this pool.

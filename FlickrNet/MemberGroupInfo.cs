@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// Information about a group the authenticated user is a member of.
     /// </summary>
-    public class MemberGroupInfo : IFlickrParsable
+    public sealed class MemberGroupInfo : IFlickrParsable
     {
         /// <summary>
         /// Property which returns the group id for the group.

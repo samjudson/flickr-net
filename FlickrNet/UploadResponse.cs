@@ -72,13 +72,13 @@ namespace FlickrNet
         /// Other codes are specific to a method.
         /// </remarks>
         [XmlAttribute("code", Form = XmlSchemaForm.Unqualified)]
-        public int Code;
+        public int Code { get; set; }
 
         /// <summary>
         /// The verbose message matching the error code.
         /// </summary>
         [XmlAttribute("msg", Form = XmlSchemaForm.Unqualified)]
-        public string Message;
+        public string Message { get; set; }
 
         /// <summary>
         /// The default constructor for a response error.
@@ -102,6 +102,7 @@ namespace FlickrNet
     /// <summary>
     /// The status of the response, either ok or fail.
     /// </summary>
+    [Serializable]
     public enum ResponseStatus
     {
         /// <summary>

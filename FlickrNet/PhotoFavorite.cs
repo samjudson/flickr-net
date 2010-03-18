@@ -9,7 +9,7 @@ namespace FlickrNet
     /// <summary>
     /// Details of the favourites for a photo.
     /// </summary>
-    public class PhotoFavorite: IFlickrParsable
+    public sealed class PhotoFavorite : IFlickrParsable
     {
         /// <summary>
         /// The Flickr User ID of the user who favourited the photo.

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Xml;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -13,7 +14,7 @@ namespace FlickrNet
 	/// <see cref="Flickr.PhotosetsGetContext"/>
 	///  and <see cref="Flickr.GroupsPoolsGetContext"/> methods.
 	/// </summary>
-	public class Context : IFlickrParsable
+    public sealed class Context : IFlickrParsable
 	{
 		/// <summary>
 		/// The number of photos in the current context, e.g. Group, Set or photostream.
@@ -54,7 +55,7 @@ namespace FlickrNet
 	/// <summary>
 	/// The next (or previous) photo in the current context.
 	/// </summary>
-	public class ContextPhoto : IFlickrParsable
+    public sealed class ContextPhoto : IFlickrParsable
 	{
 		/// <summary>
 		/// The id of the next photo. Will be "0" if this photo is the last.
@@ -137,25 +138,25 @@ namespace FlickrNet
 	/// <summary>
 	/// All contexts that a photo is in.
 	/// </summary>
-	public class AllContexts : IFlickrParsable
+    public sealed class AllContexts : IFlickrParsable
 	{
 		/// <summary>
 		/// An array of <see cref="ContextSet"/> objects for the current photo.
 		/// </summary>
-		public List<ContextSet> Sets { get; private set; }
+		public Collection<ContextSet> Sets { get; private set; }
 
 		/// <summary>
 		/// An array of <see cref="ContextGroup"/> objects for the current photo.
 		/// </summary>
-		public List<ContextGroup> Groups { get; private set; }
+		public Collection<ContextGroup> Groups { get; private set; }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         public AllContexts()
         {
-            Sets = new List<ContextSet>();
-            Groups = new List<ContextGroup>();
+            Sets = new Collection<ContextSet>();
+            Groups = new Collection<ContextGroup>();
         }
 
         void IFlickrParsable.Load(XmlReader reader)
