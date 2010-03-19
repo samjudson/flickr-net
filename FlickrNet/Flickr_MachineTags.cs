@@ -215,8 +215,6 @@ namespace FlickrNet
         /// </summary>
         /// <param name="namespaceName">The namespace that all values should be restricted to.</param>
         /// <param name="predicate">The predicate that all values should be restricted to.</param>
-        /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
-        /// <param name="perPage">Number of values to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns></returns>
         public ValueCollection MachinetagsGetRecentValues(string namespaceName, string predicate)
         {

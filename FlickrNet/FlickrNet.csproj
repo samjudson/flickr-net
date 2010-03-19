@@ -139,6 +139,8 @@
     <Compile Include="Cache.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Cluster.cs" />
+    <Compile Include="ClusterCollection.cs" />
     <Compile Include="EchoResponseDictionary.cs" />
     <Compile Include="ExifTag.cs" />
     <Compile Include="Flickr_Commons.cs" />
@@ -164,6 +166,8 @@
     <Compile Include="CollectionSet.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HotTag.cs" />
+    <Compile Include="HotTagCollection.cs" />
     <Compile Include="Institution.cs" />
     <Compile Include="InstitutionCollection.cs" />
     <Compile Include="MemberGroupInfo.cs" />

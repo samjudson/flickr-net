@@ -131,5 +131,55 @@ namespace FlickrNetTest
 
         }
 
+        [TestMethod]
+        public void TagsGetClustersNewcastleTest()
+        {
+            var col = TestData.GetInstance().TagsGetClusters("newcastle");
+
+            Assert.IsNotNull(col);
+
+            Assert.AreEqual(4, col.Count, "Count should be four.");
+            Assert.AreEqual(col.TotalClusters, col.Count);
+            Assert.AreEqual("newcastle", col.SourceTag);
+
+            Assert.AreEqual("water-ocean-clouds", col[0].ClusterId);
+
+            foreach (var c in col)
+            {
+                Assert.AreNotEqual(0, c.TotalTags, "TotalTags should not be zero.");
+                Assert.IsNotNull(c.Tags, "Tags should not be null.");
+                Assert.IsTrue(c.Tags.Count >= 3);
+                Assert.IsNotNull(c.ClusterId);
+            }
+        }
+
+        [TestMethod]
+        public void TagsGetClusterPhotosNewcastleTest()
+        {
+            Flickr f = TestData.GetInstance();
+            var col = f.TagsGetClusters("newcastle");
+
+            foreach (var c in col)
+            {
+                var ps = f.TagsGetClusterPhotos(c);
+                Assert.IsNotNull(ps);
+                Assert.AreNotEqual(0, ps.Count);
+            }
+        }
+
+        [TestMethod]
+        public void TagsGetHotListTest()
+        {
+            var col = TestData.GetInstance().TagsGetHotList();
+
+            Assert.AreNotEqual(0, col.Count, "Count should not be zero.");
+
+            foreach (var c in col)
+            {
+                Assert.IsNotNull(c);
+                Assert.IsNotNull(c.Tag);
+                Assert.AreNotEqual(0, c.Score);
+            }
+        }
     }
 }

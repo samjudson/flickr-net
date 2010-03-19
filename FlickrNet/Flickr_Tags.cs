@@ -136,5 +136,89 @@ namespace FlickrNet
 
             return GetResponseCache<TagCollection>(parameters);
         }
+
+        /// <summary>
+        /// Gives you a list of tag clusters for the given tag.
+        /// </summary>
+        /// <param name="tag">The tag to fetch clusters for.</param>
+        /// <returns></returns>
+        public ClusterCollection TagsGetClusters(string tag)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.tags.getClusters");
+            parameters.Add("tag", tag);
+
+            return GetResponseCache<ClusterCollection>(parameters);
+        }
+
+        /// <summary>
+        /// Returns the first 24 photos for a given tag cluster.
+        /// </summary>
+        /// <param name="cluster">The <see cref="Cluster"/> instance to return the photos for.</param>
+        /// <returns></returns>
+        public PhotoCollection TagsGetClusterPhotos(Cluster cluster)
+        {
+            return TagsGetClusterPhotos(cluster.SourceTag, cluster.ClusterId, PhotoSearchExtras.None);
+        }
+
+        /// <summary>
+        /// Returns the first 24 photos for a given tag cluster.
+        /// </summary>
+        /// <param name="cluster">The <see cref="Cluster"/> instance to return the photos for.</param>
+        /// <param name="extras">Extra information to return with each photo.</param>
+        /// <returns></returns>
+        public PhotoCollection TagsGetClusterPhotos(Cluster cluster, PhotoSearchExtras extras)
+        {
+            return TagsGetClusterPhotos(cluster.SourceTag, cluster.ClusterId, extras);
+        }
+
+        /// <summary>
+        /// Returns the first 24 photos for a given tag cluster.
+        /// </summary>
+        /// <param name="tag">The tag whose cluster photos you want to return.</param>
+        /// <param name="clusterId">The cluster id for the cluster you want to return the photos. This is the first three subtags of the tag cluster appended with hyphens ('-').</param>
+        /// <param name="extras">Extra information to return with each photo.</param>
+        /// <returns></returns>
+        public PhotoCollection TagsGetClusterPhotos(string tag, string clusterId, PhotoSearchExtras extras)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.tags.getClusterPhotos");
+            parameters.Add("tag", tag);
+            parameters.Add("cluster_id", clusterId);
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+
+            return GetResponseCache<PhotoCollection>(parameters);
+        }
+
+        /// <summary>
+        /// Returns a list of hot tags for the given period.
+        /// </summary>
+        /// <returns></returns>
+        public HotTagCollection TagsGetHotList()
+        {
+            return TagsGetHotList(null, 0);
+        }
+
+        /// <summary>
+        /// Returns a list of hot tags for the given period.
+        /// </summary>
+        /// <param name="period">The period for which to fetch hot tags. Valid values are day and week (defaults to day).</param>
+        /// <param name="count">The number of tags to return. Defaults to 20. Maximum allowed value is 200.</param>
+        /// <returns></returns>
+        public HotTagCollection TagsGetHotList(string period, int count)
+        {
+            if (!String.IsNullOrEmpty(period) && period != "day" && period != "week")
+            {
+                throw new ArgumentException("Period must be either 'day' or 'week'.", "period");
+            }
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.tags.getHotList");
+            if (!String.IsNullOrEmpty(period)) parameters.Add("period", period);
+            if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+
+            return GetResponseCache<HotTagCollection>(parameters);
+
+        }
     }
 }
