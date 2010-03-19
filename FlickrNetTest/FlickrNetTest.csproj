@@ -74,6 +74,7 @@
     <Compile Include="GroupsTests.cs" />
     <Compile Include="GroupsPoolsTests.cs" />
     <Compile Include="InterestingnessTests.cs" />
+    <Compile Include="MachinetagsTests.cs" />
     <Compile Include="PandaTest.cs" />
     <Compile Include="PeopleGetPhotosOfTests.cs" />
     <Compile Include="PeopleTests.cs" />

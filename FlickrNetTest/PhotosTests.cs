@@ -189,5 +189,25 @@ namespace FlickrNetTest
                     Console.WriteLine("No Medium Url");
             }
         }
+
+        [TestMethod]
+        public void PhotosUploadCheckTicketsTest()
+        {
+            Flickr f = TestData.GetInstance();
+
+            string[] tickets = new string[3];
+            tickets[0] = "invalid1";
+            tickets[1] = "invalid2";
+            tickets[2] = "invalid3";
+
+            var t = f.PhotosUploadCheckTickets(tickets);
+
+            Assert.AreEqual(3, t.Count);
+
+            Assert.AreEqual("invalid1", t[0].TicketId);
+            Assert.IsNull(t[0].PhotoId);
+            Assert.IsTrue(t[0].InvalidTicketId);
+
+        }
     }
 }

@@ -143,6 +143,7 @@
     <Compile Include="ExifTag.cs" />
     <Compile Include="Flickr_Commons.cs" />
     <Compile Include="Flickr_Galleries.cs" />
+    <Compile Include="Flickr_MachineTags.cs" />
     <Compile Include="Flickr_Upload.cs" />
     <Compile Include="Gallery.cs" />
     <Compile Include="GalleryCollection.cs" />
@@ -167,6 +168,10 @@
     <Compile Include="InstitutionCollection.cs" />
     <Compile Include="MemberGroupInfo.cs" />
     <Compile Include="MemberGroupInfoCollection.cs" />
+    <Compile Include="Namespace.cs" />
+    <Compile Include="NamespaceCollection.cs" />
+    <Compile Include="Pair.cs" />
+    <Compile Include="PairCollection.cs" />
     <Compile Include="PhotoComment.cs" />
     <Compile Include="PhotoCommentCollection.cs">
       <SubType>Code</SubType>
@@ -206,6 +211,8 @@
     <Compile Include="PopularitySort.cs" />
     <Compile Include="PopularPhoto.cs" />
     <Compile Include="PopularPhotoCollection.cs" />
+    <Compile Include="Predicate.cs" />
+    <Compile Include="PredicateCollection.cs" />
     <Compile Include="PublicGroupInfo.cs" />
     <Compile Include="PublicGroupInfoCollection.cs" />
     <Compile Include="ShapeData.cs" />
@@ -341,6 +348,8 @@
     <Compile Include="Tags.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Ticket.cs" />
+    <Compile Include="TicketCollection.cs" />
     <Compile Include="UnknownResponse.cs" />
     <Compile Include="UploadResponse.cs">
       <SubType>Code</SubType>
@@ -355,6 +364,8 @@
     <Compile Include="UtilityMethods.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Value.cs" />
+    <Compile Include="ValueCollection.cs" />
     <None Include="example_app.config" />
     <None Include="FlickrNet.ndoc" />
     <None Include="FlickrNet.snk" />

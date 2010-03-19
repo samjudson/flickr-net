@@ -61,6 +61,10 @@ namespace FlickrNet
             return (HiddenFromSearch)int.Parse(nav.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
+        /// <summary>
+        /// Returns the default privacy level preference for the user. 
+        /// </summary>
+        /// <returns></returns>
         public PrivacyFilter PrefsGetPrivacy()
         {
             CheckRequiresAuthentication();

@@ -30,5 +30,19 @@ namespace FlickrNet
             GetResponseNoCache<NoResponse>(parameters);
         }
 
+        /// <summary>
+        /// Checks the status of one or more asynchronous photo upload tickets.
+        /// </summary>
+        /// <param name="tickets">A list of ticket ids</param>
+        /// <returns></returns>
+        public TicketCollection PhotosUploadCheckTickets(string[] tickets)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.photos.upload.checkTickets");
+            parameters.Add("tickets", String.Join(",", tickets));
+
+            return GetResponseNoCache<TicketCollection>(parameters);
+        }
+
     }
 }

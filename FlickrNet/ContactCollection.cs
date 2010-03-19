@@ -33,7 +33,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "contacts")
-                throw new XmlException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
 
             while (reader.MoveToNextAttribute())
             {
