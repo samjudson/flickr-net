@@ -227,9 +227,12 @@ namespace FlickrNet
 		/// <summary>
 		/// The Web url for flickr web page for this photo.
 		/// </summary>
-		public string WebUrl
+		public Uri WebUrl
 		{
-            get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId); }
+            get
+            {
+                return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId));
+            }
 		}
 
 		/// <summary>

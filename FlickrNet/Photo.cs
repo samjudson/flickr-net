@@ -131,9 +131,12 @@ namespace FlickrNet
 		/// The url to the web page for this photo. Uses the users userId, not their web alias, but
 		/// will still work.
 		/// </summary>
-		public string WebUrl
+		public Uri WebUrl
 		{
-            get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", UserId, PhotoId); }
+            get
+            {
+                return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", PathAlias ?? UserId, PhotoId));
+            }
 		}
 
 		/// <summary>
@@ -547,7 +550,7 @@ namespace FlickrNet
                         DateFavorited = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
-                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
                         //break;
                 }
             }

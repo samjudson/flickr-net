@@ -109,7 +109,6 @@ namespace FlickrNet
 		{
             List<string> extraList = new List<string>();
 
-			System.Text.StringBuilder sb = new System.Text.StringBuilder();
             if ((extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken) extraList.Add("date_taken");
             if ((extras & PhotoSearchExtras.DateUploaded) == PhotoSearchExtras.DateUploaded) extraList.Add("date_upload");
             if ((extras & PhotoSearchExtras.IconServer) == PhotoSearchExtras.IconServer) extraList.Add("icon_server");
@@ -248,33 +247,61 @@ namespace FlickrNet
 			return new string(chars);
 		}
 
-		private const string photoUrl = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
+		private const string photoUrlFormat = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
 
-		internal static Uri UrlFormat(Photo p, string size, string format)
+		internal static Uri UrlFormat(Photo p, string size, string extension)
 		{
-			if( size == "_o" )
-				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, format);
+			if( size == "_o" || size == "original" )
+				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
 			else
-				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
+				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
 		}
 
-		internal static Uri UrlFormat(PhotoInfo p, string size, string format)
+		internal static Uri UrlFormat(PhotoInfo p, string size, string extension)
 		{
-			if( size == "_o" )
-				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, format);
+            if (size == "_o" || size == "original")
+				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
 			else
-				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
+				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
 		}
 
-		internal static Uri UrlFormat(Photoset p, string size, string format)
+        internal static Uri UrlFormat(Photoset p, string size, string extension)
 		{
-			return UrlFormat(photoUrl, p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, format);
+			return UrlFormat(p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, extension);
 		}
 
-		private static Uri UrlFormat(string format, params object[] parameters)
+        internal static Uri UrlFormat(string farm, string server, string photoid, string secret, string size, string extension)
+        {
+            switch (size)
+            {
+                case "square":
+                    size = "_s";
+                    break;
+                case "thumbnail":
+                    size = "_t";
+                    break;
+                case "small":
+                    size = "_m";
+                    break;
+                case "medium":
+                    size = "";
+                    break;
+                case "large":
+                    size = "_b";
+                    break;
+                case "original":
+                    size = "_o";
+                    break;
+            }
+
+            return UrlFormat(photoUrlFormat, farm, server, photoid, secret, size, extension);
+        }
+
+        private static Uri UrlFormat(string format, params object[] parameters)
 		{
 			return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters));
 		}
+
 
         internal static MemberTypes ParseIdToMemberType(string memberTypeId)
         {
@@ -357,6 +384,7 @@ namespace FlickrNet
             }
             return output;
         }
+
 
     }
 

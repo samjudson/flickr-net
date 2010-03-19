@@ -66,8 +66,10 @@
     <Compile Include="AuthTests.cs" />
     <Compile Include="BlogTests.cs" />
     <Compile Include="CollectionTests.cs" />
+    <Compile Include="CommonsTests.cs" />
     <Compile Include="ContactsTests.cs" />
     <Compile Include="FavoritesTests.cs" />
+    <Compile Include="GalleriesTests.cs" />
     <Compile Include="GeoTests.cs" />
     <Compile Include="GroupsTests.cs" />
     <Compile Include="GroupsPoolsTests.cs" />

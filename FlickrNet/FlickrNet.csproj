@@ -141,7 +141,11 @@
     </Compile>
     <Compile Include="EchoResponseDictionary.cs" />
     <Compile Include="ExifTag.cs" />
+    <Compile Include="Flickr_Commons.cs" />
+    <Compile Include="Flickr_Galleries.cs" />
     <Compile Include="Flickr_Upload.cs" />
+    <Compile Include="Gallery.cs" />
+    <Compile Include="GalleryCollection.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GroupCategory.cs">
       <SubType>Code</SubType>
@@ -158,6 +162,8 @@
     <Compile Include="CollectionSet.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Institution.cs" />
+    <Compile Include="InstitutionCollection.cs" />
     <Compile Include="MemberGroupInfo.cs" />
     <Compile Include="MemberGroupInfoCollection.cs" />
     <Compile Include="PhotoComment.cs" />
