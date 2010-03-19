@@ -330,7 +330,7 @@ namespace FlickrNet
 		{
 			get
 			{
-				if( OriginalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
+                if (url_l != null) return true;
 
 				if( OriginalHeight > 1280 || OriginalWidth > 1280 ) 
 					return true;
@@ -347,7 +347,7 @@ namespace FlickrNet
 		{
 			get
 			{
-				if( OriginalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
+                if (url_m != null) return true;
 
 				if( OriginalHeight > 500 || OriginalWidth > 500 ) 
 					return true;

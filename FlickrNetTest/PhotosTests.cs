@@ -145,5 +145,49 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(context);
         }
+
+        [TestMethod]
+        public void PhotosGetSizes50Test()
+        {
+            Flickr.FlushCache();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "microsoft";
+            o.PerPage = 50;
+
+            PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
+
+            foreach (Photo p in photos)
+            {
+                var sizes = TestData.GetInstance().PhotosGetSizes(p.PhotoId);
+                foreach (var s in sizes)
+                {
+
+                }
+            }
+        }
+
+        [TestMethod]
+        public void PhotosSearchDoesLargeExist()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Extras = PhotoSearchExtras.AllUrls;
+            o.PerPage = 50;
+            o.Tags = "test";
+
+            PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
+
+            foreach (Photo p in photos)
+            {
+                if (p.DoesLargeExist)
+                    Console.WriteLine(p.LargeUrl);
+                else
+                    Console.WriteLine("No Large Url");
+                if (p.DoesMediumExist)
+                    Console.WriteLine(p.MediumUrl);
+                else
+                    Console.WriteLine("No Medium Url");
+            }
+        }
     }
 }
