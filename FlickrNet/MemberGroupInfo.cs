@@ -94,7 +94,7 @@ namespace FlickrNet
                         IconFarm = reader.Value;
                         break;
                     case "photos":
-                        Photos = long.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        Photos = long.Parse(reader.Value, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

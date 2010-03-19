@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
-using System.Xml.XPath;
 
 namespace FlickrNet
 {
@@ -20,7 +19,7 @@ namespace FlickrNet
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
             List<string> pandas = new List<string>();
-            foreach (XPathNavigator n in response.GetXPathNavigator().Select("//panda/text()"))
+            foreach (System.Xml.XmlNode n in response.GetXmlDocument().SelectNodes("//panda/text()"))
             {
                 pandas.Add(n.Value);
             }

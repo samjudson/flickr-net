@@ -432,7 +432,7 @@ namespace FlickrNet
         {
             if (includeSignature)
             {
-                SortedDictionary<string, string> sorted = new SortedDictionary<string, string>();
+                SortedList<string, string> sorted = new SortedList<string, string>();
                 foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
 
                 StringBuilder sb = new StringBuilder(ApiSecret);
@@ -445,7 +445,7 @@ namespace FlickrNet
             url.Append("?");
             foreach (KeyValuePair<string, string> pair in parameters)
             {
-                url.AppendFormat("{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value));
+                url.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value));
             }
 
             return new Uri(BaseUri, new Uri(url.ToString(), UriKind.Relative));

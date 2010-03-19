@@ -20,8 +20,8 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@url");
-            return nav == null ? null : new Uri(nav.Value);
+            System.Xml.XmlNode node = response.GetXmlDocument().SelectSingleNode("*/@url");
+            return node == null ? null : new Uri(node.Value);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@url");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@url");
             return nav == null ? null : new Uri(nav.Value);
         }
 
@@ -76,7 +76,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@url");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@url");
             return nav == null ? null : new Uri(nav.Value);
         }
 
@@ -104,7 +104,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@id");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@id");
             return nav == null ? null : nav.Value;
         }
 

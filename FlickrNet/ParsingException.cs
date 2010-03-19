@@ -40,6 +40,7 @@ namespace FlickrNet
         {
         }
 
+#if !WindowsCE
         /// <summary>
         /// Initializes a new instance of the <see cref="ParsingException"/> class with serialized data.
         /// </summary>
@@ -49,5 +50,6 @@ namespace FlickrNet
             : base(info, context)
         {
         }
+#endif
     }
 }

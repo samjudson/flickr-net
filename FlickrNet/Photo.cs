@@ -92,12 +92,12 @@ namespace FlickrNet
         public DateTime DateTaken { get; private set; }
 
         /// <summary>
-        /// The date the photo was added to the group. Only returned by <see cref="Flickr.GroupsPoolsGetPhotos"/>.
+        /// The date the photo was added to the group. Only returned by <see cref="Flickr.GroupsPoolsGetPhotos(string)"/>.
         /// </summary>
         public DateTime? DateAddedToGroup { get; private set; }
 
         /// <summary>
-        /// The date the photo was favourited. Only returned by <see cref="Flickr.FavoritesGetPublicList"/>.
+        /// The date the photo was favourited. Only returned by <see cref="Flickr.FavoritesGetPublicList(string)"/>.
         /// </summary>
         public DateTime? DateFavorited { get; private set; }
 

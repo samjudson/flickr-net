@@ -118,7 +118,7 @@ namespace FlickrNet
         public void Dispose()
         {
             if (disposeHelper != null) disposeHelper.Dispose();
-            if (stream != null) stream.Dispose();
+            if (stream != null) ((IDisposable)stream).Dispose();
         }
     }
 }

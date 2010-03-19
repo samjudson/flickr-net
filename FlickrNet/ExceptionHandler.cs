@@ -32,8 +32,14 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "code")
                 {
-                    if (!int.TryParse(reader.Value, out code))
-                        throw new FlickrException("Invalid 'code' found attribute found in error message. Code is not an integer");
+                    try
+                    {
+                        code = int.Parse(reader.Value, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
+                    }
+                    catch (FormatException)
+                    {
+                        throw new FlickrException("Invalid value found in code attribute. Value '" + code + "' is not an integer");
+                    }
                     continue;
                 }
                 if (reader.LocalName == "msg")

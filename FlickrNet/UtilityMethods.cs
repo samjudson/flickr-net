@@ -74,7 +74,7 @@ namespace FlickrNet
 			if( String.IsNullOrEmpty(timestamp) ) return DateTime.MinValue;
             try
             {
-                return UnixTimestampToDate(Int64.Parse(timestamp, System.Globalization.NumberFormatInfo.InvariantInfo));
+                return UnixTimestampToDate(Int64.Parse(timestamp, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
             }
             catch (FormatException)
             {
@@ -327,7 +327,7 @@ namespace FlickrNet
             System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider();
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
             byte[] hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
-            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLowerInvariant();
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -340,15 +340,21 @@ namespace FlickrNet
             DateTime output;
 
             string format = "yyyy-MM-dd HH:mm:ss";
-            bool ableToParse = DateTime.TryParseExact(date, format, System.Globalization.DateTimeFormatInfo.InvariantInfo, System.Globalization.DateTimeStyles.None, out output);
-            if (!ableToParse)
+            try
+            {
+                output = DateTime.ParseExact(date, format, System.Globalization.DateTimeFormatInfo.InvariantInfo, System.Globalization.DateTimeStyles.None);
+            }
+            catch (FormatException)
             {
                 if (Regex.IsMatch(date, @"^\d{4}-00-01 00:00:00$"))
                 {
                     output = new DateTime(int.Parse(date.Substring(0, 4), System.Globalization.NumberFormatInfo.InvariantInfo), 1, 1);
                 }
+                else
+                {
+                    output = DateTime.MinValue;
+                }
             }
-
             return output;
         }
 

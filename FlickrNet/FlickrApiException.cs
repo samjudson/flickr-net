@@ -53,6 +53,7 @@ namespace FlickrNet
         {
         }
 
+#if !WindowsCE
         /// <summary>
         /// Initializes a new instance of the <see cref="FlickrApiException"/> class with serialized data.
         /// </summary>
@@ -66,6 +67,7 @@ namespace FlickrNet
             _code = info.GetInt32("Code");
             _message = info.GetString("Verbose");
         }
+#endif
 
 		/// <summary>
 		/// Get the code of the Flickr error.
@@ -94,6 +96,7 @@ namespace FlickrNet
 			}
 		}
 
+#if !WindowsCE
         /// <summary>
         /// When overridden in a derived class, sets the <see cref="System.Runtime.Serialization.SerializationInfo"/> with information about the exception.
         /// </summary>
@@ -109,5 +112,6 @@ namespace FlickrNet
 
             base.GetObjectData(info, context);
         }
+#endif
 	}
 }

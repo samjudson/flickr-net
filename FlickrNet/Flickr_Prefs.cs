@@ -20,7 +20,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@safety_level");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@safety_level");
             if (nav == null)
                 throw new ParsingException("Unable to find safety level in returned XML.");
 
@@ -40,7 +40,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@hidden");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@hidden");
             if (nav == null)
                 throw new ParsingException("Unable to find hidden preference in returned XML.");
 
@@ -60,7 +60,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@content_type");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@content_type");
             if (nav == null)
                 throw new ParsingException("Unable to find content type preference in returned XML.");
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml.XPath;
 using System.IO;
+using System.Xml;
 
 namespace FlickrNet
 {
@@ -17,14 +18,15 @@ namespace FlickrNet
         public string ResponseXml { get; private set; }
 
         /// <summary>
-        /// Gets a read only <see cref="XPathNavigator"/> containing the response XML.
+        /// Gets a <see cref="XmlDocument"/> containing the response XML.
         /// </summary>
         /// <returns></returns>
-        public XPathNavigator GetXPathNavigator()
+        public XmlDocument GetXmlDocument()
         {
-            StringReader reader = new StringReader(ResponseXml);
+            XmlDocument document = new XmlDocument();
+            document.LoadXml(ResponseXml);
 
-            return new XPathDocument(reader).CreateNavigator();
+            return document;
         }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

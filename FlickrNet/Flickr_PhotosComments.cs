@@ -37,7 +37,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            System.Xml.XPath.XPathNavigator nav = response.GetXPathNavigator().SelectSingleNode("*/@id");
+            System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@id");
             return nav == null ? null : nav.Value;
         }
 

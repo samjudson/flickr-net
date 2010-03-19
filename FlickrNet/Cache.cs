@@ -209,7 +209,7 @@ namespace FlickrNet
 				throw new IOException("Unexpected number of chunks found");
 
 			string url = chunks[0];
-            DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberFormatInfo.InvariantInfo));
+            DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
 			ResponseCacheItem item = new ResponseCacheItem();
 			item.Url = url;
 			item.CreationTime = creationTime;
@@ -338,9 +338,9 @@ namespace FlickrNet
 
 			string[] chunks = s.Split('\n');
 			string url = chunks[0];
-			DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberFormatInfo.InvariantInfo));
+            DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
 			string filename = chunks[2];
-            long fileSize = long.Parse(chunks[3], System.Globalization.NumberFormatInfo.InvariantInfo);
+            long fileSize = long.Parse(chunks[3], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
 
 			PictureCacheItem pci = new PictureCacheItem();
 			pci.url = url;
@@ -397,7 +397,7 @@ namespace FlickrNet
         {
         }
 
-
+#if !WindowsCE
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheException"/> class with serialized data.
         /// </summary>
@@ -407,5 +407,6 @@ namespace FlickrNet
             : base(info, context)
         {
         }
+#endif
     }
 }

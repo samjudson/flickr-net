@@ -35,7 +35,7 @@ namespace FlickrNet
 
             UnknownResponse response = GetResponseNoCache<UnknownResponse>(parameters);
 
-            return response.GetXPathNavigator().SelectSingleNode("frob").Value;
+            return response.GetXmlDocument().SelectSingleNode("frob").Value;
         }
 
         /// <summary>
