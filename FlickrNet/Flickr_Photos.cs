@@ -541,6 +541,24 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Sets the license for a photo.
+        /// </summary>
+        /// <param name="photoId">The photo to update the license for.</param>
+        /// <param name="license">The license to apply, or <see cref="LicenseType.AllRightsReserved"/> (0) to remove the current license. Note : as of this writing the <see cref="LicenseType.NoKnownCopyrightRestrictions"/> license (7) is not a valid argument.</param>
+        public void PhotosLicensesSetLicense(string photoId, LicenseType license)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("method", "flickr.photos.licenses.setLicense");
+            parameters.Add("photo_id", photoId);
+            parameters.Add("license_id", license.ToString("d"));
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+        /// <summary>
         /// Remove an existing tag.
         /// </summary>
         /// <param name="tagId">The id of the tag, as returned by <see cref="Flickr.PhotosGetInfo(string)"/> or similar method.</param>
@@ -633,8 +651,8 @@ namespace FlickrNet
             if (options.MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", options.MachineTagModeString);
             if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
             if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
-            if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", options.MinTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
-            if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", options.MaxTakenDate.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+            if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(options.MinTakenDate));
+            if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(options.MaxTakenDate));
             if (options.Licenses.Count != 0)
             {
                 List<string> licenseArray = new List<string>();

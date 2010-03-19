@@ -146,6 +146,7 @@
     <Compile Include="Flickr_Upload.cs" />
     <Compile Include="Gallery.cs" />
     <Compile Include="GalleryCollection.cs" />
+    <Compile Include="GeoPermissionType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GroupCategory.cs">
       <SubType>Code</SubType>
@@ -350,6 +351,7 @@
     <Compile Include="User.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UserGeoPermissions.cs" />
     <Compile Include="UtilityMethods.cs">
       <SubType>Code</SubType>
     </Compile>

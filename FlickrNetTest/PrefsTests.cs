@@ -61,21 +61,22 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void PrefsGetSafetyLevelTest()
-        {
-            var s = TestData.GetAuthInstance().PrefsGetSafetyLevel();
-
-            Assert.IsNotNull(s);
-            Assert.AreNotEqual<SafetyLevel>(SafetyLevel.None, s);
-        }
-
-        [TestMethod]
         public void PrefsGetContentTypeTest()
         {
             var s = TestData.GetAuthInstance().PrefsGetContentType();
 
             Assert.IsNotNull(s);
             Assert.AreNotEqual<ContentType>(ContentType.None, s);
+        }
+
+        [TestMethod]
+        public void PrefsGetGeoPermsTest()
+        {
+            var p = TestData.GetAuthInstance().PrefsGetGeoPerms();
+
+            Assert.IsNotNull(p);
+            Assert.IsTrue(p.ImportGeoExif);
+            Assert.AreEqual<GeoPermissionType>(GeoPermissionType.Public, p.GeoPermissions);
         }
 
         [TestMethod]
@@ -86,6 +87,25 @@ namespace FlickrNetTest
             Assert.IsNotNull(s);
             Assert.AreNotEqual<HiddenFromSearch>(HiddenFromSearch.None, s);
         }
+
+        [TestMethod]
+        public void PrefsGetPrivacyTest()
+        {
+            var p = TestData.GetAuthInstance().PrefsGetPrivacy();
+
+            Assert.IsNotNull(p);
+            Assert.AreEqual<PrivacyFilter>(PrivacyFilter.PublicPhotos, p);
+        }
+
+        [TestMethod]
+        public void PrefsGetSafetyLevelTest()
+        {
+            var s = TestData.GetAuthInstance().PrefsGetSafetyLevel();
+
+            Assert.IsNotNull(s);
+            Assert.AreEqual<SafetyLevel>(SafetyLevel.Safe, s);
+        }
+
 
     }
 }

@@ -61,6 +61,19 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        public void PeoplGetPhotos()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoCollection photos = f.PeopleGetPhotos();
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual(0, photos.Count, "Count should not be zero.");
+            Assert.IsTrue(photos.Total > 1000, "Total should be greater than 1000.");
+
+        }
+
+        [TestMethod]
         public void PeopleFindByUsername()
         {
             Flickr f = TestData.GetAuthInstance();

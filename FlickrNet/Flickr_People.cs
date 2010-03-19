@@ -131,6 +131,133 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Return photos from the calling user's photostream. This method must be authenticated;
+        /// </summary>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos()
+        {
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
+        }
+
+        /// <summary>
+        /// Return photos from the calling user's photostream. This method must be authenticated;
+        /// </summary>
+        /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(int page, int perPage)
+        {
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
+        }
+
+        /// <summary>
+        /// Return photos from the calling user's photostream. This method must be authenticated;
+        /// </summary>
+        /// <param name="extras">A list of extra information to fetch for each returned record.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(PhotoSearchExtras extras)
+        {
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
+        }
+
+        /// <summary>
+        /// Return photos from the calling user's photostream. This method must be authenticated;
+        /// </summary>
+        /// <param name="extras">A list of extra information to fetch for each returned record.</param>
+        /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(PhotoSearchExtras extras, int page, int perPage)
+        {
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
+        }
+
+        /// <summary>
+        /// Return photos from the given user's photostream. Only photos visible to the calling user will be returned. This method must be authenticated;
+        /// </summary>
+        /// <param name="userId">The NSID of the user who's photos to return. A value of "me" will return the calling user's photos.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(string userId)
+        {
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
+        }
+
+        /// <summary>
+        /// Return photos from the given user's photostream. Only photos visible to the calling user will be returned. This method must be authenticated;
+        /// </summary>
+        /// <param name="userId">The NSID of the user who's photos to return. A value of "me" will return the calling user's photos.</param>
+        /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(string userId, int page, int perPage)
+        {
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
+        }
+
+        /// <summary>
+        /// Return photos from the given user's photostream. Only photos visible to the calling user will be returned. This method must be authenticated;
+        /// </summary>
+        /// <param name="userId">The NSID of the user who's photos to return. A value of "me" will return the calling user's photos.</param>
+        /// <param name="extras">A list of extra information to fetch for each returned record.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(string userId, PhotoSearchExtras extras)
+        {
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
+        }
+
+        /// <summary>
+        /// Return photos from the given user's photostream. Only photos visible to the calling user will be returned. This method must be authenticated;
+        /// </summary>
+        /// <param name="userId">The NSID of the user who's photos to return. A value of "me" will return the calling user's photos.</param>
+        /// <param name="extras">A list of extra information to fetch for each returned record.</param>
+        /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(string userId, PhotoSearchExtras extras, int page, int perPage)
+        {
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
+        }
+
+        /// <summary>
+        /// Return photos from the given user's photostream. Only photos visible to the calling user will be returned. This method must be authenticated;
+        /// </summary>
+        /// <param name="userId">The NSID of the user who's photos to return. A value of "me" will return the calling user's photos.</param>
+        /// <param name="safeSearch">Safe search setting</param>
+        /// <param name="minUploadDate">Minimum upload date. Photos with an upload date greater than or equal to this value will be returned.</param>
+        /// <param name="maxUploadDate">Maximum upload date. Photos with an upload date less than or equal to this value will be returned.</param>
+        /// <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. </param>
+        /// <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. </param>
+        /// <param name="contentType">Content Type setting</param>
+        /// <param name="privacyFilter">Return photos only matching a certain privacy level.</param>
+        /// <param name="extras">A list of extra information to fetch for each returned record.</param>
+        /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <returns></returns>
+        public PhotoCollection PeopleGetPhotos(string userId, SafetyLevel safeSearch, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate, ContentTypeSearch contentType, PrivacyFilter privacyFilter, PhotoSearchExtras extras, int page, int perPage)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("method", "flickr.people.getPhotos");
+            parameters.Add("user_id", userId ?? "me");
+            if (safeSearch != SafetyLevel.None) parameters.Add("safe_search", safeSearch.ToString("d"));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+
+            if (contentType != ContentTypeSearch.None) parameters.Add("content_type", contentType.ToString("d"));
+            if (privacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+
+            return GetResponseCache<PhotoCollection>(parameters);
+        }
+
+        /// <summary>
         /// Gets the photos containing the authenticated user. Requires that the AuthToken has been set.
         /// </summary>
         /// <returns>A list of photos in the <see cref="PeoplePhotoCollection"/> class.</returns>
