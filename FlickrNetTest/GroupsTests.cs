@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void GroupsBrowserBasicTest()
+        public void GroupsBrowseBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
             GroupCategory cat = f.GroupsBrowse();
@@ -75,7 +75,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void GroupSearchBasicTest()
+        public void GroupsSearchBasicTest()
         {
             Flickr f = TestData.GetInstance();
 
@@ -96,7 +96,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestBasicGroupsGetInfo()
+        public void GroupsGetInfoBasicTest()
         {
             Flickr f = TestData.GetInstance();
 
@@ -119,7 +119,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestNoGroupIcon()
+        public void GroupsGetInfoNoGroupIconTest()
         {
             string groupId = "562176@N20";
             Flickr f = TestData.GetInstance();

@@ -26,7 +26,7 @@ namespace FlickrNet
         {
             Load(reader);
 
-            reader.Read();
+            //reader.Read();
 
             if (reader.LocalName != "stats")
             {

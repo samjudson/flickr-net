@@ -8,12 +8,12 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for PhotosSearchInterestingTests
+    /// Summary description for GroupsPoolsGetGroupsTests
     /// </summary>
     [TestClass]
-    public class PhotosSearchInterestingTests
+    public class GroupsPoolsTests
     {
-        public PhotosSearchInterestingTests()
+        public GroupsPoolsTests()
         {
             //
             // TODO: Add constructor logic here
@@ -61,19 +61,30 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestSearchInterestingnessBasic()
+        public void GroupsPoolGetPhotosDateAddedTest()
         {
             Flickr f = TestData.GetInstance();
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.SortOrder = PhotoSearchSortOrder.InterestingnessDescending;
-            o.Tags = "colorful";
-            o.PerPage = 500;
 
-            PhotoCollection ps = f.PhotosSearch(o);
+            PhotoCollection photos = f.GroupsPoolsGetPhotos(TestData.GroupId);
 
-            Assert.IsNotNull(ps, "Photos should not be null");
-            Assert.AreEqual(500, ps.PerPage, "PhotosPerPage should be 500");
-            Assert.AreEqual(500, ps.Count, "Count should be 500 as well");
+            Assert.IsNotNull(photos, "Photos should not be null");
+            Assert.IsTrue(photos.Count > 0, "Should be more than 0 photos returned");
+
+            foreach (Photo p in photos)
+            {
+                Assert.AreNotEqual(default(DateTime), p.DateUploaded, "DateAdded should not be default value");
+                Assert.IsTrue(p.DateUploaded < DateTime.Now, "DateAdded should be in the past");
+            }
+
+        }
+
+        [TestMethod]
+        public void GroupsPoolsGetGroupsBasicTest()
+        {
+            MemberGroupInfoCollection groups = TestData.GetAuthInstance().GroupsPoolsGetGroups();
+
+            Assert.IsNotNull(groups, "MemberGroupInfoCollection should not be null.");
+            Assert.AreNotEqual(0, groups.Count, "MemberGroupInfoCollection.Count should not be zero.");
         }
     }
 }

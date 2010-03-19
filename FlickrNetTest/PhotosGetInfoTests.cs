@@ -201,22 +201,33 @@ namespace FlickrNetTest
 
 
         [TestMethod]
-        public void PhotosGetExifTest()
+        public void PhotosGetInfoCanBlogTest()
         {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = TestData.TestUserId;
+            o.PerPage = 5;
+
             Flickr f = TestData.GetInstance();
 
-            ExifTagCollection tags = f.PhotosGetExif("4268023123");
+            PhotoCollection photos = f.PhotosSearch(o);
+            PhotoInfo info = f.PhotosGetInfo(photos[0].PhotoId);
 
-            Assert.IsNotNull(tags, "ExifTagCollection should not be null.");
+            Assert.AreEqual(false, info.CanBlog);
+            Assert.AreEqual(true, info.CanDownload);
+        }
 
-            Assert.IsTrue(tags.Count > 20, "More than twenty parts of EXIF data should be returned.");
+        [TestMethod]
+        public void PhotosGetInfoDataTakenGranularityTest()
+        {
+            string photoid = "4386780023";
 
-            Assert.AreEqual("System", tags[0].TagSpace, "First tags TagSpace is not set correctly.");
-            Assert.AreEqual(0, tags[0].TagSpaceId, "First tags TagSpaceId is not set correctly.");
-            Assert.AreEqual("FileName", tags[0].Tag, "First tags Tag is not set correctly.");
-            Assert.AreEqual("FileName", tags[0].Label, "First tags Label is not set correctly.");
-            Assert.AreEqual("ORI46620478284895704.img", tags[0].Raw, "First tags RAW is not correct.");
-            Assert.IsNull(tags[0].Clean, "First tags Clean should be null.");
+            Flickr f = TestData.GetInstance();
+
+            PhotoInfo info = f.PhotosGetInfo(photoid);
+
+            Assert.AreEqual(new DateTime(2009, 1, 1), info.DateTaken);
+            Assert.AreEqual(DateGranularity.Circa, info.DateTakenGranularity);
+
         }
 
     }

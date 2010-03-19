@@ -63,7 +63,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestGetFavouritesNoFavourites()
+        public void PhotosGetFavoritesNoFavourites()
         {
             // No favourites
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestGetFavouritesHasFavourites()
+        public void PhotosGetFavoritesHasFavourites()
         {
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 500, 1);
 
@@ -96,7 +96,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestGetFavouritesPaging()
+        public void PhotosGetFavoritesPaging()
         {
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 1);
 
@@ -108,7 +108,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestGetFavouritesPagingTwo()
+        public void PhotosGetFavoritesPagingTwo()
         {
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 2);
 

@@ -8,12 +8,12 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for PandaGetListTest
+    /// Summary description for InterestingnessGetListTests
     /// </summary>
     [TestClass]
-    public class PandaGetListTest
+    public class InterestingnessTests
     {
-        public PandaGetListTest()
+        public InterestingnessTests()
         {
             //
             // TODO: Add constructor logic here
@@ -61,39 +61,16 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestPandaGetList()
+        public void InterestingnessGetListTestsBasicTest()
         {
-            Flickr f = TestData.GetInstance();
+            DateTime date = DateTime.Today.AddDays(-2);
+            DateTime datePlusOne = date.AddDays(1);
 
-            string[] pandas = f.PandaGetList();
+            PhotoCollection photos = TestData.GetInstance().InterestingnessGetList(date, PhotoSearchExtras.All, 1, 100);
 
-            Assert.IsNotNull(pandas, "Should return string array");
-            Assert.IsTrue(pandas.Length > 0, "Should not return empty array");
+            Assert.IsNotNull(photos, "Photos should not be null.");
 
-            Assert.AreEqual("ling ling", pandas[0]);
-            Assert.AreEqual("hsing hsing", pandas[1]);
-            Assert.AreEqual("wang wang", pandas[2]);
-        }
-
-        [TestMethod]
-        public void TestPandaGetPhotos()
-        {
-            Flickr f = TestData.GetInstance();
-            PandaPhotoCollection photos = null;
-
-            try
-            {
-                photos = f.PandaGetPhotos("ling ling");
-            }
-            finally
-            {
-                Console.WriteLine(f.LastRequest);
-                Console.WriteLine(f.LastResponse);
-            }
-
-            Assert.IsNotNull(photos, "PandaPhotos should not be null.");
-            Assert.AreEqual(photos.Count, photos.Total, "PandaPhotos.Count should equal PandaPhotos.Total.");
-            Assert.AreEqual("ling ling", photos.PandaName, "PandaPhotos.Panda should be 'ling ling'");
+            Assert.AreEqual(100, photos.Count);
         }
     }
 }

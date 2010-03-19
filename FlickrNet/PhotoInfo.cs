@@ -235,7 +235,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the square thumbnail for the photo.
 		/// </summary>
-		public string SquareThumbnailUrl
+		public Uri SquareThumbnailUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
 		}
@@ -243,7 +243,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the thumbnail for the photo.
 		/// </summary>
-		public string ThumbnailUrl
+		public Uri ThumbnailUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
 		}
@@ -251,7 +251,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the small version of this photo.
 		/// </summary>
-		public string SmallUrl
+		public Uri SmallUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
 		}
@@ -263,7 +263,7 @@ namespace FlickrNet
 		/// There is no guarentee that this size of the image actually exists.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
 		/// </remarks>
-		public string MediumUrl
+		public Uri MediumUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
 		}
@@ -275,7 +275,7 @@ namespace FlickrNet
 		/// There is no guarentee that this size of the image actually exists.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
 		/// </remarks>
-		public string LargeUrl
+		public Uri LargeUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
 		}
@@ -283,12 +283,12 @@ namespace FlickrNet
 		/// <summary>
 		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
 		/// </summary>
-		public string OriginalUrl
+		public Uri OriginalUrl
 		{
 			get 
-			{ 
-				if( OriginalFormat == null || OriginalFormat.Length == 0 )
-					throw new InvalidOperationException("No original format information available.");
+			{
+                if (OriginalFormat == null || OriginalFormat.Length == 0)
+                    return null;
 
 				return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
 			}

@@ -14,7 +14,7 @@ namespace FlickrNetTest
         /// </summary>
         [TestMethod]
         [Ignore]
-        public void Auth()
+        public void AuthHelperMethod()
         {
             Flickr f = new Flickr(TestData.ApiKey, TestData.SharedSecret);
             string frob = f.AuthGetFrob();

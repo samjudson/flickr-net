@@ -8,12 +8,12 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for CollectionGetInfoTest
+    /// Summary description for CollectionGetTreeTest
     /// </summary>
     [TestClass]
-    public class CollectionGetInfoTest
+    public class CollectionTests
     {
-        public CollectionGetInfoTest()
+        public CollectionTests()
         {
             //
             // TODO: Add constructor logic here
@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestCollectionGetInfoBasic()
+        public void CollectionGetInfoBasicTest()
         {
             string id = "78188-72157618817175751";
 
@@ -77,6 +77,31 @@ namespace FlickrNetTest
             Assert.AreEqual(12, info.IconPhotos.Count, "IconPhotos.Length should be 12.");
 
             Assert.AreEqual("Tires", info.IconPhotos[0].Title, "The first IconPhoto Title should be 'Tires'.");
+        }
+
+        [TestMethod]
+        public void CollectionGetTreeRootTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+            CollectionCollection tree = f.CollectionsGetTree();
+
+            Assert.IsNotNull(tree, "CollectionList should not be null.");
+            Assert.AreNotEqual(0, tree.Count, "CollectionList.Count should not be zero.");
+
+            foreach (Collection coll in tree)
+            {
+                Assert.IsNotNull(coll.CollectionId, "CollectionId should not be null.");
+                Assert.IsNotNull(coll.Title, "Title should not be null.");
+                Assert.IsNotNull(coll.Description, "Description should not be null.");
+                Assert.IsNotNull(coll.IconSmall, "IconSmall should not be null.");
+                Assert.IsNotNull(coll.IconLarge, "IconLarge should not be null.");
+
+                Assert.AreNotEqual(0, coll.Sets.Count + coll.Collections.Count, "Should be either some sets or some collections.");
+
+                foreach (CollectionSet set in coll.Sets)
+                {
+                }
+            }
         }
     }
 }

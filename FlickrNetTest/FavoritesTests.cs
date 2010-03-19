@@ -8,12 +8,12 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for GroupPoolGetPhotosTests
+    /// Summary description for FavouritesGetPublicListTests
     /// </summary>
     [TestClass]
-    public class GroupPoolGetPhotosTests
+    public class FavoritesTests
     {
-        public GroupPoolGetPhotosTests()
+        public FavoritesTests()
         {
             //
             // TODO: Add constructor logic here
@@ -61,20 +61,15 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestGroupPoolDateAdded()
+        public void FavoritesGetPublicListBasicTest()
         {
+            string userId = "77788903@N00";
             Flickr f = TestData.GetInstance();
 
-            PhotoCollection photos = f.GroupsPoolsGetPhotos(TestData.GroupId);
+            PhotoCollection p = f.FavoritesGetPublicList(userId);
 
-            Assert.IsNotNull(photos, "Photos should not be null");
-            Assert.IsTrue(photos.Count > 0, "Should be more than 0 photos returned");
-
-            foreach (Photo p in photos)
-            {
-                Assert.AreNotEqual(default(DateTime), p.DateAdded, "DateAdded should not be default value");
-                Assert.IsTrue(p.DateAdded < DateTime.Now, "DateAdded should be in the past");
-            }
+            Assert.IsNotNull(p, "Photos should not be null instance.");
+            Assert.AreNotEqual(0, p.Count, "Photos.Count should be greater than zero.");
 
         }
     }

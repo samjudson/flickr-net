@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestPersonGetInfoGenderNoAuth()
+        public void PersonGetInfoGenderNoAuthTest()
         {
             Flickr f = TestData.GetInstance();
             Person p = f.PeopleGetInfo("10973297@N00");
@@ -77,7 +77,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPersonGetInfoGender()
+        public void PersonGetInfoGenderTest()
         {
             Flickr f = TestData.GetAuthInstance();
             Person p = f.PeopleGetInfo("10973297@N00");
@@ -95,7 +95,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPersonGetInfoSelf()
+        public void PersonGetInfoSelfTest()
         {
             Flickr f = TestData.GetAuthInstance();
 

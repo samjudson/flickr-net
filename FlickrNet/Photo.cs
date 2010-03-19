@@ -9,159 +9,123 @@ namespace FlickrNet
     public class Photo : IFlickrParsable
 	{
 
-		private string _photoId;
-		private string _userId;
-		private string _secret;
-		private string _server;
-		private string _farm;
-		private string _title;
-        private bool _isPublic;
-        private bool _isFriend;
-        private bool _isFamily;
-        private bool _isPrimary;
-        private LicenseType _license;
-		private string _ownerName;
-        private string _iconServer;
-        private string _iconFarm;
-        private string _originalFormat;
-		private string _originalSecret;
-		private string _machineTags;
-		private decimal _latitude;
-		private decimal _longitude;
-		private GeoAccuracy _accuracy;
-		private int _originalWidth = -1;
-		private int _originalHeight = -1;
-		private int _views = -1;
-		private string _media;
-		private string _mediaStatus;
-		private string _placeId;
-		private string _woeId;
+        private Uri url_sq;
+        private Uri url_t;
+        private Uri url_m;
+        private Uri url_s;
+        private Uri url_l;
+        private Uri url_o;
 
-        private Collection<string> _tags = new Collection<string>();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Photo"/> class.
+        /// </summary>
+        public Photo()
+        {
+            Tags = new Collection<string>();
+        }
 
         /// <summary>
         /// The list of clean tags for the photograph.
         /// </summary>
-        public Collection<string> Tags
-        {
-            get { return _tags; }
-        }
+        public Collection<string> Tags { get; private set; }
 
 		/// <remarks/>
-		public string PhotoId { get { return _photoId; } set { _photoId = value; } }
+        public string PhotoId { get; private set; }
     
 		/// <remarks/>
-		public string UserId { get { return _userId; } set { _userId = value; } }
+        public string UserId { get; internal set; }
     
 		/// <remarks/>
-		public string Secret { get { return _secret; } set { _secret = value; } }
+        public string Secret { get; private set; }
     
 		/// <remarks/>
-		public string Server { get { return _server; } set { _server = value; } }
+        public string Server { get; private set; }
     
 		/// <remarks/>
-		public string Farm { get { return _farm; } set { _farm = value; } }
+        public string Farm { get; private set; }
     
 		/// <remarks/>
-		public string Title { get { return _title; } set { _title = value; } }
+        public string Title { get; private set; }
     
 		/// <remarks/>
-		public bool IsPublic { get { return _isPublic; } set { _isPublic = value; } }
+        public bool IsPublic { get; private set; }
     
 		/// <remarks/>
-        public bool IsFriend { get { return _isFriend; } set { _isFriend = value; } }
+        public bool IsFriend { get; private set; }
     
 		/// <remarks/>
-        public bool IsFamily { get { return _isFamily; } set { _isFamily = value; } }
+        public bool IsFamily { get; private set; }
 
 		/// <remarks/>
-        public bool IsPrimary { get { return _isPrimary; } set { _isPrimary = value; } }
+        public bool IsPrimary { get; private set; }
 
 		/// <remarks/>
-        public LicenseType License { get { return _license; } set { _license = value; } }
+        public LicenseType License { get; private set; }
 
 		/// <summary>
 		/// The width of the original image. 
 		/// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
 		/// </summary>
-		public int OriginalWidth { get { return _originalWidth; } set { _originalWidth = value; } }
+        public int OriginalWidth { get; private set; }
 
 		/// <summary>
 		/// The height of the original image. 
 		/// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
 		/// </summary>
-		public int OriginalHeight { get { return _originalHeight; } set { _originalHeight = value; } }
+        public int OriginalHeight { get; private set; }
 
 		/// <summary>
 		/// Converts the raw dateupload field to a <see cref="DateTime"/>.
 		/// </summary>
-		public DateTime DateUploaded
-		{
-            get { return _dateAdded; }
-            set { _dateAdded = value; }
-		}
-
-        private DateTime _dateLastUpdated;
+		public DateTime DateUploaded { get; private set; }
 
 		/// <summary>
 		/// Converts the raw lastupdate field to a <see cref="DateTime"/>.
 		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
 		/// </summary>
-		public DateTime LastUpdated
-		{
-            get { return _dateLastUpdated; }
-            set { _dateLastUpdated = value; }
-		}
-
-        private DateTime _dateAdded;
-		/// <summary>
-		/// Converts the raw DateAdded field to a <see cref="DateTime"/>. 
-		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
-		/// </summary>
-        
-		public DateTime DateAdded
-		{
-            get { return _dateAdded; } 
-            set { _dateAdded = value; }
-		}
-
-        private DateTime _dateTaken;
+		public DateTime LastUpdated { get; private set; }
 
 		/// <summary>
 		/// Converts the raw datetaken field to a <see cref="DateTime"/>.
 		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
 		/// </summary>
-        public DateTime DateTaken
-        {
-            get { return _dateTaken; }
-            set { _dateTaken = value; }
-        }
+        public DateTime DateTaken { get; private set; }
 
-		/// <remarks/>
-		public string OwnerName { get { return _ownerName; } set { _ownerName = value; } }
+        /// <summary>
+        /// The date the photo was added to the group. Only returned by <see cref="Flickr.GroupsPoolsGetPhotos"/>.
+        /// </summary>
+        public DateTime? DateAddedToGroup { get; private set; }
+
+        /// <summary>
+        /// The date the photo was favourited. Only returned by <see cref="Flickr.FavoritesGetPublicList"/>.
+        /// </summary>
+        public DateTime? DateFavorited { get; private set; }
 
         /// <remarks/>
-        public string IconServer { get { return _iconServer; } set { _iconServer = value; } }
+        public string OwnerName { get; private set; }
 
         /// <remarks/>
-        public string IconFarm { get { return _iconFarm; } set { _iconFarm = value; } }
+        public string IconServer { get; private set; }
+
+        /// <remarks/>
+        public string IconFarm { get; private set; }
 
         /// <summary>
 		/// Optional extra field containing the original format (jpg, png etc) of the 
 		/// photo.
 		/// </summary>
-		public string OriginalFormat { get { return _originalFormat; } set { _originalFormat = value; } }
+        public string OriginalFormat { get; private set; }
 
 		/// <summary>
 		/// Optional extra field containing the original 'secret' of the 
 		/// photo used for forming the Url.
 		/// </summary>
-		public string OriginalSecret { get { return _originalSecret; } set { _originalSecret = value; } }
+        public string OriginalSecret { get; private set; }
 
 		/// <summary>
 		/// Machine tags
 		/// </summary>
-		public string MachineTags { get { return _machineTags; } set { _machineTags = value; } }
+        public string MachineTags { get; private set; }
 
 		/// <summary>
 		/// The url to the web page for this photo. Uses the users userId, not their web alias, but
@@ -175,56 +139,134 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the square thumbnail of a photo.
 		/// </summary>
-		public string SquareThumbnailUrl
+		public Uri SquareThumbnailUrl
 		{
-			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
+            get
+            {
+                if (url_sq != null)
+                    return url_sq;
+                else
+                    return UtilityMethods.UrlFormat(this, "_s", "jpg");
+            }
 		}
+
+        /// <summary>
+        /// The width of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
+        /// </summary>
+        public int? SquareThumbnailWidth { get; private set; }
+        /// <summary>
+        /// The height of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
+        /// </summary>
+        public int? SquareThumbnailHeight { get; private set; }
 
 		/// <summary>
 		/// The URL for the thumbnail of a photo.
 		/// </summary>
-		public string ThumbnailUrl
+		public Uri ThumbnailUrl
 		{
-			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
+            get
+            {
+                if (url_t != null)
+                    return url_t;
+                else
+                    return UtilityMethods.UrlFormat(this, "_t", "jpg");
+            }
 		}
 
-		/// <summary>
+        /// <summary>
+        /// The width of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
+        /// </summary>
+        public int? ThumbnailWidth { get; private set; }
+        /// <summary>
+        /// The height of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
+        /// </summary>
+        public int? ThumbnailHeight { get; private set; }
+
+        /// <summary>
 		/// The URL for the small copy of a photo.
 		/// </summary>
-		public string SmallUrl
+		public Uri SmallUrl
 		{
-			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
+            get
+            {
+                if (url_s != null)
+                    return url_s;
+                else
+                    return UtilityMethods.UrlFormat(this, "_m", "jpg");
+            }
 		}
 
-		/// <summary>
+        /// <summary>
+        /// The width of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
+        /// </summary>
+        public int? SmallWidth { get; private set; }
+        /// <summary>
+        /// The height of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
+        /// </summary>
+        public int? SmallHeight { get; private set; }
+
+        /// <summary>
 		/// The URL for the medium copy of a photo.
 		/// </summary>
 		/// <remarks>There is a chance that extremely small images will not have a medium copy.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
-		public string MediumUrl
+		public Uri MediumUrl
 		{
-			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
+            get
+            {
+                if (url_m != null)
+                    return url_m;
+                else
+                    return UtilityMethods.UrlFormat(this, "", "jpg");
+            }
 		}
+
+        /// <summary>
+        /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
+        /// </summary>
+        public int? MediumWidth { get; private set; }
+        /// <summary>
+        /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
+        /// </summary>
+        public int? MediumHeight { get; private set; }
 
 		/// <summary>
 		/// The URL for the large copy of a photo.
 		/// </summary>
 		/// <remarks>There is a chance that small images will not have a large copy.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
-		public string LargeUrl
+		public Uri LargeUrl
 		{
-			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
+            get
+            {
+                if (url_l != null)
+                    return url_l;
+                else
+                    return UtilityMethods.UrlFormat(this, "_b", "jpg");
+            }
 		}
 
-		/// <summary>
+        /// <summary>
+        /// The width of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
+        /// </summary>
+        public int? LargeWidth { get; private set; }
+        /// <summary>
+        /// The height of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
+        /// </summary>
+        public int? LargeHeight { get; private set; }
+
+        /// <summary>
 		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
 		/// </summary>
-		public string OriginalUrl
+		public Uri OriginalUrl
 		{
 			get 
-			{ 
-				if( OriginalFormat == null || OriginalFormat.Length == 0 )
-					throw new InvalidOperationException("No original format information available.");
+			{
+                if (url_o != null)
+                    return url_o;
+
+                if (OriginalFormat == null || OriginalFormat.Length == 0)
+                    return null;
 
 				return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
 			}
@@ -233,74 +275,52 @@ namespace FlickrNet
 		/// <summary>
 		/// Latitude. Will be 0 if Geo extras not specified.
 		/// </summary>
-		public decimal Latitude
-		{
-			get { return _latitude; }
-			set { _latitude = value; }
-		}
+		public decimal Latitude { get; private set; }
 
 		/// <summary>
 		/// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
 		/// </summary>
-		public decimal Longitude
-		{
-			get { return _longitude; }
-			set { _longitude = value; }
-		}
+		public decimal Longitude { get; private set; }
 
 		/// <summary>
 		/// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
 		/// </summary>
-		public string PlaceId
-		{
-			get { return _placeId; }
-			set { _placeId = value; }
-		}
+		public string PlaceId { get; private set; }
 
 		/// <summary>
 		/// The WOE (Where On Earth) ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
 		/// </summary>
-		public string WoeId
-		{
-			get { return _woeId; }
-			set { _woeId = value; }
-		}
+		public string WoeId { get; private set; }
 
 		/// <summary>
 		/// Geo-location accuracy. A value of None means that the information was not returned.
 		/// </summary>
-		public GeoAccuracy Accuracy
-		{
-			get { return _accuracy; }
-			set { _accuracy = value; }
-		}
+		public GeoAccuracy Accuracy { get; private set; }
 
 		/// <summary>
 		/// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
 		/// </summary>
-		public int Views
-		{
-			get { return _views; }
-			set { _views = value; }
-		}
+		public int? Views { get; private set; }
 
 		/// <summary>
 		/// The media format for this photo. Only returned if PhotoSearchExtras.Media is set.
 		/// </summary>
-		public string Media
-		{
-			get { return _media; }
-			set { _media = value; }
-		}
+		public string Media { get; private set; }
+
+        /// <summary>
+        /// The url alias the user has picked, it applicable.
+        /// </summary>
+        public string PathAlias { get; private set; }
 
 		/// <summary>
 		/// The status of the media for this photo. Only returned if PhotoSearchExtras.Media is set.
 		/// </summary>
-		public string MediaStatus
-		{
-			get { return _mediaStatus; }
-			set { _mediaStatus = value; }
-		}
+		public string MediaStatus { get; private set; }
+
+        /// <summary>
+        /// The description for the photo. Only returned if <see cref="PhotoSearchExtras.Description"/> is set.
+        /// </summary>
+        public string Description { get; private set; }
 
 		/// <summary>
 		/// A helper method which tries to guess if a large image will be available for this photograph
@@ -310,9 +330,9 @@ namespace FlickrNet
 		{
 			get
 			{
-				if( _originalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
+				if( OriginalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
 
-				if( _originalHeight > 1280 || _originalWidth > 1280 ) 
+				if( OriginalHeight > 1280 || OriginalWidth > 1280 ) 
 					return true;
 				else 
 					return false;
@@ -327,27 +347,20 @@ namespace FlickrNet
 		{
 			get
 			{
-				if( _originalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
+				if( OriginalHeight < 0 ) throw new InvalidOperationException("Original Dimensions are not available");
 
-				if( _originalHeight > 500 || _originalWidth > 500 ) 
+				if( OriginalHeight > 500 || OriginalWidth > 500 ) 
 					return true;
 				else 
 					return false;
 			}
 		}
 
-        /// <summary>
-        /// Default constructor for the <see cref="Photo"/> class.
-        /// </summary>
-        public Photo()
-        {
-        }
-
         void IFlickrParsable.Load(XmlReader reader)
         {
             Load(reader);
 
-            reader.Skip();
+            if (reader.LocalName == "photo" && reader.NodeType == XmlNodeType.EndElement) reader.Read();
         }
 
         /// <summary>
@@ -368,6 +381,7 @@ namespace FlickrNet
                         PhotoId = reader.Value;
                         if (String.IsNullOrEmpty(reader.Value))
                         {
+                            reader.Skip();
                             return;
                         }
                         break;
@@ -408,7 +422,7 @@ namespace FlickrNet
                     case "datetakengranularity":
                         break;
                     case "dateupload":
-                        DateAdded = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "license":
                         License = (LicenseType)int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
@@ -469,11 +483,79 @@ namespace FlickrNet
                         break;
                     case "isprimary":
                         break;
-                    default:
-                        //throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                    case "pathalias":
+                        PathAlias = reader.Value;
                         break;
+                    case "url_sq":
+                        url_sq = new Uri(reader.Value);
+                        break;
+                    case "width_sq":
+                        SquareThumbnailWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_sq":
+                        SquareThumbnailHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_t":
+                        url_t = new Uri(reader.Value);
+                        break;
+                    case "width_t":
+                        ThumbnailWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_t":
+                        ThumbnailHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_s":
+                        url_s = new Uri(reader.Value);
+                        break;
+                    case "width_s":
+                        SmallWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_s":
+                        SmallHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_m":
+                        url_m = new Uri(reader.Value);
+                        break;
+                    case "width_m":
+                        MediumWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_m":
+                        MediumHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_l":
+                        url_l = new Uri(reader.Value);
+                        break;
+                    case "width_l":
+                        LargeWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_l":
+                        LargeHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_o":
+                        url_o = new Uri(reader.Value);
+                        break;
+                    case "width_o":
+                        OriginalWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_o":
+                        OriginalHeight = reader.ReadContentAsInt();
+                        break;
+                    case "dateadded":
+                        DateAddedToGroup = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "date_faved":
+                        DateFavorited = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    default:
+                        throw new Exception("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        //break;
                 }
             }
+
+            reader.Read();
+
+            if (reader.LocalName == "description")
+                Description = reader.ReadElementContentAsString();
 
         }
     }

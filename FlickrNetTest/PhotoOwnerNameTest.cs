@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestPhotosSearch()
+        public void PhotosSearchOwnerNameTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
 
@@ -77,7 +77,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPhotosGetContactsPublicPhotos()
+        public void PhotosGetContactsPublicPhotosOwnerNameTest()
         {
             Flickr f = TestData.GetInstance();
             PhotoCollection photos = f.PhotosGetContactsPublicPhotos(TestData.TestUserId, PhotoSearchExtras.OwnerName);

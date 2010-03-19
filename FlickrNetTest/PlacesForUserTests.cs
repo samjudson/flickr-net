@@ -92,14 +92,14 @@ namespace FlickrNetTest
 
         [TestMethod]
         [ExpectedException(typeof(SignatureRequiredException))]
-        public void TestGetPlacesAuthenticationRequired()
+        public void PlacesPlacesForUserAuthenticationRequiredTest()
         {
             Flickr f = TestData.GetInstance();
             f.PlacesPlacesForUser();
         }
 
         [TestMethod]
-        public void TestPlacesForUserContinent()
+        public void PlacesPlacesForUserHasContinentsTest()
         {
             Flickr f = TestData.GetAuthInstance();
             PlaceCollection places = f.PlacesPlacesForUser();
@@ -121,7 +121,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPlacesForUserRegions()
+        public void PlacesPlacesForUserContinentHasRegionsTest()
         {
             Flickr f = TestData.GetAuthInstance();
 

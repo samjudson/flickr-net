@@ -63,7 +63,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestAuthClass()
+        public void AuthClassBasicTest()
         {
             string authResponse = "<auth><token>TheToken</token><perms>delete</perms><user nsid=\"41888973@N00\" username=\"Sam Judson\" fullname=\"Sam Judson\" /></auth>";
 

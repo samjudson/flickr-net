@@ -107,78 +107,32 @@ namespace FlickrNet
 		/// <returns></returns>
 		public static string ExtrasToString(PhotoSearchExtras extras)
 		{
+            List<string> extraList = new List<string>();
+
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-			if( (extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken )
-				sb.Append("date_taken");
-			if( (extras & PhotoSearchExtras.DateUploaded) == PhotoSearchExtras.DateUploaded )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("date_upload");
-			}
-			if( (extras & PhotoSearchExtras.IconServer) == PhotoSearchExtras.IconServer )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("icon_server");
-			}
-			if( (extras & PhotoSearchExtras.License) == PhotoSearchExtras.License )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("license");
-			}
-			if( (extras & PhotoSearchExtras.OwnerName) == PhotoSearchExtras.OwnerName )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("owner_name");
-			}
-			if( (extras & PhotoSearchExtras.OriginalFormat) == PhotoSearchExtras.OriginalFormat )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("original_format");
-			}
+            if ((extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken) extraList.Add("date_taken");
+            if ((extras & PhotoSearchExtras.DateUploaded) == PhotoSearchExtras.DateUploaded) extraList.Add("date_upload");
+            if ((extras & PhotoSearchExtras.IconServer) == PhotoSearchExtras.IconServer) extraList.Add("icon_server");
+            if ((extras & PhotoSearchExtras.License) == PhotoSearchExtras.License) extraList.Add("license");
+            if ((extras & PhotoSearchExtras.OwnerName) == PhotoSearchExtras.OwnerName) extraList.Add("owner_name");
+            if ((extras & PhotoSearchExtras.OriginalFormat) == PhotoSearchExtras.OriginalFormat) extraList.Add("original_format");
+            if ((extras & PhotoSearchExtras.LastUpdated) == PhotoSearchExtras.LastUpdated) extraList.Add("last_update");
+            if ((extras & PhotoSearchExtras.Tags) == PhotoSearchExtras.Tags) extraList.Add("tags");
+            if ((extras & PhotoSearchExtras.Geo) == PhotoSearchExtras.Geo) extraList.Add("geo");
+            if ((extras & PhotoSearchExtras.MachineTags) == PhotoSearchExtras.MachineTags) extraList.Add("machine_tags");
+            if ((extras & PhotoSearchExtras.OriginalDimensions) == PhotoSearchExtras.OriginalDimensions) extraList.Add("o_dims");
+            if ((extras & PhotoSearchExtras.Views) == PhotoSearchExtras.Views) extraList.Add("views");
+            if ((extras & PhotoSearchExtras.Media) == PhotoSearchExtras.Media) extraList.Add("media");
+            if ((extras & PhotoSearchExtras.PathAlias) == PhotoSearchExtras.PathAlias) extraList.Add("path_alias");
+            if ((extras & PhotoSearchExtras.SquareUrl) == PhotoSearchExtras.SquareUrl) extraList.Add("url_sq");
+            if ((extras & PhotoSearchExtras.ThumbnailUrl) == PhotoSearchExtras.ThumbnailUrl) extraList.Add("url_t");
+            if ((extras & PhotoSearchExtras.SmallUrl) == PhotoSearchExtras.SmallUrl) extraList.Add("url_s");
+            if ((extras & PhotoSearchExtras.MediumUrl) == PhotoSearchExtras.MediumUrl) extraList.Add("url_m");
+            if ((extras & PhotoSearchExtras.LargeUrl) == PhotoSearchExtras.LargeUrl) extraList.Add("url_l");
+            if ((extras & PhotoSearchExtras.OriginalUrl) == PhotoSearchExtras.OriginalUrl) extraList.Add("url_o");
+            if ((extras & PhotoSearchExtras.Description) == PhotoSearchExtras.Description) extraList.Add("description");
 
-			if( (extras & PhotoSearchExtras.LastUpdated) == PhotoSearchExtras.LastUpdated )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("last_update");
-			}
-
-			if( (extras & PhotoSearchExtras.Tags) == PhotoSearchExtras.Tags )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("tags");
-			}
-
-			if( (extras & PhotoSearchExtras.Geo) == PhotoSearchExtras.Geo )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("geo");
-			}
-
-			if( (extras & PhotoSearchExtras.MachineTags) == PhotoSearchExtras.MachineTags )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("machine_tags");
-			}
-
-			if( (extras & PhotoSearchExtras.OriginalDimensions) == PhotoSearchExtras.OriginalDimensions )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("o_dims");
-			}
-
-			if( (extras & PhotoSearchExtras.Views) == PhotoSearchExtras.Views )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("views");
-			}
-
-			if( (extras & PhotoSearchExtras.Media) == PhotoSearchExtras.Media )
-			{
-				if( sb.Length>0 ) sb.Append(",");
-				sb.Append("media");
-			}
-
-			return sb.ToString();
+            return String.Join(",", extraList.ToArray());
 		}
 
         /// <summary>
@@ -296,7 +250,7 @@ namespace FlickrNet
 
 		private const string photoUrl = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
 
-		internal static string UrlFormat(Photo p, string size, string format)
+		internal static Uri UrlFormat(Photo p, string size, string format)
 		{
 			if( size == "_o" )
 				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, format);
@@ -304,7 +258,7 @@ namespace FlickrNet
 				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
 		}
 
-		internal static string UrlFormat(PhotoInfo p, string size, string format)
+		internal static Uri UrlFormat(PhotoInfo p, string size, string format)
 		{
 			if( size == "_o" )
 				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, format);
@@ -312,14 +266,14 @@ namespace FlickrNet
 				return UrlFormat(photoUrl, p.Farm, p.Server, p.PhotoId, p.Secret, size, format);
 		}
 
-		internal static string UrlFormat(Photoset p, string size, string format)
+		internal static Uri UrlFormat(Photoset p, string size, string format)
 		{
 			return UrlFormat(photoUrl, p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, format);
 		}
 
-		private static string UrlFormat(string format, params object[] parameters)
+		private static Uri UrlFormat(string format, params object[] parameters)
 		{
-			return String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
+			return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters));
 		}
 
         internal static MemberTypes ParseIdToMemberType(string memberTypeId)

@@ -42,7 +42,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestBasicGetPhotos()
+        public void PhotosetsGetPhotosBasicTest()
         {
             PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
 
@@ -53,7 +53,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestMachineTags()
+        public void PhotosetsGetPhotosMachineTagsTest()
         {
             PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
 
@@ -72,7 +72,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPhotosetFilterMedia()
+        public void PhotosetsGetPhotosFilterMediaTest()
         {
             // http://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
             // Set contains videos and photos
@@ -92,7 +92,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPhotosetGetPhotosWebUrl()
+        public void PhotosetsGetPhotosWebUrlTest()
         {
             PhotosetPhotoCollection theset = f.PhotosetsGetPhotos("72157618515066456");
 

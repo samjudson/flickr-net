@@ -60,31 +60,5 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
-        public void TestDateTakenGranuality()
-        {
-            Flickr f = TestData.GetInstance();
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.UserId = "8748614@N05";
-            o.Tags = "primavera";
-            o.PerPage = 500;
-            o.Extras = PhotoSearchExtras.DateTaken;
-
-            PhotoCollection photos = f.PhotosSearch(o);
-        }
-
-        [TestMethod]
-        public void TestDataTakenGranularityPhotoGetInfo()
-        {
-            string photoid = "4386780023";
-
-            Flickr f = TestData.GetInstance();
-
-            PhotoInfo info = f.PhotosGetInfo(photoid);
-
-            Assert.AreEqual(new DateTime(2009, 1, 1), info.DateTaken);
-            Assert.AreEqual(DateGranularity.Circa, info.DateTakenGranularity);
-
-        }
     }
 }

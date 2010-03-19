@@ -72,7 +72,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod()]
-        public void TestUnixTimestampToDateString()
+        public void UnixTimestampToDateStringTest()
         {
             DateTime returnedDate = UtilityMethods.UnixTimestampToDate("1230813420");
             DateTime expectedDate = new DateTime(2009, 1, 1, 12, 37, 0);
@@ -81,7 +81,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod()]
-        public void TestUnixTimestampToDateLong()
+        public void UnixTimestampToDateLongTest()
         {
             DateTime returnedDate = UtilityMethods.UnixTimestampToDate(1230813420);
             DateTime expectedDate = new DateTime(2009, 1, 1, 12, 37, 0);
@@ -90,7 +90,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod()]
-        public void TestDateToUnixTimestamp()
+        public void DateToUnixTimestampTest()
         {
             DateTime testDate = new DateTime(2009, 1, 1, 12, 37, 0);
             string expectedResult = "1230813420";
@@ -100,7 +100,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod()]
-        public void TestUnixTimestampeToDateInvalid()
+        public void UnixTimestampToDateInvalidStringTest()
         {
             string invalidTimestamp = "kjhkjh0987";
             DateTime expectedResult = DateTime.MinValue;
@@ -246,7 +246,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestUri()
+        public void UriCreationTest()
         {
             Uri u = new Uri("/Test", UriKind.Relative);
 

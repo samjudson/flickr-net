@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestOrderSets()
+        public void PhotosetsOrderSetsStringTest()
         {
             PhotosetCollection mySets = f.PhotosetsGetList();
 
@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestOrderSets2()
+        public void PhotosetsOrderSetsArrayTest()
         {
             PhotosetCollection mySets = f.PhotosetsGetList();
 

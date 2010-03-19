@@ -42,7 +42,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void TestPhotosetsGetListBasic()
+        public void PhotosetsGetListBasicTest()
         {
             PhotosetCollection photosets = f.PhotosetsGetList(TestData.TestUserId);
 
@@ -61,7 +61,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPhotosetsGetListWebUrl()
+        public void PhotosetsGetListWebUrlTest()
         {
             PhotosetCollection photosets = f.PhotosetsGetList(TestData.TestUserId);
 

@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void SatsGetPopularPhotosBasic()
+        public void StatsGetPopularPhotosBasic()
         {
             Flickr f = TestData.GetAuthInstance();
 

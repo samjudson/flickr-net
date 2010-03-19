@@ -62,14 +62,14 @@ namespace FlickrNetTest
 
         [TestMethod]
         [ExpectedException(typeof(SignatureRequiredException))]
-        public void TestGetListUserawAuthentication()
+        public void TagsGetListUserRawAuthenticationTest()
         {
             Flickr f = TestData.GetInstance();
             f.TagsGetListUserRaw();
         }
 
         [TestMethod]
-        public void TestGetUserRawTagsBasic()
+        public void TagsGetListUserRawBasicTest()
         {
             var tags = f.TagsGetListUserRaw();
 

@@ -12,7 +12,7 @@ namespace FlickrNetTest
     ///to contain all FlickrNet.Flickr Unit Tests
     ///</summary>
     [TestClass()]
-    public class PhotoSearchTest
+    public class PhotoSearchTests
     {
         private TestContext testContextInstance;
 
@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestBasicSearch()
+        public void PhotosSearchBasicSearch()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "Test";
@@ -92,7 +92,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPerPage()
+        public void PhotosSearchPerPage()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.PerPage = 10;
@@ -109,26 +109,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestTags()
-        {
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.PerPage = 10;
-            o.Tags = "Test";
-            o.Extras = PhotoSearchExtras.Tags;
-
-            PhotoCollection photos = f.PhotosSearch(o);
-
-            foreach (Photo photo in photos)
-            {
-                Assert.IsTrue(photo.Tags.Count > 0, "Should be some tags");
-                Assert.IsTrue(photo.Tags.Contains("test"), "At least one should be 'test'");
-
-            }
-            
-        }
-
-        [TestMethod]
-        public void TestUserId()
+        public void PhotosSearchUserIdTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.UserId = TestData.TestUserId;
@@ -143,7 +124,7 @@ namespace FlickrNetTest
 
         [TestMethod]
         [ExpectedException(typeof(ApiKeyRequiredException))]
-        public void TestNoApiKey()
+        public void PhotosSearchNoApiKey()
         {
             f.ApiKey = "";
             f.PhotosSearch(new PhotoSearchOptions());
@@ -153,7 +134,7 @@ namespace FlickrNetTest
 
         [TestMethod]
         [Ignore()]
-        public void TestSortDataTakenAscending()
+        public void PhotosSearchSortDataTakenAscending()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -172,7 +153,7 @@ namespace FlickrNetTest
 
         [TestMethod]
         [Ignore()]
-        public void TestSortDataTakenDescending()
+        public void PhotosSearchSortDataTakenDescending()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -191,7 +172,7 @@ namespace FlickrNetTest
 
         [TestMethod]
         [Ignore()]
-        public void TestSortDataPostedAscending()
+        public void PhotosSearchSortDataPostedAscending()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -202,15 +183,15 @@ namespace FlickrNetTest
 
             for (int i = 1; i < p.Count; i++)
             {
-                Console.WriteLine(p[i].DateAdded);
-                Assert.AreNotEqual(default(DateTime), p[i].DateAdded);
-                Assert.IsTrue(p[i].DateAdded >= p[i - 1].DateAdded, "Date taken should increase.");
+                Console.WriteLine(p[i].DateUploaded);
+                Assert.AreNotEqual(default(DateTime), p[i].DateUploaded);
+                Assert.IsTrue(p[i].DateUploaded >= p[i - 1].DateUploaded, "Date taken should increase.");
             }
         }
 
         [TestMethod]
         [Ignore()]
-        public void TestSortDataPostedDescending()
+        public void PhotosSearchSortDataPostedDescending()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -221,14 +202,14 @@ namespace FlickrNetTest
 
             for (int i = 1; i < p.Count; i++)
             {
-                Console.WriteLine(p[i].DateAdded);
-                Assert.AreNotEqual(default(DateTime), p[i].DateAdded);
-                Assert.IsTrue(p[i].DateAdded <= p[i - 1].DateAdded, "Date taken should increase.");
+                Console.WriteLine(p[i].DateUploaded);
+                Assert.AreNotEqual(default(DateTime), p[i].DateUploaded);
+                Assert.IsTrue(p[i].DateUploaded <= p[i - 1].DateUploaded, "Date taken should increase.");
             }
         }
 
         [TestMethod]
-        public void TestGetLicenseNotNull()
+        public void PhotosSearchGetLicenseNotNull()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -244,7 +225,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestGetLicenseAttributionNoDerivs()
+        public void PhotosSearchGetLicenseAttributionNoDerivs()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -261,7 +242,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestGetLicenseNoKnownCopright()
+        public void PhotosSearchGetLicenseNoKnownCopright()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -278,7 +259,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestSearchTwice()
+        public void PhotosSearchSearchTwice()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -297,7 +278,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestPage()
+        public void PhotosSearchPageTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "colorful";
@@ -310,7 +291,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod()]
-        public void TestIsCommons()
+        public void PhotosSearchIsCommons()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.IsCommons = true;
@@ -325,7 +306,195 @@ namespace FlickrNetTest
                 Assert.AreEqual(LicenseType.NoKnownCopyrightRestrictions, photo.License);
             }
         }
+
+        [TestMethod]
+        public void PhotosSearchDateTakenGranualityTest()
+        {
+            Flickr f = TestData.GetInstance();
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = "8748614@N05";
+            o.Tags = "primavera";
+            o.PerPage = 500;
+            o.Extras = PhotoSearchExtras.DateTaken;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+        }
+
+        [TestMethod]
+        public void PhotoSearchDetailedTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "applestore";
+            o.UserId = "41888973@N00";
+            //o.Text = "Apple Store";
+            o.Extras = PhotoSearchExtras.All;
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            Console.WriteLine(f.LastRequest);
+            Console.WriteLine(f.LastResponse);
+
+            Assert.AreEqual(100, photos.PerPage);
+            Assert.AreEqual(1, photos.Page);
+
+            Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should not be zero.");
+
+            Assert.AreEqual("3547139066", photos[0].PhotoId);
+            Assert.AreEqual("41888973@N00", photos[0].UserId);
+            Assert.AreEqual("38560d3e1d", photos[0].Secret);
+            Assert.AreEqual("3311", photos[0].Server);
+            Assert.AreEqual("Apple Store!", photos[0].Title);
+            Assert.AreEqual("4", photos[0].Farm);
+            Assert.AreEqual(false, photos[0].IsFamily);
+            Assert.AreEqual(true, photos[0].IsPublic);
+            Assert.AreEqual(false, photos[0].IsFriend);
+
+            DateTime dateTaken = new DateTime(2009, 5, 19, 22, 21, 46);
+            DateTime dateUploaded = new DateTime(2009, 5, 19, 21, 21, 46);
+            Assert.IsTrue(photos[0].LastUpdated > dateTaken, "Last updated date was not correct.");
+            Assert.AreEqual(dateTaken, photos[0].DateTaken, "Date taken date was not correct.");
+            Assert.AreEqual(dateUploaded, photos[0].DateUploaded, "Date uploaded date was not correct.");
+
+            Assert.AreEqual("jpg", photos[0].OriginalFormat, "OriginalFormat should be JPG");
+            Assert.AreEqual("WanNUqqcBJTVQXvHIw", photos[0].PlaceId, "PlaceID not set correctly.");
+
+            Assert.IsNotNull(photos[0].Description, "Description should not be null.");
+
+            foreach (Photo photo in photos)
+            {
+                Assert.IsNotNull(photo.PhotoId);
+                Assert.IsTrue(photo.IsPublic);
+                Assert.IsFalse(photo.IsFamily);
+                Assert.IsFalse(photo.IsFriend);
+            }
+        }
+
+        [TestMethod]
+        public void PhotosSearchTagsTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.PerPage = 10;
+            o.Tags = "test";
+            o.Extras = PhotoSearchExtras.Tags;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            Assert.IsTrue(photos.Total > 0);
+            Assert.IsTrue(photos.Pages > 0);
+            Assert.AreEqual(10, photos.PerPage, "PerPage should be 10.");
+            Assert.AreEqual(10, photos.Count, "Count should be 10.");
+            Assert.AreEqual(1, photos.Page, "Page should be 1.");
+
+            foreach (Photo photo in photos)
+            {
+                Assert.IsTrue(photo.Tags.Count > 0, "Should be some tags");
+                Assert.IsTrue(photo.Tags.Contains("test"), "At least one should be 'test'");
+            }
+        }
+
+        [TestMethod]
+        public void PhotoSearchPerPage()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "microsoft";
+            o.Licenses.Add(LicenseType.AttributionCC);
+            o.Licenses.Add(LicenseType.AttributionNoDerivativesCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialNoDerivativesCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialShareAlikeCC);
+            o.Licenses.Add(LicenseType.AttributionShareAlikeCC);
+
+            o.MinUploadDate = DateTime.Today.AddDays(-3);
+            o.MaxUploadDate = DateTime.Today.AddDays(-2);
+
+            o.PerPage = 1;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            int totalPhotos1 = photos.Total;
+
+            o.PerPage = 10;
+
+            photos = f.PhotosSearch(o);
+
+            int totalPhotos2 = photos.Total;
+
+            o.PerPage = 100;
+
+            photos = f.PhotosSearch(o);
+
+            int totalPhotos3 = photos.Total;
+
+            Assert.AreEqual(totalPhotos1, totalPhotos2, "Total Photos 1 & 2 should be equal");
+            Assert.AreEqual(totalPhotos2, totalPhotos3, "Total Photos 1 & 2 should be equal");
+        }
+
+        [TestMethod]
+        public void PhotosSearchPhotoSearchBoundaryBox()
+        {
+            BoundaryBox b = new BoundaryBox(103.675997, 1.339811, 103.689456, 1.357764, GeoAccuracy.World);
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.BoundaryBox = b;
+            o.Accuracy = b.Accuracy;
+            o.MinUploadDate = DateTime.Now.AddYears(-1);
+            o.MaxUploadDate = DateTime.Now;
+
+            PhotoCollection ps = f.PhotosSearch(o);
+
+            foreach (Photo p in ps)
+            {
+                Console.WriteLine(p.PhotoId + " = " + p.Title);
+            }
+
+        }
+
+        [TestMethod]
+        public void PhotoSearchLatCultureTest()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("nb-NO");
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.HasGeo = true;
+            o.Extras |= PhotoSearchExtras.Geo;
+            o.Tags = "colorful";
+            o.PerPage = 10;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+        }
+
+
+        [TestMethod]
+        public void PhotosSearchTagCollectionTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = TestData.TestUserId;
+            o.PerPage = 10;
+            o.Extras = PhotoSearchExtras.Tags;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            foreach (Photo p in photos)
+            {
+                Assert.IsNotNull(p.Tags, "Tag Collection should not be null");
+                Assert.IsTrue(p.Tags.Count > 0, "Should be more than one tag for all photos");
+                Assert.IsNotNull(p.Tags[0]);
+            }
+        }
+
+        [TestMethod]
+        public void PhotosSearchInterestingnessBasicTest()
+        {
+            Flickr f = TestData.GetInstance();
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.SortOrder = PhotoSearchSortOrder.InterestingnessDescending;
+            o.Tags = "colorful";
+            o.PerPage = 500;
+
+            PhotoCollection ps = f.PhotosSearch(o);
+
+            Assert.IsNotNull(ps, "Photos should not be null");
+            Assert.AreEqual(500, ps.PerPage, "PhotosPerPage should be 500");
+            Assert.AreEqual(500, ps.Count, "Count should be 500 as well");
+        }
+
     }
-
-
 }

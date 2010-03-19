@@ -74,9 +74,45 @@ namespace FlickrNet
 		/// Returns the media type of the photo, currently either 'photo' or 'video'.
 		/// </summary>
 		Media = 4096,
+        /// <summary>
+        /// The path alias, if defined by the user (replaces the users NSID in the flickr URL for their photostream).
+        /// </summary>
+        PathAlias = 8192,
+        /// <summary>
+        /// Returns the URL for the square image, as well as the image size.
+        /// </summary>
+        SquareUrl = 16384,
+        /// <summary>
+        /// Returns the URL for the thumbnail image, as well as the image size.
+        /// </summary>
+        ThumbnailUrl = 32768,
+        /// <summary>
+        /// Returns the URL for the small image, as well as the image size.
+        /// </summary>
+        SmallUrl = 65536,
+        /// <summary>
+        /// Returns the URL for the medium image, as well as the image size.
+        /// </summary>
+        MediumUrl = 131072,
+        /// <summary>
+        /// Returns the URL for the large image, as well as the image size.
+        /// </summary>
+        LargeUrl = 262144,
+        /// <summary>
+        /// Returns the URL for the original image, as well as the image size.
+        /// </summary>
+        OriginalUrl = 524288,
+        /// <summary>
+        /// Returns the URL for all the images, as well as the image sizes.
+        /// </summary>
+        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | LargeUrl | OriginalUrl,
+        /// <summary>
+        /// Returns the description for the image.
+        /// </summary>
+        Description = 524288 * 2,
 		/// <summary>
 		/// Returns all the above information.
 		/// </summary>
-		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media
+		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description
 	}
 }

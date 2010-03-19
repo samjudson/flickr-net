@@ -86,7 +86,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void ContactsGetList()
+        public void ContactsGetListTest()
         {
             Flickr f = TestData.GetAuthInstance();
 

@@ -43,14 +43,14 @@ namespace FlickrNetTest
 
         [TestMethod]
         [ExpectedException(typeof(SignatureRequiredException))]
-        public void TestGetContactsPhotosSignatureRequired()
+        public void PhotosGetContactsPhotosSignatureRequiredTest()
         {
             Flickr f = TestData.GetInstance();
             f.PhotosGetContactsPhotos();
         }
 
         [TestMethod]
-        public void TestGetContactsPhotosBasic()
+        public void PhotosGetContactsPhotosBasicTest()
         {
             PhotoCollection photos = f.PhotosGetContactsPhotos(10);
 
@@ -62,7 +62,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void TestGetContactsPhotosExtras()
+        public void PhotosGetContactsPhotosExtrasTest()
         {
             PhotoCollection photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
 
