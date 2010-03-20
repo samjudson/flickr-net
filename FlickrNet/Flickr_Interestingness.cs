@@ -25,7 +25,7 @@ namespace FlickrNet
         /// <returns><see cref="PhotoCollection"/> instance containing list of photos.</returns>
         public PhotoCollection InterestingnessGetList(DateTime date)
         {
-            return InterestingnessGetList(date, PhotoSearchExtras.All, 0, 0);
+            return InterestingnessGetList(date, PhotoSearchExtras.None, 0, 0);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FlickrNet
         /// <returns><see cref="PhotoCollection"/> instance containing list of photos.</returns>
         public PhotoCollection InterestingnessGetList()
         {
-            return InterestingnessGetList(DateTime.MinValue, PhotoSearchExtras.All, 0, 0);
+            return InterestingnessGetList(DateTime.MinValue, PhotoSearchExtras.None, 0, 0);
         }
 
         /// <summary>

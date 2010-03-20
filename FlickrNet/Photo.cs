@@ -278,12 +278,12 @@ namespace FlickrNet
 		/// <summary>
 		/// Latitude. Will be 0 if Geo extras not specified.
 		/// </summary>
-		public decimal Latitude { get; private set; }
+        public double Latitude { get; private set; }
 
 		/// <summary>
 		/// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
 		/// </summary>
-		public decimal Longitude { get; private set; }
+        public double Longitude { get; private set; }
 
 		/// <summary>
 		/// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
@@ -449,13 +449,13 @@ namespace FlickrNet
                         WoeId = reader.Value;
                         break;
                     case "accuracy":
-                        Accuracy = (GeoAccuracy)int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Accuracy = (GeoAccuracy)reader.ReadContentAsInt();
                         break;
                     case "latitude":
-                        Latitude = decimal.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Latitude = reader.ReadContentAsDouble();
                         break;
                     case "longitude":
-                        Longitude = decimal.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Longitude = reader.ReadContentAsDouble();
                         break;
                     case "machine_tags":
                         MachineTags = reader.Value;

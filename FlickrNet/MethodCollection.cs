@@ -269,9 +269,11 @@ namespace FlickrNet
 
             reader.Read();
 
-            Description = reader.ReadContentAsString();
-
-            reader.Read();
+            if (reader.NodeType == XmlNodeType.Text)
+            {
+                Description = reader.ReadContentAsString();
+                reader.Read();
+            }
 
         }
     }

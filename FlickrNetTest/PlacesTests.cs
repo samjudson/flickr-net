@@ -11,9 +11,9 @@ namespace FlickrNetTest
     /// Summary description for PlacesForUserTests
     /// </summary>
     [TestClass]
-    public class PlacesForUserTests
+    public class PlacesTests
     {
-        public PlacesForUserTests()
+        public PlacesTests()
         {
         }
 
@@ -81,8 +81,8 @@ namespace FlickrNetTest
         [TestMethod]
         public void PlacesFindByLatLongNewcastleTest()
         {
-            decimal lat = 54.977M;
-            decimal lon = -1.612M;
+            double lat = 54.977;
+            double lon = -1.612;
 
             var place = TestData.GetInstance().PlacesFindByLatLon(lat, lon);
 
@@ -159,6 +159,72 @@ namespace FlickrNetTest
             Assert.AreEqual(91, p.ShapeData.PolyLines[0].Count);
             Assert.AreEqual(55.018703460693, p.ShapeData.PolyLines[0][90].X);
             Assert.AreEqual(-1.6715459823608, p.ShapeData.PolyLines[0][90].Y);
+        }
+
+        [TestMethod]
+        public void PlacesGetInfoByUrlBasicTest()
+        {
+            var f = TestData.GetInstance();
+            var placeId = "IEcHLFCaAZwoKQ";
+            PlaceInfo p1 = f.PlacesGetInfo(placeId, null);
+            PlaceInfo p2 = f.PlacesGetInfoByUrl(p1.PlaceUrl);
+
+            Assert.IsNotNull(p2);
+            Assert.AreEqual(p1.PlaceId, p2.PlaceId);
+            Assert.AreEqual(p1.WoeId, p2.WoeId);
+            Assert.AreEqual(p1.PlaceType, p2.PlaceType);
+            Assert.AreEqual(p1.Description, p2.Description);
+
+            Assert.IsNotNull(p2.PlaceFlickrUrl);
+        }
+
+        [TestMethod]
+        public void PlacesGetTopPlacesListTest()
+        {
+            var f = TestData.GetInstance();
+            var places = f.PlacesGetTopPlacesList(PlaceType.Continent);
+
+            Assert.IsNotNull(places);
+            Assert.AreNotEqual(0, places.Count);
+
+            foreach (var p in places)
+            {
+                Assert.AreEqual<PlaceType>(PlaceType.Continent, p.PlaceType);
+                Assert.IsNotNull(p.PlaceId);
+                Assert.IsNotNull(p.WoeId);
+            }
+        }
+
+        [TestMethod]
+        public void PlacesGetShapeHistoryTest()
+        {
+            var placeId = "IEcHLFCaAZwoKQ";
+            var f = TestData.GetInstance();
+            var col = f.PlacesGetShapeHistory(placeId, null);
+
+            Assert.IsNotNull(col, "ShapeDataCollection should not be null.");
+            Assert.AreEqual(6, col.Count, "Count should be six.");
+            Assert.AreEqual(placeId, col.PlaceId);
+
+            Assert.AreEqual(2, col[1].PolyLines.Count, "The second shape should have two polylines.");
+        }
+
+        [TestMethod]
+        public void PlacesGetTagsForPlace()
+        {
+            var placeId = "IEcHLFCaAZwoKQ";
+            var f = TestData.GetInstance();
+            var col = f.PlacesTagsForPlace(placeId, null);
+
+            Assert.IsNotNull(col, "TagCollection should not be null.");
+            Assert.AreEqual(100, col.Count, "Count should be one hundred.");
+
+            foreach (var t in col)
+            {
+                Assert.AreNotEqual(0, t.Count, "Count should be greater than zero.");
+                Assert.IsNotNull(t.TagName, "TagName should not be null.");
+            }
+
         }
     }
 }

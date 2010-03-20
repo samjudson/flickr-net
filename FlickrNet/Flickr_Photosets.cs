@@ -186,7 +186,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetPhotoCollection"/> object containing the list of <see cref="Photo"/> instances.</returns>
         public PhotosetPhotoCollection PhotosetsGetPhotos(string photosetId)
         {
-            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None, 0, 0);
+            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.None, PrivacyFilter.None, 0, 0);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetPhotoCollection"/> object containing the list of <see cref="Photo"/> instances.</returns>
         public PhotosetPhotoCollection PhotosetsGetPhotos(string photosetId, int page, int perPage)
         {
-            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, PrivacyFilter.None, page, perPage);
+            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.None, PrivacyFilter.None, page, perPage);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetPhotoCollection"/> object containing the list of <see cref="Photo"/> instances.</returns>
         public PhotosetPhotoCollection PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter)
         {
-            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter, 0, 0);
+            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.None, privacyFilter, 0, 0);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetPhotoCollection"/> object containing the list of <see cref="Photo"/> instances.</returns>
         public PhotosetPhotoCollection PhotosetsGetPhotos(string photosetId, PrivacyFilter privacyFilter, int page, int perPage)
         {
-            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.All, privacyFilter, page, perPage);
+            return PhotosetsGetPhotos(photosetId, PhotoSearchExtras.None, privacyFilter, page, perPage);
         }
 
         /// <summary>

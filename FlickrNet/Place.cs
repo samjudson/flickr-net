@@ -43,12 +43,12 @@ namespace FlickrNet
 		/// <summary>
 		/// The latitude of this place.
 		/// </summary>
-        public decimal Latitude { get; private set; }
+        public double Latitude { get; private set; }
 
 		/// <summary>
 		/// The longitude of this place.
 		/// </summary>
-        public decimal Longitude { get; private set; }
+        public double Longitude { get; private set; }
 
         /// <summary>
         /// The timezone for the place.
@@ -92,10 +92,10 @@ namespace FlickrNet
                         WoeId = reader.Value;
                         break;
                     case "latitude":
-                        Latitude = reader.ReadContentAsDecimal();
+                        Latitude = reader.ReadContentAsDouble();
                         break;
                     case "longitude":
-                        Longitude = reader.ReadContentAsDecimal();
+                        Longitude = reader.ReadContentAsDouble();
                         break;
                     case "timezone":
                         TimeZone = reader.Value;

@@ -185,7 +185,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing the list of photos.</returns>
         public PhotoCollection GroupsPoolsGetPhotos(string groupId)
         {
-            return GroupsPoolsGetPhotos(groupId, null, null, PhotoSearchExtras.All, 0, 0);
+            return GroupsPoolsGetPhotos(groupId, null, null, PhotoSearchExtras.None, 0, 0);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing the list of photos.</returns>
         public PhotoCollection GroupsPoolsGetPhotos(string groupId, string tags)
         {
-            return GroupsPoolsGetPhotos(groupId, tags, null, PhotoSearchExtras.All, 0, 0);
+            return GroupsPoolsGetPhotos(groupId, tags, null, PhotoSearchExtras.None, 0, 0);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing the list of photos.</returns>
         public PhotoCollection GroupsPoolsGetPhotos(string groupId, int page, int perPage)
         {
-            return GroupsPoolsGetPhotos(groupId, null, null, PhotoSearchExtras.All, page, perPage);
+            return GroupsPoolsGetPhotos(groupId, null, null, PhotoSearchExtras.None, page, perPage);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing the list of photos.</returns>
         public PhotoCollection GroupsPoolsGetPhotos(string groupId, string tags, int page, int perPage)
         {
-            return GroupsPoolsGetPhotos(groupId, tags, null, PhotoSearchExtras.All, page, perPage);
+            return GroupsPoolsGetPhotos(groupId, tags, null, PhotoSearchExtras.None, page, perPage);
         }
 
         /// <summary>

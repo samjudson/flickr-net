@@ -146,6 +146,7 @@
     <Compile Include="Flickr_Commons.cs" />
     <Compile Include="Flickr_Galleries.cs" />
     <Compile Include="Flickr_MachineTags.cs" />
+    <Compile Include="Flickr_PhotosPeople.cs" />
     <Compile Include="Flickr_Upload.cs" />
     <Compile Include="Gallery.cs" />
     <Compile Include="GalleryCollection.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="PublicGroupInfo.cs" />
     <Compile Include="PublicGroupInfoCollection.cs" />
     <Compile Include="ShapeData.cs" />
+    <Compile Include="ShapeDataCollection.cs" />
     <Compile Include="StatReferrer.cs" />
     <Compile Include="Enums.cs">
       <SubType>Code</SubType>

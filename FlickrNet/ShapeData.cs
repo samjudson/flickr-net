@@ -121,6 +121,8 @@ namespace FlickrNet
 
                 }
             }
+
+            reader.Read();
         }
     }
 

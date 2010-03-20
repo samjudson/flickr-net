@@ -44,6 +44,53 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Convert a <see cref="TagMode"/> to a string used when passing to Flickr.
+        /// </summary>
+        /// <param name="tagMode">The tag mode to convert.</param>
+        /// <returns>The string to pass to Flickr.</returns>
+        public static string TagModeToString(TagMode tagMode)
+        {
+            switch (tagMode)
+            {
+                case TagMode.None:
+                    return "";
+                case TagMode.AllTags:
+                    return "all";
+                case TagMode.AnyTag:
+                    return "any";
+                case TagMode.Boolean:
+                    return "bool";
+                default:
+                    return "";
+            }
+        }
+
+        /// <summary>
+        /// Convert a <see cref="MachineTagMode"/> to a string used when passing to Flickr.
+        /// </summary>
+        /// <param name="machineTagMode">The machine tag mode to convert.</param>
+        /// <returns>The string to pass to Flickr.</returns>
+        public static string MachineTagModeToString(MachineTagMode machineTagMode)
+        {
+            switch (machineTagMode)
+            {
+                case MachineTagMode.None:
+                    return "";
+                case MachineTagMode.AllTags:
+                    return "all";
+                case MachineTagMode.AnyTag:
+                    return "any";
+                default:
+                    return "";
+            }
+
+        }
+
+
+        
+
+
+        /// <summary>
         /// Encodes a URL quesrystring data component.
         /// </summary>
         /// <param name="data">The data to encode.</param>

@@ -82,26 +82,6 @@ namespace FlickrNet
 		/// </summary>
 		public TagMode TagMode { get; set; }
 
-		internal string TagModeString
-		{
-			get
-			{
-				switch(TagMode)
-				{
-					case TagMode.None:
-						return "";
-					case TagMode.AllTags:
-						return "all";
-					case TagMode.AnyTag:
-						return "any";
-					case TagMode.Boolean:
-						return "bool";
-					default:
-						return "";
-				}
-			}
-		}
-
 		/// <summary>
 		/// Search for the given machine tags.
 		/// </summary>
@@ -118,24 +98,6 @@ namespace FlickrNet
 		/// Allowed values are any and all. It defaults to any if none specified.
 		/// </remarks>
 		public MachineTagMode MachineTagMode { get; set; }
-
-		internal string MachineTagModeString
-		{
-			get
-			{
-                switch (MachineTagMode)
-				{
-					case MachineTagMode.None:
-						return "";
-					case MachineTagMode.AllTags:
-						return "all";
-					case MachineTagMode.AnyTag:
-						return "any";
-					default:
-						return "";
-				}
-			}
-		}
 
 		/// <summary>
 		/// Search for the given text in photo titles and descriptions.

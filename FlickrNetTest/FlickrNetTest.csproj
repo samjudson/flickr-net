@@ -48,7 +48,7 @@
     <Compile Include="PhotosetsOrderSets.cs" />
     <Compile Include="PhotosGetFavouritesTests.cs" />
     <Compile Include="PhotosSerializationTests.cs" />
-    <Compile Include="PlacesForUserTests.cs" />
+    <Compile Include="PlacesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagsTests.cs" />
     <Compile Include="TestData.cs" />

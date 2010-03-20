@@ -24,6 +24,17 @@ namespace FlickrNet
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string PlaceUrl { get; private set; }
 
+        /// <summary>
+        /// The URL to the place web page on Flickr.
+        /// </summary>
+        public Uri PlaceFlickrUrl
+        {
+            get
+            {
+                return new Uri("http://www.flickr.com/places" + PlaceUrl);
+            }
+        }
+
 		/// <summary>
 		/// The 'type' of this place, e.g. Region, Country etc.
 		/// </summary>
@@ -42,12 +53,12 @@ namespace FlickrNet
 		/// <summary>
 		/// The latitude of this place.
 		/// </summary>
-        public decimal Latitude { get; private set; }
+        public double Latitude { get; private set; }
 
 		/// <summary>
 		/// The longitude of this place.
 		/// </summary>
-        public decimal Longitude { get; private set; }
+        public double Longitude { get; private set; }
 
         /// <summary>
         /// The accuracy of the location information, if this information is about a photo.
@@ -128,10 +139,10 @@ namespace FlickrNet
                         WoeId = reader.Value;
                         break;
                     case "latitude":
-                        Latitude = reader.ReadContentAsDecimal();
+                        Latitude = reader.ReadContentAsDouble();
                         break;
                     case "longitude":
-                        Longitude = reader.ReadContentAsDecimal();
+                        Longitude = reader.ReadContentAsDouble();
                         break;
                     case "accuracy":
                         Accuracy = (GeoAccuracy)reader.ReadContentAsInt();

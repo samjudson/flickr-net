@@ -77,6 +77,13 @@ namespace FlickrNetTest
         [TestMethod]
         public void ReflectionMethodsCheckWeSupport()
         {
+            List<string> exceptions = new List<string>();
+            exceptions.Add("flickr.photos.getWithGeoData");
+            exceptions.Add("flickr.photos.getWithouGeoData");
+            exceptions.Add("flickr.photos.search");
+            exceptions.Add("flickr.photos.getNotInSet");
+            exceptions.Add("flickr.photos.getUntagged");
+
             Flickr f = TestData.GetInstance();
 
             MethodCollection methodNames = f.ReflectionGetMethods();
@@ -93,6 +100,7 @@ namespace FlickrNetTest
             foreach (string methodName in methodNames)
             {
                 bool found = false;
+                bool foundTrue = false;
                 string trueName = methodName.Replace("flickr.", "").Replace(".", "").ToLower();
                 foreach (MethodInfo info in methods)
                 {
@@ -102,10 +110,27 @@ namespace FlickrNetTest
                         break;
                     }
                 }
+                // Check the number of arguments to see if we have a matching method.
+                if (found && !exceptions.Contains(methodName))
+                {
+                    Method method = f.ReflectionGetMethodInfo(methodName);
+                    foreach (MethodInfo info in methods)
+                    {
+                        if (method.Arguments.Count - 1 == info.GetParameters().Length)
+                        {
+                            foundTrue = true;
+                            break;
+                        }
+                    }
+                }
                 if (!found)
                 {
                     failCount++;
                     Console.WriteLine("Method '" + methodName + "' not found in FlickrNet.Flickr.");
+                }
+                if (found && !foundTrue)
+                {
+                    Console.WriteLine("Method '" + methodName + "' found but no matching method with all arguments.");
                 }
             }
 

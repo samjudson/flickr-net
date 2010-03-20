@@ -129,7 +129,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing details of the photos returned.</returns>
         public PhotoCollection PhotosGetContactsPublicPhotos(string userId)
         {
-            return PhotosGetContactsPublicPhotos(userId, 0, false, false, false, PhotoSearchExtras.All);
+            return PhotosGetContactsPublicPhotos(userId, 0, false, false, false, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing details of the photos returned.</returns>
         public PhotoCollection PhotosGetContactsPublicPhotos(string userId, int count)
         {
-            return PhotosGetContactsPublicPhotos(userId, count, false, false, false, PhotoSearchExtras.All);
+            return PhotosGetContactsPublicPhotos(userId, count, false, false, false, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PhotosGetContactsPublicPhotos(string userId, int count, bool justFriends, bool singlePhoto, bool includeSelf)
         {
-            return PhotosGetContactsPublicPhotos(userId, count, justFriends, singlePhoto, includeSelf, PhotoSearchExtras.All);
+            return PhotosGetContactsPublicPhotos(userId, count, justFriends, singlePhoto, includeSelf, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetRecent()
         {
-            return PhotosGetRecent(0, 0, PhotoSearchExtras.All);
+            return PhotosGetRecent(0, 0, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetRecent(int page, int perPage)
         {
-            return PhotosGetRecent(page, perPage, PhotoSearchExtras.All);
+            return PhotosGetRecent(page, perPage, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged()
         {
-            return PhotosGetUntagged(0, 0, PhotoSearchExtras.All);
+            return PhotosGetUntagged(0, 0, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged(int page, int perPage)
         {
-            return PhotosGetUntagged(page, perPage, PhotoSearchExtras.All);
+            return PhotosGetUntagged(page, perPage, PhotoSearchExtras.None);
         }
 
         /// <summary>
@@ -455,11 +455,25 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged(int page, int perPage, PhotoSearchExtras extras)
         {
+            PartialSearchOptions o = new PartialSearchOptions();
+            o.Page = page;
+            o.PerPage = perPage;
+            o.Extras = extras;
+
+            return PhotosGetUntagged(o);
+        }
+
+        /// <summary>
+        /// Returns a list of your photos with no tags.
+        /// </summary>
+        /// <param name="options">The <see cref="PartialSearchOptions"/> containing the list of options supported by this method.</param>
+        /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
+        public PhotoCollection PhotosGetUntagged(PartialSearchOptions options)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getUntagged");
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+
+            UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
@@ -646,9 +660,9 @@ namespace FlickrNet
             if (options.GroupId != null && options.GroupId.Length > 0) parameters.Add("group_id", options.GroupId);
             if (options.Text != null && options.Text.Length > 0) parameters.Add("text", options.Text);
             if (options.Tags != null && options.Tags.Length > 0) parameters.Add("tags", options.Tags);
-            if (options.TagMode != TagMode.None) parameters.Add("tag_mode", options.TagModeString);
+            if (options.TagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(options.TagMode));
             if (options.MachineTags != null && options.MachineTags.Length > 0) parameters.Add("machine_tags", options.MachineTags);
-            if (options.MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", options.MachineTagModeString);
+            if (options.MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(options.MachineTagMode));
             if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
             if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
             if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(options.MinTakenDate));
