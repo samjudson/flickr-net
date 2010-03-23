@@ -80,6 +80,8 @@
     <Compile Include="BlogServiceCollection.cs" />
     <Compile Include="BoundaryBox.cs" />
     <Compile Include="Cache.cs" />
+    <Compile Include="Cluster.cs" />
+    <Compile Include="ClusterCollection.cs" />
     <Compile Include="Collection.cs" />
     <Compile Include="CollectionCollection.cs" />
     <Compile Include="CollectionInfo.cs" />
@@ -102,11 +104,14 @@
     <Compile Include="Flickr_Auth.cs" />
     <Compile Include="Flickr_Blogs.cs" />
     <Compile Include="Flickr_Collections.cs" />
+    <Compile Include="Flickr_Commons.cs" />
     <Compile Include="Flickr_Contacts.cs" />
     <Compile Include="Flickr_Favorites.cs" />
+    <Compile Include="Flickr_Galleries.cs" />
     <Compile Include="Flickr_GetResponse.cs" />
     <Compile Include="Flickr_Groups.cs" />
     <Compile Include="Flickr_Interestingness.cs" />
+    <Compile Include="Flickr_MachineTags.cs" />
     <Compile Include="Flickr_Notes.cs" />
     <Compile Include="Flickr_Panda.cs" />
     <Compile Include="Flickr_People.cs" />
@@ -115,6 +120,7 @@
     <Compile Include="Flickr_Photosets.cs" />
     <Compile Include="Flickr_PhotosGeo.cs" />
     <Compile Include="Flickr_PhotosMisc.cs" />
+    <Compile Include="Flickr_PhotosPeople.cs" />
     <Compile Include="Flickr_Places.cs" />
     <Compile Include="Flickr_Prefs.cs" />
     <Compile Include="Flickr_Reflection.cs" />
@@ -123,14 +129,21 @@
     <Compile Include="Flickr_Test.cs" />
     <Compile Include="Flickr_Upload.cs" />
     <Compile Include="Flickr_Urls.cs" />
+    <Compile Include="Gallery.cs" />
+    <Compile Include="GalleryCollection.cs" />
     <Compile Include="GeoAccuracy.cs" />
     <Compile Include="GeoContext.cs" />
     <Compile Include="GeoPermissions.cs" />
+    <Compile Include="GeoPermissionType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GroupCategory.cs" />
     <Compile Include="Groups.cs" />
     <Compile Include="GroupSearchResultCollection.cs" />
+    <Compile Include="HotTag.cs" />
+    <Compile Include="HotTagCollection.cs" />
     <Compile Include="IFlickrParsable.cs" />
+    <Compile Include="Institution.cs" />
+    <Compile Include="InstitutionCollection.cs" />
     <Compile Include="Licenses.cs" />
     <Compile Include="LockFile.cs" />
     <Compile Include="MediaType.cs" />
@@ -140,7 +153,11 @@
     <Compile Include="MemberGroupInfoCollection.cs" />
     <Compile Include="MemberTypes.cs" />
     <Compile Include="MethodCollection.cs" />
+    <Compile Include="Namespace.cs" />
+    <Compile Include="NamespaceCollection.cs" />
     <Compile Include="NoResponse.cs" />
+    <Compile Include="Pair.cs" />
+    <Compile Include="PairCollection.cs" />
     <Compile Include="PandaPhotoCollection.cs" />
     <Compile Include="ParsingException.cs" />
     <Compile Include="PartialSearchOptions.cs" />
@@ -156,6 +173,8 @@
     <Compile Include="PhotoFavoriteCollection.cs" />
     <Compile Include="PhotoInfo.cs" />
     <Compile Include="PhotoPermissions.cs" />
+    <Compile Include="PhotoPerson.cs" />
+    <Compile Include="PhotoPersonCollection.cs" />
     <Compile Include="PhotoSearchExtras.cs" />
     <Compile Include="PhotoSearchOptions.cs" />
     <Compile Include="PhotoSearchOrder.cs" />
@@ -171,11 +190,14 @@
     <Compile Include="PopularitySort.cs" />
     <Compile Include="PopularPhoto.cs" />
     <Compile Include="PopularPhotoCollection.cs" />
+    <Compile Include="Predicate.cs" />
+    <Compile Include="PredicateCollection.cs" />
     <Compile Include="PublicGroupInfo.cs" />
     <Compile Include="PublicGroupInfoCollection.cs" />
     <Compile Include="ResponseXmlException.cs" />
     <Compile Include="SafeNativeMethods.cs" />
     <Compile Include="ShapeData.cs" />
+    <Compile Include="ShapeDataCollection.cs" />
     <Compile Include="SignatureRequiredException.cs" />
     <Compile Include="Sizes.cs" />
     <Compile Include="StatDomain.cs" />
@@ -185,11 +207,16 @@
     <Compile Include="Stats.cs" />
     <Compile Include="StatViews.cs" />
     <Compile Include="Tags.cs" />
+    <Compile Include="Ticket.cs" />
+    <Compile Include="TicketCollection.cs" />
     <Compile Include="UnknownResponse.cs" />
     <Compile Include="UploadProgressEvent.cs" />
     <Compile Include="UploadResponse.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserGeoPermissions.cs" />
     <Compile Include="UtilityMethods.cs" />
+    <Compile Include="Value.cs" />
+    <Compile Include="ValueCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlickrNet.snk" />

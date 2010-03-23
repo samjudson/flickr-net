@@ -302,53 +302,13 @@ namespace FlickrNet
             if (reader.LocalName != "photo")
                 throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
 
-            while (reader.MoveToNextAttribute())
-            {
-                switch (reader.LocalName)
-                {
-                    case "id":
-                        PhotoId = reader.Value;
-                        break;
-                    case "secret":
-                        Secret = reader.Value;
-                        break;
-                    case "server":
-                        Server = reader.Value;
-                        break;
-                    case "farm":
-                        Farm = reader.Value;
-                        break;
-                    case "originalformat":
-                        OriginalFormat = reader.Value;
-                        break;
-                    case "originalsecret":
-                        OriginalSecret = reader.Value;
-                        break;
-                    case "dateuploaded":
-                        DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);
-                        break;
-                    case "isfavorite":
-                        IsFavorite = (reader.Value == "1");
-                        break;
-                    case "license":
-                        License = (LicenseType)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
-                        break;
-                    case "views":
-                        ViewCount = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
-                        break;
-                    case "rotation":
-                        Rotation = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
-                        break;
-                    case "media":
-                        Media = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
-                        break;
-                    default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-                }
-            }
+            LoadAttributes(reader);
 
-            reader.Read();
+            LoadElements(reader);
+        }
 
+        private void LoadElements(System.Xml.XmlReader reader)
+        {
             while (reader.LocalName != "photo")
             {
                 switch (reader.LocalName)
@@ -404,6 +364,56 @@ namespace FlickrNet
             }
 
             reader.Skip();
+        }
+
+        private void LoadAttributes(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "id":
+                        PhotoId = reader.Value;
+                        break;
+                    case "secret":
+                        Secret = reader.Value;
+                        break;
+                    case "server":
+                        Server = reader.Value;
+                        break;
+                    case "farm":
+                        Farm = reader.Value;
+                        break;
+                    case "originalformat":
+                        OriginalFormat = reader.Value;
+                        break;
+                    case "originalsecret":
+                        OriginalSecret = reader.Value;
+                        break;
+                    case "dateuploaded":
+                        DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "isfavorite":
+                        IsFavorite = (reader.Value == "1");
+                        break;
+                    case "license":
+                        License = (LicenseType)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "views":
+                        ViewCount = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "rotation":
+                        Rotation = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "media":
+                        Media = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+
+            reader.Read();
         }
 
         private void ParseUrls(System.Xml.XmlReader reader)
@@ -777,7 +787,7 @@ namespace FlickrNet
         public Uri Url { get; private set; }
 
         /// <summary>
-        /// The author id of the tag.
+        /// The type of the url.
         /// </summary>
         public string UrlType { get; private set; }
 

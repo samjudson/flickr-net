@@ -141,6 +141,40 @@ namespace FlickrNet
 
 		void IFlickrParsable.Load(XmlReader reader)
 		{
+            LoadAttributes(reader);
+
+            LoadElements(reader);
+		}
+
+        private void LoadElements(XmlReader reader)
+        {
+            while (reader.LocalName != "item")
+            {
+                switch (reader.LocalName)
+                {
+                    case "title":
+                        Title = reader.ReadElementContentAsString();
+                        break;
+                    case "activity":
+                        reader.ReadToDescendant("event");
+                        while (reader.LocalName == "event")
+                        {
+                            ActivityEvent e = new ActivityEvent();
+                            ((IFlickrParsable)e).Load(reader);
+                            Events.Add(e);
+                        }
+                        reader.Read();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void LoadAttributes(XmlReader reader)
+        {
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -208,31 +242,7 @@ namespace FlickrNet
             }
 
             reader.Read();
-
-            while (reader.LocalName != "item")
-            {
-                switch (reader.LocalName)
-                {
-                    case "title":
-                        Title = reader.ReadElementContentAsString();
-                        break;
-                    case "activity":
-                        reader.ReadToDescendant("event");
-                        while (reader.LocalName == "event")
-                        {
-                            ActivityEvent e = new ActivityEvent();
-                            ((IFlickrParsable)e).Load(reader);
-                            Events.Add(e);
-                        }
-                        reader.Read();
-                        break;
-                    default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
-                }
-            }
-
-            reader.Read();
-		}
+        }
 
     }
 

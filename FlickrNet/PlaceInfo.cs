@@ -116,6 +116,51 @@ namespace FlickrNet
 		/// <param name="reader"></param>
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
 		{
+            LoadAttributes(reader);
+
+            LoadElements(reader);
+		}
+
+        private void LoadElements(System.Xml.XmlReader reader)
+        {
+            while (reader.NodeType != XmlNodeType.EndElement)
+            {
+                switch (reader.LocalName)
+                {
+                    case "neighbourhood":
+                        Neighbourhood = new Place();
+                        ((IFlickrParsable)Neighbourhood).Load(reader);
+                        break;
+                    case "locality":
+                        Locality = new Place();
+                        ((IFlickrParsable)Locality).Load(reader);
+                        break;
+                    case "county":
+                        County = new Place();
+                        ((IFlickrParsable)Locality).Load(reader);
+                        break;
+                    case "region":
+                        Region = new Place();
+                        ((IFlickrParsable)Locality).Load(reader);
+                        break;
+                    case "country":
+                        Country = new Place();
+                        ((IFlickrParsable)Locality).Load(reader);
+                        break;
+                    case "shapedata":
+                        ShapeData = new ShapeData();
+                        ((IFlickrParsable)ShapeData).Load(reader);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void LoadAttributes(System.Xml.XmlReader reader)
+        {
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -162,41 +207,6 @@ namespace FlickrNet
             }
 
             reader.Read();
-
-            while (reader.NodeType != XmlNodeType.EndElement)
-            {
-                switch (reader.LocalName)
-                {
-                    case "neighbourhood":
-                        Neighbourhood = new Place();
-                        ((IFlickrParsable)Neighbourhood).Load(reader);
-                        break;
-                    case "locality":
-                        Locality = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
-                        break;
-                    case "county":
-                        County = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
-                        break;
-                    case "region":
-                        Region = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
-                        break;
-                    case "country":
-                        Country = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
-                        break;
-                    case "shapedata":
-                        ShapeData = new ShapeData();
-                        ((IFlickrParsable)ShapeData).Load(reader);
-                        break;
-                    default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
-                }
-            }
-
-			reader.Read();
-		}
+        }
     }
 }

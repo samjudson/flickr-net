@@ -57,9 +57,6 @@ namespace FlickrNet
         public bool IsFamily { get; private set; }
 
 		/// <remarks/>
-        public bool IsPrimary { get; private set; }
-
-		/// <remarks/>
         public LicenseType License { get; private set; }
 
 		/// <summary>
@@ -374,7 +371,6 @@ namespace FlickrNet
         {
             if (reader.LocalName != "photo")
                 throw new FlickrException("Unknown element found: " + reader.LocalName);
-
 
             while (reader.MoveToNextAttribute())
             {

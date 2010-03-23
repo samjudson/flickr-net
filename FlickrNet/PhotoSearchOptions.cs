@@ -7,7 +7,6 @@ namespace FlickrNet
 	/// <summary>
 	/// Summary description for PhotoSearchOptions.
 	/// </summary>
-	[Serializable]
 	public class PhotoSearchOptions
 	{
 		/// <summary>

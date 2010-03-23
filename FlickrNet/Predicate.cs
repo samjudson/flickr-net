@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A machine tag predicate. "namespace:predicate=value".
     /// </summary>
-    public class Predicate : IFlickrParsable
+    public sealed class Predicate : IFlickrParsable
     {
         /// <summary>
         /// The name the predicate

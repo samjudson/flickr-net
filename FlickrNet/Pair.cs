@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A machine tag pair made up of a namespace and predicate. "namespace:predicate=value".
     /// </summary>
-    public class Pair : IFlickrParsable
+    public sealed class Pair : IFlickrParsable
     {
         /// <summary>
         /// The name of the pair.

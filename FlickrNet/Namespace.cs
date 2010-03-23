@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A machine tag namespace. "namespace:predicate=value".
     /// </summary>
-    public class Namespace : IFlickrParsable
+    public sealed class Namespace : IFlickrParsable
     {
         /// <summary>
         /// The name of the namespace.

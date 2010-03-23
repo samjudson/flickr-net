@@ -20,7 +20,7 @@ namespace FlickrNet
         /// <summary>
         /// Only contacts can see the geographic information.
         /// </summary>
-        ContatsOnly = 2,
+        ContactsOnly = 2,
         /// <summary>
         /// Only Friends and Family can see the geographic information.
         /// </summary>

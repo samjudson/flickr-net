@@ -119,6 +119,51 @@ namespace FlickrNet
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
+            LoadAttributes(reader);
+
+            LoadElements(reader);
+
+        }
+
+        private void LoadElements(System.Xml.XmlReader reader)
+        {
+            while (reader.LocalName != "person")
+            {
+                switch (reader.LocalName)
+                {
+                    case "username":
+                        UserName = reader.ReadElementContentAsString();
+                        break;
+                    case "location":
+                        Location = reader.ReadElementContentAsString();
+                        break;
+                    case "realname":
+                        RealName = reader.ReadElementContentAsString();
+                        break;
+                    case "photosurl":
+                        PhotosUrl = new Uri(reader.ReadElementContentAsString());
+                        break;
+                    case "profileurl":
+                        ProfileUrl = new Uri(reader.ReadElementContentAsString());
+                        break;
+                    case "mobileurl":
+                        MobileUrl = new Uri(reader.ReadElementContentAsString());
+                        break;
+                    case "photos":
+                        PhotosSummary = new PersonPhotosSummary();
+                        ((IFlickrParsable)PhotosSummary).Load(reader);
+                        break;
+                    case "mbox_sha1sum":
+                        MailboxSha1Hash = reader.ReadElementContentAsString();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
+        }
+
+        private void LoadAttributes(System.Xml.XmlReader reader)
+        {
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -169,41 +214,6 @@ namespace FlickrNet
             }
 
             reader.Read();
-
-            while (reader.LocalName != "person")
-            {
-                switch (reader.LocalName)
-                {
-                    case "username":
-                        UserName = reader.ReadElementContentAsString();
-                        break;
-                    case "location":
-                        Location = reader.ReadElementContentAsString();
-                        break;
-                    case "realname":
-                        RealName = reader.ReadElementContentAsString();
-                        break;
-                    case "photosurl":
-                        PhotosUrl = new Uri(reader.ReadElementContentAsString());
-                        break;
-                    case "profileurl":
-                        ProfileUrl = new Uri(reader.ReadElementContentAsString());
-                        break;
-                    case "mobileurl":
-                        MobileUrl = new Uri(reader.ReadElementContentAsString());
-                        break;
-                    case "photos":
-                        PhotosSummary = new PersonPhotosSummary();
-                        ((IFlickrParsable)PhotosSummary).Load(reader);
-                        break;
-                    case "mbox_sha1sum":
-                        MailboxSha1Hash = reader.ReadElementContentAsString();
-                        break;
-                    default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
-                }
-            }
-
         }
     }
 

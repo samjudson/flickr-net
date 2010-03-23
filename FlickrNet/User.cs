@@ -179,6 +179,43 @@ namespace FlickrNet
 
         void IFlickrParsable.Load(XmlReader reader)
         {
+            LoadAttributes(reader);
+
+            LoadElements(reader);
+        }
+
+        private void LoadElements(XmlReader reader)
+        {
+            while (reader.LocalName != "user")
+            {
+                switch (reader.LocalName)
+                {
+                    case "username":
+                        UserName = reader.ReadElementContentAsString();
+                        break;
+                    case "bandwidth":
+                        ParseBandwidth(reader);
+                        break;
+                    case "filesize":
+                        ParseFileSize(reader);
+                        break;
+                    case "sets":
+                        ParseSets(reader);
+                        break;
+                    case "videosize":
+                        ParseVideoSize(reader);
+                        break;
+                    case "videos":
+                        ParseVideos(reader);
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                }
+            }
+        }
+
+        private void LoadAttributes(XmlReader reader)
+        {
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -196,137 +233,129 @@ namespace FlickrNet
             }
 
             reader.Read();
+        }
 
-            while (reader.LocalName != "user")
+        private void ParseVideos(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
                 {
-                    case "username":
-                        UserName = reader.ReadElementContentAsString();
+                    case "uploaded":
+                        if (!String.IsNullOrEmpty(reader.Value))
+                            VideosUploaded = reader.ReadContentAsInt();
                         break;
-                    case "bandwidth":
-                        while (reader.MoveToNextAttribute())
-                        {
-                            switch (reader.LocalName)
-                            {
-                                case "maxbytes":
-                                case "max":
-                                    BandwidthMax = reader.ReadContentAsLong();
-                                    break;
-                                case "maxkb":
-                                    BandwidthMaxKB = reader.ReadContentAsLong();
-                                    break;
-                                case "used":
-                                case "usedbytes":
-                                    BandwidthUsed = reader.ReadContentAsLong();
-                                    break;
-                                case "usedkb":
-                                    BandwidthUsedKB = reader.ReadContentAsLong();
-                                    break;
-                                case "remainingbytes":
-                                    BandwidthRemaining = reader.ReadContentAsLong();
-                                    break;
-                                case "remainingkb":
-                                    BandwidthRemainingKB = reader.ReadContentAsLong();
-                                    break;
-                                case "unlimited":
-                                    IsUnlimited = reader.Value == "1";
-                                    break;
-                                default:
-                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-                            }
-                        }
-                        reader.Read();
+                    case "remaining":
+                        if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
+                            VideosRemaining = reader.ReadContentAsInt();
                         break;
-                    case "filesize":
-                        while (reader.MoveToNextAttribute())
-                        {
-                            switch (reader.LocalName)
-                            {
-                                case "maxbytes":
-                                case "max":
-                                    FileSizeMax = reader.ReadContentAsLong();
-                                    break;
-                                case "maxkb":
-                                    FileSizeMaxKB = reader.ReadContentAsLong();
-                                    break;
-                                case "maxmb":
-                                    FileSizeMaxMB = reader.ReadContentAsLong();
-                                    break;
-                                default:
-                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-                            }
-                        }
-                        reader.Read();
-                        break;
-
-                    case "sets":
-                        while (reader.MoveToNextAttribute())
-                        {
-                            switch (reader.LocalName)
-                            {
-                                case "created":
-                                    if (!String.IsNullOrEmpty(reader.Value))
-                                        SetsCreated = reader.ReadContentAsInt();
-                                    break;
-                                case "remaining":
-                                    if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
-                                        SetsRemaining = reader.ReadContentAsInt();
-                                    break;
-                                default:
-                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-                            }
-                        }
-                        reader.Read();
-                        break;
-
-                    case "videosize":
-                        while (reader.MoveToNextAttribute())
-                        {
-                            switch (reader.LocalName)
-                            {
-                                case "maxbytes":
-                                    VideoSizeMax = reader.ReadContentAsLong();
-                                    break;
-                                case "maxkb":
-                                    VideoSizeMaxKB = reader.ReadContentAsLong();
-                                    break;
-                                case "maxmb":
-                                    VideoSizeMaxMB = reader.ReadContentAsLong();
-                                    break;
-                                default:
-                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-                            }
-                        }
-                        reader.Read();
-                        break;
-
-
-                    case "videos":
-                        while (reader.MoveToNextAttribute())
-                        {
-                            switch (reader.LocalName)
-                            {
-                                case "uploaded":
-                                    if (!String.IsNullOrEmpty(reader.Value))
-                                        VideosUploaded = reader.ReadContentAsInt();
-                                    break;
-                                case "remaining":
-                                    if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
-                                        VideosRemaining = reader.ReadContentAsInt();
-                                    break;
-                                default:
-                                    throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-                            }
-                        }
-                        reader.Read();
-                        break;
-
-
                     default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
+            reader.Read();
+        }
+
+        private void ParseVideoSize(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "maxbytes":
+                        VideoSizeMax = reader.ReadContentAsLong();
+                        break;
+                    case "maxkb":
+                        VideoSizeMaxKB = reader.ReadContentAsLong();
+                        break;
+                    case "maxmb":
+                        VideoSizeMaxMB = reader.ReadContentAsLong();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+            reader.Read();
+        }
+
+        private void ParseSets(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "created":
+                        if (!String.IsNullOrEmpty(reader.Value))
+                            SetsCreated = reader.ReadContentAsInt();
+                        break;
+                    case "remaining":
+                        if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
+                            SetsRemaining = reader.ReadContentAsInt();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+            reader.Read();
+        }
+
+        private void ParseFileSize(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "maxbytes":
+                    case "max":
+                        FileSizeMax = reader.ReadContentAsLong();
+                        break;
+                    case "maxkb":
+                        FileSizeMaxKB = reader.ReadContentAsLong();
+                        break;
+                    case "maxmb":
+                        FileSizeMaxMB = reader.ReadContentAsLong();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+            reader.Read();
+        }
+
+        private void ParseBandwidth(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "maxbytes":
+                    case "max":
+                        BandwidthMax = reader.ReadContentAsLong();
+                        break;
+                    case "maxkb":
+                        BandwidthMaxKB = reader.ReadContentAsLong();
+                        break;
+                    case "used":
+                    case "usedbytes":
+                        BandwidthUsed = reader.ReadContentAsLong();
+                        break;
+                    case "usedkb":
+                        BandwidthUsedKB = reader.ReadContentAsLong();
+                        break;
+                    case "remainingbytes":
+                        BandwidthRemaining = reader.ReadContentAsLong();
+                        break;
+                    case "remainingkb":
+                        BandwidthRemainingKB = reader.ReadContentAsLong();
+                        break;
+                    case "unlimited":
+                        IsUnlimited = reader.Value == "1";
+                        break;
+                    default:
+                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                }
+            }
+            reader.Read();
         }
     }
 }

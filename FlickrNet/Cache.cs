@@ -24,7 +24,7 @@ namespace FlickrNet
 				lock(lockObject)
 				{
 					if( _downloads == null )
-						_downloads = new PersistentCache(Path.Combine(CacheLocation, "downloadCache.dat"), new PictureCacheItemPersister(), CacheSizeLimit);
+						_downloads = new PersistentCache(Path.Combine(CacheLocation, "downloadCache.dat"), new PictureCacheItemPersister());
 					return _downloads;
 				}
 			}
@@ -42,7 +42,7 @@ namespace FlickrNet
 				lock(lockObject)
 				{
 					if( _responses == null )
-						_responses = new PersistentCache(Path.Combine(CacheLocation, "responseCache.dat"), new ResponseCacheItemPersister(), CacheSizeLimit);
+						_responses = new PersistentCache(Path.Combine(CacheLocation, "responseCache.dat"), new ResponseCacheItemPersister());
 					return _responses;
 				}
 			}
@@ -162,32 +162,40 @@ namespace FlickrNet
 	/// <summary>
 	/// A cache item containing details of a REST response from Flickr.
 	/// </summary>
-	[Serializable]
     public sealed class ResponseCacheItem : ICacheItem
 	{
-		private string url;
-		private string response;
-		private DateTime creationTime;
-
 		/// <summary>
 		/// Gets or sets the original URL of the request.
 		/// </summary>
-		public string Url { get { return url; } set { url = value; } }
+        public Uri Url { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the XML response.
 		/// </summary>
-		public string Response { get { return response; } set { response = value; } }
+        public string Response { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the time the cache item was created.
 		/// </summary>
-		public DateTime CreationTime { get { return creationTime; } set { creationTime = value; } }
+        public DateTime CreationTime { get; private set; }
 
 		/// <summary>
 		/// Gets the filesize of the request.
 		/// </summary>
-		public long FileSize { get { return (response==null?0:response.Length); } }
+		public long FileSize { get { return (Response==null?0:Response.Length); } }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="ResponseCacheItem"/> class.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="response"></param>
+        /// <param name="creationTime"></param>
+        public ResponseCacheItem(Uri url, string response, DateTime creationTime)
+        {
+            Url = url;
+            Response = response;
+            CreationTime = creationTime;
+        }
 
 		void ICacheItem.OnItemFlushed()
 		{
@@ -210,10 +218,7 @@ namespace FlickrNet
 
 			string url = chunks[0];
             DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
-			ResponseCacheItem item = new ResponseCacheItem();
-			item.Url = url;
-			item.CreationTime = creationTime;
-			item.Response = response;
+			ResponseCacheItem item = new ResponseCacheItem(new Uri(url), response, creationTime);
 			return item;
 		}
 
@@ -221,7 +226,7 @@ namespace FlickrNet
 		{
 			ResponseCacheItem item = (ResponseCacheItem) cacheItem;
 			StringBuilder result = new StringBuilder();
-			result.Append(item.Url + "\n");
+			result.Append(item.Url.AbsoluteUri + "\n");
 			result.Append(item.CreationTime.Ticks.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 			UtilityMethods.WriteString(outputStream, result.ToString());
 			UtilityMethods.WriteString(outputStream, item.Response);
@@ -273,30 +278,27 @@ namespace FlickrNet
 	/// <summary>
 	/// Contains details of image held with the Flickr.Net cache.
 	/// </summary>
-	[Serializable]
     public sealed class PictureCacheItem : ICacheItem
 	{
-		#region [ Internal Variables ]
-		internal string url;
-		internal DateTime creationTime;
-		internal string filename;
-		internal long fileSize;
-		#endregion
-
-		#region [ Public Properties ]
 		/// <summary>
 		/// The URL of the original image on Flickr.
 		/// </summary>
-		public string Url { get { return url; } }
+		public Uri Url { get; private set; }
 		/// <summary>
 		/// The <see cref="DateTime"/> that the cache item was created.
 		/// </summary>
-		public DateTime CreationTime { get { return creationTime; } }
+        public DateTime CreationTime { get; private set; }
 
 		/// <summary>
 		/// The filesize in bytes of the image.
 		/// </summary>
-		public long FileSize { get { return fileSize; } }
+        public long FileSize { get; private set; }
+
+        /// <summary>
+        /// The filename for this picture cache item.
+        /// </summary>
+        public string FileName { get; private set; }
+
 		/// <summary>
 		/// The Flickr photo id of the image.
 		/// </summary>
@@ -304,27 +306,37 @@ namespace FlickrNet
 		{
 			get 
 			{
-				if( url == null ) 
+				if( Url == null ) 
 					return null;
 				else
 				{
-					int begin = url.LastIndexOf("/", StringComparison.OrdinalIgnoreCase);
-					int end = url.IndexOf("_", StringComparison.OrdinalIgnoreCase);
+					int begin = Url.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase);
+                    int end = Url.AbsoluteUri.IndexOf("_", StringComparison.OrdinalIgnoreCase);
 
-					return url.Substring(begin + 1, (end - begin) - 1);
+                    return Url.AbsoluteUri.Substring(begin + 1, (end - begin) - 1);
 				}
 			}
 		}
-		#endregion
 
-		#region [ Public Methods ]
+        /// <summary>
+        /// Creates an instance of the PictureCacheItem.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="creationDate"></param>
+        /// <param name="fileSize"></param>
+        /// <param name="fileName"></param>
+        public PictureCacheItem(Uri url, DateTime creationDate, long fileSize, string fileName)
+        {
+            Url = url;
+            CreationTime = creationDate;
+            FileSize = fileSize;
+            FileName = fileName;
+        }
 
-		void ICacheItem.OnItemFlushed()
+        void ICacheItem.OnItemFlushed()
 		{
-			File.Delete(filename);
+			File.Delete(FileName);
 		}
-
-		#endregion
 	}
 
 	/// <summary>
@@ -342,11 +354,7 @@ namespace FlickrNet
 			string filename = chunks[2];
             long fileSize = long.Parse(chunks[3], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
 
-			PictureCacheItem pci = new PictureCacheItem();
-			pci.url = url;
-			pci.creationTime = creationTime;
-			pci.filename = filename;
-			pci.fileSize = fileSize;
+            PictureCacheItem pci = new PictureCacheItem(new Uri(url), creationTime, fileSize, filename);
 			return pci;
 		}
 
@@ -355,10 +363,10 @@ namespace FlickrNet
 			PictureCacheItem pci = (PictureCacheItem) cacheItem;
 			StringBuilder output = new StringBuilder();
 
-			output.Append(pci.url + "\n");
-			output.Append(pci.creationTime.Ticks + "\n");
-			output.Append(pci.filename + "\n");
-			output.Append(pci.fileSize + "\n");
+			output.Append(pci.Url.AbsoluteUri + "\n");
+			output.Append(pci.CreationTime.Ticks + "\n");
+			output.Append(pci.FileName + "\n");
+			output.Append(pci.FileSize + "\n");
 
 			UtilityMethods.WriteString(outputStream, output.ToString());
 		}

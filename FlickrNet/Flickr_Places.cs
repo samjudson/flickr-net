@@ -350,9 +350,9 @@ namespace FlickrNet
         /// <param name="placeType">The ID for a specific place type to cluster photos by. </param>
         /// <param name="woeId">A Where on Earth identifier to use to filter photo clusters. </param>
         /// <param name="placeId">A Flickr Places identifier to use to filter photo clusters. </param>
-        /// <param name="bbox">The boundary box to search for places in.</param>
+        /// <param name="boundaryBox">The boundary box to search for places in.</param>
         /// <returns></returns>
-        public PlaceCollection PlacesPlacesForBoundingBox(PlaceType placeType, string woeId, string placeId, BoundaryBox bbox)
+        public PlaceCollection PlacesPlacesForBoundingBox(PlaceType placeType, string woeId, string placeId, BoundaryBox boundaryBox)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForBoundingBox");
@@ -360,7 +360,7 @@ namespace FlickrNet
             parameters.Add("place_type_id", placeType.ToString("D"));
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            parameters.Add("bbox", bbox.ToString());
+            parameters.Add("bbox", boundaryBox.ToString());
 
 
             return GetResponseCache<PlaceCollection>(parameters);

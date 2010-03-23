@@ -9,9 +9,6 @@ namespace FlickrNet
     [Serializable]
     public class FlickrApiException : FlickrException
 	{
-		private int _code;
-		private string _message = String.Empty;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FlickrApiException"/> class with a specific code and message.
         /// </summary>
@@ -22,8 +19,8 @@ namespace FlickrNet
         /// <param name="message">The error message supplied by Flickr.</param>
         public FlickrApiException(int code, string message) : base()
         {
-            _code = code;
-            _message = message;
+            Code = code;
+            OriginalMessage = message;
         }
 
         /// <summary>
@@ -72,18 +69,12 @@ namespace FlickrNet
 		/// <summary>
 		/// Get the code of the Flickr error.
 		/// </summary>
-		public int Code
-		{
-			get { return _code; }
-		}
+		public int Code { get; set; }
 
 		/// <summary>
-		/// Gets the verbose message returned by Flickr.
+		/// Gets the orignal message returned by Flickr.
 		/// </summary>
-		public string Verbose
-		{
-			get { return _message; }
-		}
+		public string OriginalMessage { get; set; }
 		
 		/// <summary>
 		/// Overrides the message to return custom error message.
@@ -92,7 +83,7 @@ namespace FlickrNet
 		{
 			get
 			{
-				return _message + " (" + _code + ")";
+                return OriginalMessage + " (" + Code + ")";
 			}
 		}
 

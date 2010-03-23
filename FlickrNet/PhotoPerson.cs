@@ -57,6 +57,9 @@ namespace FlickrNet
         /// </summary>
         public string PathAlias { get; set; }
 
+        /// <summary>
+        /// The URL for the users Flickr home page.
+        /// </summary>
         public Uri PhotostreamUrl
         {
             get

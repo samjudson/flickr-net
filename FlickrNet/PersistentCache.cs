@@ -30,14 +30,12 @@ namespace FlickrNet
 		private readonly FileInfo dataFile;
 		private DateTime timestamp;  // last-modified time of dataFile when cache data was last known to be in sync
 		private long length;         // length of dataFile when cache data was last known to be in sync
-		private long maxSize;
 		
 		// The file-based mutex.  Named (dataFile.FullName + ".lock")
 		private readonly LockFile lockFile;
 
-		public PersistentCache(string filename, CacheItemPersister persister, long maxSize)
+		public PersistentCache(string filename, CacheItemPersister persister)
 		{
-			this.maxSize = maxSize;
 			this.persister = persister;
 			this.dataFile = new FileInfo(filename);
 			this.lockFile = new LockFile(filename + ".lock");
@@ -60,29 +58,10 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// Gets the maximum size for the persistent cache.
-		/// </summary>
-		public long MaxSize
-		{
-			get { return maxSize; }
-		}
-
-		/// <summary>
 		/// Gets or sets cache values.
 		/// </summary>
 		public ICacheItem this[string key]
 		{
-			get
-			{
-				if (key == null)
-					throw new ArgumentNullException("key");
-
-				using (lockFile.Acquire())
-				{
-					Refresh();
-					return InternalGet(key);
-				}
-			}
 			set
 			{
 				if (key == null)
