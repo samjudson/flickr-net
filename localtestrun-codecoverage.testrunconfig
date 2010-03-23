@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRunConfiguration name="localhost-codecoverage" id="de69b6ec-f27e-4c04-a5d5-8c04773801ec" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <Deployment userDeploymentRoot="C:\Temp\" useDefaultDeploymentRoot="false"></Deployment>
+  <Description>This is a default test run configuration for a local test run.</Description>
+  <CodeCoverage enabled="true" keyFile="FlickrNet\FlickrNet.snk">
+    <Regular>
+      <CodeCoverageItem binaryFile="FlickrNet\bin\Debug\FlickrNet.dll" pdbFile="FlickrNet\bin\Debug\FlickrNet.pdb" />
+    </Regular>
+  </CodeCoverage>
+  <TestTypeSpecific />
+</TestRunConfiguration>

@@ -100,6 +100,52 @@ namespace FlickrNetTest
             foreach (string methodName in methodNames)
             {
                 bool found = false;
+                string trueName = methodName.Replace("flickr.", "").Replace(".", "").ToLower();
+                foreach (MethodInfo info in methods)
+                {
+                    if (trueName == info.Name.ToLower())
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    failCount++;
+                    Console.WriteLine("Method '" + methodName + "' not found in FlickrNet.Flickr.");
+                }
+            }
+
+            Assert.AreEqual(0, failCount, "FailCount should be zero. Currently " + failCount + " unsupported methods found.");
+        }
+
+        [TestMethod]
+        [Ignore]
+        public void ReflectionMethodsCheckWeSupportAndParametersMatch()
+        {
+            List<string> exceptions = new List<string>();
+            exceptions.Add("flickr.photos.getWithGeoData");
+            exceptions.Add("flickr.photos.getWithouGeoData");
+            exceptions.Add("flickr.photos.search");
+            exceptions.Add("flickr.photos.getNotInSet");
+            exceptions.Add("flickr.photos.getUntagged");
+
+            Flickr f = TestData.GetInstance();
+
+            MethodCollection methodNames = f.ReflectionGetMethods();
+
+            Assert.IsNotNull(methodNames, "Should not be null");
+            Assert.AreNotEqual(0, methodNames.Count, "Should return some method names.");
+            Assert.IsNotNull(methodNames[0], "First item should not be null");
+
+            Type type = typeof(Flickr);
+            MethodInfo[] methods = type.GetMethods();
+
+            int failCount = 0;
+
+            foreach (string methodName in methodNames)
+            {
+                bool found = false;
                 bool foundTrue = false;
                 string trueName = methodName.Replace("flickr.", "").Replace(".", "").ToLower();
                 foreach (MethodInfo info in methods)
@@ -136,6 +182,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual(0, failCount, "FailCount should be zero. Currently " + failCount + " unsupported methods found.");
         }
+
 
         [TestMethod]
         public void ReflectionGetMethodInfoTest()

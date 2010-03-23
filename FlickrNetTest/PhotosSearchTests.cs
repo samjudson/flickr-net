@@ -12,7 +12,7 @@ namespace FlickrNetTest
     ///to contain all FlickrNet.Flickr Unit Tests
     ///</summary>
     [TestClass()]
-    public class PhotoSearchTests
+    public class PhotosSearchTests
     {
         private TestContext testContextInstance;
 
@@ -456,6 +456,7 @@ namespace FlickrNetTest
             o.HasGeo = true;
             o.Extras |= PhotoSearchExtras.Geo;
             o.Tags = "colorful";
+            o.TagMode = TagMode.AllTags;
             o.PerPage = 10;
 
             PhotoCollection photos = f.PhotosSearch(o);
@@ -494,6 +495,73 @@ namespace FlickrNetTest
             Assert.IsNotNull(ps, "Photos should not be null");
             Assert.AreEqual(500, ps.PerPage, "PhotosPerPage should be 500");
             Assert.AreEqual(500, ps.Count, "Count should be 500 as well");
+        }
+
+        [TestMethod]
+        public void PhotosSearchGroupIdTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.GroupId = TestData.GroupId;
+            o.PerPage = 10;
+
+            var photos = TestData.GetInstance().PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual<int>(0, photos.Count);
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.PhotoId);
+            }
+        }
+
+        [TestMethod]
+        public void PhotosSearchContactsTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+            var auth = f.AuthCheckToken(f.AuthToken);
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Contacts = ContactSearch.AllContacts;
+            o.UserId = auth.User.UserId;
+            o.PerPage = 10;
+
+            var photos = f.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual<int>(0, photos.Count);
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.PhotoId);
+            }
+        }
+
+        [TestMethod]
+        public void PhotosSearchLatLongGeoRadiusTest()
+        {
+            Flickr f = TestData.GetInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.HasGeo = true;
+            o.PerPage = 10;
+            o.Latitude = 0;
+            o.Longitude = 0;
+            o.Radius = 20;
+            o.RadiusUnits = RadiusUnit.Miles;
+            o.Extras |= PhotoSearchExtras.Geo;
+
+            var photos = f.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual<int>(0, photos.Count);
+
+            Console.WriteLine(f.LastRequest);
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.PhotoId);
+            }
         }
 
     }

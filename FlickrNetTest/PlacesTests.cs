@@ -139,6 +139,40 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PlacesPlacesForContactsBasicTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var places = f.PlacesPlacesForContacts(PlaceType.Country, null, null, 0, ContactSearch.AllContacts, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+
+            Assert.IsNotNull(places);
+
+            Assert.AreNotEqual(0, places.Count);
+
+            foreach (var place in places)
+            {
+                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.IsNotNull(place.PlaceId);
+            }
+        }
+
+        [TestMethod]
+        public void PlacesPlacesForTagsBasicTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] { "newcastle" }, TagMode.AllTags, null, MachineTagMode.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+
+            Assert.IsNotNull(places);
+
+            Assert.AreNotEqual(0, places.Count);
+
+            foreach (var place in places)
+            {
+                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.IsNotNull(place.PlaceId);
+            }
+        }
+
+        [TestMethod]
         public void PlacesGetInfoBasicTest()
         {
             var f = TestData.GetInstance();

@@ -61,8 +61,8 @@ namespace FlickrNet
         {
             if (info == null) throw new ArgumentNullException("info");
 
-            _code = info.GetInt32("Code");
-            _message = info.GetString("Verbose");
+            Code = info.GetInt32("Code");
+            OriginalMessage = info.GetString("OriginalMessage");
         }
 #endif
 
@@ -98,8 +98,8 @@ namespace FlickrNet
         {
             if (info == null) throw new ArgumentNullException("info");
 
-            info.AddValue("Code", _code);
-            info.AddValue("Verbose", _message);
+            info.AddValue("Code", Code);
+            info.AddValue("OriginalMessage", OriginalMessage);
 
             base.GetObjectData(info, context);
         }

@@ -59,7 +59,7 @@ namespace FlickrNet
                 {
                     responseXml = DoGetResponse(url);
 
-                    ResponseCacheItem resCache = new ResponseCacheItem(urlComplete, responseXml, DateTime.UtcNow);
+                    ResponseCacheItem resCache = new ResponseCacheItem(new Uri(urlComplete), responseXml, DateTime.UtcNow);
 
                     Cache.Responses.Shrink(Math.Max(0, Cache.CacheSizeLimit - responseXml.Length));
                     Cache.Responses[urlComplete] = resCache;

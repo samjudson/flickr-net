@@ -119,6 +119,21 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PeopleGetPublicPhotosBasicTest()
+        {
+            var photos = TestData.GetInstance().PeopleGetPublicPhotos(TestData.TestUserId);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual(0, photos.Count);
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.PhotoId);
+                Assert.AreEqual<string>(TestData.TestUserId, photo.UserId);
+            }
+        }
+
+        [TestMethod]
         public void PeopleGetPublicGroupsBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();

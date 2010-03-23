@@ -65,7 +65,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            NamespaceCollection col = f.MachinetagsGetNamespaces();
+            NamespaceCollection col = f.MachineTagsGetNamespaces();
 
             Assert.IsTrue(col.Count > 10, "Should be greater than 10 namespaces.");
 
@@ -83,7 +83,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            var col = f.MachinetagsGetPredicates();
+            var col = f.MachineTagsGetPredicates();
 
             Assert.IsTrue(col.Count > 10, "Should be greater than 10 namespaces.");
 
@@ -99,7 +99,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetPairsBasicTest()
         {
-            var pairs = TestData.GetInstance().MachinetagsGetPairs(null, null, 0, 0);
+            var pairs = TestData.GetInstance().MachineTagsGetPairs(null, null, 0, 0);
             Assert.IsNotNull(pairs);
 
             Assert.AreNotEqual(0, pairs.Count, "Count should not be zero.");
@@ -117,7 +117,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetPairsNamespaceTest()
         {
-            var pairs = TestData.GetInstance().MachinetagsGetPairs("dc", null, 0, 0);
+            var pairs = TestData.GetInstance().MachineTagsGetPairs("dc", null, 0, 0);
             Assert.IsNotNull(pairs);
 
             Assert.AreNotEqual(0, pairs.Count, "Count should not be zero.");
@@ -136,7 +136,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetPairsPredicateTest()
         {
-            var pairs = TestData.GetInstance().MachinetagsGetPairs(null, "author", 0, 0);
+            var pairs = TestData.GetInstance().MachineTagsGetPairs(null, "author", 0, 0);
             Assert.IsNotNull(pairs);
 
             Assert.AreNotEqual(0, pairs.Count, "Count should not be zero.");
@@ -157,7 +157,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetPairsDcAuthorTest()
         {
-            var pairs = TestData.GetInstance().MachinetagsGetPairs("dc", "author", 0, 0);
+            var pairs = TestData.GetInstance().MachineTagsGetPairs("dc", "author", 0, 0);
             Assert.IsNotNull(pairs);
 
             Assert.AreEqual(1, pairs.Count, "Count should be 1.");
@@ -176,7 +176,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetValuesTest()
         {
-            var items = TestData.GetInstance().MachinetagsGetValues("dc", "author");
+            var items = TestData.GetInstance().MachineTagsGetValues("dc", "author");
             Assert.IsNotNull(items);
 
             Assert.AreNotEqual(0, items.Count, "Count should be not be zero.");
@@ -197,7 +197,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetRecentValuesTest()
         {
-            var items = TestData.GetInstance().MachinetagsGetRecentValues(DateTime.Now.AddDays(-1));
+            var items = TestData.GetInstance().MachineTagsGetRecentValues(DateTime.Now.AddDays(-1));
             Assert.IsNotNull(items);
 
             Assert.AreNotEqual(0, items.Count, "Count should be not be zero.");
