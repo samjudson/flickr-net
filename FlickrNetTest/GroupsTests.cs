@@ -79,7 +79,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            GroupSearchResultCollection results = f.GroupsSearch("Flowers");
+            GroupSearchResultCollection results = f.GroupsSearch("Buses");
 
             Assert.IsNotNull(results, "GroupSearchResults should not be null.");
             Assert.AreNotEqual(0, results.Count, "Count should not be zero.");

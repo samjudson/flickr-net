@@ -207,7 +207,25 @@ namespace FlickrNetTest
             Assert.AreEqual("invalid1", t[0].TicketId);
             Assert.IsNull(t[0].PhotoId);
             Assert.IsTrue(t[0].InvalidTicketId);
+        }
 
+        [TestMethod]
+        public void PhotosPeopleGetListTest()
+        {
+            var photoId = "3547137580";
+
+            var people = TestData.GetInstance().PhotosPeopleGetList(photoId);
+
+            Assert.AreNotEqual(0, people.Total, "Total should not be zero.");
+            Assert.AreNotEqual(0, people.Count, "Count should not be zero.");
+            Assert.AreEqual(people.Count, people.Total, "Count should equal Total.");
+
+            foreach (var person in people)
+            {
+                Assert.IsNotNull(person.UserId, "UserId should not be null.");
+                Assert.IsNotNull(person.PhotostreamUrl, "PhotostreamUrl should not be null.");
+                Assert.IsNotNull(person.BuddyIconUrl, "BuddyIconUrl should not be null.");
+            }
         }
     }
 }

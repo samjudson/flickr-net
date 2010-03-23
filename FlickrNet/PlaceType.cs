@@ -18,9 +18,9 @@ namespace FlickrNet
         /// </summary>
         Locality = 7,
         /// <summary>
-        /// Neighbourhood.
+        /// County.
         /// </summary>
-        Neighbourhood = 22,
+        County = 9,
         /// <summary>
         /// Region.
         /// </summary>
@@ -29,6 +29,10 @@ namespace FlickrNet
         /// Country.
         /// </summary>
         Country = 12,
+        /// <summary>
+        /// Neighbourhood.
+        /// </summary>
+        Neighbourhood = 22,
         /// <summary>
         /// Continent.
         /// </summary>

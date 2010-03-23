@@ -226,5 +226,23 @@ namespace FlickrNetTest
             }
 
         }
+
+        [TestMethod]
+        public void PlacesGetPlaceTypes()
+        {
+            var pts = TestData.GetInstance().PlacesGetPlaceTypes();
+            Assert.IsNotNull(pts);
+            Assert.AreNotEqual(0, pts.Count);
+
+            foreach (var kp in pts)
+            {
+                Assert.AreNotEqual(0, kp.Key, "Key should not be zero.");
+                Assert.IsNotNull(kp.Value, "Value should not be null.");
+
+                Assert.IsTrue(Enum.IsDefined(typeof(PlaceType), kp.Key), "PlaceType with ID " + kp.Key + " and Value '" + kp.Value + "' not defined in PlaceType enum.");
+                PlaceType type = (PlaceType)kp.Key;
+                Assert.AreEqual(type.ToString("G").ToLower(), kp.Value, "Name of enum should match.");
+            }
+        }
     }
 }

@@ -207,6 +207,8 @@
     <Compile Include="GeoContext.cs" />
     <Compile Include="NoResponse.cs" />
     <Compile Include="ParsingException.cs" />
+    <Compile Include="PhotoPerson.cs" />
+    <Compile Include="PhotoPersonCollection.cs" />
     <Compile Include="Photoset.cs" />
     <Compile Include="PhotosetCommentCollection.cs" />
     <Compile Include="PhotosetPhotoCollection.cs" />

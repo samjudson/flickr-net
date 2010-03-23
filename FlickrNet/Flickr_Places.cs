@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections;
+using System.Xml;
 
 namespace FlickrNet
 {
@@ -108,6 +109,38 @@ namespace FlickrNet
             parameters.Add("url", url);
 
             return GetResponseCache<PlaceInfo>(parameters);
+        }
+
+        /// <summary>
+        /// Gets a list of valid Place Type key/value pairs.
+        /// </summary>
+        /// <remarks>
+        /// All Flickr.Net methods use the <see cref="PlaceType"/> enumeration so this method doesn't serve much purpose.
+        /// </remarks>
+        /// <returns>A <see cref="Dictionary{TKey, TValue}"/> instance containing the ID and descrptions for each place type defined by Flickr.</returns>
+        public Dictionary<int, string> PlacesGetPlaceTypes()
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.places.getPlaceTypes");
+
+            UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
+
+            Dictionary<int, string> placeTypes = new Dictionary<int, string>();
+
+            XmlDocument doc = response.GetXmlDocument();
+
+            Console.WriteLine(doc.OuterXml);
+
+            foreach (XmlNode node in doc.SelectNodes("/place_types/place_type"))
+            {
+                int id = int.Parse(node.Attributes["id"].Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                string desc = node.InnerText;
+
+                placeTypes.Add(id, desc);
+            }
+
+            return placeTypes;
+
         }
 
         /// <summary>

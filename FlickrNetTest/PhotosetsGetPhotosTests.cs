@@ -99,9 +99,9 @@ namespace FlickrNetTest
             foreach(Photo p in theset)
             {
                 Assert.IsNotNull(p.UserId, "UserId should not be null.");
-                Assert.AreNotEqual(String.Empty, p.UserId, "UserId should not be an empty string.");
-                string url = "http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
-                Assert.AreEqual(url, p.WebUrl);
+                Assert.AreNotEqual<String>(String.Empty, p.UserId, "UserId should not be an empty string.");
+                Uri url = new Uri("http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/");
+                Assert.AreEqual<Uri>(url, p.WebUrl);
             }
         }
     }

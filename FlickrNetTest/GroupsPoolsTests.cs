@@ -72,8 +72,8 @@ namespace FlickrNetTest
 
             foreach (Photo p in photos)
             {
-                Assert.AreNotEqual(default(DateTime), p.DateUploaded, "DateAdded should not be default value");
-                Assert.IsTrue(p.DateUploaded < DateTime.Now, "DateAdded should be in the past");
+                Assert.AreNotEqual(default(DateTime), p.DateAddedToGroup, "DateAddedToGroup should not be default value");
+                Assert.IsTrue(p.DateAddedToGroup < DateTime.Now, "DateAddedToGroup should be in the past");
             }
 
         }
