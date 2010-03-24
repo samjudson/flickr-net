@@ -73,6 +73,7 @@
     <Compile Include="ActivityItemCollection.cs" />
     <Compile Include="ApiKeyRequiredException.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="AssemblyInfoMore.cs" />
     <Compile Include="Auth.cs" />
     <Compile Include="AuthenticationRequiredException.cs" />
     <Compile Include="BlogCollection.cs" />

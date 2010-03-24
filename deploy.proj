@@ -1,0 +1,42 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+
+  <PropertyGroup>
+    <Major>3</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+  </PropertyGroup>
+
+  <Target Name="Build" DependsOnTargets="Version;Compile;Zip">
+  </Target>
+
+  <Target Name="Version">
+    
+    <AssemblyInfo CodeLanguage="CS"
+      OutputFile="FlickrNet\AssemblyInfo.cs"
+      AssemblyTitle="Flickr .Net Api Library"
+      AssemblyDescription=".Net library for accessing Flickr.com Api functionality"
+      AssemblyCompany="http://flickrnet.codeplex.com"
+      AssemblyProduct="Flickr .Net Api Library"
+      AssemblyCopyright="Copyright © Sam Judson 2010"
+      ComVisible="false"
+      CLSCompliant="true"
+      AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+               />
+  </Target>
+
+  <Target Name="Compile" DependsOnTargets="Version">
+    <MSBuild Projects="FlickrNet.sln" Properties="Configuration=Release" Targets="Rebuild"/>
+  </Target>
+
+  <Target Name="Zip" DependsOnTargets="Compile">
+    <ItemGroup>
+      <ZipFiles Include="FlickrNet\bin\Release\*.*" Exclude="*.pdb" />
+    </ItemGroup>
+    <MakeDir Directories="Builds" Condition="!Exists('Builds')" />
+    <Zip Files="@(ZipFiles)" ZipFileName="Builds\FlickrNet-$(Major).$(Minor).zip" ZipLevel="9" Flatten="true"/>
+  </Target>
+
+</Project>

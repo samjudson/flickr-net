@@ -123,6 +123,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AssemblyInfoMore.cs" />
     <Compile Include="Auth.cs">
       <SubType>Code</SubType>
     </Compile>
