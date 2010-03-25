@@ -124,24 +124,6 @@ namespace FlickrNet
 		}
 
 		/// <summary>
-		/// The API token is required for all calls that require authentication.
-		/// A <see cref="FlickrApiException"/> will be raised by Flickr if the API token is
-		/// not set when required.
-		/// </summary>
-		/// <remarks>
-		/// It should be noted that some methods will work without the API token, but
-		/// will return different results if used with them (such as group pool requests, 
-		/// and results which include private pictures the authenticated user is allowed to see
-		/// (their own, or others).
-		/// </remarks>
-		[Obsolete("Renamed to AuthToken to be more consistent with the Flickr API")]
-		public string ApiToken 
-		{
-			get { return _apiToken; }
-			set { _apiToken = (value==null||value.Length==0?null:value); }
-		}
-
-		/// <summary>
 		/// The authentication token is required for all calls that require authentication.
 		/// A <see cref="FlickrApiException"/> will be raised by Flickr if the authentication token is
 		/// not set when required.

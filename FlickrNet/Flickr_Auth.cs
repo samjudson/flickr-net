@@ -30,6 +30,8 @@ namespace FlickrNet
         /// <returns>The FROB.</returns>
         public string AuthGetFrob()
         {
+            CheckSigned();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFrob");
 
@@ -137,6 +139,16 @@ namespace FlickrNet
             Auth auth = GetResponseNoCache<Auth>(parameters);
             AuthToken = auth.Token;
             return auth;
+        }
+
+        /// <summary>
+        /// Checks the currently set authentication token with the flickr service to make
+        /// sure it is still valid.
+        /// </summary>
+        /// <returns>The <see cref="Auth"/> object detailing the user for the token.</returns>
+        public Auth AuthCheckToken()
+        {
+            return AuthCheckToken(AuthToken);
         }
 
         /// <summary>

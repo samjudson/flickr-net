@@ -63,6 +63,85 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        public void AuthGetFrobTest()
+        {
+            string frob = TestData.GetSignedInstance().AuthGetFrob();
+
+            Assert.IsNotNull(frob, "frob should not be null.");
+            Assert.AreNotEqual("", frob, "Frob should not be zero length string.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SignatureRequiredException))]
+        public void AuthGetFrobSignRequiredTest()
+        {
+            string frob = TestData.GetInstance().AuthGetFrob();
+        }
+
+        [TestMethod]
+        public void AuthCalcUrlTest()
+        {
+            string frob = "abcdefgh";
+
+            string url = TestData.GetSignedInstance().AuthCalcUrl(frob, AuthLevel.Read);
+
+            Assert.IsNotNull(url, "url should not be null.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SignatureRequiredException))]
+        public void AuthCalcUrlSignRequiredTest()
+        {
+            string frob = "abcdefgh";
+
+            string url = TestData.GetInstance().AuthCalcUrl(frob, AuthLevel.Read);
+        }
+
+        [TestMethod]
+        public void AuthCheckTokenBasicTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            string authToken = f.AuthToken;
+
+            Assert.IsNotNull(authToken, "authToken should not be null.");
+
+            Auth auth = f.AuthCheckToken(authToken);
+
+            Assert.IsNotNull(auth, "Auth should not be null.");
+            Assert.AreEqual(authToken, auth.Token);
+        }
+
+        [TestMethod]
+        public void AuthCheckTokenCurrentTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            Auth auth = f.AuthCheckToken();
+
+            Assert.IsNotNull(auth, "Auth should not be null.");
+            Assert.AreEqual(f.AuthToken, auth.Token);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SignatureRequiredException))]
+        public void AuthCheckTokenSignRequiredTest()
+        {
+            string token = "abcdefgh";
+
+            TestData.GetInstance().AuthCheckToken(token);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FlickrApiException))]
+        public void AuthCheckTokenInvalidTokenTest()
+        {
+            string token = "abcdefgh";
+
+            TestData.GetSignedInstance().AuthCheckToken(token);
+        }
+
+        [TestMethod]
         public void AuthClassBasicTest()
         {
             string authResponse = "<auth><token>TheToken</token><perms>delete</perms><user nsid=\"41888973@N00\" username=\"Sam Judson\" fullname=\"Sam Judson\" /></auth>";
