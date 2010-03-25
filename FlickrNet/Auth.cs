@@ -34,7 +34,7 @@ namespace FlickrNet
     public sealed class Auth : IFlickrParsable
 	{
 		/// <summary>
-		/// The authentication token returned by the <see cref="Flickr.AuthGetToken"/> or <see cref="Flickr.AuthCheckToken"/> methods.
+		/// The authentication token returned by the <see cref="Flickr.AuthGetToken"/> or <see cref="Flickr.AuthCheckToken(string)"/> methods.
 		/// </summary>
 		public string Token { get; private set; }
 

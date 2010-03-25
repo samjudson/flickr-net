@@ -61,6 +61,26 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        public void GroupsPoolGetPhotosFullParamTest()
+        {
+            Flickr f = TestData.GetInstance();
+
+            PhotoCollection photos = f.GroupsPoolsGetPhotos(TestData.GroupId, null, TestData.TestUserId, PhotoSearchExtras.All, 1, 20);
+
+            Assert.IsNotNull(photos, "Photos should not be null");
+            Assert.IsTrue(photos.Count > 0, "Should be more than 0 photos returned");
+            Assert.AreEqual(20, photos.PerPage);
+            Assert.AreEqual(1, photos.Page);
+
+            foreach (Photo p in photos)
+            {
+                Assert.AreNotEqual(default(DateTime), p.DateAddedToGroup, "DateAddedToGroup should not be default value");
+                Assert.IsTrue(p.DateAddedToGroup < DateTime.Now, "DateAddedToGroup should be in the past");
+            }
+
+        }
+
+        [TestMethod]
         public void GroupsPoolGetPhotosDateAddedTest()
         {
             Flickr f = TestData.GetInstance();

@@ -46,8 +46,6 @@ namespace FlickrNetTest
         {
             PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
 
-            Console.WriteLine(f.LastResponse);
-
             Assert.AreEqual(8, set.Total, "NumberOfPhotos should be 8.");
             Assert.AreEqual(8, set.Count, "Should be 8 photos returned.");
         }

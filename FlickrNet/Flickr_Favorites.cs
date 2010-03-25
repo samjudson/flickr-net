@@ -74,6 +74,8 @@ namespace FlickrNet
         /// <returns><see cref="PhotoCollection"/> instance containing a collection of <see cref="Photo"/> objects.</returns>
         public PhotoCollection FavoritesGetList(string userId, int page, int perPage)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.getList");
             if (userId != null) parameters.Add("user_id", userId);

@@ -177,6 +177,35 @@ namespace FlickrNet
 			return String.Format(System.Globalization.NumberFormatInfo.InvariantInfo, "{0},{1},{2},{3}", MinimumLongitude, MinimumLatitude, MaximumLongitude, MaximumLatitude);
 		}
 
+        /// <summary>
+        /// Calculates the distance in miles from the SW to the NE corners of this boundary box.
+        /// </summary>
+        /// <returns></returns>
+        public double DiagonalDistanceInMiles()
+        {
+            return DiagonalDistance() * 3963.191;
+        }
+
+        /// <summary>
+        /// Calculates the distance in kilometres from the SW to the NE corners of this boundary box.
+        /// </summary>
+        /// <returns></returns>
+        public double DiagonalDistanceInKM()
+        {
+            return DiagonalDistance() * 6378.137;
+        }
+
+        private double DiagonalDistance()
+        {
+            double latRad1 = MinimumLatitude / 180.0 * Math.PI;
+            double latRad2 = MaximumLatitude / 180.0 * Math.PI;
+            double lonRad1 = MinimumLongitude / 180.0 * Math.PI;
+            double lonRad2 = MaximumLongitude / 180.0 * Math.PI;
+
+            double e = Math.Acos(Math.Sin(latRad1) * Math.Sin(latRad2) + Math.Cos(latRad1) * Math.Cos(latRad2) * Math.Cos(lonRad2 - lonRad1));
+            return e;
+        }
+
 		/// <summary>
 		/// Example boundary box for the UK.
 		/// </summary>

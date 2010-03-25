@@ -74,7 +74,6 @@ namespace FlickrNetTest
                 Assert.IsNotNull(n.NamespaceName, "NamespaceName should not be null.");
                 Assert.AreNotEqual(0, n.Predicates, "Predicates should not be zero.");
                 Assert.AreNotEqual(0, n.Usage, "Usage should not be zero.");
-                Console.WriteLine(n.NamespaceName + " has " + n.Predicates + " predicates and a usage of " + n.Usage);
             }
         }
 
@@ -92,7 +91,6 @@ namespace FlickrNetTest
                 Assert.IsNotNull(n.PredicateName, "PredicateName should not be null.");
                 Assert.AreNotEqual(0, n.Namespaces, "Namespaces should not be zero.");
                 Assert.AreNotEqual(0, n.Usage, "Usage should not be zero.");
-                Console.WriteLine(n.PredicateName + " has " + n.Namespaces + " predicates and a usage of " + n.Usage);
             }
         }
 
@@ -149,8 +147,6 @@ namespace FlickrNetTest
                 Assert.IsNotNull(p.NamespaceName, "NamespaceName should not be null.");
                 Assert.AreNotEqual(0, p.Usage, "Usage should be greater than zero.");
 
-                Console.WriteLine(p.PairName + " used " + p.Usage + " times");
-
             }
         }
 
@@ -169,7 +165,6 @@ namespace FlickrNetTest
                 Assert.AreEqual("dc:author", p.PairName, "PairName should be 'dc:author'.");
                 Assert.AreNotEqual(0, p.Usage, "Usage should be greater than zero.");
 
-                Console.WriteLine(p.PairName + " used " + p.Usage + " times");
             }
         }
 
@@ -189,8 +184,6 @@ namespace FlickrNetTest
                 Assert.AreEqual("dc", item.NamespaceName, "NamespaceName should be 'dc'.");
                 Assert.IsNotNull(item.ValueText, "ValueText should not be null.");
                 Assert.AreNotEqual(0, item.Usage, "Usage should be greater than zero.");
-
-                Console.WriteLine(item.ValueText + " used " + item.Usage + " times");
             }
         }
 
@@ -210,8 +203,6 @@ namespace FlickrNetTest
                 Assert.IsNotNull(item.DateFirstAdded, "DateFirstAdded should not be null.");
                 Assert.IsNotNull(item.DateLastUsed, "DateLastUsed should not be null.");
                 Assert.AreNotEqual(0, item.Usage, "Usage should be greater than zero.");
-
-                Console.WriteLine(item.ValueText + " used " + item.Usage + " times");
             }
         }
     }

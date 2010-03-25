@@ -432,8 +432,6 @@ namespace FlickrNet
             return output;
         }
 
-
-
         internal static string DateToMySql(DateTime date)
         {
             return date.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);

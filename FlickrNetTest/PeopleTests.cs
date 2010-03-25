@@ -61,7 +61,40 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void PeoplGetPhotos()
+        public void PeopleGetPhotosOfBasicTest()
+        {
+            Flickr f = TestData.GetInstance();
+
+            PeoplePhotoCollection p = f.PeopleGetPhotosOf(TestData.TestUserId);
+
+            Assert.IsNotNull(p, "PeoplePhotos should not be null.");
+            Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
+            Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(SignatureRequiredException))]
+        public void PeopleGetPhotosOfAuthRequired()
+        {
+            Flickr f = TestData.GetInstance();
+
+            PeoplePhotoCollection p = f.PeopleGetPhotosOf();
+        }
+
+        [TestMethod()]
+        public void PeopleGetPhotosOfMe()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PeoplePhotoCollection p = f.PeopleGetPhotosOf();
+
+            Assert.IsNotNull(p, "PeoplePhotos should not be null.");
+            Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
+            Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
+        }
+
+        [TestMethod]
+        public void PeopleGetPhotosBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
 
@@ -70,6 +103,63 @@ namespace FlickrNetTest
             Assert.IsNotNull(photos);
             Assert.AreNotEqual(0, photos.Count, "Count should not be zero.");
             Assert.IsTrue(photos.Total > 1000, "Total should be greater than 1000.");
+        }
+
+        [TestMethod]
+        public void PeopleGetPhotosFullParamTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoCollection photos = f.PeopleGetPhotos(TestData.TestUserId, SafetyLevel.Safe, DateTime.Today.AddYears(-2), DateTime.Today, DateTime.Today.AddYears(-2), DateTime.Today, ContentTypeSearch.All, PrivacyFilter.PublicPhotos, PhotoSearchExtras.All, 1, 20);
+
+            Assert.IsNotNull(photos);
+            Assert.AreEqual(20, photos.Count, "Count should be twenty.");
+        }
+
+        [TestMethod]
+        public void PersonGetInfoGenderNoAuthTest()
+        {
+            Flickr f = TestData.GetInstance();
+            Person p = f.PeopleGetInfo("10973297@N00");
+
+            Assert.IsNotNull(p, "Person object should be returned");
+            Assert.IsNull(p.Gender, "Gender should be null as not authenticated.");
+
+            Assert.IsNull(p.IsReverseContact, "IsReverseContact should not be null.");
+            Assert.IsNull(p.IsContact, "IsContact should be null.");
+            Assert.IsNull(p.IsIgnored, "IsIgnored should be null.");
+            Assert.IsNull(p.IsFriend, "IsFriend should be null.");
+        }
+
+        [TestMethod]
+        public void PersonGetInfoGenderTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+            Person p = f.PeopleGetInfo("10973297@N00");
+
+            Assert.IsNotNull(p, "Person object should be returned");
+            Assert.AreEqual("F", p.Gender, "Gender of M should be returned");
+
+            Assert.IsNotNull(p.IsReverseContact, "IsReverseContact should not be null.");
+            Assert.IsNotNull(p.IsContact, "IsContact should not be null.");
+            Assert.IsNotNull(p.IsIgnored, "IsIgnored should not be null.");
+            Assert.IsNotNull(p.IsFriend, "IsFriend should not be null.");
+
+            Assert.IsNotNull(p.PhotosSummary, "PhotosSummary should not be null.");
+        }
+
+        [TestMethod]
+        public void PersonGetInfoSelfTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            Auth a = f.AuthCheckToken(f.AuthToken);
+
+            Person p = f.PeopleGetInfo(a.User.UserId);
+
+            Assert.IsNotNull(p.MailboxSha1Hash, "MailboxSha1Hash should not be null.");
+            Assert.IsNotNull(p.PhotosSummary, "PhotosSummary should not be null.");
+            Assert.AreNotEqual(0, p.PhotosSummary.Views, "PhotosSummary.Views should not be zero.");
 
         }
 
@@ -93,29 +183,6 @@ namespace FlickrNetTest
 
             Assert.AreEqual("41888973@N00", user.UserId);
             Assert.AreEqual("Sam Judson", user.UserName);
-        }
-
-        [TestMethod]
-        public void UrlsLookupUserTest1()
-        {
-            Flickr f = TestData.GetAuthInstance();
-
-            FoundUser user = f.UrlsLookupUser("http://www.flickr.com/photos/samjudson");
-
-            Assert.AreEqual("41888973@N00", user.UserId);
-            Assert.AreEqual("Sam Judson", user.UserName);
-        }
-
-        [TestMethod]
-        public void UrlsLookupGroup()
-        {
-            string groupUrl = "http://www.flickr.com/groups/angels_of_the_north/";
-
-            Flickr f = TestData.GetAuthInstance();
-
-            string groupId = f.UrlsLookupGroup(groupUrl);
-
-            Assert.AreEqual("71585219@N00", groupId);
         }
 
         [TestMethod]

@@ -79,17 +79,8 @@ namespace FlickrNetTest
         public void PandaGetPhotosLingLingTest()
         {
             Flickr f = TestData.GetInstance();
-            PandaPhotoCollection photos = null;
 
-            try
-            {
-                photos = f.PandaGetPhotos("ling ling");
-            }
-            finally
-            {
-                Console.WriteLine(f.LastRequest);
-                Console.WriteLine(f.LastResponse);
-            }
+            var photos = f.PandaGetPhotos("ling ling");
 
             Assert.IsNotNull(photos, "PandaPhotos should not be null.");
             Assert.AreEqual(photos.Count, photos.Total, "PandaPhotos.Count should equal PandaPhotos.Total.");

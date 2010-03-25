@@ -68,9 +68,6 @@ namespace FlickrNetTest
             // No favourites
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
 
-            Console.WriteLine(f.LastRequest);
-            Console.WriteLine(f.LastResponse);
-
             Assert.AreEqual(0, favs.Count, "Should have no favourites");
 
         }

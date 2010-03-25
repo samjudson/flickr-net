@@ -8,12 +8,12 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for PhotoInfoDateTakenGranualityTest
+    /// Summary description for UrlsTests
     /// </summary>
     [TestClass]
-    public class PhotoInfoDateTakenGranualityTest
+    public class UrlsTests
     {
-        public PhotoInfoDateTakenGranualityTest()
+        public UrlsTests()
         {
             //
             // TODO: Add constructor logic here
@@ -59,6 +59,55 @@ namespace FlickrNetTest
         // public void MyTestCleanup() { }
         //
         #endregion
+
+        [TestMethod]
+        public void UrlsLookupUserTest1()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            FoundUser user = f.UrlsLookupUser("http://www.flickr.com/photos/samjudson");
+
+            Assert.AreEqual("41888973@N00", user.UserId);
+            Assert.AreEqual("Sam Judson", user.UserName);
+        }
+
+        [TestMethod]
+        public void UrlsLookupGroup()
+        {
+            string groupUrl = "http://www.flickr.com/groups/angels_of_the_north/";
+
+            Flickr f = TestData.GetAuthInstance();
+
+            string groupId = f.UrlsLookupGroup(groupUrl);
+
+            Assert.AreEqual("71585219@N00", groupId);
+        }
+
+        [TestMethod]
+        public void UrlsGetUserPhotosTest()
+        {
+            Uri url = TestData.GetInstance().UrlsGetUserPhotos(TestData.TestUserId);
+
+            Assert.AreEqual<Uri>(new Uri("http://www.flickr.com/photos/samjudson/"), url);
+        }
+
+        [TestMethod]
+        public void UrlsGetUserProfileTest()
+        {
+            Uri url = TestData.GetInstance().UrlsGetUserProfile(TestData.TestUserId);
+
+            Assert.AreEqual<Uri>(new Uri("http://www.flickr.com/people/samjudson/"), url);
+        }
+
+        [TestMethod]
+        public void UrlsGetGroupTest()
+        {
+            Uri url = TestData.GetInstance().UrlsGetGroup(TestData.GroupId);
+
+            Assert.AreEqual<Uri>(new Uri("http://www.flickr.com/groups/florus/"), url);
+        }
+
+
 
     }
 }

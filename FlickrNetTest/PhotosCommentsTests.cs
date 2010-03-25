@@ -11,9 +11,9 @@ namespace FlickrNetTest
     /// Summary description for PhotosCommentsGetListTests
     /// </summary>
     [TestClass]
-    public class PhotosCommentsGetListTests
+    public class PhotosCommentsTests
     {
-        public PhotosCommentsGetListTests()
+        public PhotosCommentsTests()
         {
             //
             // TODO: Add constructor logic here
@@ -73,7 +73,25 @@ namespace FlickrNetTest
 
             Assert.AreEqual("ian1001", comments[0].AuthorUserName);
             Assert.AreEqual("Sam lucky you NYCis so cool can't wait to go again it's my fav city along with San fran", comments[0].CommentHtml);
+        }
 
+        [TestMethod]
+        public void PhotosCommentsGetRecentForContactsBasicTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var photos = f.PhotosCommentsGetRecentForContacts();
+            Assert.IsNotNull(photos, "PhotoCollection should not be null.");
+        }
+
+        [TestMethod]
+        public void PhotosCommentsGetRecentForContactsFullParamTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var photos = f.PhotosCommentsGetRecentForContacts(DateTime.Today.AddDays(-7), PhotoSearchExtras.All, 1, 20);
+            Assert.IsNotNull(photos, "PhotoCollection should not be null.");
+            Assert.AreEqual(20, photos.PerPage);
 
         }
     }

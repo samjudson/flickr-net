@@ -54,8 +54,6 @@ namespace FlickrNetTest
         {
             PhotoCollection photos = f.PhotosGetContactsPhotos(10);
 
-            Console.WriteLine(f.LastResponse);
-
             Assert.IsTrue(photos.Count > 0, "Should return some photos");
             Assert.AreEqual(10, photos.Count, "Should return 10 photos");
 
@@ -65,8 +63,6 @@ namespace FlickrNetTest
         public void PhotosGetContactsPhotosExtrasTest()
         {
             PhotoCollection photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
-
-            Console.WriteLine(f.LastResponse);
 
             Assert.IsTrue(photos.Count > 0, "Should return some photos");
             Assert.AreEqual(10, photos.Count, "Should return 10 photos");

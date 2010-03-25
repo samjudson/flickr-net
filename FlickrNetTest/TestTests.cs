@@ -94,9 +94,6 @@ namespace FlickrNetTest
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("test1", "testvalue");
 
-            Console.WriteLine(f.LastRequest);
-            Console.WriteLine(f.LastResponse);
-
             Dictionary<string, string> returns = f.TestEcho(parameters);
 
             Assert.IsNotNull(returns);

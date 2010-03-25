@@ -61,6 +61,34 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        public void ActivityUserCommentsBasicTest()
+        {
+            var f = TestData.GetAuthInstance();
+            ActivityItemCollection activity = f.ActivityUserComments(0, 0);
+
+            Assert.IsNotNull(activity, "ActivityItemCollection should not be null.");
+
+            foreach (ActivityItem item in activity)
+            {
+                Assert.IsNotNull(item.Id, "Id should not be null.");
+            }
+        }
+
+        [TestMethod]
+        public void ActivityUserPhotosBasicTest()
+        {
+            var f = TestData.GetAuthInstance();
+            ActivityItemCollection activity = f.ActivityUserPhotos(20, "d");
+
+            Assert.IsNotNull(activity, "ActivityItemCollection should not be null.");
+
+            foreach (ActivityItem item in activity)
+            {
+                Assert.IsNotNull(item.Id, "Id should not be null.");
+            }
+        }
+
+        [TestMethod]
         public void ActivityUserPhotosBasicTests()
         {
             Flickr f = TestData.GetAuthInstance();

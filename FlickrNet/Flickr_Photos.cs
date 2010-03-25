@@ -637,6 +637,8 @@ namespace FlickrNet
         /// <returns>Returns a <see cref="PhotoCollection"/> instance containing the list of photos.</returns>
         public PhotoCollection PhotosRecentlyUpdated(DateTime minDate, PhotoSearchExtras extras, int page, int perPage)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.recentlyUpdated");
             parameters.Add("min_date", UtilityMethods.DateToUnixTimestamp(minDate));

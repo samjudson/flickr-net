@@ -82,10 +82,7 @@ namespace FlickrNetTest
             Flickr f = TestData.GetInstance();
             PhotoCollection photos = f.PhotosGetContactsPublicPhotos(TestData.TestUserId, PhotoSearchExtras.OwnerName);
 
-            Console.WriteLine(f.LastResponse);
-
             Assert.IsNotNull(photos[0].OwnerName);
-
         }
 
     }

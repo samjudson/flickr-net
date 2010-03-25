@@ -8,12 +8,12 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     /// <summary>
-    /// Summary description for PeopleGetPhotosOfTests
+    /// Summary description for PhotosGeoTests
     /// </summary>
     [TestClass]
-    public class PeopleGetPhotosOfTests
+    public class PhotosGeoTests
     {
-        public PeopleGetPhotosOfTests()
+        public PhotosGeoTests()
         {
             //
             // TODO: Add constructor logic here
@@ -61,45 +61,30 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
-        public void PeopleGetPhotosOfBasicTest()
-        {
-            Flickr f = TestData.GetInstance();
-
-            PeoplePhotoCollection p = f.PeopleGetPhotosOf(TestData.TestUserId);
-
-            Assert.IsNotNull(p, "PeoplePhotos should not be null.");
-            Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
-            Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
-        }
-
-        [TestMethod()]
-        [ExpectedException(typeof(SignatureRequiredException))]
-        public void PeopleGetPhotosOfAuthRequired()
-        {
-            Flickr f = TestData.GetInstance();
-
-            PeoplePhotoCollection p = f.PeopleGetPhotosOf();
-        }
-
-        [TestMethod()]
-        public void PeopleGetPhotosOfMe()
+        public void PhotosGeoPhotosForLocationBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
+            Auth auth = f.AuthCheckToken();
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = auth.User.UserId;
+            o.HasGeo = true;
+            o.PerPage = 1;
+            o.Extras = PhotoSearchExtras.Geo;
 
-            try
+            var photos = f.PhotosSearch(o);
+            var photo = photos[0];
+
+            var photos2 = f.PhotosGeoPhotosForLocation(photo.Latitude, photo.Longitude, GeoAccuracy.World, PhotoSearchExtras.All, 0, 0);
+
+            Assert.IsNotNull(photos2);
+
+            foreach (var p in photos2)
             {
-
-                PeoplePhotoCollection p = f.PeopleGetPhotosOf();
-
-                Assert.IsNotNull(p, "PeoplePhotos should not be null.");
-                Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
-                Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
+                Assert.IsNotNull(p.PhotoId);
+                Assert.AreNotEqual(0, p.Longitude);
+                Assert.AreNotEqual(0, p.Latitude);
             }
-            finally
-            {
-                Console.WriteLine(f.LastRequest);
-                Console.WriteLine(f.LastResponse);
-            }
+
         }
     }
 }

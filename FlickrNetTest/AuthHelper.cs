@@ -19,8 +19,6 @@ namespace FlickrNetTest
             Flickr f = new Flickr(TestData.ApiKey, TestData.SharedSecret);
             string frob = f.AuthGetFrob();
 
-            Console.WriteLine(f.LastResponse);
-
             Assert.IsNotNull(frob, "Frob should not be null.");
 
             string url = f.AuthCalcUrl(frob, AuthLevel.Delete);

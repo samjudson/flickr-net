@@ -41,6 +41,11 @@ namespace FlickrNet
         /// </summary>
         public string CommentId { get; private set; }
 
+        /// <summary>
+        /// If this is a note activity then this is the ID of the note.
+        /// </summary>
+        public string NoteId { get; private set; }
+
         void IFlickrParsable.Load(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
@@ -72,6 +77,9 @@ namespace FlickrNet
                         break;
                     case "commentid":
                         CommentId = reader.Value;
+                        break;
+                    case "noteid":
+                        NoteId = reader.Value;
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

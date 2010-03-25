@@ -145,7 +145,6 @@ namespace FlickrNetTest
 
             for (int i = 1; i < p.Count; i++)
             {
-                Console.WriteLine(p[i].DateTaken);
                 Assert.AreNotEqual(default(DateTime), p[i].DateTaken);
                 Assert.IsTrue(p[i].DateTaken >= p[i - 1].DateTaken, "Date taken should increase");
             }
@@ -164,7 +163,6 @@ namespace FlickrNetTest
 
             for (int i = 1; i < p.Count; i++)
             {
-                Console.WriteLine(p[i].DateTaken);
                 Assert.AreNotEqual(default(DateTime), p[i].DateTaken);
                 Assert.IsTrue(p[i].DateTaken <= p[i - 1].DateTaken, "Date taken should decrease.");
             }
@@ -183,7 +181,6 @@ namespace FlickrNetTest
 
             for (int i = 1; i < p.Count; i++)
             {
-                Console.WriteLine(p[i].DateUploaded);
                 Assert.AreNotEqual(default(DateTime), p[i].DateUploaded);
                 Assert.IsTrue(p[i].DateUploaded >= p[i - 1].DateUploaded, "Date taken should increase.");
             }
@@ -202,7 +199,6 @@ namespace FlickrNetTest
 
             for (int i = 1; i < p.Count; i++)
             {
-                Console.WriteLine(p[i].DateUploaded);
                 Assert.AreNotEqual(default(DateTime), p[i].DateUploaded);
                 Assert.IsTrue(p[i].DateUploaded <= p[i - 1].DateUploaded, "Date taken should increase.");
             }
@@ -330,9 +326,6 @@ namespace FlickrNetTest
             o.Extras = PhotoSearchExtras.All;
             PhotoCollection photos = f.PhotosSearch(o);
 
-            Console.WriteLine(f.LastRequest);
-            Console.WriteLine(f.LastResponse);
-
             Assert.AreEqual(100, photos.PerPage);
             Assert.AreEqual(1, photos.Page);
 
@@ -437,12 +430,14 @@ namespace FlickrNetTest
             o.Accuracy = b.Accuracy;
             o.MinUploadDate = DateTime.Now.AddYears(-1);
             o.MaxUploadDate = DateTime.Now;
+            o.Extras = PhotoSearchExtras.Geo;
 
             PhotoCollection ps = f.PhotosSearch(o);
 
             foreach (Photo p in ps)
             {
-                Console.WriteLine(p.PhotoId + " = " + p.Title);
+                Assert.IsTrue(p.Latitude > b.MinimumLatitude && b.MaximumLatitude > p.Latitude, "Latitude is not within the boundary box.");
+                Assert.IsTrue(p.Longitude > b.MinimumLongitude && b.MaximumLongitude > p.Longitude, "Longitude is not within the boundary box.");
             }
 
         }
@@ -556,12 +551,36 @@ namespace FlickrNetTest
             Assert.IsNotNull(photos);
             Assert.AreNotEqual<int>(0, photos.Count);
 
-            Console.WriteLine(f.LastRequest);
-
             foreach (var photo in photos)
             {
                 Assert.IsNotNull(photo.PhotoId);
             }
+        }
+
+        [TestMethod]
+        public void PhotosSearchFullParamTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = TestData.TestUserId;
+            o.Tags = "microsoft";
+            o.TagMode = TagMode.AllTags;
+            o.Text = "microsoft";
+            o.MachineTagMode = MachineTagMode.AllTags;
+            o.MachineTags = "dc:author=*";
+            o.MinTakenDate = DateTime.Today.AddYears(-1);
+            o.MaxTakenDate = DateTime.Today;
+            o.PrivacyFilter = PrivacyFilter.PublicPhotos;
+            o.SafeSearch = SafetyLevel.Safe;
+            o.ContentType = ContentTypeSearch.PhotosOnly;
+            o.HasGeo = false;
+            o.WoeId = "30079";
+            o.PlaceId = "IEcHLFCaAZwoKQ";
+
+            var photos = TestData.GetInstance().PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.AreEqual(0, photos.Count);
+
         }
 
     }

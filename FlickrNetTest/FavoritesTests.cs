@@ -68,9 +68,32 @@ namespace FlickrNetTest
 
             PhotoCollection p = f.FavoritesGetPublicList(userId);
 
-            Assert.IsNotNull(p, "Photos should not be null instance.");
-            Assert.AreNotEqual(0, p.Count, "Photos.Count should be greater than zero.");
-
+            Assert.IsNotNull(p, "PhotoCollection should not be null instance.");
+            Assert.AreNotEqual(0, p.Count, "PhotoCollection.Count should be greater than zero.");
         }
+
+        [TestMethod]
+        public void FavoritesGetListBasicTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoCollection photos = f.FavoritesGetList();
+            Assert.IsNotNull(photos, "PhotoCollection should not be null instance.");
+            Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should be greater than zero.");
+        }
+
+        [TestMethod]
+        public void FavoritesGetListFullParamTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoCollection photos = f.FavoritesGetList(TestData.TestUserId, 2, 20);
+            Assert.IsNotNull(photos, "PhotoCollection should not be null instance.");
+            Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should be greater than zero.");
+            Assert.AreEqual(2, photos.Page);
+            Assert.AreEqual(20, photos.PerPage);
+            Assert.AreEqual(20, photos.Count);
+        }
+
     }
 }

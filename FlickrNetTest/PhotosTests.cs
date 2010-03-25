@@ -139,6 +139,26 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotoGetRecentTest()
+        {
+            var photos = TestData.GetInstance().PhotosGetRecent(1, 20, PhotoSearchExtras.All);
+
+            Assert.IsNotNull(photos);
+            Assert.AreEqual(20, photos.PerPage);
+            Assert.AreEqual(20, photos.Count);
+        }
+
+        [TestMethod]
+        public void PhotosRecentlyUpdatedTest()
+        {
+            var photos = TestData.GetAuthInstance().PhotosRecentlyUpdated(DateTime.Today.AddDays(-100), PhotoSearchExtras.All, 1, 20);
+
+            Assert.IsNotNull(photos);
+            Assert.AreEqual(20, photos.PerPage);
+            Assert.AreEqual(20, photos.Count);
+        }
+
+        [TestMethod]
         public void PhotosGetContextBasicTest()
         {
             var context = TestData.GetInstance().PhotosGetContext("4114887196");
@@ -179,14 +199,8 @@ namespace FlickrNetTest
 
             foreach (Photo p in photos)
             {
-                if (p.DoesLargeExist)
-                    Console.WriteLine(p.LargeUrl);
-                else
-                    Console.WriteLine("No Large Url");
-                if (p.DoesMediumExist)
-                    Console.WriteLine(p.MediumUrl);
-                else
-                    Console.WriteLine("No Medium Url");
+                Assert.IsTrue(p.DoesLargeExist == true || p.DoesLargeExist == false);
+                Assert.IsTrue(p.DoesMediumExist == true || p.DoesMediumExist == false);
             }
         }
 

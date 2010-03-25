@@ -88,5 +88,37 @@ namespace FlickrNetTest
             }
         }
 
+        [TestMethod]
+        public void StatsGetPhotosetDomainsBasic()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            StatDomainCollection domains = f.StatsGetPhotosetDomains(DateTime.Today.AddDays(-2), 1, 10);
+
+            Assert.IsNotNull(domains, "StatDomains should not be null.");
+
+            foreach (StatDomain domain in domains)
+            {
+                Assert.IsNotNull(domain.Name, "StatDomain.Name should not be null.");
+                Assert.AreNotEqual(0, domain.Views, "StatDomain.Views should not be zero.");
+            }
+        }
+
+        [TestMethod]
+        public void StatsGetPhotostreamDomainsBasic()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            StatDomainCollection domains = f.StatsGetPhotostreamDomains(DateTime.Today.AddDays(-2), 1, 10);
+
+            Assert.IsNotNull(domains, "StatDomains should not be null.");
+
+            foreach (StatDomain domain in domains)
+            {
+                Assert.IsNotNull(domain.Name, "StatDomain.Name should not be null.");
+                Assert.AreNotEqual(0, domain.Views, "StatDomain.Views should not be zero.");
+            }
+        }
+
     }
 }

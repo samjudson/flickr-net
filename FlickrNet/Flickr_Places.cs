@@ -266,10 +266,10 @@ namespace FlickrNet
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (threshold > 0) parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToUnixTimestamp(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToUnixTimestamp(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }
@@ -303,10 +303,10 @@ namespace FlickrNet
             if (tagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(tagMode));
             if (machineTags != null && machineTags.Length > 0) parameters.Add("machine_tags", String.Join(",", machineTags));
             if (machineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(machineTagMode));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToUnixTimestamp(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToUnixTimestamp(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }
@@ -336,10 +336,10 @@ namespace FlickrNet
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (threshold > 0) parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (contactType != ContactSearch.None) parameters.Add("contacts", (contactType == ContactSearch.AllContacts ? "all" : "ff"));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToUnixTimestamp(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToUnixTimestamp(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }
@@ -425,10 +425,10 @@ namespace FlickrNet
 
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToUnixTimestamp(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToUnixTimestamp(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date ", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date ", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
 
             return GetResponseCache<TagCollection>(parameters);
         }

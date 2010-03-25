@@ -48,8 +48,6 @@ namespace FlickrNetTest
 
             Assert.IsTrue(photosets.Count > 0, "Should be at least one photoset");
 
-            Console.WriteLine(f.LastResponse);
-
             foreach (Photoset set in photosets)
             {
                 Assert.IsNotNull(set.OwnerId, "OwnerId should not be null");
