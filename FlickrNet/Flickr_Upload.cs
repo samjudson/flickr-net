@@ -94,9 +94,9 @@ namespace FlickrNet
         /// <param name="title">The title of the photo (optional).</param>
         /// <param name="description">The description of the photograph (optional).</param>
         /// <param name="tags">The tags for the photograph (optional).</param>
-        /// <param name="isPublic">0 for private, 1 for public.</param>
-        /// <param name="isFamily">1 if family, 0 is not.</param>
-        /// <param name="isFriend">1 if friend, 0 if not.</param>
+        /// <param name="isPublic">false for private, true for public.</param>
+        /// <param name="isFamily">true if visible to family.</param>
+        /// <param name="isFriend">true if visible to friends only.</param>
         /// <param name="contentType">The content type of the photo, i.e. Photo, Screenshot or Other.</param>
         /// <param name="safetyLevel">The safety level of the photo, i.e. Safe, Moderate or Restricted.</param>
         /// <param name="hiddenFromSearch">Is the photo hidden from public searches.</param>
@@ -104,30 +104,8 @@ namespace FlickrNet
         public string UploadPicture(Stream stream, string fileName, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
         {
             CheckRequiresAuthentication();
-            /*
-             * 
-             * Modified UploadPicture code taken from the Flickr.Net library
-             * URL: http://workspaces.gotdotnet.com/flickrdotnet
-             * It is used under the terms of the Common Public License 1.0
-             * URL: http://www.opensource.org/licenses/cpl.php
-             * 
-             * */
-
-            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
             Uri uploadUri = new Uri(UploadUrl);
-
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
-            req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
-            req.Method = "POST";
-            if (Proxy != null) req.Proxy = Proxy;
-            //req.Referer = "http://www.flickr.com";
-            req.KeepAlive = true;
-            req.Timeout = HttpTimeout;
-            req.ContentType = "multipart/form-data; boundary=" + boundary + "";
-            req.Expect = "";
-
-            StringBuilder sb = new StringBuilder();
 
             Hashtable parameters = new Hashtable();
 
@@ -164,40 +142,62 @@ namespace FlickrNet
             parameters.Add("api_key", _apiKey);
             parameters.Add("auth_token", _apiToken);
 
+            string s = UploadData(stream, fileName, uploadUri, parameters);
+
+            XmlSerializer serializer = _uploaderSerializer;
+            StringReader str = new StringReader(s);
+            FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
+
+            if (uploader.Status == ResponseStatus.Ok)
+            {
+                return uploader.PhotoId;
+            }
+            else
+            {
+                throw new FlickrApiException(uploader.Error.Code, uploader.Error.Message);
+            }
+        }
+
+        private string UploadData(Stream imageStream, string fileName, Uri uploadUri, Hashtable parameters)
+        {
             string[] keys = new string[parameters.Keys.Count];
             parameters.Keys.CopyTo(keys, 0);
             Array.Sort(keys);
 
-            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
+            StringBuilder hashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
+            StringBuilder contentStringBuilder = new StringBuilder();
+            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
             foreach (string key in keys)
             {
-                HashStringBuilder.Append(key);
-                HashStringBuilder.Append(parameters[key]);
-                sb.Append("--" + boundary + "\r\n");
-                sb.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
-                sb.Append("\r\n");
-                sb.Append(parameters[key] + "\r\n");
+                hashStringBuilder.Append(key);
+                hashStringBuilder.Append(parameters[key]);
+                contentStringBuilder.Append("--" + boundary + "\r\n");
+                contentStringBuilder.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
+                contentStringBuilder.Append("\r\n");
+                contentStringBuilder.Append(parameters[key] + "\r\n");
             }
 
-            sb.Append("--" + boundary + "\r\n");
-            sb.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
-            sb.Append("\r\n");
-            sb.Append(UtilityMethods.MD5Hash(HashStringBuilder.ToString()) + "\r\n");
+            contentStringBuilder.Append("--" + boundary + "\r\n");
+            contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
+            contentStringBuilder.Append("\r\n");
+            contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
+
+            fileName = Path.GetFileName(fileName);
 
             // Photo
-            sb.Append("--" + boundary + "\r\n");
-            sb.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + fileName + "\"\r\n");
-            sb.Append("Content-Type: image/jpeg\r\n");
-            sb.Append("\r\n");
+            contentStringBuilder.Append("--" + boundary + "\r\n");
+            contentStringBuilder.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + fileName + "\"\r\n");
+            contentStringBuilder.Append("Content-Type: image/jpeg\r\n");
+            contentStringBuilder.Append("\r\n");
 
             UTF8Encoding encoding = new UTF8Encoding();
 
-            byte[] postContents = encoding.GetBytes(sb.ToString());
+            byte[] postContents = encoding.GetBytes(contentStringBuilder.ToString());
 
-            byte[] photoContents = new byte[stream.Length];
-            stream.Read(photoContents, 0, photoContents.Length);
-            stream.Close();
+            byte[] photoContents = new byte[imageStream.Length];
+            imageStream.Read(photoContents, 0, photoContents.Length);
+            imageStream.Close();
 
             byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
 
@@ -205,6 +205,15 @@ namespace FlickrNet
             Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
             Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
             Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
+
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
+            req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
+            req.Method = "POST";
+            if (Proxy != null) req.Proxy = Proxy;
+            req.KeepAlive = true;
+            req.Timeout = HttpTimeout;
+            req.ContentType = "multipart/form-data; boundary=" + boundary + "";
+            req.Expect = "";
 
             req.ContentLength = dataBuffer.Length;
 
@@ -230,39 +239,25 @@ namespace FlickrNet
 
             HttpWebResponse res = (HttpWebResponse)req.GetResponse();
 
-            XmlSerializer serializer = _uploaderSerializer;
-
             StreamReader sr = new StreamReader(res.GetResponseStream());
             string s = sr.ReadToEnd();
             sr.Close();
-
-            StringReader str = new StringReader(s);
-
-            FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
-
-            if (uploader.Status == ResponseStatus.Ok)
-            {
-                return uploader.PhotoId;
-            }
-            else
-            {
-                throw new FlickrApiException(uploader.Error.Code, uploader.Error.Message);
-            }
+            return s;
         }
 
         /// <summary>
         /// Replace an existing photo on Flickr.
         /// </summary>
-        /// <param name="fileName">The filename of the photo to upload.</param>
+        /// <param name="fullFileName">The full filename of the photo to upload.</param>
         /// <param name="photoId">The ID of the photo to replace.</param>
         /// <returns>The id of the photograph after successful uploading.</returns>
-        public string ReplacePicture(string fileName, string photoId)
+        public string ReplacePicture(string fullFileName, string photoId)
         {
             FileStream stream = null;
             try
             {
-                stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                return ReplacePicture(stream, photoId);
+                stream = new FileStream(fullFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                return ReplacePicture(stream, fullFileName, photoId);
             }
             finally
             {
@@ -277,22 +272,10 @@ namespace FlickrNet
         /// <param name="stream">The <see cref="Stream"/> object containing the photo to be uploaded.</param>
         /// <param name="photoId">The ID of the photo to replace.</param>
         /// <returns>The id of the photograph after successful uploading.</returns>
-        public string ReplacePicture(Stream stream, string photoId)
+        public string ReplacePicture(Stream stream, string fileName, string photoId)
         {
-            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.NumberFormatInfo.InvariantInfo);
 
             Uri replaceUri = new Uri(ReplaceUrl);
-
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(replaceUri);
-            req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
-            req.Method = "POST";
-            if (Proxy != null) req.Proxy = Proxy;
-            req.Referer = "http://www.flickr.com";
-            req.KeepAlive = false;
-            req.Timeout = HttpTimeout;
-            req.ContentType = "multipart/form-data; boundary=" + boundary + "";
-
-            StringBuilder sb = new StringBuilder();
 
             Hashtable parameters = new Hashtable();
 
@@ -300,79 +283,10 @@ namespace FlickrNet
             parameters.Add("api_key", _apiKey);
             parameters.Add("auth_token", _apiToken);
 
-            string[] keys = new string[parameters.Keys.Count];
-            parameters.Keys.CopyTo(keys, 0);
-            Array.Sort(keys);
-
-            StringBuilder HashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
-
-            foreach (string key in keys)
-            {
-                HashStringBuilder.Append(key);
-                HashStringBuilder.Append(parameters[key]);
-                sb.Append("--" + boundary + "\r\n");
-                sb.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
-                sb.Append("\r\n");
-                sb.Append(parameters[key] + "\r\n");
-            }
-
-            sb.Append("--" + boundary + "\r\n");
-            sb.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
-            sb.Append("\r\n");
-            sb.Append(UtilityMethods.MD5Hash(HashStringBuilder.ToString()) + "\r\n");
-
-            // Photo
-            sb.Append("--" + boundary + "\r\n");
-            sb.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"image.jpeg\"\r\n");
-            sb.Append("Content-Type: image/jpeg\r\n");
-            sb.Append("\r\n");
-
-            UTF8Encoding encoding = new UTF8Encoding();
-
-            byte[] postContents = encoding.GetBytes(sb.ToString());
-
-            byte[] photoContents = new byte[stream.Length];
-            stream.Read(photoContents, 0, photoContents.Length);
-            stream.Close();
-
-            byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
-
-            byte[] dataBuffer = new byte[postContents.Length + photoContents.Length + postFooter.Length];
-            Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
-            Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
-            Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
-
-            req.ContentLength = dataBuffer.Length;
-
-            Stream resStream = req.GetRequestStream();
-
-            int j = 1;
-            int uploadBit = Math.Max(dataBuffer.Length / 100, 50 * 1024);
-            int uploadSoFar = 0;
-
-            for (int i = 0; i < dataBuffer.Length; i = i + uploadBit)
-            {
-                int toUpload = Math.Min(uploadBit, dataBuffer.Length - i);
-                uploadSoFar += toUpload;
-
-                resStream.Write(dataBuffer, i, toUpload);
-
-                if ((OnUploadProgress != null) && ((j++) % 5 == 0 || uploadSoFar == dataBuffer.Length))
-                {
-                    OnUploadProgress(this, new UploadProgressEventArgs(i + toUpload, uploadSoFar == dataBuffer.Length));
-                }
-            }
-            resStream.Close();
-
-            HttpWebResponse res = (HttpWebResponse)req.GetResponse();
-
-            XmlSerializer serializer = _uploaderSerializer;
-
-            StreamReader sr = new StreamReader(res.GetResponseStream());
-            string s = sr.ReadToEnd();
-            sr.Close();
+            string s = UploadData(stream, fileName, replaceUri, parameters);
 
             StringReader str = new StringReader(s);
+            XmlSerializer serializer = _uploaderSerializer;
 
             FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
 
