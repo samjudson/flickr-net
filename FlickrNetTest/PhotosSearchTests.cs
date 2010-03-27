@@ -103,8 +103,7 @@ namespace FlickrNetTest
             Assert.IsTrue(photos.Pages > 0, "TotalPages should be greater than 0.");
             Assert.AreEqual(10, photos.PerPage, "PhotosPerPage should be 10.");
             Assert.AreEqual(1, photos.Page, "PageNumber should be 1.");
-
-            Assert.IsTrue(photos.Count > 0, "PhotoCollection Length should be greater than 0.");
+            Assert.AreEqual(10, photos.Count, "Count should be 10.");
             Assert.AreEqual(photos.PerPage, photos.Count);
         }
 
@@ -418,7 +417,7 @@ namespace FlickrNetTest
             int totalPhotos3 = photos.Total;
 
             Assert.AreEqual(totalPhotos1, totalPhotos2, "Total Photos 1 & 2 should be equal");
-            Assert.AreEqual(totalPhotos2, totalPhotos3, "Total Photos 1 & 2 should be equal");
+            Assert.AreEqual(totalPhotos2, totalPhotos3, "Total Photos 2 & 3 should be equal");
         }
 
         [TestMethod]
@@ -426,6 +425,7 @@ namespace FlickrNetTest
         {
             BoundaryBox b = new BoundaryBox(103.675997, 1.339811, 103.689456, 1.357764, GeoAccuracy.World);
             PhotoSearchOptions o = new PhotoSearchOptions();
+            o.HasGeo = true;
             o.BoundaryBox = b;
             o.Accuracy = b.Accuracy;
             o.MinUploadDate = DateTime.Now.AddYears(-1);
@@ -436,6 +436,9 @@ namespace FlickrNetTest
 
             foreach (Photo p in ps)
             {
+                // Annoying, but sometimes Flickr doesn't return the geo properties for a photo even for this type of search.
+                if (p.Latitude == 0 && p.Longitude == 0) continue;
+
                 Assert.IsTrue(p.Latitude > b.MinimumLatitude && b.MaximumLatitude > p.Latitude, "Latitude is not within the boundary box.");
                 Assert.IsTrue(p.Longitude > b.MinimumLongitude && b.MaximumLongitude > p.Longitude, "Longitude is not within the boundary box.");
             }

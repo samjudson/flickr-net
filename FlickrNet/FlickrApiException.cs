@@ -50,21 +50,6 @@ namespace FlickrNet
         {
         }
 
-#if !WindowsCE
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FlickrApiException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected FlickrApiException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-            if (info == null) throw new ArgumentNullException("info");
-
-            Code = info.GetInt32("Code");
-            OriginalMessage = info.GetString("OriginalMessage");
-        }
-#endif
 
 		/// <summary>
 		/// Get the code of the Flickr error.
@@ -87,22 +72,5 @@ namespace FlickrNet
 			}
 		}
 
-#if !WindowsCE
-        /// <summary>
-        /// When overridden in a derived class, sets the <see cref="System.Runtime.Serialization.SerializationInfo"/> with information about the exception.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-        {
-            if (info == null) throw new ArgumentNullException("info");
-
-            info.AddValue("Code", Code);
-            info.AddValue("OriginalMessage", OriginalMessage);
-
-            base.GetObjectData(info, context);
-        }
-#endif
 	}
 }

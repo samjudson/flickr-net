@@ -270,6 +270,7 @@ namespace FlickrNet
         /// Replace an existing photo on Flickr.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> object containing the photo to be uploaded.</param>
+        /// <param name="fileName">The filename of the file to replace the existing item with.</param>
         /// <param name="photoId">The ID of the photo to replace.</param>
         /// <returns>The id of the photograph after successful uploading.</returns>
         public string ReplacePicture(Stream stream, string fileName, string photoId)

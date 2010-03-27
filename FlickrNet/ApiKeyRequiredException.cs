@@ -34,16 +34,5 @@ namespace FlickrNet
         {
         }
 
-#if !WindowsCE
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ApiKeyRequiredException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected ApiKeyRequiredException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
 	}
 }

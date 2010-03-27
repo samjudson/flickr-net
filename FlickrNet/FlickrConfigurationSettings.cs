@@ -1,4 +1,4 @@
-#if !WindowsCE
+#if !(MONOTOUCH || WindowsCE)
 using System;
 using System.Collections.Specialized ;
 using System.Xml;

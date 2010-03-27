@@ -35,17 +35,5 @@ namespace FlickrNet
         {
         }
 
-#if !WindowsCE
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SignatureRequiredException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected SignatureRequiredException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
-
 	}
 }

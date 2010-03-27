@@ -2,7 +2,7 @@ using System;
 using System.Configuration;
 using System.Xml;
 
-#if !WindowsCE
+#if !(MONOTOUCH || WindowsCE)
 namespace FlickrNet
 {
 	/// <summary>

@@ -40,8 +40,8 @@ namespace FlickrNet
 		#endregion
 
 		#region [ Private Variables ]
-#if !WindowsCE
-		private static bool _isServiceSet;
+#if !(MONOTOUCH || WindowsCE)
+        private static bool _isServiceSet;
 #endif
 		private static SupportedService _defaultService = SupportedService.Flickr;
 
@@ -184,10 +184,10 @@ namespace FlickrNet
 		/// </summary>
 		public static SupportedService DefaultService
 		{
-			get 
-			{
-#if !WindowsCE
-				if( !_isServiceSet && FlickrConfigurationManager.Settings != null )
+			get
+            {
+#if !(MONOTOUCH || WindowsCE)
+                if ( !_isServiceSet && FlickrConfigurationManager.Settings != null )
 				{
 					_defaultService = FlickrConfigurationManager.Settings.Service;
 					_isServiceSet = true;
@@ -198,8 +198,8 @@ namespace FlickrNet
 			set
 			{
 				_defaultService = value;
-#if !WindowsCE
-				_isServiceSet = true;
+#if !(MONOTOUCH || WindowsCE)
+                _isServiceSet = true;
 #endif
 			}
 		}
@@ -215,9 +215,9 @@ namespace FlickrNet
 			}
 			set 
 			{
-				_service = value; 
-#if !WindowsCE
-				if( _service == SupportedService.Zooomr ) ServicePointManager.Expect100Continue = false;
+				_service = value;
+#if !(MONOTOUCH || WindowsCE)
+                if ( _service == SupportedService.Zooomr ) ServicePointManager.Expect100Continue = false;
 #endif
 			}
 		}
@@ -299,14 +299,6 @@ namespace FlickrNet
 			Cache.FlushCache(url);
 		}
 
-		/// <summary>
-		/// Provides static access to the list of cached photos.
-		/// </summary>
-		/// <returns>An array of <see cref="PictureCacheItem"/> objects.</returns>
-		public static PictureCacheItem[] GetCachePictures()
-		{
-			return (PictureCacheItem[]) Cache.Downloads.ToArray(typeof(PictureCacheItem));
-		}
 		#endregion
 
 		#region [ Constructors ]
@@ -315,9 +307,9 @@ namespace FlickrNet
 		/// Constructor loads configuration settings from app.config or web.config file if they exist.
 		/// </summary>
 		public Flickr()
-		{
-#if !WindowsCE
-			FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
+        {
+#if !(MONOTOUCH || WindowsCE)
+            FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
 			if( settings == null ) return;
 
 			if( settings.CacheSize != 0 ) CacheSizeLimit = settings.CacheSize;

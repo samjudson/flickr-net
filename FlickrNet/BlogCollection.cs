@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 using System.Collections.ObjectModel;
 
@@ -39,7 +39,7 @@ namespace FlickrNet
         /// <see cref="Flickr.BlogsPostPhoto(string, string, string, string, string)"/>. 
 		/// </summary>
         public string BlogId { get; set; }
-    
+		
 		/// <summary>
 		/// The name you have assigned to the blog in Flickr.
 		/// </summary>

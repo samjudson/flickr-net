@@ -11,25 +11,6 @@ namespace FlickrNet
 	/// </summary>
 	internal sealed class Cache
 	{
-		private static PersistentCache _downloads;
-
-
-		/// <summary>
-		/// A static object containing the list of cached downloaded files.
-		/// </summary>
-		public static PersistentCache Downloads
-		{
-			get 
-			{
-				lock(lockObject)
-				{
-					if( _downloads == null )
-						_downloads = new PersistentCache(Path.Combine(CacheLocation, "downloadCache.dat"), new PictureCacheItemPersister());
-					return _downloads;
-				}
-			}
-		}
-
 		private static PersistentCache _responses;
 
 		/// <summary>
@@ -65,7 +46,7 @@ namespace FlickrNet
 		{
 			get
 			{
-#if !WindowsCE
+#if !(WindowsCE || MONOTOUCH)
 				if( _cacheDisabled == Tristate.Null && FlickrConfigurationManager.Settings != null )
 					_cacheDisabled = (FlickrConfigurationManager.Settings.CacheDisabled?Tristate.True:Tristate.False);
 #endif
@@ -84,21 +65,26 @@ namespace FlickrNet
 
 		internal static string CacheLocation
 		{
-			get 
-			{ 
-#if !WindowsCE
-				if( _cacheLocation == null && FlickrConfigurationManager.Settings != null )
+			get
+            {
+#if !(WindowsCE || MONOTOUCH)
+                if ( _cacheLocation == null && FlickrConfigurationManager.Settings != null )
 					_cacheLocation = FlickrConfigurationManager.Settings.CacheLocation;
 #endif
 				if( _cacheLocation == null )
 				{
 					try
-					{
-#if !WindowsCE
-						_cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FlickrNet");
-#else
+                    {
+#if !(WindowsCE || MONOTOUCH)
+                        _cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FlickrNet");
+#endif
+#if MONOTOUCH
+                        _cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "../Library/Caches");
+#endif
+#if WindowsCE
                         _cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FlickrNetCache");
 #endif
+
 					}
 					catch(System.Security.SecurityException)
 					{
@@ -148,13 +134,11 @@ namespace FlickrNet
 		internal static void FlushCache(Uri url)
 		{
 			Responses[url.AbsoluteUri] = null;
-			Downloads[url.AbsoluteUri] = null;
 		}
 
 		internal static void FlushCache()
 		{
 			Responses.Flush();
-			Downloads.Flush();
 		}
 
 	}
@@ -275,102 +259,6 @@ namespace FlickrNet
 		public abstract void Write(Stream outputStream, ICacheItem cacheItem);
 	}
 
-	/// <summary>
-	/// Contains details of image held with the Flickr.Net cache.
-	/// </summary>
-    public sealed class PictureCacheItem : ICacheItem
-	{
-		/// <summary>
-		/// The URL of the original image on Flickr.
-		/// </summary>
-		public Uri Url { get; private set; }
-		/// <summary>
-		/// The <see cref="DateTime"/> that the cache item was created.
-		/// </summary>
-        public DateTime CreationTime { get; private set; }
-
-		/// <summary>
-		/// The filesize in bytes of the image.
-		/// </summary>
-        public long FileSize { get; private set; }
-
-        /// <summary>
-        /// The filename for this picture cache item.
-        /// </summary>
-        public string FileName { get; private set; }
-
-		/// <summary>
-		/// The Flickr photo id of the image.
-		/// </summary>
-		public string PhotoId
-		{
-			get 
-			{
-				if( Url == null ) 
-					return null;
-				else
-				{
-					int begin = Url.AbsoluteUri.LastIndexOf("/", StringComparison.OrdinalIgnoreCase);
-                    int end = Url.AbsoluteUri.IndexOf("_", StringComparison.OrdinalIgnoreCase);
-
-                    return Url.AbsoluteUri.Substring(begin + 1, (end - begin) - 1);
-				}
-			}
-		}
-
-        /// <summary>
-        /// Creates an instance of the PictureCacheItem.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="creationDate"></param>
-        /// <param name="fileSize"></param>
-        /// <param name="fileName"></param>
-        public PictureCacheItem(Uri url, DateTime creationDate, long fileSize, string fileName)
-        {
-            Url = url;
-            CreationTime = creationDate;
-            FileSize = fileSize;
-            FileName = fileName;
-        }
-
-        void ICacheItem.OnItemFlushed()
-		{
-			File.Delete(FileName);
-		}
-	}
-
-	/// <summary>
-	/// Persists PictureCacheItem objects.
-	/// </summary>
-	internal class PictureCacheItemPersister : CacheItemPersister
-	{
-		public override ICacheItem Read(Stream inputStream)
-		{
-			string s = UtilityMethods.ReadString(inputStream);
-
-			string[] chunks = s.Split('\n');
-			string url = chunks[0];
-            DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
-			string filename = chunks[2];
-            long fileSize = long.Parse(chunks[3], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
-
-            PictureCacheItem pci = new PictureCacheItem(new Uri(url), creationTime, fileSize, filename);
-			return pci;
-		}
-
-		public override void Write(Stream outputStream, ICacheItem cacheItem)
-		{
-			PictureCacheItem pci = (PictureCacheItem) cacheItem;
-			StringBuilder output = new StringBuilder();
-
-			output.Append(pci.Url.AbsoluteUri + "\n");
-			output.Append(pci.CreationTime.Ticks + "\n");
-			output.Append(pci.FileName + "\n");
-			output.Append(pci.FileSize + "\n");
-
-			UtilityMethods.WriteString(outputStream, output.ToString());
-		}
-	}
 
     /// <summary>
     /// An internal class used for catching caching exceptions.
@@ -404,17 +292,5 @@ namespace FlickrNet
             : base(message, innerException)
         {
         }
-
-#if !WindowsCE
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CacheException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected CacheException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        {
-        }
-#endif
     }
 }
