@@ -100,6 +100,8 @@ namespace FlickrNet
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
+
+            reader.Read();
         }
     }
 
