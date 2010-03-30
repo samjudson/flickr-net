@@ -130,6 +130,8 @@ namespace FlickrNet
         /// <returns>True on a successful addition.</returns>
         public void GroupsPoolsAdd(string photoId, string groupId)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.add");
             parameters.Add("photo_id", photoId);

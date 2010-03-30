@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+using System.IO;
 
 namespace FlickrNetTest
 {
@@ -59,6 +60,57 @@ namespace FlickrNetTest
         // public void MyTestCleanup() { }
         //
         #endregion
+
+        [TestMethod]
+        public void GroupsPoolsAddBasicTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            byte[] imageBytes = TestData.TestImageBytes;
+            Stream s = new MemoryStream(imageBytes);
+            s.Position = 0;
+
+            string title = "Test Title";
+            string desc = "Test Description\nSecond Line";
+            string tags = "testtag1,testtag2";
+            string photoId = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+
+            try
+            {
+                f.GroupsPoolsAdd(photoId, TestData.FlickrNetTestGroupId);
+            }
+            finally
+            {
+                f.PhotosDelete(photoId);
+            }
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SignatureRequiredException))]
+        public void GroupsPoolsAddNotAuthTestTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            byte[] imageBytes = TestData.TestImageBytes;
+            Stream s = new MemoryStream(imageBytes);
+            s.Position = 0;
+
+            string title = "Test Title";
+            string desc = "Test Description\nSecond Line";
+            string tags = "testtag1,testtag2";
+            string photoId = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+
+            try
+            {
+                TestData.GetInstance().GroupsPoolsAdd(photoId, TestData.FlickrNetTestGroupId);
+            }
+            finally
+            {
+                f.PhotosDelete(photoId);
+            }
+
+        }
 
         [TestMethod]
         public void GroupsPoolGetPhotosFullParamTest()

@@ -21,6 +21,17 @@ namespace FlickrNetTest
         // Test user is Sam Judson (i.e. Me)
         public const string TestUserId = "41888973@N00";
 
+        public const string TestImageBase64 = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
+
+        public static byte[] TestImageBytes
+        {
+            get
+            {
+                return Convert.FromBase64String(TestImageBase64);
+            }
+        }
+
+        public const string FlickrNetTestGroupId = "1368041@N20";
 
         public static string AuthToken
         {

@@ -67,8 +67,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            string image = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
-            byte[] imageBytes = Convert.FromBase64String(image);
+            byte[] imageBytes = TestData.TestImageBytes;
             Stream s = new MemoryStream(imageBytes);
             s.Position = 0;
 
@@ -99,7 +98,7 @@ namespace FlickrNetTest
                     byte[] downloadBytes = client.DownloadData(url);
                     string downloadBase64 = Convert.ToBase64String(downloadBytes);
 
-                    Assert.AreEqual(image, downloadBase64);
+                    Assert.AreEqual(TestData.TestImageBase64, downloadBase64);
                 }
             }
             finally
