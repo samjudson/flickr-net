@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
@@ -137,6 +137,8 @@
     <Compile Include="Flickr_Upload.cs" />
     <Compile Include="Gallery.cs" />
     <Compile Include="GalleryCollection.cs" />
+    <Compile Include="GalleryPhoto.cs" />
+    <Compile Include="GalleryPhotoCollection.cs" />
     <Compile Include="GeoPermissionType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GroupCategory.cs">

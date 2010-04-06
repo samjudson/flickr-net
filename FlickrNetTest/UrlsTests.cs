@@ -84,6 +84,19 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void UrlsLookupGalleryTest()
+        {
+            Uri galleryUrl = new Uri("http://www.flickr.com/photos/samjudson/galleries/72157622589312064");
+
+            Flickr f = TestData.GetInstance();
+
+            Gallery gallery = f.UrlsLookupGallery(galleryUrl);
+
+            Assert.AreEqual<Uri>(galleryUrl, gallery.GalleryUrl);
+
+        }
+
+        [TestMethod]
         public void UrlsGetUserPhotosTest()
         {
             Uri url = TestData.GetInstance().UrlsGetUserPhotos(TestData.TestUserId);

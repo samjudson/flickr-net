@@ -77,13 +77,6 @@ namespace FlickrNetTest
         [TestMethod]
         public void ReflectionMethodsCheckWeSupport()
         {
-            List<string> exceptions = new List<string>();
-            exceptions.Add("flickr.photos.getWithGeoData");
-            exceptions.Add("flickr.photos.getWithouGeoData");
-            exceptions.Add("flickr.photos.search");
-            exceptions.Add("flickr.photos.getNotInSet");
-            exceptions.Add("flickr.photos.getUntagged");
-
             Flickr f = TestData.GetInstance();
 
             MethodCollection methodNames = f.ReflectionGetMethods();
@@ -117,6 +110,55 @@ namespace FlickrNetTest
             }
 
             Assert.AreEqual(0, failCount, "FailCount should be zero. Currently " + failCount + " unsupported methods found.");
+        }
+
+        [TestMethod]
+        public void ReflectionGetMethodInfoSearchArgCheck()
+        {
+            PropertyInfo[] properties = typeof(PhotoSearchOptions).GetProperties();
+
+            Method flickrMethod = TestData.GetInstance().ReflectionGetMethodInfo("flickr.photos.search");
+
+            // These arguments are covered, but are named slightly differently from Flickr.
+            Dictionary<string, string> exceptions = new Dictionary<string, string>();
+            exceptions.Add("license", "licenses"); // Licenses
+            exceptions.Add("sort", "sortorder"); // SortOrder
+            exceptions.Add("bbox", "boundarybox"); // BoundaryBox
+            exceptions.Add("lat", "latitude"); // Latitude
+            exceptions.Add("lon", "longitude"); // Longitude
+            exceptions.Add("media", "mediatype"); // MediaType
+
+            int numMissing = 0;
+
+            foreach (MethodArgument argument in flickrMethod.Arguments)
+            {
+                if (argument.Name == "api_key") continue;
+
+                bool found = false;
+
+                string arg = argument.Name.Replace("_", "").ToLower();
+
+                if (exceptions.ContainsKey(arg)) arg = exceptions[arg];
+
+                foreach (PropertyInfo info in properties)
+                {
+                    string propName = info.Name.ToLower();
+                    if (arg == propName)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+
+                if (!found)
+                {
+                    numMissing++;
+                    Console.WriteLine("Argument " + argument.Name + " not found.");
+                }
+            }
+
+            Assert.AreEqual(0, numMissing, "Number of missing arguments should be zero.");
         }
 
         [TestMethod]

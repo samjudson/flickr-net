@@ -320,7 +320,7 @@ namespace FlickrNet
         /// <summary>
         /// The description for the photo. Only returned if <see cref="PhotoSearchExtras.Description"/> is set.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; protected set; }
 
 		/// <summary>
 		/// A helper method which tries to guess if a large image will be available for this photograph
@@ -481,6 +481,7 @@ namespace FlickrNet
                         OwnerName = reader.Value;
                         break;
                     case "isprimary":
+                    case "is_primary":
                         break;
                     case "pathalias":
                         PathAlias = reader.Value;
@@ -544,6 +545,8 @@ namespace FlickrNet
                         break;
                     case "date_faved":
                         DateFavorited = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "has_comment": // Gallery photos return this, but we ignore it and set GalleryPhoto.Comment instead.
                         break;
                     default:
                         throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);

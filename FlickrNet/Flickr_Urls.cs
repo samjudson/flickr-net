@@ -81,6 +81,32 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Returns gallery info, by url.
+        /// </summary>
+        /// <param name="url">The gallery's URL.</param>
+        /// <returns></returns>
+        public Gallery UrlsLookupGallery(string url)
+        {
+            return UrlsLookupGallery(new Uri(url, UriKind.Absolute));
+        }
+
+
+        /// <summary>
+        /// Returns gallery info, by url.
+        /// </summary>
+        /// <param name="url">The gallery's URL.</param>
+        /// <returns></returns>
+        public Gallery UrlsLookupGallery(Uri url)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.urls.lookupGallery");
+            parameters.Add("api_key", _apiKey);
+            parameters.Add("url", url.AbsoluteUri);
+
+            return GetResponseCache<Gallery>(parameters);
+        }
+
+        /// <summary>
         /// Returns a group NSID, given the url to a group's page or photo pool.
         /// </summary>
         /// <param name="urlToFind">The url to the group's page or photo pool.</param>

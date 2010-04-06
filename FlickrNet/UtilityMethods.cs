@@ -436,6 +436,21 @@ namespace FlickrNet
         {
             return date.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
         }
+
+        public static string MediaTypeToString(MediaType mediaType)
+        {
+            switch (mediaType)
+            {
+                case MediaType.All:
+                    return "all";
+                case MediaType.Photos:
+                    return "photos";
+                case MediaType.Videos:
+                    return "videos";
+                default:
+                    return "";
+            }
+        }
     }
 
 }

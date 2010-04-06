@@ -9,7 +9,7 @@ namespace FlickrNet
 	/// <summary>
 	/// Internal Cache class
 	/// </summary>
-	internal sealed class Cache
+	public static class Cache
 	{
 		private static PersistentCache _responses;
 
@@ -30,10 +30,6 @@ namespace FlickrNet
 		}
 
 
-		private Cache()
-		{
-		}
-
 		private static object lockObject = new object();
 
 		private enum Tristate
@@ -42,7 +38,10 @@ namespace FlickrNet
 		}
 		private static Tristate _cacheDisabled;
 
-		internal static bool CacheDisabled
+        /// <summary>
+        /// Returns weither of not the cache is currently disabled.
+        /// </summary>
+		public static bool CacheDisabled
 		{
 			get
 			{
@@ -63,7 +62,10 @@ namespace FlickrNet
 
 		private static string _cacheLocation;
 
-		internal static string CacheLocation
+        /// <summary>
+        /// Returns the currently set location for the cache.
+        /// </summary>
+		public static string CacheLocation
 		{
 			get
             {
@@ -130,13 +132,20 @@ namespace FlickrNet
 			get { return _cachetimeout; }
 			set { _cachetimeout = value; }
 		}
-		
-		internal static void FlushCache(Uri url)
+
+        /// <summary>
+        /// Remove a specific URL from the cache.
+        /// </summary>
+        /// <param name="url"></param>
+        public static void FlushCache(Uri url)
 		{
 			Responses[url.AbsoluteUri] = null;
 		}
 
-		internal static void FlushCache()
+        /// <summary>
+        /// Clears all responses from the cache.
+        /// </summary>
+		public static void FlushCache()
 		{
 			Responses.Flush();
 		}

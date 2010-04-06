@@ -66,6 +66,11 @@ namespace FlickrNet
 		/// </summary>
 		public string UserId { get; set; }
 
+        /// <summary>
+        /// The geocontext for the resulting photos.
+        /// </summary>
+        public GeoContext GeoContext { get; set; }
+
 		/// <summary>
 		/// The group id of the group to search within.
 		/// </summary>
@@ -126,6 +131,11 @@ namespace FlickrNet
 		/// signifies that the value is not to be used.
 		/// </summary>
 		public DateTime MaxTakenDate { get; set; }
+
+        /// <summary>
+        /// Filter by media type.
+        /// </summary>
+        public MediaType MediaType { get; set; }
 
         private Collection<LicenseType> _licenses = new Collection<LicenseType>();
 
@@ -242,6 +252,16 @@ namespace FlickrNet
         /// True if the photo is taken from the Flickr Commons project.
         /// </summary>
         public bool IsCommons { get; set; }
+
+        /// <summary>
+        /// Is the image in a gallery.
+        /// </summary>
+        public bool InGallery { get; set; }
+
+        /// <summary>
+        /// Is the photo a part of the getty images collection on Flickr.
+        /// </summary>
+        public bool IsGetty { get; set; }
 
 		internal string ExtrasString
 		{

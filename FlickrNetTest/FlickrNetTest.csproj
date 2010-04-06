@@ -65,6 +65,7 @@
     <Compile Include="ActivityTests.cs" />
     <Compile Include="AuthTests.cs" />
     <Compile Include="BlogTests.cs" />
+    <Compile Include="CacheTests.cs" />
     <Compile Include="CollectionTests.cs" />
     <Compile Include="CommonsTests.cs" />
     <Compile Include="ContactsTests.cs" />

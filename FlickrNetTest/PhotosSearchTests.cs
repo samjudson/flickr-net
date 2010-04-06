@@ -384,7 +384,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PhotoSearchPerPage()
+        public void PhotosSearchPerPageMultipleTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "microsoft";
@@ -584,6 +584,18 @@ namespace FlickrNetTest
             Assert.IsNotNull(photos);
             Assert.AreEqual(0, photos.Count);
 
+        }
+
+        [TestMethod]
+        public void PhotosSearchGalleryPhotos()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = TestData.TestUserId;
+            o.InGallery = true;
+            o.Tags = "art";
+            PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
+
+            Assert.AreEqual(1, photos.Count, "Only one photo should have been returned.");
         }
 
     }

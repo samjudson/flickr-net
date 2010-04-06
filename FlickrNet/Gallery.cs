@@ -128,7 +128,7 @@ namespace FlickrNet
                         GalleryId = reader.Value;
                         break;
                     case "url":
-                        GalleryUrl = new Uri(reader.Value);
+                        GalleryUrl = new Uri(new Uri("http://www.flickr.com"), reader.Value);
                         break;
                     case "owner":
                         OwnerId = reader.Value;
@@ -144,12 +144,15 @@ namespace FlickrNet
                         PrimaryPhotoId = reader.Value;
                         break;
                     case "primary_photo_server":
+                    case "server":
                         PrimaryPhotoServer = reader.Value;
                         break;
                     case "primary_photo_farm":
+                    case "farm":
                         PrimaryPhotoFarm = reader.Value;
                         break;
                     case "primary_photo_secret":
+                    case "secret":
                         PrimaryPhotoSecret = reader.Value;
                         break;
 

@@ -13,7 +13,7 @@ namespace FlickrNet
 	/// protected by the lockFile.  Private methods should
 	/// not acquire the lockFile as it is not reentrant.
 	/// </summary>
-	internal sealed class PersistentCache : IDisposable
+	public sealed class PersistentCache : IDisposable
 	{
 		// The in-memory representation of the cache.
 		// Use SortedList instead of Hashtable only to maintain backward 
@@ -34,6 +34,11 @@ namespace FlickrNet
 		// The file-based mutex.  Named (dataFile.FullName + ".lock")
 		private readonly LockFile lockFile;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PersistentCache"/> for the given filename and cache type.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="persister"></param>
 		public PersistentCache(string filename, CacheItemPersister persister)
 		{
 			this.persister = persister;
@@ -80,6 +85,13 @@ namespace FlickrNet
 			}
 		}
 
+        /// <summary>
+        /// Gets the specified key from the cache unless it has expired.
+        /// </summary>
+        /// <param name="key">The key to look up in the cache.</param>
+        /// <param name="maxAge">The maximum age the item can be before it is no longer returned.</param>
+        /// <param name="removeIfExpired">Whether to delete the item if it has expired or not.</param>
+        /// <returns></returns>
 		public ICacheItem Get(string key, TimeSpan maxAge, bool removeIfExpired)
 		{
 			Debug.Assert(maxAge > TimeSpan.Zero || maxAge == TimeSpan.MinValue, "maxAge should be positive, not negative");
@@ -110,11 +122,18 @@ namespace FlickrNet
 			return expired ? null : item;
 		}
 
+        /// <summary>
+        /// Clears the current cache of items.
+        /// </summary>
 		public void Flush()
 		{
 			Shrink(0);
 		}
 
+        /// <summary>
+        /// Shrinks the current cache to a specific size, removing older items first.
+        /// </summary>
+        /// <param name="size"></param>
 		public void Shrink(long size)
 		{
 			if (size < 0)
@@ -304,13 +323,9 @@ namespace FlickrNet
 			}
 		}
 
-        #region IDisposable Members
-
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             if (lockFile != null) lockFile.Dispose();
         }
-
-        #endregion
     }
 }

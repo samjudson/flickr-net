@@ -696,6 +696,10 @@ namespace FlickrNet
             if (options.WoeId != null) parameters.Add("woe_id", options.WoeId);
             if (options.PlaceId != null) parameters.Add("place_id", options.PlaceId);
             if (options.IsCommons) parameters.Add("is_commons", "1");
+            if (options.InGallery) parameters.Add("in_gallery", "1");
+            if (options.IsGetty) parameters.Add("is_getty", "1");
+            if (options.MediaType != MediaType.None) parameters.Add("media", UtilityMethods.MediaTypeToString(options.MediaType));
+            if (options.GeoContext != GeoContext.NotDefined) parameters.Add("geo_context", options.GeoContext.ToString("d"));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }

@@ -51,7 +51,11 @@ namespace FlickrNet
                 }
             }
 
-            reader.Skip();
+            reader.Read();
+
+            if (reader.LocalName == "description")
+                Description = reader.ReadElementContentAsString();
+
             reader.Skip();
         }
     }
