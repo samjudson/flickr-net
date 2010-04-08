@@ -658,48 +658,8 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.search");
-            if (options.UserId != null && options.UserId.Length > 0) parameters.Add("user_id", options.UserId);
-            if (options.GroupId != null && options.GroupId.Length > 0) parameters.Add("group_id", options.GroupId);
-            if (options.Text != null && options.Text.Length > 0) parameters.Add("text", options.Text);
-            if (options.Tags != null && options.Tags.Length > 0) parameters.Add("tags", options.Tags);
-            if (options.TagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(options.TagMode));
-            if (options.MachineTags != null && options.MachineTags.Length > 0) parameters.Add("machine_tags", options.MachineTags);
-            if (options.MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(options.MachineTagMode));
-            if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
-            if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
-            if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(options.MinTakenDate));
-            if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(options.MaxTakenDate));
-            if (options.Licenses.Count != 0)
-            {
-                List<string> licenseArray = new List<string>();
-                foreach (LicenseType license in options.Licenses)
-                {
-                    licenseArray.Add(license.ToString("d"));
-                }
-                parameters.Add("license", String.Join(",", licenseArray.ToArray()));
-            }
-            if (options.PerPage != 0) parameters.Add("per_page", options.PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (options.Page != 0) parameters.Add("page", options.Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (options.Extras != PhotoSearchExtras.None) parameters.Add("extras", options.ExtrasString);
-            if (options.SortOrder != PhotoSearchSortOrder.None) parameters.Add("sort", options.SortOrderString);
-            if (options.PrivacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
-            if (options.BoundaryBox != null && options.BoundaryBox.IsSet) parameters.Add("bbox", options.BoundaryBox.ToString());
-            if (options.Accuracy != GeoAccuracy.None) parameters.Add("accuracy", options.Accuracy.ToString("d"));
-            if (options.SafeSearch != SafetyLevel.None) parameters.Add("safe_search", options.SafeSearch.ToString("d"));
-            if (options.ContentType != ContentTypeSearch.None) parameters.Add("content_type", options.ContentType.ToString("d"));
-            if (options.HasGeo != null) parameters.Add("has_geo", options.HasGeo.Value?"1":"0");
-            if (options.Latitude != null) parameters.Add("lat", options.Latitude.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (options.Longitude != null) parameters.Add("lon", options.Longitude.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (options.Radius != null) parameters.Add("radius", options.Radius.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (options.RadiusUnits != RadiusUnit.None) parameters.Add("radius_units", (options.RadiusUnits == RadiusUnit.Miles ? "mi" : "km"));
-            if (options.Contacts != ContactSearch.None) parameters.Add("contacts", (options.Contacts == ContactSearch.AllContacts ? "all" : "ff"));
-            if (options.WoeId != null) parameters.Add("woe_id", options.WoeId);
-            if (options.PlaceId != null) parameters.Add("place_id", options.PlaceId);
-            if (options.IsCommons) parameters.Add("is_commons", "1");
-            if (options.InGallery) parameters.Add("in_gallery", "1");
-            if (options.IsGetty) parameters.Add("is_getty", "1");
-            if (options.MediaType != MediaType.None) parameters.Add("media", UtilityMethods.MediaTypeToString(options.MediaType));
-            if (options.GeoContext != GeoContext.NotDefined) parameters.Add("geo_context", options.GeoContext.ToString("d"));
+
+            options.AddToDictionary(parameters);
 
             return GetResponseCache<PhotoCollection>(parameters);
         }

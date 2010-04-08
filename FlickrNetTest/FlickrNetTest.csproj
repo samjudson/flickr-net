@@ -79,6 +79,7 @@
     <Compile Include="PandaTest.cs" />
     <Compile Include="PeopleTests.cs" />
     <Compile Include="PhotosCommentsTests.cs" />
+    <Compile Include="PhotoSearchOptionsTests.cs" />
     <Compile Include="PhotosetCommentsGetListTests.cs" />
     <Compile Include="PhotosetsGetPhotosTests.cs" />
     <Compile Include="PhotosGeoTests.cs" />
