@@ -132,6 +132,8 @@
     <Compile Include="Flickr_Urls.cs" />
     <Compile Include="Gallery.cs" />
     <Compile Include="GalleryCollection.cs" />
+    <Compile Include="GalleryPhoto.cs" />
+    <Compile Include="GalleryPhotoCollection.cs" />
     <Compile Include="GeoAccuracy.cs" />
     <Compile Include="GeoContext.cs" />
     <Compile Include="GeoPermissions.cs" />
