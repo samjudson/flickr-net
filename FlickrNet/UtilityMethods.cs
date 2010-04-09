@@ -437,6 +437,11 @@ namespace FlickrNet
             return date.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
         }
 
+        /// <summary>
+        /// Converts a <see cref="MediaType"/> enumeration into a string used by Flickr.
+        /// </summary>
+        /// <param name="mediaType">The <see cref="MediaType"/> value to convert.</param>
+        /// <returns></returns>
         public static string MediaTypeToString(MediaType mediaType)
         {
             switch (mediaType)

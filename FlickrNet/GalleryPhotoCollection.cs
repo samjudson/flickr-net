@@ -5,7 +5,7 @@ using System.Text;
 namespace FlickrNet
 {
     /// <summary>
-    /// A list of gallery photos as returned by <see cref="Flickr.GalleriesGetPhotos(string, PhotoSearchExtras, int, int)"/>
+    /// A list of gallery photos as returned by <see cref="Flickr.GalleriesGetPhotos(string, PhotoSearchExtras)"/>
     /// </summary>
     public sealed class GalleryPhotoCollection : System.Collections.ObjectModel.Collection<GalleryPhoto>, IFlickrParsable
     {

@@ -5,7 +5,7 @@ using System.Text;
 namespace FlickrNet
 {
     /// <summary>
-    /// An instance of a photo returned by <see cref="Flickr.GalleriesGetPhotos(string, PhotoSearchExtras, int, int)"/>.
+    /// An instance of a photo returned by <see cref="Flickr.GalleriesGetPhotos(string, PhotoSearchExtras)"/>.
     /// </summary>
     public class GalleryPhoto : Photo, IFlickrParsable
     {

@@ -273,6 +273,10 @@ namespace FlickrNet
 			get	{ return UtilityMethods.SortOrderToString(SortOrder); }
 		}
 
+        /// <summary>
+        /// Calculates the Uri for a Flash slideshow for the given search options.
+        /// </summary>
+        /// <returns></returns>
         public Uri CalculateSlideshowUrl()
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -294,6 +298,10 @@ namespace FlickrNet
             return new Uri(sb.ToString());
         }
 
+        /// <summary>
+        /// Takes the various properties of this instance and adds them to a <see cref="Dictionary{K,V}"/> instanced passed in, ready for sending to Flickr.
+        /// </summary>
+        /// <param name="parameters">The <see cref="Dictionary{K,V}"/> to add the options to.</param>
         public void AddToDictionary(Dictionary<string, string> parameters)
         {
             if (UserId != null && UserId.Length > 0) parameters.Add("user_id", UserId);
