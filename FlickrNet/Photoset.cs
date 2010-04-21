@@ -131,43 +131,34 @@ namespace FlickrNet
                         break;
                     case "photos":
                     case "total":
-                        NumberOfPhotos = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        NumberOfPhotos = reader.ReadContentAsInt();
                         break;
                     case "videos":
-                        NumberOfVideos = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        NumberOfVideos = reader.ReadContentAsInt();
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
                 }
             }
 
-            if (!reader.IsEmptyElement)
+            reader.Read();
+
+            while( reader.LocalName != "photoset" && reader.NodeType != System.Xml.XmlNodeType.EndElement)
             {
-                reader.Read();
-
-                while (true)
+                switch(reader.LocalName)
                 {
-                    if (reader.Name == "title")
-                    {
-                        Title = reader.ReadInnerXml();
-                        continue;
-                    }
-                    if (reader.Name == "description")
-                    {
-                        Description = reader.ReadInnerXml();
-                        continue;
-                    }
-                    if (reader.NodeType == System.Xml.XmlNodeType.EndElement && reader.Name == "photoset")
-                    {
-                        reader.Read();
-                    }
-                    break;
+                    case "title":
+                        Title = reader.ReadElementContentAsString();
+                        break;
+                    case "description":
+                        Description = reader.ReadElementContentAsString();
+                        break;
+                    default:
+                        throw new ParsingException("Unknown element: " + reader.LocalName);
                 }
-
             }
 
-            reader.Skip();
+            reader.Read();
         }
-
     }
 }

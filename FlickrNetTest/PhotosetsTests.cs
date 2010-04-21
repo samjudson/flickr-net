@@ -10,11 +10,11 @@ namespace FlickrNetTest
     /// Summary description for FlickrPhotosetsGetList
     /// </summary>
     [TestClass]
-    public class PhotosetsGetList
+    public class PhotosetsTests
     {
         Flickr f = new Flickr(TestData.ApiKey);
 
-        public PhotosetsGetList()
+        public PhotosetsTests()
         {
             Flickr.CacheDisabled = true;
         }
@@ -40,6 +40,19 @@ namespace FlickrNetTest
         // public void MyTestCleanup() { }
         //
         #endregion
+
+        [TestMethod]
+        public void PhotosetsGetInfoBasicTest()
+        {
+            string photosetId = "72157594532130119";
+
+            var p = TestData.GetInstance().PhotosetsGetInfo(photosetId);
+
+            Assert.IsNotNull(p);
+            Assert.AreEqual(photosetId, p.PhotosetId);
+            Assert.AreEqual("Places: Derwent Walk, Gateshead", p.Title);
+            Assert.AreEqual("It's near work, so I go quite a bit...", p.Description);
+        }
 
         [TestMethod]
         public void PhotosetsGetListBasicTest()

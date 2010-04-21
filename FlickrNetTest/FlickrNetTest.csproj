@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="AuthHelper.cs" />
     <Compile Include="PhotosSearchTests.cs" />
-    <Compile Include="PhotosetsGetList.cs" />
+    <Compile Include="PhotosetsTests.cs" />
     <Compile Include="PhotosGetContactsPhotos.cs" />
     <Compile Include="PhotoOwnerNameTest.cs" />
     <Compile Include="PhotosetsOrderSets.cs" />
