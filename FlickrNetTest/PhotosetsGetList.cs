@@ -47,6 +47,7 @@ namespace FlickrNetTest
             PhotosetCollection photosets = f.PhotosetsGetList(TestData.TestUserId);
 
             Assert.IsTrue(photosets.Count > 0, "Should be at least one photoset");
+            Assert.IsTrue(photosets.Count > 100, "Should be greater than 100 photosets. (" + photosets.Count + " returned)");
 
             foreach (Photoset set in photosets)
             {

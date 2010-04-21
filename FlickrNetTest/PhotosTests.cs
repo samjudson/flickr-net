@@ -243,6 +243,18 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosPeopleGetListSpecificUserTest()
+        {
+            string photoId = "104267998"; // http://www.flickr.com/photos/thunderchild5/104267998/
+            string userId = "41888973@N00"; //sam judsons nsid
+
+            Flickr f = TestData.GetInstance();
+            PhotoPersonCollection ppl = f.PhotosPeopleGetList(photoId);
+            PhotoPerson pp = ppl[0];
+            Assert.AreEqual(userId, pp.UserId);
+        }
+
+        [TestMethod]
         public void PhotosLicensesGetInfoBasicTest()
         {
             LicenseCollection col = TestData.GetInstance().PhotosLicensesGetInfo();

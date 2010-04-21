@@ -89,7 +89,7 @@ namespace FlickrNet
                 {
                     case "id":
                     case "nsid":
-                        UserId = reader.LocalName;
+                        UserId = reader.Value;
                         break;
                     case "iconserver":
                         IconServer = reader.Value;
