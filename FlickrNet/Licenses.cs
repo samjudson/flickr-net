@@ -41,7 +41,11 @@ namespace FlickrNet
 		/// <summary>
 		/// No Known Copyright Resitrctions (Flickr Commons).
 		/// </summary>
-        NoKnownCopyrightRestrictions = 7
+        NoKnownCopyrightRestrictions = 7,
+        /// <summary>
+        /// United States Government Work
+        /// </summary>
+        UnitedStatesGovernmentWork = 8
     }
 
 	/// <summary>
@@ -95,7 +99,10 @@ namespace FlickrNet
                         LicenseName = reader.Value;
                         break;
                     case "url":
-                        LicenseUrl = new Uri(reader.Value);
+                        if (!String.IsNullOrEmpty(reader.Value))
+                        {
+                            LicenseUrl = new Uri(reader.Value);
+                        }
                         break;
                     default:
                         throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);

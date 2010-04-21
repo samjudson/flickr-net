@@ -241,5 +241,19 @@ namespace FlickrNetTest
                 Assert.IsNotNull(person.BuddyIconUrl, "BuddyIconUrl should not be null.");
             }
         }
+
+        [TestMethod]
+        public void PhotosLicensesGetInfoBasicTest()
+        {
+            LicenseCollection col = TestData.GetInstance().PhotosLicensesGetInfo();
+
+            foreach (License lic in col)
+            {
+                if (!Enum.IsDefined(typeof(LicenseType), lic.LicenseId))
+                {
+                    Assert.Fail("License with ID " + (int)lic.LicenseId + ", " + lic.LicenseName + " dooes not exist.");
+                }
+            }
+        }
     }
 }
