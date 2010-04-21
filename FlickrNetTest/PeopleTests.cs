@@ -117,7 +117,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PersonGetInfoGenderNoAuthTest()
+        public void PeopleGetInfoGenderNoAuthTest()
         {
             Flickr f = TestData.GetInstance();
             Person p = f.PeopleGetInfo("10973297@N00");
@@ -132,7 +132,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PersonGetInfoGenderTest()
+        public void PeopleGetInfoGenderTest()
         {
             Flickr f = TestData.GetAuthInstance();
             Person p = f.PeopleGetInfo("10973297@N00");
@@ -149,7 +149,15 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PersonGetInfoSelfTest()
+        public void PeopleGetInfoBuddyIconTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+            Person p = f.PeopleGetInfo(TestData.TestUserId);
+            Assert.IsTrue(p.BuddyIconUrl.AbsoluteUri.Contains(".static.flickr.com/"), "Buddy icon doesn't contain correct details.");
+        }
+
+        [TestMethod]
+        public void PeopleGetInfoSelfTest()
         {
             Flickr f = TestData.GetAuthInstance();
 

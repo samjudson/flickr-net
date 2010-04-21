@@ -252,6 +252,7 @@ namespace FlickrNetTest
             PhotoPersonCollection ppl = f.PhotosPeopleGetList(photoId);
             PhotoPerson pp = ppl[0];
             Assert.AreEqual(userId, pp.UserId);
+            Assert.IsTrue(pp.BuddyIconUrl.AbsoluteUri.Contains(".static.flickr.com/"), "Buddy icon doesn't contain correct details.");
         }
 
         [TestMethod]
