@@ -233,11 +233,18 @@ namespace FlickrNetTest
             var placeId = "IEcHLFCaAZwoKQ";
             PlaceInfo p = f.PlacesGetInfo(placeId, null);
 
+            Console.WriteLine(f.LastResponse);
+
             Assert.IsNotNull(p);
             Assert.AreEqual(placeId, p.PlaceId);
             Assert.AreEqual("30079", p.WoeId);
             Assert.AreEqual(PlaceType.Locality, p.PlaceType);
             Assert.AreEqual("Newcastle upon Tyne, England, United Kingdom", p.Description);
+
+            Assert.AreEqual("IEcHLFCaAZwoKQ", p.Locality.PlaceId);
+            Assert.AreEqual("5La1sJqYA5qNBtPTrA", p.County.PlaceId);
+            Assert.AreEqual("pn4MsiGbBZlXeplyXg", p.Region.PlaceId);
+            Assert.AreEqual("DevLebebApj4RVbtaQ", p.Country.PlaceId);
 
             Assert.IsTrue(p.HasShapeData);
             Assert.IsNotNull(p.ShapeData);

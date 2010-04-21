@@ -137,15 +137,15 @@ namespace FlickrNet
                         break;
                     case "county":
                         County = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
+                        ((IFlickrParsable)County).Load(reader);
                         break;
                     case "region":
                         Region = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
+                        ((IFlickrParsable)Region).Load(reader);
                         break;
                     case "country":
                         Country = new Place();
-                        ((IFlickrParsable)Locality).Load(reader);
+                        ((IFlickrParsable)Country).Load(reader);
                         break;
                     case "shapedata":
                         ShapeData = new ShapeData();
