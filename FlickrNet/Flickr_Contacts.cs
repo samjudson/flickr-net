@@ -119,7 +119,7 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.contacts.getListRecentlyUploaded");
-            if( dateLastUpdated != DateTime.MinValue) parameters.Add("date_last_updated", UtilityMethods.DateToUnixTimestamp(dateLastUpdated));
+            if (dateLastUpdated != DateTime.MinValue) parameters.Add("date_lastupload", UtilityMethods.DateToUnixTimestamp(dateLastUpdated));
             if( !String.IsNullOrEmpty(filter) ) parameters.Add("filter", filter);
 
             return GetResponseNoCache<ContactCollection>(parameters);
