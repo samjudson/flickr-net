@@ -27,11 +27,11 @@ namespace FlickrNet
         /// <summary>
         /// The URL to the place web page on Flickr.
         /// </summary>
-        public Uri PlaceFlickrUrl
+        public string PlaceFlickrUrl
         {
             get
             {
-                return new Uri("http://www.flickr.com/places" + PlaceUrl);
+                return "http://www.flickr.com/places" + PlaceUrl;
             }
         }
 

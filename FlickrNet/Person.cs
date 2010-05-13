@@ -89,31 +89,31 @@ namespace FlickrNet
 		/// The users photo location on Flickr
 		/// http://www.flickr.com/photos/username/
 		/// </summary>
-        public Uri PhotosUrl { get; private set; }
+        public string PhotosUrl { get; private set; }
 
 		/// <summary>
 		/// The users profile location on Flickr
 		/// http://www.flickr.com/people/username/
 		/// </summary>
-        public Uri ProfileUrl { get; private set; }
+        public string ProfileUrl { get; private set; }
 
         /// <summary>
         /// The users profile location on Flickr
         /// http://m.flickr.com/photostream.gne?id=ID
         /// </summary>
-        public Uri MobileUrl { get; private set; }
+        public string MobileUrl { get; private set; }
 
 		/// <summary>
 		/// Returns the <see cref="Uri"/> for the users Buddy Icon.
 		/// </summary>
-		public Uri BuddyIconUrl
+        public string BuddyIconUrl
 		{
 			get
 			{
 				if( String.IsNullOrEmpty(IconServer) || IconServer == "0" )
-					return new Uri("http://www.flickr.com/images/buddyicon.jpg");
+					return "http://www.flickr.com/images/buddyicon.jpg";
 				else
-                    return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId));
+                    return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId);
 			}
 		}
 
@@ -141,13 +141,13 @@ namespace FlickrNet
                         RealName = reader.ReadElementContentAsString();
                         break;
                     case "photosurl":
-                        PhotosUrl = new Uri(reader.ReadElementContentAsString());
+                        PhotosUrl = reader.ReadElementContentAsString();
                         break;
                     case "profileurl":
-                        ProfileUrl = new Uri(reader.ReadElementContentAsString());
+                        ProfileUrl = reader.ReadElementContentAsString();
                         break;
                     case "mobileurl":
-                        MobileUrl = new Uri(reader.ReadElementContentAsString());
+                        MobileUrl = reader.ReadElementContentAsString();
                         break;
                     case "photos":
                         PhotosSummary = new PersonPhotosSummary();

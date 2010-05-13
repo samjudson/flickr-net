@@ -17,7 +17,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL to the gallery on the web.
         /// </summary>
-        public Uri GalleryUrl { get; private set; }
+        public string GalleryUrl { get; private set; }
 
         /// <summary>
         /// The user ID of the gallery owner.
@@ -77,7 +77,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL of the thumbnail for the primary image for this gallery.
         /// </summary>
-        public Uri PrimaryPhotoThumbnailUrl
+        public string PrimaryPhotoThumbnailUrl
         {
             get
             {
@@ -88,7 +88,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL of the small image for the primary image for this gallery.
         /// </summary>
-        public Uri PrimaryPhotoSmallUrl
+        public string PrimaryPhotoSmallUrl
         {
             get
             {
@@ -99,7 +99,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL of the squrea thumbnail for the primary image for this gallery.
         /// </summary>
-        public Uri PrimaryPhotoSquareThumbnailUrl
+        public string PrimaryPhotoSquareThumbnailUrl
         {
             get
             {
@@ -110,7 +110,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL of the medium image for the primary image for this gallery. For large sizes call <see cref="Flickr.PhotosGetSizes(string)"/>
         /// </summary>
-        public Uri PrimaryPhotoMediumUrl
+        public string PrimaryPhotoMediumUrl
         {
             get
             {
@@ -128,7 +128,7 @@ namespace FlickrNet
                         GalleryId = reader.Value;
                         break;
                     case "url":
-                        GalleryUrl = new Uri(new Uri("http://www.flickr.com"), reader.Value);
+                        GalleryUrl = (reader.Value.IndexOf("www.flickr.com") > 0 ? reader.Value : "http://www.flickr.com" + reader.Value);
                         break;
                     case "owner":
                         OwnerId = reader.Value;

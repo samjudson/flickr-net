@@ -27,17 +27,17 @@ namespace FlickrNet
         /// <summary>
         /// The URL to the institution's main site.
         /// </summary>
-        public Uri SiteUrl { get; private set; }
+        public string SiteUrl { get; private set; }
 
         /// <summary>
         /// The URL to the institution's page on Flickr.
         /// </summary>
-        public Uri FlickrUrl { get; private set; }
+        public string FlickrUrl { get; private set; }
 
         /// <summary>
         /// The URL to the institution's copyright/license page.
         /// </summary>
-        public Uri LicenseUrl { get; private set; }
+        public string LicenseUrl { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -70,7 +70,7 @@ namespace FlickrNet
                         while (reader.LocalName == "url")
                         {
                             string type = reader.GetAttribute("type");
-                            Uri url = new Uri(reader.ReadElementContentAsString());
+                            string url = reader.ReadElementContentAsString();
                             switch (type)
                             {
                                 case "site":

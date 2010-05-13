@@ -9,12 +9,12 @@ namespace FlickrNet
     public class Photo : IFlickrParsable
 	{
 
-        private Uri url_sq;
-        private Uri url_t;
-        private Uri url_m;
-        private Uri url_s;
-        private Uri url_l;
-        private Uri url_o;
+        private string url_sq;
+        private string url_t;
+        private string url_m;
+        private string url_s;
+        private string url_l;
+        private string url_o;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Photo"/> class.
@@ -128,18 +128,18 @@ namespace FlickrNet
 		/// The url to the web page for this photo. Uses the users userId, not their web alias, but
 		/// will still work.
 		/// </summary>
-		public Uri WebUrl
+        public string WebUrl
 		{
             get
             {
-                return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", PathAlias ?? UserId, PhotoId));
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", PathAlias ?? UserId, PhotoId);
             }
 		}
 
 		/// <summary>
 		/// The URL for the square thumbnail of a photo.
 		/// </summary>
-		public Uri SquareThumbnailUrl
+        public string SquareThumbnailUrl
 		{
             get
             {
@@ -162,7 +162,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the thumbnail of a photo.
 		/// </summary>
-		public Uri ThumbnailUrl
+        public string ThumbnailUrl
 		{
             get
             {
@@ -185,7 +185,7 @@ namespace FlickrNet
         /// <summary>
 		/// The URL for the small copy of a photo.
 		/// </summary>
-		public Uri SmallUrl
+        public string SmallUrl
 		{
             get
             {
@@ -210,7 +210,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <remarks>There is a chance that extremely small images will not have a medium copy.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
-		public Uri MediumUrl
+        public string MediumUrl
 		{
             get
             {
@@ -235,7 +235,7 @@ namespace FlickrNet
 		/// </summary>
 		/// <remarks>There is a chance that small images will not have a large copy.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
-		public Uri LargeUrl
+        public string LargeUrl
 		{
             get
             {
@@ -258,7 +258,7 @@ namespace FlickrNet
         /// <summary>
 		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
 		/// </summary>
-		public Uri OriginalUrl
+        public string OriginalUrl
 		{
 			get 
 			{
@@ -487,7 +487,7 @@ namespace FlickrNet
                         PathAlias = reader.Value;
                         break;
                     case "url_sq":
-                        url_sq = new Uri(reader.Value);
+                        url_sq = reader.Value;
                         break;
                     case "width_sq":
                         SquareThumbnailWidth = reader.ReadContentAsInt();
@@ -496,7 +496,7 @@ namespace FlickrNet
                         SquareThumbnailHeight = reader.ReadContentAsInt();
                         break;
                     case "url_t":
-                        url_t = new Uri(reader.Value);
+                        url_t = reader.Value;
                         break;
                     case "width_t":
                         ThumbnailWidth = reader.ReadContentAsInt();
@@ -505,7 +505,7 @@ namespace FlickrNet
                         ThumbnailHeight = reader.ReadContentAsInt();
                         break;
                     case "url_s":
-                        url_s = new Uri(reader.Value);
+                        url_s = reader.Value;
                         break;
                     case "width_s":
                         SmallWidth = reader.ReadContentAsInt();
@@ -514,7 +514,7 @@ namespace FlickrNet
                         SmallHeight = reader.ReadContentAsInt();
                         break;
                     case "url_m":
-                        url_m = new Uri(reader.Value);
+                        url_m = reader.Value;
                         break;
                     case "width_m":
                         MediumWidth = reader.ReadContentAsInt();
@@ -523,7 +523,7 @@ namespace FlickrNet
                         MediumHeight = reader.ReadContentAsInt();
                         break;
                     case "url_l":
-                        url_l = new Uri(reader.Value);
+                        url_l = reader.Value;
                         break;
                     case "width_l":
                         LargeWidth = reader.ReadContentAsInt();
@@ -532,7 +532,7 @@ namespace FlickrNet
                         LargeHeight = reader.ReadContentAsInt();
                         break;
                     case "url_o":
-                        url_o = new Uri(reader.Value);
+                        url_o = reader.Value;
                         break;
                     case "width_o":
                         OriginalWidth = reader.ReadContentAsInt();

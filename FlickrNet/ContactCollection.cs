@@ -115,14 +115,14 @@ namespace FlickrNet
         /// <summary>
         /// The buddy icon for this contact.
         /// </summary>
-        public Uri BuddyIconUrl
+        public string BuddyIconUrl
         {
             get
             {
                 if (String.IsNullOrEmpty(IconServer) || IconServer == "0")
-                    return new Uri("http://www.flickr.com/images/buddyicon.jpg");
+                    return "http://www.flickr.com/images/buddyicon.jpg";
                 else
-                    return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId));
+                    return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId);
             }
         }
 

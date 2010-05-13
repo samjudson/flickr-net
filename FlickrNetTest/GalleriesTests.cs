@@ -157,7 +157,6 @@ namespace FlickrNetTest
             Flickr.FlushCache();
             Flickr.CacheDisabled = true;
 
-            Uri galleryUrl = new Uri("http://www.flickr.com/photos/samjudson/galleries/72157622589312064");
             Flickr f = TestData.GetAuthInstance();
 
             string galleryId = "78188-72157622589312064";

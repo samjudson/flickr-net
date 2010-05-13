@@ -85,12 +85,12 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL, in the given context, for the next or previous photo.
 		/// </summary>
-        public Uri Url { get; private set; }
+        public string Url { get; private set; }
 
 		/// <summary>
 		/// The URL for the thumbnail of the photo.
 		/// </summary>
-        public Uri Thumbnail { get; private set; }
+        public string ThumbnailUrl { get; private set; }
 
         /// <summary>
         /// The media type of this item.
@@ -119,10 +119,10 @@ namespace FlickrNet
                         Title = reader.Value;
                         break;
                     case "url":
-                        Url = new Uri(new Uri("http://www.flickr.com"), new Uri(reader.Value, UriKind.Relative));
+                        Url = "http://www.flickr.com" + reader.Value;
                         break;
                     case "thumb":
-                        Thumbnail = new Uri(reader.Value);
+                        ThumbnailUrl = reader.Value;
                         break;
                     case "media":
                         MediaType = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);

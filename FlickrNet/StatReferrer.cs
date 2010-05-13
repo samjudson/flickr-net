@@ -13,7 +13,7 @@ namespace FlickrNet
         /// <summary>
         /// The url that the referrer referred from.
         /// </summary>
-        public Uri Url { get; set; }
+        public string Url { get; set; }
         /// <summary>
         /// The number of times that URL was referred from.
         /// </summary>
@@ -34,7 +34,7 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "url":
-                        Url = new Uri(reader.Value);
+                        Url = reader.Value;
                         break;
                     case "searchterm":
                         SearchTerm = reader.Value;

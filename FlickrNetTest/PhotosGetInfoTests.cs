@@ -120,7 +120,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
-            Assert.AreEqual(new Uri("http://www.flickr.com/photos/samjudson/4268023123/"), info.Urls[0].Url);
+            Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
 
         }
 
@@ -183,7 +183,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
-            Assert.AreEqual(new Uri("http://www.flickr.com/photos/samjudson/4268023123/"), info.Urls[0].Url);
+            Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
 
         }
 

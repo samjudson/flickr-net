@@ -68,13 +68,13 @@ namespace FlickrNetTest
             o.Text = "kittens";
             o.InGallery = true;
 
-            Uri url = o.CalculateSlideshowUrl();
+            string url = o.CalculateSlideshowUrl();
 
             Assert.IsNotNull(url);
 
-            Uri expected = new Uri("http://www.flickr.com/show.gne?api_method=flickr.photos.search&method_params=text|kittens;in_gallery|1");
+            string expected = "http://www.flickr.com/show.gne?api_method=flickr.photos.search&method_params=text|kittens;in_gallery|1";
 
-            Assert.AreEqual<Uri>(expected, url);
+            Assert.AreEqual<string>(expected, url);
 
         }
     }

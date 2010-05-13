@@ -60,24 +60,24 @@ namespace FlickrNet
         /// <summary>
         /// The URL for the users Flickr home page.
         /// </summary>
-        public Uri PhotostreamUrl
+        public string PhotostreamUrl
         {
             get
             {
-                return new Uri("http://www.flickr.com/photos/" + (PathAlias ?? UserId));
+                return "http://www.flickr.com/photos/" + (PathAlias ?? UserId);
             }
         }
         /// <summary>
         /// Returns the <see cref="Uri"/> for the users Buddy Icon.
         /// </summary>
-        public Uri BuddyIconUrl
+        public string BuddyIconUrl
         {
             get
             {
                 if (String.IsNullOrEmpty(IconServer) || IconServer == "0")
-                    return new Uri("http://www.flickr.com/images/buddyicon.jpg");
+                    return "http://www.flickr.com/images/buddyicon.jpg";
                 else
-                    return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId));
+                    return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId);
             }
         }
 

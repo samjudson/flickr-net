@@ -62,6 +62,17 @@ namespace FlickrNet
             return GetResponseCache<StatDomainCollection>(parameters);
         }
 
+        public CsvFileCollection StatsGetCsvFiles()
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+            parameters.Add("method", "flickr.stats.getCSVFiles");
+
+            return GetResponseCache<CsvFileCollection>(parameters);
+        }
+
         /// <summary>
         /// Get a list of referring domains for all photos.
         /// </summary>

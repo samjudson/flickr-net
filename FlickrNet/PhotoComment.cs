@@ -28,7 +28,7 @@ namespace FlickrNet
         /// <summary>
         /// The permalink to the comment on the photos web page.
         /// </summary>
-        public Uri Permalink { get; private set; }
+        public string Permalink { get; private set; }
 
         /// <summary>
         /// The date and time that the comment was created.
@@ -59,7 +59,7 @@ namespace FlickrNet
                         AuthorUserName = reader.Value;
                         break;
                     case "permalink":
-                        Permalink = new Uri(reader.Value);
+                        Permalink = reader.Value;
                         break;
                     case "datecreate":
                         DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);

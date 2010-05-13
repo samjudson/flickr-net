@@ -48,7 +48,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL of the blog website.
 		/// </summary>
-        public Uri BlogUrl { get; set; }
+        public string BlogUrl { get; set; }
 
 		/// <summary>
 		/// If Flickr stores the password for this then this will be 0, meaning you do not need to pass in the
@@ -77,7 +77,7 @@ namespace FlickrNet
                         BlogName = reader.Value;
                         break;
                     case "url":
-                        BlogUrl = new Uri(reader.Value);
+                        BlogUrl = reader.Value;
                         break;
                     case "needspassword":
                         NeedsPassword = reader.Value == "1";

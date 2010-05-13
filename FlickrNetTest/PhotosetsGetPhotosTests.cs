@@ -98,8 +98,8 @@ namespace FlickrNetTest
             {
                 Assert.IsNotNull(p.UserId, "UserId should not be null.");
                 Assert.AreNotEqual<String>(String.Empty, p.UserId, "UserId should not be an empty string.");
-                Uri url = new Uri("http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/");
-                Assert.AreEqual<Uri>(url, p.WebUrl);
+                string url = "http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
+                Assert.AreEqual<string>(url, p.WebUrl);
             }
         }
     }

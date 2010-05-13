@@ -20,7 +20,7 @@ namespace FlickrNet
         public ShapeData()
         {
             PolyLines = new Collection<Collection<PointD>>();
-            Urls = new Collection<Uri>();
+            Urls = new Collection<string>();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace FlickrNet
         /// <summary>
         /// A list of urls for the shapefiles.
         /// </summary>
-        public Collection<Uri> Urls { get; private set; }
+        public Collection<string> Urls { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

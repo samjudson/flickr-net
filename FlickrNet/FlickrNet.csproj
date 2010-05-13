@@ -125,6 +125,8 @@
     </Compile>
     <Compile Include="Cluster.cs" />
     <Compile Include="ClusterCollection.cs" />
+    <Compile Include="CsvFile.cs" />
+    <Compile Include="CsvFileCollection.cs" />
     <Compile Include="EchoResponseDictionary.cs" />
     <Compile Include="ExifTag.cs" />
     <Compile Include="Flickr_Commons.cs" />

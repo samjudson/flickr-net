@@ -227,18 +227,18 @@ namespace FlickrNet
 		/// <summary>
 		/// The Web url for flickr web page for this photo.
 		/// </summary>
-		public Uri WebUrl
+        public string WebUrl
 		{
             get
             {
-                return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId));
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId);
             }
 		}
 
 		/// <summary>
 		/// The URL for the square thumbnail for the photo.
 		/// </summary>
-		public Uri SquareThumbnailUrl
+        public string SquareThumbnailUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
 		}
@@ -246,7 +246,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the thumbnail for the photo.
 		/// </summary>
-		public Uri ThumbnailUrl
+        public string ThumbnailUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
 		}
@@ -254,7 +254,7 @@ namespace FlickrNet
 		/// <summary>
 		/// The URL for the small version of this photo.
 		/// </summary>
-		public Uri SmallUrl
+        public string SmallUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
 		}
@@ -266,7 +266,7 @@ namespace FlickrNet
 		/// There is no guarentee that this size of the image actually exists.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
 		/// </remarks>
-		public Uri MediumUrl
+        public string MediumUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
 		}
@@ -278,7 +278,7 @@ namespace FlickrNet
 		/// There is no guarentee that this size of the image actually exists.
 		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
 		/// </remarks>
-		public Uri LargeUrl
+        public string LargeUrl
 		{
 			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
 		}
@@ -286,7 +286,7 @@ namespace FlickrNet
 		/// <summary>
 		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
 		/// </summary>
-		public Uri OriginalUrl
+        public string OriginalUrl
 		{
 			get 
 			{
@@ -784,7 +784,7 @@ namespace FlickrNet
         /// <summary>
         /// The url for the photoset.
         /// </summary>
-        public Uri Url { get; private set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The type of the url.
@@ -810,7 +810,7 @@ namespace FlickrNet
 
             reader.Read();
 
-            Url = new Uri(reader.ReadContentAsString());
+            Url = reader.ReadContentAsString();
 
             reader.Skip();
         }

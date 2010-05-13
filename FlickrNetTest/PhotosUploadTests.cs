@@ -92,7 +92,7 @@ namespace FlickrNetTest
 
                 SizeCollection sizes = f.PhotosGetSizes(photoId);
 
-                Uri url = sizes[sizes.Count - 1].Source;
+                string url = sizes[sizes.Count - 1].Source;
                 using (WebClient client = new WebClient())
                 {
                     byte[] downloadBytes = client.DownloadData(url);

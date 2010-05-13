@@ -277,7 +277,7 @@ namespace FlickrNet
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
-        public Uri CalculateSlideshowUrl()
+        public string CalculateSlideshowUrl()
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             sb.Append("http://www.flickr.com/show.gne");
@@ -295,7 +295,7 @@ namespace FlickrNet
 
             sb.Append(String.Join(";", parts.ToArray()));
 
-            return new Uri(sb.ToString());
+            return sb.ToString();
         }
 
         /// <summary>

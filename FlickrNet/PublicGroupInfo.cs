@@ -32,9 +32,9 @@ namespace FlickrNet
         /// <summary>
         /// The URL for the group web page.
         /// </summary>
-        public Uri GroupUrl
+        public string GroupUrl
         {
-            get { return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/groups/{0}/", GroupId)); }
+            get { return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/groups/{0}/", GroupId); }
         }
 
         void IFlickrParsable.Load(XmlReader reader)

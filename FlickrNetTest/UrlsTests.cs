@@ -86,38 +86,38 @@ namespace FlickrNetTest
         [TestMethod]
         public void UrlsLookupGalleryTest()
         {
-            Uri galleryUrl = new Uri("http://www.flickr.com/photos/samjudson/galleries/72157622589312064");
+            string galleryUrl = "http://www.flickr.com/photos/samjudson/galleries/72157622589312064";
 
             Flickr f = TestData.GetInstance();
 
             Gallery gallery = f.UrlsLookupGallery(galleryUrl);
 
-            Assert.AreEqual<Uri>(galleryUrl, gallery.GalleryUrl);
+            Assert.AreEqual<string>(galleryUrl, gallery.GalleryUrl);
 
         }
 
         [TestMethod]
         public void UrlsGetUserPhotosTest()
         {
-            Uri url = TestData.GetInstance().UrlsGetUserPhotos(TestData.TestUserId);
+            string url = TestData.GetInstance().UrlsGetUserPhotos(TestData.TestUserId);
 
-            Assert.AreEqual<Uri>(new Uri("http://www.flickr.com/photos/samjudson/"), url);
+            Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/", url);
         }
 
         [TestMethod]
         public void UrlsGetUserProfileTest()
         {
-            Uri url = TestData.GetInstance().UrlsGetUserProfile(TestData.TestUserId);
+            string url = TestData.GetInstance().UrlsGetUserProfile(TestData.TestUserId);
 
-            Assert.AreEqual<Uri>(new Uri("http://www.flickr.com/people/samjudson/"), url);
+            Assert.AreEqual<string>("http://www.flickr.com/people/samjudson/", url);
         }
 
         [TestMethod]
         public void UrlsGetGroupTest()
         {
-            Uri url = TestData.GetInstance().UrlsGetGroup(TestData.GroupId);
+            string url = TestData.GetInstance().UrlsGetGroup(TestData.GroupId);
 
-            Assert.AreEqual<Uri>(new Uri("http://www.flickr.com/groups/florus/"), url);
+            Assert.AreEqual<string>("http://www.flickr.com/groups/florus/", url);
         }
 
 

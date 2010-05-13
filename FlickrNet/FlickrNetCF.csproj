@@ -89,6 +89,8 @@
     <Compile Include="CollectionSet.cs" />
     <Compile Include="ContactCollection.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="CsvFile.cs" />
+    <Compile Include="CsvFileCollection.cs" />
     <Compile Include="DateGranularity.cs" />
     <Compile Include="EchoResponseDictionary.cs" />
     <Compile Include="Enums.cs" />

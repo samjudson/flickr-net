@@ -48,12 +48,12 @@ namespace FlickrNet
 		/// <summary>
 		/// The source url of the image.
 		/// </summary>
-		public Uri Source { get; private set; }
+        public string Source { get; private set; }
     
 		/// <summary>
 		/// The url to the photographs web page for this particular size.
 		/// </summary>
-		public Uri Url { get; private set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The media type of this size.
@@ -77,10 +77,10 @@ namespace FlickrNet
                         Height = reader.ReadContentAsInt();
                         break;
                     case "source":
-                        Source = new Uri(reader.Value);
+                        Source = reader.Value;
                         break;
                     case "url":
-                        Url = new Uri(reader.Value);
+                        Url = reader.Value;
                         break;
                     case "media":
                         MediaType = reader.Value == "photo" ? MediaType.Photos : MediaType.Videos;

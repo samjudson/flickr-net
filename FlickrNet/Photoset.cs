@@ -9,7 +9,7 @@ namespace FlickrNet
     /// </summary>
     public sealed class Photoset : IFlickrParsable
     {
-        private Uri _url;
+        private string _url;
 
         /// <summary>
         /// The ID of the photoset.
@@ -19,11 +19,11 @@ namespace FlickrNet
         /// <summary>
         /// The URL of the photoset.
         /// </summary>
-        public Uri Url
+        public string Url
         {
             get
             {
-                if (_url == null) _url = new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId));
+                if (_url == null) _url = String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
                 return _url;
             }
             private set { _url = value; }
@@ -77,7 +77,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL for the thumbnail of a photo.
         /// </summary>
-        public Uri PhotosetThumbnailUrl
+        public string PhotosetThumbnailUrl
         {
             get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
         }
@@ -85,7 +85,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL for the square thumbnail of a photo.
         /// </summary>
-        public Uri PhotosetSquareThumbnailUrl
+        public string PhotosetSquareThumbnailUrl
         {
             get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
         }
@@ -93,7 +93,7 @@ namespace FlickrNet
         /// <summary>
         /// The URL for the small copy of a photo.
         /// </summary>
-        public Uri PhotosetSmallUrl
+        public string PhotosetSmallUrl
         {
             get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
         }
@@ -111,7 +111,7 @@ namespace FlickrNet
                         PhotosetId = reader.Value;
                         break;
                     case "url":
-                        Url = new Uri(reader.Value);
+                        Url = reader.Value;
                         break;
                     case "owner_id":
                     case "owner":

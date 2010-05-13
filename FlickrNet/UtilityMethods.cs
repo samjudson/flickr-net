@@ -296,7 +296,7 @@ namespace FlickrNet
 
 		private const string photoUrlFormat = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
 
-		internal static Uri UrlFormat(Photo p, string size, string extension)
+        internal static string UrlFormat(Photo p, string size, string extension)
 		{
 			if( size == "_o" || size == "original" )
 				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
@@ -304,7 +304,7 @@ namespace FlickrNet
 				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
 		}
 
-		internal static Uri UrlFormat(PhotoInfo p, string size, string extension)
+        internal static string UrlFormat(PhotoInfo p, string size, string extension)
 		{
             if (size == "_o" || size == "original")
 				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
@@ -312,12 +312,12 @@ namespace FlickrNet
 				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
 		}
 
-        internal static Uri UrlFormat(Photoset p, string size, string extension)
+        internal static string UrlFormat(Photoset p, string size, string extension)
 		{
 			return UrlFormat(p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, extension);
 		}
 
-        internal static Uri UrlFormat(string farm, string server, string photoid, string secret, string size, string extension)
+        internal static string UrlFormat(string farm, string server, string photoid, string secret, string size, string extension)
         {
             switch (size)
             {
@@ -344,9 +344,9 @@ namespace FlickrNet
             return UrlFormat(photoUrlFormat, farm, server, photoid, secret, size, extension);
         }
 
-        private static Uri UrlFormat(string format, params object[] parameters)
+        private static string UrlFormat(string format, params object[] parameters)
 		{
-			return new Uri(String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters));
+			return String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
 		}
 
 

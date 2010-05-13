@@ -84,7 +84,7 @@ namespace FlickrNet
         public string LicenseName { get; private set; }
 
 		/// <summary>The URL for the license text.</summary>
-        public Uri LicenseUrl { get; private set; }
+        public string LicenseUrl { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -101,7 +101,7 @@ namespace FlickrNet
                     case "url":
                         if (!String.IsNullOrEmpty(reader.Value))
                         {
-                            LicenseUrl = new Uri(reader.Value);
+                            LicenseUrl = reader.Value;
                         }
                         break;
                     default:
