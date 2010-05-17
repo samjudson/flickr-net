@@ -161,9 +161,12 @@ namespace FlickrNetTest
         [TestMethod]
         public void PhotosGetContextBasicTest()
         {
-            var context = TestData.GetInstance().PhotosGetContext("4114887196");
+            var context = TestData.GetInstance().PhotosGetContext("3845365350");
 
             Assert.IsNotNull(context);
+
+            Assert.AreEqual<string>("3844573707", context.PreviousPhoto.PhotoId);
+            Assert.AreEqual<string>("3992605178", context.NextPhoto.PhotoId);
         }
 
         [TestMethod]
