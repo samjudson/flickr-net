@@ -44,7 +44,7 @@ namespace FlickrNet
                         break;
                     case "nextphoto":
                         NextPhoto = new ContextPhoto();
-                        ((IFlickrParsable)PreviousPhoto).Load(reader);
+                        ((IFlickrParsable)NextPhoto).Load(reader);
                         break;
 
                 }
