@@ -92,7 +92,6 @@ namespace FlickrNetTest
             var photos = f.PhotosCommentsGetRecentForContacts(DateTime.Now.AddHours(-1), PhotoSearchExtras.All, 1, 20);
             Assert.IsNotNull(photos, "PhotoCollection should not be null.");
             Assert.AreEqual(20, photos.PerPage);
-
         }
     }
 }

@@ -177,6 +177,8 @@ namespace FlickrNet
             if ((extras & PhotoSearchExtras.LargeUrl) == PhotoSearchExtras.LargeUrl) extraList.Add("url_l");
             if ((extras & PhotoSearchExtras.OriginalUrl) == PhotoSearchExtras.OriginalUrl) extraList.Add("url_o");
             if ((extras & PhotoSearchExtras.Description) == PhotoSearchExtras.Description) extraList.Add("description");
+            if ((extras & PhotoSearchExtras.Usage) == PhotoSearchExtras.Usage) extraList.Add("usage");
+            if ((extras & PhotoSearchExtras.Visibility) == PhotoSearchExtras.Visibility) extraList.Add("visibility");
 
             return String.Join(",", extraList.ToArray());
 		}

@@ -297,6 +297,41 @@ namespace FlickrNet
 		/// </summary>
 		public GeoAccuracy Accuracy { get; private set; }
 
+        /// <summary>
+        /// Can the current user (or unauthenticated user if no authentication token provided) comment on this photo.
+        /// </summary>
+        /// <remarks>Will always be false for unauthenticated calls.</remarks>
+        public bool? CanComment { get; private set; }
+
+        /// <summary>
+        /// Can the current user (or unauthenticated user if no authentication token provided) print this photo.
+        /// </summary>
+        /// <remarks>Will always be false for unauthenticated calls.</remarks>
+        public bool? CanPrint { get; private set; }
+
+        /// <summary>
+        /// Can the current user (or unauthenticated user if no authentication token provided) download this photo.
+        /// </summary>
+        public bool? CanDownload { get; private set; }
+
+        /// <summary>
+        /// Can the current user (or unauthenticated user if no authentication token provided) add 'meta' to this photo (notes, tags etc).
+        /// </summary>
+        /// <remarks>Will always be false for unauthenticated calls.</remarks>
+        public bool? CanAddMeta { get; private set; }
+
+        /// <summary>
+        /// Can the current user (or unauthenticated user if no authentication token provided) blog this photo.
+        /// </summary>
+        /// <remarks>Will always be false for unauthenticated calls.</remarks>
+        public bool? CanBlog { get; private set; }
+
+        /// <summary>
+        /// Can the current user (or unauthenticated user if no authentication token provided) share on this photo.
+        /// </summary>
+        /// <remarks>Will always be false for unauthenticated calls.</remarks>
+        public bool? CanShare { get; private set; }
+
 		/// <summary>
 		/// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
 		/// </summary>
@@ -547,6 +582,24 @@ namespace FlickrNet
                         DateFavorited = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "has_comment": // Gallery photos return this, but we ignore it and set GalleryPhoto.Comment instead.
+                        break;
+                    case "can_comment":
+                        CanComment = (reader.Value == "1");
+                        break;
+                    case "can_addmeta":
+                        CanAddMeta = (reader.Value == "1");
+                        break;
+                    case "can_blog":
+                        CanBlog = (reader.Value == "1");
+                        break;
+                    case "can_print":
+                        CanPrint = (reader.Value == "1");
+                        break;
+                    case "can_download":
+                        CanDownload = (reader.Value == "1");
+                        break;
+                    case "can_share":
+                        CanShare = (reader.Value == "1");
                         break;
                     default:
                         throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);

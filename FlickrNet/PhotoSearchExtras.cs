@@ -109,10 +109,18 @@ namespace FlickrNet
         /// <summary>
         /// Returns the description for the image.
         /// </summary>
-        Description = 524288 * 2,
+        Description = 1048576,
+        /// <summary>
+        /// Returns the details of CanBlog, CanDownload etc.
+        /// </summary>
+        Usage = 2097152,
+        /// <summary>
+        /// Returns the details for IsPublic, IsFamily and IsFriend.
+        /// </summary>
+        Visibility = 4194304,
 		/// <summary>
 		/// Returns all the above information.
 		/// </summary>
-		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description
+		All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility
 	}
 }
