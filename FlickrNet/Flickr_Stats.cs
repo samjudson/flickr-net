@@ -62,6 +62,13 @@ namespace FlickrNet
             return GetResponseCache<StatDomainCollection>(parameters);
         }
 
+        /// <summary>
+        /// Gets the collection of CSV files of archived stats from Flickr.
+        /// </summary>
+        /// <remarks>
+        /// Archived files only available till the 1st June 2010.
+        /// </remarks>
+        /// <returns></returns>
         public CsvFileCollection StatsGetCsvFiles()
         {
             CheckRequiresAuthentication();

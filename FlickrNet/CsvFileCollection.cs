@@ -4,6 +4,12 @@ using System.Text;
 
 namespace FlickrNet
 {
+    /// <summary>
+    /// The collection of CSV files containing archived stats available for download from Flickr.
+    /// </summary>
+    /// <remarks>
+    /// Only supported until the 1st June 2010.
+    /// </remarks>
     public sealed class CsvFileCollection : System.Collections.ObjectModel.Collection<CsvFile>, IFlickrParsable
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

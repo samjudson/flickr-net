@@ -7,7 +7,7 @@ namespace FlickrNet
     /// <summary>
     /// A list of photos contained within a photoset.
     /// </summary>
-    public sealed class PhotosetPhotoCollection : System.Collections.ObjectModel.Collection<Photo>, IFlickrParsable
+    public sealed class PhotosetPhotoCollection : PagedPhotoCollection, IFlickrParsable
     {
         /// <summary>
         /// The id for the photoset.
@@ -28,23 +28,6 @@ namespace FlickrNet
         /// The real name of the owner of this photoset.
         /// </summary>
         public string OwnerName { get; private set; }
-
-        /// <summary>
-        /// The page of the results returned. Will be 1 even if no results are returned.
-        /// </summary>
-        public int Page { get; private set; }
-        /// <summary>
-        /// The number of pages of photos returned. Will likely be 1 if no photos are returned.
-        /// </summary>
-        public int Pages { get; private set; }
-        /// <summary>
-        /// The number of photos returned per page.
-        /// </summary>
-        public int PerPage { get; private set; }
-        /// <summary>
-        /// The total number of photos that match the query. Call the method again to retrieve each page of results if Total > PerPage.
-        /// </summary>
-        public int Total { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

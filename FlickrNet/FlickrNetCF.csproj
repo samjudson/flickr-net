@@ -161,6 +161,7 @@
     <Compile Include="Namespace.cs" />
     <Compile Include="NamespaceCollection.cs" />
     <Compile Include="NoResponse.cs" />
+    <Compile Include="PagedPhotoCollection.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="PairCollection.cs" />
     <Compile Include="PandaPhotoCollection.cs" />

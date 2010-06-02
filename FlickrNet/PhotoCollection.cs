@@ -8,20 +8,8 @@ using System.Xml;
 namespace FlickrNet
 {
 	/// <remarks/>
-    public sealed class PhotoCollection : System.Collections.ObjectModel.Collection<Photo>, IFlickrParsable
+    public sealed class PhotoCollection : PagedPhotoCollection, IFlickrParsable
 	{
-        /// <remarks/>
-        public int Page { get; set; }
-
-        /// <remarks/>
-        public int Pages { get; set; }
-
-        /// <remarks/>
-        public int PerPage { get; set; }
-
-		/// <remarks/>
-        public int Total { get; set; }
-
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "photos")
