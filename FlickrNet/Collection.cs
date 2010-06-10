@@ -51,7 +51,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "collection")
-                throw new ParsingException("Unknown element found: " + reader.LocalName);
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -73,7 +73,8 @@ namespace FlickrNet
                         IconSmall = reader.Value;
                         break;
                     default:
-                        throw new ParsingException("Unknown element: " + reader.Name + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
 
                 }
             }

@@ -51,7 +51,8 @@ namespace FlickrNet
                         PermissionAddMeta = (PermissionAddMeta)Enum.Parse(typeof(PermissionAddMeta), reader.Value, true);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

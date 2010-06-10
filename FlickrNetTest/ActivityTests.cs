@@ -112,15 +112,24 @@ namespace FlickrNetTest
                     Assert.AreNotEqual(ActivityEventType.Unknown, e.EventType, "EventType should not be 'Unknown'.");
                     Assert.IsTrue(e.DateAdded > DateTime.Today.AddDays(-21), "DateAdded should be within the last 20 days");
 
-                    if (e.EventType == ActivityEventType.Favorite)
-                        Assert.IsNull(e.Value, "Value should be null for a favorite event.");
-                    else
-                        Assert.IsNotNull(e.Value, "Value should not be null for a non-favorite event.");
+                    // For Gallery events the comment is optional.
+                    if (e.EventType != ActivityEventType.Gallery)
+                    {
+                        if (e.EventType == ActivityEventType.Favorite)
+                            Assert.IsNull(e.Value, "Value should be null for a favorite event.");
+                        else
+                            Assert.IsNotNull(e.Value, "Value should not be null for a non-favorite event.");
+                    }
 
                     if (e.EventType == ActivityEventType.Comment)
                         Assert.IsNotNull(e.CommentId, "CommentId should not be null for a comment event.");
                     else
                         Assert.IsNull(e.CommentId, "CommentId should be null for non-comment events.");
+
+                    if (e.EventType == ActivityEventType.Gallery)
+                        Assert.IsNotNull(e.GalleryId, "GalleryId should not be null for a gallery event.");
+                    else
+                        Assert.IsNull(e.GalleryId, "GalleryId should be null for non-gallery events.");
                 }
             }
         }

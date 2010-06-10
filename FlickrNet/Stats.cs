@@ -28,7 +28,7 @@ namespace FlickrNet
         {
             if (reader.LocalName != "stats")
             {
-                throw new System.Xml.XmlException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown element '{0}' found in Flickr Response.", reader.LocalName));
+                UtilityMethods.CheckParsingException(reader);
             }
 
             while (reader.MoveToNextAttribute())
@@ -45,7 +45,8 @@ namespace FlickrNet
                         Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

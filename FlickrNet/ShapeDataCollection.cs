@@ -45,7 +45,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "shapes")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -76,7 +76,8 @@ namespace FlickrNet
                     case "place_type":
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

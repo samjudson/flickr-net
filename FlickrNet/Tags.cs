@@ -50,7 +50,8 @@ namespace FlickrNet
                         Count = reader.ReadContentAsInt();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -116,7 +117,8 @@ namespace FlickrNet
                         CleanTag = reader.ReadContentAsString();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

@@ -52,7 +52,8 @@ namespace FlickrNet
                         DateLaunched = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

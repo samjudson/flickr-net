@@ -12,7 +12,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "groups")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             reader.Read();
 

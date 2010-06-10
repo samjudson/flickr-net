@@ -458,6 +458,24 @@ namespace FlickrNet
                     return "";
             }
         }
+
+        /// <summary>
+        /// If an unknown element is found and the DLL is a debug DLL then a <see cref="ParsingException"/> is thrown.
+        /// </summary>
+        /// <param name="reader">The <see cref="XmlReader"/> containing the unknown xml node.</param>
+        [System.Diagnostics.Conditional("DEBUG")]
+        public static void CheckParsingException(XmlReader reader)
+        {
+            if (reader.NodeType == XmlNodeType.Attribute)
+            {
+                throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
+            }
+            if( !String.IsNullOrEmpty(reader.Value) )
+                throw new ParsingException("Unknown " + reader.NodeType.ToString() + ": " + reader.Name + "=" + reader.Value);
+            else
+                throw new ParsingException("Unknown element: " + reader.Name);
+                
+        }
     }
 
 }

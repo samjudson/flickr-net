@@ -166,7 +166,8 @@ namespace FlickrNet
                         reader.Read();
                         break;
                     default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -237,7 +238,8 @@ namespace FlickrNet
                         Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

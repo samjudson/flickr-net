@@ -163,7 +163,8 @@ namespace FlickrNet
                         VideosCount = reader.ReadContentAsInt();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -180,7 +181,8 @@ namespace FlickrNet
                         Description = reader.ReadElementContentAsString();
                         break;
                     default:
-                        throw new ParsingException("Unknown element: " + reader.LocalName);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

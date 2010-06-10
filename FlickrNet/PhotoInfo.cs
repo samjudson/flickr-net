@@ -300,7 +300,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photo")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             LoadAttributes(reader);
 
@@ -358,7 +358,8 @@ namespace FlickrNet
                         ((IFlickrParsable)GeoPermissions).Load(reader);
                         break;
                     default:
-                        throw new ParsingException("Unknown element found: " + reader.LocalName);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
 
                 }
             }
@@ -409,7 +410,8 @@ namespace FlickrNet
                         Media = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -471,7 +473,8 @@ namespace FlickrNet
                         CanShare = reader.Value == "1";
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -494,7 +497,8 @@ namespace FlickrNet
                         IsFriend = reader.Value == "1";
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -514,7 +518,8 @@ namespace FlickrNet
                         CanAddMeta = (reader.Value == "1");
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -534,7 +539,8 @@ namespace FlickrNet
                         PermissionAddMeta = (PermissionAddMeta)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -560,7 +566,8 @@ namespace FlickrNet
                         DateLastUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -586,7 +593,8 @@ namespace FlickrNet
                         OwnerLocation = reader.Value;
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -664,7 +672,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "note")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -692,7 +700,8 @@ namespace FlickrNet
                         Height = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -742,7 +751,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "tag")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -764,7 +773,8 @@ namespace FlickrNet
                         IsMachineTag = (reader.Value == "1");
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -794,7 +804,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "url")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -804,7 +814,8 @@ namespace FlickrNet
                         UrlType = reader.Value;
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

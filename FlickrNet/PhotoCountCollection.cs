@@ -13,7 +13,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photocounts")
-                throw new ParsingException("Unknown element found: " + reader.LocalName);
+                UtilityMethods.CheckParsingException(reader);
 
             reader.Read();
 
@@ -48,7 +48,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photocount")
-                throw new ParsingException("Unknown element found: " + reader.LocalName);
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -64,7 +64,8 @@ namespace FlickrNet
                         ToDate = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
 
                 }
             }

@@ -357,6 +357,11 @@ namespace FlickrNet
         /// </summary>
         public string Description { get; protected set; }
 
+        /// <summary>
+        /// If Geolocation information is returned for this photo then this will contain the permissions for who can see those permissions.
+        /// </summary>
+        public GeoPermissions GeoPermissions { get; private set; }
+
 		/// <summary>
 		/// A helper method which tries to guess if a large image will be available for this photograph
 		/// based on the original dimensions returned with the photo.
@@ -405,7 +410,7 @@ namespace FlickrNet
         protected void Load(XmlReader reader)
         {
             if (reader.LocalName != "photo")
-                throw new FlickrException("Unknown element found: " + reader.LocalName);
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -601,9 +606,25 @@ namespace FlickrNet
                     case "can_share":
                         CanShare = (reader.Value == "1");
                         break;
+                    case "geo_is_family":
+                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        GeoPermissions.IsFamily = (reader.Value == "1");
+                        break;
+                    case "geo_is_friend":
+                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        GeoPermissions.IsFriend = (reader.Value == "1");
+                        break;
+                    case "geo_is_public":
+                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        GeoPermissions.IsPublic = (reader.Value == "1");
+                        break;
+                    case "geo_is_contact":
+                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        GeoPermissions.IsContact = (reader.Value == "1");
+                        break;
                     default:
-                        throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
-                        //break;
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

@@ -166,7 +166,8 @@ namespace FlickrNet
                         IsPoolModerated = reader.Value == "1";
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -202,7 +203,8 @@ namespace FlickrNet
                         ((IFlickrParsable)Restrictions).Load(reader);
                         break;
                     default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
 
                 }
             }

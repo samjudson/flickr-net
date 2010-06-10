@@ -56,7 +56,8 @@ namespace FlickrNet
                         EighteenPlus = reader.Value == "1";
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 

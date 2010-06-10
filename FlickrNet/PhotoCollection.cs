@@ -13,8 +13,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "photos")
-                throw new FlickrException("Unknown element found: " + reader.LocalName);
-
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -33,7 +32,8 @@ namespace FlickrNet
                         Pages = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     default:
-                        throw new ParsingException("Unknown element: " + reader.Name + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
 
                 }
             }

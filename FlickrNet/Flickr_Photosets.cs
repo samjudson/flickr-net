@@ -344,6 +344,61 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Removes a photo from a photoset.
+        /// </summary>
+        /// <remarks>
+        /// An exception will be raised if the photo is not in the set.
+        /// </remarks>
+        /// <param name="photosetId">The ID of the photoset to remove the photo from.</param>
+        /// <param name="photoIds">The IDs of the photo to remove.</param>
+        public void PhotosetsRemovePhotos(string photosetId, string[] photoIds)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.photosets.removePhotos");
+            parameters.Add("photoset_id", photosetId);
+            parameters.Add("photo_ids", String.Join(",", photoIds));
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+        /// <summary>
+        /// Removes a photo from a photoset.
+        /// </summary>
+        /// <remarks>
+        /// An exception will be raised if the photo is not in the set.
+        /// </remarks>
+        /// <param name="photosetId">The ID of the photoset to reorder the photo for.</param>
+        /// <param name="photoIds">The IDs of the photo to reorder.</param>
+        public void PhotosetsReorderPhotos(string photosetId, string[] photoIds)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.photosets.reorderPhotos");
+            parameters.Add("photoset_id", photosetId);
+            parameters.Add("photo_ids", String.Join(",", photoIds));
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+        /// <summary>
+        /// Removes a photo from a photoset.
+        /// </summary>
+        /// <remarks>
+        /// An exception will be raised if the photo is not in the set.
+        /// </remarks>
+        /// <param name="photosetId">The ID of the photoset to set the primary photo for.</param>
+        /// <param name="photoId">The IDs of the photo to become the primary photo.</param>
+        public void PhotosetsSetPrimaryPhoto(string photosetId, string photoId)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.photosets.setPrimaryPhoto");
+            parameters.Add("photoset_id", photosetId);
+            parameters.Add("photo_id", photoId);
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+
+        /// <summary>
         /// Gets a list of comments for a photoset.
         /// </summary>
         /// <param name="photosetId">The id of the photoset to return the comments for.</param>

@@ -74,7 +74,8 @@ namespace FlickrNet
                         ((IFlickrParsable)User).Load(reader);
                         break;
                     default:
-                        throw new ParsingException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown element '{0}' found in Flickr response.", reader.LocalName));
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
         }

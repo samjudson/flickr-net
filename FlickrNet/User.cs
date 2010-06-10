@@ -33,7 +33,7 @@ namespace FlickrNet
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "user")
-                throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
             {
@@ -50,7 +50,8 @@ namespace FlickrNet
                         FullName = reader.Value;
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -209,7 +210,8 @@ namespace FlickrNet
                         ParseVideos(reader);
                         break;
                     default:
-                        throw new ParsingException("Unknown element name '" + reader.LocalName + "' found in Flickr response");
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
         }
@@ -228,7 +230,8 @@ namespace FlickrNet
                         IsPro = reader.Value == "1";
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
@@ -250,7 +253,8 @@ namespace FlickrNet
                             VideosRemaining = reader.ReadContentAsInt();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
             reader.Read();
@@ -272,7 +276,8 @@ namespace FlickrNet
                         VideoSizeMaxMB = reader.ReadContentAsLong();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
             reader.Read();
@@ -293,7 +298,8 @@ namespace FlickrNet
                             SetsRemaining = reader.ReadContentAsInt();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
             reader.Read();
@@ -316,7 +322,8 @@ namespace FlickrNet
                         FileSizeMaxMB = reader.ReadContentAsLong();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
             reader.Read();
@@ -352,7 +359,8 @@ namespace FlickrNet
                         IsUnlimited = reader.Value == "1";
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
             reader.Read();

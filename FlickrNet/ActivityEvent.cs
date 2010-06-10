@@ -46,6 +46,11 @@ namespace FlickrNet
         /// </summary>
         public string NoteId { get; private set; }
 
+        /// <summary>
+        /// If this is a gallery activityits then this will contain the ID of the gallery.
+        /// </summary>
+        public string GalleryId { get; private set; }
+
         void IFlickrParsable.Load(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
@@ -64,6 +69,12 @@ namespace FlickrNet
                             case "comment":
                                 EventType = ActivityEventType.Comment;
                                 break;
+                            case "added_to_gallery":
+                                EventType = ActivityEventType.Gallery;
+                                break;
+                            default:
+                                UtilityMethods.CheckParsingException(reader);
+                                break;
                         }
                         break;
                     case "user":
@@ -81,9 +92,12 @@ namespace FlickrNet
                     case "noteid":
                         NoteId = reader.Value;
                         break;
+                    case "galleryid":
+                        GalleryId = reader.Value;
+                        break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
-
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
             
@@ -118,6 +132,10 @@ namespace FlickrNet
 		/// <summary>
 		/// The event is a favourite.
 		/// </summary>
-		Favorite
+		Favorite,
+        /// <summary>
+        /// The event is for a gallery.
+        /// </summary>
+        Gallery
 	}
 }

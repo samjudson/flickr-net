@@ -122,7 +122,8 @@ namespace FlickrNet
                         PositionHeight = reader.ReadContentAsInt();
                         break;
                     default:
-                        throw new ParsingException("Unknown attribute value: " + reader.LocalName + "=" + reader.Value);
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
                 }
             }
 
