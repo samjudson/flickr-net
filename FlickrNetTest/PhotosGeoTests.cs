@@ -74,9 +74,10 @@ namespace FlickrNetTest
             var photos = f.PhotosSearch(o);
             var photo = photos[0];
 
-            var photos2 = f.PhotosGeoPhotosForLocation(photo.Latitude, photo.Longitude, GeoAccuracy.World, PhotoSearchExtras.All, 0, 0);
+            var photos2 = f.PhotosGeoPhotosForLocation(photo.Latitude, photo.Longitude, photo.Accuracy, PhotoSearchExtras.All, 0, 0);
 
-            Assert.IsNotNull(photos2);
+            Assert.IsNotNull(photos2, "PhotosGeoPhotosForLocation should not return null.");
+            Assert.IsTrue(photos2.Count > 0, "Should return one or more photos.");
 
             foreach (var p in photos2)
             {
