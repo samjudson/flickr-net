@@ -363,6 +363,7 @@
     </Compile>
     <Compile Include="Value.cs" />
     <Compile Include="ValueCollection.cs" />
+    <Compile Include="VideoInfo.cs" />
     <None Include="example_app.config" />
     <None Include="FlickrNet.ndoc" />
     <None Include="FlickrNet.snk" />

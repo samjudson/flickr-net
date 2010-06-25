@@ -223,6 +223,7 @@
     <Compile Include="UtilityMethods.cs" />
     <Compile Include="Value.cs" />
     <Compile Include="ValueCollection.cs" />
+    <Compile Include="VideoInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FlickrNet.snk" />

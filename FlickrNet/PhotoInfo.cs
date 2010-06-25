@@ -224,6 +224,11 @@ namespace FlickrNet
         /// </summary>
         public GeoPermissions GeoPermissions { get; private set; }
 
+        /// <summary>
+        /// If this item is a video this contains information such as if it is ready, its duration etc.
+        /// </summary>
+        public VideoInfo VideoInfo { get; private set; }
+
 		/// <summary>
 		/// The Web url for flickr web page for this photo.
 		/// </summary>
@@ -356,6 +361,10 @@ namespace FlickrNet
                     case "geoperms":
                         GeoPermissions = new GeoPermissions();
                         ((IFlickrParsable)GeoPermissions).Load(reader);
+                        break;
+                    case "video":
+                        VideoInfo = new VideoInfo();
+                        ((IFlickrParsable)VideoInfo).Load(reader);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -600,6 +609,7 @@ namespace FlickrNet
 
             reader.Read();
         }
+
     }
 
 	/// <summary>

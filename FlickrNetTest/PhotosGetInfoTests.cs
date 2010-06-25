@@ -230,5 +230,25 @@ namespace FlickrNetTest
 
         }
 
+        [TestMethod]
+        public void PhotosGetInfoVideoTest()
+        {
+            string videoId = "2926486605";
+
+            Flickr f = TestData.GetInstance();
+
+            try
+            {
+                var info = f.PhotosGetInfo(videoId);
+
+                Assert.IsNotNull(info);
+                Assert.AreEqual(videoId, info.PhotoId);
+            }
+            catch
+            {
+                Console.WriteLine(f.LastResponse);
+                throw;
+            }
+        }
     }
 }
