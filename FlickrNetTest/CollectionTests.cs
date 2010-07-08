@@ -87,6 +87,7 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(tree, "CollectionList should not be null.");
             Assert.AreNotEqual(0, tree.Count, "CollectionList.Count should not be zero.");
+            Assert.IsTrue(tree.Count > 1, "CollectionList.Count should be greater than 1.");
 
             foreach (Collection coll in tree)
             {
@@ -100,6 +101,7 @@ namespace FlickrNetTest
 
                 foreach (CollectionSet set in coll.Sets)
                 {
+                    Assert.IsNotNull(set.SetId, "SetId should not be null.");
                 }
             }
         }

@@ -81,7 +81,7 @@ namespace FlickrNet
 
             reader.Read();
 
-            while (reader.LocalName == "collection" || reader.LocalName == "set")
+            while (reader.NodeType == XmlNodeType.Element && (reader.LocalName == "collection" || reader.LocalName == "set"))
             {
                 if (reader.LocalName == "collection")
                 {
