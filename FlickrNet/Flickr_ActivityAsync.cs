@@ -14,10 +14,10 @@ namespace FlickrNet
         /// <remarks>
         /// <b>Do not poll this method more than once an hour.</b>
         /// </remarks>
-        /// <returns>An array of <see cref="ActivityItem"/> instances.</returns>
-        public ActivityItemCollection ActivityUserPhotos()
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void ActivityUserPhotosAsync(Action<FlickrResult<ActivityItemCollection>> callback)
         {
-            return ActivityUserPhotos(null);
+            ActivityUserPhotosAsync(null, callback);
         }
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace FlickrNet
         /// </remarks>
         /// <param name="timePeriod">The number of days or hours you want to get activity for.</param>
         /// <param name="timeType">'d' for days, 'h' for hours.</param>
-        /// <returns>An array of <see cref="ActivityItem"/> instances.</returns>
-        public ActivityItemCollection ActivityUserPhotos(int timePeriod, string timeType)
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void ActivityUserPhotosAsync(int timePeriod, string timeType, Action<FlickrResult<ActivityItemCollection>> callback)
         {
             if (timePeriod == 0)
                 throw new ArgumentOutOfRangeException("timePeriod", "Time Period should be greater than 0");
@@ -40,10 +40,10 @@ namespace FlickrNet
             if (timeType != "d" && timeType != "h")
                 throw new ArgumentOutOfRangeException("timeType", "Time type must be 'd' or 'h'");
 
-            return ActivityUserPhotos(timePeriod + timeType);
+            ActivityUserPhotosAsync(timePeriod + timeType, callback);
         }
 
-        private ActivityItemCollection ActivityUserPhotos(string timeframe)
+        private void ActivityUserPhotosAsync(string timeframe, Action<FlickrResult<ActivityItemCollection>> callback)
         {
             CheckRequiresAuthentication();
 
@@ -51,7 +51,7 @@ namespace FlickrNet
             parameters.Add("method", "flickr.activity.userPhotos");
             if (timeframe != null && timeframe.Length > 0) parameters.Add("timeframe", timeframe);
 
-            return GetResponseCache<ActivityItemCollection>(parameters);
+            GetResponseAsync<ActivityItemCollection>(parameters, callback);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace FlickrNet
         /// </remarks>
         /// <param name="page">The page of the activity to return.</param>
         /// <param name="perPage">The number of activities to return per page.</param>
-        /// <returns></returns>
-        public ActivityItemCollection ActivityUserComments(int page, int perPage)
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void ActivityUserCommentsAsync(int page, int perPage, Action<FlickrResult<ActivityItemCollection>> callback)
         {
             CheckRequiresAuthentication();
 
@@ -72,7 +72,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
-            return GetResponseCache<ActivityItemCollection>(parameters);
+            GetResponseAsync<ActivityItemCollection>(parameters, callback);
         }
 
 

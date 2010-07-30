@@ -5,7 +5,6 @@ namespace FlickrNet
 	/// <summary>
 	/// Generic Flickr.Net Exception.
 	/// </summary>
-	[Serializable]
 	public class FlickrException : Exception
 	{
         /// <summary>

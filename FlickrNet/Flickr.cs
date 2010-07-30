@@ -2,13 +2,15 @@ using System;
 using System.Net;
 using System.IO;
 using System.Xml;
-using System.Xml.XPath;
 using System.Xml.Serialization;
 using System.Text;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Collections.Generic;
+#if SILVERLIGHT
+using System.Linq;
+#endif
 
 namespace FlickrNet
 {
@@ -27,7 +29,7 @@ namespace FlickrNet
 	public partial class Flickr
 	{
 
-		#region [ Upload Event and Delegate ]
+#if !SILVERLIGHT
 		/// <summary>
 		/// 
 		/// </summary>
@@ -37,10 +39,10 @@ namespace FlickrNet
 		/// uploaded is recorded in the <see cref="UploadProgressEventArgs"/> class.
 		/// </summary>
 		public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
-		#endregion
+#endif
 
-		#region [ Private Variables ]
-#if !(MONOTOUCH || WindowsCE)
+        #region [ Private Variables ]
+#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
         private static bool _isServiceSet;
 #endif
 		private static SupportedService _defaultService = SupportedService.Flickr;
@@ -95,11 +97,12 @@ namespace FlickrNet
 		private string _lastRequest;
 		private string _lastResponse;
 
+#if !SILVERLIGHT
 		private WebProxy _proxy;// = WebProxy.GetDefaultProxy();
 
 		// Static serializers
 		private static XmlSerializer _uploaderSerializer = new XmlSerializer(typeof(FlickrNet.UploadResponse));
-
+#endif
 		#endregion
 
 		#region [ Public Properties ]
@@ -186,7 +189,7 @@ namespace FlickrNet
 		{
 			get
             {
-#if !(MONOTOUCH || WindowsCE)
+#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
                 if ( !_isServiceSet && FlickrConfigurationManager.Settings != null )
 				{
 					_defaultService = FlickrConfigurationManager.Settings.Service;
@@ -198,10 +201,10 @@ namespace FlickrNet
 			set
 			{
 				_defaultService = value;
-#if !(MONOTOUCH || WindowsCE)
+#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
                 _isServiceSet = true;
 #endif
-			}
+            }
 		}
 
 		/// <summary>
@@ -216,10 +219,10 @@ namespace FlickrNet
 			set 
 			{
 				_service = value;
-#if !(MONOTOUCH || WindowsCE)
+#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
                 if ( _service == SupportedService.Zooomr ) ServicePointManager.Expect100Continue = false;
 #endif
-			}
+            }
 		}
 
 		/// <summary>
@@ -257,11 +260,15 @@ namespace FlickrNet
 			get { return _lastRequest; }
 		}
 
+#if !SILVERLIGHT
 		/// <summary>
 		/// You can set the <see cref="WebProxy"/> or alter its properties.
 		/// It defaults to your internet explorer proxy settings.
 		/// </summary>
+
 		public WebProxy Proxy { get { return _proxy; } set { _proxy = value; } }
+#endif
+
 		#endregion
 
 		#region [ Cache Methods ]
@@ -308,7 +315,7 @@ namespace FlickrNet
 		/// </summary>
 		public Flickr()
         {
-#if !(MONOTOUCH || WindowsCE)
+#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
             FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
 			if( settings == null ) return;
 
@@ -333,7 +340,7 @@ namespace FlickrNet
 			}
 #endif
 
-			CurrentService = DefaultService;
+            CurrentService = DefaultService;
 		}
 
 		/// <summary>
@@ -406,8 +413,12 @@ namespace FlickrNet
         {
             if (includeSignature)
             {
+#if !SILVERLIGHT
                 SortedList<string, string> sorted = new SortedList<string, string>();
                 foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
+#else
+                var sorted = parameters.OrderBy(p => p.Key);
+#endif
 
                 StringBuilder sb = new StringBuilder(ApiSecret);
                 foreach (KeyValuePair<string, string> pair in sorted) { sb.Append(pair.Key); sb.Append(pair.Value); }

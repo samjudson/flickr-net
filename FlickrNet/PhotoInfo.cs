@@ -657,6 +657,7 @@ namespace FlickrNet
 		/// </summary>
         public string NoteText { get; private set; }
 
+#if !SILVERLIGHT
         /// <summary>
         /// The <see cref="System.Drawing.Size"/> of this note. Derived from <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
@@ -678,7 +679,7 @@ namespace FlickrNet
                 return new System.Drawing.Point(XPosition, YPosition);
             }
         }
-
+#endif
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "note")

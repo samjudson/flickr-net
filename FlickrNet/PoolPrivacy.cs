@@ -8,7 +8,7 @@ namespace FlickrNet
     /// <summary>
     /// The various pricay settings for a group.
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public enum PoolPrivacy
     {
         /// <summary>

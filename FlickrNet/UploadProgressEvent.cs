@@ -9,12 +9,12 @@ namespace FlickrNet
 	{
 		private bool _uploadComplete;
 
-		private int _bytes;
+		private long _bytes;
 
 		/// <summary>
 		/// Number of bytes transfered so far.
 		/// </summary>
-		public int Bytes
+		public long Bytes
 		{
 			get { return _bytes; }
 		}
@@ -27,7 +27,7 @@ namespace FlickrNet
 			get { return _uploadComplete; }
 		}
 
-		internal UploadProgressEventArgs(int bytes, bool complete)
+		internal UploadProgressEventArgs(long bytes, bool complete)
 		{
 			_bytes = bytes;
 			_uploadComplete = complete;

@@ -114,10 +114,10 @@ namespace FlickrNet
                 switch (reader.Name)
                 {
                     case "title":
-                        _title = reader.ReadString();
+                        _title = reader.ReadElementContentAsString();
                         break;
                     case "description":
-                        _description = reader.ReadString();
+                        _description = reader.ReadElementContentAsString();
                         break;
                     case "iconphotos":
                         reader.Read();

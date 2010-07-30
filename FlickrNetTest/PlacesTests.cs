@@ -326,16 +326,16 @@ namespace FlickrNetTest
         {
             var pts = TestData.GetInstance().PlacesGetPlaceTypes();
             Assert.IsNotNull(pts);
-            Assert.AreNotEqual(0, pts.Count);
+            Assert.IsTrue(pts.Count > 1, "Count should be greater than one. Count = " + pts.Count + ".");
 
             foreach (var kp in pts)
             {
-                Assert.AreNotEqual(0, kp.Key, "Key should not be zero.");
-                Assert.IsNotNull(kp.Value, "Value should not be null.");
+                Assert.AreNotEqual(0, kp.Id, "Key should not be zero.");
+                Assert.IsNotNull(kp.Name, "Value should not be null.");
 
-                Assert.IsTrue(Enum.IsDefined(typeof(PlaceType), kp.Key), "PlaceType with ID " + kp.Key + " and Value '" + kp.Value + "' not defined in PlaceType enum.");
-                PlaceType type = (PlaceType)kp.Key;
-                Assert.AreEqual(type.ToString("G").ToLower(), kp.Value, "Name of enum should match.");
+                Assert.IsTrue(Enum.IsDefined(typeof(PlaceType), kp.Id), "PlaceType with ID " + kp.Id + " and Value '" + kp.Name + "' not defined in PlaceType enum.");
+                PlaceType type = (PlaceType)kp.Id;
+                Assert.AreEqual(type.ToString("G").ToLower(), kp.Name, "Name of enum should match.");
             }
         }
 

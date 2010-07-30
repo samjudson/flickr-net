@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
 using System.IO;
 using System.Net;
+using System.Linq;
 
 namespace FlickrNetTest
 {
@@ -61,6 +62,38 @@ namespace FlickrNetTest
         // public void MyTestCleanup() { }
         //
         #endregion
+
+        [TestMethod]
+        public void UploadPictureAsyncBasicTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var w = new AsyncSubject<FlickrResult<string>>();
+
+            byte[] imageBytes = TestData.TestImageBytes;
+            Stream s = new MemoryStream(imageBytes);
+            s.Position = 0;
+
+            string title = "Test Title";
+            string desc = "Test Description\nSecond Line";
+            string tags = "testtag1,testtag2";
+
+            f.UploadPictureAsync(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible,
+                r => { w.OnNext(r); w.OnCompleted(); });
+
+            var result = w.Next().First();
+
+            if (result.HasError)
+            {
+                throw result.Error;
+            }
+
+            Assert.IsNotNull(result.Result);
+            Console.WriteLine(result.Result);
+
+            // Clean up photo
+            //f.PhotosDelete(result.Result);
+        }
 
         [TestMethod]
         public void UploadPictureBasicTest()

@@ -1,71 +1,53 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DACD45D5-ED22-4DD5-9D1D-B1706E0AD1B9}</ProjectGuid>
+    <ProjectGuid>{99FD3B5A-FAB3-488E-8169-37842B4F0B18}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FlickrNetCF</RootNamespace>
-    <AssemblyName>FlickrNetCF</AssemblyName>
-    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PlatformFamilyName>WindowsCE</PlatformFamilyName>
-    <PlatformID>E2BECB1F-8C8C-41ba-B736-9BE7D946A398</PlatformID>
-    <OSVersion>5.00</OSVersion>
-    <DeployDirSuffix>FlickrNetCF</DeployDirSuffix>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FormFactorID>
-    </FormFactorID>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>FlickrNet.snk</AssemblyOriginatorKeyFile>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <NativePlatformName>Windows CE</NativePlatformName>
+    <RootNamespace>FlickrNet</RootNamespace>
+    <AssemblyName>FlickrNetSilverlight</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PocketPC;WindowsCE</DefineConstants>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
-    <FileAlignment>512</FileAlignment>
     <WarningLevel>4</WarningLevel>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\Debug\FlickrNetCF.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;PocketPC;WindowsCE</DefineConstants>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
-    <FileAlignment>512</FileAlignment>
     <WarningLevel>4</WarningLevel>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System.CoreEx, Version=1.0.2563.203, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Observable, Version=1.0.0.203, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.0.2563.203, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityEvent.cs" />
@@ -102,36 +84,37 @@
     <Compile Include="FlickrConfigurationManager.cs" />
     <Compile Include="FlickrConfigurationSettings.cs" />
     <Compile Include="FlickrException.cs" />
+    <Compile Include="FlickrResult.cs" />
     <Compile Include="FlickrWebException.cs" />
-    <Compile Include="Flickr_Activity.cs" />
-    <Compile Include="Flickr_Auth.cs" />
-    <Compile Include="Flickr_Blogs.cs" />
-    <Compile Include="Flickr_Collections.cs" />
-    <Compile Include="Flickr_Commons.cs" />
-    <Compile Include="Flickr_Contacts.cs" />
-    <Compile Include="Flickr_Favorites.cs" />
-    <Compile Include="Flickr_Galleries.cs" />
-    <Compile Include="Flickr_GetResponse.cs" />
-    <Compile Include="Flickr_Groups.cs" />
-    <Compile Include="Flickr_Interestingness.cs" />
-    <Compile Include="Flickr_MachineTags.cs" />
-    <Compile Include="Flickr_Notes.cs" />
-    <Compile Include="Flickr_Panda.cs" />
-    <Compile Include="Flickr_People.cs" />
-    <Compile Include="Flickr_Photos.cs" />
-    <Compile Include="Flickr_PhotosComments.cs" />
-    <Compile Include="Flickr_Photosets.cs" />
-    <Compile Include="Flickr_PhotosGeo.cs" />
-    <Compile Include="Flickr_PhotosMisc.cs" />
-    <Compile Include="Flickr_PhotosPeople.cs" />
-    <Compile Include="Flickr_Places.cs" />
-    <Compile Include="Flickr_Prefs.cs" />
-    <Compile Include="Flickr_Reflection.cs" />
-    <Compile Include="Flickr_Stats.cs" />
-    <Compile Include="Flickr_Tags.cs" />
-    <Compile Include="Flickr_Test.cs" />
-    <Compile Include="Flickr_Upload.cs" />
-    <Compile Include="Flickr_Urls.cs" />
+    <Compile Include="Flickr_ActivityAsync.cs" />
+    <Compile Include="Flickr_AuthAsync.cs" />
+    <Compile Include="Flickr_BlogsAsync.cs" />
+    <Compile Include="Flickr_CollectionsAsync.cs" />
+    <Compile Include="Flickr_CommonsAsync.cs" />
+    <Compile Include="Flickr_ContactsAsync.cs" />
+    <Compile Include="Flickr_FavoritesAsync.cs" />
+    <Compile Include="Flickr_GalleriesAsync.cs" />
+    <Compile Include="Flickr_GetResponseAsync.cs" />
+    <Compile Include="Flickr_GroupsAsync.cs" />
+    <Compile Include="Flickr_InterestingnessAsync.cs" />
+    <Compile Include="Flickr_MachineTagsAsync.cs" />
+    <Compile Include="Flickr_NotesAsync.cs" />
+    <Compile Include="Flickr_PandaAsync.cs" />
+    <Compile Include="Flickr_PeopleAsync.cs" />
+    <Compile Include="Flickr_PhotosAsync.cs" />
+    <Compile Include="Flickr_PhotosCommentsAsync.cs" />
+    <Compile Include="Flickr_PhotosetsAsync.cs" />
+    <Compile Include="Flickr_PhotosGeoAsync.cs" />
+    <Compile Include="Flickr_PhotosMiscAsync.cs" />
+    <Compile Include="Flickr_PhotosPeopleAsync.cs" />
+    <Compile Include="Flickr_PlacesAsync.cs" />
+    <Compile Include="Flickr_PrefsAsync.cs" />
+    <Compile Include="Flickr_ReflectionAsync.cs" />
+    <Compile Include="Flickr_StatsAsync.cs" />
+    <Compile Include="Flickr_TagsAsync.cs" />
+    <Compile Include="Flickr_TestAsync.cs" />
+    <Compile Include="Flickr_UploadAsync.cs" />
+    <Compile Include="Flickr_UrlsAsync.cs" />
     <Compile Include="Gallery.cs" />
     <Compile Include="GalleryCollection.cs" />
     <Compile Include="GalleryPhoto.cs" />
@@ -151,6 +134,8 @@
     <Compile Include="InstitutionCollection.cs" />
     <Compile Include="Licenses.cs" />
     <Compile Include="LockFile.cs" />
+    <Compile Include="MD5Core.cs" />
+    <Compile Include="MD5Managed.cs" />
     <Compile Include="MediaType.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberCollection.cs" />
@@ -168,7 +153,9 @@
     <Compile Include="ParsingException.cs" />
     <Compile Include="PartialSearchOptions.cs" />
     <Compile Include="PeoplePhotoCollection.cs" />
-    <Compile Include="PersistentCache.cs" />
+    <Compile Include="PersistentCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Person.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoCollection.cs" />
@@ -204,8 +191,9 @@
     <Compile Include="PublicGroupInfoCollection.cs" />
     <Compile Include="ResponseXmlException.cs" />
     <Compile Include="SafeNativeMethods.cs" />
-    <Compile Include="ShapeData.cs" />
+    <Compile Include="SerializableAttribute.cs" />
     <Compile Include="ShapeDataCollection.cs" />
+    <Compile Include="ShapeDataSL.cs" />
     <Compile Include="SignatureRequiredException.cs" />
     <Compile Include="Sizes.cs" />
     <Compile Include="StatDomain.cs" />
@@ -217,9 +205,9 @@
     <Compile Include="Tags.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketCollection.cs" />
-    <Compile Include="UnknownResponse.cs" />
+    <Compile Include="UnknownResponseSL.cs" />
     <Compile Include="UploadProgressEvent.cs" />
-    <Compile Include="UploadResponse.cs" />
+    <Compile Include="UploadResponseSL.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserGeoPermissions.cs" />
     <Compile Include="UtilityMethods.cs" />
@@ -228,23 +216,13 @@
     <Compile Include="VideoInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FlickrNet.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="CodeAnalysisDictionary.xml" />
+    <Content Include="CodeAnalysisDictionary.xml" />
+    <Content Include="License.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-  <Import Condition="'$(TargetFrameworkVersion)' == 'v1.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.v1.targets" />
-  <Import Condition="'$(TargetFrameworkVersion)' == 'v2.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
-        <HostingProcess disable="1" />
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -252,5 +230,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <Import Condition="'$(TargetFrameworkVersion)' == 'v3.5'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

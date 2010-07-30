@@ -113,6 +113,44 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void ReflectionMethodsCheckWeSupportAsync()
+        {
+            Flickr f = TestData.GetInstance();
+
+            MethodCollection methodNames = f.ReflectionGetMethods();
+
+            Assert.IsNotNull(methodNames, "Should not be null");
+            Assert.AreNotEqual(0, methodNames.Count, "Should return some method names.");
+            Assert.IsNotNull(methodNames[0], "First item should not be null");
+
+            Type type = typeof(Flickr);
+            MethodInfo[] methods = type.GetMethods();
+
+            int failCount = 0;
+
+            foreach (string methodName in methodNames)
+            {
+                bool found = false;
+                string trueName = methodName.Replace("flickr.", "").Replace(".", "").ToLower() + "async";
+                foreach (MethodInfo info in methods)
+                {
+                    if (trueName == info.Name.ToLower())
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    failCount++;
+                    Console.WriteLine("Async Method '" + methodName + "' not found in FlickrNet.Flickr.");
+                }
+            }
+
+            Assert.AreEqual(0, failCount, "FailCount should be zero. Currently " + failCount + " unsupported methods found.");
+        }
+
+        [TestMethod]
         public void ReflectionGetMethodInfoSearchArgCheck()
         {
             PropertyInfo[] properties = typeof(PhotoSearchOptions).GetProperties();

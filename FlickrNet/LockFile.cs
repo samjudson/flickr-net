@@ -39,7 +39,7 @@ namespace FlickrNet
 
 			lock (this)
 			{
-#if !WindowsCE
+#if !WindowsCE && !SILVERLIGHT
 				while (stream != null)
 					Monitor.Wait(this);
 #endif
@@ -51,7 +51,7 @@ namespace FlickrNet
 					try
 					{
 						Debug.Assert(stream == null, "Stream was not null--programmer error");
-						stream = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.None, 8, false);
+						stream = new FileStream(filepath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.None);
 						return disposeHelper;
 					}
 					catch (IOException ioe)
