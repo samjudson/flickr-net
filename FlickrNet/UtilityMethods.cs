@@ -7,7 +7,6 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Collections.Generic;
 #if SILVERLIGHT
-using System.Xml.Linq;
 using System.Linq;
 #endif
 
