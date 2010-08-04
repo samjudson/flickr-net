@@ -18,16 +18,18 @@ namespace FlickrNet
             parameters.Add("method", "flickr.urls.getGroup");
             parameters.Add("group_id", groupId);
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<string> result = new FlickrResult<string>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = r.Result.GetAttributeValue("*", "url");
-                }
-                callback(result);
-            });
+                    FlickrResult<string> result = new FlickrResult<string>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = r.Result.GetAttributeValue("*", "url");
+                    }
+                    callback(result);
+                });
         }
 
         /// <summary>
@@ -53,16 +55,18 @@ namespace FlickrNet
             parameters.Add("method", "flickr.urls.getUserPhotos");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<string> result = new FlickrResult<string>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = r.Result.GetAttributeValue("*", "url");
-                }
-                callback(result);
-            });
+                    FlickrResult<string> result = new FlickrResult<string>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = r.Result.GetAttributeValue("*", "url");
+                    }
+                    callback(result);
+                });
         }
 
         /// <summary>
@@ -87,16 +91,18 @@ namespace FlickrNet
             parameters.Add("method", "flickr.urls.getUserProfile");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<string> result = new FlickrResult<string>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = r.Result.GetAttributeValue("*", "url");
-                }
-                callback(result);
-            });
+                    FlickrResult<string> result = new FlickrResult<string>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = r.Result.GetAttributeValue("*", "url");
+                    }
+                    callback(result);
+                });
         }
 
         /// <summary>
@@ -108,7 +114,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGallery");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("url", url);
 
             GetResponseAsync<Gallery>(parameters, callback);
@@ -123,19 +129,21 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGroup");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<string> result = new FlickrResult<string>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = r.Result.GetAttributeValue("*", "id");
-                }
-                callback(result);
-            });
+                    FlickrResult<string> result = new FlickrResult<string>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = r.Result.GetAttributeValue("*", "id");
+                    }
+                    callback(result);
+                });
         }
 
         /// <summary>
@@ -147,7 +155,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupUser");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
 
             GetResponseAsync<FoundUser>(parameters, callback);

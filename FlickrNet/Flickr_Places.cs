@@ -86,7 +86,7 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getInfo");
 
-            if (String.IsNullOrEmpty(placeId) &&  String.IsNullOrEmpty(woeId))
+            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
             {
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
@@ -148,7 +148,7 @@ namespace FlickrNet
             return GetResponseCache<ShapeDataCollection>(parameters);
 
         }
-        
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -159,7 +159,7 @@ namespace FlickrNet
             return PlacesGetTopPlacesList(placeType, DateTime.MinValue, null, null);
         }
 
-        
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -172,7 +172,7 @@ namespace FlickrNet
             return PlacesGetTopPlacesList(placeType, DateTime.MinValue, placeId, woeId);
         }
 
-        
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -385,7 +385,7 @@ namespace FlickrNet
         {
             return PlacesTagsForPlace(placeId, woeId, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
-        
+
         /// <summary>
         /// Return a list of the top 100 unique tags for a Flickr Places or Where on Earth (WOE) ID.
         /// </summary>

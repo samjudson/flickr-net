@@ -5,16 +5,15 @@ using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
-	/// <remarks/>
+    /// <remarks/>
     public class Photo : IFlickrParsable
-	{
-
-        private string url_sq;
-        private string url_t;
-        private string url_m;
-        private string url_s;
-        private string url_l;
-        private string url_o;
+    {
+        private string urlSquare;
+        private string urlThumbnail;
+        private string urlMedium;
+        private string urlSmall;
+        private string urlLarge;
+        private string urlOriginal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Photo"/> class.
@@ -29,63 +28,63 @@ namespace FlickrNet
         /// </summary>
         public Collection<string> Tags { get; private set; }
 
-		/// <remarks/>
+        /// <remarks/>
         public string PhotoId { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public string UserId { get; internal set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public string Secret { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public string Server { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public string Farm { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public string Title { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public bool IsPublic { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public bool IsFriend { get; private set; }
     
-		/// <remarks/>
+        /// <remarks/>
         public bool IsFamily { get; private set; }
 
-		/// <remarks/>
+        /// <remarks/>
         public LicenseType License { get; private set; }
 
-		/// <summary>
-		/// The width of the original image. 
-		/// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
-		/// </summary>
+        /// <summary>
+        /// The width of the original image. 
+        /// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
+        /// </summary>
         public int OriginalWidth { get; private set; }
 
-		/// <summary>
-		/// The height of the original image. 
-		/// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
-		/// </summary>
+        /// <summary>
+        /// The height of the original image. 
+        /// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
+        /// </summary>
         public int OriginalHeight { get; private set; }
 
-		/// <summary>
-		/// Converts the raw dateupload field to a <see cref="DateTime"/>.
-		/// </summary>
-		public DateTime DateUploaded { get; private set; }
+        /// <summary>
+        /// Converts the raw dateupload field to a <see cref="DateTime"/>.
+        /// </summary>
+        public DateTime DateUploaded { get; private set; }
 
-		/// <summary>
-		/// Converts the raw lastupdate field to a <see cref="DateTime"/>.
-		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
-		/// </summary>
-		public DateTime LastUpdated { get; private set; }
+        /// <summary>
+        /// Converts the raw lastupdate field to a <see cref="DateTime"/>.
+        /// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
+        /// </summary>
+        public DateTime LastUpdated { get; private set; }
 
-		/// <summary>
-		/// Converts the raw datetaken field to a <see cref="DateTime"/>.
-		/// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
-		/// </summary>
+        /// <summary>
+        /// Converts the raw datetaken field to a <see cref="DateTime"/>.
+        /// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
+        /// </summary>
         public DateTime DateTaken { get; private set; }
 
         /// <summary>
@@ -108,47 +107,47 @@ namespace FlickrNet
         public string IconFarm { get; private set; }
 
         /// <summary>
-		/// Optional extra field containing the original format (jpg, png etc) of the 
-		/// photo.
-		/// </summary>
+        /// Optional extra field containing the original format (jpg, png etc) of the 
+        /// photo.
+        /// </summary>
         public string OriginalFormat { get; private set; }
 
-		/// <summary>
-		/// Optional extra field containing the original 'secret' of the 
-		/// photo used for forming the Url.
-		/// </summary>
+        /// <summary>
+        /// Optional extra field containing the original 'secret' of the 
+        /// photo used for forming the Url.
+        /// </summary>
         public string OriginalSecret { get; private set; }
 
-		/// <summary>
-		/// Machine tags
-		/// </summary>
+        /// <summary>
+        /// Machine tags
+        /// </summary>
         public string MachineTags { get; private set; }
 
-		/// <summary>
-		/// The url to the web page for this photo. Uses the users userId, not their web alias, but
-		/// will still work.
-		/// </summary>
+        /// <summary>
+        /// The url to the web page for this photo. Uses the users userId, not their web alias, but
+        /// will still work.
+        /// </summary>
         public string WebUrl
-		{
+        {
             get
             {
                 return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", PathAlias ?? UserId, PhotoId);
             }
-		}
+        }
 
-		/// <summary>
-		/// The URL for the square thumbnail of a photo.
-		/// </summary>
+        /// <summary>
+        /// The URL for the square thumbnail of a photo.
+        /// </summary>
         public string SquareThumbnailUrl
-		{
+        {
             get
             {
-                if (url_sq != null)
-                    return url_sq;
+                if (urlSquare != null)
+                    return urlSquare;
                 else
                     return UtilityMethods.UrlFormat(this, "_s", "jpg");
             }
-		}
+        }
 
         /// <summary>
         /// The width of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
@@ -159,19 +158,19 @@ namespace FlickrNet
         /// </summary>
         public int? SquareThumbnailHeight { get; private set; }
 
-		/// <summary>
-		/// The URL for the thumbnail of a photo.
-		/// </summary>
+        /// <summary>
+        /// The URL for the thumbnail of a photo.
+        /// </summary>
         public string ThumbnailUrl
-		{
+        {
             get
             {
-                if (url_t != null)
-                    return url_t;
+                if (urlThumbnail != null)
+                    return urlThumbnail;
                 else
                     return UtilityMethods.UrlFormat(this, "_t", "jpg");
             }
-		}
+        }
 
         /// <summary>
         /// The width of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
@@ -183,18 +182,18 @@ namespace FlickrNet
         public int? ThumbnailHeight { get; private set; }
 
         /// <summary>
-		/// The URL for the small copy of a photo.
-		/// </summary>
+        /// The URL for the small copy of a photo.
+        /// </summary>
         public string SmallUrl
-		{
+        {
             get
             {
-                if (url_s != null)
-                    return url_s;
+                if (urlSmall != null)
+                    return urlSmall;
                 else
                     return UtilityMethods.UrlFormat(this, "_m", "jpg");
             }
-		}
+        }
 
         /// <summary>
         /// The width of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
@@ -206,20 +205,20 @@ namespace FlickrNet
         public int? SmallHeight { get; private set; }
 
         /// <summary>
-		/// The URL for the medium copy of a photo.
-		/// </summary>
-		/// <remarks>There is a chance that extremely small images will not have a medium copy.
-		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
+        /// The URL for the medium copy of a photo.
+        /// </summary>
+        /// <remarks>There is a chance that extremely small images will not have a medium copy.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
         public string MediumUrl
-		{
+        {
             get
             {
-                if (url_m != null)
-                    return url_m;
+                if (urlMedium != null)
+                    return urlMedium;
                 else
-                    return UtilityMethods.UrlFormat(this, "", "jpg");
+                    return UtilityMethods.UrlFormat(this, String.Empty, "jpg");
             }
-		}
+        }
 
         /// <summary>
         /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
@@ -230,21 +229,21 @@ namespace FlickrNet
         /// </summary>
         public int? MediumHeight { get; private set; }
 
-		/// <summary>
-		/// The URL for the large copy of a photo.
-		/// </summary>
-		/// <remarks>There is a chance that small images will not have a large copy.
-		/// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
+        /// <summary>
+        /// The URL for the large copy of a photo.
+        /// </summary>
+        /// <remarks>There is a chance that small images will not have a large copy.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
         public string LargeUrl
-		{
+        {
             get
             {
-                if (url_l != null)
-                    return url_l;
+                if (urlLarge != null)
+                    return urlLarge;
                 else
                     return UtilityMethods.UrlFormat(this, "_b", "jpg");
             }
-		}
+        }
 
         /// <summary>
         /// The width of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
@@ -256,46 +255,46 @@ namespace FlickrNet
         public int? LargeHeight { get; private set; }
 
         /// <summary>
-		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
-		/// </summary>
+        /// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
+        /// </summary>
         public string OriginalUrl
-		{
-			get 
-			{
-                if (url_o != null)
-                    return url_o;
+        {
+            get 
+            {
+                if (urlOriginal != null)
+                    return urlOriginal;
 
                 if (OriginalFormat == null || OriginalFormat.Length == 0)
                     return null;
 
-				return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
-			}
-		}
+                return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
+            }
+        }
 
-		/// <summary>
-		/// Latitude. Will be 0 if Geo extras not specified.
-		/// </summary>
+        /// <summary>
+        /// Latitude. Will be 0 if Geo extras not specified.
+        /// </summary>
         public double Latitude { get; private set; }
 
-		/// <summary>
-		/// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
-		/// </summary>
+        /// <summary>
+        /// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
+        /// </summary>
         public double Longitude { get; private set; }
 
-		/// <summary>
-		/// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
-		/// </summary>
-		public string PlaceId { get; private set; }
+        /// <summary>
+        /// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
+        /// </summary>
+        public string PlaceId { get; private set; }
 
-		/// <summary>
-		/// The WOE (Where On Earth) ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
-		/// </summary>
-		public string WoeId { get; private set; }
+        /// <summary>
+        /// The WOE (Where On Earth) ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
+        /// </summary>
+        public string WoeId { get; private set; }
 
-		/// <summary>
-		/// Geo-location accuracy. A value of None means that the information was not returned.
-		/// </summary>
-		public GeoAccuracy Accuracy { get; private set; }
+        /// <summary>
+        /// Geo-location accuracy. A value of None means that the information was not returned.
+        /// </summary>
+        public GeoAccuracy Accuracy { get; private set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) comment on this photo.
@@ -332,25 +331,25 @@ namespace FlickrNet
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
         public bool? CanShare { get; private set; }
 
-		/// <summary>
-		/// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
-		/// </summary>
-		public int? Views { get; private set; }
+        /// <summary>
+        /// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
+        /// </summary>
+        public int? Views { get; private set; }
 
-		/// <summary>
-		/// The media format for this photo. Only returned if PhotoSearchExtras.Media is set.
-		/// </summary>
-		public string Media { get; private set; }
+        /// <summary>
+        /// The media format for this photo. Only returned if PhotoSearchExtras.Media is set.
+        /// </summary>
+        public string Media { get; private set; }
 
         /// <summary>
         /// The url alias the user has picked, it applicable.
         /// </summary>
         public string PathAlias { get; private set; }
 
-		/// <summary>
-		/// The status of the media for this photo. Only returned if PhotoSearchExtras.Media is set.
-		/// </summary>
-		public string MediaStatus { get; private set; }
+        /// <summary>
+        /// The status of the media for this photo. Only returned if PhotoSearchExtras.Media is set.
+        /// </summary>
+        public string MediaStatus { get; private set; }
 
         /// <summary>
         /// The description for the photo. Only returned if <see cref="PhotoSearchExtras.Description"/> is set.
@@ -362,39 +361,39 @@ namespace FlickrNet
         /// </summary>
         public GeoPermissions GeoPermissions { get; private set; }
 
-		/// <summary>
-		/// A helper method which tries to guess if a large image will be available for this photograph
-		/// based on the original dimensions returned with the photo.
-		/// </summary>
-		public bool DoesLargeExist
-		{
-			get
-			{
-                if (url_l != null) return true;
+        /// <summary>
+        /// A helper method which tries to guess if a large image will be available for this photograph
+        /// based on the original dimensions returned with the photo.
+        /// </summary>
+        public bool DoesLargeExist
+        {
+            get
+            {
+                if (urlLarge != null) return true;
 
-				if( OriginalHeight > 1280 || OriginalWidth > 1280 ) 
-					return true;
-				else 
-					return false;
-			}
-		}
+                if (OriginalHeight > 1280 || OriginalWidth > 1280)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
-		/// <summary>
-		/// A helper method which tries to guess if a medium image will be available for this photograph
-		/// based on the original dimensions returned with the photo.
-		/// </summary>
-		public bool DoesMediumExist
-		{
-			get
-			{
-                if (url_m != null) return true;
+        /// <summary>
+        /// A helper method which tries to guess if a medium image will be available for this photograph
+        /// based on the original dimensions returned with the photo.
+        /// </summary>
+        public bool DoesMediumExist
+        {
+            get
+            {
+                if (urlMedium != null) return true;
 
-				if( OriginalHeight > 500 || OriginalWidth > 500 ) 
-					return true;
-				else 
-					return false;
-			}
-		}
+                if (OriginalHeight > 500 || OriginalWidth > 500)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -440,13 +439,13 @@ namespace FlickrNet
                         Title = reader.Value;
                         break;
                     case "ispublic":
-                        IsPublic = (reader.Value == "1");
+                        IsPublic = reader.Value == "1";
                         break;
                     case "isfamily":
-                        IsFamily = (reader.Value == "1");
+                        IsFamily = reader.Value == "1";
                         break;
                     case "isfriend":
-                        IsFriend = (reader.Value == "1");
+                        IsFriend = reader.Value == "1";
                         break;
                     case "tags":
                         foreach (string tag in reader.Value.Split(' '))
@@ -455,7 +454,7 @@ namespace FlickrNet
                         }
                         break;
                     case "datetaken":
-                        //e.g. 2007-11-04 08:55:18
+                        // For example : 2007-11-04 08:55:18
                         DateTaken = UtilityMethods.ParseDateWithGranularity(reader.Value);
                         break;
                     case "datetakengranularity":
@@ -527,7 +526,7 @@ namespace FlickrNet
                         PathAlias = reader.Value;
                         break;
                     case "url_sq":
-                        url_sq = reader.Value;
+                        urlSquare = reader.Value;
                         break;
                     case "width_sq":
                         SquareThumbnailWidth = reader.ReadContentAsInt();
@@ -536,7 +535,7 @@ namespace FlickrNet
                         SquareThumbnailHeight = reader.ReadContentAsInt();
                         break;
                     case "url_t":
-                        url_t = reader.Value;
+                        urlThumbnail = reader.Value;
                         break;
                     case "width_t":
                         ThumbnailWidth = reader.ReadContentAsInt();
@@ -545,7 +544,7 @@ namespace FlickrNet
                         ThumbnailHeight = reader.ReadContentAsInt();
                         break;
                     case "url_s":
-                        url_s = reader.Value;
+                        urlSmall = reader.Value;
                         break;
                     case "width_s":
                         SmallWidth = reader.ReadContentAsInt();
@@ -554,7 +553,7 @@ namespace FlickrNet
                         SmallHeight = reader.ReadContentAsInt();
                         break;
                     case "url_m":
-                        url_m = reader.Value;
+                        urlMedium = reader.Value;
                         break;
                     case "width_m":
                         MediumWidth = reader.ReadContentAsInt();
@@ -563,7 +562,7 @@ namespace FlickrNet
                         MediumHeight = reader.ReadContentAsInt();
                         break;
                     case "url_l":
-                        url_l = reader.Value;
+                        urlLarge = reader.Value;
                         break;
                     case "width_l":
                         LargeWidth = reader.ReadContentAsInt();
@@ -572,7 +571,7 @@ namespace FlickrNet
                         LargeHeight = reader.ReadContentAsInt();
                         break;
                     case "url_o":
-                        url_o = reader.Value;
+                        urlOriginal = reader.Value;
                         break;
                     case "width_o":
                         OriginalWidth = reader.ReadContentAsInt();
@@ -589,37 +588,53 @@ namespace FlickrNet
                     case "has_comment": // Gallery photos return this, but we ignore it and set GalleryPhoto.Comment instead.
                         break;
                     case "can_comment":
-                        CanComment = (reader.Value == "1");
+                        CanComment = reader.Value == "1";
                         break;
                     case "can_addmeta":
-                        CanAddMeta = (reader.Value == "1");
+                        CanAddMeta = reader.Value == "1";
                         break;
                     case "can_blog":
-                        CanBlog = (reader.Value == "1");
+                        CanBlog = reader.Value == "1";
                         break;
                     case "can_print":
-                        CanPrint = (reader.Value == "1");
+                        CanPrint = reader.Value == "1";
                         break;
                     case "can_download":
-                        CanDownload = (reader.Value == "1");
+                        CanDownload = reader.Value == "1";
                         break;
                     case "can_share":
-                        CanShare = (reader.Value == "1");
+                        CanShare = reader.Value == "1";
                         break;
                     case "geo_is_family":
-                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
-                        GeoPermissions.IsFamily = (reader.Value == "1");
+                        if (GeoPermissions == null)
+                        {
+                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions.PhotoId = PhotoId;
+                        }
+                        GeoPermissions.IsFamily = reader.Value == "1";
                         break;
                     case "geo_is_friend":
-                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        if (GeoPermissions == null)
+                        {
+                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions.PhotoId = PhotoId;
+                        }
                         GeoPermissions.IsFriend = (reader.Value == "1");
                         break;
                     case "geo_is_public":
-                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        if (GeoPermissions == null)
+                        {
+                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions.PhotoId = PhotoId;
+                        }
                         GeoPermissions.IsPublic = (reader.Value == "1");
                         break;
                     case "geo_is_contact":
-                        if (GeoPermissions == null) { GeoPermissions = new GeoPermissions(); GeoPermissions.PhotoId = PhotoId; }
+                        if (GeoPermissions == null)
+                        {
+                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions.PhotoId = PhotoId;
+                        }
                         GeoPermissions.IsContact = (reader.Value == "1");
                         break;
                     default:

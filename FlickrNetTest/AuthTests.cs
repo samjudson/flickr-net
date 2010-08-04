@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
 using System.Xml;
 using System.IO;
+using System.Linq;
 
 namespace FlickrNetTest
 {
@@ -66,6 +67,23 @@ namespace FlickrNetTest
         public void AuthGetFrobTest()
         {
             string frob = TestData.GetSignedInstance().AuthGetFrob();
+
+            Assert.IsNotNull(frob, "frob should not be null.");
+            Assert.AreNotEqual("", frob, "Frob should not be zero length string.");
+        }
+
+        [TestMethod]
+        public void AuthGetFrobAsyncTest()
+        {
+            var w = new AsyncSubject<FlickrResult<string>>();
+
+            TestData.GetSignedInstance().AuthGetFrobAsync(r => { w.OnNext(r); w.OnCompleted(); });
+
+            var frobResult = w.Next().First();
+
+            Assert.IsFalse(frobResult.HasError);
+
+            string frob = frobResult.Result;
 
             Assert.IsNotNull(frob, "frob should not be null.");
             Assert.AreNotEqual("", frob, "Frob should not be zero length string.");

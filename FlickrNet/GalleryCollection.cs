@@ -10,24 +10,24 @@ namespace FlickrNet
     /// </summary>
     public sealed class GalleryCollection : Collection<Gallery>, IFlickrParsable
     {
-        		/// <summary>
-		/// The current page that the group search results represents.
-		/// </summary>
+                /// <summary>
+        /// The current page that the group search results represents.
+        /// </summary>
         public int Page { get; private set; }
 
-		/// <summary>
-		/// The total number of pages this search would return.
-		/// </summary>
+        /// <summary>
+        /// The total number of pages this search would return.
+        /// </summary>
         public int Pages { get; private set; }
 
-		/// <summary>
-		/// The number of groups returned per photo.
-		/// </summary>
+        /// <summary>
+        /// The number of groups returned per photo.
+        /// </summary>
         public int PerPage { get; private set; }
 
-		/// <summary>
-		/// The total number of groups that where returned for the search.
-		/// </summary>
+        /// <summary>
+        /// The total number of groups that where returned for the search.
+        /// </summary>
         public int Total { get; private set; }
 
         /// <summary>

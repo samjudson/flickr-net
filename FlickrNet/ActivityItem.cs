@@ -1,15 +1,35 @@
-using System;
-using System.Xml;
-using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Activity class used for <see cref="Flickr.ActivityUserPhotos()"/>
-	/// and <see cref="Flickr.ActivityUserComments"/>.
-	/// </summary>
-	public sealed class ActivityItem : IFlickrParsable
-	{
+    using System;
+    using System.Collections.Generic;
+    using System.Xml;
+    
+    /// <summary>
+    /// The type of the <see cref="ActivityItem"/>.
+    /// </summary>
+    public enum ActivityItemType
+    {
+        /// <summary>
+        /// The type is unknown, either not set of a new unsupported type.
+        /// </summary>
+        Unknown,
+        /// <summary>
+        /// The activity item is on a photoset.
+        /// </summary>
+        Photoset,
+        /// <summary>
+        /// The activitiy item is on a photo.
+        /// </summary>
+        Photo
+    }
+
+    /// <summary>
+    /// Activity class used for <see cref="Flickr.ActivityUserPhotos()"/>
+    /// and <see cref="Flickr.ActivityUserComments"/>.
+    /// </summary>
+    public sealed class ActivityItem : IFlickrParsable
+    {
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -18,133 +38,133 @@ namespace FlickrNet
             Events = new System.Collections.ObjectModel.Collection<ActivityEvent>();
         }
 
-		/// <summary>
-		/// The <see cref="ActivityItemType"/> of the item.
-		/// </summary>
-		public ActivityItemType ItemType { get; private set; }
+        /// <summary>
+        /// The <see cref="ActivityItemType"/> of the item.
+        /// </summary>
+        public ActivityItemType ItemType { get; private set; }
 
-		/// <summary>
-		/// The ID of either the photoset or the photo.
-		/// </summary>
-		public string Id { get; private set; }
+        /// <summary>
+        /// The ID of either the photoset or the photo.
+        /// </summary>
+        public string Id { get; private set; }
 
-		/// <summary>
-		/// The secret for either the photo, or the primary photo for the photoset.
-		/// </summary>
-		public string Secret { get; private set; }
+        /// <summary>
+        /// The secret for either the photo, or the primary photo for the photoset.
+        /// </summary>
+        public string Secret { get; private set; }
 
-		/// <summary>
-		/// The server for either the photo, or the primary photo for the photoset.
-		/// </summary>
-		public string Server { get; private set; }
+        /// <summary>
+        /// The server for either the photo, or the primary photo for the photoset.
+        /// </summary>
+        public string Server { get; private set; }
 
-		/// <summary>
-		/// The server farm for either the photo, or the primary photo for the photoset.
-		/// </summary>
-		public string Farm { get; private set; }
+        /// <summary>
+        /// The server farm for either the photo, or the primary photo for the photoset.
+        /// </summary>
+        public string Farm { get; private set; }
 
-		/// <summary>
-		/// The title of the photoset or photo.
-		/// </summary>
-		public string Title { get; private set; }
+        /// <summary>
+        /// The title of the photoset or photo.
+        /// </summary>
+        public string Title { get; private set; }
 
-		/// <summary>
-		/// The number of new comments within the given time frame. 
-		/// </summary>
-		/// <remarks>
-		/// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
-		/// </remarks>
-		public int NewComments { get; private set; }
+        /// <summary>
+        /// The number of new comments within the given time frame. 
+        /// </summary>
+        /// <remarks>
+        /// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
+        /// </remarks>
+        public int NewComments { get; private set; }
 
-		/// <summary>
-		/// The number of old comments within the given time frame. 
-		/// </summary>
-		/// <remarks>
-		/// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
-		/// </remarks>
-		public int OldComments { get; private set; }
+        /// <summary>
+        /// The number of old comments within the given time frame. 
+        /// </summary>
+        /// <remarks>
+        /// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
+        /// </remarks>
+        public int OldComments { get; private set; }
 
-		/// <summary>
-		/// The number of comments on the item. 
-		/// </summary>
-		/// <remarks>
-		/// Only applicable for <see cref="Flickr.ActivityUserComments"/>.
-		/// </remarks>
-		public int Comments { get; private set; }
+        /// <summary>
+        /// The number of comments on the item. 
+        /// </summary>
+        /// <remarks>
+        /// Only applicable for <see cref="Flickr.ActivityUserComments"/>.
+        /// </remarks>
+        public int Comments { get; private set; }
 
-		/// <summary>
-		/// Gets the number of views for this photo or photoset.
-		/// </summary>
-		public int Views { get; private set; }
+        /// <summary>
+        /// Gets the number of views for this photo or photoset.
+        /// </summary>
+        public int Views { get; private set; }
 
-		/// <summary>
-		/// You want more! You got it!
-		/// </summary>
-		/// <remarks>
-		/// Actually, not sure what this it for!
-		/// </remarks>
-		public bool More { get; private set; }
+        /// <summary>
+        /// You want more! You got it!
+        /// </summary>
+        /// <remarks>
+        /// Actually, not sure what this it for!
+        /// </remarks>
+        public bool More { get; private set; }
 
-		/// <summary>
-		/// The user id of the owner of this item.
-		/// </summary>
-		public string OwnerId { get; private set; }
+        /// <summary>
+        /// The user id of the owner of this item.
+        /// </summary>
+        public string OwnerId { get; private set; }
 
         /// <summary>
         /// The username of the owner of this item.
         /// </summary>
         public string OwnerName { get; private set; }
 
-		/// <summary>
-		/// If the type is a photoset then this contains the number of photos in the set. Otherwise returns -1.
-		/// </summary>
-		public int? Photos { get; private set; }
+        /// <summary>
+        /// If the type is a photoset then this contains the number of photos in the set. Otherwise returns -1.
+        /// </summary>
+        public int? Photos { get; private set; }
 
-		/// <summary>
-		/// If this is a photoset then returns the primary photo id, otherwise will be null (<code>Nothing</code> in VB.Net).
-		/// </summary>
-		public string PrimaryPhotoId { get; private set; }
+        /// <summary>
+        /// If this is a photoset then returns the primary photo id, otherwise will be null (<code>Nothing</code> in VB.Net).
+        /// </summary>
+        public string PrimaryPhotoId { get; private set; }
 
-		/// <summary>
-		/// The number of new notes within the given time frame. 
-		/// </summary>
-		/// <remarks>
-		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
-		/// </remarks>
-		public int? NewNotes { get; private set; }
+        /// <summary>
+        /// The number of new notes within the given time frame. 
+        /// </summary>
+        /// <remarks>
+        /// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
+        /// </remarks>
+        public int? NewNotes { get; private set; }
 
-		/// <summary>
-		/// The number of old notes within the given time frame. 
-		/// </summary>
-		/// <remarks>
-		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
-		/// </remarks>
-		public int? OldNotes { get; private set; }
+        /// <summary>
+        /// The number of old notes within the given time frame. 
+        /// </summary>
+        /// <remarks>
+        /// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
+        /// </remarks>
+        public int? OldNotes { get; private set; }
 
-		/// <summary>
-		/// The number of comments on the photo.
-		/// </summary>
-		/// <remarks>
-		/// Only applicable for photos and when calling <see cref="Flickr.ActivityUserComments"/>.
-		/// </remarks>
-		public int? Notes { get; private set; }
+        /// <summary>
+        /// The number of comments on the photo.
+        /// </summary>
+        /// <remarks>
+        /// Only applicable for photos and when calling <see cref="Flickr.ActivityUserComments"/>.
+        /// </remarks>
+        public int? Notes { get; private set; }
 
-		/// <summary>
-		/// If the type is a photo then this contains the number of favourites in the set. Otherwise returns -1.
-		/// </summary>
-		public int? Favorites { get; private set; }
+        /// <summary>
+        /// If the type is a photo then this contains the number of favourites in the set. Otherwise returns -1.
+        /// </summary>
+        public int? Favorites { get; private set; }
 
-		/// <summary>
-		/// The events that comprise this activity item.
-		/// </summary>
-		public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; private set; }
+        /// <summary>
+        /// The events that comprise this activity item.
+        /// </summary>
+        public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; private set; }
 
-		void IFlickrParsable.Load(XmlReader reader)
-		{
+        void IFlickrParsable.Load(XmlReader reader)
+        {
             LoadAttributes(reader);
 
             LoadElements(reader);
-		}
+        }
 
         private void LoadElements(XmlReader reader)
         {
@@ -248,22 +268,4 @@ namespace FlickrNet
 
     }
 
-	/// <summary>
-	/// The type of the <see cref="ActivityItem"/>.
-	/// </summary>
-	public enum ActivityItemType
-	{
-		/// <summary>
-		/// The type is unknown, either not set of a new unsupported type.
-		/// </summary>
-		Unknown,
-		/// <summary>
-		/// The activity item is on a photoset.
-		/// </summary>
-		Photoset,
-		/// <summary>
-		/// The activitiy item is on a photo.
-		/// </summary>
-		Photo
-	}
 }

@@ -34,12 +34,12 @@ namespace FlickrNet
             }
 
             Uri url;
-            if (!String.IsNullOrEmpty(_sharedSecret))
+            if (!String.IsNullOrEmpty(sharedSecret))
                 url = CalculateUri(parameters, true);
             else
                 url = CalculateUri(parameters, false);
 
-            _lastRequest = url.AbsoluteUri;
+            lastRequest = url.AbsoluteUri;
 
             string responseXml = String.Empty;
 
@@ -69,7 +69,7 @@ namespace FlickrNet
                 }
             }
 
-            _lastResponse = responseXml;
+            lastResponse = responseXml;
 
             XmlTextReader reader = new XmlTextReader(new StringReader(responseXml));
             reader.WhitespaceHandling = WhitespaceHandling.None;
@@ -113,7 +113,7 @@ namespace FlickrNet
             if (url.AbsoluteUri.Length > 2000)
             {
                 postContents = url.Query.Substring(1);
-                url = new Uri(url, "");
+                url = new Uri(url, String.Empty);
             }
 
             // Initialise the web request
@@ -152,7 +152,7 @@ namespace FlickrNet
                     HttpWebResponse res2 = (HttpWebResponse)ex.Response;
                     if (res2 != null)
                     {
-                        throw new FlickrWebException(String.Format(System.Globalization.CultureInfo.InvariantCulture,"HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
+                        throw new FlickrWebException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
                     }
                 }
                 throw new FlickrWebException(ex.Message, ex);

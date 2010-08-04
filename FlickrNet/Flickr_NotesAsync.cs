@@ -29,7 +29,9 @@ namespace FlickrNet
             parameters.Add("note_h", noteHeight.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("note_text", noteText);
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
                     FlickrResult<string> result = new FlickrResult<string>();
                     result.HasError = r.HasError;

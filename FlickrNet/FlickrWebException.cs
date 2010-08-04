@@ -2,12 +2,12 @@ using System;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Exception thrown when a communication error occurs with a web call.
-	/// </summary>
+    /// <summary>
+    /// Exception thrown when a communication error occurs with a web call.
+    /// </summary>
     [Serializable]
     public class FlickrWebException : FlickrException
-	{
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlickrWebException"/> class.
         /// </summary>
@@ -35,5 +35,5 @@ namespace FlickrNet
         {
         }
 
-	}
+    }
 }

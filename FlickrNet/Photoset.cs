@@ -9,7 +9,7 @@ namespace FlickrNet
     /// </summary>
     public sealed class Photoset : IFlickrParsable
     {
-        private string _url;
+        private string url;
 
         /// <summary>
         /// The ID of the photoset.
@@ -23,10 +23,10 @@ namespace FlickrNet
         {
             get
             {
-                if (_url == null) _url = String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
-                return _url;
+                if (url == null) url = String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
+                return url;
             }
-            private set { _url = value; }
+            private set { url = value; }
         }
 
         /// <summary>
@@ -144,9 +144,9 @@ namespace FlickrNet
 
             reader.Read();
 
-            while( reader.LocalName != "photoset" && reader.NodeType != System.Xml.XmlNodeType.EndElement)
+            while (reader.LocalName != "photoset" && reader.NodeType != System.Xml.XmlNodeType.EndElement)
             {
-                switch(reader.LocalName)
+                switch (reader.LocalName)
                 {
                     case "title":
                         Title = reader.ReadElementContentAsString();

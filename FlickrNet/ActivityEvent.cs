@@ -3,38 +3,38 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// A user event on a photo, e.g. Comment or Favourite etc.
-	/// </summary>
-	/// <remarks>
-	/// Includes the user's Flickr ID, name, the date of the activity and its content (if a comment).
-	/// </remarks>
-	public sealed class ActivityEvent : IFlickrParsable
-	{
-		/// <summary>
-		/// The <see cref="ActivityEventType"/> of the event, either Comment or Note.
-		/// </summary>
-		public ActivityEventType EventType { get; private set; }
+    /// <summary>
+    /// A user event on a photo, e.g. Comment or Favourite etc.
+    /// </summary>
+    /// <remarks>
+    /// Includes the user's Flickr ID, name, the date of the activity and its content (if a comment).
+    /// </remarks>
+    public sealed class ActivityEvent : IFlickrParsable
+    {
+        /// <summary>
+        /// The <see cref="ActivityEventType"/> of the event, either Comment or Note.
+        /// </summary>
+        public ActivityEventType EventType { get; private set; }
 
-		/// <summary>
-		/// The user id of the user who made the comment or note.
-		/// </summary>
-		public string UserId { get; private set; }
+        /// <summary>
+        /// The user id of the user who made the comment or note.
+        /// </summary>
+        public string UserId { get; private set; }
 
-		/// <summary>
-		/// The screen name of the user who made the comment or note.
-		/// </summary>
-		public string UserName { get; private set; }
+        /// <summary>
+        /// The screen name of the user who made the comment or note.
+        /// </summary>
+        public string UserName { get; private set; }
 
-		/// <summary>
-		/// The date the note or comment was added.
-		/// </summary>
-		public DateTime DateAdded { get; private set; }
+        /// <summary>
+        /// The date the note or comment was added.
+        /// </summary>
+        public DateTime DateAdded { get; private set; }
 
-		/// <summary>
-		/// The text of the note or comment.
-		/// </summary>
-		public string Value { get; private set; }
+        /// <summary>
+        /// The text of the note or comment.
+        /// </summary>
+        public string Value { get; private set; }
 
         /// <summary>
         /// If this event is a comment then this is the ID of the comment.
@@ -112,30 +112,34 @@ namespace FlickrNet
 
     }
 
-	/// <summary>
-	/// The type of the <see cref="ActivityEvent"/>.
-	/// </summary>
-	public enum ActivityEventType
-	{
-		/// <summary>
-		/// The event type was not specified, or was a new unsupported type.
-		/// </summary>
-		Unknown,
-		/// <summary>
-		/// The event was a comment.
-		/// </summary>
-		Comment,
-		/// <summary>
-		/// The event was a note.
-		/// </summary>
-		Note,
-		/// <summary>
-		/// The event is a favourite.
-		/// </summary>
-		Favorite,
+    /// <summary>
+    /// The type of the <see cref="ActivityEvent"/>.
+    /// </summary>
+    public enum ActivityEventType
+    {
+        /// <summary>
+        /// The event type was not specified, or was a new unsupported type.
+        /// </summary>
+        Unknown,
+
+        /// <summary>
+        /// The event was a comment.
+        /// </summary>
+        Comment,
+
+        /// <summary>
+        /// The event was a note.
+        /// </summary>
+        Note,
+
+        /// <summary>
+        /// The event is a favourite.
+        /// </summary>
+        Favorite,
+
         /// <summary>
         /// The event is for a gallery.
         /// </summary>
         Gallery
-	}
+    }
 }

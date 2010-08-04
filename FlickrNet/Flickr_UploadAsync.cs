@@ -64,8 +64,8 @@ namespace FlickrNet
                 parameters.Add("hidden", hiddenFromSearch.ToString("D"));
             }
 
-            parameters.Add("api_key", _apiKey);
-            parameters.Add("auth_token", _apiToken);
+            parameters.Add("api_key", apiKey);
+            parameters.Add("auth_token", apiToken);
 
             UploadDataAsync(stream, fileName, uploadUri, parameters, callback);
         }
@@ -84,8 +84,8 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("photo_id", photoId);
-            parameters.Add("api_key", _apiKey);
-            parameters.Add("auth_token", _apiToken);
+            parameters.Add("api_key", apiKey);
+            parameters.Add("auth_token", apiToken);
 
             UploadDataAsync(stream, fileName, replaceUri, parameters, callback);
         }
@@ -98,57 +98,61 @@ namespace FlickrNet
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
             req.Method = "POST";
-            req.ContentType = "multipart/form-data; boundary=" + boundary + "";
+            req.ContentType = "multipart/form-data; boundary=" + boundary;
 
-            req.BeginGetRequestStream(r =>
-            {
-                Stream s = req.EndGetRequestStream(r);
-                s.Write(dataBuffer, 0, dataBuffer.Length);
-                s.Close();
-
-                req.BeginGetResponse(r2 =>
+            req.BeginGetRequestStream(
+                r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    Stream s = req.EndGetRequestStream(r);
+                    s.Write(dataBuffer, 0, dataBuffer.Length);
+                    s.Close();
 
-                    try
-                    {
-                        WebResponse res = req.EndGetResponse(r2);
-                        StreamReader sr = new StreamReader(res.GetResponseStream());
-                        string responseXml = sr.ReadToEnd();
-                        sr.Close();
-
-                        XmlReaderSettings settings = new XmlReaderSettings();
-                        settings.IgnoreWhitespace = true;
-                        XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
-
-                        if (!reader.ReadToDescendant("rsp"))
+                    req.BeginGetResponse(
+                        r2 =>
                         {
-                            throw new XmlException("Unable to find response element 'rsp' in Flickr response");
-                        }
-                        while (reader.MoveToNextAttribute())
-                        {
-                            if (reader.LocalName == "stat" && reader.Value == "fail")
-                                throw ExceptionHandler.CreateResponseException(reader);
-                            continue;
-                        }
+                            FlickrResult<string> result = new FlickrResult<string>();
 
-                        reader.MoveToElement();
-                        reader.Read();
+                            try
+                            {
+                                WebResponse res = req.EndGetResponse(r2);
+                                StreamReader sr = new StreamReader(res.GetResponseStream());
+                                string responseXml = sr.ReadToEnd();
+                                sr.Close();
 
-                        UnknownResponse t = new UnknownResponse();
-                        ((IFlickrParsable)t).Load(reader);
-                        result.Result = t.GetElementValue("photoid");
-                        result.HasError = false;
-                    }
-                    catch (Exception ex)
-                    {
-                        result.Error = ex;
-                    }
+                                XmlReaderSettings settings = new XmlReaderSettings();
+                                settings.IgnoreWhitespace = true;
+                                XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
 
-                    callback(result);
+                                if (!reader.ReadToDescendant("rsp"))
+                                {
+                                    throw new XmlException("Unable to find response element 'rsp' in Flickr response");
+                                }
+                                while (reader.MoveToNextAttribute())
+                                {
+                                    if (reader.LocalName == "stat" && reader.Value == "fail")
+                                        throw ExceptionHandler.CreateResponseException(reader);
+                                    continue;
+                                }
 
-                }, this);
-            }, this);
+                                reader.MoveToElement();
+                                reader.Read();
+
+                                UnknownResponse t = new UnknownResponse();
+                                ((IFlickrParsable)t).Load(reader);
+                                result.Result = t.GetElementValue("photoid");
+                                result.HasError = false;
+                            }
+                            catch (Exception ex)
+                            {
+                                result.Error = ex;
+                            }
+
+                            callback(result);
+
+                        }, 
+                        this);
+                }, 
+                this);
 
         }
 
@@ -158,7 +162,7 @@ namespace FlickrNet
             parameters.Keys.CopyTo(keys, 0);
             Array.Sort(keys);
 
-            StringBuilder hashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
+            StringBuilder hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
             StringBuilder contentStringBuilder = new StringBuilder();
 
             foreach (string key in keys)

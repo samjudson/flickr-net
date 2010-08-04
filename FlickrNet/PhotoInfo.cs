@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
+    /// <summary>
     /// Detailed information returned by <see cref="Flickr.PhotosGetInfo(string)"/> or <see cref="Flickr.PhotosGetInfo(string, string)"/> methods.
-	/// </summary>
+    /// </summary>
     public sealed class PhotoInfo : IFlickrParsable
-	{
+    {
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -19,50 +19,50 @@ namespace FlickrNet
         }
 
         /// <summary>
-		/// The id of the photo.
-		/// </summary>
+        /// The id of the photo.
+        /// </summary>
         public string PhotoId { get; private set; }
 
-		/// <summary>
-		/// The secret of the photo. Used to calculate the URL (amongst other things).
-		/// </summary>
+        /// <summary>
+        /// The secret of the photo. Used to calculate the URL (amongst other things).
+        /// </summary>
         public string Secret { get; private set; }
 
-		/// <summary>
-		/// The server on which the photo resides.
-		/// </summary>
+        /// <summary>
+        /// The server on which the photo resides.
+        /// </summary>
         public string Server { get; private set; }
 
-		/// <summary>
-		/// The server farm on which the photo resides.
-		/// </summary>
+        /// <summary>
+        /// The server farm on which the photo resides.
+        /// </summary>
         public string Farm { get; private set; }
 
-		/// <summary>
-		/// The original format of the image (e.g. jpg, png etc).
-		/// </summary>
+        /// <summary>
+        /// The original format of the image (e.g. jpg, png etc).
+        /// </summary>
         public string OriginalFormat { get; private set; }
 
-		/// <summary>
-		/// Optional extra field containing the original 'secret' of the 
-		/// photo used for forming the Url.
-		/// </summary>
+        /// <summary>
+        /// Optional extra field containing the original 'secret' of the 
+        /// photo used for forming the Url.
+        /// </summary>
         public string OriginalSecret { get; private set; }
 
-		/// <summary>
-		/// The date the photo was uploaded (or 'posted').
-		/// </summary>
-		public DateTime DateUploaded { get; private set; }
+        /// <summary>
+        /// The date the photo was uploaded (or 'posted').
+        /// </summary>
+        public DateTime DateUploaded { get; private set; }
 
-		/// <summary>
-		/// Is the photo a favorite of the current authorised user. 
-		/// Will be 0 if the user is not authorised.
-		/// </summary>
+        /// <summary>
+        /// Is the photo a favorite of the current authorised user. 
+        /// Will be 0 if the user is not authorised.
+        /// </summary>
         public bool IsFavorite { get; private set; }
 
-		/// <summary>
-		/// The license of the photo.
-		/// </summary>
+        /// <summary>
+        /// The license of the photo.
+        /// </summary>
         public LicenseType License { get; private set; }
 
         /// <summary>
@@ -100,14 +100,14 @@ namespace FlickrNet
         /// </summary>
         public string OwnerLocation { get; private set; }
 
-		/// <summary>
-		/// The title of the photo.
-		/// </summary>
+        /// <summary>
+        /// The title of the photo.
+        /// </summary>
         public string Title { get; private set; }
 
-		/// <summary>
-		/// The description of the photo.
-		/// </summary>
+        /// <summary>
+        /// The description of the photo.
+        /// </summary>
         public string Description { get; private set; }
 
         /// <summary>
@@ -161,14 +161,14 @@ namespace FlickrNet
         /// </summary>
         public bool CanShare { get; private set; }
 
-		/// <summary>
-		/// The number of comments the photo has.
-		/// </summary>
-		public int CommentsCount  { get; private set; }
+        /// <summary>
+        /// The number of comments the photo has.
+        /// </summary>
+        public int CommentsCount { get; private set; }
 
-		/// <summary>
-		/// The notes for the photo.
-		/// </summary>
+        /// <summary>
+        /// The notes for the photo.
+        /// </summary>
         public System.Collections.ObjectModel.Collection<PhotoInfoNote> Notes { get; private set; }
 
         /// <summary>
@@ -211,12 +211,12 @@ namespace FlickrNet
         /// </summary>
         public PermissionAddMeta? PermissionAddMeta { get; private set; }
 
-		/// <summary>
-		/// The location information of this photo, if available.
-		/// </summary>
-		/// <remarks>
-		/// Will be null if the photo has no location information stored on Flickr.
-		/// </remarks>
+        /// <summary>
+        /// The location information of this photo, if available.
+        /// </summary>
+        /// <remarks>
+        /// Will be null if the photo has no location information stored on Flickr.
+        /// </remarks>
         public PlaceInfo Location { get; private set; }
 
         /// <summary>
@@ -229,78 +229,78 @@ namespace FlickrNet
         /// </summary>
         public VideoInfo VideoInfo { get; private set; }
 
-		/// <summary>
-		/// The Web url for flickr web page for this photo.
-		/// </summary>
+        /// <summary>
+        /// The Web url for flickr web page for this photo.
+        /// </summary>
         public string WebUrl
-		{
+        {
             get
             {
                 return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId);
             }
-		}
+        }
 
-		/// <summary>
-		/// The URL for the square thumbnail for the photo.
-		/// </summary>
+        /// <summary>
+        /// The URL for the square thumbnail for the photo.
+        /// </summary>
         public string SquareThumbnailUrl
-		{
-			get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
-		}
+        {
+            get { return UtilityMethods.UrlFormat(this, "_s", "jpg"); }
+        }
 
-		/// <summary>
-		/// The URL for the thumbnail for the photo.
-		/// </summary>
+        /// <summary>
+        /// The URL for the thumbnail for the photo.
+        /// </summary>
         public string ThumbnailUrl
-		{
-			get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
-		}
+        {
+            get { return UtilityMethods.UrlFormat(this, "_t", "jpg"); }
+        }
 
-		/// <summary>
-		/// The URL for the small version of this photo.
-		/// </summary>
+        /// <summary>
+        /// The URL for the small version of this photo.
+        /// </summary>
         public string SmallUrl
-		{
-			get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
-		}
+        {
+            get { return UtilityMethods.UrlFormat(this, "_m", "jpg"); }
+        }
 
-		/// <summary>
-		/// The URL for the medium version of this photo.
-		/// </summary>
-		/// <remarks>
-		/// There is no guarentee that this size of the image actually exists.
-		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
-		/// </remarks>
+        /// <summary>
+        /// The URL for the medium version of this photo.
+        /// </summary>
+        /// <remarks>
+        /// There is no guarentee that this size of the image actually exists.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
+        /// </remarks>
         public string MediumUrl
-		{
-			get { return UtilityMethods.UrlFormat(this, "", "jpg"); }
-		}
+        {
+            get { return UtilityMethods.UrlFormat(this, String.Empty, "jpg"); }
+        }
 
-		/// <summary>
-		/// The URL for the large version of this photo.
-		/// </summary>
-		/// <remarks>
-		/// There is no guarentee that this size of the image actually exists.
-		/// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
-		/// </remarks>
+        /// <summary>
+        /// The URL for the large version of this photo.
+        /// </summary>
+        /// <remarks>
+        /// There is no guarentee that this size of the image actually exists.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
+        /// </remarks>
         public string LargeUrl
-		{
-			get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
-		}
+        {
+            get { return UtilityMethods.UrlFormat(this, "_b", "jpg"); }
+        }
 
-		/// <summary>
-		/// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
-		/// </summary>
+        /// <summary>
+        /// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
+        /// </summary>
         public string OriginalUrl
-		{
-			get 
-			{
+        {
+            get 
+            {
                 if (OriginalFormat == null || OriginalFormat.Length == 0)
                     return null;
 
-				return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
-			}
-		}
+                return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
+            }
+        }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -612,49 +612,49 @@ namespace FlickrNet
 
     }
 
-	/// <summary>
-	/// A class containing information about a note on a photo.
-	/// </summary>
+    /// <summary>
+    /// A class containing information about a note on a photo.
+    /// </summary>
     public sealed class PhotoInfoNote : IFlickrParsable
-	{
-		/// <summary>
-		/// The notes unique ID.
-		/// </summary>
+    {
+        /// <summary>
+        /// The notes unique ID.
+        /// </summary>
         public string NoteId { get; private set; }
 
-		/// <summary>
-		/// The User ID of the user who wrote the note.
-		/// </summary>
+        /// <summary>
+        /// The User ID of the user who wrote the note.
+        /// </summary>
         public string AuthorId { get; private set; }
 
-		/// <summary>
-		/// The name of the user who wrote the note.
-		/// </summary>
+        /// <summary>
+        /// The name of the user who wrote the note.
+        /// </summary>
         public string AuthorName { get; private set; }
 
-		/// <summary>
-		/// The x (left) position of the top left corner of the note.
-		/// </summary>
+        /// <summary>
+        /// The x (left) position of the top left corner of the note.
+        /// </summary>
         public int XPosition { get; private set; }
 
-		/// <summary>
-		/// The y (top) position of the top left corner of the note.
-		/// </summary>
+        /// <summary>
+        /// The y (top) position of the top left corner of the note.
+        /// </summary>
         public int YPosition { get; private set; }
 
-		/// <summary>
-		/// The width of the note.
-		/// </summary>
-		public int Width { get; private set; }
+        /// <summary>
+        /// The width of the note.
+        /// </summary>
+        public int Width { get; private set; }
 
-		/// <summary>
-		/// The height of the note.
-		/// </summary>
+        /// <summary>
+        /// The height of the note.
+        /// </summary>
         public int Height { get; private set; }
 
-		/// <summary>
-		/// The text of the note.
-		/// </summary>
+        /// <summary>
+        /// The text of the note.
+        /// </summary>
         public string NoteText { get; private set; }
 
 #if !SILVERLIGHT
@@ -724,39 +724,39 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// The details of a tag of a photo.
-	/// </summary>
+    /// <summary>
+    /// The details of a tag of a photo.
+    /// </summary>
     public sealed class PhotoInfoTag : IFlickrParsable
-	{
-		/// <summary>
-		/// The id of the tag.
-		/// </summary>
+    {
+        /// <summary>
+        /// The id of the tag.
+        /// </summary>
         public string TagId { get; private set; }
 
-		/// <summary>
-		/// The author id of the tag.
-		/// </summary>
+        /// <summary>
+        /// The author id of the tag.
+        /// </summary>
         public string AuthorId { get; private set; }
 
-		/// <summary>
-		/// The real name of the author of the tag.
-		/// </summary>
+        /// <summary>
+        /// The real name of the author of the tag.
+        /// </summary>
         public string AuthorName { get; private set; }
 
-		/// <summary>
-		/// Raw copy of the tag, as the user entered it.
-		/// </summary>
+        /// <summary>
+        /// Raw copy of the tag, as the user entered it.
+        /// </summary>
         public string Raw { get; private set; }
 
-		/// <summary>
-		/// Is the tag a machine tag.
-		/// </summary>
+        /// <summary>
+        /// Is the tag a machine tag.
+        /// </summary>
         public bool IsMachineTag { get; private set; }
 
-		/// <summary>
-		/// The actually tag.
-		/// </summary>
+        /// <summary>
+        /// The actually tag.
+        /// </summary>
         public string TagText { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

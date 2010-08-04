@@ -50,16 +50,18 @@ namespace FlickrNet
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (accuracy != GeoAccuracy.None) parameters.Add("accuracy", ((int)accuracy).ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
-            GetResponseAsync<PlaceCollection>(parameters, (r) =>
-            {
-                FlickrResult<Place> result = new FlickrResult<Place>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<PlaceCollection>(
+                parameters,
+                r =>
                 {
-                    result.Result = r.Result[0];
-                }
-                callback(result);
-            });
+                    FlickrResult<Place> result = new FlickrResult<Place>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = r.Result[0];
+                    }
+                    callback(result);
+                });
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getInfo");
 
-            if (String.IsNullOrEmpty(placeId) &&  String.IsNullOrEmpty(woeId))
+            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
             {
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
@@ -157,7 +159,7 @@ namespace FlickrNet
             GetResponseAsync<ShapeDataCollection>(parameters, callback);
 
         }
-        
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -168,7 +170,7 @@ namespace FlickrNet
             PlacesGetTopPlacesListAsync(placeType, DateTime.MinValue, null, null, callback);
         }
 
-        
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -181,7 +183,7 @@ namespace FlickrNet
             PlacesGetTopPlacesListAsync(placeType, DateTime.MinValue, placeId, woeId, callback);
         }
 
-        
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -394,7 +396,7 @@ namespace FlickrNet
         {
             PlacesTagsForPlaceAsync(placeId, woeId, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, callback);
         }
-        
+
         /// <summary>
         /// Return a list of the top 100 unique tags for a Flickr Places or Where on Earth (WOE) ID.
         /// </summary>

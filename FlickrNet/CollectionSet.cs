@@ -5,23 +5,19 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// 
-	/// </summary>
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class CollectionSet : IFlickrParsable
-	{
-		private string _SetId;
-		private string _title;
-		private string _description;
+    {
+        /// <remarks/>
+        public string SetId { get; private set; }
 
-		/// <remarks/>
-		public string SetId { get { return _SetId; } set { _SetId = value; } }
+        /// <remarks/>
+        public string Title { get; private set; }
 
-		/// <remarks/>
-		public string Title { get { return _title; } set { _title = value; } }
-
-		/// <remarks/>
-		public string Description { get { return _description; } set { _description = value; } }
+        /// <remarks/>
+        public string Description { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

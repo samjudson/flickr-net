@@ -12,18 +12,18 @@ namespace FlickrNet
             Result = result.Result;
         }
 
-        private Exception _error;
+        private Exception error;
         public bool HasError { get; set; }
         public T Result { get; set; }
         public Exception Error
         {
             get
             {
-                return _error;
+                return error;
             }
             set
             {
-                _error = value;
+                error = value;
                 if (value is FlickrApiException)
                 {
                     FlickrApiException ex = value as FlickrApiException;
@@ -44,7 +44,7 @@ namespace FlickrNet
     /// <typeparam name="T">The type of the result returned from Flickr.</typeparam>
     public class FlickrResult<T>
     {
-        private Exception _error;
+        private Exception error;
         /// <summary>
         /// True if the result returned an error.
         /// </summary>
@@ -62,12 +62,16 @@ namespace FlickrNet
         {
             get
             {
-                return _error;
+                return error;
             }
             set
             {
-                _error = value;
-                if (value == null) { HasError = false; return; }
+                error = value;
+                if (value == null)
+                {
+                    HasError = false; 
+                    return;
+                }
                 HasError = true;
                 if (value is FlickrApiException)
                 {

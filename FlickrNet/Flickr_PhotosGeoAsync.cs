@@ -65,29 +65,31 @@ namespace FlickrNet
             parameters.Add("method", "flickr.photos.geo.getLocation");
             parameters.Add("photo_id", photoId);
 
-            GetResponseAsync<PhotoInfo>(parameters, (r) =>
-            {
-                FlickrResult<PlaceInfo> result = new FlickrResult<PlaceInfo>();
-                result.HasError = r.HasError;
-                if (result.HasError)
+            GetResponseAsync<PhotoInfo>(
+                parameters,
+                r =>
                 {
-                    if (result.ErrorCode == 2)
+                    FlickrResult<PlaceInfo> result = new FlickrResult<PlaceInfo>();
+                    result.HasError = r.HasError;
+                    if (result.HasError)
                     {
-                        result.HasError = false;
-                        result.Result = null;
-                        result.Error = null;
+                        if (result.ErrorCode == 2)
+                        {
+                            result.HasError = false;
+                            result.Result = null;
+                            result.Error = null;
+                        }
+                        else
+                        {
+                            result.Error = r.Error;
+                        }
                     }
                     else
                     {
-                        result.Error = r.Error;
+                        result.Result = r.Result.Location;
                     }
-                }
-                else
-                {
-                    result.Result = r.Result.Location;
-                }
-                callback(result);
-            });
+                    callback(result);
+                });
         }
 
         /// <summary>

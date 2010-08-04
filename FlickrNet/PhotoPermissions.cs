@@ -3,28 +3,28 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Permissions for the selected photo.
-	/// </summary>
+    /// <summary>
+    /// Permissions for the selected photo.
+    /// </summary>
     public sealed class PhotoPermissions : IFlickrParsable
-	{
-		/// <remarks/>
-		public string PhotoId { get; private set; }
+    {
+        /// <remarks/>
+        public string PhotoId { get; private set; }
 
-		/// <remarks/>
-		public bool IsPublic { get; private set; }
+        /// <remarks/>
+        public bool IsPublic { get; private set; }
     
-		/// <remarks/>
-		public bool IsFriend { get; private set; }
+        /// <remarks/>
+        public bool IsFriend { get; private set; }
     
-		/// <remarks/>
-		public bool IsFamily { get; private set; }
+        /// <remarks/>
+        public bool IsFamily { get; private set; }
 
-		/// <remarks/>
-		public PermissionComment PermissionComment { get; private set; }
+        /// <remarks/>
+        public PermissionComment PermissionComment { get; private set; }
 
-		/// <remarks/>
-		public PermissionAddMeta PermissionAddMeta { get; private set; }
+        /// <remarks/>
+        public PermissionAddMeta PermissionAddMeta { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

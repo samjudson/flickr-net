@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// The information about the number of photos a user has.
-	/// </summary>
+    /// <summary>
+    /// The information about the number of photos a user has.
+    /// </summary>
     public sealed class PhotoCountCollection : System.Collections.ObjectModel.Collection<PhotoCount>, IFlickrParsable
-	{
+    {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photocounts")
@@ -30,20 +30,20 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// The specifics of a particular count.
-	/// </summary>
+    /// <summary>
+    /// The specifics of a particular count.
+    /// </summary>
     public sealed class PhotoCount : IFlickrParsable
-	{
-		/// <summary>Total number of photos between the FromDate and the ToDate.</summary>
-		/// <remarks/>
+    {
+        /// <summary>Total number of photos between the FromDate and the ToDate.</summary>
+        /// <remarks/>
         public int Count { get; private set; }
     
-		/// <summary>The From date as a <see cref="DateTime"/> object.</summary>
-		public DateTime FromDate { get; private set; }
+        /// <summary>The From date as a <see cref="DateTime"/> object.</summary>
+        public DateTime FromDate { get; private set; }
 
-		/// <summary>The To date as a <see cref="DateTime"/> object.</summary>
-		public DateTime ToDate { get; private set; }
+        /// <summary>The To date as a <see cref="DateTime"/> object.</summary>
+        public DateTime ToDate { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

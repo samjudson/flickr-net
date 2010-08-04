@@ -4,29 +4,29 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Returned by <see cref="Flickr.GroupsSearch(string)"/> methods.
-	/// </summary>
+    /// <summary>
+    /// Returned by <see cref="Flickr.GroupsSearch(string)"/> methods.
+    /// </summary>
     public sealed class GroupSearchResultCollection : System.Collections.ObjectModel.Collection<GroupSearchResult>, IFlickrParsable
-	{
-		/// <summary>
-		/// The current page that the group search results represents.
-		/// </summary>
+    {
+        /// <summary>
+        /// The current page that the group search results represents.
+        /// </summary>
         public int Page { get; private set; }
 
-		/// <summary>
-		/// The total number of pages this search would return.
-		/// </summary>
+        /// <summary>
+        /// The total number of pages this search would return.
+        /// </summary>
         public int Pages { get; private set; }
 
-		/// <summary>
-		/// The number of groups returned per photo.
-		/// </summary>
+        /// <summary>
+        /// The number of groups returned per photo.
+        /// </summary>
         public int PerPage { get; private set; }
 
-		/// <summary>
-		/// The total number of groups that where returned for the search.
-		/// </summary>
+        /// <summary>
+        /// The total number of groups that where returned for the search.
+        /// </summary>
         public int Total { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
@@ -73,22 +73,22 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// A class which encapsulates a single group search result.
-	/// </summary>
-	public sealed class GroupSearchResult : IFlickrParsable
-	{
-		/// <summary>
-		/// The group id for the result.
-		/// </summary>
+    /// <summary>
+    /// A class which encapsulates a single group search result.
+    /// </summary>
+    public sealed class GroupSearchResult : IFlickrParsable
+    {
+        /// <summary>
+        /// The group id for the result.
+        /// </summary>
         public string GroupId { get; private set; }
-		/// <summary>
-		/// The group name for the result.
-		/// </summary>
+        /// <summary>
+        /// The group name for the result.
+        /// </summary>
         public string GroupName { get; private set; }
-		/// <summary>
-		/// True if the group is an over eighteen (adult) group only.
-		/// </summary>
+        /// <summary>
+        /// True if the group is an over eighteen (adult) group only.
+        /// </summary>
         public bool EighteenPlus { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)

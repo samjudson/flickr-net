@@ -5,25 +5,25 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// EXIF data for the selected photo.
-	/// </summary>
+    /// <summary>
+    /// EXIF data for the selected photo.
+    /// </summary>
     public sealed class ExifTagCollection : System.Collections.ObjectModel.Collection<ExifTag>, IFlickrParsable
-	{
-		/// <summary>
-		/// The Photo ID for the photo whose EXIF data this is.
-		/// </summary>
-		public string PhotoId { get; private set; }
+    {
+        /// <summary>
+        /// The Photo ID for the photo whose EXIF data this is.
+        /// </summary>
+        public string PhotoId { get; private set; }
 
-		/// <summary>
-		/// The Secret of the photo.
-		/// </summary>
-		public string Secret { get; private set; }
+        /// <summary>
+        /// The Secret of the photo.
+        /// </summary>
+        public string Secret { get; private set; }
 
-		/// <summary>
-		/// The server number for the photo.
-		/// </summary>
-		public string Server { get; private set; }
+        /// <summary>
+        /// The server number for the photo.
+        /// </summary>
+        public string Server { get; private set; }
 
         /// <summary>
         /// The server farm for this photo.

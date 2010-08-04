@@ -3,32 +3,32 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Contains details of a user
-	/// </summary>
-	public sealed class FoundUser : IFlickrParsable
-	{
-		/// <summary>
-		/// The ID of the found user.
-		/// </summary>
-		public string UserId { get; private set; }
+    /// <summary>
+    /// Contains details of a user
+    /// </summary>
+    public sealed class FoundUser : IFlickrParsable
+    {
+        /// <summary>
+        /// The ID of the found user.
+        /// </summary>
+        public string UserId { get; private set; }
 
-		/// <summary>
-		/// The username of the found user.
-		/// </summary>
-		public string UserName { get; private set; }
+        /// <summary>
+        /// The username of the found user.
+        /// </summary>
+        public string UserName { get; private set; }
 
         /// <summary>
         /// The full name of the user. Only returned by <see cref="Flickr.AuthGetToken"/>.
         /// </summary>
         public string FullName { get; private set; }
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		public FoundUser()
-		{
-		}
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public FoundUser()
+        {
+        }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -65,25 +65,25 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// The upload status of the user, as returned by <see cref="Flickr.PeopleGetUploadStatus"/>.
-	/// </summary>
+    /// <summary>
+    /// The upload status of the user, as returned by <see cref="Flickr.PeopleGetUploadStatus"/>.
+    /// </summary>
     public sealed class UserStatus : IFlickrParsable
-	{
-		/// <summary>
-		/// The id of the user object.
-		/// </summary>
-		public string UserId { get; private set; }
+    {
+        /// <summary>
+        /// The id of the user object.
+        /// </summary>
+        public string UserId { get; private set; }
 
-		/// <summary>
-		/// The Username of the selected user.
-		/// </summary>
-		public string UserName { get; private set; }
+        /// <summary>
+        /// The Username of the selected user.
+        /// </summary>
+        public string UserName { get; private set; }
 
-		/// <summary>
-		/// Is the current user a Pro account.
-		/// </summary>
-		public bool IsPro { get; private set; }
+        /// <summary>
+        /// Is the current user a Pro account.
+        /// </summary>
+        public bool IsPro { get; private set; }
 
         /// <summary>
         /// The maximum bandwidth (in bytes) that the user can use each month.
@@ -171,12 +171,12 @@ namespace FlickrNet
         public int? VideosRemaining { get; private set; }
 
         /// <summary>
-		/// <see cref="Double"/> representing the percentage bandwidth used so far. Will range from 0 to 1.
-		/// </summary>
-		public Double PercentageUsed
-		{
-			get { return BandwidthUsed * 1.0 / BandwidthMax; }
-		}
+        /// <see cref="Double"/> representing the percentage bandwidth used so far. Will range from 0 to 1.
+        /// </summary>
+        public double PercentageUsed
+        {
+            get { return BandwidthUsed * 1.0 / BandwidthMax; }
+        }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

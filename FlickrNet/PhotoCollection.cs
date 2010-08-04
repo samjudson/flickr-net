@@ -7,9 +7,9 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <remarks/>
+    /// <remarks/>
     public sealed class PhotoCollection : PagedPhotoCollection, IFlickrParsable
-	{
+    {
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "photos")

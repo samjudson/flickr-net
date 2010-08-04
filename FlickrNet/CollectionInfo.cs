@@ -6,72 +6,62 @@ using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Summary description for CollectionInfo.
-	/// </summary>
+    /// <summary>
+    /// Summary description for CollectionInfo.
+    /// </summary>
     public sealed class CollectionInfo : IFlickrParsable
-	{
-		private string _title;
-		private string _description;
-		private string _collectionId;
-		private int _childCount;
-		private DateTime _dateCreated;
-		private string _iconLarge;
-		private string _iconSmall;
-		private string _server;
-		private string _secret;
+    {
+        private Collection<Photo> iconPhotos = new Collection<Photo>();
 
-        private Collection<Photo> _iconPhotos = new Collection<Photo>();
+        /// <summary>
+        /// The ID for the collection.
+        /// </summary>
+        public string CollectionId { get; private set; }
 
-		/// <summary>
-		/// The ID for the collection.
-		/// </summary>
-		public string CollectionId { get { return _collectionId; } }
+        /// <summary>
+        /// The number of child collections this collection contains. Call <see cref="Flickr.CollectionsGetTree()"/> for children.
+        /// </summary>
+        public int ChildCount { get; private set; }
 
-		/// <summary>
-		/// The number of child collections this collection contains. Call <see cref="Flickr.CollectionsGetTree()"/> for children.
-		/// </summary>
-		public int ChildCount { get { return _childCount; } }
+        /// <summary>
+        /// The date the collection was created.
+        /// </summary>
+        public DateTime DateCreated { get; private set; }
 
-		/// <summary>
-		/// The date the collection was created.
-		/// </summary>
-		public DateTime DateCreated { get { return _dateCreated; } }
+        /// <summary>
+        /// The large mosaic icon for the collection.
+        /// </summary>
+        public string IconLarge { get; private set; }
 
-		/// <summary>
-		/// The large mosaic icon for the collection.
-		/// </summary>
-		public string IconLarge { get { return _iconLarge; } }
+        /// <summary>
+        /// The small mosaix icon for the collection.
+        /// </summary>
+        public string IconSmall { get; private set; }
 
-		/// <summary>
-		/// The small mosaix icon for the collection.
-		/// </summary>
-		public string IconSmall { get { return _iconSmall; } }
+        /// <summary>
+        /// The server for the icons.
+        /// </summary>
+        public string Server { get; private set; }
 
-		/// <summary>
-		/// The server for the icons.
-		/// </summary>
-		public string Server { get { return _server; } }
+        /// <summary>
+        /// The secret for the icons.
+        /// </summary>
+        public string Secret { get; private set; }
 
-		/// <summary>
-		/// The secret for the icons.
-		/// </summary>
-		public string Secret { get { return _secret; } }
+        /// <summary>
+        /// The description for the collection.
+        /// </summary>
+        public string Description { get; private set; }
 
-		/// <summary>
-		/// The description for the collection.
-		/// </summary>
-		public string Description { get { return _description; } }
-
-		/// <summary>
-		/// The title of the description.
-		/// </summary>
-		public string Title { get { return _title; } }
+        /// <summary>
+        /// The title of the description.
+        /// </summary>
+        public string Title { get; private set; }
 
         /// <summary>
         /// An array of the 12 photos used to create a collection's mosaic.
         /// </summary>
-        public Collection<Photo> IconPhotos { get { return _iconPhotos; } }
+        public Collection<Photo> IconPhotos { get { return iconPhotos; } }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -83,25 +73,25 @@ namespace FlickrNet
                 switch (reader.Name)
                 {
                     case "id":
-                        _collectionId = reader.Value;
+                        CollectionId = reader.Value;
                         break;
                     case "child_count":
-                        _childCount = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        ChildCount = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "datecreate":
-                        _dateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "iconlarge":
-                        _iconLarge = reader.Value;
+                        IconLarge = reader.Value;
                         break;
                     case "iconsmall":
-                        _iconSmall = reader.Value;
+                        IconSmall = reader.Value;
                         break;
                     case "server":
-                        _server = reader.Value;
+                        Server = reader.Value;
                         break;
                     case "secret":
-                        _secret = reader.Value;
+                        Secret = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -114,10 +104,10 @@ namespace FlickrNet
                 switch (reader.Name)
                 {
                     case "title":
-                        _title = reader.ReadElementContentAsString();
+                        Title = reader.ReadElementContentAsString();
                         break;
                     case "description":
-                        _description = reader.ReadElementContentAsString();
+                        Description = reader.ReadElementContentAsString();
                         break;
                     case "iconphotos":
                         reader.Read();
@@ -127,7 +117,7 @@ namespace FlickrNet
                             Photo p = new Photo();
                             ((IFlickrParsable)p).Load(reader);
 
-                            _iconPhotos.Add(p);
+                            iconPhotos.Add(p);
                         }
                         reader.Read();
                         return;
@@ -140,5 +130,5 @@ namespace FlickrNet
             reader.Skip();
 
         }
-	}
+    }
 }

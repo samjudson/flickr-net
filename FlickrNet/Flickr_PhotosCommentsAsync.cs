@@ -35,7 +35,9 @@ namespace FlickrNet
             parameters.Add("photo_id", photoId);
             parameters.Add("comment_text", commentText);
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
                     FlickrResult<string> result = new FlickrResult<string>();
                     result.HasError = r.HasError;

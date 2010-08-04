@@ -3,12 +3,12 @@ using System.Security.Permissions;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Exception thrown when the Flickr API returned a specifi error code.
-	/// </summary>
+    /// <summary>
+    /// Exception thrown when the Flickr API returned a specifi error code.
+    /// </summary>
     [Serializable]
     public class FlickrApiException : FlickrException
-	{
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="FlickrApiException"/> class with a specific code and message.
         /// </summary>
@@ -51,26 +51,26 @@ namespace FlickrNet
         }
 
 
-		/// <summary>
-		/// Get the code of the Flickr error.
-		/// </summary>
-		public int Code { get; set; }
+        /// <summary>
+        /// Get the code of the Flickr error.
+        /// </summary>
+        public int Code { get; set; }
 
-		/// <summary>
-		/// Gets the orignal message returned by Flickr.
-		/// </summary>
-		public string OriginalMessage { get; set; }
-		
-		/// <summary>
-		/// Overrides the message to return custom error message.
-		/// </summary>
-		public override string Message
-		{
-			get
-			{
+        /// <summary>
+        /// Gets the orignal message returned by Flickr.
+        /// </summary>
+        public string OriginalMessage { get; set; }
+        
+        /// <summary>
+        /// Overrides the message to return custom error message.
+        /// </summary>
+        public override string Message
+        {
+            get
+            {
                 return OriginalMessage + " (" + Code + ")";
-			}
-		}
+            }
+        }
 
-	}
+    }
 }

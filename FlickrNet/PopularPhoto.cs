@@ -26,8 +26,6 @@ namespace FlickrNet
         {
             Load(reader);
 
-            //reader.Read();
-
             if (reader.LocalName != "stats")
             {
                         UtilityMethods.CheckParsingException(reader);

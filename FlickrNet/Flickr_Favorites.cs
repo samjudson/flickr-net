@@ -6,7 +6,6 @@ namespace FlickrNet
 {
     public partial class Flickr
     {
-        #region [ Favorites ]
         /// <summary>
         /// Adds a photo to the logged in favourites.
         /// Requires authentication.
@@ -122,8 +121,5 @@ namespace FlickrNet
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
-        #endregion
-
-
     }
 }

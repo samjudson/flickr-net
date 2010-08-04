@@ -139,12 +139,12 @@ namespace FlickrNet
                 parameters.Add("hidden", (int)hiddenFromSearch);
             }
 
-            parameters.Add("api_key", _apiKey);
-            parameters.Add("auth_token", _apiToken);
+            parameters.Add("api_key", apiKey);
+            parameters.Add("auth_token", apiToken);
 
             string s = UploadData(stream, fileName, uploadUri, parameters);
 
-            XmlSerializer serializer = _uploaderSerializer;
+            XmlSerializer serializer = uploaderSerializer;
             StringReader str = new StringReader(s);
             FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
 
@@ -164,7 +164,7 @@ namespace FlickrNet
             parameters.Keys.CopyTo(keys, 0);
             Array.Sort(keys);
 
-            StringBuilder hashStringBuilder = new StringBuilder(_sharedSecret, 2 * 1024);
+            StringBuilder hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
             StringBuilder contentStringBuilder = new StringBuilder();
             string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
@@ -212,8 +212,8 @@ namespace FlickrNet
             if (Proxy != null) req.Proxy = Proxy;
             req.KeepAlive = true;
             req.Timeout = HttpTimeout;
-            req.ContentType = "multipart/form-data; boundary=" + boundary + "";
-            req.Expect = "";
+            req.ContentType = "multipart/form-data; boundary=" + boundary;
+            req.Expect = String.Empty;
 
             req.ContentLength = dataBuffer.Length;
 
@@ -281,13 +281,13 @@ namespace FlickrNet
             Hashtable parameters = new Hashtable();
 
             parameters.Add("photo_id", photoId);
-            parameters.Add("api_key", _apiKey);
-            parameters.Add("auth_token", _apiToken);
+            parameters.Add("api_key", apiKey);
+            parameters.Add("auth_token", apiToken);
 
             string s = UploadData(stream, fileName, replaceUri, parameters);
 
             StringReader str = new StringReader(s);
-            XmlSerializer serializer = _uploaderSerializer;
+            XmlSerializer serializer = uploaderSerializer;
 
             FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
 

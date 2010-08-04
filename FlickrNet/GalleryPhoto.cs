@@ -24,7 +24,7 @@ namespace FlickrNet
             if (reader.LocalName == "description")
                 Description = reader.ReadElementContentAsString();
 
-            if( reader.NodeType == System.Xml.XmlNodeType.EndElement && reader.LocalName == "photo")
+            if (reader.NodeType == System.Xml.XmlNodeType.EndElement && reader.LocalName == "photo")
                 reader.Skip();
         }
     }

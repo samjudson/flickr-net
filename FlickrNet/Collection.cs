@@ -5,48 +5,42 @@ using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
-	/// <remarks/>
-	public sealed class Collection : IFlickrParsable
-	{
-		private string _CollectionId;
-		private string _title;
-		private string _description;
-		private string _iconlarge;
-		private string _iconsmall;
+    /// <remarks/>
+    public sealed class Collection : IFlickrParsable
+    {
+        private Collection<CollectionSet> subsets = new Collection<CollectionSet>();
+        private Collection<Collection> subcollections = new Collection<Collection>();
 
-        private Collection<CollectionSet> _subsets = new Collection<CollectionSet>();
-        private Collection<Collection> _subcollections = new Collection<Collection>();
+        /// <remarks/>
+        public string CollectionId { get; private set; }
 
-		/// <remarks/>
-		public string CollectionId { get { return _CollectionId; } set { _CollectionId = value; } }
+        /// <remarks/>
+        public string Title { get; private set; }
 
-		/// <remarks/>
-		public string Title { get { return _title; } set { _title = value; } }
+        /// <remarks/>
+        public string Description { get; private set; }
 
-		/// <remarks/>
-		public string Description { get { return _description; } set { _description = value; } }
+        /// <remarks/>
+        public string IconLarge { get; private set; }
 
-		/// <remarks/>
-		public string IconLarge { get { return _iconlarge; } set { _iconlarge = value; } }
+        /// <remarks/>
+        public string IconSmall { get; private set; }
 
-		/// <remarks/>
-		public string IconSmall { get { return _iconsmall; } set { _iconsmall = value; } }
+        /// <summary>
+        /// An array of <see cref="CollectionSet"/> objects.
+        /// </summary>
+        public Collection<CollectionSet> Sets
+        {
+            get { return subsets; }
+        }
 
-		/// <summary>
-		/// An array of <see cref="CollectionSet"/> objects.
-		/// </summary>
-		public Collection<CollectionSet> Sets
-		{
-			get { return _subsets; }
-		}
-
-		/// <summary>
-		/// An array of <see cref="Collection"/> objects.
-		/// </summary>
+        /// <summary>
+        /// An array of <see cref="Collection"/> objects.
+        /// </summary>
         public Collection<Collection> Collections
-		{
-			get { return _subcollections; }
-		}
+        {
+            get { return subcollections; }
+        }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -87,14 +81,14 @@ namespace FlickrNet
                 {
                     Collection c = new Collection();
                     ((IFlickrParsable)c).Load(reader);
-                    _subcollections.Add(c);
+                    subcollections.Add(c);
 
                 }
                 else
                 {
                     CollectionSet s = new CollectionSet();
                     ((IFlickrParsable)s).Load(reader);
-                    _subsets.Add(s);
+                    subsets.Add(s);
                 }
             }
 

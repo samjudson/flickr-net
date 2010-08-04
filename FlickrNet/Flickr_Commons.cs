@@ -12,7 +12,7 @@ namespace FlickrNet
         /// <returns></returns>
         public InstitutionCollection CommonsGetInstitutions()
         {
-            Dictionary<string, string> parameters = new Dictionary<string,string>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.commons.getInstitutions");
 
             return GetResponseCache<InstitutionCollection>(parameters);

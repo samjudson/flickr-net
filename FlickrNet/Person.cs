@@ -5,21 +5,21 @@ using System.Xml.Schema;
 namespace FlickrNet
 {
 
-	/// <summary>
-	/// The <see cref="Person"/> class contains details returned by the <see cref="Flickr.PeopleGetInfo"/>
-	/// method.
-	/// </summary>
+    /// <summary>
+    /// The <see cref="Person"/> class contains details returned by the <see cref="Flickr.PeopleGetInfo"/>
+    /// method.
+    /// </summary>
     public sealed class Person : IFlickrParsable
-	{
-		/// <summary>The user id of the user.</summary>
-		/// <remarks/>
+    {
+        /// <summary>The user id of the user.</summary>
+        /// <remarks/>
         public string UserId { get; private set; }
     
-		/// <summary>Does the user posses a pro account.
-		/// 0 = free acouunt, 1 = pro account holder.</summary>
+        /// <summary>Does the user posses a pro account.
+        /// 0 = free acouunt, 1 = pro account holder.</summary>
         public bool IsPro { get; private set; }
-	
-		/// <summary>The server that will serve up the users Buddy Icon.</summary>
+    
+        /// <summary>The server that will serve up the users Buddy Icon.</summary>
         public string IconServer { get; private set; }
 
         /// <summary>The server farm that will serve up the users Buddy Icon.</summary>
@@ -65,19 +65,19 @@ namespace FlickrNet
 
         /// <summary>The users username, also known as their screenname.</summary>
         public string UserName { get; private set; }
-	
-		/// <summary>The users real name, as entered in their profile.</summary>
+    
+        /// <summary>The users real name, as entered in their profile.</summary>
         public string RealName { get; private set; }
-	
-		/// <summary>The SHA1 hash of the users email address - used for FOAF networking.</summary>
+    
+        /// <summary>The SHA1 hash of the users email address - used for FOAF networking.</summary>
         public string MailboxSha1Hash { get; private set; }
-	
-		/// <summary>Consists of your current location followed by country.</summary>
-		/// <example>e.g. Newcastle, UK.</example>
+    
+        /// <summary>Consists of your current location followed by country.</summary>
+        /// <example>e.g. Newcastle, UK.</example>
         public string Location { get; private set; }
 
-		/// <summary>Sub element containing a summary of the users photo information.</summary>
-		/// <remarks/>
+        /// <summary>Sub element containing a summary of the users photo information.</summary>
+        /// <remarks/>
         public PersonPhotosSummary PhotosSummary { get; private set; }
 
         /// <summary>
@@ -85,16 +85,16 @@ namespace FlickrNet
         /// </summary>
         public string PathAlias { get; private set; }
 
-		/// <summary>
-		/// The users photo location on Flickr
-		/// http://www.flickr.com/photos/username/
-		/// </summary>
+        /// <summary>
+        /// The users photo location on Flickr
+        /// http://www.flickr.com/photos/username/
+        /// </summary>
         public string PhotosUrl { get; private set; }
 
-		/// <summary>
-		/// The users profile location on Flickr
-		/// http://www.flickr.com/people/username/
-		/// </summary>
+        /// <summary>
+        /// The users profile location on Flickr
+        /// http://www.flickr.com/people/username/
+        /// </summary>
         public string ProfileUrl { get; private set; }
 
         /// <summary>
@@ -103,19 +103,19 @@ namespace FlickrNet
         /// </summary>
         public string MobileUrl { get; private set; }
 
-		/// <summary>
-		/// Returns the <see cref="Uri"/> for the users Buddy Icon.
-		/// </summary>
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the users Buddy Icon.
+        /// </summary>
         public string BuddyIconUrl
-		{
-			get
-			{
-				if( String.IsNullOrEmpty(IconServer) || IconServer == "0" )
-					return "http://www.flickr.com/images/buddyicon.jpg";
-				else
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(IconServer) || IconServer == "0")
+                    return "http://www.flickr.com/images/buddyicon.jpg";
+                else
                     return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, UserId);
-			}
-		}
+            }
+        }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -219,24 +219,24 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// A summary of a users photos.
-	/// </summary>
+    /// <summary>
+    /// A summary of a users photos.
+    /// </summary>
     public sealed class PersonPhotosSummary : IFlickrParsable
-	{
-		/// <summary>The first date the user uploaded a picture, converted into <see cref="DateTime"/> format.</summary>
-		public DateTime FirstDate { get; private set; }
+    {
+        /// <summary>The first date the user uploaded a picture, converted into <see cref="DateTime"/> format.</summary>
+        public DateTime FirstDate { get; private set; }
 
-		/// <summary>The first date the user took a picture, converted into <see cref="DateTime"/> format.</summary>
-		public DateTime FirstTakenDate { get; private set; }
+        /// <summary>The first date the user took a picture, converted into <see cref="DateTime"/> format.</summary>
+        public DateTime FirstTakenDate { get; private set; }
 
         /// <summary>The total number of photos for the user.</summary>
-		/// <remarks/>
-		public int PhotoCount { get; private set; }
+        /// <remarks/>
+        public int PhotoCount { get; private set; }
 
-		/// <summary>The total number of photos for the user.</summary>
-		/// <remarks/>
-		public int Views { get; private set; }
+        /// <summary>The total number of photos for the user.</summary>
+        /// <remarks/>
+        public int Views { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

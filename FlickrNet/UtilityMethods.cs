@@ -12,16 +12,16 @@ using System.Linq;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Internal class providing certain utility functions to other classes.
-	/// </summary>
-	public sealed class UtilityMethods
-	{
-		private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0);
+    /// <summary>
+    /// Internal class providing certain utility functions to other classes.
+    /// </summary>
+    public sealed class UtilityMethods
+    {
+        private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0);
 
-		private UtilityMethods()
-		{
-		}
+        private UtilityMethods()
+        {
+        }
 
         /// <summary>
         /// Converts <see cref="AuthLevel"/> to a string.
@@ -41,7 +41,7 @@ namespace FlickrNet
                 case AuthLevel.None:
                     return "none";
                 default:
-                    return "";
+                    return String.Empty;
 
             }
         }
@@ -56,7 +56,7 @@ namespace FlickrNet
             switch (tagMode)
             {
                 case TagMode.None:
-                    return "";
+                    return String.Empty;
                 case TagMode.AllTags:
                     return "all";
                 case TagMode.AnyTag:
@@ -64,7 +64,7 @@ namespace FlickrNet
                 case TagMode.Boolean:
                     return "bool";
                 default:
-                    return "";
+                    return String.Empty;
             }
         }
 
@@ -78,13 +78,13 @@ namespace FlickrNet
             switch (machineTagMode)
             {
                 case MachineTagMode.None:
-                    return "";
+                    return String.Empty;
                 case MachineTagMode.AllTags:
                     return "all";
                 case MachineTagMode.AnyTag:
                     return "any";
                 default:
-                    return "";
+                    return String.Empty;
             }
 
         }
@@ -103,25 +103,25 @@ namespace FlickrNet
             return Uri.EscapeDataString(data);
         }
 
-		/// <summary>
-		/// Converts a <see cref="DateTime"/> object into a unix timestamp number.
-		/// </summary>
-		/// <param name="date">The date to convert.</param>
-		/// <returns>A long for the number of seconds since 1st January 1970, as per unix specification.</returns>
-		public static string DateToUnixTimestamp(DateTime date)
-		{
-			TimeSpan ts = date - unixStartDate;
-			return ts.TotalSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo);
-		}
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> object into a unix timestamp number.
+        /// </summary>
+        /// <param name="date">The date to convert.</param>
+        /// <returns>A long for the number of seconds since 1st January 1970, as per unix specification.</returns>
+        public static string DateToUnixTimestamp(DateTime date)
+        {
+            TimeSpan ts = date - unixStartDate;
+            return ts.TotalSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo);
+        }
 
-		/// <summary>
-		/// Converts a string, representing a unix timestamp number into a <see cref="DateTime"/> object.
-		/// </summary>
-		/// <param name="timestamp">The timestamp, as a string.</param>
-		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
-		public static DateTime UnixTimestampToDate(string timestamp)
-		{
-			if( String.IsNullOrEmpty(timestamp) ) return DateTime.MinValue;
+        /// <summary>
+        /// Converts a string, representing a unix timestamp number into a <see cref="DateTime"/> object.
+        /// </summary>
+        /// <param name="timestamp">The timestamp, as a string.</param>
+        /// <returns>The <see cref="DateTime"/> object the time represents.</returns>
+        public static DateTime UnixTimestampToDate(string timestamp)
+        {
+            if (String.IsNullOrEmpty(timestamp)) return DateTime.MinValue;
             try
             {
                 return UnixTimestampToDate(Int64.Parse(timestamp, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -130,33 +130,33 @@ namespace FlickrNet
             {
                 return DateTime.MinValue;
             }
-		}
+        }
 
-		/// <summary>
-		/// Converts a <see cref="long"/>, representing a unix timestamp number into a <see cref="DateTime"/> object.
-		/// </summary>
-		/// <param name="timestamp">The unix timestamp.</param>
-		/// <returns>The <see cref="DateTime"/> object the time represents.</returns>
-		public static DateTime UnixTimestampToDate(long timestamp)
-		{
-			return unixStartDate.AddSeconds(timestamp);
-		}
+        /// <summary>
+        /// Converts a <see cref="long"/>, representing a unix timestamp number into a <see cref="DateTime"/> object.
+        /// </summary>
+        /// <param name="timestamp">The unix timestamp.</param>
+        /// <returns>The <see cref="DateTime"/> object the time represents.</returns>
+        public static DateTime UnixTimestampToDate(long timestamp)
+        {
+            return unixStartDate.AddSeconds(timestamp);
+        }
 
-		/// <summary>
-		/// Utility method to convert the <see cref="PhotoSearchExtras"/> enum to a string.
-		/// </summary>
-		/// <example>
-		/// <code>
-		///     PhotoSearchExtras extras = PhotoSearchExtras.DateTaken &amp; PhotoSearchExtras.IconServer;
-		///     string val = Utils.ExtrasToString(extras);
-		///     Console.WriteLine(val);
-		/// </code>
-		/// outputs: "date_taken,icon_server";
-		/// </example>
-		/// <param name="extras"></param>
-		/// <returns></returns>
-		public static string ExtrasToString(PhotoSearchExtras extras)
-		{
+        /// <summary>
+        /// Utility method to convert the <see cref="PhotoSearchExtras"/> enum to a string.
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///     PhotoSearchExtras extras = PhotoSearchExtras.DateTaken &amp; PhotoSearchExtras.IconServer;
+        ///     string val = Utils.ExtrasToString(extras);
+        ///     Console.WriteLine(val);
+        /// </code>
+        /// outputs: "date_taken,icon_server";
+        /// </example>
+        /// <param name="extras"></param>
+        /// <returns></returns>
+        public static string ExtrasToString(PhotoSearchExtras extras)
+        {
             List<string> extraList = new List<string>();
 
             if ((extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken) extraList.Add("date_taken");
@@ -184,35 +184,35 @@ namespace FlickrNet
             if ((extras & PhotoSearchExtras.Visibility) == PhotoSearchExtras.Visibility) extraList.Add("visibility");
 
             return String.Join(",", extraList.ToArray());
-		}
+        }
 
         /// <summary>
         /// Converts a <see cref="PhotoSearchSortOrder"/> into a string for use by the Flickr API.
         /// </summary>
         /// <param name="order">The sort order to convert.</param>
         /// <returns>The string representative for the sort order.</returns>
-		public static string SortOrderToString(PhotoSearchSortOrder order)
-		{
-			switch(order)
-			{
-				case PhotoSearchSortOrder.DatePostedAscending:
-					return "date-posted-asc";
-				case PhotoSearchSortOrder.DatePostedDescending:
-					return "date-posted-desc";
-				case PhotoSearchSortOrder.DateTakenAscending:
-					return "date-taken-asc";
-				case PhotoSearchSortOrder.DateTakenDescending:
-					return "date-taken-desc";
-				case PhotoSearchSortOrder.InterestingnessAscending:
-					return "interestingness-asc";
-				case PhotoSearchSortOrder.InterestingnessDescending:
-					return "interestingness-desc";
-				case PhotoSearchSortOrder.Relevance:
-					return "relevance";
-				default:
-					return null;
-			}
-		}
+        public static string SortOrderToString(PhotoSearchSortOrder order)
+        {
+            switch (order)
+            {
+                case PhotoSearchSortOrder.DatePostedAscending:
+                    return "date-posted-asc";
+                case PhotoSearchSortOrder.DatePostedDescending:
+                    return "date-posted-desc";
+                case PhotoSearchSortOrder.DateTakenAscending:
+                    return "date-taken-asc";
+                case PhotoSearchSortOrder.DateTakenDescending:
+                    return "date-taken-desc";
+                case PhotoSearchSortOrder.InterestingnessAscending:
+                    return "interestingness-asc";
+                case PhotoSearchSortOrder.InterestingnessDescending:
+                    return "interestingness-desc";
+                case PhotoSearchSortOrder.Relevance:
+                    return "relevance";
+                default:
+                    return String.Empty;
+            }
+        }
 
         /// <summary>
         /// Converts a <see cref="PopularitySort"/> enum to a string.
@@ -230,7 +230,7 @@ namespace FlickrNet
                 case PopularitySort.Views:
                     return "views";
                 default:
-                    return "";
+                    return String.Empty;
             }
         }
 
@@ -239,88 +239,88 @@ namespace FlickrNet
         /// </summary>
         /// <param name="options">The options to convert to an array.</param>
         /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
-		public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, string> parameters)
-		{
-			if( options.MinUploadDate != DateTime.MinValue ) parameters.Add("min_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
-			if( options.MaxUploadDate != DateTime.MinValue ) parameters.Add("max_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
+        public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, string> parameters)
+        {
+            if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
+            if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
             if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", DateToMySql(options.MinTakenDate));
             if (options.MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", DateToMySql(options.MaxTakenDate));
-			if( options.Extras != PhotoSearchExtras.None ) parameters.Add("extras", options.ExtrasString);
-			if( options.SortOrder != PhotoSearchSortOrder.None ) parameters.Add("sort", options.SortOrderString);
-			if( options.PerPage > 0 ) parameters.Add("per_page", options.PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-			if( options.Page > 0 ) parameters.Add("page", options.Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-			if( options.PrivacyFilter != PrivacyFilter.None ) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
-		}
+            if (options.Extras != PhotoSearchExtras.None) parameters.Add("extras", options.ExtrasString);
+            if (options.SortOrder != PhotoSearchSortOrder.None) parameters.Add("sort", options.SortOrderString);
+            if (options.PerPage > 0) parameters.Add("per_page", options.PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (options.Page > 0) parameters.Add("page", options.Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (options.PrivacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", options.PrivacyFilter.ToString("d"));
+        }
 
-		internal static void WriteInt32(Stream s, int i)
-		{
-			s.WriteByte((byte) (i & 0xFF));
-			s.WriteByte((byte) ((i >> 8) & 0xFF));
-			s.WriteByte((byte) ((i >> 16) & 0xFF));
-			s.WriteByte((byte) ((i >> 24) & 0xFF));
-		}
+        internal static void WriteInt32(Stream s, int i)
+        {
+            s.WriteByte((byte)(i & 0xFF));
+            s.WriteByte((byte)((i >> 8) & 0xFF));
+            s.WriteByte((byte)((i >> 16) & 0xFF));
+            s.WriteByte((byte)((i >> 24) & 0xFF));
+        }
 
-		internal static void WriteString(Stream s, string str)
-		{
-			WriteInt32(s, str.Length);
-			foreach (char c in str)
-			{
-				s.WriteByte((byte) (c & 0xFF));
-				s.WriteByte((byte) ((c >> 8) & 0xFF));
-			}
-		}
+        internal static void WriteString(Stream s, string str)
+        {
+            WriteInt32(s, str.Length);
+            foreach (char c in str)
+            {
+                s.WriteByte((byte)(c & 0xFF));
+                s.WriteByte((byte)((c >> 8) & 0xFF));
+            }
+        }
 
-		internal static int ReadInt32(Stream s)
-		{
-			int i = 0, b;
-			for (int j = 0; j < 4; j++)
-			{
-				b = s.ReadByte();
-				if (b == -1)
-					throw new IOException("Unexpected EOF encountered");
-				i |= (b << (j * 8));
-			}
-			return i;
-		}
+        internal static int ReadInt32(Stream s)
+        {
+            int i = 0, b;
+            for (int j = 0; j < 4; j++)
+            {
+                b = s.ReadByte();
+                if (b == -1)
+                    throw new IOException("Unexpected EOF encountered");
+                i |= (b << (j * 8));
+            }
+            return i;
+        }
 
-		internal static string ReadString(Stream s)
-		{
-			int len = ReadInt32(s);
-			char[] chars = new char[len];
-			for (int i = 0; i < len; i++)
-			{
-				int hi, lo;
-				lo = s.ReadByte();
-				hi = s.ReadByte();
-				if (lo == -1 || hi == -1)
-					throw new IOException("Unexpected EOF encountered");
-				chars[i] = (char) (lo | (hi << 8));
-			}
-			return new string(chars);
-		}
+        internal static string ReadString(Stream s)
+        {
+            int len = ReadInt32(s);
+            char[] chars = new char[len];
+            for (int i = 0; i < len; i++)
+            {
+                int hi, lo;
+                lo = s.ReadByte();
+                hi = s.ReadByte();
+                if (lo == -1 || hi == -1)
+                    throw new IOException("Unexpected EOF encountered");
+                chars[i] = (char)(lo | (hi << 8));
+            }
+            return new string(chars);
+        }
 
-		private const string photoUrlFormat = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
+        private const string PhotoUrlFormat = "http://farm{0}.static.flickr.com/{1}/{2}_{3}{4}.{5}";
 
         internal static string UrlFormat(Photo p, string size, string extension)
-		{
-			if( size == "_o" || size == "original" )
-				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
-			else
-				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
-		}
+        {
+            if (size == "_o" || size == "original")
+                return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
+            else
+                return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
+        }
 
         internal static string UrlFormat(PhotoInfo p, string size, string extension)
-		{
+        {
             if (size == "_o" || size == "original")
-				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
-			else
-				return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
-		}
+                return UrlFormat(p.Farm, p.Server, p.PhotoId, p.OriginalSecret, size, extension);
+            else
+                return UrlFormat(p.Farm, p.Server, p.PhotoId, p.Secret, size, extension);
+        }
 
         internal static string UrlFormat(Photoset p, string size, string extension)
-		{
-			return UrlFormat(p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, extension);
-		}
+        {
+            return UrlFormat(p.Farm, p.Server, p.PrimaryPhotoId, p.Secret, size, extension);
+        }
 
         internal static string UrlFormat(string farm, string server, string photoid, string secret, string size, string extension)
         {
@@ -336,7 +336,7 @@ namespace FlickrNet
                     size = "_m";
                     break;
                 case "medium":
-                    size = "";
+                    size = String.Empty;
                     break;
                 case "large":
                     size = "_b";
@@ -346,13 +346,13 @@ namespace FlickrNet
                     break;
             }
 
-            return UrlFormat(photoUrlFormat, farm, server, photoid, secret, size, extension);
+            return UrlFormat(PhotoUrlFormat, farm, server, photoid, secret, size, extension);
         }
 
         private static string UrlFormat(string format, params object[] parameters)
-		{
-			return String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
-		}
+        {
+            return String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
+        }
 
 
         internal static MemberTypes ParseIdToMemberType(string memberTypeId)
@@ -410,7 +410,7 @@ namespace FlickrNet
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
             byte[] hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
 #endif
-            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            return BitConverter.ToString(hashedBytes).Replace("-", String.Empty).ToLower(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="date">The date, as a string, to be parsed.</param>
         /// <returns>The parsed <see cref="DateTime"/>.</returns>
-        public  static DateTime ParseDateWithGranularity(string date)
+        public static DateTime ParseDateWithGranularity(string date)
         {
             DateTime output;
 
@@ -462,7 +462,7 @@ namespace FlickrNet
                 case MediaType.Videos:
                     return "videos";
                 default:
-                    return "";
+                    return String.Empty;
             }
         }
 
@@ -477,7 +477,7 @@ namespace FlickrNet
             {
                 throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
             }
-            if( !String.IsNullOrEmpty(reader.Value) )
+            if (!String.IsNullOrEmpty(reader.Value))
                 throw new ParsingException("Unknown " + reader.NodeType.ToString() + ": " + reader.Name + "=" + reader.Value);
             else
                 throw new ParsingException("Unknown element: " + reader.Name);

@@ -30,7 +30,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.reflection.getMethodInfo");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("method_name", methodName);
 
             GetResponseAsync<Method>(parameters, callback);

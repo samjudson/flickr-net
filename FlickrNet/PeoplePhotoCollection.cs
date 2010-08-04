@@ -60,7 +60,7 @@ namespace FlickrNet
                         Pages = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "has_next_page":
-                        HasNextPage = (reader.Value == "1");
+                        HasNextPage = reader.Value == "1";
                         break;
                     case "total":
                         Total = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);

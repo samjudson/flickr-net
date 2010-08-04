@@ -2,18 +2,18 @@ using System;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Exception thrown is no API key is supplied.
-	/// </summary>
+    /// <summary>
+    /// Exception thrown is no API key is supplied.
+    /// </summary>
     [Serializable]
-	public class ApiKeyRequiredException : FlickrException
-	{
-		/// <summary>
+    public class ApiKeyRequiredException : FlickrException
+    {
+        /// <summary>
         /// Initializes a new instance of the <see cref="ApiKeyRequiredException"/> class.
-		/// </summary>
-		public ApiKeyRequiredException() : base("API Key is required for all method calls")
-		{
-		}
+        /// </summary>
+        public ApiKeyRequiredException() : base("API Key is required for all method calls")
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiKeyRequiredException"/> class with a specified error message.
@@ -34,5 +34,5 @@ namespace FlickrNet
         {
         }
 
-	}
+    }
 }

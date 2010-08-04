@@ -89,7 +89,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGallery");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("url", url);
 
             return GetResponseCache<Gallery>(parameters);
@@ -104,7 +104,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGroup");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
@@ -122,7 +122,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupUser");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
 
             return GetResponseCache<FoundUser>(parameters);

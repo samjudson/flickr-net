@@ -16,20 +16,22 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getList");
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<string[]> result = new FlickrResult<string[]>();
-                result.HasError = r.HasError;
-                if (r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Error = r.Error;
-                }
-                else
-                {
-                    result.Result = r.Result.GetElementArray("panda");
-                }
-                callback(result);
-            });
+                    FlickrResult<string[]> result = new FlickrResult<string[]>();
+                    result.HasError = r.HasError;
+                    if (r.HasError)
+                    {
+                        result.Error = r.Error;
+                    }
+                    else
+                    {
+                        result.Result = r.Result.GetElementArray("panda");
+                    }
+                    callback(result);
+                });
 
         }
 
@@ -79,8 +81,8 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getPhotos");
             parameters.Add("panda_name", pandaName);
-            if( extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if( perPage > 0 ) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<PandaPhotoCollection>(parameters, callback);

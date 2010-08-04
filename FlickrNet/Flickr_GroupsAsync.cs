@@ -65,7 +65,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.search");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("text", text);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -82,7 +82,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.getInfo");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             parameters.Add("group_id", groupId);
             GetResponseAsync<GroupFullInfo>(parameters, callback);
         }
@@ -114,7 +114,7 @@ namespace FlickrNet
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.members.getList");
-            parameters.Add("api_key", _apiKey);
+            parameters.Add("api_key", apiKey);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (memberTypes != MemberTypes.None) parameters.Add("membertypes", UtilityMethods.MemberTypeToString(memberTypes));

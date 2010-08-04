@@ -2,12 +2,12 @@ using System;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Exception thrown when an error parsing the returned XML.
-	/// </summary>
+    /// <summary>
+    /// Exception thrown when an error parsing the returned XML.
+    /// </summary>
     [Serializable]
     public class ResponseXmlException : FlickrException
-	{
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResponseXmlException"/> class.
         /// </summary>
@@ -35,5 +35,5 @@ namespace FlickrNet
         {
         }
 
-	}
+    }
 }

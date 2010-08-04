@@ -20,8 +20,7 @@ namespace FlickrNet
 
         public XDocument GetXDocument()
         {
-            XDocument doc = new XDocument(ResponseXml);
-            return doc;
+            return XDocument.Parse(ResponseXml);
         }
 
         /// <summary>

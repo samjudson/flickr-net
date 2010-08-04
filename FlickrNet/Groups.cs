@@ -5,57 +5,57 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Provides details of a particular group.
-	/// </summary>
-	/// <remarks>Used by <see cref="Flickr.GroupsBrowse()"/> and
-	/// <see cref="Flickr.GroupsBrowse(string)"/>.</remarks>
-	public class Group
-	{
-		/// <summary>
-		/// The id of the group.
-		/// </summary>
+    /// <summary>
+    /// Provides details of a particular group.
+    /// </summary>
+    /// <remarks>Used by <see cref="Flickr.GroupsBrowse()"/> and
+    /// <see cref="Flickr.GroupsBrowse(string)"/>.</remarks>
+    public class Group
+    {
+        /// <summary>
+        /// The id of the group.
+        /// </summary>
         [XmlAttribute("nsid", Form = XmlSchemaForm.Unqualified)]
         public string GroupId { get; internal set; }
-    
-		/// <summary>
-		/// The name of the group
-		/// </summary>
-		[XmlAttribute("name", Form=XmlSchemaForm.Unqualified)]
+
+        /// <summary>
+        /// The name of the group
+        /// </summary>
+        [XmlAttribute("name", Form = XmlSchemaForm.Unqualified)]
         public string GroupName { get; internal set; }
 
-		/// <summary>
-		/// The number of memebers of the group.
-		/// </summary>
-		[XmlAttribute("members", Form=XmlSchemaForm.Unqualified)]
+        /// <summary>
+        /// The number of memebers of the group.
+        /// </summary>
+        [XmlAttribute("members", Form = XmlSchemaForm.Unqualified)]
         public int Members { get; internal set; }
-	}
+    }
 
-	/// <summary>
-	/// Provides details of a particular group.
-	/// </summary>
-	/// <remarks>
-	/// Used by the Url methods and <see cref="Flickr.GroupsGetInfo"/> method.
-	/// The reason for a <see cref="Group"/> and <see cref="GroupFullInfo"/> are due to xml serialization
-	/// incompatabilities.
-	/// </remarks>
-	public sealed class GroupFullInfo : IFlickrParsable
-	{
-		/// <remarks/>
+    /// <summary>
+    /// Provides details of a particular group.
+    /// </summary>
+    /// <remarks>
+    /// Used by the Url methods and <see cref="Flickr.GroupsGetInfo"/> method.
+    /// The reason for a <see cref="Group"/> and <see cref="GroupFullInfo"/> are due to xml serialization
+    /// incompatabilities.
+    /// </remarks>
+    public sealed class GroupFullInfo : IFlickrParsable
+    {
+        /// <remarks/>
         public string GroupId { get; private set; }
-    
-		/// <remarks/>
+
+        /// <remarks/>
         public string GroupName { get; private set; }
 
-		/// <remarks/>
+        /// <remarks/>
         public string Description { get; private set; }
 
-		/// <remarks/>
+        /// <remarks/>
         public int Members { get; private set; }
 
-		/// <summary>
-		/// The server number used for the groups icon.
-		/// </summary>
+        /// <summary>
+        /// The server number used for the groups icon.
+        /// </summary>
         public string IconServer { get; private set; }
 
         /// <summary>
@@ -106,10 +106,10 @@ namespace FlickrNet
             }
         }
 
-		/// <remarks/>
+        /// <remarks/>
         public PoolPrivacy Privacy { get; private set; }
-	
-		/// <remarks/>
+
+        /// <remarks/>
         public GroupThrottleInfo ThrottleInfo { get; private set; }
 
         /// <summary>
@@ -117,31 +117,31 @@ namespace FlickrNet
         /// </summary>
         public GroupInfoRestrictions Restrictions { get; private set; }
 
-		/// <summary>
-		/// Methods for automatically converting a <see cref="GroupFullInfo"/> object into
-		/// and instance of a <see cref="Group"/> object.
-		/// </summary>
-		/// <param name="groupInfo">The incoming object.</param>
-		/// <returns>The <see cref="Group"/> instance.</returns>
-		public static implicit operator Group( GroupFullInfo groupInfo )	
-		{
-			Group g = new Group();
-			g.GroupId = groupInfo.GroupId;
-			g.GroupName = groupInfo.GroupName;
-			g.Members = groupInfo.Members;
+        /// <summary>
+        /// Methods for automatically converting a <see cref="GroupFullInfo"/> object into
+        /// and instance of a <see cref="Group"/> object.
+        /// </summary>
+        /// <param name="groupInfo">The incoming object.</param>
+        /// <returns>The <see cref="Group"/> instance.</returns>
+        public static implicit operator Group(GroupFullInfo groupInfo)
+        {
+            Group g = new Group();
+            g.GroupId = groupInfo.GroupId;
+            g.GroupName = groupInfo.GroupName;
+            g.Members = groupInfo.Members;
 
-			return g;
-		}
+            return g;
+        }
 
-		/// <summary>
-		/// Converts the current <see cref="GroupFullInfo"/> into an instance of the
-		/// <see cref="Group"/> class.
-		/// </summary>
-		/// <returns>A <see cref="Group"/> instance.</returns>
-		public Group ToGroup()
-		{
-			return (Group)this;
-		}
+        /// <summary>
+        /// Converts the current <see cref="GroupFullInfo"/> into an instance of the
+        /// <see cref="Group"/> class.
+        /// </summary>
+        /// <returns>A <see cref="Group"/> instance.</returns>
+        public Group ToGroup()
+        {
+            return (Group)this;
+        }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -213,46 +213,46 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// Throttle information about a group (i.e. posting limit)
-	/// </summary>
-	public sealed class GroupThrottleInfo : IFlickrParsable
-	{
-		/// <summary>
-		/// The number of posts in each period allowed to this group.
-		/// </summary>
+    /// <summary>
+    /// Throttle information about a group (i.e. posting limit)
+    /// </summary>
+    public sealed class GroupThrottleInfo : IFlickrParsable
+    {
+        /// <summary>
+        /// The number of posts in each period allowed to this group.
+        /// </summary>
         public int Count { get; private set; }
 
-		/// <summary>
-		/// The posting limit mode for a group.
-		/// </summary>
+        /// <summary>
+        /// The posting limit mode for a group.
+        /// </summary>
         public GroupThrottleMode Mode { get; private set; }
 
         private static GroupThrottleMode ParseMode(string mode)
-		{
-			switch(mode)
-			{
-				case "day":
-					return GroupThrottleMode.PerDay;
-				case "week":
+        {
+            switch (mode)
+            {
+                case "day":
+                    return GroupThrottleMode.PerDay;
+                case "week":
                     return GroupThrottleMode.PerWeek;
-				case "month":
+                case "month":
                     return GroupThrottleMode.PerMonth;
-				case "ever":
+                case "ever":
                     return GroupThrottleMode.Ever;
-				case "none":
+                case "none":
                     return GroupThrottleMode.NoLimit;
-				case "disabled":
+                case "disabled":
                     return GroupThrottleMode.Disabled;
-				default:
-					throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown mode found {0}", mode), "mode");
-			}
-		}
+                default:
+                    throw new ArgumentException(string.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown mode found {0}", mode), "mode");
+            }
+        }
 
-		/// <summary>
-		/// The number of remainging posts allowed by this user. If unauthenticated then this will be zero.
-		/// </summary>
-		public int Remaining { get; private set; }
+        /// <summary>
+        /// The number of remainging posts allowed by this user. If unauthenticated then this will be zero.
+        /// </summary>
+        public int Remaining { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -360,37 +360,37 @@ namespace FlickrNet
     }
 
 
-	/// <summary>
-	/// The posting limit most for a group.
-	/// </summary>
-	public enum GroupThrottleMode
-	{
-		/// <summary>
-		/// Per day posting limit.
-		/// </summary>
-		PerDay,
-		/// <summary>
-		/// Per week posting limit.
-		/// </summary>
-		PerWeek,
-		/// <summary>
-		/// Per month posting limit.
-		/// </summary>
-		PerMonth,
-		/// <summary>
-		/// No posting limit.
-		/// </summary>
-		NoLimit,
-		/// <summary>
-		/// Posting limit is total number of photos in the group.
-		/// </summary>
-		Ever,
-		/// <summary>
-		/// Posting is disabled to this group.
-		/// </summary>
-		Disabled
+    /// <summary>
+    /// The posting limit most for a group.
+    /// </summary>
+    public enum GroupThrottleMode
+    {
+        /// <summary>
+        /// Per day posting limit.
+        /// </summary>
+        PerDay,
+        /// <summary>
+        /// Per week posting limit.
+        /// </summary>
+        PerWeek,
+        /// <summary>
+        /// Per month posting limit.
+        /// </summary>
+        PerMonth,
+        /// <summary>
+        /// No posting limit.
+        /// </summary>
+        NoLimit,
+        /// <summary>
+        /// Posting limit is total number of photos in the group.
+        /// </summary>
+        Ever,
+        /// <summary>
+        /// Posting is disabled to this group.
+        /// </summary>
+        Disabled
 
-	}
+    }
 
 
 }

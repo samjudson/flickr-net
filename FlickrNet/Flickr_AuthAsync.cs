@@ -35,7 +35,9 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFrob");
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
+            GetResponseAsync<UnknownResponse>(
+                parameters, 
+                r =>
                 {
                     FlickrResult<string> result = new FlickrResult<string>();
                     result.HasError = r.HasError;
@@ -63,11 +65,11 @@ namespace FlickrNet
         /// <returns>The url to redirect the user to.</returns>
         public string AuthCalcUrlAsync(string frob, AuthLevel authLevel)
         {
-            if (_sharedSecret == null) throw new SignatureRequiredException();
+            if (sharedSecret == null) throw new SignatureRequiredException();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "frob" + frob + "perms" + UtilityMethods.AuthLevelToString(authLevel);
+            string hash = sharedSecret + "api_key" + apiKey + "frob" + frob + "perms" + UtilityMethods.AuthLevelToString(authLevel);
             hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel) + "&frob=" + frob;
+            string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel) + "&frob=" + frob;
             url += "&api_sig=" + hash;
 
             return url;
@@ -86,9 +88,9 @@ namespace FlickrNet
 
             CheckSigned();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
+            string hash = sharedSecret + "api_key" + apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
             hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl + "?api_key=" + _apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
+            string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
             url += "&api_sig=" + hash;
 
             return url;
@@ -107,9 +109,9 @@ namespace FlickrNet
 
             CheckSigned();
 
-            string hash = _sharedSecret + "api_key" + _apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
+            string hash = sharedSecret + "api_key" + apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
             hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + _apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
+            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
             url += "&api_sig=" + hash;
 
             return url;
@@ -130,13 +132,16 @@ namespace FlickrNet
             parameters.Add("method", "flickr.auth.getToken");
             parameters.Add("frob", frob);
 
-            GetResponseAsync<Auth>(parameters, (r) => {
-                if( !r.HasError )
+            GetResponseAsync<Auth>(
+                parameters,
+                r =>
                 {
-                    AuthToken = r.Result.Token;
-                }
-                callback(r);
-            });
+                    if (!r.HasError)
+                    {
+                        AuthToken = r.Result.Token;
+                    }
+                    callback(r);
+                });
         }
 
         /// <summary>
@@ -151,15 +156,18 @@ namespace FlickrNet
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFullToken");
-            parameters.Add("mini_token", miniToken.Replace("-", ""));
+            parameters.Add("mini_token", miniToken.Replace("-", String.Empty));
 
-            GetResponseAsync<Auth>(parameters, (r) => {
-                if( !r.HasError )
+            GetResponseAsync<Auth>(
+                parameters,
+                r =>
                 {
-                    AuthToken = r.Result.Token;
-                }
-                callback(r);
-            });
+                    if (!r.HasError)
+                    {
+                        AuthToken = r.Result.Token;
+                    }
+                    callback(r);
+                });
         }
 
         /// <summary>
@@ -186,14 +194,16 @@ namespace FlickrNet
             parameters.Add("method", "flickr.auth.checkToken");
             parameters.Add("auth_token", token);
 
-            GetResponseAsync<Auth>(parameters, (r) =>
-            {
-                if (!r.HasError)
+            GetResponseAsync<Auth>(
+                parameters,
+                r =>
                 {
-                    AuthToken = r.Result.Token;
-                }
-                callback(r);
-            });
+                    if (!r.HasError)
+                    {
+                        AuthToken = r.Result.Token;
+                    }
+                    callback(r);
+                });
         }
 
     }

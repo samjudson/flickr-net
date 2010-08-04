@@ -8,25 +8,25 @@ using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// The context of the current photo, as returned by
-	/// <see cref="Flickr.PhotosGetContext"/>,
-	/// <see cref="Flickr.PhotosetsGetContext"/>
-	///  and <see cref="Flickr.GroupsPoolsGetContext"/> methods.
-	/// </summary>
+    /// <summary>
+    /// The context of the current photo, as returned by
+    /// <see cref="Flickr.PhotosGetContext"/>,
+    /// <see cref="Flickr.PhotosetsGetContext"/>
+    ///  and <see cref="Flickr.GroupsPoolsGetContext"/> methods.
+    /// </summary>
     public sealed class Context : IFlickrParsable
-	{
-		/// <summary>
-		/// The number of photos in the current context, e.g. Group, Set or photostream.
-		/// </summary>
+    {
+        /// <summary>
+        /// The number of photos in the current context, e.g. Group, Set or photostream.
+        /// </summary>
         public int Count { get; private set; }
-		/// <summary>
-		/// The next photo in the context.
-		/// </summary>
+        /// <summary>
+        /// The next photo in the context.
+        /// </summary>
         public ContextPhoto NextPhoto { get; private set; }
-		/// <summary>
-		/// The previous photo in the context.
-		/// </summary>
+        /// <summary>
+        /// The previous photo in the context.
+        /// </summary>
         public ContextPhoto PreviousPhoto { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
@@ -52,19 +52,19 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// The next (or previous) photo in the current context.
-	/// </summary>
+    /// <summary>
+    /// The next (or previous) photo in the current context.
+    /// </summary>
     public sealed class ContextPhoto : IFlickrParsable
-	{
-		/// <summary>
-		/// The id of the next photo. Will be "0" if this photo is the last.
-		/// </summary>
+    {
+        /// <summary>
+        /// The id of the next photo. Will be "0" if this photo is the last.
+        /// </summary>
         public string PhotoId { get; private set; }
 
-		/// <summary>
-		/// The secret for the photo.
-		/// </summary>
+        /// <summary>
+        /// The secret for the photo.
+        /// </summary>
         public string Secret { get; private set; }
 
         /// <summary>
@@ -77,19 +77,19 @@ namespace FlickrNet
         /// </summary>
         public string Farm { get; private set; }
 
-		/// <summary>
-		/// The title of the next photo in context.
-		/// </summary>
+        /// <summary>
+        /// The title of the next photo in context.
+        /// </summary>
         public string Title { get; private set; }
 
-		/// <summary>
-		/// The URL, in the given context, for the next or previous photo.
-		/// </summary>
+        /// <summary>
+        /// The URL, in the given context, for the next or previous photo.
+        /// </summary>
         public string Url { get; private set; }
 
-		/// <summary>
-		/// The URL for the thumbnail of the photo.
-		/// </summary>
+        /// <summary>
+        /// The URL for the thumbnail of the photo.
+        /// </summary>
         public string ThumbnailUrl { get; private set; }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace FlickrNet
                         ThumbnailUrl = reader.Value;
                         break;
                     case "media":
-                        MediaType = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
+                        MediaType = reader.Value == "photo" ? MediaType.Photos : MediaType.Videos;
                         break;
 
                 }
@@ -135,20 +135,20 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// All contexts that a photo is in.
-	/// </summary>
+    /// <summary>
+    /// All contexts that a photo is in.
+    /// </summary>
     public sealed class AllContexts : IFlickrParsable
-	{
-		/// <summary>
-		/// An array of <see cref="ContextSet"/> objects for the current photo.
-		/// </summary>
-		public Collection<ContextSet> Sets { get; private set; }
+    {
+        /// <summary>
+        /// An array of <see cref="ContextSet"/> objects for the current photo.
+        /// </summary>
+        public Collection<ContextSet> Sets { get; private set; }
 
-		/// <summary>
-		/// An array of <see cref="ContextGroup"/> objects for the current photo.
-		/// </summary>
-		public Collection<ContextGroup> Groups { get; private set; }
+        /// <summary>
+        /// An array of <see cref="ContextGroup"/> objects for the current photo.
+        /// </summary>
+        public Collection<ContextGroup> Groups { get; private set; }
 
         /// <summary>
         /// Default constructor.
@@ -186,33 +186,33 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// A set context for a photo.
-	/// </summary>
-	public class ContextSet
-	{
-		/// <summary>
-		/// The Photoset ID of the set the selected photo is in.
-		/// </summary>
+    /// <summary>
+    /// A set context for a photo.
+    /// </summary>
+    public class ContextSet
+    {
+        /// <summary>
+        /// The Photoset ID of the set the selected photo is in.
+        /// </summary>
         public string PhotosetId { get; internal set; }
-		/// <summary>
-		/// The title of the set the selected photo is in.
-		/// </summary>
+        /// <summary>
+        /// The title of the set the selected photo is in.
+        /// </summary>
         public string Title { get; internal set; }
-	}
+    }
 
-	/// <summary>
-	/// A group context got a photo.
-	/// </summary>
-	public class ContextGroup
-	{
-		/// <summary>
-		/// The Group ID for the group that the selected photo is in.
-		/// </summary>
+    /// <summary>
+    /// A group context got a photo.
+    /// </summary>
+    public class ContextGroup
+    {
+        /// <summary>
+        /// The Group ID for the group that the selected photo is in.
+        /// </summary>
         public string GroupId { get; internal set; }
-		/// <summary>
-		/// The title of the group that then selected photo is in.
-		/// </summary>
+        /// <summary>
+        /// The title of the group that then selected photo is in.
+        /// </summary>
         public string Title { get; internal set; }
-	}
+    }
 }

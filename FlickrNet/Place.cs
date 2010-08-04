@@ -6,48 +6,48 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Summary description for Place.
-	/// </summary>
+    /// <summary>
+    /// Summary description for Place.
+    /// </summary>
     public sealed class Place : IFlickrParsable
-	{
-		/// <summary>
-		/// The unique id for this place.
-		/// </summary>
+    {
+        /// <summary>
+        /// The unique id for this place.
+        /// </summary>
         public string PlaceId { get; private set; }
 
-		/// <summary>
-		/// The web page URL that corresponds to this place.
-		/// </summary>
+        /// <summary>
+        /// The web page URL that corresponds to this place.
+        /// </summary>
         /// <remarks>
         /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings")]
         public string PlaceUrl { get; private set; }
 
-		/// <summary>
-		/// The 'type' of this place, e.g. Region, Country etc.
-		/// </summary>
+        /// <summary>
+        /// The 'type' of this place, e.g. Region, Country etc.
+        /// </summary>
         public PlaceType PlaceType { get; private set; }
 
-		/// <summary>
-		/// The WOE id for the locality.
-		/// </summary>
+        /// <summary>
+        /// The WOE id for the locality.
+        /// </summary>
         public string WoeId { get; private set; }
 
-		/// <summary>
-		/// The description of this place, where provided.
-		/// </summary>
+        /// <summary>
+        /// The description of this place, where provided.
+        /// </summary>
         public string Description { get; private set; }
 
-		/// <summary>
-		/// The latitude of this place.
-		/// </summary>
+        /// <summary>
+        /// The latitude of this place.
+        /// </summary>
         public double Latitude { get; private set; }
 
-		/// <summary>
-		/// The longitude of this place.
-		/// </summary>
+        /// <summary>
+        /// The longitude of this place.
+        /// </summary>
         public double Longitude { get; private set; }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace FlickrNet
         /// </remarks>
         public int? PhotoCount { get; private set; }
 
-		/// <summary>
-		/// Serializes the XML to an instance.
-		/// </summary>
-		/// <param name="reader"></param>
+        /// <summary>
+        /// Serializes the XML to an instance.
+        /// </summary>
+        /// <param name="reader"></param>
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
-		{
+        {
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -128,7 +128,7 @@ namespace FlickrNet
                 }
             }
 
-			reader.Read();
-		}
-	}
+            reader.Read();
+        }
+    }
 }

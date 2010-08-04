@@ -10,10 +10,12 @@ namespace FlickrNet
     {
         private void GetResponseEvent<T>(Dictionary<string, string> parameters, EventHandler<FlickrResultArgs<T>> handler) where T : IFlickrParsable, new()
         {
-            GetResponseAsync<T>(parameters, (r) =>
-            {
-                handler(this, new FlickrResultArgs<T>(r));
-            });
+            GetResponseAsync<T>(
+                parameters,
+                r =>
+                {
+                    handler(this, new FlickrResultArgs<T>(r));
+                });
         }
 
         private void GetResponseAsync<T>(Dictionary<string, string> parameters, Action<FlickrResult<T>> callback) where T : IFlickrParsable, new()
@@ -28,12 +30,12 @@ namespace FlickrNet
             }
 
             Uri url;
-            if (!String.IsNullOrEmpty(_sharedSecret))
+            if (!String.IsNullOrEmpty(sharedSecret))
                 url = CalculateUri(parameters, true);
             else
                 url = CalculateUri(parameters, false);
 
-            _lastRequest = url.AbsoluteUri;
+            lastRequest = url.AbsoluteUri;
 
             DoGetResponseAsync<T>(url, callback);
 
@@ -46,7 +48,7 @@ namespace FlickrNet
             if (url.AbsoluteUri.Length > 2000)
             {
                 postContents = url.Query.Substring(1);
-                url = new Uri(url, "");
+                url = new Uri(url, String.Empty);
             }
 
             WebClient client = new WebClient();
@@ -65,7 +67,7 @@ namespace FlickrNet
                 {
                     string responseXml = e.Result;
 
-                    _lastResponse = responseXml;
+                    lastResponse = responseXml;
 
                     XmlReaderSettings settings = new XmlReaderSettings();
                     settings.IgnoreWhitespace = true;

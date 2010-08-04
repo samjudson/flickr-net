@@ -120,7 +120,7 @@ namespace FlickrNet
 
             parameters.Add("method", "flickr.contacts.getListRecentlyUploaded");
             if (dateLastUpdated != DateTime.MinValue) parameters.Add("date_lastupload", UtilityMethods.DateToUnixTimestamp(dateLastUpdated));
-            if( !String.IsNullOrEmpty(filter) ) parameters.Add("filter", filter);
+            if (!String.IsNullOrEmpty(filter)) parameters.Add("filter", filter);
 
             return GetResponseNoCache<ContactCollection>(parameters);
 

@@ -19,11 +19,13 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getContentType");
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
+            GetResponseAsync<UnknownResponse>(
+                parameters, 
+                r =>
                 {
                     FlickrResult<ContentType> result = new FlickrResult<ContentType>();
                     result.Error = r.Error;
-                    if( !r.HasError )
+                    if (!r.HasError)
                     {
                         result.Result = (ContentType)int.Parse(r.Result.GetAttributeValue("*", "content_type"), System.Globalization.NumberFormatInfo.InvariantInfo);
                     }
@@ -56,16 +58,18 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getHidden");
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<HiddenFromSearch> result = new FlickrResult<HiddenFromSearch>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = (HiddenFromSearch)int.Parse(r.Result.GetAttributeValue("*", "hidden"), System.Globalization.NumberFormatInfo.InvariantInfo);
-                }
-                callback(result);
-            });
+                    FlickrResult<HiddenFromSearch> result = new FlickrResult<HiddenFromSearch>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = (HiddenFromSearch)int.Parse(r.Result.GetAttributeValue("*", "hidden"), System.Globalization.NumberFormatInfo.InvariantInfo);
+                    }
+                    callback(result);
+                });
         }
 
         /// <summary>
@@ -79,16 +83,18 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getPrivacy");
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<PrivacyFilter> result = new FlickrResult<PrivacyFilter>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = (PrivacyFilter)int.Parse(r.Result.GetAttributeValue("*", "privacy"), System.Globalization.NumberFormatInfo.InvariantInfo);
-                }
-                callback(result);
-            });
+                    FlickrResult<PrivacyFilter> result = new FlickrResult<PrivacyFilter>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = (PrivacyFilter)int.Parse(r.Result.GetAttributeValue("*", "privacy"), System.Globalization.NumberFormatInfo.InvariantInfo);
+                    }
+                    callback(result);
+                });
 
         }
 
@@ -103,16 +109,18 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getSafetyLevel");
 
-            GetResponseAsync<UnknownResponse>(parameters, (r) =>
-            {
-                FlickrResult<SafetyLevel> result = new FlickrResult<SafetyLevel>();
-                result.Error = r.Error;
-                if (!r.HasError)
+            GetResponseAsync<UnknownResponse>(
+                parameters,
+                r =>
                 {
-                    result.Result = (SafetyLevel)int.Parse(r.Result.GetAttributeValue("*", "safety_level"), System.Globalization.NumberFormatInfo.InvariantInfo);
-                }
-                callback(result);
-            });
+                    FlickrResult<SafetyLevel> result = new FlickrResult<SafetyLevel>();
+                    result.Error = r.Error;
+                    if (!r.HasError)
+                    {
+                        result.Result = (SafetyLevel)int.Parse(r.Result.GetAttributeValue("*", "safety_level"), System.Globalization.NumberFormatInfo.InvariantInfo);
+                    }
+                    callback(result);
+                });
         }
 
     }

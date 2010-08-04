@@ -26,19 +26,19 @@ namespace FlickrNet
     }
 
     /// <summary>
-	/// A simple tag class, containing a tag name and optional count (for <see cref="Flickr.TagsGetListUserPopular()"/>)
-	/// </summary>
+    /// A simple tag class, containing a tag name and optional count (for <see cref="Flickr.TagsGetListUserPopular()"/>)
+    /// </summary>
     public sealed class Tag : IFlickrParsable
-	{
-		/// <summary>
-		/// The name of the tag.
-		/// </summary>
-		public string TagName { get; private set; }
+    {
+        /// <summary>
+        /// The name of the tag.
+        /// </summary>
+        public string TagName { get; private set; }
 
-		/// <summary>
+        /// <summary>
         /// The poularity of the tag. Will be 0 if not returned via <see cref="Flickr.TagsGetListUserPopular()"/>
-		/// </summary>
-		public int Count { get; private set; }
+        /// </summary>
+        public int Count { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -84,11 +84,11 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// Raw tags, as returned by the <see cref="Flickr.TagsGetListUserRaw(string)"/> method.
-	/// </summary>
+    /// <summary>
+    /// Raw tags, as returned by the <see cref="Flickr.TagsGetListUserRaw(string)"/> method.
+    /// </summary>
     public sealed class RawTag : IFlickrParsable
-	{
+    {
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -97,16 +97,16 @@ namespace FlickrNet
             RawTags = new Collection<string>();
         }
 
-		/// <summary>
-		/// An array of strings containing the raw tags returned by the method.
-		/// </summary>
+        /// <summary>
+        /// An array of strings containing the raw tags returned by the method.
+        /// </summary>
         public Collection<string> RawTags { get; private set; }
 
-		/// <summary>
-		/// The clean tag.
-		/// </summary>
-		public string CleanTag { get; private set; }
-		
+        /// <summary>
+        /// The clean tag.
+        /// </summary>
+        public string CleanTag { get; private set; }
+        
         void IFlickrParsable.Load(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())

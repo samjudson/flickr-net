@@ -237,6 +237,31 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosSearchGetMultipleLicenses()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "microsoft";
+            o.PerPage = 500;
+            o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;
+            o.Licenses.Add(LicenseType.AttributionNoDerivativesCC);
+            o.Licenses.Add(LicenseType.AttributionNoncommercialNoDerivativesCC);
+            o.Extras = PhotoSearchExtras.License | PhotoSearchExtras.OwnerName;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            Console.WriteLine(f.LastRequest);
+
+            foreach (Photo photo in photos)
+            {
+                if (photo.License != LicenseType.AttributionNoDerivativesCC &&
+                    photo.License != LicenseType.AttributionNoncommercialNoDerivativesCC)
+                {
+                    Assert.Fail("License not one of selected licenses: " + photo.License.ToString());
+                }
+            }
+        }
+
+        [TestMethod]
         public void PhotosSearchGetLicenseNoKnownCopright()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();

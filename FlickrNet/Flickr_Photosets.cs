@@ -172,7 +172,7 @@ namespace FlickrNet
             if (userId != null) parameters.Add("user_id", userId);
 
             PhotosetCollection photosets = GetResponseCache<PhotosetCollection>(parameters);
-            foreach(Photoset photoset in photosets)
+            foreach (Photoset photoset in photosets)
             {
                 photoset.OwnerId = userId;
             }
@@ -294,7 +294,7 @@ namespace FlickrNet
             if (privacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (media != MediaType.None) parameters.Add("media", (media == MediaType.All ? "all" : (media == MediaType.Photos ? "photos" : (media == MediaType.Videos ? "videos" : ""))));
+            if (media != MediaType.None) parameters.Add("media", (media == MediaType.All ? "all" : (media == MediaType.Photos ? "photos" : (media == MediaType.Videos ? "videos" : String.Empty))));
 
             return GetResponseCache<PhotosetPhotoCollection>(parameters);
         }

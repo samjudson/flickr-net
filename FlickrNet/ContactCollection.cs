@@ -6,11 +6,11 @@ using System.Xml;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Contains a list of <see cref="Contact"/> items for a given user.
-	/// </summary>
+    /// <summary>
+    /// Contains a list of <see cref="Contact"/> items for a given user.
+    /// </summary>
     public sealed class ContactCollection : System.Collections.ObjectModel.Collection<Contact>, IFlickrParsable
-	{
+    {
         /// <summary>
         /// The total number of contacts that match the calling query.
         /// </summary>
@@ -27,8 +27,6 @@ namespace FlickrNet
         /// The number of pages of contacts that are available.
         /// </summary>
         public int Pages { get; set; }
-
-        #region IFlickrParsable Members
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -69,23 +67,21 @@ namespace FlickrNet
 
             reader.Skip();
         }
-
-        #endregion
     }
 
-	/// <summary>
-	/// Contains details of a contact for a particular user.
-	/// </summary>
+    /// <summary>
+    /// Contains details of a contact for a particular user.
+    /// </summary>
     public sealed class Contact : IFlickrParsable
-	{
-		/// <summary>
-		/// The user id of the contact.
-		/// </summary>
+    {
+        /// <summary>
+        /// The user id of the contact.
+        /// </summary>
         public string UserId { get; set; }
     
-		/// <summary>
-		/// The username (or screen name) of the contact.
-		/// </summary>
+        /// <summary>
+        /// The username (or screen name) of the contact.
+        /// </summary>
         public string UserName { get; set; }
 
         /// <summary>
@@ -132,19 +128,19 @@ namespace FlickrNet
         /// </summary>
         public int? PhotosUploaded { get; set; }
 
-		/// <summary>
-		/// Is this contact marked as a friend contact?
-		/// </summary>
+        /// <summary>
+        /// Is this contact marked as a friend contact?
+        /// </summary>
         public bool? IsFriend { get; set; }
     
-		/// <summary>
-		/// Is this user marked a family contact?
-		/// </summary>
+        /// <summary>
+        /// Is this user marked a family contact?
+        /// </summary>
         public bool? IsFamily { get; set; }
     
-		/// <summary>
-		/// Unsure how to even set this!
-		/// </summary>
+        /// <summary>
+        /// Unsure how to even set this!
+        /// </summary>
         public bool? IsIgnored { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
@@ -178,10 +174,10 @@ namespace FlickrNet
                         Location = reader.Value;
                         break;
                     case "friend":
-                        IsFriend = (reader.Value == "1");
+                        IsFriend = reader.Value == "1";
                         break;
                     case "family":
-                        IsFamily = (reader.Value == "1");
+                        IsFamily = reader.Value == "1";
                         break;
                     case "path_alias":
                         PathAlias = reader.Value;
@@ -198,5 +194,5 @@ namespace FlickrNet
             reader.Skip();
         }
 
-	}
+    }
 }

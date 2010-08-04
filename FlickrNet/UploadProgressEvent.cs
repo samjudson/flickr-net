@@ -2,35 +2,35 @@ using System;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Event arguments for a <see cref="Flickr.OnUploadProgress"/> event.
-	/// </summary>
-	public class UploadProgressEventArgs : EventArgs
-	{
-		private bool _uploadComplete;
+    /// <summary>
+    /// Event arguments for a <see cref="Flickr.OnUploadProgress"/> event.
+    /// </summary>
+    public class UploadProgressEventArgs : EventArgs
+    {
+        private bool uploadComplete;
 
-		private long _bytes;
+        private long bytes;
 
-		/// <summary>
-		/// Number of bytes transfered so far.
-		/// </summary>
-		public long Bytes
-		{
-			get { return _bytes; }
-		}
+        /// <summary>
+        /// Number of bytes transfered so far.
+        /// </summary>
+        public long Bytes
+        {
+            get { return bytes; }
+        }
 
-		/// <summary>
-		/// True if all bytes have been uploaded.
-		/// </summary>
-		public bool UploadComplete
-		{
-			get { return _uploadComplete; }
-		}
+        /// <summary>
+        /// True if all bytes have been uploaded.
+        /// </summary>
+        public bool UploadComplete
+        {
+            get { return uploadComplete; }
+        }
 
-		internal UploadProgressEventArgs(long bytes, bool complete)
-		{
-			_bytes = bytes;
-			_uploadComplete = complete;
-		}
-	}
+        internal UploadProgressEventArgs(long bytes, bool complete)
+        {
+            this.bytes = bytes;
+            this.uploadComplete = complete;
+        }
+    }
 }

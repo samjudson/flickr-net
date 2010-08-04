@@ -3,7 +3,6 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Collections.Generic;
-//using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FlickrNet
 {

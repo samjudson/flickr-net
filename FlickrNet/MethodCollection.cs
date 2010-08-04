@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Summary description for Methods.
-	/// </summary>
+    /// <summary>
+    /// Summary description for Methods.
+    /// </summary>
     public sealed class MethodCollection : System.Collections.ObjectModel.Collection<string>, IFlickrParsable
-	{
+    {
         void IFlickrParsable.Load(XmlReader reader)
         {
             reader.Read();
@@ -24,15 +24,15 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// A method supported by the Flickr API.
-	/// </summary>
-	/// <remarks>
-	/// See <a href="http://www.flickr.com/services/api">Flickr API Documentation</a> for a complete list
-	/// of methods.
-	/// </remarks>
+    /// <summary>
+    /// A method supported by the Flickr API.
+    /// </summary>
+    /// <remarks>
+    /// See <a href="http://www.flickr.com/services/api">Flickr API Documentation</a> for a complete list
+    /// of methods.
+    /// </remarks>
     public sealed class Method : IFlickrParsable
-	{
+    {
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -41,9 +41,9 @@ namespace FlickrNet
             Arguments = new System.Collections.ObjectModel.Collection<MethodArgument>();
             Errors = new System.Collections.ObjectModel.Collection<MethodError>();
         }
-		/// <summary>
-		/// The name of the method.
-		/// </summary>
+        /// <summary>
+        /// The name of the method.
+        /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
@@ -61,33 +61,30 @@ namespace FlickrNet
         /// </summary>
         public MethodPermission RequiredPermissions { get; private set; }
 
-		/// <summary>
-		/// The description of the method.
-		/// </summary>
+        /// <summary>
+        /// The description of the method.
+        /// </summary>
         public string Description { get; private set; }
 
-		/// <summary>
-		/// An example response for the method.
-		/// </summary>
+        /// <summary>
+        /// An example response for the method.
+        /// </summary>
         public string Response { get; private set; }
 
-		/// <summary>
-		/// An explanation of the example response for the method.
-		/// </summary>
+        /// <summary>
+        /// An explanation of the example response for the method.
+        /// </summary>
        public string Explanation { get; private set; }
 
-		/// <summary>
-		/// The arguments of the method.
-		/// </summary>
+        /// <summary>
+        /// The arguments of the method.
+        /// </summary>
         public System.Collections.ObjectModel.Collection<MethodArgument> Arguments { get; private set; }
 
-		/// <summary>
-		/// The possible errors that could be returned by the method.
-		/// </summary>
+        /// <summary>
+        /// The possible errors that could be returned by the method.
+        /// </summary>
         public System.Collections.ObjectModel.Collection<MethodError> Errors { get; private set; }
-
-
-        #region IFlickrParsable Members
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -154,8 +151,6 @@ namespace FlickrNet
 
             reader.Skip();
         }
-
-        #endregion
     }
 
     /// <summary>
@@ -177,24 +172,24 @@ namespace FlickrNet
         Write = 2
     }
 
-	/// <summary>
-	/// An argument for a method.
-	/// </summary>
+    /// <summary>
+    /// An argument for a method.
+    /// </summary>
     public sealed class MethodArgument : IFlickrParsable
-	{
-		/// <summary>
-		/// The name of the argument.
-		/// </summary>
+    {
+        /// <summary>
+        /// The name of the argument.
+        /// </summary>
         public string Name { get; private set; }
 
-		/// <summary>
-		/// Is the argument optional or not.
-		/// </summary>
+        /// <summary>
+        /// Is the argument optional or not.
+        /// </summary>
         public bool IsOptional { get; private set; }
 
-		/// <summary>
-		/// The description of the argument.
-		/// </summary>
+        /// <summary>
+        /// The description of the argument.
+        /// </summary>
         public string Description { get; private set; }
 
         void IFlickrParsable.Load(XmlReader reader)
@@ -226,14 +221,14 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// A possible error that a method can return.
-	/// </summary>
+    /// <summary>
+    /// A possible error that a method can return.
+    /// </summary>
     public sealed class MethodError : IFlickrParsable
-	{
-		/// <summary>
-		/// The code for the error.
-		/// </summary>
+    {
+        /// <summary>
+        /// The code for the error.
+        /// </summary>
         public int Code { get; set; }
 
         /// <summary>

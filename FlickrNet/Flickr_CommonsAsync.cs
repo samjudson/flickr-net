@@ -12,7 +12,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void CommonsGetInstitutionsAsync(Action<FlickrResult<InstitutionCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string,string>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.commons.getInstitutions");
 
             GetResponseAsync<InstitutionCollection>(parameters, callback);

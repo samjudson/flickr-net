@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <remarks/>
-	public sealed class CollectionCollection : System.Collections.ObjectModel.Collection<Collection>, IFlickrParsable
-	{
+    /// <remarks/>
+    public sealed class CollectionCollection : System.Collections.ObjectModel.Collection<Collection>, IFlickrParsable
+    {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "collections")

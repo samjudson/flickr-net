@@ -132,18 +132,18 @@ namespace FlickrNet
     /// </summary>
     public struct PointD
     {
-        private double _x;
-        private double _y;
+        private double x;
+        private double y;
 
         /// <summary>
         /// The X position of the point.
         /// </summary>
-        public double X { get { return _x; } }
+        public double X { get { return x; } }
 
         /// <summary>
         /// The Y position of the point.
         /// </summary>
-        public double Y { get { return _y; } }
+        public double Y { get { return y; } }
 
         /// <summary>
         /// Default constructor.
@@ -152,8 +152,8 @@ namespace FlickrNet
         /// <param name="y"></param>
         public PointD(double x, double y)
         {
-            _x = x;
-            _y = y;
+            this.x = x;
+            this.y = y;
         }
 
         /// <summary>

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Contains details of a category, including groups belonging to the category and sub categories.
-	/// </summary>
-	public sealed class GroupCategory : IFlickrParsable
-	{
+    /// <summary>
+    /// Contains details of a category, including groups belonging to the category and sub categories.
+    /// </summary>
+    public sealed class GroupCategory : IFlickrParsable
+    {
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -17,41 +17,41 @@ namespace FlickrNet
             Groups = new System.Collections.ObjectModel.Collection<Group>();
         }
 
-		/// <summary>
-		/// The name for the category.
-		/// </summary>
+        /// <summary>
+        /// The name for the category.
+        /// </summary>
         public string CategoryName { get; private set; }
     
-		/// <summary>
-		/// A forward slash delimited list of the parents of the current group.
-		/// </summary>
-		/// <remarks>
-		/// Can be matched against the list of PathIds to jump directly to a parent group.
-		/// </remarks>
-		/// <example>
-		/// Group Id 91, Romance will return "/Life/Romance" as the Path and "/90/91" as its PathIds
-		/// </example>
+        /// <summary>
+        /// A forward slash delimited list of the parents of the current group.
+        /// </summary>
+        /// <remarks>
+        /// Can be matched against the list of PathIds to jump directly to a parent group.
+        /// </remarks>
+        /// <example>
+        /// Group Id 91, Romance will return "/Life/Romance" as the Path and "/90/91" as its PathIds
+        /// </example>
         public string Path { get; private set; }
     
-		/// <summary>
-		/// A forward slash delimited list of the ids of the parents of the current group.
-		/// </summary>
-		/// <remarks>
-		/// Can be matched against the Path to jump directly to a parent group.
-		/// </remarks>
-		/// <example>
-		/// Group Id 91, Romance will return "/Life/Romance" as the Path and "/90/91" as its PathIds
-		/// </example>
+        /// <summary>
+        /// A forward slash delimited list of the ids of the parents of the current group.
+        /// </summary>
+        /// <remarks>
+        /// Can be matched against the Path to jump directly to a parent group.
+        /// </remarks>
+        /// <example>
+        /// Group Id 91, Romance will return "/Life/Romance" as the Path and "/90/91" as its PathIds
+        /// </example>
         public string PathIds { get; private set; }
 
-		/// <summary>
-		/// An array of <see cref="Subcategory"/> items.
-		/// </summary>
+        /// <summary>
+        /// An array of <see cref="Subcategory"/> items.
+        /// </summary>
         public System.Collections.ObjectModel.Collection<Subcategory> Subcategories { get; private set; }
 
-		/// <summary>
-		/// An array of <see cref="Group"/> items, listing the groups within this category.
-		/// </summary>
+        /// <summary>
+        /// An array of <see cref="Group"/> items, listing the groups within this category.
+        /// </summary>
         public System.Collections.ObjectModel.Collection<Group> Groups { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
@@ -103,24 +103,24 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// Holds details of a sub category, including its id, name and the number of groups in it.
-	/// </summary>
+    /// <summary>
+    /// Holds details of a sub category, including its id, name and the number of groups in it.
+    /// </summary>
     public sealed class Subcategory : IFlickrParsable
-	{
-		/// <summary>
-		/// The id of the category.
-		/// </summary>
+    {
+        /// <summary>
+        /// The id of the category.
+        /// </summary>
         public string SubcategoryId { get; private set; }
     
-		/// <summary>
-		/// The name of the category.
-		/// </summary>
+        /// <summary>
+        /// The name of the category.
+        /// </summary>
         public string SubcategoryName { get; private set; }
     
-		/// <summary>
-		/// The number of groups found within the category.
-		/// </summary>
+        /// <summary>
+        /// The number of groups found within the category.
+        /// </summary>
         public int GroupCount { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

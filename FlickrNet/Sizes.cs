@@ -5,11 +5,11 @@ using System;
 
 namespace FlickrNet
 {
-	/// <summary>
-	/// Collection of <see cref="Size"/> items for a given photograph.
-	/// </summary>
+    /// <summary>
+    /// Collection of <see cref="Size"/> items for a given photograph.
+    /// </summary>
     public sealed class SizeCollection : System.Collections.ObjectModel.Collection<Size>, IFlickrParsable
-	{
+    {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             reader.Read();
@@ -25,34 +25,34 @@ namespace FlickrNet
         }
     }
 
-	/// <summary>
-	/// Contains details about all the sizes available for a given photograph.
-	/// </summary>
+    /// <summary>
+    /// Contains details about all the sizes available for a given photograph.
+    /// </summary>
     public sealed class Size : IFlickrParsable
-	{
-		/// <summary>
-		/// The label for the size, such as "Thumbnail", "Small", "Medium", "Large" and "Original".
-		/// </summary>
-		public string Label { get; private set; }
+    {
+        /// <summary>
+        /// The label for the size, such as "Thumbnail", "Small", "Medium", "Large" and "Original".
+        /// </summary>
+        public string Label { get; private set; }
     
         /// <summary>
         /// The width of the resulting image, in pixels
         /// </summary>
-		public int Width { get; private set; }
+        public int Width { get; private set; }
     
-		/// <summary>
-		/// The height of the resulting image, in pixels
-		/// </summary>
-		public int Height { get; private set; }
+        /// <summary>
+        /// The height of the resulting image, in pixels
+        /// </summary>
+        public int Height { get; private set; }
     
-		/// <summary>
-		/// The source url of the image.
-		/// </summary>
+        /// <summary>
+        /// The source url of the image.
+        /// </summary>
         public string Source { get; private set; }
     
-		/// <summary>
-		/// The url to the photographs web page for this particular size.
-		/// </summary>
+        /// <summary>
+        /// The url to the photographs web page for this particular size.
+        /// </summary>
         public string Url { get; private set; }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace FlickrNet
                         Label = reader.Value;
                         break;
                     case "width":
-                        Width = reader.ReadContentAsInt() ;
+                        Width = reader.ReadContentAsInt();
                         break;
                     case "height":
                         Height = reader.ReadContentAsInt();
