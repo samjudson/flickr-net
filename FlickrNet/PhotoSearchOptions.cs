@@ -265,6 +265,26 @@ namespace FlickrNet
         /// </summary>
         public bool IsGetty { get; set; }
 
+        /// <summary>
+        /// If true then limit the search to within the current person's favourites.
+        /// </summary>
+        public bool Faves { get; set; }
+
+        /// <summary>
+        /// If set then will return photos tagged as containing the given person.
+        /// </summary>
+        public string PersonId { get; set; }
+
+        /// <summary>
+        /// Search for photos taken with a particular camera.
+        /// </summary>
+        public string Camera { get; set; }
+
+        /// <summary>
+        /// I've no idea what this does. The Flickr API comment is simply: Jump, jump!
+        /// </summary>
+        public string JumpTo { get; set; }
+
         internal string ExtrasString
         {
             get { return UtilityMethods.ExtrasToString(Extras); }
@@ -348,6 +368,10 @@ namespace FlickrNet
             if (IsGetty) parameters.Add("is_getty", "1");
             if (MediaType != MediaType.None) parameters.Add("media", UtilityMethods.MediaTypeToString(MediaType));
             if (GeoContext != GeoContext.NotDefined) parameters.Add("geo_context", GeoContext.ToString("d"));
+            if (Faves) parameters.Add("faves", "1");
+            if (PersonId != null) parameters.Add("person_id", PersonId);
+            if (Camera != null) parameters.Add("camera", Camera);
+            if (JumpTo != null) parameters.Add("jump_to", JumpTo);
         }
     }
 

@@ -92,6 +92,40 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosSearchFavorites()
+        {
+            Flickr f = TestData.GetAuthInstance();
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = "me";
+            o.Faves = true;
+            o.Tags = "cat";
+
+            PhotoCollection p = f.PhotosSearch(o);
+
+            Assert.IsTrue(p.Count > 10, "Should have returned more than 10 result returned. Count = " + p.Count);
+            Assert.IsTrue(p.Count < 100, "Should be less than 100 results returned. Count = " + p.Count);
+        }
+
+        [TestMethod]
+        public void PhotosSearchCameraIphone()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Camera = "iPhone 4";
+            o.MinUploadDate = DateTime.Now.AddDays(-2);
+            o.MaxUploadDate = DateTime.Now;
+            o.Extras = PhotoSearchExtras.Tags;
+
+            var ps = f.PhotosSearch(o);
+
+            foreach (Photo p in ps)
+            {
+                Console.WriteLine(p.WebUrl);
+            }
+        }
+
+        [TestMethod]
         public void PhotosSearchPerPage()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
