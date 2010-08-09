@@ -619,7 +619,7 @@ namespace FlickrNet
                             GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
-                        GeoPermissions.IsFriend = (reader.Value == "1");
+                        GeoPermissions.IsFriend = reader.Value == "1";
                         break;
                     case "geo_is_public":
                         if (GeoPermissions == null)
@@ -627,7 +627,7 @@ namespace FlickrNet
                             GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
-                        GeoPermissions.IsPublic = (reader.Value == "1");
+                        GeoPermissions.IsPublic = reader.Value == "1";
                         break;
                     case "geo_is_contact":
                         if (GeoPermissions == null)
@@ -635,7 +635,7 @@ namespace FlickrNet
                             GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
-                        GeoPermissions.IsContact = (reader.Value == "1");
+                        GeoPermissions.IsContact = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

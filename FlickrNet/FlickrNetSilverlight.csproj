@@ -57,6 +57,7 @@
     <Compile Include="AssemblyInfoMore.cs" />
     <Compile Include="Auth.cs" />
     <Compile Include="AuthenticationRequiredException.cs" />
+    <Compile Include="Blog.cs" />
     <Compile Include="BlogCollection.cs" />
     <Compile Include="BlogService.cs" />
     <Compile Include="BlogServiceCollection.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="CollectionCollection.cs" />
     <Compile Include="CollectionInfo.cs" />
     <Compile Include="CollectionSet.cs" />
+    <Compile Include="Contact.cs" />
     <Compile Include="ContactCollection.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="CsvFile.cs" />
@@ -131,7 +133,9 @@
     <Compile Include="IFlickrParsable.cs" />
     <Compile Include="Institution.cs" />
     <Compile Include="InstitutionCollection.cs" />
+    <Compile Include="LicenseCollection.cs" />
     <Compile Include="Licenses.cs" />
+    <Compile Include="LicenseType.cs" />
     <Compile Include="LockFile.cs" />
     <Compile Include="MD5Core.cs" />
     <Compile Include="MD5Managed.cs" />

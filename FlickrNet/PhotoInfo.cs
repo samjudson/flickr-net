@@ -404,7 +404,7 @@ namespace FlickrNet
                         DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "isfavorite":
-                        IsFavorite = (reader.Value == "1");
+                        IsFavorite = reader.Value == "1";
                         break;
                     case "license":
                         License = (LicenseType)int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
@@ -416,7 +416,7 @@ namespace FlickrNet
                         Rotation = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "media":
-                        Media = (reader.Value == "photo" ? MediaType.Photos : MediaType.Videos);
+                        Media = reader.Value == "photo" ? MediaType.Photos : MediaType.Videos;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -521,10 +521,10 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "cancomment":
-                        CanComment = (reader.Value == "1");
+                        CanComment = reader.Value == "1";
                         break;
                     case "canaddmeta":
-                        CanAddMeta = (reader.Value == "1");
+                        CanAddMeta = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -781,7 +781,7 @@ namespace FlickrNet
                         Raw = reader.Value;
                         break;
                     case "machine_tag":
-                        IsMachineTag = (reader.Value == "1");
+                        IsMachineTag = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

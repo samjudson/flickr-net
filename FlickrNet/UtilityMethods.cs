@@ -278,7 +278,7 @@ namespace FlickrNet
                 b = s.ReadByte();
                 if (b == -1)
                     throw new IOException("Unexpected EOF encountered");
-                i |= (b << (j * 8));
+                i |= b << (j * 8);
             }
             return i;
         }

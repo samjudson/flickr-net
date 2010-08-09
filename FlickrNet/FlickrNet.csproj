@@ -112,6 +112,7 @@
     <Compile Include="AuthenticationRequiredException.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Blog.cs" />
     <Compile Include="BlogCollection.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -125,6 +126,7 @@
     </Compile>
     <Compile Include="Cluster.cs" />
     <Compile Include="ClusterCollection.cs" />
+    <Compile Include="Contact.cs" />
     <Compile Include="CsvFile.cs" />
     <Compile Include="CsvFileCollection.cs" />
     <Compile Include="EchoResponseDictionary.cs" />
@@ -189,6 +191,8 @@
     <Compile Include="HotTagCollection.cs" />
     <Compile Include="Institution.cs" />
     <Compile Include="InstitutionCollection.cs" />
+    <Compile Include="LicenseCollection.cs" />
+    <Compile Include="LicenseType.cs" />
     <Compile Include="MemberGroupInfo.cs" />
     <Compile Include="MemberGroupInfoCollection.cs" />
     <Compile Include="Namespace.cs" />

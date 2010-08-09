@@ -41,13 +41,13 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "ready":
-                        Ready = (reader.Value == "1");
+                        Ready = reader.Value == "1";
                         break;
                     case "failed":
-                        Failed = (reader.Value == "1");
+                        Failed = reader.Value == "1";
                         break;
                     case "pending":
-                        Pending = (reader.Value == "1");
+                        Pending = reader.Value == "1";
                         break;
                     case "duration":
                         Duration = reader.ReadContentAsInt();
