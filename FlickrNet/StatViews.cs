@@ -32,6 +32,10 @@ namespace FlickrNet
         /// The number of collection views.
         /// </summary>
         public int CollectionViews { get; set; }
+        /// <summary>
+        /// The number of gallery views.
+        /// </summary>
+        public int GalleryViews { get; private set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -58,6 +62,9 @@ namespace FlickrNet
                         break;
                     case "collections":
                         CollectionViews = int.Parse(reader.GetAttribute("views"), System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "galleries":
+                        GalleryViews = int.Parse(reader.GetAttribute("views"), System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -239,9 +239,11 @@ namespace FlickrNet
 
             DateTime newTimestamp = DateTime.MinValue;
             long newLength = -1;
+            
+            dataFile.Refresh();
+
             if (dataFile.Exists)
             {
-                dataFile.Refresh();
                 newTimestamp = dataFile.LastWriteTime;
                 newLength = dataFile.Length;
             }
