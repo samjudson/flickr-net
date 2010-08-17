@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Collections;
 using System.Xml.Serialization;
+using System.Xml;
 
 namespace FlickrNet
 {
@@ -107,7 +108,7 @@ namespace FlickrNet
 
             Uri uploadUri = new Uri(UploadUrl);
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             if (title != null && title.Length > 0)
             {
@@ -128,92 +129,58 @@ namespace FlickrNet
 
             if (safetyLevel != SafetyLevel.None)
             {
-                parameters.Add("safety_level", (int)safetyLevel);
+                parameters.Add("safety_level", safetyLevel.ToString("D"));
             }
             if (contentType != ContentType.None)
             {
-                parameters.Add("content_type", (int)contentType);
+                parameters.Add("content_type", contentType.ToString("D"));
             }
             if (hiddenFromSearch != HiddenFromSearch.None)
             {
-                parameters.Add("hidden", (int)hiddenFromSearch);
+                parameters.Add("hidden", hiddenFromSearch.ToString("D"));
             }
 
             parameters.Add("api_key", apiKey);
             parameters.Add("auth_token", apiToken);
 
-            string s = UploadData(stream, fileName, uploadUri, parameters);
+            string responseXml = UploadData(stream, fileName, uploadUri, parameters);
 
-            XmlSerializer serializer = uploaderSerializer;
-            StringReader str = new StringReader(s);
-            FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreWhitespace = true;
+            XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
 
-            if (uploader.Status == ResponseStatus.Ok)
+            if (!reader.ReadToDescendant("rsp"))
             {
-                return uploader.PhotoId;
+                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
             }
-            else
+            while (reader.MoveToNextAttribute())
             {
-                throw new FlickrApiException(uploader.Error.Code, uploader.Error.Message);
+                if (reader.LocalName == "stat" && reader.Value == "fail")
+                    throw ExceptionHandler.CreateResponseException(reader);
+                continue;
             }
+
+            reader.MoveToElement();
+            reader.Read();
+
+            UnknownResponse t = new UnknownResponse();
+            ((IFlickrParsable)t).Load(reader);
+            return t.GetElementValue("photoid");
         }
 
-        private string UploadData(Stream imageStream, string fileName, Uri uploadUri, Hashtable parameters)
+        private string UploadData(Stream imageStream, string fileName, Uri uploadUri, Dictionary<string, string> parameters)
         {
-            string[] keys = new string[parameters.Keys.Count];
-            parameters.Keys.CopyTo(keys, 0);
-            Array.Sort(keys);
-
-            StringBuilder hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
-            StringBuilder contentStringBuilder = new StringBuilder();
             string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
-            foreach (string key in keys)
-            {
-                hashStringBuilder.Append(key);
-                hashStringBuilder.Append(parameters[key]);
-                contentStringBuilder.Append("--" + boundary + "\r\n");
-                contentStringBuilder.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
-                contentStringBuilder.Append("\r\n");
-                contentStringBuilder.Append(parameters[key] + "\r\n");
-            }
-
-            contentStringBuilder.Append("--" + boundary + "\r\n");
-            contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
-            contentStringBuilder.Append("\r\n");
-            contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
-
-            fileName = Path.GetFileName(fileName);
-
-            // Photo
-            contentStringBuilder.Append("--" + boundary + "\r\n");
-            contentStringBuilder.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + fileName + "\"\r\n");
-            contentStringBuilder.Append("Content-Type: image/jpeg\r\n");
-            contentStringBuilder.Append("\r\n");
-
-            UTF8Encoding encoding = new UTF8Encoding();
-
-            byte[] postContents = encoding.GetBytes(contentStringBuilder.ToString());
-
-            byte[] photoContents = new byte[imageStream.Length];
-            imageStream.Read(photoContents, 0, photoContents.Length);
-            imageStream.Close();
-
-            byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
-
-            byte[] dataBuffer = new byte[postContents.Length + photoContents.Length + postFooter.Length];
-            Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
-            Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
-            Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
-
+            byte[] dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
+            
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
-            req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
+            //req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
             req.Method = "POST";
             if (Proxy != null) req.Proxy = Proxy;
-            req.KeepAlive = true;
-            req.Timeout = HttpTimeout;
+            //req.Timeout = HttpTimeout;
             req.ContentType = "multipart/form-data; boundary=" + boundary;
-            req.Expect = String.Empty;
+            //req.Expect = String.Empty;
 
             req.ContentLength = dataBuffer.Length;
 
@@ -278,27 +245,35 @@ namespace FlickrNet
 
             Uri replaceUri = new Uri(ReplaceUrl);
 
-            Hashtable parameters = new Hashtable();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("photo_id", photoId);
             parameters.Add("api_key", apiKey);
             parameters.Add("auth_token", apiToken);
 
-            string s = UploadData(stream, fileName, replaceUri, parameters);
+            string responseXml = UploadData(stream, fileName, replaceUri, parameters);
 
-            StringReader str = new StringReader(s);
-            XmlSerializer serializer = uploaderSerializer;
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreWhitespace = true;
+            XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
 
-            FlickrNet.UploadResponse uploader = (FlickrNet.UploadResponse)serializer.Deserialize(str);
-
-            if (uploader.Status == ResponseStatus.Ok)
+            if (!reader.ReadToDescendant("rsp"))
             {
-                return uploader.PhotoId;
+                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
             }
-            else
+            while (reader.MoveToNextAttribute())
             {
-                throw new FlickrApiException(uploader.Error.Code, uploader.Error.Message);
+                if (reader.LocalName == "stat" && reader.Value == "fail")
+                    throw ExceptionHandler.CreateResponseException(reader);
+                continue;
             }
+
+            reader.MoveToElement();
+            reader.Read();
+
+            UnknownResponse t = new UnknownResponse();
+            ((IFlickrParsable)t).Load(reader);
+            return t.GetElementValue("photoid");
         }
 
     }

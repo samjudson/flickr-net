@@ -384,9 +384,6 @@
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketCollection.cs" />
     <Compile Include="UnknownResponse.cs" />
-    <Compile Include="UploadResponse.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="UploadProgressEvent.cs">
       <SubType>Code</SubType>
     </Compile>

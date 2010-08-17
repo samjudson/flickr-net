@@ -92,7 +92,7 @@ namespace FlickrNetTest
             Console.WriteLine(result.Result);
 
             // Clean up photo
-            //f.PhotosDelete(result.Result);
+            f.PhotosDelete(result.Result);
         }
 
         [TestMethod]
@@ -137,6 +137,50 @@ namespace FlickrNetTest
             finally
             {
                 f.PhotosDelete(photoId);
+            }
+        }
+
+        [TestMethod]
+        public void UploadPictureFromUrl()
+        {
+            string url = "http://www.google.co.uk/intl/en_com/images/srpr/logo1w.png";
+            Flickr f = TestData.GetAuthInstance();
+
+            using (WebClient client = new WebClient())
+            {
+                using (Stream s = client.OpenRead(url))
+                {
+                    string photoId = f.UploadPicture(s, "google.png", "Google Image", "Google", "", false, false, false, ContentType.Photo, SafetyLevel.None, HiddenFromSearch.None);
+                    f.PhotosDelete(photoId);
+                }
+            }
+        }
+
+        [Ignore]
+        [TestMethod]
+        public void UploadPictureVideoTests()
+        {
+            // Samples downloaded from http://support.apple.com/kb/HT1425
+            // sample_mpeg2.m2v does not upload
+            string[] filenames = new string[] { "sample_mpeg4.mp4", "sample_sorenson.mov", "sample_iTunes.mov", "sample_iPod.m4v", "sample.3gp", "sample_3GPP2.3g2" };
+            // Copy files to this directory.
+            string directory = @"Z:\Code Projects\FlickrNet\Samples\";
+
+            foreach (string file in filenames)
+            {
+                try
+                {
+                    using (Stream s = new FileStream(Path.Combine(directory, file), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        Flickr f = TestData.GetAuthInstance();
+                        string photoId = f.UploadPicture(s, file, "Video Upload Test", file, "video, test", false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.None);
+                        f.PhotosDelete(photoId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail("Failed during upload of " + file + " with exception: " + ex.ToString());
+                }
             }
         }
     }

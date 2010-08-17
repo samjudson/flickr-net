@@ -156,52 +156,5 @@ namespace FlickrNet
 
         }
 
-        private byte[] CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
-        {
-            string[] keys = new string[parameters.Keys.Count];
-            parameters.Keys.CopyTo(keys, 0);
-            Array.Sort(keys);
-
-            StringBuilder hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
-            StringBuilder contentStringBuilder = new StringBuilder();
-
-            foreach (string key in keys)
-            {
-                hashStringBuilder.Append(key);
-                hashStringBuilder.Append(parameters[key]);
-                contentStringBuilder.Append("--" + boundary + "\r\n");
-                contentStringBuilder.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
-                contentStringBuilder.Append("\r\n");
-                contentStringBuilder.Append(parameters[key] + "\r\n");
-            }
-
-            contentStringBuilder.Append("--" + boundary + "\r\n");
-            contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
-            contentStringBuilder.Append("\r\n");
-            contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
-
-            // Photo
-            contentStringBuilder.Append("--" + boundary + "\r\n");
-            contentStringBuilder.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + Path.GetFileName(fileName) + "\"\r\n");
-            contentStringBuilder.Append("Content-Type: image/jpeg\r\n");
-            contentStringBuilder.Append("\r\n");
-
-            UTF8Encoding encoding = new UTF8Encoding();
-
-            byte[] postContents = encoding.GetBytes(contentStringBuilder.ToString());
-
-            byte[] photoContents = new byte[imageStream.Length];
-            imageStream.Read(photoContents, 0, photoContents.Length);
-            imageStream.Close();
-
-            byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
-
-            byte[] dataBuffer = new byte[postContents.Length + photoContents.Length + postFooter.Length];
-            Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
-            Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
-            Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
-            return dataBuffer;
-        }
-
     }
 }

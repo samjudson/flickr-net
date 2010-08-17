@@ -183,11 +183,13 @@ namespace FlickrNetTest
         [TestMethod]
         public void PlacesPlacesForContactsFullParamTest()
         {
-            DateTime lastYear = DateTime.Today.AddYears(-5);
+            DateTime lastYear = DateTime.Today.AddYears(-1);
             DateTime today = DateTime.Today;
 
             var f = TestData.GetAuthInstance();
             var places = f.PlacesPlacesForContacts(PlaceType.Country, null, null, 1, ContactSearch.AllContacts, lastYear, today, lastYear, today);
+
+            Console.WriteLine(f.LastRequest);
 
             Assert.IsNotNull(places);
 

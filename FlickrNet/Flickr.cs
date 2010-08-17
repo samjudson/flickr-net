@@ -103,9 +103,6 @@ namespace FlickrNet
 #if !SILVERLIGHT
         // Old Code: = WebProxy.GetDefaultProxy();
         private WebProxy proxy; 
-
-        // Static serializers
-        private static XmlSerializer uploaderSerializer = new XmlSerializer(typeof(FlickrNet.UploadResponse));
 #endif
 
         /// <summary>
@@ -446,5 +443,65 @@ namespace FlickrNet
 
             return new Uri(BaseUri, new Uri(url.ToString(), UriKind.Relative));
         }
+
+        private byte[] ConvertNonSeekableStreamToByteArray(Stream nonSeekableStream)
+        {
+            MemoryStream ms = new MemoryStream();
+            byte[] buffer = new byte[1024];
+            int bytes;
+            while ((bytes = nonSeekableStream.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                ms.Write(buffer, 0, bytes);
+            }
+            byte[] output = ms.ToArray();
+            return output;
+        }
+
+        private byte[] CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
+        {
+            string[] keys = new string[parameters.Keys.Count];
+            parameters.Keys.CopyTo(keys, 0);
+            Array.Sort(keys);
+
+            StringBuilder hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
+            StringBuilder contentStringBuilder = new StringBuilder();
+
+            foreach (string key in keys)
+            {
+                hashStringBuilder.Append(key);
+                hashStringBuilder.Append(parameters[key]);
+                contentStringBuilder.Append("--" + boundary + "\r\n");
+                contentStringBuilder.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
+                contentStringBuilder.Append("\r\n");
+                contentStringBuilder.Append(parameters[key] + "\r\n");
+            }
+
+            contentStringBuilder.Append("--" + boundary + "\r\n");
+            contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
+            contentStringBuilder.Append("\r\n");
+            contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
+
+            // Photo
+            contentStringBuilder.Append("--" + boundary + "\r\n");
+            contentStringBuilder.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + Path.GetFileName(fileName) + "\"\r\n");
+            contentStringBuilder.Append("Content-Type: image/jpeg\r\n");
+            contentStringBuilder.Append("\r\n");
+
+            UTF8Encoding encoding = new UTF8Encoding();
+
+            byte[] postContents = encoding.GetBytes(contentStringBuilder.ToString());
+
+            byte[] photoContents = ConvertNonSeekableStreamToByteArray(imageStream);
+
+            byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
+
+            byte[] dataBuffer = new byte[postContents.Length + photoContents.Length + postFooter.Length];
+            Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
+            Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
+            Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
+            return dataBuffer;
+        }
+
+
     }
 }

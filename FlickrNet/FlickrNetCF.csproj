@@ -223,7 +223,6 @@
     <Compile Include="TicketCollection.cs" />
     <Compile Include="UnknownResponse.cs" />
     <Compile Include="UploadProgressEvent.cs" />
-    <Compile Include="UploadResponse.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserGeoPermissions.cs" />
     <Compile Include="UtilityMethods.cs" />
