@@ -657,7 +657,17 @@ namespace FlickrNet
         /// </summary>
         public string NoteText { get; private set; }
 
-#if !SILVERLIGHT
+#if SILVERLIGHT
+        public System.Windows.Size Size
+        {
+            get { return new System.Windows.Size(Width, Height); }
+        }
+
+        public System.Windows.Point Location
+        {
+            get { return new System.Windows.Point(XPosition, YPosition); }
+        }
+#else
         /// <summary>
         /// The <see cref="System.Drawing.Size"/> of this note. Derived from <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
