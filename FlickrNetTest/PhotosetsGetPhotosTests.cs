@@ -102,5 +102,28 @@ namespace FlickrNetTest
                 Assert.AreEqual<string>(url, p.WebUrl);
             }
         }
+
+        [TestMethod]
+        public void PhotosetsGetPhotosPrimaryPhotoTest()
+        {
+            PhotosetPhotoCollection theset = f.PhotosetsGetPhotos("72157618515066456", 1, 100);
+
+            Assert.IsNotNull(theset.PrimaryPhotoId, "PrimaryPhotoId should not be null.");
+
+            if (theset.Total < theset.PerPage)
+            {
+                Photo primary = null;
+                foreach (Photo p in theset)
+                {
+                    if (p.PhotoId == theset.PrimaryPhotoId)
+                    {
+                        primary = p;
+                        break;
+                    }
+                }
+
+                Assert.IsNotNull(primary, "Primary photo should have been found.");
+            }
+        }
     }
 }
