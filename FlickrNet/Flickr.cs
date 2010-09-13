@@ -95,7 +95,7 @@ namespace FlickrNet
         private string apiKey;
         private string apiToken;
         private string sharedSecret;
-        private int timeout = 30000;
+        private int timeout = 100000;
         private const string UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
         private string lastRequest;
         private string lastResponse;
@@ -496,9 +496,11 @@ namespace FlickrNet
             byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
 
             byte[] dataBuffer = new byte[postContents.Length + photoContents.Length + postFooter.Length];
+
             Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
             Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
             Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
+
             return dataBuffer;
         }
 

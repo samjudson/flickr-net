@@ -178,7 +178,7 @@ namespace FlickrNet
             //req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
             req.Method = "POST";
             if (Proxy != null) req.Proxy = Proxy;
-            //req.Timeout = HttpTimeout;
+            req.Timeout = HttpTimeout;
             req.ContentType = "multipart/form-data; boundary=" + boundary;
             //req.Expect = String.Empty;
 
