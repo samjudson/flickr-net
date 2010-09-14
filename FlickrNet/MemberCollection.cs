@@ -13,22 +13,22 @@ namespace FlickrNet
         /// <summary>
         /// The page of the results returned.
         /// </summary>
-        public int Page { get; private set; }
+        public int Page { get; set; }
 
         /// <summary>
         /// The total number of pages that could have been returned.
         /// </summary>
-        public int Pages { get; private set; }
+        public int Pages { get; set; }
 
         /// <summary>
         /// The total number of members in the group.
         /// </summary>
-        public int Total { get; private set; }
+        public int Total { get; set; }
 
         /// <summary>
         /// The number of members returned per page.
         /// </summary>
-        public int PerPage { get; private set; }
+        public int PerPage { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

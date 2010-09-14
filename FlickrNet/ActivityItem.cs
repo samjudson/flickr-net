@@ -41,32 +41,32 @@ namespace FlickrNet
         /// <summary>
         /// The <see cref="ActivityItemType"/> of the item.
         /// </summary>
-        public ActivityItemType ItemType { get; private set; }
+        public ActivityItemType ItemType { get; set; }
 
         /// <summary>
         /// The ID of either the photoset or the photo.
         /// </summary>
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// The secret for either the photo, or the primary photo for the photoset.
         /// </summary>
-        public string Secret { get; private set; }
+        public string Secret { get; set; }
 
         /// <summary>
         /// The server for either the photo, or the primary photo for the photoset.
         /// </summary>
-        public string Server { get; private set; }
+        public string Server { get; set; }
 
         /// <summary>
         /// The server farm for either the photo, or the primary photo for the photoset.
         /// </summary>
-        public string Farm { get; private set; }
+        public string Farm { get; set; }
 
         /// <summary>
         /// The title of the photoset or photo.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The number of new comments within the given time frame. 
@@ -74,7 +74,7 @@ namespace FlickrNet
         /// <remarks>
         /// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
         /// </remarks>
-        public int NewComments { get; private set; }
+        public int NewComments { get; set; }
 
         /// <summary>
         /// The number of old comments within the given time frame. 
@@ -82,7 +82,7 @@ namespace FlickrNet
         /// <remarks>
         /// Only applicable for <see cref="Flickr.ActivityUserPhotos()"/>.
         /// </remarks>
-        public int OldComments { get; private set; }
+        public int OldComments { get; set; }
 
         /// <summary>
         /// The number of comments on the item. 
@@ -90,12 +90,12 @@ namespace FlickrNet
         /// <remarks>
         /// Only applicable for <see cref="Flickr.ActivityUserComments"/>.
         /// </remarks>
-        public int Comments { get; private set; }
+        public int Comments { get; set; }
 
         /// <summary>
         /// Gets the number of views for this photo or photoset.
         /// </summary>
-        public int Views { get; private set; }
+        public int Views { get; set; }
 
         /// <summary>
         /// You want more! You got it!
@@ -103,27 +103,27 @@ namespace FlickrNet
         /// <remarks>
         /// Actually, not sure what this it for!
         /// </remarks>
-        public bool More { get; private set; }
+        public bool More { get; set; }
 
         /// <summary>
         /// The user id of the owner of this item.
         /// </summary>
-        public string OwnerId { get; private set; }
+        public string OwnerId { get; set; }
 
         /// <summary>
         /// The username of the owner of this item.
         /// </summary>
-        public string OwnerName { get; private set; }
+        public string OwnerName { get; set; }
 
         /// <summary>
         /// If the type is a photoset then this contains the number of photos in the set. Otherwise returns -1.
         /// </summary>
-        public int? Photos { get; private set; }
+        public int? Photos { get; set; }
 
         /// <summary>
         /// If this is a photoset then returns the primary photo id, otherwise will be null (<code>Nothing</code> in VB.Net).
         /// </summary>
-        public string PrimaryPhotoId { get; private set; }
+        public string PrimaryPhotoId { get; set; }
 
         /// <summary>
         /// The number of new notes within the given time frame. 
@@ -131,7 +131,7 @@ namespace FlickrNet
         /// <remarks>
         /// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
         /// </remarks>
-        public int? NewNotes { get; private set; }
+        public int? NewNotes { get; set; }
 
         /// <summary>
         /// The number of old notes within the given time frame. 
@@ -139,7 +139,7 @@ namespace FlickrNet
         /// <remarks>
         /// Only applicable for photos and when calling <see cref="Flickr.ActivityUserPhotos()"/>.
         /// </remarks>
-        public int? OldNotes { get; private set; }
+        public int? OldNotes { get; set; }
 
         /// <summary>
         /// The number of comments on the photo.
@@ -147,17 +147,17 @@ namespace FlickrNet
         /// <remarks>
         /// Only applicable for photos and when calling <see cref="Flickr.ActivityUserComments"/>.
         /// </remarks>
-        public int? Notes { get; private set; }
+        public int? Notes { get; set; }
 
         /// <summary>
         /// If the type is a photo then this contains the number of favourites in the set. Otherwise returns -1.
         /// </summary>
-        public int? Favorites { get; private set; }
+        public int? Favorites { get; set; }
 
         /// <summary>
         /// The events that comprise this activity item.
         /// </summary>
-        public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; private set; }
+        public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

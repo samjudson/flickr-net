@@ -33,12 +33,12 @@ namespace FlickrNet
         /// <summary>
         /// The name of the tag.
         /// </summary>
-        public string TagName { get; private set; }
+        public string TagName { get; set; }
 
         /// <summary>
         /// The poularity of the tag. Will be 0 if not returned via <see cref="Flickr.TagsGetListUserPopular()"/>
         /// </summary>
-        public int Count { get; private set; }
+        public int Count { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -100,12 +100,12 @@ namespace FlickrNet
         /// <summary>
         /// An array of strings containing the raw tags returned by the method.
         /// </summary>
-        public Collection<string> RawTags { get; private set; }
+        public Collection<string> RawTags { get; set; }
 
         /// <summary>
         /// The clean tag.
         /// </summary>
-        public string CleanTag { get; private set; }
+        public string CleanTag { get; set; }
         
         void IFlickrParsable.Load(XmlReader reader)
         {

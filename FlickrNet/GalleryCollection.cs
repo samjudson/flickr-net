@@ -13,32 +13,32 @@ namespace FlickrNet
                 /// <summary>
         /// The current page that the group search results represents.
         /// </summary>
-        public int Page { get; private set; }
+        public int Page { get; set; }
 
         /// <summary>
         /// The total number of pages this search would return.
         /// </summary>
-        public int Pages { get; private set; }
+        public int Pages { get; set; }
 
         /// <summary>
         /// The number of groups returned per photo.
         /// </summary>
-        public int PerPage { get; private set; }
+        public int PerPage { get; set; }
 
         /// <summary>
         /// The total number of groups that where returned for the search.
         /// </summary>
-        public int Total { get; private set; }
+        public int Total { get; set; }
 
         /// <summary>
         /// The owner of these galleries if called from <see cref="Flickr.GalleriesGetList(string, int, int)"/>.
         /// </summary>
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// The ID photo that these galleries contain if called from <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.
         /// </summary>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

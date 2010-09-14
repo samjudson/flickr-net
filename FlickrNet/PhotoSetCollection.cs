@@ -17,7 +17,7 @@ namespace FlickrNet
         /// <remarks>
         /// 1 meants yes, 0 means no.
         /// </remarks>
-        public bool CanCreate { get; private set; }
+        public bool CanCreate { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

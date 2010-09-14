@@ -12,17 +12,17 @@ namespace FlickrNet
         /// <summary>
         /// The name the predicate
         /// </summary>
-        public string PredicateName { get; private set; }
+        public string PredicateName { get; set; }
 
         /// <summary>
         /// The usage of the predicate.
         /// </summary>
-        public int Usage { get; private set; }
+        public int Usage { get; set; }
 
         /// <summary>
         /// The number of distinct namespaces the predicate applies to.
         /// </summary>
-        public int Namespaces { get; private set; }
+        public int Namespaces { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

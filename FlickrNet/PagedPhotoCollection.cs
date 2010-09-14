@@ -12,21 +12,21 @@ namespace FlickrNet
         /// <summary>
         /// The Page of results that was returned from Flickr. The first page is 1.
         /// </summary>
-        public int Page { get; protected set; }
+        public int Page { get; set; }
 
         /// <summary>
         /// The number of pages available from Flickr.
         /// </summary>
-        public int Pages { get; protected set; }
+        public int Pages { get; set; }
 
         /// <summary>
         /// The number of photos per page in the result set.
         /// </summary>
-        public int PerPage { get; protected set; }
+        public int PerPage { get; set; }
 
         /// <summary>
         /// The total number of photos available from Flickr (over all the pages).
         /// </summary>
-        public int Total { get; protected set; }
+        public int Total { get; set; }
     }
 }

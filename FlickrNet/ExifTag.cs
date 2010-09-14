@@ -12,34 +12,34 @@ namespace FlickrNet
         /// <summary>
         /// The type of EXIF data, e.g. EXIF, TIFF, GPS etc.
         /// </summary>
-        public string TagSpace { get; private set; }
+        public string TagSpace { get; set; }
 
         /// <summary>
         /// An id number for the type of tag space.
         /// </summary>
-        public int TagSpaceId { get; private set; }
+        public int TagSpaceId { get; set; }
 
         /// <summary>
         /// The tag number.
         /// </summary>
-        public string Tag { get; private set; }
+        public string Tag { get; set; }
 
         /// <summary>
         /// The label, or description for the tag, such as Aperture
         /// or Manufacturer
         /// </summary>
-        public string Label { get; private set; }
+        public string Label { get; set; }
 
         /// <summary>
         /// The raw EXIF data.
         /// </summary>
-        public string Raw { get; private set; }
+        public string Raw { get; set; }
 
         /// <summary>
         /// An optional clean version of the <see cref="Raw"/> property.
         /// May be null if the <c>Raw</c> property is in a suitable format already.
         /// </summary>
-        public string Clean { get; private set; }
+        public string Clean { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

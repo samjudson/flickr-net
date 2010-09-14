@@ -13,17 +13,17 @@ namespace FlickrNet
         /// <summary>
         /// The Photo ID for the photo whose EXIF data this is.
         /// </summary>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
 
         /// <summary>
         /// The Secret of the photo.
         /// </summary>
-        public string Secret { get; private set; }
+        public string Secret { get; set; }
 
         /// <summary>
         /// The server number for the photo.
         /// </summary>
-        public string Server { get; private set; }
+        public string Server { get; set; }
 
         /// <summary>
         /// The server farm for this photo.

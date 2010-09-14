@@ -16,47 +16,47 @@ namespace FlickrNet
         /// <summary>
         /// The ID for the collection.
         /// </summary>
-        public string CollectionId { get; private set; }
+        public string CollectionId { get; set; }
 
         /// <summary>
         /// The number of child collections this collection contains. Call <see cref="Flickr.CollectionsGetTree()"/> for children.
         /// </summary>
-        public int ChildCount { get; private set; }
+        public int ChildCount { get; set; }
 
         /// <summary>
         /// The date the collection was created.
         /// </summary>
-        public DateTime DateCreated { get; private set; }
+        public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// The large mosaic icon for the collection.
         /// </summary>
-        public string IconLarge { get; private set; }
+        public string IconLarge { get; set; }
 
         /// <summary>
         /// The small mosaix icon for the collection.
         /// </summary>
-        public string IconSmall { get; private set; }
+        public string IconSmall { get; set; }
 
         /// <summary>
         /// The server for the icons.
         /// </summary>
-        public string Server { get; private set; }
+        public string Server { get; set; }
 
         /// <summary>
         /// The secret for the icons.
         /// </summary>
-        public string Secret { get; private set; }
+        public string Secret { get; set; }
 
         /// <summary>
         /// The description for the collection.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The title of the description.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// An array of the 12 photos used to create a collection's mosaic.

@@ -12,35 +12,35 @@ namespace FlickrNet
         /// <summary>
         /// Property which returns the group id for the group.
         /// </summary>
-        public string GroupId { get; private set; }
+        public string GroupId { get; set; }
 
         /// <summary>The group name.</summary>
-        public string GroupName { get; private set; }
+        public string GroupName { get; set; }
 
         /// <summary>
         /// True if the user is the admin for the group, false if they are not.
         /// </summary>
-        public bool IsAdmin { get; private set; }
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         /// The privacy of the pool (see <see cref="PoolPrivacy"/>).
         /// </summary>
-        public PoolPrivacy Privacy { get; private set; }
+        public PoolPrivacy Privacy { get; set; }
 
         /// <summary>
         /// The server number for the group icon.
         /// </summary>
-        public string IconServer { get; private set; }
+        public string IconServer { get; set; }
 
         /// <summary>
         /// The web farm ID for the group icon.
         /// </summary>
-        public string IconFarm { get; private set; }
+        public string IconFarm { get; set; }
 
         /// <summary>
         /// The number of photos currently in this group.
         /// </summary>
-        public long Photos { get; private set; }
+        public long Photos { get; set; }
 
         /// <summary>
         /// The URL for the group icon.

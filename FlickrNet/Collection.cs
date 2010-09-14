@@ -12,19 +12,19 @@ namespace FlickrNet
         private Collection<Collection> subcollections = new Collection<Collection>();
 
         /// <remarks/>
-        public string CollectionId { get; private set; }
+        public string CollectionId { get; set; }
 
         /// <remarks/>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <remarks/>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <remarks/>
-        public string IconLarge { get; private set; }
+        public string IconLarge { get; set; }
 
         /// <remarks/>
-        public string IconSmall { get; private set; }
+        public string IconSmall { get; set; }
 
         /// <summary>
         /// An array of <see cref="CollectionSet"/> objects.

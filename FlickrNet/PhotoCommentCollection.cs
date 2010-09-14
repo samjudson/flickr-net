@@ -12,7 +12,7 @@ namespace FlickrNet
         /// <summary>
         /// The ID of photo for these comments.
         /// </summary>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

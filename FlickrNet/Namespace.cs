@@ -12,17 +12,17 @@ namespace FlickrNet
         /// <summary>
         /// The name of the namespace.
         /// </summary>
-        public string NamespaceName { get; private set; }
+        public string NamespaceName { get; set; }
 
         /// <summary>
         /// The usage of the namespace.
         /// </summary>
-        public int Usage { get; private set; }
+        public int Usage { get; set; }
 
         /// <summary>
         /// The number of unique predicates within this namespace.
         /// </summary>
-        public int Predicates { get; private set; }
+        public int Predicates { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

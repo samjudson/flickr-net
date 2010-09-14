@@ -13,44 +13,44 @@ namespace FlickrNet
     {
         /// <summary>The user id of the user.</summary>
         /// <remarks/>
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
 
         /// <summary>The server that will serve up the users Buddy Icon.</summary>
-        public string IconServer { get; private set; }
+        public string IconServer { get; set; }
 
         /// <summary>The server farm that will serve up the users Buddy Icon.</summary>
-        public string IconFarm { get; private set; }
+        public string IconFarm { get; set; }
 
         /// <summary>The users username, also known as their screenname.</summary>
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         /// <summary>The users real name, as entered in their profile.</summary>
-        public string RealName { get; private set; }
+        public string RealName { get; set; }
 
         /// <summary>
         /// The user ID of the person who added this person, to this photo.
         /// </summary>
-        public string AddedByUserId { get; private set; }
+        public string AddedByUserId { get; set; }
 
         /// <summary>
         /// The left most position of the persons bounding box, if any.
         /// </summary>
-        public int? PositionX { get; private set; }
+        public int? PositionX { get; set; }
 
         /// <summary>
         /// The top most position of the persons bounding box, if any.
         /// </summary>
-        public int? PositionY { get; private set; }
+        public int? PositionY { get; set; }
 
         /// <summary>
         /// The width of the persons bounding box, if any.
         /// </summary>
-        public int? PositionWidth { get; private set; }
+        public int? PositionWidth { get; set; }
 
         /// <summary>
         /// The height of the persons bounding box, if any.
         /// </summary>
-        public int? PositionHeight { get; private set; }
+        public int? PositionHeight { get; set; }
 
         /// <summary>
         /// The path alias for the users photostream, if they have set it.

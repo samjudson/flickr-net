@@ -13,27 +13,27 @@ namespace FlickrNet
         /// <summary>
         /// The user id for the member.
         /// </summary>
-        public string MemberId { get; private set; }
+        public string MemberId { get; set; }
 
         /// <summary>
         /// The members name.
         /// </summary>
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// The icon server for the users buddy icon. See <see cref="IconUrl"/> for the complete URL.
         /// </summary>
-        public string IconServer { get; private set; }
+        public string IconServer { get; set; }
 
         /// <summary>
         /// The icon farm for the users buddy icon. See <see cref="IconUrl"/> for the complete URL.
         /// </summary>
-        public string IconFarm { get; private set; }
+        public string IconFarm { get; set; }
 
         /// <summary>
         /// The type of the member (basic, moderator or administrator).
         /// </summary>
-        public MemberTypes MemberType { get; private set; }
+        public MemberTypes MemberType { get; set; }
 
         /// <summary>
         /// The icon URL for the users buddy icon. Calculated from the <see cref="IconFarm"/> and <see cref="IconServer"/>.

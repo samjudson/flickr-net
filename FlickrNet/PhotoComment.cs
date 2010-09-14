@@ -13,32 +13,32 @@ namespace FlickrNet
         /// <summary>
         /// The comment id of this comment.
         /// </summary>
-        public string CommentId { get; private set; }
+        public string CommentId { get; set; }
 
         /// <summary>
         /// The user id of the author of the comment.
         /// </summary>
-        public string AuthorUserId { get; private set; }
+        public string AuthorUserId { get; set; }
 
         /// <summary>
         /// The username (screen name) of the author of the comment.
         /// </summary>
-        public string AuthorUserName { get; private set; }
+        public string AuthorUserName { get; set; }
 
         /// <summary>
         /// The permalink to the comment on the photos web page.
         /// </summary>
-        public string Permalink { get; private set; }
+        public string Permalink { get; set; }
 
         /// <summary>
         /// The date and time that the comment was created.
         /// </summary>
-        public DateTime DateCreated { get; private set; }
+        public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// The comment text (can contain HTML).
         /// </summary>
-        public string CommentHtml { get; private set; }
+        public string CommentHtml { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

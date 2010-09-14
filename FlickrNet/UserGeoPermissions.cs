@@ -12,17 +12,17 @@ namespace FlickrNet
         /// <summary>
         /// The ID of the user.
         /// </summary>
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// The default privacy level for geographic information attached to the user's photos.
         /// </summary>
-        public GeoPermissionType GeoPermissions { get; private set; }
+        public GeoPermissionType GeoPermissions { get; set; }
 
         /// <summary>
         /// Whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
         /// </summary>
-        public bool ImportGeoExif { get; private set; }
+        public bool ImportGeoExif { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

@@ -12,22 +12,22 @@ namespace FlickrNet
         /// <summary>
         /// The id for the photoset.
         /// </summary>
-        public string PhotosetId { get; private set; }
+        public string PhotosetId { get; set; }
 
         /// <summary>
         /// The ID of the primary photo for this photoset. May be contained within the list.
         /// </summary>
-        public string PrimaryPhotoId { get; private set; }
+        public string PrimaryPhotoId { get; set; }
 
         /// <summary>
         /// The NSID of the owner of this photoset.
         /// </summary>
-        public string OwnerId { get; private set; }
+        public string OwnerId { get; set; }
 
         /// <summary>
         /// The real name of the owner of this photoset.
         /// </summary>
-        public string OwnerName { get; private set; }
+        public string OwnerName { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

@@ -12,67 +12,67 @@ namespace FlickrNet
         /// <summary>
         /// The ID for the gallery.
         /// </summary>
-        public string GalleryId { get; private set; }
+        public string GalleryId { get; set; }
 
         /// <summary>
         /// The URL to the gallery on the web.
         /// </summary>
-        public string GalleryUrl { get; private set; }
+        public string GalleryUrl { get; set; }
 
         /// <summary>
         /// The user ID of the gallery owner.
         /// </summary>
-        public string OwnerId { get; private set; }
+        public string OwnerId { get; set; }
 
         /// <summary>
         /// The date the gallery was first created.
         /// </summary>
-        public DateTime DateCreated { get; private set; }
+        public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// The date the gallery was last updated.
         /// </summary>
-        public DateTime DateLastUpdated { get; private set; }
+        public DateTime DateLastUpdated { get; set; }
 
         /// <summary>
         /// The photo id of the primary photo for the gallery.
         /// </summary>
-        public string PrimaryPhotoId { get; private set; }
+        public string PrimaryPhotoId { get; set; }
 
         /// <summary>
         /// The server for the primary photo for the gallery.
         /// </summary>
-        public string PrimaryPhotoServer { get; private set; }
+        public string PrimaryPhotoServer { get; set; }
 
         /// <summary>
         /// The web farm for the primary photo for the gallery.
         /// </summary>
-        public string PrimaryPhotoFarm { get; private set; }
+        public string PrimaryPhotoFarm { get; set; }
 
         /// <summary>
         /// The saecret for the primary photo for the gallery.
         /// </summary>
-        public string PrimaryPhotoSecret { get; private set; }
+        public string PrimaryPhotoSecret { get; set; }
 
         /// <summary>
         /// The number of photos in this gallery.
         /// </summary>
-        public int PhotosCount { get; private set; }
+        public int PhotosCount { get; set; }
 
         /// <summary>
         /// The number of videos in this gallery.
         /// </summary>
-        public int VideosCount { get; private set; }
+        public int VideosCount { get; set; }
 
         /// <summary>
         /// The title of this gallery.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The description of this gallery.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The URL of the thumbnail for the primary image for this gallery.

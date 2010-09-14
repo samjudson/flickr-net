@@ -14,20 +14,20 @@ namespace FlickrNet
         /// <summary>
         /// Property which returns the group id for the group.
         /// </summary>
-        public string GroupId { get; private set; }
+        public string GroupId { get; set; }
 
         /// <summary>The group name.</summary>
-        public string GroupName { get; private set; }
+        public string GroupName { get; set; }
 
         /// <summary>
         /// True if the user is the admin for the group, false if they are not.
         /// </summary>
-        public bool IsAdmin { get; private set; }
+        public bool IsAdmin { get; set; }
 
         /// <summary>
         /// Will contain 1 if the group is restricted to people who are 18 years old or over, 0 if it is not.
         /// </summary>
-        public bool EighteenPlus { get; private set; }
+        public bool EighteenPlus { get; set; }
 
         /// <summary>
         /// The URL for the group web page.

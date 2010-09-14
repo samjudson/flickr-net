@@ -12,22 +12,22 @@ namespace FlickrNet
         /// <summary>
         /// The ID of the ticket asked for.
         /// </summary>
-        public string TicketId { get; private set; }
+        public string TicketId { get; set; }
 
         /// <summary>
         /// If the ticket is complete then this contains the photo ID of the uploaded photo.
         /// </summary>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
 
         /// <summary>
         /// Is the ticket ID supplied a valid ticket. True if it is invalid.
         /// </summary>
-        public bool InvalidTicketId { get; private set; }
+        public bool InvalidTicketId { get; set; }
 
         /// <summary>
         /// The status of a valid ticket. 0 = Incomplete, 1 = Complete, 2 = Error processing the image/video.
         /// </summary>
-        public int CompleteStatus { get; private set; }
+        public int CompleteStatus { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

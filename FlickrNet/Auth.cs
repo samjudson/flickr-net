@@ -44,17 +44,17 @@ namespace FlickrNet
         /// <summary>
         /// The authentication token returned by the <see cref="Flickr.AuthGetToken"/> or <see cref="Flickr.AuthCheckToken(string)"/> methods.
         /// </summary>
-        public string Token { get; private set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// The permissions the current token allows the application to perform.
         /// </summary>
-        public AuthLevel Permissions { get; private set; }
+        public AuthLevel Permissions { get; set; }
 
         /// <summary>
         /// The <see cref="User"/> object associated with the token. Readonly.
         /// </summary>
-        public FoundUser User { get; private set; }
+        public FoundUser User { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

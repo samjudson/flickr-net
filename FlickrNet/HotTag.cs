@@ -12,12 +12,12 @@ namespace FlickrNet
         /// <summary>
         /// The tag that is hot.
         /// </summary>
-        public string Tag { get; private set; }
+        public string Tag { get; set; }
 
         /// <summary>
         /// The score for the tag.
         /// </summary>
-        public int Score { get; private set; }
+        public int Score { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

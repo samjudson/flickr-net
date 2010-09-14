@@ -26,102 +26,102 @@ namespace FlickrNet
         /// <summary>
         /// The list of clean tags for the photograph.
         /// </summary>
-        public Collection<string> Tags { get; private set; }
+        public Collection<string> Tags { get; set; }
 
         /// <remarks/>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
     
         /// <remarks/>
-        public string UserId { get; internal set; }
+        public string UserId { get; set; }
     
         /// <remarks/>
-        public string Secret { get; private set; }
+        public string Secret { get; set; }
     
         /// <remarks/>
-        public string Server { get; private set; }
+        public string Server { get; set; }
     
         /// <remarks/>
-        public string Farm { get; private set; }
+        public string Farm { get; set; }
     
         /// <remarks/>
-        public string Title { get; private set; }
+        public string Title { get; set; }
     
         /// <remarks/>
-        public bool IsPublic { get; private set; }
+        public bool IsPublic { get; set; }
     
         /// <remarks/>
-        public bool IsFriend { get; private set; }
+        public bool IsFriend { get; set; }
     
         /// <remarks/>
-        public bool IsFamily { get; private set; }
+        public bool IsFamily { get; set; }
 
         /// <remarks/>
-        public LicenseType License { get; private set; }
+        public LicenseType License { get; set; }
 
         /// <summary>
         /// The width of the original image. 
         /// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
         /// </summary>
-        public int OriginalWidth { get; private set; }
+        public int OriginalWidth { get; set; }
 
         /// <summary>
         /// The height of the original image. 
         /// Only returned if <see cref="PhotoSearchExtras.OriginalDimensions"/> is specified.
         /// </summary>
-        public int OriginalHeight { get; private set; }
+        public int OriginalHeight { get; set; }
 
         /// <summary>
         /// Converts the raw dateupload field to a <see cref="DateTime"/>.
         /// </summary>
-        public DateTime DateUploaded { get; private set; }
+        public DateTime DateUploaded { get; set; }
 
         /// <summary>
         /// Converts the raw lastupdate field to a <see cref="DateTime"/>.
         /// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
         /// </summary>
-        public DateTime LastUpdated { get; private set; }
+        public DateTime LastUpdated { get; set; }
 
         /// <summary>
         /// Converts the raw datetaken field to a <see cref="DateTime"/>.
         /// Returns <see cref="DateTime.MinValue"/> if the raw value was not returned.
         /// </summary>
-        public DateTime DateTaken { get; private set; }
+        public DateTime DateTaken { get; set; }
 
         /// <summary>
         /// The date the photo was added to the group. Only returned by <see cref="Flickr.GroupsPoolsGetPhotos(string)"/>.
         /// </summary>
-        public DateTime? DateAddedToGroup { get; private set; }
+        public DateTime? DateAddedToGroup { get; set; }
 
         /// <summary>
         /// The date the photo was favourited. Only returned by <see cref="Flickr.FavoritesGetPublicList(string)"/>.
         /// </summary>
-        public DateTime? DateFavorited { get; private set; }
+        public DateTime? DateFavorited { get; set; }
 
         /// <remarks/>
-        public string OwnerName { get; private set; }
+        public string OwnerName { get; set; }
 
         /// <remarks/>
-        public string IconServer { get; private set; }
+        public string IconServer { get; set; }
 
         /// <remarks/>
-        public string IconFarm { get; private set; }
+        public string IconFarm { get; set; }
 
         /// <summary>
         /// Optional extra field containing the original format (jpg, png etc) of the 
         /// photo.
         /// </summary>
-        public string OriginalFormat { get; private set; }
+        public string OriginalFormat { get; set; }
 
         /// <summary>
         /// Optional extra field containing the original 'secret' of the 
         /// photo used for forming the Url.
         /// </summary>
-        public string OriginalSecret { get; private set; }
+        public string OriginalSecret { get; set; }
 
         /// <summary>
         /// Machine tags
         /// </summary>
-        public string MachineTags { get; private set; }
+        public string MachineTags { get; set; }
 
         /// <summary>
         /// The url to the web page for this photo. Uses the users userId, not their web alias, but
@@ -152,11 +152,11 @@ namespace FlickrNet
         /// <summary>
         /// The width of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
         /// </summary>
-        public int? SquareThumbnailWidth { get; private set; }
+        public int? SquareThumbnailWidth { get; set; }
         /// <summary>
         /// The height of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
         /// </summary>
-        public int? SquareThumbnailHeight { get; private set; }
+        public int? SquareThumbnailHeight { get; set; }
 
         /// <summary>
         /// The URL for the thumbnail of a photo.
@@ -175,11 +175,11 @@ namespace FlickrNet
         /// <summary>
         /// The width of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
         /// </summary>
-        public int? ThumbnailWidth { get; private set; }
+        public int? ThumbnailWidth { get; set; }
         /// <summary>
         /// The height of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
         /// </summary>
-        public int? ThumbnailHeight { get; private set; }
+        public int? ThumbnailHeight { get; set; }
 
         /// <summary>
         /// The URL for the small copy of a photo.
@@ -198,11 +198,11 @@ namespace FlickrNet
         /// <summary>
         /// The width of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
         /// </summary>
-        public int? SmallWidth { get; private set; }
+        public int? SmallWidth { get; set; }
         /// <summary>
         /// The height of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
         /// </summary>
-        public int? SmallHeight { get; private set; }
+        public int? SmallHeight { get; set; }
 
         /// <summary>
         /// The URL for the medium copy of a photo.
@@ -223,11 +223,11 @@ namespace FlickrNet
         /// <summary>
         /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
         /// </summary>
-        public int? MediumWidth { get; private set; }
+        public int? MediumWidth { get; set; }
         /// <summary>
         /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
         /// </summary>
-        public int? MediumHeight { get; private set; }
+        public int? MediumHeight { get; set; }
 
         /// <summary>
         /// The URL for the large copy of a photo.
@@ -248,11 +248,11 @@ namespace FlickrNet
         /// <summary>
         /// The width of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
         /// </summary>
-        public int? LargeWidth { get; private set; }
+        public int? LargeWidth { get; set; }
         /// <summary>
         /// The height of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
         /// </summary>
-        public int? LargeHeight { get; private set; }
+        public int? LargeHeight { get; set; }
 
         /// <summary>
         /// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
@@ -274,82 +274,82 @@ namespace FlickrNet
         /// <summary>
         /// Latitude. Will be 0 if Geo extras not specified.
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// Longitude. Will be 0 if <see cref="PhotoSearchExtras.Geo"/> not specified.
         /// </summary>
-        public double Longitude { get; private set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// The Place ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
         /// </summary>
-        public string PlaceId { get; private set; }
+        public string PlaceId { get; set; }
 
         /// <summary>
         /// The WOE (Where On Earth) ID. Will be null if <see cref="PhotoSearchExtras.Geo"/> is not specified in the search.
         /// </summary>
-        public string WoeId { get; private set; }
+        public string WoeId { get; set; }
 
         /// <summary>
         /// Geo-location accuracy. A value of None means that the information was not returned.
         /// </summary>
-        public GeoAccuracy Accuracy { get; private set; }
+        public GeoAccuracy Accuracy { get; set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) comment on this photo.
         /// </summary>
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
-        public bool? CanComment { get; private set; }
+        public bool? CanComment { get; set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) print this photo.
         /// </summary>
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
-        public bool? CanPrint { get; private set; }
+        public bool? CanPrint { get; set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) download this photo.
         /// </summary>
-        public bool? CanDownload { get; private set; }
+        public bool? CanDownload { get; set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) add 'meta' to this photo (notes, tags etc).
         /// </summary>
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
-        public bool? CanAddMeta { get; private set; }
+        public bool? CanAddMeta { get; set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) blog this photo.
         /// </summary>
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
-        public bool? CanBlog { get; private set; }
+        public bool? CanBlog { get; set; }
 
         /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) share on this photo.
         /// </summary>
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
-        public bool? CanShare { get; private set; }
+        public bool? CanShare { get; set; }
 
         /// <summary>
         /// The number of views for this photo. Only returned if PhotoSearchExtras.Views is set.
         /// </summary>
-        public int? Views { get; private set; }
+        public int? Views { get; set; }
 
         /// <summary>
         /// The media format for this photo. Only returned if PhotoSearchExtras.Media is set.
         /// </summary>
-        public string Media { get; private set; }
+        public string Media { get; set; }
 
         /// <summary>
         /// The url alias the user has picked, it applicable.
         /// </summary>
-        public string PathAlias { get; private set; }
+        public string PathAlias { get; set; }
 
         /// <summary>
         /// The status of the media for this photo. Only returned if PhotoSearchExtras.Media is set.
         /// </summary>
-        public string MediaStatus { get; private set; }
+        public string MediaStatus { get; set; }
 
         /// <summary>
         /// The description for the photo. Only returned if <see cref="PhotoSearchExtras.Description"/> is set.
@@ -359,7 +359,7 @@ namespace FlickrNet
         /// <summary>
         /// If Geolocation information is returned for this photo then this will contain the permissions for who can see those permissions.
         /// </summary>
-        public GeoPermissions GeoPermissions { get; private set; }
+        public GeoPermissions GeoPermissions { get; set; }
 
         /// <summary>
         /// A helper method which tries to guess if a large image will be available for this photograph

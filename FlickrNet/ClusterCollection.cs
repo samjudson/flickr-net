@@ -13,12 +13,12 @@ namespace FlickrNet
         /// <summary>
         /// The source tag for this cluster collection.
         /// </summary>
-        public string SourceTag { get; private set; }
+        public string SourceTag { get; set; }
 
         /// <summary>
         /// The total number of clusters for this tag.
         /// </summary>
-        public int TotalClusters { get; private set; }
+        public int TotalClusters { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

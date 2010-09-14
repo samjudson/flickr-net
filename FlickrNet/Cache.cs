@@ -162,17 +162,17 @@ namespace FlickrNet
         /// <summary>
         /// Gets or sets the original URL of the request.
         /// </summary>
-        public Uri Url { get; private set; }
+        public Uri Url { get; set; }
 
         /// <summary>
         /// Gets or sets the XML response.
         /// </summary>
-        public string Response { get; private set; }
+        public string Response { get; set; }
 
         /// <summary>
         /// Gets or sets the time the cache item was created.
         /// </summary>
-        public DateTime CreationTime { get; private set; }
+        public DateTime CreationTime { get; set; }
 
         /// <summary>
         /// Gets the filesize of the request.

@@ -26,42 +26,42 @@ namespace FlickrNet
         /// <summary>
         /// The date the shapedata was created.
         /// </summary>
-        public DateTime DateCreated { get; private set; }
+        public DateTime DateCreated { get; set; }
 
         /// <summary>
         /// The alpha for the shape data.
         /// </summary>
-        public double Alpha { get; private set; }
+        public double Alpha { get; set; }
 
         /// <summary>
         /// The number of points in the shapefile.
         /// </summary>
-        public int PointCount { get; private set; }
+        public int PointCount { get; set; }
 
         /// <summary>
         /// The number of edge in the shapefile.
         /// </summary>
-        public int EdgeCount { get; private set; }
+        public int EdgeCount { get; set; }
 
         /// <summary>
         /// Does the shape have a donut hole.
         /// </summary>
-        public bool HasDonutHole { get; private set; }
+        public bool HasDonutHole { get; set; }
 
         /// <summary>
         /// Is the shape a donut hole.
         /// </summary>
-        public bool IsDonutHole { get; private set; }
+        public bool IsDonutHole { get; set; }
 
         /// <summary>
         /// A list of polylines making up the shape. Each polyline is itself a list of points.
         /// </summary>
-        public Collection<Collection<PointD>> PolyLines { get; private set; }
+        public Collection<Collection<PointD>> PolyLines { get; set; }
 
         /// <summary>
         /// A list of urls for the shapefiles.
         /// </summary>
-        public Collection<string> Urls { get; private set; }
+        public Collection<string> Urls { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

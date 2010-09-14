@@ -13,12 +13,12 @@ namespace FlickrNet
         /// <summary>
         /// The name of the predicate searched for, if any.
         /// </summary>
-        public string PredicateName { get; private set; }
+        public string PredicateName { get; set; }
 
         /// <summary>
         /// The namespace that was searched for, if any.
         /// </summary>
-        public string NamespaceName { get; private set; }
+        public string NamespaceName { get; set; }
 
         /// <summary>
         /// The total number of namespaces that match the calling query.

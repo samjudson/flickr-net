@@ -14,7 +14,7 @@ namespace FlickrNet
         /// <summary>
         /// The ID of the photoset.
         /// </summary>
-        public string PhotosetId { get; private set; }
+        public string PhotosetId { get; set; }
 
         /// <summary>
         /// The URL of the photoset.
@@ -26,53 +26,53 @@ namespace FlickrNet
                 if (url == null) url = String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/", OwnerId, PhotosetId);
                 return url;
             }
-            private set { url = value; }
+            set { url = value; }
         }
 
         /// <summary>
         /// The ID of the owner of the photoset.
         /// </summary>
-        public string OwnerId { get; internal set; }
+        public string OwnerId { get; set; }
 
         /// <summary>
         /// The photo ID of the primary photo of the photoset.
         /// </summary>
-        public string PrimaryPhotoId { get; private set; }
+        public string PrimaryPhotoId { get; set; }
 
         /// <summary>
         /// The secret for the primary photo for the photoset.
         /// </summary>
-        public string Secret { get; private set; }
+        public string Secret { get; set; }
 
         /// <summary>
         /// The server for the primary photo for the photoset.
         /// </summary>
-        public string Server { get; private set; }
+        public string Server { get; set; }
 
         /// <summary>
         /// The server farm for the primary photo for the photoset.
         /// </summary>
-        public string Farm { get; private set; }
+        public string Farm { get; set; }
 
         /// <summary>
         /// The number of photos in this photoset.
         /// </summary>
-        public int NumberOfPhotos { get; private set; }
+        public int NumberOfPhotos { get; set; }
 
         /// <summary>
         /// The number of videos in this photoset.
         /// </summary>
-        public int NumberOfVideos { get; private set; }
+        public int NumberOfVideos { get; set; }
 
         /// <summary>
         /// The title of the photoset.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The description of the photoset.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The URL for the thumbnail of a photo.

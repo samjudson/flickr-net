@@ -11,17 +11,17 @@ namespace FlickrNet
         /// <summary>
         /// The ID of the found user.
         /// </summary>
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// The username of the found user.
         /// </summary>
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// The full name of the user. Only returned by <see cref="Flickr.AuthGetToken"/>.
         /// </summary>
-        public string FullName { get; private set; }
+        public string FullName { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -73,102 +73,102 @@ namespace FlickrNet
         /// <summary>
         /// The id of the user object.
         /// </summary>
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// The Username of the selected user.
         /// </summary>
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// Is the current user a Pro account.
         /// </summary>
-        public bool IsPro { get; private set; }
+        public bool IsPro { get; set; }
 
         /// <summary>
         /// The maximum bandwidth (in bytes) that the user can use each month.
         /// </summary>
-        public long BandwidthMax { get; private set; }
+        public long BandwidthMax { get; set; }
 
         /// <summary>
         /// The maximum bandwidth (in kilobytes) that the user can use each month.
         /// </summary>
-        public long BandwidthMaxKB { get; private set; }
+        public long BandwidthMaxKB { get; set; }
 
         /// <summary>
         /// The remaining bandwidth (in bytes) that the user can use this month.
         /// </summary>
-        public long BandwidthRemaining { get; private set; }
+        public long BandwidthRemaining { get; set; }
 
         /// <summary>
         /// The remaining bandwidth (in kilobytes) that the user can use this month.
         /// </summary>
-        public long BandwidthRemainingKB { get; private set; }
+        public long BandwidthRemainingKB { get; set; }
 
         /// <summary>
         /// The number of bytes of the current months bandwidth that the user has used.
         /// </summary>
-        public long BandwidthUsed { get; private set; }
+        public long BandwidthUsed { get; set; }
 
         /// <summary>
         /// The number of kilobytes of the current months bandwidth that the user has used.
         /// </summary>
-        public long BandwidthUsedKB { get; private set; }
+        public long BandwidthUsedKB { get; set; }
 
         /// <summary>
         /// Is the upload bandwidth unlimited (i.e. a Pro user).
         /// </summary>
-        public bool IsUnlimited { get; private set; }
+        public bool IsUnlimited { get; set; }
 
         /// <summary>
         /// The maximum filesize (in bytes) that the user is allowed to upload.
         /// </summary>
-        public long FileSizeMax { get; private set; }
+        public long FileSizeMax { get; set; }
 
         /// <summary>
         /// The maximum filesize (in kilobytes) that the user is allowed to upload.
         /// </summary>
-        public long FileSizeMaxKB { get; private set; }
+        public long FileSizeMaxKB { get; set; }
 
         /// <summary>
         /// The maximum filesize (in MB) that the user is allowed to upload.
         /// </summary>
-        public long FileSizeMaxMB { get; private set; }
+        public long FileSizeMaxMB { get; set; }
 
         /// <summary>
         /// The maximum filesize (in bytes) that the user is allowed to upload.
         /// </summary>
-        public long VideoSizeMax { get; private set; }
+        public long VideoSizeMax { get; set; }
 
         /// <summary>
         /// The maximum filesize (in kilobytes) that the user is allowed to upload.
         /// </summary>
-        public long VideoSizeMaxKB { get; private set; }
+        public long VideoSizeMaxKB { get; set; }
 
         /// <summary>
         /// The maximum filesize (in MB) that the user is allowed to upload.
         /// </summary>
-        public long VideoSizeMaxMB { get; private set; }
+        public long VideoSizeMaxMB { get; set; }
 
         /// <summary>
         /// The number of sets the user has created. Will be null for Pro users.
         /// </summary>
-        public int? SetsCreated { get; private set; }
+        public int? SetsCreated { get; set; }
 
         /// <summary>
         /// The number of sets the user can still created. Will be null for Pro users.
         /// </summary>
-        public int? SetsRemaining { get; private set; }
+        public int? SetsRemaining { get; set; }
 
         /// <summary>
         /// The number of videos the user has uploaded. Will be null or zero for Pro users.
         /// </summary>
-        public int? VideosUploaded { get; private set; }
+        public int? VideosUploaded { get; set; }
 
         /// <summary>
         /// The number of videos the user can upload. Will be null for Pro users.
         /// </summary>
-        public int? VideosRemaining { get; private set; }
+        public int? VideosRemaining { get; set; }
 
         /// <summary>
         /// <see cref="Double"/> representing the percentage bandwidth used so far. Will range from 0 to 1.

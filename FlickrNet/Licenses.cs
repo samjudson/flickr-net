@@ -15,13 +15,13 @@ namespace FlickrNet
         ///     The ID of the license. Used by <see cref="Flickr.PhotosGetInfo(string)"/> and 
         ///     <see cref="Flickr.PhotosGetInfo(string, string)"/>.
         /// </summary>
-        public LicenseType LicenseId { get; private set; }
+        public LicenseType LicenseId { get; set; }
 
         /// <summary>The name of the license.</summary>
-        public string LicenseName { get; private set; }
+        public string LicenseName { get; set; }
 
         /// <summary>The URL for the license text.</summary>
-        public string LicenseUrl { get; private set; }
+        public string LicenseUrl { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

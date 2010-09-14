@@ -12,22 +12,22 @@ namespace FlickrNet
         /// <summary>
         /// The current page that the group search results represents.
         /// </summary>
-        public int Page { get; private set; }
+        public int Page { get; set; }
 
         /// <summary>
         /// The total number of pages this search would return.
         /// </summary>
-        public int Pages { get; private set; }
+        public int Pages { get; set; }
 
         /// <summary>
         /// The number of groups returned per photo.
         /// </summary>
-        public int PerPage { get; private set; }
+        public int PerPage { get; set; }
 
         /// <summary>
         /// The total number of groups that where returned for the search.
         /// </summary>
-        public int Total { get; private set; }
+        public int Total { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -81,15 +81,15 @@ namespace FlickrNet
         /// <summary>
         /// The group id for the result.
         /// </summary>
-        public string GroupId { get; private set; }
+        public string GroupId { get; set; }
         /// <summary>
         /// The group name for the result.
         /// </summary>
-        public string GroupName { get; private set; }
+        public string GroupName { get; set; }
         /// <summary>
         /// True if the group is an over eighteen (adult) group only.
         /// </summary>
-        public bool EighteenPlus { get; private set; }
+        public bool EighteenPlus { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

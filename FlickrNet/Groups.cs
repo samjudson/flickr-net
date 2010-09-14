@@ -16,19 +16,19 @@ namespace FlickrNet
         /// The id of the group.
         /// </summary>
         [XmlAttribute("nsid", Form = XmlSchemaForm.Unqualified)]
-        public string GroupId { get; internal set; }
+        public string GroupId { get; set; }
 
         /// <summary>
         /// The name of the group
         /// </summary>
         [XmlAttribute("name", Form = XmlSchemaForm.Unqualified)]
-        public string GroupName { get; internal set; }
+        public string GroupName { get; set; }
 
         /// <summary>
         /// The number of memebers of the group.
         /// </summary>
         [XmlAttribute("members", Form = XmlSchemaForm.Unqualified)]
-        public int Members { get; internal set; }
+        public int Members { get; set; }
     }
 
     /// <summary>
@@ -42,36 +42,36 @@ namespace FlickrNet
     public sealed class GroupFullInfo : IFlickrParsable
     {
         /// <remarks/>
-        public string GroupId { get; private set; }
+        public string GroupId { get; set; }
 
         /// <remarks/>
-        public string GroupName { get; private set; }
+        public string GroupName { get; set; }
 
         /// <remarks/>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <remarks/>
-        public int Members { get; private set; }
+        public int Members { get; set; }
 
         /// <summary>
         /// The server number used for the groups icon.
         /// </summary>
-        public string IconServer { get; private set; }
+        public string IconServer { get; set; }
 
         /// <summary>
         /// The server farm for the group icon. If zero then the group uses the default icon.
         /// </summary>
-        public string IconFarm { get; private set; }
+        public string IconFarm { get; set; }
 
         /// <summary>
         /// The language that the group information has been returned in.
         /// </summary>
-        public string Language { get; private set; }
+        public string Language { get; set; }
 
         /// <summary>
         /// Is this group's pool moderated.
         /// </summary>
-        public bool IsPoolModerated { get; private set; }
+        public bool IsPoolModerated { get; set; }
 
         /// <summary>
         /// The HTML for the group's 'Blast' (the banner seen on the group home page).
@@ -107,15 +107,15 @@ namespace FlickrNet
         }
 
         /// <remarks/>
-        public PoolPrivacy Privacy { get; private set; }
+        public PoolPrivacy Privacy { get; set; }
 
         /// <remarks/>
-        public GroupThrottleInfo ThrottleInfo { get; private set; }
+        public GroupThrottleInfo ThrottleInfo { get; set; }
 
         /// <summary>
         /// The restrictions that apply to new items added to this group's pool.
         /// </summary>
-        public GroupInfoRestrictions Restrictions { get; private set; }
+        public GroupInfoRestrictions Restrictions { get; set; }
 
         /// <summary>
         /// Methods for automatically converting a <see cref="GroupFullInfo"/> object into
@@ -221,12 +221,12 @@ namespace FlickrNet
         /// <summary>
         /// The number of posts in each period allowed to this group.
         /// </summary>
-        public int Count { get; private set; }
+        public int Count { get; set; }
 
         /// <summary>
         /// The posting limit mode for a group.
         /// </summary>
-        public GroupThrottleMode Mode { get; private set; }
+        public GroupThrottleMode Mode { get; set; }
 
         private static GroupThrottleMode ParseMode(string mode)
         {
@@ -252,7 +252,7 @@ namespace FlickrNet
         /// <summary>
         /// The number of remainging posts allowed by this user. If unauthenticated then this will be zero.
         /// </summary>
-        public int Remaining { get; private set; }
+        public int Remaining { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -283,37 +283,37 @@ namespace FlickrNet
         /// <summary>
         /// Are photos allowed to be added to this pool.
         /// </summary>
-        public bool PhotosAccepted { get; private set; }
+        public bool PhotosAccepted { get; set; }
         /// <summary>
         /// Are videos allowed to be added to this pool.
         /// </summary>
-        public bool VideosAccepted { get; private set; }
+        public bool VideosAccepted { get; set; }
 
         /// <summary>
         /// Are Photo/Video images allowed to be added to this pool.
         /// </summary>
-        public bool ImagesAccepted { get; private set; }
+        public bool ImagesAccepted { get; set; }
         /// <summary>
         /// Are Screenshots/Screencasts allowed to be added to this pool.
         /// </summary>
-        public bool ScreenshotsAccepted { get; private set; }
+        public bool ScreenshotsAccepted { get; set; }
         /// <summary>
         /// Are Illustrations/Art/Animation/CGI allowed to be added to this pool.
         /// </summary>
-        public bool ArtIllustrationsAccepted { get; private set; }
+        public bool ArtIllustrationsAccepted { get; set; }
 
         /// <summary>
         /// Are safe items allowed to be added to this pool.
         /// </summary>
-        public bool SafeItemsAccepted { get; private set; }
+        public bool SafeItemsAccepted { get; set; }
         /// <summary>
         /// Are moderated items allowed to be added to this pool.
         /// </summary>
-        public bool ModeratedItemsAccepted { get; private set; }
+        public bool ModeratedItemsAccepted { get; set; }
         /// <summary>
         /// Are restricted items allowed to be added to this pool.
         /// </summary>
-        public bool RestrictedItemsAccepted { get; private set; }
+        public bool RestrictedItemsAccepted { get; set; }
         /// <summary>
         /// Must the item have geo information.
         /// </summary>

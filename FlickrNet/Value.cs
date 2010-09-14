@@ -12,32 +12,32 @@ namespace FlickrNet
         /// <summary>
         /// The usage of this machine tag value.
         /// </summary>
-        public int Usage { get; private set; }
+        public int Usage { get; set; }
 
         /// <summary>
         /// The namespace for this value.
         /// </summary>
-        public string NamespaceName { get; internal set; }
+        public string NamespaceName { get; set; }
 
         /// <summary>
         /// The predicate name for this value.
         /// </summary>
-        public string PredicateName { get; internal set; }
+        public string PredicateName { get; set; }
 
         /// <summary>
         /// The text of this value.
         /// </summary>
-        public string ValueText { get; private set; }
+        public string ValueText { get; set; }
 
         /// <summary>
         /// The date this machine tag was first used.
         /// </summary>
-        public DateTime? DateFirstAdded { get; private set; }
+        public DateTime? DateFirstAdded { get; set; }
 
         /// <summary>
         /// The date this machine tag was last added.
         /// </summary>
-        public DateTime? DateLastUsed { get; private set; }
+        public DateTime? DateLastUsed { get; set; }
 
         /// <summary>
         /// The full machine tag for this value.

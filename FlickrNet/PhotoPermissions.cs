@@ -9,22 +9,22 @@ namespace FlickrNet
     public sealed class PhotoPermissions : IFlickrParsable
     {
         /// <remarks/>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
 
         /// <remarks/>
-        public bool IsPublic { get; private set; }
+        public bool IsPublic { get; set; }
     
         /// <remarks/>
-        public bool IsFriend { get; private set; }
+        public bool IsFriend { get; set; }
     
         /// <remarks/>
-        public bool IsFamily { get; private set; }
+        public bool IsFamily { get; set; }
 
         /// <remarks/>
-        public PermissionComment PermissionComment { get; private set; }
+        public PermissionComment PermissionComment { get; set; }
 
         /// <remarks/>
-        public PermissionAddMeta PermissionAddMeta { get; private set; }
+        public PermissionAddMeta PermissionAddMeta { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

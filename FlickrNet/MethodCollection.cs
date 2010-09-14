@@ -44,47 +44,47 @@ namespace FlickrNet
         /// <summary>
         /// The name of the method.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Does the method require the call to be authenticated.
         /// </summary>
-        public bool NeedsLogin { get; private set; }
+        public bool NeedsLogin { get; set; }
 
         /// <summary>
         /// Does the method request the call to be signed.
         /// </summary>
-        public bool NeedsSigning { get; private set; }
+        public bool NeedsSigning { get; set; }
 
         /// <summary>
         /// The minimum level of permissions required for this method call.
         /// </summary>
-        public MethodPermission RequiredPermissions { get; private set; }
+        public MethodPermission RequiredPermissions { get; set; }
 
         /// <summary>
         /// The description of the method.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// An example response for the method.
         /// </summary>
-        public string Response { get; private set; }
+        public string Response { get; set; }
 
         /// <summary>
         /// An explanation of the example response for the method.
         /// </summary>
-       public string Explanation { get; private set; }
+       public string Explanation { get; set; }
 
         /// <summary>
         /// The arguments of the method.
         /// </summary>
-        public System.Collections.ObjectModel.Collection<MethodArgument> Arguments { get; private set; }
+        public System.Collections.ObjectModel.Collection<MethodArgument> Arguments { get; set; }
 
         /// <summary>
         /// The possible errors that could be returned by the method.
         /// </summary>
-        public System.Collections.ObjectModel.Collection<MethodError> Errors { get; private set; }
+        public System.Collections.ObjectModel.Collection<MethodError> Errors { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -180,17 +180,17 @@ namespace FlickrNet
         /// <summary>
         /// The name of the argument.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Is the argument optional or not.
         /// </summary>
-        public bool IsOptional { get; private set; }
+        public bool IsOptional { get; set; }
 
         /// <summary>
         /// The description of the argument.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

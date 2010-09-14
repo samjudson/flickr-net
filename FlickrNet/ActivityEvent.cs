@@ -14,42 +14,42 @@ namespace FlickrNet
         /// <summary>
         /// The <see cref="ActivityEventType"/> of the event, either Comment or Note.
         /// </summary>
-        public ActivityEventType EventType { get; private set; }
+        public ActivityEventType EventType { get; set; }
 
         /// <summary>
         /// The user id of the user who made the comment or note.
         /// </summary>
-        public string UserId { get; private set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// The screen name of the user who made the comment or note.
         /// </summary>
-        public string UserName { get; private set; }
+        public string UserName { get; set; }
 
         /// <summary>
         /// The date the note or comment was added.
         /// </summary>
-        public DateTime DateAdded { get; private set; }
+        public DateTime DateAdded { get; set; }
 
         /// <summary>
         /// The text of the note or comment.
         /// </summary>
-        public string Value { get; private set; }
+        public string Value { get; set; }
 
         /// <summary>
         /// If this event is a comment then this is the ID of the comment.
         /// </summary>
-        public string CommentId { get; private set; }
+        public string CommentId { get; set; }
 
         /// <summary>
         /// If this is a note activity then this is the ID of the note.
         /// </summary>
-        public string NoteId { get; private set; }
+        public string NoteId { get; set; }
 
         /// <summary>
         /// If this is a gallery activityits then this will contain the ID of the gallery.
         /// </summary>
-        public string GalleryId { get; private set; }
+        public string GalleryId { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {

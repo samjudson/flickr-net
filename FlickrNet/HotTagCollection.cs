@@ -13,12 +13,12 @@ namespace FlickrNet
         /// <summary>
         /// The period that was used for the query.
         /// </summary>
-        public string Period { get; private set; }
+        public string Period { get; set; }
 
         /// <summary>
         /// The count that was used for the query.
         /// </summary>
-        public int TagCount { get; private set; }
+        public int TagCount { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

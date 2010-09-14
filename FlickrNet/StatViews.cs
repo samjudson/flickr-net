@@ -35,7 +35,7 @@ namespace FlickrNet
         /// <summary>
         /// The number of gallery views.
         /// </summary>
-        public int GalleryViews { get; private set; }
+        public int GalleryViews { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

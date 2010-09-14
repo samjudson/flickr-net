@@ -37,13 +37,13 @@ namespace FlickrNet
     {
         /// <summary>Total number of photos between the FromDate and the ToDate.</summary>
         /// <remarks/>
-        public int Count { get; private set; }
+        public int Count { get; set; }
     
         /// <summary>The From date as a <see cref="DateTime"/> object.</summary>
-        public DateTime FromDate { get; private set; }
+        public DateTime FromDate { get; set; }
 
         /// <summary>The To date as a <see cref="DateTime"/> object.</summary>
-        public DateTime ToDate { get; private set; }
+        public DateTime ToDate { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {

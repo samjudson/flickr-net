@@ -19,15 +19,15 @@ namespace FlickrNet
         /// <summary>
         /// The number of photos in the current context, e.g. Group, Set or photostream.
         /// </summary>
-        public int Count { get; private set; }
+        public int Count { get; set; }
         /// <summary>
         /// The next photo in the context.
         /// </summary>
-        public ContextPhoto NextPhoto { get; private set; }
+        public ContextPhoto NextPhoto { get; set; }
         /// <summary>
         /// The previous photo in the context.
         /// </summary>
-        public ContextPhoto PreviousPhoto { get; private set; }
+        public ContextPhoto PreviousPhoto { get; set; }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -60,37 +60,37 @@ namespace FlickrNet
         /// <summary>
         /// The id of the next photo. Will be "0" if this photo is the last.
         /// </summary>
-        public string PhotoId { get; private set; }
+        public string PhotoId { get; set; }
 
         /// <summary>
         /// The secret for the photo.
         /// </summary>
-        public string Secret { get; private set; }
+        public string Secret { get; set; }
 
         /// <summary>
         /// The server for this photo.
         /// </summary>
-        public string Server { get; private set; }
+        public string Server { get; set; }
 
         /// <summary>
         /// The web server farm for this photos images.
         /// </summary>
-        public string Farm { get; private set; }
+        public string Farm { get; set; }
 
         /// <summary>
         /// The title of the next photo in context.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// The URL, in the given context, for the next or previous photo.
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; set; }
 
         /// <summary>
         /// The URL for the thumbnail of the photo.
         /// </summary>
-        public string ThumbnailUrl { get; private set; }
+        public string ThumbnailUrl { get; set; }
 
         /// <summary>
         /// The media type of this item.
@@ -143,12 +143,12 @@ namespace FlickrNet
         /// <summary>
         /// An array of <see cref="ContextSet"/> objects for the current photo.
         /// </summary>
-        public Collection<ContextSet> Sets { get; private set; }
+        public Collection<ContextSet> Sets { get; set; }
 
         /// <summary>
         /// An array of <see cref="ContextGroup"/> objects for the current photo.
         /// </summary>
-        public Collection<ContextGroup> Groups { get; private set; }
+        public Collection<ContextGroup> Groups { get; set; }
 
         /// <summary>
         /// Default constructor.
@@ -194,11 +194,11 @@ namespace FlickrNet
         /// <summary>
         /// The Photoset ID of the set the selected photo is in.
         /// </summary>
-        public string PhotosetId { get; internal set; }
+        public string PhotosetId { get; set; }
         /// <summary>
         /// The title of the set the selected photo is in.
         /// </summary>
-        public string Title { get; internal set; }
+        public string Title { get; set; }
     }
 
     /// <summary>
@@ -209,10 +209,10 @@ namespace FlickrNet
         /// <summary>
         /// The Group ID for the group that the selected photo is in.
         /// </summary>
-        public string GroupId { get; internal set; }
+        public string GroupId { get; set; }
         /// <summary>
         /// The title of the group that then selected photo is in.
         /// </summary>
-        public string Title { get; internal set; }
+        public string Title { get; set; }
     }
 }

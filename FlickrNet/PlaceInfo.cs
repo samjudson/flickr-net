@@ -13,7 +13,7 @@ namespace FlickrNet
         /// <summary>
         /// The unique id for this place.
         /// </summary>
-        public string PlaceId { get; private set; }
+        public string PlaceId { get; set; }
 
         /// <summary>
         /// The web page URL that corresponds to this place.
@@ -22,7 +22,7 @@ namespace FlickrNet
         /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Although called 'URL' by the Flickr API it is not an actual URI.")]
-        public string PlaceUrl { get; private set; }
+        public string PlaceUrl { get; set; }
 
         /// <summary>
         /// The URL to the place web page on Flickr.
@@ -38,77 +38,77 @@ namespace FlickrNet
         /// <summary>
         /// The 'type' of this place, e.g. Region, Country etc.
         /// </summary>
-        public PlaceType PlaceType { get; private set; }
+        public PlaceType PlaceType { get; set; }
 
         /// <summary>
         /// The WOE id for the locality.
         /// </summary>
-        public string WoeId { get; private set; }
+        public string WoeId { get; set; }
 
         /// <summary>
         /// The description of this place, where provided.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The latitude of this place.
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// The longitude of this place.
         /// </summary>
-        public double Longitude { get; private set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// The accuracy of the location information, if this information is about a photo.
         /// </summary>
-        public GeoAccuracy? Accuracy { get; private set; }
+        public GeoAccuracy? Accuracy { get; set; }
 
         /// <summary>
         /// The context of the location, if this information is about a photo.
         /// </summary>
-        public GeoContext? Context { get; private set; }
+        public GeoContext? Context { get; set; }
 
         /// <summary>
         /// The timezone for the place.
         /// </summary>
-        public string TimeZone { get; private set; }
+        public string TimeZone { get; set; }
 
         /// <summary>
         /// Does this place have shape data for it.
         /// </summary>
-        public bool HasShapeData { get; private set; }
+        public bool HasShapeData { get; set; }
 
         /// <summary>
         /// The neighbourhood for this location. May be null.
         /// </summary>
-        public Place Neighbourhood { get; private set; }
+        public Place Neighbourhood { get; set; }
 
         /// <summary>
         /// Details about the place's locality. May be null.
         /// </summary>
-        public Place Locality { get; private set; }
+        public Place Locality { get; set; }
 
         /// <summary>
         /// Details of the place's county. May be null.
         /// </summary>
-        public Place County { get; private set; }
+        public Place County { get; set; }
 
         /// <summary>
         /// Details of the place's region. May be null.
         /// </summary>
-        public Place Region { get; private set; }
+        public Place Region { get; set; }
 
         /// <summary>
         /// Details of the place's country. May be null.
         /// </summary>
-        public Place Country { get; private set; }
+        public Place Country { get; set; }
 
         /// <summary>
         /// The shape data for this place. Only available for some places (see <see cref="HasShapeData"/>).
         /// </summary>
-        public ShapeData ShapeData { get; private set; }
+        public ShapeData ShapeData { get; set; }
 
         /// <summary>
         /// Serializes the XML to an instance.

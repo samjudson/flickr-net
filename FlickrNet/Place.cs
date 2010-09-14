@@ -14,7 +14,7 @@ namespace FlickrNet
         /// <summary>
         /// The unique id for this place.
         /// </summary>
-        public string PlaceId { get; private set; }
+        public string PlaceId { get; set; }
 
         /// <summary>
         /// The web page URL that corresponds to this place.
@@ -23,37 +23,37 @@ namespace FlickrNet
         /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
         /// </remarks>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Justification = "Although called 'URL' by the Flickr API it is not an actual URI.")]
-        public string PlaceUrl { get; private set; }
+        public string PlaceUrl { get; set; }
 
         /// <summary>
         /// The 'type' of this place, e.g. Region, Country etc.
         /// </summary>
-        public PlaceType PlaceType { get; private set; }
+        public PlaceType PlaceType { get; set; }
 
         /// <summary>
         /// The WOE id for the locality.
         /// </summary>
-        public string WoeId { get; private set; }
+        public string WoeId { get; set; }
 
         /// <summary>
         /// The description of this place, where provided.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// The latitude of this place.
         /// </summary>
-        public double Latitude { get; private set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// The longitude of this place.
         /// </summary>
-        public double Longitude { get; private set; }
+        public double Longitude { get; set; }
 
         /// <summary>
         /// The timezone for the place.
         /// </summary>
-        public string TimeZone { get; private set; }
+        public string TimeZone { get; set; }
 
         /// <summary>
         /// The number of photos the calling user has for this place.
@@ -61,7 +61,7 @@ namespace FlickrNet
         /// <remarks>
         /// Only returned for <see cref="Flickr.PlacesPlacesForUser()"/>.
         /// </remarks>
-        public int? PhotoCount { get; private set; }
+        public int? PhotoCount { get; set; }
 
         /// <summary>
         /// Serializes the XML to an instance.
