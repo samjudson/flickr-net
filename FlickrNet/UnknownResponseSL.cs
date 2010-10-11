@@ -33,7 +33,10 @@ namespace FlickrNet
         public string GetAttributeValue(string element, string attribute)
         {
             System.Xml.Linq.XDocument doc = GetXDocument();
-            return doc.Descendants(element).Attributes(attribute).First().Value;
+            if (String.IsNullOrEmpty(element) || element == "*")
+                return doc.Descendants().Attributes(attribute).First().Value;
+            else
+                return doc.Descendants(element).Attributes(attribute).First().Value;
         }
 
         /// <summary>
