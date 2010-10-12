@@ -56,68 +56,6 @@ namespace FlickrNet
         }
 
         /// <summary>
-        /// Calculates the URL to redirect the user to Flickr web site for
-        /// authentication. Used by desktop application. 
-        /// See <see cref="AuthGetFrob"/> for example code.
-        /// </summary>
-        /// <param name="frob">The FROB to be used for authentication.</param>
-        /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
-        /// <returns>The url to redirect the user to.</returns>
-        public string AuthCalcUrlAsync(string frob, AuthLevel authLevel)
-        {
-            if (sharedSecret == null) throw new SignatureRequiredException();
-
-            string hash = sharedSecret + "api_key" + apiKey + "frob" + frob + "perms" + UtilityMethods.AuthLevelToString(authLevel);
-            hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel) + "&frob=" + frob;
-            url += "&api_sig=" + hash;
-
-            return url;
-        }
-
-        /// <summary>
-        /// Calculates the URL to redirect the user to Flickr web site for
-        /// authentication. Used by Web applications. 
-        /// See <see cref="AuthGetFrob"/> for example code.
-        /// </summary>
-        /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
-        /// <returns>The url to redirect the user to.</returns>
-        public string AuthCalcWebUrlAsync(AuthLevel authLevel)
-        {
-            CheckApiKey();
-
-            CheckSigned();
-
-            string hash = sharedSecret + "api_key" + apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
-            hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
-            url += "&api_sig=" + hash;
-
-            return url;
-        }
-
-        /// <summary>
-        /// Calculates the URL to redirect the user to Flickr mobile web site for
-        /// authentication. Used by Mobile Web applications. 
-        /// See <see cref="AuthGetFrob"/> for example code.
-        /// </summary>
-        /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
-        /// <returns>The url to redirect the user to.</returns>
-        public string AuthCalcMobileUrlAsync(AuthLevel authLevel)
-        {
-            CheckApiKey();
-
-            CheckSigned();
-
-            string hash = sharedSecret + "api_key" + apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
-            hash = UtilityMethods.MD5Hash(hash);
-            string url = AuthUrl.Replace("www.flickr.com", "m.flickr.com") + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
-            url += "&api_sig=" + hash;
-
-            return url;
-        }
-
-        /// <summary>
         /// After the user has authenticated your application on the flickr web site call this 
         /// method with the FROB (either stored from <see cref="AuthGetFrob"/> or returned in the URL
         /// from the Flickr web site) to get the users token.

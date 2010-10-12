@@ -107,6 +107,7 @@
     <Compile Include="FlickrWebException.cs" />
     <Compile Include="Flickr_Activity.cs" />
     <Compile Include="Flickr_Auth.cs" />
+    <Compile Include="Flickr_AuthCalc.cs" />
     <Compile Include="Flickr_Blogs.cs" />
     <Compile Include="Flickr_Collections.cs" />
     <Compile Include="Flickr_Commons.cs" />

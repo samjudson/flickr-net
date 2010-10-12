@@ -89,6 +89,7 @@
     <Compile Include="FlickrWebException.cs" />
     <Compile Include="Flickr_ActivityAsync.cs" />
     <Compile Include="Flickr_AuthAsync.cs" />
+    <Compile Include="Flickr_AuthCalc.cs" />
     <Compile Include="Flickr_BlogsAsync.cs" />
     <Compile Include="Flickr_CollectionsAsync.cs" />
     <Compile Include="Flickr_CommonsAsync.cs" />
