@@ -273,7 +273,7 @@ namespace FlickrNet
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-            parameters.Add("method", "flickr.stats.getCollectionStats");
+            parameters.Add("method", "flickr.stats.getPhotostreamStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
 
             GetResponseAsync<Stats>(parameters, callback);
@@ -291,7 +291,7 @@ namespace FlickrNet
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
-            parameters.Add("method", "flickr.stats.getCollectionStats");
+            parameters.Add("method", "flickr.stats.getPhotosetStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("photoset_id", photosetId);
 
