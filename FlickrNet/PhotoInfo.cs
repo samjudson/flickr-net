@@ -134,12 +134,28 @@ namespace FlickrNet
         public bool CanComment { get; set; }
 
         /// <summary>
+        /// Can the public add new comments.
+        /// </summary>
+        /// <remarks>
+        /// "1" = true, "0" = false.
+        /// </remarks>
+        public bool CanPublicComment { get; set; }
+
+        /// <summary>
         /// Can the authorized user add new meta data (tags and notes).
         /// </summary>
         /// <remarks>
         /// "1" = true, "0" = false.
         /// </remarks>
         public bool CanAddMeta { get; set; }
+
+        /// <summary>
+        /// Can the public add new meta data (tags and notes).
+        /// </summary>
+        /// <remarks>
+        /// "1" = true, "0" = false.
+        /// </remarks>
+        public bool CanPublicAddMeta { get; set; }
 
         /// <summary>
         /// Specifies if the user allows blogging of this photos. 1 = Yes, 0 = No.
@@ -336,6 +352,9 @@ namespace FlickrNet
                     case "editability":
                         ParseEditability(reader);
                         break;
+                    case "publiceditability":
+                        ParsePublicEditability(reader);
+                        break;
                     case "dates":
                         ParseDates(reader);
                         break;
@@ -368,6 +387,7 @@ namespace FlickrNet
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
+                        reader.Skip();
                         break;
 
                 }
@@ -525,6 +545,27 @@ namespace FlickrNet
                         break;
                     case "canaddmeta":
                         CanAddMeta = reader.Value == "1";
+                        break;
+                    default:
+                        UtilityMethods.CheckParsingException(reader);
+                        break;
+                }
+            }
+
+            reader.Read();
+        }
+
+        private void ParsePublicEditability(System.Xml.XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "cancomment":
+                        CanPublicComment = reader.Value == "1";
+                        break;
+                    case "canaddmeta":
+                        CanPublicAddMeta = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
