@@ -28,7 +28,7 @@ namespace FlickrNet
 
             if (reader.LocalName != "stats")
             {
-                        UtilityMethods.CheckParsingException(reader);
+                UtilityMethods.CheckParsingException(reader);
             }
 
             while (reader.MoveToNextAttribute())

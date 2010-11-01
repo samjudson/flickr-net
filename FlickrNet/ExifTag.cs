@@ -82,6 +82,7 @@ namespace FlickrNet
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
+                        reader.Skip();
                         break;
                 }
             }
