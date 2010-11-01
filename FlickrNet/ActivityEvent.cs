@@ -72,6 +72,9 @@ namespace FlickrNet
                             case "added_to_gallery":
                                 EventType = ActivityEventType.Gallery;
                                 break;
+                            case "tag":
+                                EventType = ActivityEventType.Tag;
+                                break;
                             default:
                                 UtilityMethods.CheckParsingException(reader);
                                 break;
@@ -140,6 +143,11 @@ namespace FlickrNet
         /// <summary>
         /// The event is for a gallery.
         /// </summary>
-        Gallery
+        Gallery,
+
+        /// <summary>
+        /// The event is a tag being added to a item.
+        /// </summary>
+        Tag
     }
 }
