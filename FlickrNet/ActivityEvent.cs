@@ -75,6 +75,9 @@ namespace FlickrNet
                             case "tag":
                                 EventType = ActivityEventType.Tag;
                                 break;
+                            case "group_invite":
+                                EventType = ActivityEventType.GroupInvite;
+                                break;
                             default:
                                 UtilityMethods.CheckParsingException(reader);
                                 break;
@@ -148,6 +151,11 @@ namespace FlickrNet
         /// <summary>
         /// The event is a tag being added to a item.
         /// </summary>
-        Tag
+        Tag,
+
+        /// <summary>
+        /// The event is a group invite.
+        /// </summary>
+        GroupInvite
     }
 }
