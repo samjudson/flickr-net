@@ -17,7 +17,21 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void ActivityUserPhotosAsync(Action<FlickrResult<ActivityItemCollection>> callback)
         {
-            ActivityUserPhotosAsync(null, callback);
+            ActivityUserPhotosAsync(null, 0, 0, callback);
+        }
+
+        /// <summary>
+        /// Returns a list of recent activity on photos belonging to the calling user.
+        /// </summary>
+        /// <remarks>
+        /// <b>Do not poll this method more than once an hour.</b>
+        /// </remarks>
+        /// <param name="page">The page numver of the activity to return.</param>
+        /// <param name="perPage">The number of activities to return per page.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void ActivityUserPhotosAsync(int page, int perPage, Action<FlickrResult<ActivityItemCollection>> callback)
+        {
+            ActivityUserPhotosAsync(null, page, perPage, callback);
         }
 
         /// <summary>
@@ -31,6 +45,22 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void ActivityUserPhotosAsync(int timePeriod, string timeType, Action<FlickrResult<ActivityItemCollection>> callback)
         {
+            ActivityUserPhotosAsync(timePeriod, timeType, 0, 0, callback);
+        }
+
+        /// <summary>
+        /// Returns a list of recent activity on photos belonging to the calling user.
+        /// </summary>
+        /// <remarks>
+        /// <b>Do not poll this method more than once an hour.</b>
+        /// </remarks>
+        /// <param name="timePeriod">The number of days or hours you want to get activity for.</param>
+        /// <param name="timeType">'d' for days, 'h' for hours.</param>
+        /// <param name="page">The page numver of the activity to return.</param>
+        /// <param name="perPage">The number of activities to return per page.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void ActivityUserPhotosAsync(int timePeriod, string timeType, int page, int perPage, Action<FlickrResult<ActivityItemCollection>> callback)
+        {
             if (timePeriod == 0)
                 throw new ArgumentOutOfRangeException("timePeriod", "Time Period should be greater than 0");
 
@@ -40,16 +70,18 @@ namespace FlickrNet
             if (timeType != "d" && timeType != "h")
                 throw new ArgumentOutOfRangeException("timeType", "Time type must be 'd' or 'h'");
 
-            ActivityUserPhotosAsync(timePeriod + timeType, callback);
+            ActivityUserPhotosAsync(timePeriod + timeType, page, perPage, callback);
         }
 
-        private void ActivityUserPhotosAsync(string timeframe, Action<FlickrResult<ActivityItemCollection>> callback)
+        private void ActivityUserPhotosAsync(string timeframe, int page, int perPage, Action<FlickrResult<ActivityItemCollection>> callback)
         {
             CheckRequiresAuthentication();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.activity.userPhotos");
             if (timeframe != null && timeframe.Length > 0) parameters.Add("timeframe", timeframe);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<ActivityItemCollection>(parameters, callback);
         }
