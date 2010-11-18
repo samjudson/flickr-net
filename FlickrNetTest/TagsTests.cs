@@ -181,5 +181,11 @@ namespace FlickrNetTest
                 Assert.AreNotEqual(0, c.Score);
             }
         }
+
+        [TestMethod]
+        public void TagsGetListUserTest()
+        {
+            var col = TestData.GetInstance().TagsGetListUser(TestData.TestUserId);
+        }
     }
 }

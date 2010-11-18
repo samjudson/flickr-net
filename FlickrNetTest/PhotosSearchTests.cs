@@ -539,6 +539,26 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosSearchMultipleTagsTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "art,collection";
+            o.TagMode = TagMode.AllTags;
+            o.PerPage = 10;
+            o.Extras = PhotoSearchExtras.Tags;
+
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            foreach (Photo p in photos)
+            {
+                Assert.IsNotNull(p.Tags, "Tag Collection should not be null");
+                Assert.IsTrue(p.Tags.Count > 0, "Should be more than one tag for all photos");
+                Assert.IsTrue(p.Tags.Contains("art"), "Should contain 'art' tag.");
+                Assert.IsTrue(p.Tags.Contains("collection"), "Should contain 'collection' tag.");
+            }
+        }
+
+        [TestMethod]
         public void PhotosSearchInterestingnessBasicTest()
         {
             Flickr f = TestData.GetInstance();
