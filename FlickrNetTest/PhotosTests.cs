@@ -271,5 +271,39 @@ namespace FlickrNetTest
                 }
             }
         }
-    }
+
+        [TestMethod]
+        public void WebUrlContainsUserIdIfPathAliasIsEmpty()
+        {
+            var options = new PhotoSearchOptions
+                        {
+                            UserId = "25515003@N03",
+                            PerPage = 1,
+                            Extras = PhotoSearchExtras.PathAlias
+                        };
+
+            var flickr = TestData.GetInstance();
+            var photos = flickr.PhotosSearch(options);
+
+            string webUrl = photos[0].WebUrl;
+            string userPart = webUrl.Split('/')[4];
+
+            Console.WriteLine("WebUrl is: " + webUrl);
+            Assert.AreNotEqual(userPart, string.Empty, "User part of the URL cannot be empty");
+        }
+
+        [TestMethod]
+        public void PhotostreamUrlContainsUserIdIfPathAliasIsEmpty()
+        {
+            var photoPerson = new PhotoPerson()
+                                  {
+                                      PathAlias = string.Empty,
+                                      UserId = "UserId",
+                                  };
+
+            string userPart = photoPerson.PhotostreamUrl.Split('/')[4];
+
+            Assert.AreNotEqual(userPart, string.Empty, "User part of the URL cannot be empty");
+        }
+   }
 }
