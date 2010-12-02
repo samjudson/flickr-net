@@ -101,6 +101,30 @@ namespace FlickrNet
         public string OwnerLocation { get; set; }
 
         /// <summary>
+        /// The server for the owners buddy icon.
+        /// </summary>
+        public string OwnerIconServer { get; set; }
+
+        /// <summary>
+        /// The farm for the owners buddy icon.
+        /// </summary>
+        public string OwnerIconFarm { get; set; }
+
+        /// <summary>
+        /// The owners buddy icon, or the default buddy icon it no icon is set.
+        /// </summary>
+        public string OwnerBuddyIcon
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(OwnerIconServer) || OwnerIconServer == "0")
+                    return "http://www.flickr.com/images/buddyicon.jpg";
+                else
+                    return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", OwnerIconFarm, OwnerIconServer, OwnerUserId);
+            }
+        }
+
+        /// <summary>
         /// The title of the photo.
         /// </summary>
         public string Title { get; set; }
@@ -641,6 +665,12 @@ namespace FlickrNet
                         break;
                     case "location":
                         OwnerLocation = reader.Value;
+                        break;
+                    case "iconserver":
+                        OwnerIconServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        OwnerIconFarm = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
