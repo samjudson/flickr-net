@@ -1,6 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 
   <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  <Import Project="help.proj"/>
 
   <PropertyGroup>
     <Major>3</Major>
@@ -9,10 +10,14 @@
     <Revision>0</Revision>
   </PropertyGroup>
 
-  <Target Name="Build" DependsOnTargets="Version;Compile;Zip">
+  <Target Name="Build" DependsOnTargets="Version;Compile;Help;Zip">
   </Target>
 
   <Target Name="Version">
+
+  <Version BuildType="Automatic">
+		<Output TaskParameter="Build" PropertyName="Build" />
+	</Version>
     
     <AssemblyInfo CodeLanguage="CS"
       OutputFile="FlickrNet\AssemblyInfo.cs"
@@ -29,14 +34,16 @@
 
   <Target Name="Compile" DependsOnTargets="Version">
     <MSBuild Projects="FlickrNet.sln" Properties="Configuration=Release" Targets="Rebuild"/>
+    <MSBuild Projects="FlickrNetVS10.sln" Properties="Configuration=Release" Targets="Rebuild"/>
   </Target>
 
   <Target Name="Zip" DependsOnTargets="Compile">
     <ItemGroup>
       <ZipFiles Include="FlickrNet\bin\Release\*.*" Exclude="*.pdb" />
+	  <ZipFiles Include="Sandcastle\Help\FlickrNet.chm" />
     </ItemGroup>
     <MakeDir Directories="Builds" Condition="!Exists('Builds')" />
-    <Zip Files="@(ZipFiles)" ZipFileName="Builds\FlickrNet-$(Major).$(Minor).zip" ZipLevel="9" Flatten="true"/>
+    <Zip Files="@(ZipFiles)" ZipFileName="Builds\FlickrNet-$(Major).$(Minor).$(Build).zip" ZipLevel="9" Flatten="true"/>
   </Target>
 
 </Project>

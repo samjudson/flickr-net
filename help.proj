@@ -1,0 +1,9 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Help">
+
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  <Target Name="Help">
+    <MSBuild Projects="Sandcastle\Flickr Net Sandcastle File.shfbproj"/>
+  </Target>
+
+ </Project>
+  
