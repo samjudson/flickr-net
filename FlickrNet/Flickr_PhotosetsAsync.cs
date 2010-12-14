@@ -46,9 +46,9 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.create");
-            parameters.Add("title", title);
             parameters.Add("primary_photo_id", primaryPhotoId);
-            parameters.Add("description", description);
+            if (!String.IsNullOrEmpty(title)) parameters.Add("title", title);
+            if (!String.IsNullOrEmpty(description)) parameters.Add("description", description);
 
             GetResponseAsync<Photoset>(parameters, callback);
         }
