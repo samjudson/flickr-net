@@ -92,6 +92,18 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosSearchSignedTest()
+        {
+            Flickr f = TestData.GetSignedInstance();
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "Test";
+            o.PerPage = 5;
+            PhotoCollection photos = f.PhotosSearch(o);
+
+            Assert.AreEqual(5, photos.PerPage, "PerPage should equal 5.");
+        }
+
+        [TestMethod]
         public void PhotosSearchFavorites()
         {
             Flickr f = TestData.GetAuthInstance();

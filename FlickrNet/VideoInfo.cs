@@ -50,13 +50,22 @@ namespace FlickrNet
                         Pending = reader.Value == "1";
                         break;
                     case "duration":
-                        Duration = reader.ReadContentAsInt();
+                        if (String.IsNullOrEmpty(reader.Value))
+                            Duration = -1;
+                        else
+                            Duration = reader.ReadContentAsInt();
                         break;
                     case "width":
-                        Width = reader.ReadContentAsInt();
+                        if (String.IsNullOrEmpty(reader.Value))
+                            Width = -1;
+                        else
+                            Width = reader.ReadContentAsInt();
                         break;
                     case "height":
-                        Height = reader.ReadContentAsInt();
+                        if (String.IsNullOrEmpty(reader.Value))
+                            Height = -1;
+                        else
+                            Height = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
