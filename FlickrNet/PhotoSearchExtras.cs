@@ -95,6 +95,10 @@ namespace FlickrNet
         /// </summary>
         MediumUrl = 131072,
         /// <summary>
+        /// Returns the URL for the medium 640 image, as well as the image size.
+        /// </summary>
+        Medium640Url = 8388608,
+        /// <summary>
         /// Returns the URL for the large image, as well as the image size.
         /// </summary>
         LargeUrl = 262144,
@@ -105,7 +109,7 @@ namespace FlickrNet
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
         /// </summary>
-        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | LargeUrl | OriginalUrl,
+        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | LargeUrl | OriginalUrl,
         /// <summary>
         /// Returns the description for the image.
         /// </summary>
