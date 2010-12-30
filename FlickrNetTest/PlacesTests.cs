@@ -118,9 +118,13 @@ namespace FlickrNetTest
         [TestMethod]
         public void PlacesGetChildrenWithPhotosPublicPlaceIdTest()
         {
-            string placeId = "6AQKCGmbBZQfMthgkA"; // Europe;
+            string placeId = "lkyV7jSbBZTkl7Wkqg"; // Europe;
+            Flickr f = TestData.GetInstance();
 
-            var places = TestData.GetInstance().PlacesGetChildrenWithPhotosPublic(placeId, null);
+            var places = f.PlacesGetChildrenWithPhotosPublic(placeId, null);
+            Console.WriteLine(f.LastRequest);
+            Console.WriteLine(f.LastResponse);
+
             Assert.IsNotNull(places);
             Assert.AreNotEqual(0, places.Count);
 
@@ -133,7 +137,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void PlacesGetChildrenWithPhotosPublicWoeIdTest()
         {
-            string woeId = "23424791"; // Europe;
+            string woeId = "24865675"; // Europe;
 
             var places = TestData.GetInstance().PlacesGetChildrenWithPhotosPublic(null, woeId);
             Assert.IsNotNull(places);
@@ -252,9 +256,9 @@ namespace FlickrNetTest
             Assert.IsNotNull(p.ShapeData);
             Assert.AreEqual(0.00015, p.ShapeData.Alpha);
             Assert.AreEqual(1, p.ShapeData.PolyLines.Count);
-            Assert.AreEqual(91, p.ShapeData.PolyLines[0].Count);
-            Assert.AreEqual(55.018703460693, p.ShapeData.PolyLines[0][90].X);
-            Assert.AreEqual(-1.6715459823608, p.ShapeData.PolyLines[0][90].Y);
+            Assert.AreEqual(89, p.ShapeData.PolyLines[0].Count);
+            Assert.AreEqual(55.030498504639, p.ShapeData.PolyLines[0][88].X);
+            Assert.AreEqual(-1.6404060125351, p.ShapeData.PolyLines[0][88].Y);
         }
 
         [TestMethod]
@@ -299,10 +303,10 @@ namespace FlickrNetTest
             var col = f.PlacesGetShapeHistory(placeId, null);
 
             Assert.IsNotNull(col, "ShapeDataCollection should not be null.");
-            Assert.AreEqual(6, col.Count, "Count should be six.");
+            Assert.AreEqual(7, col.Count, "Count should be six.");
             Assert.AreEqual(placeId, col.PlaceId);
 
-            Assert.AreEqual(2, col[1].PolyLines.Count, "The second shape should have two polylines.");
+            Assert.AreEqual(1, col[1].PolyLines.Count, "The second shape should have one polylines.");
         }
 
         [TestMethod]

@@ -96,6 +96,8 @@ namespace FlickrNetTest
             // Get last 10 days activity.
             ActivityItemCollection items = f.ActivityUserPhotos(20, "d");
 
+            Console.WriteLine(f.LastResponse);
+
             Assert.IsNotNull(items, "ActivityItemCollection should not be null.");
 
             Assert.AreNotEqual(0, items.Count, "ActivityItemCollection should not be zero.");

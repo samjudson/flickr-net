@@ -125,5 +125,18 @@ namespace FlickrNetTest
                 Assert.IsNotNull(primary, "Primary photo should have been found.");
             }
         }
+
+        [TestMethod]
+        public void PhotosetsGetPhotosOrignalTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var photos = f.PhotosetsGetPhotos("72157623027759445", PhotoSearchExtras.AllUrls);
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.OriginalUrl, "Original URL should not be null.");
+            }
+        }
     }
 }

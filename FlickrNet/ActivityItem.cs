@@ -21,7 +21,11 @@ namespace FlickrNet
         /// <summary>
         /// The activitiy item is on a photo.
         /// </summary>
-        Photo
+        Photo,
+        /// <summary>
+        /// THe activity item is on a gallery.
+        /// </summary>
+        Gallery
     }
 
     /// <summary>
@@ -202,10 +206,18 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "type":
-                        if (reader.Value == "photoset")
-                            ItemType = ActivityItemType.Photoset;
-                        else if (reader.Value == "photo")
-                            ItemType = ActivityItemType.Photo;
+                        switch (reader.Value)
+                        {
+                            case "photoset":
+                                ItemType = ActivityItemType.Photoset;
+                                break;
+                            case "photo":
+                                ItemType = ActivityItemType.Photo;
+                                break;
+                            case "gallery":
+                                ItemType = ActivityItemType.Gallery;
+                                break;
+                        }
                         break;
                     case "owner":
                         OwnerId = reader.Value;

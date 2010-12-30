@@ -80,15 +80,17 @@ namespace FlickrNetTest
 
             ExifTagCollection tags = f.PhotosGetExif("4268023123");
 
+            Console.WriteLine(f.LastResponse);
+
             Assert.IsNotNull(tags, "ExifTagCollection should not be null.");
 
             Assert.IsTrue(tags.Count > 20, "More than twenty parts of EXIF data should be returned.");
 
-            Assert.AreEqual("System", tags[0].TagSpace, "First tags TagSpace is not set correctly.");
+            Assert.AreEqual("IFD0", tags[0].TagSpace, "First tags TagSpace is not set correctly.");
             Assert.AreEqual(0, tags[0].TagSpaceId, "First tags TagSpaceId is not set correctly.");
-            Assert.AreEqual("FileName", tags[0].Tag, "First tags Tag is not set correctly.");
-            Assert.AreEqual("FileName", tags[0].Label, "First tags Label is not set correctly.");
-            Assert.AreEqual("ORI46620478284895704.img", tags[0].Raw, "First tags RAW is not correct.");
+            Assert.AreEqual("ImageDescription", tags[0].Tag, "First tags Tag is not set correctly.");
+            Assert.AreEqual("Image Description", tags[0].Label, "First tags Label is not set correctly.");
+            Assert.AreEqual("It scares me sometimes how much some of my handwriting reminds me of Dad's - in this photo there is one 5 that especially reminds me of his handwriting.", tags[0].Raw, "First tags RAW is not correct.");
             Assert.IsNull(tags[0].Clean, "First tags Clean should be null.");
         }
 

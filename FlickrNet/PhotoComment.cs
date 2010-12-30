@@ -35,6 +35,10 @@ namespace FlickrNet
         /// </summary>
         public DateTime DateCreated { get; set; }
 
+        public string IconServer { get; set; }
+
+        public string IconFarm { get; set; }
+
         /// <summary>
         /// The comment text (can contain HTML).
         /// </summary>
@@ -63,6 +67,12 @@ namespace FlickrNet
                         break;
                     case "datecreate":
                         DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "iconserver":
+                        IconServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        IconFarm = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

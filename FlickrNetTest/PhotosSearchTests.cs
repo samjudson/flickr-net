@@ -617,6 +617,9 @@ namespace FlickrNetTest
 
             var photos = f.PhotosSearch(o);
 
+            Console.WriteLine(f.LastRequest);
+            Console.WriteLine(f.LastResponse);
+
             Assert.IsNotNull(photos);
             Assert.AreNotEqual<int>(0, photos.Count);
 
@@ -634,13 +637,16 @@ namespace FlickrNetTest
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.HasGeo = true;
             o.PerPage = 10;
-            o.Latitude = 0;
-            o.Longitude = 0;
+            o.Latitude = 55.2971;
+            o.Longitude = -2.075;
             o.Radius = 20;
             o.RadiusUnits = RadiusUnit.Miles;
             o.Extras |= PhotoSearchExtras.Geo;
 
             var photos = f.PhotosSearch(o);
+
+            Console.WriteLine(f.LastRequest);
+            Console.WriteLine(f.LastResponse);
 
             Assert.IsNotNull(photos);
             Assert.AreNotEqual<int>(0, photos.Count);
