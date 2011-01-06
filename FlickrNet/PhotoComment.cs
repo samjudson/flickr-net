@@ -35,9 +35,29 @@ namespace FlickrNet
         /// </summary>
         public DateTime DateCreated { get; set; }
 
+        /// <summary>
+        /// The server for the commenting users buddy icon.
+        /// </summary>
         public string IconServer { get; set; }
 
+        /// <summary>
+        /// The farm for the commenting users buddy icon.
+        /// </summary>
         public string IconFarm { get; set; }
+
+        /// <summary>
+        /// The comment authors buddy icon.
+        /// </summary>
+        public string AuthorBuddyIcon
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(IconServer) && IconServer != "0")
+                    return String.Format("http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, AuthorUserId);
+                else
+                    return "http://www.flickr.com/images/buddyicon.jpg";
+            }
+        }
 
         /// <summary>
         /// The comment text (can contain HTML).

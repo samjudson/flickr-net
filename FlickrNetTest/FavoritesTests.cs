@@ -87,6 +87,18 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
+            var photos = f.FavoritesGetList(TestData.TestUserId, DateTime.Now.AddYears(-1), DateTime.Now, PhotoSearchExtras.All, 1, 10);
+            Assert.IsNotNull(photos, "PhotoCollection should not be null.");
+
+            Assert.IsTrue(photos.Count > 0, "Count should be greater than zero.");
+
+        }
+
+        [TestMethod]
+        public void FavoritesGetListPartialParamTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
             PhotoCollection photos = f.FavoritesGetList(TestData.TestUserId, 2, 20);
             Assert.IsNotNull(photos, "PhotoCollection should not be null instance.");
             Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should be greater than zero.");
