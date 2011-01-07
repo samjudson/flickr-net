@@ -7,6 +7,17 @@ namespace FlickrNet
     public partial class Flickr
     {
         /// <summary>
+        /// Calculates a URL for revoking permissions for your application by the user.
+        /// </summary>
+        /// <param name="appToken">The 'application id' of your application. 
+        /// Go to http://www.flickr.com/services/auth/list.gne to get your application token.</param>
+        /// <returns></returns>
+        public string AuthCaclRevokeUrl(string appToken)
+        {
+            return "http://www.flickr.com/services/auth/revoke.gne?token=" + appToken;
+        }
+
+        /// <summary>
         /// Calculates the URL to redirect the user to Flickr web site for
         /// authentication. Used by desktop application. 
         /// See <see cref="AuthGetFrob"/> for example code.
