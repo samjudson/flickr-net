@@ -158,6 +158,10 @@ namespace FlickrNetTest
             Assert.IsNotNull(groups, "MemberGroupInfoCollection should not be null.");
             Assert.AreNotEqual(0, groups.Count, "MemberGroupInfoCollection.Count should not be zero.");
             Assert.IsTrue(groups.Count > 1, "Count should be greater than one.");
+
+            Assert.AreEqual(400, groups.PerPage, "PerPage should be 400.");
+            Assert.AreEqual(1, groups.Page, "Page should be 1.");
+            Assert.IsTrue(groups.Total > 1, "Total chould be greater than one");
         }
     }
 }

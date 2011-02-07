@@ -175,8 +175,21 @@ namespace FlickrNet
         /// <returns></returns>
         public MemberGroupInfoCollection GroupsPoolsGetGroups()
         {
+            return GroupsPoolsGetGroups(0, 0);
+        }
+
+        /// <summary>
+        /// Returns a list of groups to which you can add photos.
+        /// </summary>
+        /// <param name="page">The page of results to return. Defaults to 1.</param>
+        /// <param name="perPage">The number of groups to return per page. Defaults to 400.</param>
+        /// <returns></returns>
+        public MemberGroupInfoCollection GroupsPoolsGetGroups(int page, int perPage)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getGroups");
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             return GetResponseCache<MemberGroupInfoCollection>(parameters);
         }
 
