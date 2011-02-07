@@ -65,6 +65,16 @@ namespace FlickrNet
         public int VideosCount { get; set; }
 
         /// <summary>
+        /// The number of views for this gallery.
+        /// </summary>
+        public int ViewCount { get; set; }
+
+        /// <summary>
+        /// The number of comments on the gallery.
+        /// </summary>
+        public int CommentCount { get; set; }
+
+        /// <summary>
         /// The title of this gallery.
         /// </summary>
         public string Title { get; set; }
@@ -164,6 +174,12 @@ namespace FlickrNet
                         break;
                     case "count_videos":
                         VideosCount = reader.ReadContentAsInt();
+                        break;
+                    case "count_views":
+                        ViewCount = reader.ReadContentAsInt();
+                        break;
+                    case "count_comments":
+                        CommentCount = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

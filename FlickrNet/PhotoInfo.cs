@@ -81,6 +81,11 @@ namespace FlickrNet
         public MediaType Media { get; set; }
 
         /// <summary>
+        /// The safety level of the photo (safe, moderated or restricted).
+        /// </summary>
+        public SafetyLevel SafetyLevel { get; set; }
+
+        /// <summary>
         /// The NSID of the owner of this item.
         /// </summary>
         public string OwnerUserId { get; set; }
@@ -461,6 +466,9 @@ namespace FlickrNet
                         break;
                     case "media":
                         Media = reader.Value == "photo" ? MediaType.Photos : MediaType.Videos;
+                        break;
+                    case "safety_level":
+                        SafetyLevel = (SafetyLevel)reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
