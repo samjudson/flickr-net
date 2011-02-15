@@ -23,7 +23,7 @@ namespace FlickrNet
         /// </summary>
         Photo,
         /// <summary>
-        /// THe activity item is on a gallery.
+        /// The activity item is on a gallery.
         /// </summary>
         Gallery
     }
@@ -162,6 +162,36 @@ namespace FlickrNet
         /// The events that comprise this activity item.
         /// </summary>
         public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; set; }
+
+        /// <summary>
+        /// The URL for the square thumbnail of a photo or the primary photo for a photoset or gallery.
+        /// </summary>
+        public string SquareThumbnailUrl
+        {
+            get
+            {
+                if (ItemType == ActivityItemType.Photo)
+                    return UtilityMethods.UrlFormat(Farm, Server, Id, Secret, "_s", "jpg");
+                if (ItemType == ActivityItemType.Photoset || ItemType == ActivityItemType.Gallery)
+                    return UtilityMethods.UrlFormat(Farm, Server, PrimaryPhotoId, Secret, "_s", "jpg");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// The URL for the small thumbnail of a photo or the primary photo for a photoset or gallery.
+        /// </summary>
+        public string SmallUrl
+        {
+            get
+            {
+                if (ItemType == ActivityItemType.Photo)
+                    return UtilityMethods.UrlFormat(Farm, Server, Id, Secret, "_m", "jpg");
+                if (ItemType == ActivityItemType.Photoset || ItemType == ActivityItemType.Gallery)
+                    return UtilityMethods.UrlFormat(Farm, Server, PrimaryPhotoId, Secret, "_m", "jpg");
+                return null;
+            }
+        }
 
         void IFlickrParsable.Load(XmlReader reader)
         {
