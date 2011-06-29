@@ -25,6 +25,11 @@ namespace FlickrNet
         public string OwnerId { get; set; }
 
         /// <summary>
+        /// The username (screen name) of the gallery owner.
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
         /// The date the gallery was first created.
         /// </summary>
         public DateTime DateCreated { get; set; }
@@ -146,6 +151,9 @@ namespace FlickrNet
                     case "owner":
                         OwnerId = reader.Value;
                         break;
+                    case "username":
+                        Username = reader.Value;
+                        break;
                     case "date_create":
                         DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
@@ -158,10 +166,12 @@ namespace FlickrNet
                         break;
                     case "primary_photo_server":
                     case "server":
+                    case "iconserver":
                         PrimaryPhotoServer = reader.Value;
                         break;
                     case "primary_photo_farm":
                     case "farm":
+                    case "iconfarm":
                         PrimaryPhotoFarm = reader.Value;
                         break;
                     case "primary_photo_secret":

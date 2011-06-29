@@ -358,7 +358,7 @@ namespace FlickrNet
             if (HasGeo != null) parameters.Add("has_geo", HasGeo.Value ? "1" : "0");
             if (Latitude != null) parameters.Add("lat", Latitude.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (Longitude != null) parameters.Add("lon", Longitude.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (Radius != null) parameters.Add("radius", Radius.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (Radius != null) parameters.Add("radius", Radius.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
             if (RadiusUnits != RadiusUnit.None) parameters.Add("radius_units", (RadiusUnits == RadiusUnit.Miles ? "mi" : "km"));
             if (Contacts != ContactSearch.None) parameters.Add("contacts", (Contacts == ContactSearch.AllContacts ? "all" : "ff"));
             if (WoeId != null) parameters.Add("woe_id", WoeId);

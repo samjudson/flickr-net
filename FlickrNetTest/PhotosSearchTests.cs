@@ -418,7 +418,7 @@ namespace FlickrNetTest
             Assert.AreEqual(dateUploaded, photos[0].DateUploaded, "Date uploaded date was not correct.");
 
             Assert.AreEqual("jpg", photos[0].OriginalFormat, "OriginalFormat should be JPG");
-            Assert.AreEqual("WanNUqqcBJTVQXvHIw", photos[0].PlaceId, "PlaceID not set correctly.");
+            Assert.AreEqual("JjXZOYpUV7IbeGVOUQ", photos[0].PlaceId, "PlaceID not set correctly.");
 
             Assert.IsNotNull(photos[0].Description, "Description should not be null.");
 
@@ -636,24 +636,61 @@ namespace FlickrNetTest
 
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.HasGeo = true;
+            o.MinTakenDate = DateTime.Today.AddYears(-3);
             o.PerPage = 10;
-            o.Latitude = 55.2971;
-            o.Longitude = -2.075;
-            o.Radius = 20;
-            o.RadiusUnits = RadiusUnit.Miles;
+            o.Latitude = 61.600447;
+            o.Longitude = 5.035064;
+            o.Radius = 4.75f;
+            o.RadiusUnits = RadiusUnit.Kilometers;
             o.Extras |= PhotoSearchExtras.Geo;
 
             var photos = f.PhotosSearch(o);
 
-            Console.WriteLine(f.LastRequest);
-            Console.WriteLine(f.LastResponse);
-
             Assert.IsNotNull(photos);
-            Assert.AreNotEqual<int>(0, photos.Count);
+            Assert.AreNotEqual<int>(0, photos.Count, "No photos returned by search.");
 
             foreach (var photo in photos)
             {
                 Assert.IsNotNull(photo.PhotoId);
+                Assert.AreNotEqual<double>(0, photo.Longitude, "Longitude should not be zero.");
+                Assert.AreNotEqual<double>(0, photo.Latitude, "Latitude should not be zero.");
+            }
+        }
+
+        [TestMethod]
+        public void PhotosSearchLargeRadiusTest()
+        {
+            double lat = 61.600447;
+            double lon = 5.035064;
+            Flickr f = TestData.GetInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.PerPage = 100;
+            o.HasGeo = true;
+            o.MinTakenDate = DateTime.Today.AddYears(-3);
+            o.Latitude = lat;
+            o.Longitude = lon;
+            o.Radius = 5.432123456f;
+            o.RadiusUnits = RadiusUnit.Kilometers;
+            o.Extras |= PhotoSearchExtras.Geo;
+
+            var photos = f.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual<int>(0, photos.Count, "No photos returned by search.");
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.PhotoId);
+                Assert.AreNotEqual<double>(0, photo.Longitude, "Longitude should not be zero.");
+                Assert.AreNotEqual<double>(0, photo.Latitude, "Latitude should not be zero.");
+
+                Console.WriteLine("Photo {0}, Lat={1}, Long={2}", photo.PhotoId, photo.Latitude, photo.Longitude);
+
+                // Note: +/-1 is not an exact match to 5.4km, but anything outside of these bounds is definitely wrong.
+                Assert.IsTrue(photo.Latitude > lat - 1 && photo.Latitude < lat + 1, "Latitude not within acceptable range.");
+                Assert.IsTrue(photo.Longitude > lon - 1 && photo.Longitude < lon + 1, "Latitude not within acceptable range.");
+
             }
         }
 
@@ -674,7 +711,7 @@ namespace FlickrNetTest
             o.ContentType = ContentTypeSearch.PhotosOnly;
             o.HasGeo = false;
             o.WoeId = "30079";
-            o.PlaceId = "IEcHLFCaAZwoKQ";
+            o.PlaceId = "X9sTR3BSUrqorQ";
 
             var photos = TestData.GetInstance().PhotosSearch(o);
 
@@ -693,6 +730,19 @@ namespace FlickrNetTest
             PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
 
             Assert.AreEqual(1, photos.Count, "Only one photo should have been returned.");
+        }
+
+        [TestMethod]
+        public void PhotosSearchUrlLimitTest()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Extras = PhotoSearchExtras.All;
+            o.TagMode = TagMode.AnyTag;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < 200; i++) sb.Append("tagnumber" + i);
+            o.Tags = sb.ToString();
+
+            PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
         }
 
     }

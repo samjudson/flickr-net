@@ -75,6 +75,26 @@ namespace FlickrNet
         public string Description { get; set; }
 
         /// <summary>
+        /// Date the photoset was created.
+        /// </summary>
+        public DateTime DateCreated { get; set; }
+
+        /// <summary>
+        /// Date the photoset was last updated.
+        /// </summary>
+        public DateTime DateUpdated { get; set; }
+
+        /// <summary>
+        /// The number of times the photoset has been viewed.
+        /// </summary>
+        public int ViewCount { get; set; }
+
+        /// <summary>
+        /// The number of comments on this photoset.
+        /// </summary>
+        public int CommentCount { get; set; }
+
+        /// <summary>
         /// The URL for the thumbnail of a photo.
         /// </summary>
         public string PhotosetThumbnailUrl
@@ -135,6 +155,24 @@ namespace FlickrNet
                         break;
                     case "videos":
                         NumberOfVideos = reader.ReadContentAsInt();
+                        break;
+                    case "needs_interstitial":
+                        // Who knows what this is for.
+                        break;
+                    case "visibility_can_see_set":
+                        // Who knows what this is for.
+                        break;
+                    case "date_create":
+                        DateCreated = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "date_update":
+                        DateUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "view_count":
+                        ViewCount = reader.ReadContentAsInt();
+                        break;
+                    case "comment_count":
+                        CommentCount = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

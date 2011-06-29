@@ -113,25 +113,30 @@ namespace FlickrNet
             if (url.AbsoluteUri.Length > 2000)
             {
                 postContents = url.Query.Substring(1);
-                url = new Uri(url, String.Empty);
+                string simpleUrl = url.Scheme + "://" + url.Host + url.AbsolutePath;
+                url = new Uri(simpleUrl);
             }
+
+            byte[] postArray = Encoding.UTF8.GetBytes(postContents);
 
             // Initialise the web request
             req = (HttpWebRequest)HttpWebRequest.Create(url);
             req.Method = CurrentService == SupportedService.Zooomr ? "GET" : "POST";
 
-            if (req.Method == "POST") req.ContentLength = postContents.Length;
+            if (req.Method == "POST") req.ContentLength = postArray.Length;
 
             req.UserAgent = UserAgent;
             if (Proxy != null) req.Proxy = Proxy;
             req.Timeout = HttpTimeout;
             req.KeepAlive = false;
+
             if (postContents.Length > 0)
             {
                 req.ContentType = "application/x-www-form-urlencoded";
-                StreamWriter sw = new StreamWriter(req.GetRequestStream());
-                sw.Write(postContents);
-                sw.Close();
+                using (Stream dataStream = req.GetRequestStream())
+                {
+                    dataStream.Write(postArray, 0, postArray.Length);
+                }
             }
             else
             {

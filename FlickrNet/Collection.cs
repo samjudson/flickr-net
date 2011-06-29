@@ -27,6 +27,11 @@ namespace FlickrNet
         public string IconSmall { get; set; }
 
         /// <summary>
+        /// The URL of the collection. Only returned when creating a new collection.
+        /// </summary>
+        public string Url { get; set; }
+
+        /// <summary>
         /// An array of <see cref="CollectionSet"/> objects.
         /// </summary>
         public Collection<CollectionSet> Sets
@@ -65,6 +70,9 @@ namespace FlickrNet
                         break;
                     case "iconsmall":
                         IconSmall = reader.Value;
+                        break;
+                    case "url":
+                        Url = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

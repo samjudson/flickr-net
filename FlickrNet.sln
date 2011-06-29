@@ -5,9 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNet", "FlickrNet\Flic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B0EA36B8-D7E6-48C8-B27C-0D76852660F2}"
 	ProjectSection(SolutionItems) = preProject
-		deploy.proj = deploy.proj
-		FlickrNet.vsmdi = FlickrNet.vsmdi
-		help.proj = help.proj
+		flickrnet.vsmdi = flickrnet.vsmdi
 		localtestrun-codecoverage.testrunconfig = localtestrun-codecoverage.testrunconfig
 		localtestrun.testrunconfig = localtestrun.testrunconfig
 	EndProjectSection

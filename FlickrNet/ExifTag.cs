@@ -41,6 +41,20 @@ namespace FlickrNet
         /// </summary>
         public string Clean { get; set; }
 
+        /// <summary>
+        /// Get the value of the <see cref="Clean"/> property, or the value of <see cref="Raw"/> if Clean is empty or null.
+        /// </summary>
+        public string CleanOrRaw
+        {
+            get
+            {
+                if( string.IsNullOrEmpty( Clean ) )
+                    return Raw;
+                else
+                    return Clean;
+            }
+        }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "exif")

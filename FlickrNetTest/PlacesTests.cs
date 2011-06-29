@@ -109,16 +109,16 @@ namespace FlickrNetTest
                 Assert.AreEqual(PlaceType.Continent, place.PlaceType, "PlaceType should be continent.");
             }
 
-            Assert.AreEqual("lkyV7jSbBZTkl7Wkqg", places[0].PlaceId);
+            Assert.AreEqual("6dCBhRRTVrJiB5xOrg", places[0].PlaceId);
             Assert.AreEqual("Europe", places[0].Description);
-            Assert.AreEqual("6AQKCGmbBZQfMthgkA", places[1].PlaceId);
+            Assert.AreEqual("l5geY0lTVrLoNkLgeQ", places[1].PlaceId);
             Assert.AreEqual("North America", places[1].Description);
         }
 
         [TestMethod]
         public void PlacesGetChildrenWithPhotosPublicPlaceIdTest()
         {
-            string placeId = "lkyV7jSbBZTkl7Wkqg"; // Europe;
+            string placeId = "6dCBhRRTVrJiB5xOrg"; // Europe;
             Flickr f = TestData.GetInstance();
 
             var places = f.PlacesGetChildrenWithPhotosPublic(placeId, null);
@@ -145,7 +145,7 @@ namespace FlickrNetTest
 
             foreach (var place in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Region, place.PlaceType);
+                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
             }
         }
 
@@ -154,8 +154,8 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            // Test place ID of 'lkyV7jSbBZTkl7Wkqg' is Europe
-            PlaceCollection p = f.PlacesPlacesForUser(PlaceType.Region, null, "lkyV7jSbBZTkl7Wkqg");
+            // Test place ID of '6dCBhRRTVrJiB5xOrg' is Europe
+            PlaceCollection p = f.PlacesPlacesForUser(PlaceType.Region, null, "6dCBhRRTVrJiB5xOrg");
 
             foreach (Place place in p)
             {
@@ -236,7 +236,7 @@ namespace FlickrNetTest
         public void PlacesGetInfoBasicTest()
         {
             var f = TestData.GetInstance();
-            var placeId = "IEcHLFCaAZwoKQ";
+            var placeId = "X9sTR3BSUrqorQ";
             PlaceInfo p = f.PlacesGetInfo(placeId, null);
 
             Console.WriteLine(f.LastResponse);
@@ -247,10 +247,10 @@ namespace FlickrNetTest
             Assert.AreEqual(PlaceType.Locality, p.PlaceType);
             Assert.AreEqual("Newcastle upon Tyne, England, United Kingdom", p.Description);
 
-            Assert.AreEqual("IEcHLFCaAZwoKQ", p.Locality.PlaceId);
-            Assert.AreEqual("5La1sJqYA5qNBtPTrA", p.County.PlaceId);
-            Assert.AreEqual("pn4MsiGbBZlXeplyXg", p.Region.PlaceId);
-            Assert.AreEqual("DevLebebApj4RVbtaQ", p.Country.PlaceId);
+            Assert.AreEqual("X9sTR3BSUrqorQ", p.Locality.PlaceId);
+            Assert.AreEqual("myqh27pQULzLWcg7Kg", p.County.PlaceId);
+            Assert.AreEqual("2eIY2QFTVr_DwWZNLg", p.Region.PlaceId);
+            Assert.AreEqual("cnffEpdTUb5v258BBA", p.Country.PlaceId);
 
             Assert.IsTrue(p.HasShapeData);
             Assert.IsNotNull(p.ShapeData);
@@ -265,7 +265,7 @@ namespace FlickrNetTest
         public void PlacesGetInfoByUrlBasicTest()
         {
             var f = TestData.GetInstance();
-            var placeId = "IEcHLFCaAZwoKQ";
+            var placeId = "X9sTR3BSUrqorQ";
             PlaceInfo p1 = f.PlacesGetInfo(placeId, null);
             PlaceInfo p2 = f.PlacesGetInfoByUrl(p1.PlaceUrl);
 
@@ -298,7 +298,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void PlacesGetShapeHistoryTest()
         {
-            var placeId = "IEcHLFCaAZwoKQ";
+            var placeId = "X9sTR3BSUrqorQ";
             var f = TestData.GetInstance();
             var col = f.PlacesGetShapeHistory(placeId, null);
 
@@ -312,7 +312,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void PlacesGetTagsForPlace()
         {
-            var placeId = "IEcHLFCaAZwoKQ";
+            var placeId = "X9sTR3BSUrqorQ";
             var f = TestData.GetInstance();
             var col = f.PlacesTagsForPlace(placeId, null);
 

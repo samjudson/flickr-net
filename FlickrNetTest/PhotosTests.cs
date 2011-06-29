@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+using System.Net;
 
 namespace FlickrNetTest
 {
@@ -207,6 +208,25 @@ namespace FlickrNetTest
                 Assert.IsTrue(p.DoesLargeExist == true || p.DoesLargeExist == false);
                 Assert.IsTrue(p.DoesMediumExist == true || p.DoesMediumExist == false);
             }
+        }
+
+        [TestMethod]
+        public void PhotosSetMetaLargeDescription()
+        {
+            string description;
+
+            using (WebClient wc = new WebClient())
+            {
+                description = wc.DownloadString("http://en.wikipedia.org/wiki/Scots_Pine");
+                // Limit to size of a url to 65519 characters, so chop the description down to a large but not too large size.
+                description = description.Substring(0, 6551);
+            }
+
+            string title = "Blacksway Cat";
+            string photoId = "5279984467";
+
+            Flickr f = TestData.GetAuthInstance();
+            f.PhotosSetMeta(photoId, title, description);
         }
 
         [TestMethod]
