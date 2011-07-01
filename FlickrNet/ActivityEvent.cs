@@ -26,6 +26,10 @@ namespace FlickrNet
         /// </summary>
         public string UserName { get; set; }
 
+        public string IconServer { get; set; }
+
+        public string IconFarm { get; set; }
+
         /// <summary>
         /// The date the note or comment was added.
         /// </summary>
@@ -100,6 +104,12 @@ namespace FlickrNet
                         break;
                     case "galleryid":
                         GalleryId = reader.Value;
+                        break;
+                    case "iconserver":
+                        IconServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        IconFarm = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

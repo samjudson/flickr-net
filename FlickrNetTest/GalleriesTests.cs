@@ -133,6 +133,8 @@ namespace FlickrNetTest
 
             var gallery = f.GalleriesGetInfo(galleryId);
 
+            Console.WriteLine("GalleryUrl = " + gallery.GalleryUrl);
+
             var photos = f.GalleriesGetPhotos(galleryId);
 
             List<string> photoIds = new List<string>();

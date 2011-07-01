@@ -484,6 +484,14 @@ namespace FlickrNet
                 throw new ParsingException("Unknown element: " + reader.Name);
                 
         }
+
+        public static string BuddyIcon(string server, string farm, string userId)
+        {
+            if (String.IsNullOrEmpty(server) || server == "0")
+                return "http://www.flickr.com/images/buddyicon.jpg";
+            else
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
+        }
     }
 
 }

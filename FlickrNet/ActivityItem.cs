@@ -120,6 +120,27 @@ namespace FlickrNet
         public string OwnerName { get; set; }
 
         /// <summary>
+        /// The web server number for the activity item owners buddy icon.
+        /// </summary>
+        public string OwnerServer { get; set; }
+
+        /// <summary>
+        /// The server farm number for the activity item owners buddy icon.
+        /// </summary>
+        public string OwnerFarm { get; set; }
+
+        /// <summary>
+        /// The activity item owners buddy icon.
+        /// </summary>
+        public string OwnerBuddyIcon
+        {
+            get
+            {
+                return UtilityMethods.BuddyIcon(OwnerServer, OwnerFarm, OwnerId);
+            }
+        }
+
+        /// <summary>
         /// If the type is a photoset then this contains the number of photos in the set. Otherwise returns -1.
         /// </summary>
         public int? Photos { get; set; }
@@ -157,6 +178,8 @@ namespace FlickrNet
         /// If the type is a photo then this contains the number of favourites in the set. Otherwise returns -1.
         /// </summary>
         public int? Favorites { get; set; }
+
+        public MediaType Media { get; set; }
 
         /// <summary>
         /// The events that comprise this activity item.
@@ -249,6 +272,17 @@ namespace FlickrNet
                                 break;
                         }
                         break;
+                    case "media":
+                        switch (reader.Value)
+                        {
+                            case "photo":
+                                Media = MediaType.Photos;
+                                break;
+                            case "video":
+                                Media = MediaType.Videos;
+                                break;
+                        }
+                        break;
                     case "owner":
                         OwnerId = reader.Value;
                         break;
@@ -266,6 +300,12 @@ namespace FlickrNet
                         break;
                     case "farm":
                         Farm = reader.Value;
+                        break;
+                    case "iconserver":
+                        OwnerServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        OwnerFarm = reader.Value;
                         break;
                     case "commentsnew":
                         NewComments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);

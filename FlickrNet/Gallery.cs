@@ -24,6 +24,18 @@ namespace FlickrNet
         /// </summary>
         public string OwnerId { get; set; }
 
+        public string OwnerServer { get; set; }
+
+        public string OwnerFarm { get; set; }
+
+        public string OwnerBuddyIcon
+        {
+            get
+            {
+                return UtilityMethods.BuddyIcon(OwnerServer, OwnerFarm, OwnerId);
+            }
+        }
+
         /// <summary>
         /// The username (screen name) of the gallery owner.
         /// </summary>
@@ -164,14 +176,18 @@ namespace FlickrNet
                     case "primary_photo_id":
                         PrimaryPhotoId = reader.Value;
                         break;
+                    case "iconserver":
+                        OwnerServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        OwnerFarm = reader.Value;
+                        break;
                     case "primary_photo_server":
                     case "server":
-                    case "iconserver":
                         PrimaryPhotoServer = reader.Value;
                         break;
                     case "primary_photo_farm":
                     case "farm":
-                    case "iconfarm":
                         PrimaryPhotoFarm = reader.Value;
                         break;
                     case "primary_photo_secret":
