@@ -59,13 +59,33 @@ namespace FlickrNet
         /// <returns>The url to redirect the user to.</returns>
         public string AuthCalcWebUrl(AuthLevel authLevel)
         {
+            return AuthCalcWebUrl(authLevel, null);
+        }
+
+        /// <summary>
+        /// Calculates the URL to redirect the user to Flickr web site for
+        /// authentication. Used by Web applications. 
+        /// See <see cref="AuthGetFrob"/> for example code.
+        /// </summary>
+        /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
+        /// <param name="extra">An extra string value which Flickr will return to the callback URL along with the frob.</param>
+        /// <returns>The url to redirect the user to.</returns>
+        public string AuthCalcWebUrl(AuthLevel authLevel, string extra)
+        {
             CheckApiKey();
 
             CheckSigned();
 
             string hash = sharedSecret + "api_key" + apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
-            hash = UtilityMethods.MD5Hash(hash);
             string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
+
+            if (!String.IsNullOrEmpty(extra))
+            {
+                hash += "extra" + extra;
+                url += "&extra=" + Uri.EscapeDataString(extra);
+            }
+
+            hash = UtilityMethods.MD5Hash(hash);
             url += "&api_sig=" + hash;
 
             return url;
