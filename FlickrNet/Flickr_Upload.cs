@@ -207,7 +207,7 @@ namespace FlickrNet
 
                 if ((OnUploadProgress != null) && ((j++) % 5 == 0 || uploadSoFar == dataBuffer.Length))
                 {
-                    OnUploadProgress(this, new UploadProgressEventArgs(i + toUpload, uploadSoFar == dataBuffer.Length));
+                    OnUploadProgress(this, new UploadProgressEventArgs(i + toUpload, dataBuffer.Length));
                 }
             }
             resStream.Close();

@@ -433,21 +433,8 @@ namespace FlickrNet
         {
             if (includeSignature)
             {
-#if !SILVERLIGHT
-                SortedList<string, string> sorted = new SortedList<string, string>();
-                foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
-#else
-                var sorted = parameters.OrderBy(p => p.Key);
-#endif
-
-                StringBuilder sb = new StringBuilder(ApiSecret);
-                foreach (KeyValuePair<string, string> pair in sorted)
-                {
-                    sb.Append(pair.Key); 
-                    sb.Append(pair.Value);
-                }
-
-                parameters.Add("api_sig", UtilityMethods.MD5Hash(sb.ToString()));
+                string signature = CalculateAuthSignature(parameters);
+                parameters.Add("api_sig", signature);
             }
 
             StringBuilder url = new StringBuilder();
@@ -458,6 +445,25 @@ namespace FlickrNet
             }
 
             return new Uri(BaseUri, new Uri(url.ToString(), UriKind.Relative));
+        }
+
+        private string CalculateAuthSignature(Dictionary<string, string> parameters)
+        {
+#if !SILVERLIGHT
+            SortedList<string, string> sorted = new SortedList<string, string>();
+            foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
+#else
+                var sorted = parameters.OrderBy(p => p.Key);
+#endif
+
+            StringBuilder sb = new StringBuilder(ApiSecret);
+            foreach (KeyValuePair<string, string> pair in sorted)
+            {
+                sb.Append(pair.Key);
+                sb.Append(pair.Value);
+            }
+            string signature = UtilityMethods.MD5Hash(sb.ToString());
+            return signature;
         }
 
         private byte[] ConvertNonSeekableStreamToByteArray(Stream nonSeekableStream)

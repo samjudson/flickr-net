@@ -7,30 +7,37 @@ namespace FlickrNet
     /// </summary>
     public class UploadProgressEventArgs : EventArgs
     {
-        private bool uploadComplete;
-
-        private long bytes;
-
         /// <summary>
         /// Number of bytes transfered so far.
         /// </summary>
-        public long Bytes
-        {
-            get { return bytes; }
-        }
+        public long BytesSent { get; internal set; }
+
+        /// <summary>
+        /// Total bytes to be sent
+        /// </summary>
+        public long TotalBytesToSend { get; internal set; }
 
         /// <summary>
         /// True if all bytes have been uploaded.
         /// </summary>
-        public bool UploadComplete
+        public bool UploadComplete { get { return ProcessPercentage == 100; } }
+
+        /// <summary>
+        /// The percentage of the upload that has been completed.
+        /// </summary>
+        public int ProcessPercentage
         {
-            get { return uploadComplete; }
+            get { return Convert.ToInt32(BytesSent * 100 / TotalBytesToSend); }
         }
 
-        internal UploadProgressEventArgs(long bytes, bool complete)
+        internal UploadProgressEventArgs()
         {
-            this.bytes = bytes;
-            this.uploadComplete = complete;
+        }
+
+        internal UploadProgressEventArgs(long bytes, long totalBytes)
+        {
+            this.BytesSent = bytes;
+            this.TotalBytesToSend = totalBytes;
         }
     }
 }

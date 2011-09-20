@@ -48,9 +48,13 @@ namespace FlickrNet
 
             Uri url;
             if (!String.IsNullOrEmpty(sharedSecret))
+            {
                 url = CalculateUri(parameters, true);
+            }
             else
+            {
                 url = CalculateUri(parameters, false);
+            }
 
             lastRequest = url.AbsoluteUri;
 
