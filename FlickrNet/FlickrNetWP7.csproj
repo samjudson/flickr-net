@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -85,6 +85,8 @@
     <Compile Include="FlickrConfigurationManager.cs" />
     <Compile Include="FlickrConfigurationSettings.cs" />
     <Compile Include="FlickrException.cs" />
+    <Compile Include="FlickrResponder.cs" />
+    <Compile Include="FlickrResponderAsync.cs" />
     <Compile Include="FlickrResult.cs" />
     <Compile Include="FlickrWebException.cs" />
     <Compile Include="Flickr_ActivityAsync.cs" />
@@ -101,6 +103,8 @@
     <Compile Include="Flickr_InterestingnessAsync.cs" />
     <Compile Include="Flickr_MachineTagsAsync.cs" />
     <Compile Include="Flickr_NotesAsync.cs" />
+    <Compile Include="Flickr_OAuth.cs" />
+    <Compile Include="Flickr_OAuthAsync.cs" />
     <Compile Include="Flickr_PandaAsync.cs" />
     <Compile Include="Flickr_PeopleAsync.cs" />
     <Compile Include="Flickr_PhotosAsync.cs" />
@@ -150,6 +154,9 @@
     <Compile Include="Namespace.cs" />
     <Compile Include="NamespaceCollection.cs" />
     <Compile Include="NoResponse.cs" />
+    <Compile Include="OAuthAccessToken.cs" />
+    <Compile Include="OAuthException.cs" />
+    <Compile Include="OAuthRequestToken.cs" />
     <Compile Include="PagedPhotoCollection.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="PairCollection.cs" />

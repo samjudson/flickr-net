@@ -73,10 +73,23 @@ namespace FlickrNet
         /// <returns>An array of <see cref="PublicGroupInfo"/> instances.</returns>
         public PublicGroupInfoCollection PeopleGetPublicGroups(string userId)
         {
+            return PeopleGetPublicGroups(userId, null);
+        }
+        
+        /// <summary>
+        /// Get a list of public groups for a user.
+        /// </summary>
+        /// <param name="userId">The user id to get groups for.</param>
+        /// <param name="includeInvitationOnly">Wheither to include public but invitation only groups in the results.</param>
+        /// <returns>An array of <see cref="PublicGroupInfo"/> instances.</returns>
+        public PublicGroupInfoCollection PeopleGetPublicGroups(string userId, bool? includeInvitationOnly)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicGroups");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
+            if (includeInvitationOnly.HasValue) parameters.Add("invitation_only", includeInvitationOnly.Value ? "1" : "0");
+
 
             return GetResponseCache<PublicGroupInfoCollection>(parameters);
         }

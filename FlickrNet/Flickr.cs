@@ -29,7 +29,6 @@ namespace FlickrNet
     public partial class Flickr
     {
 
-#if !SILVERLIGHT
         /// <summary>
         /// 
         /// </summary>
@@ -39,7 +38,6 @@ namespace FlickrNet
         /// uploaded is recorded in the <see cref="UploadProgressEventArgs"/> class.
         /// </summary>
         public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
-#endif
 
 #if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
         private static bool isServiceSet;
@@ -96,7 +94,12 @@ namespace FlickrNet
         private string apiToken;
         private string sharedSecret;
         private int timeout = 100000;
-        private const string UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
+
+        /// <summary>
+        /// User Agent string sent web calls to Flickr.
+        /// </summary>
+        public const string UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
+
         private string lastRequest;
         private string lastResponse;
 
@@ -150,6 +153,17 @@ namespace FlickrNet
                 apiToken = value == null || value.Length == 0 ? null : value;
             }
         }
+
+        /// <summary>
+        /// OAuth Access Token. Needed for authenticated access using OAuth to Flickr.
+        /// </summary>
+        public string OAuthAccessToken { get; set; }
+
+        /// <summary>
+        /// OAuth Access Token Secret. Needed for authenticated access using OAuth to Flickr.
+        /// </summary>
+        public string OAuthAccessTokenSecret { get; set; }
+
 
         /// <summary>
         /// Gets or sets whether the cache should be disabled. Use only in extreme cases where you are sure you
@@ -400,11 +414,13 @@ namespace FlickrNet
         {
             CheckApiKey();
 
-            if (ApiSecret == null || ApiSecret.Length == 0)
-                throw new SignatureRequiredException();
-            if (AuthToken == null || AuthToken.Length == 0)
-                throw new AuthenticationRequiredException();
+            if (!String.IsNullOrEmpty(OAuthAccessToken) && !String.IsNullOrEmpty(OAuthAccessTokenSecret))
+                return;
 
+            if (String.IsNullOrEmpty(ApiSecret))
+                throw new SignatureRequiredException();
+            if (String.IsNullOrEmpty(AuthToken))
+                throw new AuthenticationRequiredException();
         }
 
         /// <summary>
@@ -438,7 +454,7 @@ namespace FlickrNet
             url.Append("?");
             foreach (KeyValuePair<string, string> pair in parameters)
             {
-                url.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value));
+                url.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value ?? ""));
             }
 
             return new Uri(BaseUri, new Uri(url.ToString(), UriKind.Relative));
@@ -459,6 +475,8 @@ namespace FlickrNet
 
         private byte[] CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
         {
+            bool oAuth = parameters.ContainsKey("oauth_consumer_key");
+
             string[] keys = new string[parameters.Keys.Count];
             parameters.Keys.CopyTo(keys, 0);
             Array.Sort(keys);
@@ -468,6 +486,8 @@ namespace FlickrNet
 
             foreach (string key in keys)
             {
+                if (key.StartsWith("oauth")) continue;
+
                 hashStringBuilder.Append(key);
                 hashStringBuilder.Append(parameters[key]);
                 contentStringBuilder.Append("--" + boundary + "\r\n");
@@ -476,10 +496,13 @@ namespace FlickrNet
                 contentStringBuilder.Append(parameters[key] + "\r\n");
             }
 
-            contentStringBuilder.Append("--" + boundary + "\r\n");
-            contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
-            contentStringBuilder.Append("\r\n");
-            contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
+            if (!oAuth)
+            {
+                contentStringBuilder.Append("--" + boundary + "\r\n");
+                contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
+                contentStringBuilder.Append("\r\n");
+                contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
+            }
 
             // Photo
             contentStringBuilder.Append("--" + boundary + "\r\n");
@@ -503,7 +526,6 @@ namespace FlickrNet
 
             return dataBuffer;
         }
-
 
     }
 }

@@ -30,6 +30,11 @@ namespace FlickrNet
         public bool EighteenPlus { get; set; }
 
         /// <summary>
+        /// Whether the group is invitation only.
+        /// </summary>
+        public bool InvitationOnly { get; set; }
+
+        /// <summary>
         /// The URL for the group web page.
         /// </summary>
         public string GroupUrl
@@ -54,6 +59,9 @@ namespace FlickrNet
                         break;
                     case "eighteenplus":
                         EighteenPlus = reader.Value == "1";
+                        break;
+                    case "invitation_only":
+                        InvitationOnly = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

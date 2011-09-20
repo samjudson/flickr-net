@@ -24,12 +24,25 @@ namespace FlickrNet
 
         private T GetResponse<T>(Dictionary<string, string> parameters, TimeSpan cacheTimeout) where T : IFlickrParsable, new()
         {
+            // Flow for GetResponse.
+            // 1. Check API Key
+            // 2. Calculate Cache URL.
+            // 3. Check Cache for URL.
+            // 4. Get Response if not in cache.
+            // 5. Write Cache.
+            // 6. Parse Response.
+
             CheckApiKey();
 
             parameters["api_key"] = ApiKey;
 
-            if (!String.IsNullOrEmpty(AuthToken))
+            // If OAuth Token exists or no authentication required then use new OAuth
+            if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
             {
+                OAuthGetBasicParameters(parameters);
+                if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
+            }
+            else{
                 parameters["auth_token"] = AuthToken;
             }
 
@@ -45,7 +58,7 @@ namespace FlickrNet
 
             if (CacheDisabled)
             {
-                responseXml = DoGetResponse(url);
+                responseXml = FlickrResponder.GetDataResponse(this, BaseUri.AbsoluteUri, parameters);
             }
             else
             {
@@ -60,7 +73,7 @@ namespace FlickrNet
                 else
                 {
                     Debug.WriteLine("Cache miss.");
-                    responseXml = DoGetResponse(url);
+                    responseXml = FlickrResponder.GetDataResponse(this, BaseUri.AbsoluteUri, parameters);
 
                     ResponseCacheItem resCache = new ResponseCacheItem(new Uri(urlComplete), responseXml, DateTime.UtcNow);
 
@@ -95,83 +108,83 @@ namespace FlickrNet
 
         }
 
-        /// <summary>
-        /// A private method which performs the actual HTTP web request if
-        /// the details are not found within the cache.
-        /// </summary>
-        /// <param name="url">The URL to download.</param>
-        /// <returns>A string containing the response XML.</returns>
-        /// <remarks>If the final length of the URL would be greater than 2000 characters 
-        /// then they are sent as part of the body instead.</remarks>
-        private string DoGetResponse(Uri url)
-        {
-            HttpWebRequest req = null;
-            HttpWebResponse res = null;
+        ///// <summary>
+        ///// A private method which performs the actual HTTP web request if
+        ///// the details are not found within the cache.
+        ///// </summary>
+        ///// <param name="url">The URL to download.</param>
+        ///// <returns>A string containing the response XML.</returns>
+        ///// <remarks>If the final length of the URL would be greater than 2000 characters 
+        ///// then they are sent as part of the body instead.</remarks>
+        //private string DoGetResponse(Uri url)
+        //{
+        //    HttpWebRequest req = null;
+        //    HttpWebResponse res = null;
 
-            string postContents = String.Empty;
+        //    string postContents = String.Empty;
 
-            if (url.AbsoluteUri.Length > 2000)
-            {
-                postContents = url.Query.Substring(1);
-                string simpleUrl = url.Scheme + "://" + url.Host + url.AbsolutePath;
-                url = new Uri(simpleUrl);
-            }
+        //    if (url.AbsoluteUri.Length > 2000)
+        //    {
+        //        postContents = url.Query.Substring(1);
+        //        string simpleUrl = url.Scheme + "://" + url.Host + url.AbsolutePath;
+        //        url = new Uri(simpleUrl);
+        //    }
 
-            byte[] postArray = Encoding.UTF8.GetBytes(postContents);
+        //    byte[] postArray = Encoding.UTF8.GetBytes(postContents);
 
-            // Initialise the web request
-            req = (HttpWebRequest)HttpWebRequest.Create(url);
-            req.Method = CurrentService == SupportedService.Zooomr ? "GET" : "POST";
+        //    // Initialise the web request
+        //    req = (HttpWebRequest)HttpWebRequest.Create(url);
+        //    req.Method = CurrentService == SupportedService.Zooomr ? "GET" : "POST";
 
-            if (req.Method == "POST") req.ContentLength = postArray.Length;
+        //    if (req.Method == "POST") req.ContentLength = postArray.Length;
 
-            req.UserAgent = UserAgent;
-            if (Proxy != null) req.Proxy = Proxy;
-            req.Timeout = HttpTimeout;
-            req.KeepAlive = false;
+        //    req.UserAgent = UserAgent;
+        //    if (Proxy != null) req.Proxy = Proxy;
+        //    req.Timeout = HttpTimeout;
+        //    req.KeepAlive = false;
 
-            if (postContents.Length > 0)
-            {
-                req.ContentType = "application/x-www-form-urlencoded";
-                using (Stream dataStream = req.GetRequestStream())
-                {
-                    dataStream.Write(postArray, 0, postArray.Length);
-                }
-            }
-            else
-            {
-                // This is needed in the Compact Framework
-                // See for more details: http://msdn2.microsoft.com/en-us/library/1afx2b0f.aspx
-                req.GetRequestStream().Close();
-            }
+        //    if (postContents.Length > 0)
+        //    {
+        //        req.ContentType = "application/x-www-form-urlencoded";
+        //        using (Stream dataStream = req.GetRequestStream())
+        //        {
+        //            dataStream.Write(postArray, 0, postArray.Length);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        // This is needed in the Compact Framework
+        //        // See for more details: http://msdn2.microsoft.com/en-us/library/1afx2b0f.aspx
+        //        req.GetRequestStream().Close();
+        //    }
 
-            try
-            {
-                // Get response from the internet
-                res = (HttpWebResponse)req.GetResponse();
-            }
-            catch (WebException ex)
-            {
-                if (ex.Status == WebExceptionStatus.ProtocolError)
-                {
-                    HttpWebResponse res2 = (HttpWebResponse)ex.Response;
-                    if (res2 != null)
-                    {
-                        throw new FlickrWebException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
-                    }
-                }
-                throw new FlickrWebException(ex.Message, ex);
-            }
+        //    try
+        //    {
+        //        // Get response from the internet
+        //        res = (HttpWebResponse)req.GetResponse();
+        //    }
+        //    catch (WebException ex)
+        //    {
+        //        if (ex.Status == WebExceptionStatus.ProtocolError)
+        //        {
+        //            HttpWebResponse res2 = (HttpWebResponse)ex.Response;
+        //            if (res2 != null)
+        //            {
+        //                throw new FlickrWebException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "HTTP Error {0}, {1}", (int)res2.StatusCode, res2.StatusDescription), ex);
+        //            }
+        //        }
+        //        throw new FlickrWebException(ex.Message, ex);
+        //    }
 
-            string responseString = string.Empty;
+        //    string responseString = string.Empty;
 
-            using (StreamReader sr = new StreamReader(res.GetResponseStream()))
-            {
-                responseString = sr.ReadToEnd();
-            }
+        //    using (StreamReader sr = new StreamReader(res.GetResponseStream()))
+        //    {
+        //        responseString = sr.ReadToEnd();
+        //    }
 
-            return responseString;
-        }
+        //    return responseString;
+        //}
 
 
 

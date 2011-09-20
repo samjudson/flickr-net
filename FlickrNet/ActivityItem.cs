@@ -179,6 +179,9 @@ namespace FlickrNet
         /// </summary>
         public int? Favorites { get; set; }
 
+        /// <summary>
+        /// The media type for this activity item, either photo or video.
+        /// </summary>
         public MediaType Media { get; set; }
 
         /// <summary>

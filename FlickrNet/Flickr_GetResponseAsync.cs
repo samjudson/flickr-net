@@ -24,7 +24,13 @@ namespace FlickrNet
 
             parameters["api_key"] = ApiKey;
 
-            if (!String.IsNullOrEmpty(AuthToken))
+            if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
+            {
+                OAuthGetBasicParameters(parameters);
+                parameters.Remove("api_key");
+                if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
+            }
+            else
             {
                 parameters["auth_token"] = AuthToken;
             }
@@ -37,7 +43,53 @@ namespace FlickrNet
 
             lastRequest = url.AbsoluteUri;
 
-            DoGetResponseAsync<T>(url, callback);
+            try
+            {
+                FlickrResponder.GetDataResponseAsync(this, BaseUri.AbsoluteUri, parameters, (r)
+                    =>
+                    {
+                        FlickrResult<T> result = new FlickrResult<T>();
+                        if (r.HasError)
+                        {
+                            result.Error = r.Error;
+                        }
+                        else
+                        {
+                            lastResponse = r.Result;
+
+                            XmlReaderSettings settings = new XmlReaderSettings();
+                            settings.IgnoreWhitespace = true;
+                            XmlReader reader = XmlReader.Create(new StringReader(r.Result), settings);
+
+                            if (!reader.ReadToDescendant("rsp"))
+                            {
+                                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
+                            }
+                            while (reader.MoveToNextAttribute())
+                            {
+                                if (reader.LocalName == "stat" && reader.Value == "fail")
+                                    throw ExceptionHandler.CreateResponseException(reader);
+                                continue;
+                            }
+
+                            reader.MoveToElement();
+                            reader.Read();
+
+                            T t = new T();
+                            ((IFlickrParsable)t).Load(reader);
+                            result.Result = t;
+                            result.HasError = false;
+                        }
+
+                        if (callback != null) callback(result);
+                    });
+            }
+            catch (Exception ex)
+            {
+                FlickrResult<T> result = new FlickrResult<T>();
+                result.Error = ex;
+                if (null != callback) callback(result);
+            }
 
         }
 

@@ -95,6 +95,11 @@ namespace FlickrNet
         public int CommentCount { get; set; }
 
         /// <summary>
+        /// If the call was authenticated then can the current user comment on this photoset?
+        /// </summary>
+        public bool? CanComment { get; set; }
+
+        /// <summary>
         /// The URL for the thumbnail of a photo.
         /// </summary>
         public string PhotosetThumbnailUrl
@@ -173,6 +178,9 @@ namespace FlickrNet
                         break;
                     case "comment_count":
                         CommentCount = reader.ReadContentAsInt();
+                        break;
+                    case "can_comment":
+                        CanComment = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

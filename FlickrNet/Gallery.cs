@@ -24,10 +24,19 @@ namespace FlickrNet
         /// </summary>
         public string OwnerId { get; set; }
 
+        /// <summary>
+        /// Server for the gallery ownsers buddy icon. See <see cref="OwnerBuddyIcon"/> for full url.
+        /// </summary>
         public string OwnerServer { get; set; }
 
+        /// <summary>
+        /// Farm for the gallery ownsers buddy icon. See <see cref="OwnerBuddyIcon"/> for full url.
+        /// </summary>
         public string OwnerFarm { get; set; }
 
+        /// <summary>
+        /// Gallery owner's buddy icon url.
+        /// </summary>
         public string OwnerBuddyIcon
         {
             get

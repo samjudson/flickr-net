@@ -65,7 +65,19 @@ namespace FlickrNet
             }
 
             parameters.Add("api_key", apiKey);
-            parameters.Add("auth_token", apiToken);
+
+            if (!String.IsNullOrEmpty(OAuthAccessToken))
+            {
+                parameters.Remove("api_key");
+                OAuthGetBasicParameters(parameters);
+                parameters.Add("oauth_token", OAuthAccessToken);
+                string sig = OAuthCalculateSignature("POST", uploadUri.AbsoluteUri, parameters, OAuthAccessTokenSecret);
+                parameters.Add("oauth_signature", sig);
+            }
+            else
+            { 
+                parameters.Add("auth_token", apiToken);
+            }
 
             UploadDataAsync(stream, fileName, uploadUri, parameters, callback);
         }
@@ -94,17 +106,35 @@ namespace FlickrNet
         {
             string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
+            string authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
+
             byte[] dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
 
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
             req.Method = "POST";
             req.ContentType = "multipart/form-data; boundary=" + boundary;
+            if (!String.IsNullOrEmpty(authHeader))
+            {
+                req.Headers["Authorization"] = authHeader;
+            }
 
             req.BeginGetRequestStream(
                 r =>
                 {
                     Stream s = req.EndGetRequestStream(r);
-                    s.Write(dataBuffer, 0, dataBuffer.Length);
+                    int bufferSize = 1024 * 32;
+                    int soFar = 0;
+                    while (soFar < dataBuffer.Length)
+                    {
+                        s.Write(dataBuffer, soFar, bufferSize);
+                        soFar += bufferSize;
+
+                        if (OnUploadProgress != null)
+                        {
+                            UploadProgressEventArgs args = new UploadProgressEventArgs(soFar, soFar == dataBuffer.Length);
+                            OnUploadProgress(this, args);
+                        }
+                    }
                     s.Close();
 
                     req.BeginGetResponse(
@@ -144,7 +174,18 @@ namespace FlickrNet
                             }
                             catch (Exception ex)
                             {
-                                result.Error = ex;
+                                if (ex is WebException)
+                                {
+                                    OAuthException oauthEx = new OAuthException(ex);
+                                    if (String.IsNullOrEmpty(oauthEx.Message))
+                                        result.Error = ex;
+                                    else
+                                        result.Error = oauthEx;
+                                }
+                                else
+                                {
+                                    result.Error = ex;
+                                }
                             }
 
                             callback(result);

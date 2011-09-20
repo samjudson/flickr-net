@@ -26,8 +26,14 @@ namespace FlickrNet
         /// </summary>
         public string UserName { get; set; }
 
+        /// <summary>
+        /// Server for the buddy icon for the event user.
+        /// </summary>
         public string IconServer { get; set; }
 
+        /// <summary>
+        /// Farm for the buddy icon for the event user.
+        /// </summary>
         public string IconFarm { get; set; }
 
         /// <summary>

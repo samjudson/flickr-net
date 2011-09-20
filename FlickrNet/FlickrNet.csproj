@@ -131,6 +131,9 @@
     <Compile Include="CsvFileCollection.cs" />
     <Compile Include="EchoResponseDictionary.cs" />
     <Compile Include="ExifTag.cs" />
+    <Compile Include="FlickrResponder.cs" />
+    <Compile Include="FlickrResponderAsync.cs" />
+    <Compile Include="FlickrResponderSync.cs" />
     <Compile Include="FlickrResult.cs" />
     <Compile Include="Flickr_ActivityAsync.cs" />
     <Compile Include="Flickr_AuthAsync.cs" />
@@ -149,6 +152,9 @@
     <Compile Include="Flickr_MachineTags.cs" />
     <Compile Include="Flickr_MachineTagsAsync.cs" />
     <Compile Include="Flickr_NotesAsync.cs" />
+    <Compile Include="Flickr_OAuth.cs" />
+    <Compile Include="Flickr_OAuthAsync.cs" />
+    <Compile Include="Flickr_OAuthSync.cs" />
     <Compile Include="Flickr_PandaAsync.cs" />
     <Compile Include="Flickr_PeopleAsync.cs" />
     <Compile Include="Flickr_PhotosAsync.cs" />
@@ -198,6 +204,9 @@
     <Compile Include="MemberGroupInfoCollection.cs" />
     <Compile Include="Namespace.cs" />
     <Compile Include="NamespaceCollection.cs" />
+    <Compile Include="OAuthAccessToken.cs" />
+    <Compile Include="OAuthException.cs" />
+    <Compile Include="OAuthRequestToken.cs" />
     <Compile Include="PagedPhotoCollection.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="PairCollection.cs" />

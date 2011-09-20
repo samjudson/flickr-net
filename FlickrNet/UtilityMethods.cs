@@ -485,12 +485,48 @@ namespace FlickrNet
                 
         }
 
+        /// <summary>
+        /// Returns the buddy icon for a given set of server, farm and userid. If no server is present then returns the standard buddy icon.
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="farm"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public static string BuddyIcon(string server, string farm, string userId)
         {
             if (String.IsNullOrEmpty(server) || server == "0")
                 return "http://www.flickr.com/images/buddyicon.jpg";
             else
                 return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
+        }
+
+        /// <summary>
+        /// Converts a URL parameter encoded string into a dictionary.
+        /// </summary>
+        /// <remarks>
+        /// e.g. ab=cd&amp;ef=gh will return a dictionary of { "ab" => "cd", "ef" => "gh" }.</remarks>
+        /// <param name="response"></param>
+        /// <returns></returns>
+        public static Dictionary<string, string> StringToDictionary(string response)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            string[] parts = response.Split('&');
+
+            foreach (string part in parts)
+            {
+#if WindowsCE || SILVERLIGHT
+                string[] bits = part.Split('=');
+#else
+                string[] bits = part.Split(new char[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
+#endif
+                if (bits.Length == 1)
+                    dic.Add(bits[0], "");
+                else
+                    dic.Add(bits[0], Uri.UnescapeDataString(bits[1]));
+            }
+
+            return dic;
         }
     }
 
