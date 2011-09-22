@@ -156,9 +156,12 @@ namespace FlickrNet
                         break;
                     case "photos":
                     case "total":
+                        break;
+                    case "count_photos":
                         NumberOfPhotos = reader.ReadContentAsInt();
                         break;
                     case "videos":
+                    case "count_videos":
                         NumberOfVideos = reader.ReadContentAsInt();
                         break;
                     case "needs_interstitial":
@@ -174,9 +177,11 @@ namespace FlickrNet
                         DateUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "view_count":
+                    case "count_views":
                         ViewCount = reader.ReadContentAsInt();
                         break;
                     case "comment_count":
+                    case "count_comments":
                         CommentCount = reader.ReadContentAsInt();
                         break;
                     case "can_comment":
