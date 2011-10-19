@@ -46,7 +46,7 @@ namespace FlickrNet
             {
                 if (!pair.Key.StartsWith("oauth"))
                 {
-                    data += pair.Key + "=" + Uri.EscapeDataString(pair.Value) + "&";
+                    data += pair.Key + "=" + UtilityMethods.EscapeOAuthString(pair.Value) + "&";
                 }
             }
             return data;

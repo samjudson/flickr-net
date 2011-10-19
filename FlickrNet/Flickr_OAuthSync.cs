@@ -20,7 +20,7 @@ namespace FlickrNet
 
             parameters.Add("oauth_callback", callback);
 
-            string sig = OAuthCalculateSignature("GET", url, parameters, null);
+            string sig = OAuthCalculateSignature("POST", url, parameters, null);
 
             parameters.Add("oauth_signature", sig);
 
@@ -56,7 +56,7 @@ namespace FlickrNet
             parameters.Add("oauth_verifier", verifier);
             parameters.Add("oauth_token", requestToken);
 
-            string sig = OAuthCalculateSignature("GET", url, parameters, requestTokenSecret);
+            string sig = OAuthCalculateSignature("POST", url, parameters, requestTokenSecret);
 
             parameters.Add("oauth_signature", sig);
 

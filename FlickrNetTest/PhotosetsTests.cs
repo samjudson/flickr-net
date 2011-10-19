@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+using System.IO;
+using System.Diagnostics;
 
 namespace FlickrNetTest
 {
@@ -85,6 +87,36 @@ namespace FlickrNetTest
                 string expectedUrl = "http://www.flickr.com/photos/" + TestData.TestUserId + "/sets/" + set.PhotosetId + "/";
                 Assert.AreEqual<string>(expectedUrl, set.Url);
             }
+        }
+
+        [TestMethod]
+        public void PhotosetsCreateAddPhotosTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            byte[] imageBytes = TestData.TestImageBytes;
+            Stream s = new MemoryStream(imageBytes);
+
+            string title = "Test Title";
+            string desc = "Test Description\nSecond Line";
+            string tags = "testtag1,testtag2";
+
+            s.Position = 0;
+            string photoId1 = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+            Debug.WriteLine("Photo 1 created: " + photoId1);
+
+            s.Position = 0;
+            string photoId2 = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+            Debug.WriteLine("Photo 2 created: " + photoId2);
+
+            Photoset photoset = f.PhotosetsCreate("Test photoset", photoId1);
+            Debug.WriteLine("Photoset created: " + photoset.PhotosetId);
+
+            f.PhotosetsAddPhoto(photoset.PhotosetId, photoId2);
+
+            f.PhotosetsDelete(photoset.PhotosetId);
+            f.PhotosDelete(photoId1);
+            f.PhotosDelete(photoId2);
         }
     }
 }

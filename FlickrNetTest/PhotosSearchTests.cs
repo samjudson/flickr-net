@@ -608,11 +608,10 @@ namespace FlickrNetTest
         public void PhotosSearchContactsTest()
         {
             Flickr f = TestData.GetAuthInstance();
-            var auth = f.AuthCheckToken(f.AuthToken);
 
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Contacts = ContactSearch.AllContacts;
-            o.UserId = auth.User.UserId;
+            o.UserId = TestData.TestUserId;
             o.PerPage = 10;
 
             var photos = f.PhotosSearch(o);

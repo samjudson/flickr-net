@@ -154,9 +154,9 @@ namespace FlickrNet
                     case "server":
                         Server = reader.Value;
                         break;
-                    case "photos":
                     case "total":
                         break;
+                    case "photos":
                     case "count_photos":
                         NumberOfPhotos = reader.ReadContentAsInt();
                         break;

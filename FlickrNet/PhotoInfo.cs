@@ -275,6 +275,12 @@ namespace FlickrNet
         public VideoInfo VideoInfo { get; set; }
 
         /// <summary>
+        /// Does this photo contain tagged people.
+        /// </summary>
+        /// <remarks>Call <see cref="Flickr.PhotosPeopleGetList"/> to get the people found in this photo.</remarks>
+        public bool HasPeople { get; set; }
+
+        /// <summary>
         /// The Web url for flickr web page for this photo.
         /// </summary>
         public string WebUrl
@@ -413,6 +419,10 @@ namespace FlickrNet
                     case "video":
                         VideoInfo = new VideoInfo();
                         ((IFlickrParsable)VideoInfo).Load(reader);
+                        break;
+                    case "people":
+                        HasPeople = reader.GetAttribute("haspeople") == "1";
+                        reader.Skip();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

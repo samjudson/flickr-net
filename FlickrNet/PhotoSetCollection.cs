@@ -19,6 +19,26 @@ namespace FlickrNet
         /// </remarks>
         public bool CanCreate { get; set; }
 
+        /// <summary>
+        /// The current page of the results.
+        /// </summary>
+        public int Page { get; set; }
+
+        /// <summary>
+        /// The total number of pages of results available.
+        /// </summary>
+        public int Pages { get; set; }
+
+        /// <summary>
+        /// The maximum number of photosets returned per page.
+        /// </summary>
+        public int PerPage { get; set; }
+
+        /// <summary>
+        /// The total number of photosets available.
+        /// </summary>
+        public int Total { get; set; }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photosets")
@@ -30,6 +50,18 @@ namespace FlickrNet
                 {
                     case "cancreate":
                         CanCreate = reader.Value == "1";
+                        break;
+                    case "page":
+                        Page = reader.ReadContentAsInt();
+                        break;
+                    case "perpage":
+                        PerPage = reader.ReadContentAsInt();
+                        break;
+                    case "pages":
+                        Pages = reader.ReadContentAsInt();
+                        break;
+                    case "total":
+                        Total = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

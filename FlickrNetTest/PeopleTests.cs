@@ -161,9 +161,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            Auth a = f.AuthCheckToken(f.AuthToken);
-
-            Person p = f.PeopleGetInfo(a.User.UserId);
+            Person p = f.PeopleGetInfo(TestData.TestUserId);
 
             Assert.IsNotNull(p.MailboxSha1Hash, "MailboxSha1Hash should not be null.");
             Assert.IsNotNull(p.PhotosSummary, "PhotosSummary should not be null.");

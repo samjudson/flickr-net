@@ -97,11 +97,11 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(returns);
 
-            Assert.AreEqual(3, returns.Count);
+            // Was 3, now 11 because of extra oauth parameter used by default.
+            Assert.AreEqual(11, returns.Count);
 
             Assert.AreEqual("flickr.test.echo", returns["method"]);
             Assert.AreEqual("testvalue", returns["test1"]);
-            Assert.AreEqual(f.ApiKey, returns["api_key"]);
 
         }
     }

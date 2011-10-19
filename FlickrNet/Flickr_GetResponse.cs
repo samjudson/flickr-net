@@ -36,14 +36,23 @@ namespace FlickrNet
 
             parameters["api_key"] = ApiKey;
 
-            // If OAuth Token exists or no authentication required then use new OAuth
-            if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
+            // If performing one of the old 'flickr.auth' methods then use old authentication details.
+            if (parameters["method"].StartsWith("flickr.auth"))
             {
-                OAuthGetBasicParameters(parameters);
-                if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
+                if (!String.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
             }
-            else{
-                parameters["auth_token"] = AuthToken;
+            else
+            {
+                // If OAuth Token exists or no authentication required then use new OAuth
+                if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
+                {
+                    OAuthGetBasicParameters(parameters);
+                    if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
+                }
+                else
+                {
+                    parameters["auth_token"] = AuthToken;
+                }
             }
 
             Uri url;

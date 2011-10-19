@@ -64,6 +64,7 @@ namespace FlickrNetTest
         #endregion
 
         [TestMethod]
+        [Ignore]
         public void UploadPictureAsyncBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();

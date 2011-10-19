@@ -30,6 +30,11 @@ namespace FlickrNet
         /// </summary>
         public string Farm { get; set; }
 
+        /// <summary>
+        /// The make and model of the camera that took the photo, if available.
+        /// </summary>
+        public string Camera { get; set; }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photo")
@@ -50,6 +55,9 @@ namespace FlickrNet
                         break;
                     case "farm":
                         Farm = reader.Value;
+                        break;
+                    case "camera":
+                        Camera = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

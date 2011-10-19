@@ -131,7 +131,7 @@ namespace FlickrNet
 
                         if (OnUploadProgress != null)
                         {
-                            UploadProgressEventArgs args = new UploadProgressEventArgs(soFar, soFar == dataBuffer.Length);
+                            UploadProgressEventArgs args = new UploadProgressEventArgs(soFar, dataBuffer.Length);
                             OnUploadProgress(this, args);
                         }
                     }

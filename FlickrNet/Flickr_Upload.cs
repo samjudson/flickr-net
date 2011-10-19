@@ -148,8 +148,19 @@ namespace FlickrNet
                 parameters.Add("hidden", hiddenFromSearch.ToString("D"));
             }
 
-            parameters.Add("api_key", apiKey);
-            parameters.Add("auth_token", apiToken);
+            if (!String.IsNullOrEmpty(OAuthAccessToken))
+            {
+                OAuthGetBasicParameters(parameters);
+                parameters.Add("oauth_token", OAuthAccessToken);
+
+                string sig = OAuthCalculateSignature("POST", uploadUri.AbsoluteUri, parameters, OAuthAccessTokenSecret);
+                parameters.Add("oauth_signature", sig);
+            }
+            else
+            {
+                parameters.Add("api_key", apiKey);
+                parameters.Add("auth_token", apiToken);
+            }
 
             string responseXml = UploadData(stream, fileName, uploadUri, parameters);
 
@@ -180,6 +191,7 @@ namespace FlickrNet
         {
             string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
+            string authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
             byte[] dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
             
             HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
@@ -189,6 +201,10 @@ namespace FlickrNet
             req.Timeout = HttpTimeout;
             req.ContentType = "multipart/form-data; boundary=" + boundary;
             //req.Expect = String.Empty;
+            if (!String.IsNullOrEmpty(authHeader))
+            {
+                req.Headers["Authorization"] = authHeader;
+            }
 
             req.ContentLength = dataBuffer.Length;
 

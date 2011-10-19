@@ -66,18 +66,19 @@ namespace FlickrNetTest
         [TestMethod]
         public void AuthGetFrobTest()
         {
-            string frob = TestData.GetSignedInstance().AuthGetFrob();
+            string frob = TestData.GetOldSignedInstance().AuthGetFrob();
 
             Assert.IsNotNull(frob, "frob should not be null.");
             Assert.AreNotEqual("", frob, "Frob should not be zero length string.");
         }
 
         [TestMethod]
+        [Ignore]
         public void AuthGetFrobAsyncTest()
         {
             var w = new AsyncSubject<FlickrResult<string>>();
 
-            TestData.GetSignedInstance().AuthGetFrobAsync(r => { w.OnNext(r); w.OnCompleted(); });
+            TestData.GetOldSignedInstance().AuthGetFrobAsync(r => { w.OnNext(r); w.OnCompleted(); });
 
             var frobResult = w.Next().First();
 
@@ -101,7 +102,7 @@ namespace FlickrNetTest
         {
             string frob = "abcdefgh";
 
-            string url = TestData.GetSignedInstance().AuthCalcUrl(frob, AuthLevel.Read);
+            string url = TestData.GetOldSignedInstance().AuthCalcUrl(frob, AuthLevel.Read);
 
             Assert.IsNotNull(url, "url should not be null.");
         }
@@ -118,7 +119,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void AuthCheckTokenBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = TestData.GetOldAuthInstance();
 
             string authToken = f.AuthToken;
 
@@ -133,7 +134,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void AuthCheckTokenCurrentTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = TestData.GetOldAuthInstance();
 
             Auth auth = f.AuthCheckToken();
 
@@ -156,7 +157,7 @@ namespace FlickrNetTest
         {
             string token = "abcdefgh";
 
-            TestData.GetSignedInstance().AuthCheckToken(token);
+            TestData.GetOldSignedInstance().AuthCheckToken(token);
         }
 
         [TestMethod]

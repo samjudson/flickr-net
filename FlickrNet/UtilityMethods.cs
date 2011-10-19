@@ -528,6 +528,34 @@ namespace FlickrNet
 
             return dic;
         }
+
+        /// <summary>
+        /// Escapes a string for use with OAuth.
+        /// </summary>
+        /// <remarks>The only valid characters are Alphanumerics and "-", "_", "." and "~". Everything else is hex encoded.</remarks>
+        /// <param name="text">The text to escape.</param>
+        /// <returns>The escaped string.</returns>
+        public static string EscapeOAuthString(string text)
+        {
+            string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+
+            StringBuilder result = new StringBuilder(text.Length * 2);
+
+            foreach (char symbol in text)
+            {
+                if (unreservedChars.IndexOf(symbol) != -1)
+                {
+                    result.Append(symbol);
+                }
+                else
+                {
+                    result.Append('%' + String.Format("{0:X2}", (int)symbol));
+                }
+            }
+
+            return result.ToString();
+        }
+
     }
 
 }

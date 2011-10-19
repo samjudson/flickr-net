@@ -15,6 +15,22 @@ namespace FlickrNet
         /// </summary>
         public int Total { get; set; }
 
+        /// <summary>
+        /// The width of the photo used for positioning the people.
+        /// </summary>
+        /// <remarks>
+        /// This will usually be the medium or the medium-640 image.
+        /// </remarks>
+        public int PhotoWidth { get; set; }
+
+        /// <summary>
+        /// The height of the photo used for positioning the people.
+        /// </summary>
+        /// <remarks>
+        /// This will usually be the medium or the medium-640 image.
+        /// </remarks>
+        public int PhotoHeight { get; set; }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "people")
@@ -25,7 +41,13 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "total":
-                        Total = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        Total = reader.ReadContentAsInt();
+                        break;
+                    case "photo_width":
+                        PhotoWidth = reader.ReadContentAsInt();
+                        break;
+                    case "photo_height":
+                        PhotoHeight = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

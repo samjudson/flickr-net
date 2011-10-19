@@ -64,9 +64,8 @@ namespace FlickrNetTest
         public void PhotosGeoPhotosForLocationBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
-            Auth auth = f.AuthCheckToken();
             PhotoSearchOptions o = new PhotoSearchOptions();
-            o.UserId = auth.User.UserId;
+            o.UserId = TestData.TestUserId;
             o.HasGeo = true;
             o.PerPage = 1;
             o.Extras = PhotoSearchExtras.Geo;

@@ -96,6 +96,28 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosGetExifIPhoneTest()
+        {
+            bool bFound = false;
+            Flickr f = TestData.GetInstance();
+
+            ExifTagCollection tags = f.PhotosGetExif("5899928191");
+
+            Assert.AreEqual("Apple iPhone 4", tags.Camera, "Camera property should be set correctly.");
+
+            foreach (ExifTag tag in tags)
+            {
+                if (tag.Tag == "Model")
+                {
+                    Assert.IsTrue(tag.Raw == "iPhone 4", "Model tag is not 'iPhone 4'");
+                    bFound = true;
+                    break;
+                }
+            }
+            Assert.IsTrue(bFound, "Model tag not found.");
+        }
+
+        [TestMethod]
         public void PhotosGetPermsBasicTest()
         {
             var p = TestData.GetAuthInstance().PhotosGetPerms("4114887196");

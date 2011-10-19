@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.Diagnostics;
 
 namespace FlickrNet
 {
@@ -86,6 +87,8 @@ namespace FlickrNet
                 {
                     string responseData = responseReader.ReadToEnd();
                     responseReader.Close();
+
+                    Debug.WriteLine("OAuth response = " + responseData);
 
                     throw new OAuthException(responseData, ex);
                 }

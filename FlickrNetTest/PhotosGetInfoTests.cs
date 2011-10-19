@@ -92,8 +92,8 @@ namespace FlickrNetTest
             Assert.AreEqual(new DateTime(2010, 01, 12, 11, 01, 20), info.DateTaken, "DateTaken is not set correctly.");
 
             //Editability
-            Assert.IsTrue(info.CanComment, "CanComment should be true when not authenticated.");
-            Assert.IsTrue(info.CanAddMeta, "CanAddMeta should be true when not authenticated.");
+            Assert.IsTrue(info.CanComment, "CanComment should be true when authenticated.");
+            Assert.IsTrue(info.CanAddMeta, "CanAddMeta should be true when authenticated.");
 
             //Permissions
             Assert.AreEqual(PermissionComment.Everybody, info.PermissionComment);
@@ -199,6 +199,18 @@ namespace FlickrNetTest
             Assert.IsNotNull(info.Location);
         }
 
+        [TestMethod]
+        public void PhotosGetInfoWithPeople()
+        {
+            Flickr f = TestData.GetInstance();
+            string photoId = "3547137580"; // http://www.flickr.com/photos/samjudson/3547137580/in/photosof-samjudson/
+
+            PhotoInfo info = f.PhotosGetInfo(photoId);
+
+            Assert.IsNotNull(info);
+            Assert.IsTrue(info.HasPeople, "HasPeople should be true.");
+
+        }
 
         [TestMethod]
         public void PhotosGetInfoCanBlogTest()

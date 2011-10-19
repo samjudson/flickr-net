@@ -87,6 +87,7 @@
     <Compile Include="GroupsPoolsTests.cs" />
     <Compile Include="InterestingnessTests.cs" />
     <Compile Include="MachinetagsTests.cs" />
+    <Compile Include="OAuthTests.cs" />
     <Compile Include="PandaTest.cs" />
     <Compile Include="PeopleTests.cs" />
     <Compile Include="PhotosCommentsTests.cs" />

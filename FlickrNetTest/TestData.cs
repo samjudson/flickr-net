@@ -35,36 +35,82 @@ namespace FlickrNetTest
 
         public static string AuthToken
         {
-            get
-            {
-                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
-                if (key != null && key.GetValue("AuthToken") != null)
-                    return key.GetValue("AuthToken").ToString();
-                else
-                    return null;
-            }
-            set
-            {
-                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
-                if (key == null)
-                    key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"SOFTWARE\FlickrNetTest");
-                key.SetValue("AuthToken", value);
-            }
+            get { return GetRegistryKey("AuthToken"); }
+            set { SetRegistryKey("AuthToken", value); }
         }
+
+        public static string RequestToken
+        {
+            get { return GetRegistryKey("RequestToken"); }
+            set { SetRegistryKey("RequestToken", value); }
+        }
+
+        public static string RequestTokenSecret
+        {
+            get { return GetRegistryKey("RequestTokenSecret"); }
+            set { SetRegistryKey("RequestTokenSecret", value); }
+        }
+
+        public static string AccessToken
+        {
+            get { return GetRegistryKey("AccessToken"); }
+            set { SetRegistryKey("AccessToken", value); }
+        }
+
+        public static string AccessTokenSecret
+        {
+            get { return GetRegistryKey("AccessTokenSecret"); }
+            set { SetRegistryKey("AccessTokenSecret", value); }
+        }
+
+        private static void SetRegistryKey(string name, string value)
+        {
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
+            if (key == null)
+                key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"SOFTWARE\FlickrNetTest");
+            key.SetValue(name, value);
+        }
+
+        private static string GetRegistryKey(string name)
+        {
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
+            if (key != null && key.GetValue(name) != null)
+                return key.GetValue(name).ToString();
+            else
+                return null;
+        }
+
+
 
         public static Flickr GetInstance()
         {
             return new Flickr(ApiKey);
         }
 
-        internal static Flickr GetSignedInstance()
+        public static Flickr GetSignedInstance()
         {
             return new Flickr(ApiKey, SharedSecret);
         }
 
-        internal static Flickr GetAuthInstance()
+        public static Flickr GetAuthInstance()
         {
-            return new Flickr(ApiKey, SharedSecret, AuthToken);
+            Flickr f = new Flickr(ApiKey, SharedSecret);
+            f.OAuthAccessToken = AccessToken;
+            f.OAuthAccessTokenSecret = AccessTokenSecret;
+            return f;
         }
+
+        public static Flickr GetOldSignedInstance()
+        {
+            Flickr f = new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269");
+            return f;
+        }
+
+        public static Flickr GetOldAuthInstance()
+        {
+            Flickr f = new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269", AuthToken);
+            return f;
+        }
+
     }
 }

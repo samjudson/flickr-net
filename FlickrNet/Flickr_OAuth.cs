@@ -4,6 +4,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Xml;
+using System.Diagnostics;
 #if SILVERLIGHT
 using System.Linq;
 #endif
@@ -38,13 +39,13 @@ namespace FlickrNet
             {
                 sb.Append(pair.Key);
                 sb.Append("=");
-                sb.Append(Uri.EscapeDataString(pair.Value));
+                sb.Append(UtilityMethods.EscapeOAuthString(pair.Value));
                 sb.Append("&");
             }
 
             sb.Remove(sb.Length - 1, 1);
 
-            baseString = method + "&" + Uri.EscapeDataString(url) + "&" + Uri.EscapeDataString(sb.ToString());
+            baseString = method + "&" + UtilityMethods.EscapeOAuthString(url) + "&" + UtilityMethods.EscapeOAuthString(sb.ToString());
 
 #if WindowsCE
             FlickrNet.Security.Cryptography.HMACSHA1 sha1 = new FlickrNet.Security.Cryptography.HMACSHA1(keyBytes);
@@ -56,6 +57,10 @@ namespace FlickrNet
 
             string hash = Convert.ToBase64String(hashBytes);
 
+            Debug.WriteLine("key  = " + key);
+            Debug.WriteLine("base = " + baseString);
+            Debug.WriteLine("sig  = " + hash);
+
             return hash;
         }
 
@@ -64,10 +69,10 @@ namespace FlickrNet
         /// </summary>
         /// <param name="requestToken">The request token to include in the authorization url.</param>
         /// <returns></returns>
-        public string OAuthCalculateAuthorizationUrl(string requestToken)
-        {
-            return OAuthCalculateAuthorizationUrl(requestToken, AuthLevel.None);
-        }
+        //public string OAuthCalculateAuthorizationUrl(string requestToken)
+        //{
+        //    return OAuthCalculateAuthorizationUrl(requestToken, AuthLevel.None);
+        //}
 
         /// <summary>
         /// Returns the authorization URL for OAuth authorization, based off the request token and permissions provided.
@@ -101,7 +106,7 @@ namespace FlickrNet
         /// <returns></returns>
         public Dictionary<string, string> OAuthGetBasicParameters()
         {
-            string oauthtimestamp = UtilityMethods.DateToUnixTimestamp(DateTime.Now);
+            string oauthtimestamp = UtilityMethods.DateToUnixTimestamp(DateTime.UtcNow);
             string oauthnonce = new Random().Next(100000000).ToString();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

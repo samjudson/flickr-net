@@ -87,6 +87,8 @@ namespace FlickrNet
         /// <returns>The <see cref="Auth"/> object detailing the user for the token.</returns>
         public Auth AuthCheckToken()
         {
+            CheckRequiresAuthentication();
+
             return AuthCheckToken(AuthToken);
         }
 
