@@ -159,6 +159,7 @@ namespace FlickrNet
         /// <summary>
         /// Gets a list of the currently authenticated users photosets.
         /// </summary>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public void PhotosetsGetListAsync(Action<FlickrResult<PhotosetCollection>> callback)
         {
@@ -170,6 +171,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="page">The page of the results to return. Defaults to page 1.</param>
         /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public void PhotosetsGetListAsync(int page, int perPage, Action<FlickrResult<PhotosetCollection>> callback)
         {
