@@ -65,16 +65,6 @@ namespace FlickrNet
         }
 
         /// <summary>
-        /// Returns the authorization URL for OAuth authorization, based off the request token provided.
-        /// </summary>
-        /// <param name="requestToken">The request token to include in the authorization url.</param>
-        /// <returns></returns>
-        //public string OAuthCalculateAuthorizationUrl(string requestToken)
-        //{
-        //    return OAuthCalculateAuthorizationUrl(requestToken, AuthLevel.None);
-        //}
-
-        /// <summary>
         /// Returns the authorization URL for OAuth authorization, based off the request token and permissions provided.
         /// </summary>
         /// <param name="requestToken">The request token to include in the authorization url.</param>

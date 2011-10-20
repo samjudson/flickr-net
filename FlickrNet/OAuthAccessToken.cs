@@ -8,7 +8,7 @@ namespace FlickrNet
     /// The access authentication token return by Flickr after a successful authentication.
     /// </summary>
     [Serializable]
-    public class OAuthAccessToken
+    public class OAuthAccessToken : IFlickrParsable
     {
         /// <summary>
         /// The access token string.
@@ -54,5 +54,23 @@ namespace FlickrNet
 
             return token;
         }
+
+        #region IFlickrParsable Members
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+            if (reader.LocalName != "auth")
+            {
+                UtilityMethods.CheckParsingException(reader);
+                return;
+            }
+
+            reader.ReadToDescendant("access_token");
+
+            Token = reader.GetAttribute("oauth_token");
+            TokenSecret = reader.GetAttribute("oauth_token_secret");
+        }
+
+        #endregion
     }
 }

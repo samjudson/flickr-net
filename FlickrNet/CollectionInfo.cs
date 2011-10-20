@@ -99,7 +99,9 @@ namespace FlickrNet
                 }
             }
 
-            while (reader.Read())
+            reader.Read();
+
+            while (reader.LocalName != "collection")
             {
                 switch (reader.Name)
                 {

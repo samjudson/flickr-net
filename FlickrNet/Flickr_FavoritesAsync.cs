@@ -164,5 +164,69 @@ namespace FlickrNet
 
             GetResponseAsync<PhotoCollection>(parameters, callback);
         }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        /// <returns></returns>
+        public void FavoritesGetContextAsync(string photoId, string userId, Action<FlickrResult<FavoriteContext>> callback)
+        {
+            FavoritesGetContextAsync(photoId, userId, 1, 1, PhotoSearchExtras.None, callback);
+        }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="extras">Any extras to return for each photo in the previous and next list.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        /// <returns></returns>
+        public void FavoritesGetContextAsync(string photoId, string userId, PhotoSearchExtras extras, Action<FlickrResult<FavoriteContext>> callback)
+        {
+            FavoritesGetContextAsync(photoId, userId, 1, 1, extras, callback);
+        }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="numPrevious">The number of previous favorites to list. Defaults to 1.</param>
+        /// <param name="numNext">The number of next favorites to list. Defaults to 1.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        /// <returns></returns>
+        public void FavoritesGetContextAsync(string photoId, string userId, int numPrevious, int numNext, Action<FlickrResult<FavoriteContext>> callback)
+        {
+            FavoritesGetContextAsync(photoId, userId, numPrevious, numNext, PhotoSearchExtras.None, callback);
+        }
+
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="numPrevious">The number of previous favorites to list. Defaults to 1.</param>
+        /// <param name="numNext">The number of next favorites to list. Defaults to 1.</param>
+        /// <param name="extras">Any extras to return for each photo in the previous and next list.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        /// <returns></returns>
+        public void FavoritesGetContextAsync(string photoId, string userId, int numPrevious, int numNext, PhotoSearchExtras extras, Action<FlickrResult<FavoriteContext>> callback)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.favorites.getContext");
+            parameters.Add("user_id", userId);
+            parameters.Add("photo_id", photoId);
+            parameters.Add("num_prev", Math.Max(1, numPrevious).ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("num_next", Math.Max(1, numNext).ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+
+            GetResponseAsync<FavoriteContext>(parameters, callback);
+        }
+
     }
 }

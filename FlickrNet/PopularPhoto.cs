@@ -24,7 +24,7 @@ namespace FlickrNet
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
-            Load(reader);
+            Load(reader, false);
 
             if (reader.LocalName != "stats")
             {

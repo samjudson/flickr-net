@@ -12,7 +12,11 @@ namespace FlickrNet
     public class OAuthException : Exception
     {
         private string mess;
-        private Exception exception;
+
+        /// <summary>
+        /// The full response of the exception.
+        /// </summary>
+        public string FullResponse { get; set; }
 
         /// <summary>
         /// The list of error parameters returned by the OAuth exception.
@@ -26,11 +30,17 @@ namespace FlickrNet
         /// <param name="innerException"></param>
         public OAuthException(string response, Exception innerException) : base("OAuth Exception", innerException)
         {
+            FullResponse = response;
+
             OAuthErrorPameters = UtilityMethods.StringToDictionary(response);
 
             mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
         }
 
+        /// <summary>
+        /// Constructor for the OAuthException class.
+        /// </summary>
+        /// <param name="innerException"></param>
         public OAuthException(Exception innerException) : base("OAuth Exception", innerException)
         {
             WebException exception = innerException as WebException;
@@ -41,8 +51,10 @@ namespace FlickrNet
 
             using(StreamReader sr = new StreamReader(res.GetResponseStream()))
             {
-
                 string response = sr.ReadToEnd();
+
+                FullResponse = response;
+
                 OAuthErrorPameters = UtilityMethods.StringToDictionary(response);
                 mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
                 sr.Close();

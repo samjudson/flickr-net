@@ -131,6 +131,8 @@
     <Compile Include="CsvFileCollection.cs" />
     <Compile Include="EchoResponseDictionary.cs" />
     <Compile Include="ExifTag.cs" />
+    <Compile Include="FavoriteContextPhoto.cs" />
+    <Compile Include="FavoriteContext.cs" />
     <Compile Include="FlickrResponder.cs" />
     <Compile Include="FlickrResponderAsync.cs" />
     <Compile Include="FlickrResponderSync.cs" />

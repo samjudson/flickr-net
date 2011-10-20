@@ -107,5 +107,35 @@ namespace FlickrNetTest
             Assert.AreEqual(20, photos.Count);
         }
 
+        [TestMethod]
+        public void FavoritesGetContext()
+        {
+            Flickr f = TestData.GetInstance();
+            string photoId = "2502963121";
+            string userId = "41888973@N00";
+
+            var context = f.FavoritesGetContext(photoId, userId);
+
+            Assert.IsNotNull(context);
+            Assert.AreNotEqual(0, context.Count, "Count should be greater than zero");
+            Assert.AreEqual(1, context.PreviousPhotos.Count, "Should be 1 previous photo.");
+            Assert.AreEqual(1, context.NextPhotos.Count, "Should be 1 next photo.");
+        }
+
+        [TestMethod]
+        public void FavoritesGetContextMorePrevious()
+        {
+            Flickr f = TestData.GetInstance();
+            string photoId = "2502963121";
+            string userId = "41888973@N00";
+
+            var context = f.FavoritesGetContext(photoId, userId, 3, 4, PhotoSearchExtras.Description);
+
+            Assert.IsNotNull(context);
+            Assert.AreNotEqual(0, context.Count, "Count should be greater than zero");
+            Assert.AreEqual(3, context.PreviousPhotos.Count, "Should be 3 previous photo.");
+            Assert.AreEqual(4, context.NextPhotos.Count, "Should be 4 next photo.");
+        }
+
     }
 }

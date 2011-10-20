@@ -80,6 +80,8 @@
     <Compile Include="ExceptionHandler.cs" />
     <Compile Include="ExifTag.cs" />
     <Compile Include="ExifTagCollection.cs" />
+    <Compile Include="FavoriteContext.cs" />
+    <Compile Include="FavoriteContextPhoto.cs" />
     <Compile Include="Flickr.cs" />
     <Compile Include="FlickrApiException.cs" />
     <Compile Include="FlickrConfigurationManager.cs" />

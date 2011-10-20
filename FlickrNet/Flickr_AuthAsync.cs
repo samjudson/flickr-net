@@ -144,5 +144,37 @@ namespace FlickrNet
                 });
         }
 
+        /// <summary>
+        /// Takes the currently (old) authentication Flickr instance and turns it OAuth authenticated instance.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method will also clear <see cref="Flickr.AuthToken"/> 
+        /// and set <see cref="Flickr.OAuthAccessToken"/> and <see cref="Flickr.OAuthAccessTokenSecret"/>.
+        /// </remarks>
+        /// <param name="callback"></param>
+        public void AuthOAuthGetAccessTokenAsync(Action<FlickrResult<OAuthAccessToken>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.auth.oauth.getAccessToken");
+
+            GetResponseAsync<OAuthAccessToken>(parameters,
+                r =>
+                {
+                    if (!r.HasError)
+                    {
+                        OAuthAccessToken = r.Result.Token;
+                        OAuthAccessTokenSecret = r.Result.TokenSecret;
+
+                        AuthToken = null;
+                    }
+
+                    callback(r);
+                });
+
+
+        }
+
     }
 }

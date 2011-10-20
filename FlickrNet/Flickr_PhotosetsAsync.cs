@@ -162,7 +162,18 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public void PhotosetsGetListAsync(Action<FlickrResult<PhotosetCollection>> callback)
         {
-            PhotosetsGetListAsync(null, callback);
+            PhotosetsGetListAsync(null, 0, 0, callback);
+        }
+
+        /// <summary>
+        /// Gets a list of the currently authenticated users photosets.
+        /// </summary>
+        /// <param name="page">The page of the results to return. Defaults to page 1.</param>
+        /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public void PhotosetsGetListAsync(int page, int perPage, Action<FlickrResult<PhotosetCollection>> callback)
+        {
+            PhotosetsGetListAsync(null, page, perPage, callback);
         }
 
         /// <summary>
@@ -172,9 +183,23 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsGetListAsync(string userId, Action<FlickrResult<PhotosetCollection>> callback)
         {
+            PhotosetsGetListAsync(userId, 0, 0, callback);
+        }
+
+        /// <summary>
+        /// Gets a list of the specified users photosets.
+        /// </summary>
+        /// <param name="userId">The ID of the user to return the photosets of.</param>
+        /// <param name="page">The page of the results to return. Defaults to page 1.</param>
+        /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void PhotosetsGetListAsync(string userId, int page, int perPage, Action<FlickrResult<PhotosetCollection>> callback)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getList");
             if (userId != null) parameters.Add("user_id", userId);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<PhotosetCollection>(
                 parameters, 

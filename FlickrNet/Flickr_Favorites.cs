@@ -187,5 +187,63 @@ namespace FlickrNet
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <returns></returns>
+        public FavoriteContext FavoritesGetContext(string photoId, string userId)
+        {
+            return FavoritesGetContext(photoId, userId, 1, 1, PhotoSearchExtras.None);
+        }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="extras">Any extras to return for each photo in the previous and next list.</param>
+        /// <returns></returns>
+        public FavoriteContext FavoritesGetContext(string photoId, string userId, PhotoSearchExtras extras)
+        {
+            return FavoritesGetContext(photoId, userId, 1, 1, extras);
+        }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="numPrevious">The number of previous favorites to list. Defaults to 1.</param>
+        /// <param name="numNext">The number of next favorites to list. Defaults to 1.</param>
+        /// <returns></returns>
+        public FavoriteContext FavoritesGetContext(string photoId, string userId, int numPrevious, int numNext)
+        {
+            return FavoritesGetContext(photoId, userId, numPrevious, numNext, PhotoSearchExtras.None);
+        }
+
+        /// <summary>
+        /// Get the next and previous favorites in a users list of favorites, based on one of their favorites.
+        /// </summary>
+        /// <param name="photoId">The photo id of the photo for which to find the next and previous favorites.</param>
+        /// <param name="userId">The user id of the users whose favorites you wish to search.</param>
+        /// <param name="numPrevious">The number of previous favorites to list. Defaults to 1.</param>
+        /// <param name="numNext">The number of next favorites to list. Defaults to 1.</param>
+        /// <param name="extras">Any extras to return for each photo in the previous and next list.</param>
+        /// <returns></returns>
+        public FavoriteContext FavoritesGetContext(string photoId, string userId, int numPrevious, int numNext, PhotoSearchExtras extras)
+        {
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.favorites.getContext");
+            parameters.Add("user_id", userId);
+            parameters.Add("photo_id", photoId);
+            parameters.Add("num_prev", Math.Max(1, numPrevious).ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            parameters.Add("num_next", Math.Max(1, numNext).ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+
+            return GetResponseCache<FavoriteContext>(parameters);
+        }
     }
 }

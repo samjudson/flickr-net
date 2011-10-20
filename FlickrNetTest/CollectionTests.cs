@@ -72,6 +72,7 @@ namespace FlickrNetTest
             Assert.AreEqual(id, info.CollectionId, "CollectionId should be correct.");
             Assert.AreEqual(1, info.ChildCount, "ChildCount should be 1.");
             Assert.AreEqual("Global Collection", info.Title, "Title should be 'Global Collection'.");
+            Assert.AreEqual("My global collection.", info.Description, "Description should be set correctly.");
             Assert.AreEqual("3629", info.Server, "Server should be 3629.");
 
             Assert.AreEqual(12, info.IconPhotos.Count, "IconPhotos.Length should be 12.");
@@ -107,11 +108,31 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void CollectionsEditMetaTest()
+        {
+            string id = "78188-72157618817175751";
+
+            Flickr.CacheDisabled = true;
+            Flickr f = TestData.GetAuthInstance();
+
+            CollectionInfo info = f.CollectionsGetInfo(id);
+
+            f.CollectionsEditMeta(id, info.Title, info.Description + "TEST");
+
+            var info2 = f.CollectionsGetInfo(id);
+
+            Assert.AreNotEqual(info.Description, info2.Description);
+
+            // Revert description
+            f.CollectionsEditMeta(id, info.Title, info.Description);
+
+        }
+        [TestMethod]
         public void CollectionCreateBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
 
-            //Collection c1 = f.CollectionsCreate("Test TItle", "Test Description", null);
+            //Collection c1 = f.CollectionsCreate("Test Title", "Test Description", null);
 
             //f.CollectionsEditMeta(c1.CollectionId, "Real Test Title", "Real Test Description");
 

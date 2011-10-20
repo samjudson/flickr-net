@@ -157,7 +157,22 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public PhotosetCollection PhotosetsGetList()
         {
-            return PhotosetsGetList(null);
+            CheckRequiresAuthentication();
+
+            return PhotosetsGetList(null, 0, 0);
+        }
+
+        /// <summary>
+        /// Gets a list of the currently authenticated users photosets.
+        /// </summary>
+        /// <param name="page">The page of the results to return. Defaults to page 1.</param>
+        /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList(int page, int perPage)
+        {
+            CheckRequiresAuthentication();
+
+            return PhotosetsGetList(null, page, perPage);
         }
 
         /// <summary>
@@ -167,9 +182,23 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public PhotosetCollection PhotosetsGetList(string userId)
         {
+            return PhotosetsGetList(userId, 0, 0);
+        }
+
+        /// <summary>
+        /// Gets a list of the specified users photosets.
+        /// </summary>
+        /// <param name="userId">The ID of the user to return the photosets of.</param>
+        /// <param name="page">The page of the results to return. Defaults to page 1.</param>
+        /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList(string userId, int page, int perPage)
+        {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getList");
             if (userId != null) parameters.Add("user_id", userId);
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             PhotosetCollection photosets = GetResponseCache<PhotosetCollection>(parameters);
             foreach (Photoset photoset in photosets)
