@@ -76,16 +76,18 @@ namespace FlickrNet
 
             CheckSigned();
 
-            string hash = sharedSecret + "api_key" + apiKey + "perms" + UtilityMethods.AuthLevelToString(authLevel);
+            string textToHash = sharedSecret + "api_key" + apiKey;
             string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
 
             if (!String.IsNullOrEmpty(extra))
             {
-                hash += "extra" + extra;
+                textToHash += "extra" + extra;
                 url += "&extra=" + Uri.EscapeDataString(extra);
             }
 
-            hash = UtilityMethods.MD5Hash(hash);
+            textToHash += "perms" + UtilityMethods.AuthLevelToString(authLevel);
+
+            string hash = UtilityMethods.MD5Hash(textToHash);
             url += "&api_sig=" + hash;
 
             return url;
