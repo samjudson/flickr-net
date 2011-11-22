@@ -41,14 +41,7 @@ namespace FlickrNet
         public string IconUrl
         {
             get {
-                if (IconServer != null && IconServer.Length > 0 && IconServer != "0")
-                {
-                    return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", IconFarm, IconServer, MemberId);
-                }
-                else
-                {
-                    return "http://www.flickr.com/images/buddyicon.jpg";
-                }
+                return UtilityMethods.BuddyIcon(IconServer, IconFarm, MemberId);
             }
         }
 

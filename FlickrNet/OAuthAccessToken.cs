@@ -36,7 +36,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="response">A URL parameter encoded string, e.g. "oauth_token=ABC&amp;oauth_token_secret=DEF&amp;user_id=1234567@N00".</param>
         /// <returns></returns>
-        public static OAuthAccessToken ParseResponse(string response)
+        internal static OAuthAccessToken ParseResponse(string response)
         {
             Dictionary<string, string> parts = UtilityMethods.StringToDictionary(response);
 
@@ -55,8 +55,6 @@ namespace FlickrNet
             return token;
         }
 
-        #region IFlickrParsable Members
-
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "auth")
@@ -70,7 +68,5 @@ namespace FlickrNet
             Token = reader.GetAttribute("oauth_token");
             TokenSecret = reader.GetAttribute("oauth_token_secret");
         }
-
-        #endregion
     }
 }

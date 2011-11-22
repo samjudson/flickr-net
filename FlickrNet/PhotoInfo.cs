@@ -122,10 +122,7 @@ namespace FlickrNet
         {
             get
             {
-                if (String.IsNullOrEmpty(OwnerIconServer) || OwnerIconServer == "0")
-                    return "http://www.flickr.com/images/buddyicon.jpg";
-                else
-                    return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.static.flickr.com/{1}/buddyicons/{2}.jpg", OwnerIconFarm, OwnerIconServer, OwnerUserId);
+                return UtilityMethods.BuddyIcon(OwnerIconServer, OwnerIconFarm, OwnerUserId);
             }
         }
 
