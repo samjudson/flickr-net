@@ -118,5 +118,15 @@ namespace FlickrNetTest
             f.PhotosDelete(photoId1);
             f.PhotosDelete(photoId2);
         }
+
+        [TestMethod]
+        public void PhotosetsGetInfoEncodingCorrect()
+        {
+            Flickr f = TestData.GetInstance();
+
+            Photoset pset = f.PhotosetsGetInfo("72157627650627399");
+
+            Assert.AreEqual("Sítio em Arujá - 14/08/2011", pset.Title);
+        }
     }
 }

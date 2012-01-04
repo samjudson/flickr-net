@@ -100,6 +100,7 @@ namespace FlickrNet
         private static string DownloadData(string method, string baseUrl, string data, string contentType, string authHeader)
         {
             WebClient client = new WebClient();
+            client.Encoding = System.Text.Encoding.UTF8;
             client.Headers.Add("user-agent", Flickr.UserAgent);
             if (!String.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
             if (!String.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
