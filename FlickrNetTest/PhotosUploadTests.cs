@@ -142,6 +142,31 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void ReplacePictureBasicTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            byte[] imageBytes = TestData.TestImageBytes;
+            Stream s = new MemoryStream(imageBytes);
+            s.Position = 0;
+
+            string title = "Test Title";
+            string desc = "Test Description\nSecond Line";
+            string tags = "testtag1,testtag2";
+            string photoId = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+
+            try
+            {
+                s.Position = 0;
+                f.ReplacePicture(s, "Test.jpg", photoId);
+            }
+            finally
+            {
+                f.PhotosDelete(photoId);
+            }
+        }
+
+        [TestMethod]
         public void UploadPictureFromUrl()
         {
             string url = "http://www.google.co.uk/intl/en_com/images/srpr/logo1w.png";

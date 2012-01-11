@@ -272,8 +272,20 @@ namespace FlickrNet
             Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             parameters.Add("photo_id", photoId);
-            parameters.Add("api_key", apiKey);
-            parameters.Add("auth_token", apiToken);
+
+            if (!String.IsNullOrEmpty(OAuthAccessToken))
+            {
+                OAuthGetBasicParameters(parameters);
+                parameters.Add("oauth_token", OAuthAccessToken);
+
+                string sig = OAuthCalculateSignature("POST", replaceUri.AbsoluteUri, parameters, OAuthAccessTokenSecret);
+                parameters.Add("oauth_signature", sig);
+            }
+            else
+            {
+                parameters.Add("api_key", apiKey);
+                parameters.Add("auth_token", apiToken);
+            }
 
             string responseXml = UploadData(stream, fileName, replaceUri, parameters);
 
