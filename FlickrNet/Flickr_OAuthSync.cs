@@ -65,6 +65,16 @@ namespace FlickrNet
             return FlickrNet.OAuthAccessToken.ParseResponse(response);
         }
 
+        public Auth OAuthCheckToken()
+        {
+            CheckRequiresAuthentication();
 
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.auth.oauth.checkToken");
+
+            var o = GetResponseNoCache<Auth>(parameters);
+
+            return o;
+        }
     }
 }

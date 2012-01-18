@@ -37,7 +37,9 @@ namespace FlickrNet
             parameters["api_key"] = ApiKey;
 
             // If performing one of the old 'flickr.auth' methods then use old authentication details.
-            if (parameters["method"].StartsWith("flickr.auth"))
+            string method = parameters["method"];
+
+            if (method.StartsWith("flickr.auth") && !method.EndsWith("oauth.checkToken"))
             {
                 if (!String.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
             }

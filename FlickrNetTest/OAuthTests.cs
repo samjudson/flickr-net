@@ -121,5 +121,15 @@ namespace FlickrNetTest
             f.ApiSecret = "asdasd";
             f.OAuthGetRequestToken("oob");
         }
+
+        [TestMethod]
+        public void OAuthCheckTokenTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            Auth a = f.OAuthCheckToken();
+
+            Assert.AreEqual(a.Token, f.OAuthAccessToken);
+        }
     }
 }

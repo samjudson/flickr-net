@@ -60,7 +60,7 @@ namespace FlickrNet
         {
             reader.Read();
 
-            while (reader.LocalName != "auth")
+            while (reader.LocalName != "auth" && reader.LocalName != "oauth")
             {
                 switch (reader.LocalName)
                 {
