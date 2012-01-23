@@ -629,6 +629,25 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PhotosSearchGoeContext()
+        {
+            Flickr f = TestData.GetInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.HasGeo = true;
+            o.GeoContext = GeoContext.Outdoors;
+            o.Tags = "landscape";
+            o.Extras |= PhotoSearchExtras.Geo;
+
+            PhotoCollection col = f.PhotosSearch(o);
+
+            foreach (Photo p in col)
+            {
+                Assert.AreEqual(GeoContext.Outdoors, p.GeoContext);
+            }
+        }
+
+        [TestMethod]
         public void PhotosSearchLatLongGeoRadiusTest()
         {
             Flickr f = TestData.GetInstance();

@@ -323,6 +323,11 @@ namespace FlickrNet
         public GeoAccuracy Accuracy { get; set; }
 
         /// <summary>
+        /// The GeoContext of the photo, if it has location information.
+        /// </summary>
+        public GeoContext? GeoContext { get; set; }
+
+        /// <summary>
         /// Can the current user (or unauthenticated user if no authentication token provided) comment on this photo.
         /// </summary>
         /// <remarks>Will always be false for unauthenticated calls.</remarks>
@@ -672,6 +677,9 @@ namespace FlickrNet
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsContact = reader.Value == "1";
+                        break;
+                    case "context":
+                        GeoContext = (GeoContext)reader.ReadContentAsInt();
                         break;
                     default:
                         if (!allowExtraAtrributes) UtilityMethods.CheckParsingException(reader);
