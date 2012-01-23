@@ -114,6 +114,23 @@ namespace FlickrNet
             }
         }
 
+        /// <summary>
+        /// Description of the timezone of this user.
+        /// </summary>
+        public string TimeZoneLabel { get; set; }
+        /// <summary>
+        /// Offset for the timezome for this user, e.g. "+01:00".
+        /// </summary>
+        public string TimeZoneOffset { get; set; }
+
+        /// <summary>
+        /// The description of the user, as taken from the users profil page.
+        /// </summary>
+        /// <remarks>
+        /// Will likely contain HTML.
+        /// </remarks>
+        public string Description { get; set; }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             LoadAttributes(reader);
@@ -152,6 +169,14 @@ namespace FlickrNet
                         break;
                     case "mbox_sha1sum":
                         MailboxSha1Hash = reader.ReadElementContentAsString();
+                        break;
+                    case "timezone":
+                        TimeZoneLabel = reader.GetAttribute("label");
+                        TimeZoneOffset = reader.GetAttribute("offset");
+                        reader.Read();
+                        break;
+                    case "description":
+                        Description = reader.ReadElementContentAsString();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
