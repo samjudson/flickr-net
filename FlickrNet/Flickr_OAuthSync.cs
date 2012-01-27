@@ -65,6 +65,10 @@ namespace FlickrNet
             return FlickrNet.OAuthAccessToken.ParseResponse(response);
         }
 
+        /// <summary>
+        /// Checks the OAuth token, returns user information and permissions if valid.
+        /// </summary>
+        /// <returns></returns>
         public Auth OAuthCheckToken()
         {
             CheckRequiresAuthentication();

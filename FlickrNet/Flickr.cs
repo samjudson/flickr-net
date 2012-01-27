@@ -98,7 +98,7 @@ namespace FlickrNet
         /// <summary>
         /// User Agent string sent web calls to Flickr.
         /// </summary>
-        public const string UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
+        //public const string UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
 
         private string lastRequest;
         private string lastResponse;

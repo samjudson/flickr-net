@@ -21,6 +21,10 @@ namespace FlickrNet
         /// <returns></returns>
         public static string OAuthCalculateAuthHeader(Dictionary<string, string> parameters)
         {
+            // Silverlight < 5 doesn't support modification of the Authorization header, so all data must be sent in post body.
+#if SILVERLIGHT
+            return "";
+#else
             StringBuilder sb = new StringBuilder("OAuth ");
             foreach (KeyValuePair<string, string> pair in parameters)
             {
@@ -29,8 +33,8 @@ namespace FlickrNet
                     sb.Append(pair.Key + "=\"" + Uri.EscapeDataString(pair.Value) + "\",");
                 }
             }
-
             return sb.Remove(sb.Length - 1, 1).ToString();
+#endif
         }
 
         /// <summary>
@@ -44,10 +48,15 @@ namespace FlickrNet
             string data = String.Empty;
             foreach (KeyValuePair<string, string> pair in parameters)
             {
+                // Silverlight < 5 doesn't support modification of the Authorization header, so all data must be sent in post body.
+#if SILVERLIGHT
+                data += pair.Key + "=" + UtilityMethods.EscapeOAuthString(pair.Value) + "&";
+#else
                 if (!pair.Key.StartsWith("oauth"))
                 {
                     data += pair.Key + "=" + UtilityMethods.EscapeOAuthString(pair.Value) + "&";
                 }
+#endif
             }
             return data;
         }
