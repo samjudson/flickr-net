@@ -126,7 +126,7 @@ namespace FlickrNet
                     int soFar = 0;
                     while (soFar < dataBuffer.Length)
                     {
-                        s.Write(dataBuffer, soFar, bufferSize);
+                        s.Write(dataBuffer, soFar, Math.Min(bufferSize, dataBuffer.Length - soFar));
                         soFar += bufferSize;
 
                         if (OnUploadProgress != null)

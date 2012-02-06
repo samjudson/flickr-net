@@ -492,8 +492,11 @@ namespace FlickrNet
 
             foreach (string key in keys)
             {
-                if (key.StartsWith("oauth")) continue;
 
+#if !SILVERLIGHT
+                // Silverlight < 5 doesn't support modification of the Authorization header, so all data must be sent in post body.
+                if (key.StartsWith("oauth")) continue;
+#endif
                 hashStringBuilder.Append(key);
                 hashStringBuilder.Append(parameters[key]);
                 contentStringBuilder.Append("--" + boundary + "\r\n");
