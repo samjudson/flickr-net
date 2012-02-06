@@ -20,6 +20,27 @@ namespace FlickrNet
         public string GroupName { get; set; }
 
         /// <summary>
+        /// Server farm for the group buddy icon.
+        /// </summary>
+        public string IconFarm { get; set; }
+
+        /// <summary>
+        /// Server for the group buddy icon.
+        /// </summary>
+        public string IconServer { get; set; }
+
+        /// <summary>
+        /// Group buddy icon.
+        /// </summary>
+        public string GroupIconUrl
+        {
+            get
+            {
+                return UtilityMethods.BuddyIcon(IconServer, IconFarm, GroupId);
+            }
+        }
+
+        /// <summary>
         /// True if the user is the admin for the group, false if they are not.
         /// </summary>
         public bool IsAdmin { get; set; }
@@ -62,6 +83,12 @@ namespace FlickrNet
                         break;
                     case "invitation_only":
                         InvitationOnly = reader.Value == "1";
+                        break;
+                    case "iconfarm":
+                        IconFarm = reader.Value;
+                        break;
+                    case "iconserver":
+                        IconServer = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

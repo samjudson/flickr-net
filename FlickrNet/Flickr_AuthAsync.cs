@@ -176,5 +176,20 @@ namespace FlickrNet
 
         }
 
+        /// <summary>
+        /// Checks the OAuth token, returns user information and permissions if valid.
+        /// </summary>
+        /// <returns></returns>
+        public void AuthOAuthCheckTokenAsync(Action<FlickrResult<Auth>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.auth.oauth.checkToken");
+
+            GetResponseAsync<Auth>(parameters, callback);
+        }
+
+
     }
 }

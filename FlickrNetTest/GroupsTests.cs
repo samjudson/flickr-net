@@ -109,7 +109,7 @@ namespace FlickrNetTest
             Assert.AreEqual("3304", info.IconServer);
             Assert.AreEqual("4", info.IconFarm);
 
-            Assert.AreEqual<string>("http://farm4.static.flickr.com/3304/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
+            Assert.AreEqual<string>("http://farm4.staticflickr.com/3304/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
 
             Assert.AreEqual(3, info.ThrottleInfo.Count);
             Assert.AreEqual(GroupThrottleMode.PerDay, info.ThrottleInfo.Mode);

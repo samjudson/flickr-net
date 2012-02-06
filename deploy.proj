@@ -5,20 +5,64 @@
 
   <PropertyGroup>
     <Major>3</Major>
-    <Minor>2</Minor>
+    <Minor>3</Minor>
     <Build>0</Build>
     <Revision>0</Revision>
+	<ShortVersion>$(Major).$(Minor)</ShortVersion>
+	<Version>$(ShortVersion).$(Build).$(Revision)</Version>
   </PropertyGroup>
 
-  <Target Name="Build" DependsOnTargets="Version;Compile;Help;Zip">
+  <Target Name="Build" DependsOnTargets="Version;Compile;Help;Zip;NuGet">
+  </Target>
+
+  <Target Name="NuGet">
+	<CreateItem Include="FlickrNet\bin\Release\*.*">
+		<Output TaskParameter="Include" ItemName="ReleaseFiles"/>
+	</CreateItem>
+	<CreateItem Include="Sandcastle\Help\FlickrNet.chm">
+		<Output TaskParameter="Include" ItemName="HelpFile"/>
+	</CreateItem>	
+	<Copy SourceFiles="@(ReleaseFiles)" DestinationFolder="Builds"/>
+	<Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>
+
+  	<XmlUpdate 
+      Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+      XmlFileName="NuGet\FlickrNet.nuspec"
+	  Prefix="nu"
+      XPath="//nu:metadata/nu:version"
+      Value="$(ShortVersion)" />
+	<XmlUpdate
+      Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+      XmlFileName="NuGet\FlickrNet.Silverlight.nuspec"
+	  Prefix="nu"
+      XPath="//nu:metadata/nu:version"
+      Value="$(ShortVersion)" />
+	<XmlUpdate
+      Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+      XmlFileName="NuGet\FlickrNet.CF.nuspec"
+	  Prefix="nu"
+      XPath="//nu:metadata/nu:version"
+      Value="$(ShortVersion)" />
+	<XmlUpdate
+      Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+      XmlFileName="NuGet\FlickrNet.WP7.nuspec"
+	  Prefix="nu"
+      XPath="//nu:metadata/nu:version"
+      Value="$(ShortVersion)" />
+
+	<Exec Command="nuget pack Nuget\FlickrNet.nuspec"/>
+	<Exec Command="nuget pack Nuget\FlickrNet.WP7.nuspec"/>
+	<Exec Command="nuget pack Nuget\FlickrNet.Silverlight.nuspec"/>
+	<Exec Command="nuget pack Nuget\FlickrNet.CF.nuspec"/>
+	
+	<WriteLinesToFile File="publish.bat" Overwrite="true" Lines="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
+	<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.CF.$(ShortVersion).nupkg"/>
+	<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg"/>
+	<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg"/>
   </Target>
 
   <Target Name="Version">
 
-  <Version BuildType="Automatic">
-		<Output TaskParameter="Build" PropertyName="Build" />
-	</Version>
-    
     <AssemblyInfo CodeLanguage="CS"
       OutputFile="FlickrNet\AssemblyInfo.cs"
       AssemblyTitle="Flickr .Net Api Library"
@@ -28,7 +72,7 @@
       AssemblyCopyright="Copyright © Sam Judson 2010"
       ComVisible="false"
       CLSCompliant="true"
-      AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+      AssemblyVersion="$(Version)"
                />
   </Target>
 
@@ -43,7 +87,7 @@
 	  <ZipFiles Include="Sandcastle\Help\FlickrNet.chm" />
     </ItemGroup>
     <MakeDir Directories="Builds" Condition="!Exists('Builds')" />
-    <Zip Files="@(ZipFiles)" ZipFileName="Builds\FlickrNet-$(Major).$(Minor).$(Build).zip" ZipLevel="9" Flatten="true"/>
+    <Zip Files="@(ZipFiles)" ZipFileName="Builds\FlickrNet-$(ShortVersion).zip" ZipLevel="9" Flatten="true"/>
   </Target>
 
 </Project>

@@ -20,6 +20,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Sam Judson 2010")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("3.2.4310.0")]
+[assembly: AssemblyVersion("3.3.0.0")]
 
 

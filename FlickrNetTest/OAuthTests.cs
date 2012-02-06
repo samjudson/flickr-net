@@ -127,7 +127,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            Auth a = f.OAuthCheckToken();
+            Auth a = f.AuthOAuthCheckToken();
 
             Assert.AreEqual(a.Token, f.OAuthAccessToken);
         }

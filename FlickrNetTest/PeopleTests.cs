@@ -170,7 +170,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
             Person p = f.PeopleGetInfo(TestData.TestUserId);
-            Assert.IsTrue(p.BuddyIconUrl.Contains(".static.flickr.com/"), "Buddy icon doesn't contain correct details.");
+            Assert.IsTrue(p.BuddyIconUrl.Contains(".staticflickr.com/"), "Buddy icon doesn't contain correct details.");
         }
 
         [TestMethod]
