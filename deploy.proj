@@ -6,10 +6,10 @@
   <PropertyGroup>
     <Major>3</Major>
     <Minor>3</Minor>
-    <Build>0</Build>
+    <Build>1</Build>
     <Revision>0</Revision>
-	<ShortVersion>$(Major).$(Minor)</ShortVersion>
-	<Version>$(ShortVersion).$(Build).$(Revision)</Version>
+	<ShortVersion>$(Major).$(Minor).$(Build)</ShortVersion>
+	<Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
   </PropertyGroup>
 
   <Target Name="Build" DependsOnTargets="Version;Compile;Help;Zip;NuGet">
@@ -50,10 +50,10 @@
       XPath="//nu:metadata/nu:version"
       Value="$(ShortVersion)" />
 
-	<Exec Command="nuget pack Nuget\FlickrNet.nuspec"/>
-	<Exec Command="nuget pack Nuget\FlickrNet.WP7.nuspec"/>
-	<Exec Command="nuget pack Nuget\FlickrNet.Silverlight.nuspec"/>
-	<Exec Command="nuget pack Nuget\FlickrNet.CF.nuspec"/>
+	<Exec Command="nuget pack FlickrNet.nuspec" WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.WP7.nuspec"  WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.Silverlight.nuspec"  WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.CF.nuspec"  WorkingDirectory="Nuget"/>
 	
 	<WriteLinesToFile File="publish.bat" Overwrite="true" Lines="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
 	<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.CF.$(ShortVersion).nupkg"/>
