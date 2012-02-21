@@ -421,7 +421,15 @@ namespace FlickrNet
         /// <returns>The parsed <see cref="DateTime"/>.</returns>
         public static DateTime ParseDateWithGranularity(string date)
         {
-            DateTime output;
+            DateTime output = DateTime.MinValue;
+
+            if (String.IsNullOrEmpty(date)) return output;
+            if (date == "0000-00-00 00:00:00") return output;
+            if (date.EndsWith("-00-01 00:00:00"))
+            {
+                output = new DateTime(int.Parse(date.Substring(0, 4), System.Globalization.NumberFormatInfo.InvariantInfo), 1, 1);
+                return output;
+            }
 
             string format = "yyyy-MM-dd HH:mm:ss";
             try
@@ -430,14 +438,9 @@ namespace FlickrNet
             }
             catch (FormatException)
             {
-                if (Regex.IsMatch(date, @"^\d{4}-00-01 00:00:00$"))
-                {
-                    output = new DateTime(int.Parse(date.Substring(0, 4), System.Globalization.NumberFormatInfo.InvariantInfo), 1, 1);
-                }
-                else
-                {
-                    output = DateTime.MinValue;
-                }
+#if DEBUG
+                throw;
+#endif
             }
             return output;
         }

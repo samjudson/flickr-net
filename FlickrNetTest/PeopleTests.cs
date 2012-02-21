@@ -249,5 +249,17 @@ namespace FlickrNetTest
             Assert.IsNotNull(u.UserName);
             Assert.AreNotEqual(0, u.FileSizeMax);
         }
+
+        [TestMethod]
+        public void PeopleGetInfoBlankDate()
+        {
+            var p = TestData.GetInstance().PeopleGetInfo("18387778@N00");
+        }
+
+        [TestMethod]
+        public void PeopleGetInfoZeroDate()
+        {
+            var p = TestData.GetInstance().PeopleGetInfo("47963952@N03");
+        }
     }
 }

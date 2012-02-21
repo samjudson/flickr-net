@@ -21,9 +21,11 @@ namespace FlickrNet
     /// Create an instance of this class and then call its methods to perform methods on Flickr.
     /// </remarks>
     /// <example>
-    /// <code>FlickrNet.Flickr flickr = new FlickrNet.Flickr();
+    /// <code>
+    /// FlickrNet.Flickr flickr = new FlickrNet.Flickr();
     /// User user = flickr.PeopleFindByEmail("cal@iamcal.com");
-    /// Console.WriteLine("User Id is " + u.UserId);</code>
+    /// Console.WriteLine("User Id is " + u.UserId);
+    /// </code>
     /// </example>
     // [System.Net.WebPermission(System.Security.Permissions.SecurityAction.Demand, ConnectPattern="http://www.flickr.com/.*")]
     public partial class Flickr
