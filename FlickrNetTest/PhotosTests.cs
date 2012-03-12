@@ -349,5 +349,24 @@ namespace FlickrNetTest
 
             Assert.AreNotEqual(userPart, string.Empty, "User part of the URL cannot be empty");
         }
+
+        [TestMethod]
+        public void PhotosTestLargeSquareSmall320()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Extras = PhotoSearchExtras.LargeSquareUrl | PhotoSearchExtras.Small320Url;
+            o.UserId = TestData.TestUserId;
+            o.PerPage = 10;
+
+            var photos = TestData.GetInstance().PhotosSearch(o);
+            Assert.IsTrue(photos.Count > 0, "Should return more than zero photos.");
+
+            foreach (var photo in photos)
+            {
+                Assert.IsNotNull(photo.Small320Url, "Small320Url should not be null.");
+                Assert.IsNotNull(photo.LargeSquareThumbnailUrl, "LargeSquareThumbnailUrl should not be null.");
+            }
+        }
+
    }
 }

@@ -109,7 +109,7 @@ namespace FlickrNet
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
         /// </summary>
-        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | LargeUrl | OriginalUrl,
+        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | LargeUrl | OriginalUrl | LargeSquareUrl | Small320Url,
         /// <summary>
         /// Returns the description for the image.
         /// </summary>
@@ -122,6 +122,14 @@ namespace FlickrNet
         /// Returns the details for IsPublic, IsFamily and IsFriend.
         /// </summary>
         Visibility = 4194304,
+        /// <summary>
+        /// Large (150x150) square image.
+        /// </summary>
+        LargeSquareUrl = 8388608,
+        /// <summary>
+        /// Small (320 on longest side) image.
+        /// </summary>
+        Small320Url = 16777216,
         /// <summary>
         /// Returns all the above information.
         /// </summary>

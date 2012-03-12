@@ -9,10 +9,12 @@ namespace FlickrNet
     public class Photo : IFlickrParsable
     {
         private string urlSquare;
+        private string urlLargeSquare;
         private string urlThumbnail;
         private string urlMedium;
         private string urlMedium640;
         private string urlSmall;
+        private string urlSmall320;
         private string urlLarge;
         private string urlOriginal;
 
@@ -160,6 +162,28 @@ namespace FlickrNet
         public int? SquareThumbnailHeight { get; set; }
 
         /// <summary>
+        /// The URL for the large (150x150) square thumbnail of a photo.
+        /// </summary>
+        public string LargeSquareThumbnailUrl
+        {
+            get
+            {
+                if (urlLargeSquare != null)
+                    return urlLargeSquare;
+                else
+                    return UtilityMethods.UrlFormat(this, "_q", "jpg");
+            }
+        }
+
+        /// <summary>
+        /// The width of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
+        /// </summary>
+        public int? LargeSquareThumbnailWidth { get; set; }
+        /// <summary>
+        /// The height of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
+        /// </summary>
+        public int? LargeSquareThumbnailHeight { get; set; }
+        /// <summary>
         /// The URL for the thumbnail of a photo.
         /// </summary>
         public string ThumbnailUrl
@@ -204,6 +228,29 @@ namespace FlickrNet
         /// The height of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
         /// </summary>
         public int? SmallHeight { get; set; }
+
+        /// <summary>
+        /// The URL for the small (320 on longest side) copy of a photo.
+        /// </summary>
+        public string Small320Url
+        {
+            get
+            {
+                if (urlSmall320 != null)
+                    return urlSmall320;
+                else
+                    return UtilityMethods.UrlFormat(this, "_n", "jpg");
+            }
+        }
+
+        /// <summary>
+        /// The width of the small 320 image. Only returned if <see cref="PhotoSearchExtras.Small320Url"/> is specified.
+        /// </summary>
+        public int? Small320Width { get; set; }
+        /// <summary>
+        /// The height of the small 320 image. Only returned if <see cref="PhotoSearchExtras.Small320Url"/> is specified.
+        /// </summary>
+        public int? Small320Height { get; set; }
 
         /// <summary>
         /// The URL for the medium 640 copy of a photo.
@@ -574,6 +621,24 @@ namespace FlickrNet
                         break;
                     case "height_t":
                         ThumbnailHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_q":
+                        urlLargeSquare = reader.Value;
+                        break;
+                    case "width_q":
+                        LargeSquareThumbnailWidth = reader.ReadContentAsInt();
+                        break;
+                    case "height_q":
+                        LargeSquareThumbnailHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_n":
+                        urlSmall320 = reader.Value;
+                        break;
+                    case "width_n":
+                        Small320Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_n":
+                        Small320Height = reader.ReadContentAsInt();
                         break;
                     case "url_s":
                         urlSmall = reader.Value;
