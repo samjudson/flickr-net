@@ -542,23 +542,39 @@ namespace FlickrNet
         /// <returns>The escaped string.</returns>
         public static string EscapeOAuthString(string text)
         {
-            string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+            string value = text;
 
-            StringBuilder result = new StringBuilder(text.Length * 2);
+            value = Uri.EscapeDataString(value).Replace("+", "%20");
 
-            foreach (char symbol in text)
-            {
-                if (unreservedChars.IndexOf(symbol) != -1)
-                {
-                    result.Append(symbol);
-                }
-                else
-                {
-                    result.Append('%' + String.Format("{0:X2}", (int)symbol));
-                }
-            }
+            // UrlEncode escapes with lowercase characters (e.g. %2f) but oAuth needs %2F
+            value = Regex.Replace(value, "(%[0-9a-f][0-9a-f])", c => c.Value.ToUpper());
 
-            return result.ToString();
+            // these characters are not escaped by UrlEncode() but needed to be escaped
+            value = value.Replace("(", "%28").Replace(")", "%29").Replace("$", "%24").Replace("!", "%21").Replace(
+                "*", "%2A").Replace("'", "%27");
+
+            // these characters are escaped by UrlEncode() but will fail if unescaped!
+            value = value.Replace("%7E", "~");
+
+            return value;
+
+            //string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
+
+            //StringBuilder result = new StringBuilder(text.Length * 2);
+
+            //foreach (char symbol in text)
+            //{
+            //    if (unreservedChars.IndexOf(symbol) != -1)
+            //    {
+            //        result.Append(symbol);
+            //    }
+            //    else
+            //    {
+            //        result.Append('%' + String.Format("{0:X2}", (int)symbol));
+            //    }
+            //}
+
+            //return result.ToString();
         }
 
     }

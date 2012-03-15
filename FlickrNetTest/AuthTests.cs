@@ -152,7 +152,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FlickrApiException))]
+        [ExpectedException(typeof(FlickrNet.Exceptions.LoginFailedInvalidTokenException))]
         public void AuthCheckTokenInvalidTokenTest()
         {
             string token = "abcdefgh";

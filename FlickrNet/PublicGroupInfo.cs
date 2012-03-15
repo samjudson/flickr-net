@@ -56,6 +56,16 @@ namespace FlickrNet
         public bool InvitationOnly { get; set; }
 
         /// <summary>
+        /// The number of members in a group.
+        /// </summary>
+        public int Members { get; set; }
+
+        /// <summary>
+        /// The total number of photos in the group.
+        /// </summary>
+        public long PoolCount { get; set; }
+
+        /// <summary>
         /// The URL for the group web page.
         /// </summary>
         public string GroupUrl
@@ -89,6 +99,12 @@ namespace FlickrNet
                         break;
                     case "iconserver":
                         IconServer = reader.Value;
+                        break;
+                    case "members":
+                        Members = reader.ReadContentAsInt();
+                        break;
+                    case "pool_count":
+                        PoolCount = reader.ReadContentAsLong();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

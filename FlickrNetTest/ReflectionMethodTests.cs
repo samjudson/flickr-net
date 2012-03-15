@@ -284,5 +284,54 @@ namespace FlickrNetTest
             Assert.AreEqual("Method not found", method.Errors[0].Message, "First error should have code of 1");
             Assert.AreEqual("The requested method was not found.", method.Errors[0].Description, "First error should have code of 1");
         }
+
+        [TestMethod]
+        public void ReflectionGetMethodInfoFavContextArguments()
+        {
+            var methodName = "flickr.favorites.getContext";
+            var method = TestData.GetInstance().ReflectionGetMethodInfo(methodName);
+
+            Assert.AreEqual(6, method.Arguments.Count);
+            Assert.AreEqual("The id of the photo to fetch the context for.", method.Arguments[1].Description);
+            Assert.IsNull(method.Arguments[4].Description);
+        }
+
+        private void GetExceptionList()
+        {
+            Dictionary<int, List<string>> errors = new Dictionary<int, List<string>>();
+            Flickr.CacheDisabled = true;
+
+            Flickr f = TestData.GetInstance();
+            var list = f.ReflectionGetMethods();
+            foreach (var methodName in list)
+            {
+                Console.WriteLine("Method = " + methodName);
+                var method = f.ReflectionGetMethodInfo(methodName);
+
+                foreach (var exception in method.Errors)
+                {
+                    if (!errors.ContainsKey(exception.Code))
+                    {
+                        errors[exception.Code] = new List<string>();
+                    }
+
+                    var l = errors[exception.Code];
+                    if (!l.Contains(exception.Message))
+                    {
+                        l.Add(exception.Message);
+                    }
+                }
+            }
+
+            foreach (var pair in errors)
+            {
+                Console.WriteLine("Code,Message");
+                foreach (string l in pair.Value)
+                {
+                    Console.WriteLine(pair.Key + ",\"" + l + "\"");
+                }
+                Console.WriteLine();
+            }
+        }
     }
 }

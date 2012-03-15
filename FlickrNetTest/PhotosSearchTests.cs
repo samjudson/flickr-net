@@ -763,5 +763,35 @@ namespace FlickrNetTest
             PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
         }
 
+        [TestMethod]
+        public void PhotoSearchRussianCharacters()
+        {
+            Flickr f = TestData.GetInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "снег";
+
+            var photos = f.PhotosSearch(o);
+
+            Console.WriteLine(f.LastRequest);
+
+            Assert.AreNotEqual(0, photos.Count, "Search should return some results.");
+        }
+
+        [TestMethod]
+        public void PhotoSearchAuthRussianCharacters()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "снег";
+
+            var photos = f.PhotosSearch(o);
+
+            Console.WriteLine(f.LastRequest);
+
+            Assert.AreNotEqual(0, photos.Count, "Search should return some results.");
+        }
+
     }
 }
