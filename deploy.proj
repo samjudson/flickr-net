@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <Major>3</Major>
-    <Minor>3</Minor>
-    <Build>1</Build>
+    <Minor>4</Minor>
+    <Build>0</Build>
     <Revision>0</Revision>
 	<ShortVersion>$(Major).$(Minor).$(Build)</ShortVersion>
 	<Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
