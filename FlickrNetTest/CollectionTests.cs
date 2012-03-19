@@ -127,23 +127,20 @@ namespace FlickrNetTest
             f.CollectionsEditMeta(id, info.Title, info.Description);
 
         }
+
         [TestMethod]
-        public void CollectionCreateBasicTest()
+        public void CollectionsEmptyCollection()
         {
             Flickr f = TestData.GetAuthInstance();
 
-            //Collection c1 = f.CollectionsCreate("Test Title", "Test Description", null);
+            // Get global collection
+            CollectionCollection collections = f.CollectionsGetTree("78188-72157618817175751", null);
 
-            //f.CollectionsEditMeta(c1.CollectionId, "Real Test Title", "Real Test Description");
+            Assert.IsNotNull(collections);
+            Assert.IsTrue(collections.Count > 0, "Global collection should be greater than zero.");
 
-            //Collection c2 = f.CollectionsCreate("Test 2", "T2", c1.CollectionId);
-            //Collection c3 = f.CollectionsCreate("Test 3", "T3", c1.CollectionId);
-            //Collection c4 = f.CollectionsCreate("Test 4", "T4", c1.CollectionId);
-            //Collection c5 = f.CollectionsCreate("Test 5", "T5", c1.CollectionId);
-
-            //f.CollectionsSortCollections(c1.CollectionId, new string[] { c5.CollectionId, c4.CollectionId, c3.CollectionId, c2.CollectionId });
-
-            //f.CollectionsDelete(c1.CollectionId, true);
+            Assert.IsNotNull(collections[0].Collections);
+            Assert.IsTrue(collections[0].Collections.Count > 2, "Global collection should have more than two child collections.");
 
         }
     }

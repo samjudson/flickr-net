@@ -81,6 +81,15 @@ namespace FlickrNet
                 }
             }
 
+            reader.MoveToElement();
+
+            // If this is an empty collection then skip to next item, which wont be a child, but may be a sibling.
+            if (reader.IsEmptyElement)
+            {
+                reader.Skip();
+                return;
+            }
+
             reader.Read();
 
             while (reader.NodeType == XmlNodeType.Element && (reader.LocalName == "collection" || reader.LocalName == "set"))
