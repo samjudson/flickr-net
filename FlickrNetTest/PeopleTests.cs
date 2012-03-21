@@ -261,5 +261,14 @@ namespace FlickrNetTest
         {
             var p = TestData.GetInstance().PeopleGetInfo("47963952@N03");
         }
+
+        [TestMethod]
+        public void PeoplGetInfoInternationalCharacters()
+        {
+            var p = TestData.GetInstance().PeopleGetInfo("70701693@N03");
+
+            Assert.AreEqual("70701693@N03", p.UserId, "UserId should match.");
+            Assert.AreEqual("朋斌 冯", p.RealName, "RealName should match");
+        }
     }
 }
