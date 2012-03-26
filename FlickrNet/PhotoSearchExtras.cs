@@ -131,8 +131,12 @@ namespace FlickrNet
         /// </summary>
         Small320Url = 16777216,
         /// <summary>
+        /// Returns information on rotation of images compared to original
+        /// </summary>
+        Rotation = 33554432,
+        /// <summary>
         /// Returns all the above information.
         /// </summary>
-        All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility
+        All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility | Rotation
     }
 }

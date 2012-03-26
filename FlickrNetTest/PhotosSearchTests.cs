@@ -793,5 +793,21 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Search should return some results.");
         }
 
+        [TestMethod]
+        public void PhotoSearchRotation()
+        {
+            Flickr f = TestData.GetInstance();
+            PhotoSearchOptions o = new PhotoSearchOptions() { Extras = PhotoSearchExtras.Rotation, UserId = TestData.TestUserId, PerPage = 100 };
+            var photos = f.PhotosSearch(o);
+            foreach (var photo in photos)
+            {
+                Assert.IsTrue(photo.Rotation.HasValue, "Rotation should be set.");
+                if (photo.PhotoId == "6861439677")
+                    Assert.AreEqual(90, photo.Rotation, "Rotation should be 90 for this photo.");
+                if (photo.PhotoId == "6790104907")
+                    Assert.AreEqual(0, photo.Rotation, "Rotation should be 0 for this photo.");
+            }
+        }
+
     }
 }

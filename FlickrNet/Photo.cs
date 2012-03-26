@@ -440,6 +440,14 @@ namespace FlickrNet
         public GeoPermissions GeoPermissions { get; set; }
 
         /// <summary>
+        /// If requested will contain the number of degrees the photo has been rotated since upload.
+        /// </summary>
+        /// <remarks>
+        /// This might be due to the photo containing rotation information so done automatically, or by manually rotating the photo in Flickr.
+        /// </remarks>
+        public int? Rotation { get; set; }
+
+        /// <summary>
         /// A helper method which tries to guess if a large image will be available for this photograph
         /// based on the original dimensions returned with the photo.
         /// </summary>
@@ -745,6 +753,9 @@ namespace FlickrNet
                         break;
                     case "context":
                         GeoContext = (GeoContext)reader.ReadContentAsInt();
+                        break;
+                    case "rotation":
+                        Rotation = reader.ReadContentAsInt();
                         break;
                     default:
                         if (!allowExtraAtrributes) UtilityMethods.CheckParsingException(reader);
