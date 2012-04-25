@@ -72,16 +72,28 @@ namespace FlickrNet
         /// <returns></returns>
         public string OAuthCalculateAuthorizationUrl(string requestToken, AuthLevel perms)
         {
+            return OAuthCalculateAuthorizationUrl(requestToken, perms, false);
+        }
+
+        /// <summary>
+        /// Returns the authorization URL for OAuth authorization, based off the request token and permissions provided.
+        /// </summary>
+        /// <param name="requestToken">The request token to include in the authorization url.</param>
+        /// <param name="perms">The permissions being requested.</param>
+        /// <param name="mobile">Should the url be generated be the mobile one or not.</param>
+        /// <returns></returns>
+        public string OAuthCalculateAuthorizationUrl(string requestToken, AuthLevel perms, bool mobile)
+        {
             string permsString = (perms == AuthLevel.None) ? "" : "&perms=" + UtilityMethods.AuthLevelToString(perms);
             
-            return "http://www.flickr.com/services/oauth/authorize?oauth_token=" + requestToken + permsString;
+            return "http://" + (mobile?"m":"www") + ".flickr.com/services/oauth/authorize?oauth_token=" + requestToken + permsString;
         }
 
         /// <summary>
         /// Populates the given dictionary with the basic OAuth parameters, oauth_timestamp, oauth_noonce etc.
         /// </summary>
         /// <param name="parameters">Dictionary to be populated with the OAuth parameters.</param>
-        public void OAuthGetBasicParameters(Dictionary<string, string> parameters)
+        private void OAuthGetBasicParameters(Dictionary<string, string> parameters)
         {
             var oAuthParameters = OAuthGetBasicParameters();
             foreach (var k in oAuthParameters)
@@ -94,7 +106,7 @@ namespace FlickrNet
         /// Returns a new dictionary containing the basic OAuth parameters.
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> OAuthGetBasicParameters()
+        private Dictionary<string, string> OAuthGetBasicParameters()
         {
             string oauthtimestamp = UtilityMethods.DateToUnixTimestamp(DateTime.UtcNow);
             string oauthnonce = new Random().Next(100000000).ToString();

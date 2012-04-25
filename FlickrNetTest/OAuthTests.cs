@@ -92,7 +92,7 @@ namespace FlickrNetTest
             OAuthRequestToken requestToken = new OAuthRequestToken();
             requestToken.Token = TestData.RequestToken;
             requestToken.TokenSecret = TestData.RequestTokenSecret;
-            string verifier = "672-475-377";
+            string verifier = "688-801-669";
 
             OAuthAccessToken accessToken = f.OAuthGetAccessToken(requestToken, verifier);
 
@@ -130,6 +130,33 @@ namespace FlickrNetTest
             Auth a = f.AuthOAuthCheckToken();
 
             Assert.AreEqual(a.Token, f.OAuthAccessToken);
+        }
+
+        [TestMethod]
+        public void OAuthCheckEncoding()
+        {
+            // Test cases taken from OAuth spec
+            // http://wiki.oauth.net/w/page/12238556/TestCases
+            var test = new Dictionary<string, string>()
+            {
+                { "abcABC123", "abcABC123" },
+                { "-._~", "-._~"},
+                {"%", "%25"},
+                { "+", "%2B"},
+                { "&=*", "%26%3D%2A"},
+                { "", ""},
+                { "\u000A", "%0A"},
+                { "\u0020", "%20"},
+                { "\u007F", "%7F"},
+                { "\u0080", "%C2%80"},
+                { "\u3001", "%E3%80%81"},
+                { "$()", "%24%28%29"}
+            };
+
+            foreach (var pair in test)
+            {
+                Assert.AreEqual(pair.Value, UtilityMethods.EscapeOAuthString(pair.Key));
+            }
         }
     }
 }

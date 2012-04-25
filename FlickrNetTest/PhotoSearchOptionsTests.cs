@@ -77,5 +77,21 @@ namespace FlickrNetTest
             Assert.AreEqual<string>(expected, url);
 
         }
+
+        [TestMethod]
+        public void PhotoSearchExtrasViews()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.Tags = "kittens";
+            o.Extras = PhotoSearchExtras.Views;
+
+            var photos = TestData.GetInstance().PhotosSearch(o);
+
+            foreach (var photo in photos)
+            {
+                Assert.IsTrue(photo.Views.HasValue);
+            }
+
+        }
     }
 }
