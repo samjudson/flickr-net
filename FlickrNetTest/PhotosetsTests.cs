@@ -102,19 +102,29 @@ namespace FlickrNetTest
             string tags = "testtag1,testtag2";
 
             s.Position = 0;
+            // Upload photo once
             string photoId1 = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
             Debug.WriteLine("Photo 1 created: " + photoId1);
 
             s.Position = 0;
+            // Upload photo a second time
             string photoId2 = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
             Debug.WriteLine("Photo 2 created: " + photoId2);
 
+            // Creat photoset
             Photoset photoset = f.PhotosetsCreate("Test photoset", photoId1);
             Debug.WriteLine("Photoset created: " + photoset.PhotosetId);
 
+            // Add second photo to photoset.
             f.PhotosetsAddPhoto(photoset.PhotosetId, photoId2);
 
+            // Remove second photo from photoset
+            f.PhotosetsRemovePhoto(photoset.PhotosetId, photoId2);
+
+            // Delete photoset completely
             f.PhotosetsDelete(photoset.PhotosetId);
+
+            // Delete both photos.
             f.PhotosDelete(photoId1);
             f.PhotosDelete(photoId2);
         }
