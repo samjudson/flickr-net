@@ -364,6 +364,8 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to remove.</param>
         public void PhotosetsRemovePhoto(string photosetId, string photoId)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.removePhoto");
             parameters.Add("photoset_id", photosetId);

@@ -62,7 +62,13 @@ namespace FlickrNet
 
             string response = FlickrResponder.GetDataResponse(this, url, parameters);
 
-            return FlickrNet.OAuthAccessToken.ParseResponse(response);
+            var accessToken = FlickrNet.OAuthAccessToken.ParseResponse(response);
+
+            // Set current access token.
+            OAuthAccessToken = accessToken.Token;
+            OAuthAccessTokenSecret = accessToken.TokenSecret;
+
+            return accessToken;
         }
 
     }
