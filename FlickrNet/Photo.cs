@@ -432,7 +432,7 @@ namespace FlickrNet
         /// <summary>
         /// The description for the photo. Only returned if <see cref="PhotoSearchExtras.Description"/> is set.
         /// </summary>
-        public string Description { get; protected set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// If Geolocation information is returned for this photo then this will contain the permissions for who can see those permissions.
