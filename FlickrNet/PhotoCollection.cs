@@ -23,6 +23,7 @@ namespace FlickrNet
                         Total = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "perpage":
+                    case "per_page":
                         PerPage = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "page":
