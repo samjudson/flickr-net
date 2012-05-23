@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+
 
 namespace FlickrNetTest
 {
@@ -262,5 +264,29 @@ namespace FlickrNetTest
                 throw;
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(FlickrApiException))]
+        public void TestPhotoNotFound()
+        {
+            Flickr f = TestData.GetInstance();
+            f.PhotosGetInfo("abcd");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(FlickrApiException))]
+        public void TestPhotoNotFoundAsync()
+        {
+            Flickr f = TestData.GetInstance();
+
+            var w = new AsyncSubject<FlickrResult<PhotoInfo>>();
+
+            f.PhotosGetInfoAsync("abcd", r => { w.OnNext(r); w.OnCompleted(); });
+            var result = w.Next().First();
+
+            Assert.IsTrue(result.HasError);
+            throw result.Error;
+        }
+
     }
 }

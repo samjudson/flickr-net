@@ -387,7 +387,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PhotoSearchDetailedTest()
+        public void PhotosSearchDetailedTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
             o.Tags = "applestore";
@@ -517,7 +517,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PhotoSearchLatCultureTest()
+        public void PhotosSearchLatCultureTest()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("nb-NO");
 
@@ -764,7 +764,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PhotoSearchRussianCharacters()
+        public void PhotosSearchRussianCharacters()
         {
             Flickr f = TestData.GetInstance();
 
@@ -779,7 +779,25 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PhotoSearchAuthRussianCharacters()
+        public void PhotosSearchRussianTagsReturned()
+        {
+            Flickr f = TestData.GetInstance();
+
+            var o = new PhotoSearchOptions();
+            o.UserId = "31828860@N08";
+            o.Extras = PhotoSearchExtras.Tags;
+
+            var photos = f.PhotosSearch(o);
+
+            foreach (var photo in photos)
+            {
+                Console.WriteLine(photo.Title + " = " + String.Join(",", photo.Tags));
+            }
+
+        }
+
+        [TestMethod]
+        public void PhotosSearchAuthRussianCharacters()
         {
             Flickr f = TestData.GetAuthInstance();
 
@@ -794,7 +812,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        public void PhotoSearchRotation()
+        public void PhotosSearchRotation()
         {
             Flickr f = TestData.GetInstance();
             PhotoSearchOptions o = new PhotoSearchOptions() { Extras = PhotoSearchExtras.Rotation, UserId = TestData.TestUserId, PerPage = 100 };

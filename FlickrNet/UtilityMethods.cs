@@ -17,7 +17,7 @@ namespace FlickrNet
     /// </summary>
     public sealed class UtilityMethods
     {
-        private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0);
+        private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         private UtilityMethods()
         {
