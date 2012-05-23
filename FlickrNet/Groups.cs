@@ -89,6 +89,21 @@ namespace FlickrNet
         public DateTime? BlastDateAdded { get; set; }
 
         /// <summary>
+        /// The role name assigned to members of this group.
+        /// </summary>
+        public string MemberRoleName { get; set; }
+
+        /// <summary>
+        /// The role name assigned to moderators of this group.
+        /// </summary>
+        public string ModeratorRoleName { get; set; }
+
+        /// <summary>
+        /// The role name assigned to admins of this group.
+        /// </summary>
+        public string AdminRoleName { get; set; }
+
+        /// <summary>
         /// The url for the group's icon. 
         /// </summary>
         public string GroupIconUrl
@@ -194,6 +209,12 @@ namespace FlickrNet
                     case "restrictions":
                         Restrictions = new GroupInfoRestrictions();
                         ((IFlickrParsable)Restrictions).Load(reader);
+                        break;
+                    case "roles":
+                        MemberRoleName = reader.GetAttribute("member");
+                        ModeratorRoleName = reader.GetAttribute("moderator");
+                        AdminRoleName = reader.GetAttribute("admin");
+                        reader.Read();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
