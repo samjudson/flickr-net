@@ -66,30 +66,39 @@ namespace FlickrNet
                         }
                         else
                         {
-                            lastResponse = r.Result;
-
-                            XmlReaderSettings settings = new XmlReaderSettings();
-                            settings.IgnoreWhitespace = true;
-                            XmlReader reader = XmlReader.Create(new StringReader(r.Result), settings);
-
-                            if (!reader.ReadToDescendant("rsp"))
+                            try
                             {
-                                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
+                                lastResponse = r.Result;
+
+                                XmlReaderSettings settings = new XmlReaderSettings();
+                                settings.IgnoreWhitespace = true;
+                                XmlReader reader = XmlReader.Create(new StringReader(r.Result), settings);
+
+                                if (!reader.ReadToDescendant("rsp"))
+                                {
+                                    throw new XmlException("Unable to find response element 'rsp' in Flickr response");
+                                }
+                                while (reader.MoveToNextAttribute())
+                                {
+                                    if (reader.LocalName == "stat" && reader.Value == "fail")
+                                    {
+                                        throw ExceptionHandler.CreateResponseException(reader);
+                                    }
+                                    continue;
+                                }
+
+                                reader.MoveToElement();
+                                reader.Read();
+
+                                T t = new T();
+                                ((IFlickrParsable)t).Load(reader);
+                                result.Result = t;
+                                result.HasError = false;
                             }
-                            while (reader.MoveToNextAttribute())
+                            catch (Exception ex)
                             {
-                                if (reader.LocalName == "stat" && reader.Value == "fail")
-                                    throw ExceptionHandler.CreateResponseException(reader);
-                                continue;
+                                result.Error = ex;
                             }
-
-                            reader.MoveToElement();
-                            reader.Read();
-
-                            T t = new T();
-                            ((IFlickrParsable)t).Load(reader);
-                            result.Result = t;
-                            result.HasError = false;
                         }
 
                         if (callback != null) callback(result);
