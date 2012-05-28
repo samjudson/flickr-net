@@ -253,5 +253,62 @@ namespace FlickrNet
 
             GetResponseAsync<PhotoCollection>(parameters, callback);
         }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to join.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to join.</param>
+        /// <param name="callback">The callback method to signify that this call has completed.</param>
+        public void GroupsJoinAsync(string groupId, Action<FlickrResult<NoResponse>> callback)
+        {
+            GroupsJoinAsync(groupId, false, callback);
+        }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to join.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to join.</param>
+        /// <param name="acceptsRules">Specify true to signify that the user accepts the groups rules.</param>
+        /// <param name="callback">The callback method to signify that this call has completed.</param>
+        public void GroupsJoinAsync(string groupId, bool acceptsRules, Action<FlickrResult<NoResponse>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.groups.join");
+            parameters.Add("group_id", groupId);
+            if (acceptsRules) parameters.Add("accepts_rules", "1");
+
+            GetResponseAsync<NoResponse>(parameters, callback);
+        }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to leave.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to leave.</param>
+        /// <param name="callback">The callback method to signify that this call has completed.</param>
+        public void GroupsLeaveAsync(string groupId, Action<FlickrResult<NoResponse>> callback)
+        {
+            GroupsLeaveAsync(groupId, false, callback);
+        }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to leave.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to leave.</param>
+        /// <param name="deletePhotos">Specify true to delete all of the users photos when they leave the group.</param>
+        /// <param name="callback">The callback method to signify that this call has completed.</param>
+        public void GroupsLeaveAsync(string groupId, bool deletePhotos, Action<FlickrResult<NoResponse>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.groups.leave");
+            parameters.Add("group_id", groupId);
+            if (deletePhotos) parameters.Add("delete_photos", "1");
+
+            GetResponseAsync<NoResponse>(parameters, callback);
+        }
+
     }
 }

@@ -211,6 +211,7 @@
     <Compile Include="CollectionSet.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GroupFullInfo.cs" />
     <Compile Include="HotTag.cs" />
     <Compile Include="HotTagCollection.cs" />
     <Compile Include="Institution.cs" />

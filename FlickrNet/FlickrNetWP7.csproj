@@ -146,6 +146,7 @@
     <Compile Include="GeoPermissionType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GroupCategory.cs" />
+    <Compile Include="GroupFullInfo.cs" />
     <Compile Include="Groups.cs" />
     <Compile Include="GroupSearchResultCollection.cs" />
     <Compile Include="HotTag.cs" />

@@ -263,5 +263,57 @@ namespace FlickrNet
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to join.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to join.</param>
+        public void GroupsJoin(string groupId)
+        {
+            GroupsJoin(groupId, false);
+        }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to join.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to join.</param>
+        /// <param name="acceptsRules">Specify true to signify that the user accepts the groups rules.</param>
+        public void GroupsJoin(string groupId, bool acceptsRules)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.groups.join");
+            parameters.Add("group_id", groupId);
+            if (acceptsRules) parameters.Add("accepts_rules", "1");
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to leave.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to leave.</param>
+        public void GroupsLeave(string groupId)
+        {
+            GroupsLeave(groupId, false);
+        }
+
+        /// <summary>
+        /// Specify a group for the authenticated user to leave.
+        /// </summary>
+        /// <param name="groupId">The group id of the group to leave.</param>
+        /// <param name="deletePhotos">Specify true to delete all of the users photos when they leave the group.</param>
+        public void GroupsLeave(string groupId, bool deletePhotos)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.groups.leave");
+            parameters.Add("group_id", groupId);
+            if (deletePhotos) parameters.Add("delete_photos", "1");
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
     }
 }
