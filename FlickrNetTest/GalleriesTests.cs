@@ -267,5 +267,20 @@ namespace FlickrNetTest
 
             Assert.IsTrue(found, "Should have found the photo in the gallery.");
         }
+
+        [TestMethod]
+        public void GalleriesFlickrTest()
+        {
+            Flickr f = TestData.GetInstance();
+
+            var galleries = f.GalleriesGetList("78685728@N03");
+
+            Assert.AreEqual(0, galleries.Count);
+
+            f = TestData.GetAuthInstance();
+            galleries = f.GalleriesGetList("78685728@N03");
+
+            Assert.AreNotEqual(0, galleries.Count);
+        }
     }
 }

@@ -95,5 +95,28 @@ namespace FlickrNetTest
 
             //Assert.IsFalse(result.HasError);
         }
+
+        [TestMethod]
+        public void PhotosSearchAsyncShowerTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            PhotoSearchOptions o = new PhotoSearchOptions();
+            o.UserId = "78507951@N00";
+            o.Tags = "shower";
+            o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;
+            o.PerPage = 1000;
+            o.TagMode = TagMode.AllTags;
+            o.Extras = PhotoSearchExtras.All;
+
+            var w = new AsyncSubject<FlickrResult<PhotoCollection>>();
+
+            f.PhotosSearchAsync(o, r => { w.OnNext(r); w.OnCompleted(); });
+            var result = w.Next().First();
+
+            Assert.IsTrue(result.Result.Total > 0);
+
+        }
+
     }
 }
