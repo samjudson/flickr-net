@@ -208,25 +208,26 @@ namespace FlickrNet
 
             req.ContentLength = dataBuffer.Length;
 
-            Stream resStream = req.GetRequestStream();
-
-            int j = 1;
-            int uploadBit = Math.Max(dataBuffer.Length / 100, 50 * 1024);
-            int uploadSoFar = 0;
-
-            for (int i = 0; i < dataBuffer.Length; i = i + uploadBit)
+            using (Stream reqStream = req.GetRequestStream())
             {
-                int toUpload = Math.Min(uploadBit, dataBuffer.Length - i);
-                uploadSoFar += toUpload;
+                int bufferSize = 32 * 1024;
+                if (dataBuffer.Length / 100 > bufferSize) bufferSize = bufferSize * 2;
 
-                resStream.Write(dataBuffer, i, toUpload);
+                int uploadedSoFar = 0;
 
-                if ((OnUploadProgress != null) && ((j++) % 5 == 0 || uploadSoFar == dataBuffer.Length))
+                while (uploadedSoFar < dataBuffer.Length)
                 {
-                    OnUploadProgress(this, new UploadProgressEventArgs(i + toUpload, dataBuffer.Length));
+                    reqStream.Write(dataBuffer, uploadedSoFar, Math.Min(bufferSize, dataBuffer.Length - uploadedSoFar));
+                    uploadedSoFar += bufferSize;
+
+                    if (OnUploadProgress != null)
+                    {
+                        UploadProgressEventArgs args = new UploadProgressEventArgs(uploadedSoFar, dataBuffer.Length);
+                        OnUploadProgress(this, args);
+                    }
                 }
+                reqStream.Close();
             }
-            resStream.Close();
 
             HttpWebResponse res = (HttpWebResponse)req.GetResponse();
 
