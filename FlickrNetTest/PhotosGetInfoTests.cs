@@ -5,6 +5,8 @@ using System.Linq;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+using System.Reactive.Subjects;
+using System.Reactive.Linq;
 
 
 namespace FlickrNetTest

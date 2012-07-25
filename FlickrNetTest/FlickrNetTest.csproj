@@ -40,14 +40,10 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.CoreEx, Version=1.0.2787.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Observable, Version=1.0.0.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Reactive, Version=1.0.2787.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Reactive">
+      <HintPath>..\packages\Rx-Main.1.0.11226\lib\Net4\System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -67,12 +63,6 @@
     <Compile Include="TestData.cs" />
     <Compile Include="UtilsTest.cs" />
     <Compile Include="VSCodeGenAccessors.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FlickrNet\FlickrNet.csproj">
-      <Project>{5F017126-C1FF-4996-85CC-6150E80C6AFC}</Project>
-      <Name>FlickrNet</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityTests.cs" />
@@ -110,6 +100,15 @@
     <Compile Include="StatsGetTotalViewsTest.cs" />
     <Compile Include="TestTests.cs" />
     <Compile Include="UrlsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FlickrNet\FlickrNet.csproj">
+      <Project>{5f017126-c1ff-4996-85cc-6150e80c6afc}</Project>
+      <Name>FlickrNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
 </Project>

@@ -7,6 +7,8 @@ using FlickrNet;
 using System.Xml;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
+using System.Reactive.Linq;
 
 namespace FlickrNetTest
 {
