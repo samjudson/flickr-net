@@ -84,17 +84,22 @@ namespace FlickrNetTest
 
         public static Flickr GetInstance()
         {
-            return new Flickr(ApiKey);
+            var f = new Flickr(ApiKey);
+            f.InstanceCacheDisabled = true;
+            return f;
         }
 
         public static Flickr GetSignedInstance()
         {
-            return new Flickr(ApiKey, SharedSecret);
+            var f = new Flickr(ApiKey, SharedSecret);
+            f.InstanceCacheDisabled = true;
+            return f;
         }
 
         public static Flickr GetAuthInstance()
         {
             Flickr f = new Flickr(ApiKey, SharedSecret);
+            f.InstanceCacheDisabled = true;
             f.OAuthAccessToken = AccessToken;
             f.OAuthAccessTokenSecret = AccessTokenSecret;
             return f;
@@ -103,12 +108,14 @@ namespace FlickrNetTest
         public static Flickr GetOldSignedInstance()
         {
             Flickr f = new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269");
+            f.InstanceCacheDisabled = true;
             return f;
         }
 
         public static Flickr GetOldAuthInstance()
         {
             Flickr f = new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269", AuthToken);
+            f.InstanceCacheDisabled = true;
             return f;
         }
 

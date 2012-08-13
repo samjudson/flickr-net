@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlickrNetTest
 {
@@ -66,7 +63,7 @@ namespace FlickrNetTest
         public void PhotosGetFavoritesNoFavourites()
         {
             // No favourites
-            PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.PhotoId, 100, 1);
+            PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.PhotoId);
 
             Assert.AreEqual(0, favs.Count, "Should have no favourites");
 

@@ -96,6 +96,7 @@ namespace FlickrNet
         private static void DownloadDataAsync(string method, string baseUrl, string data, string contentType, string authHeader, Action<FlickrResult<string>> callback)
         {
             WebClient client = new WebClient();
+
             if (!String.IsNullOrEmpty(contentType)) client.Headers["Content-Type"] = contentType;
             if (!String.IsNullOrEmpty(authHeader)) client.Headers["Authorization"] = authHeader;
 
@@ -104,7 +105,7 @@ namespace FlickrNet
                 client.UploadStringCompleted += delegate(object sender, UploadStringCompletedEventArgs e)
                 {
                     FlickrResult<string> result = new FlickrResult<string>();
-                    if( e.Error != null)
+                    if (e.Error != null)
                     {
                         result.Error = e.Error;
                         callback(result);
@@ -120,10 +121,10 @@ namespace FlickrNet
             }
             else
             {
-                client.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs e) 
+                client.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs e)
                 {
                     FlickrResult<string> result = new FlickrResult<string>();
-                    if( e.Error != null)
+                    if (e.Error != null)
                     {
                         result.Error = e.Error;
                         callback(result);
@@ -136,8 +137,8 @@ namespace FlickrNet
                 };
 
                 client.DownloadStringAsync(new Uri(baseUrl));
+
             }
         }
-
     }
 }

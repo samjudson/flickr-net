@@ -187,6 +187,33 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        public void PeopleGetGroupsTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var groups = f.PeopleGetGroups(TestData.TestUserId);
+
+            Assert.IsNotNull(groups);
+            Assert.AreNotEqual(0, groups.Count);
+        }
+
+        [TestMethod]
+        public void PeopleGetLimitsTest()
+        {
+            var f = TestData.GetAuthInstance();
+
+            var limits = f.PeopleGetLimits();
+
+            Assert.IsNotNull(limits);
+
+            Assert.AreEqual(0, limits.MaximumDisplayPixels);
+            Assert.AreEqual(52428800, limits.MaximumPhotoUpload);
+            Assert.AreEqual(524288000, limits.MaximumVideoUpload);
+            Assert.AreEqual(90, limits.MaximumVideoDuration);
+            
+        }
+
+        [TestMethod]
         public void PeopleFindByUsername()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -228,11 +255,11 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            PublicGroupInfoCollection groups = f.PeopleGetPublicGroups(TestData.TestUserId);
+            GroupInfoCollection groups = f.PeopleGetPublicGroups(TestData.TestUserId);
 
             Assert.AreNotEqual(0, groups.Count, "PublicGroupInfoCollection.Count should not be zero.");
 
-            foreach(PublicGroupInfo group in groups)
+            foreach(GroupInfo group in groups)
             {
                 Assert.IsNotNull(group.GroupId, "GroupId should not be null.");
                 Assert.IsNotNull(group.GroupName, "GroupName should not be null.");

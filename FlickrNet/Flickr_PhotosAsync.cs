@@ -230,7 +230,7 @@ namespace FlickrNet
         /// a list of the number of photos between DateA and DateB,
         /// followed by the number between DateB and DateC. 
         /// More parameters means more sets.</remarks>
-        /// <param name="dates">Array of <see cref="DateTime"/> objects.</param>
+        /// <param name="dates">Array of <see cref="DateTime"/> objects representing upload dates.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetCountsAsync(DateTime[] dates, Action<FlickrResult<PhotoCountCollection>> callback)
         {
@@ -267,6 +267,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetCountsAsync(DateTime[] dates, DateTime[] takenDates, Action<FlickrResult<PhotoCountCollection>> callback)
         {
+            CheckRequiresAuthentication();
+
             string dateString = null;
             string takenDateString = null;
 
@@ -358,6 +360,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetPermsAsync(string photoId, Action<FlickrResult<PhotoPermissions>> callback)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getPerms");
             parameters.Add("photo_id", photoId);

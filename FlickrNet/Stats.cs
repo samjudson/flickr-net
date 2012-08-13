@@ -36,13 +36,22 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "views":
-                        Views = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        if (String.IsNullOrEmpty(reader.Value))
+                            Views = 0;
+                        else
+                            Views = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "comments":
-                        Comments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        if (String.IsNullOrEmpty(reader.Value))
+                            Comments = 0;
+                        else
+                            Comments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "favorites":
-                        Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        if (String.IsNullOrEmpty(reader.Value))
+                            Favorites = 0;
+                        else
+                            Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

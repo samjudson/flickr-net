@@ -40,6 +40,23 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Gets a list of groups the user is a member of.
+        /// </summary>
+        /// <param name="userId">The user whose groups you wish to return.</param>
+        /// <param name="callback"></param>
+        public void PeopleGetGroupsAsync(string userId, Action<FlickrResult<GroupInfoCollection>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.people.getGroups");
+            parameters.Add("user_id", userId);
+
+            GetResponseAsync<GroupInfoCollection>(parameters, callback);
+        }
+
+
+        /// <summary>
         /// Gets the <see cref="Person"/> object for the given user id.
         /// </summary>
         /// <param name="userId">The user id to find.</param>
@@ -52,6 +69,20 @@ namespace FlickrNet
             parameters.Add("user_id", userId);
 
             GetResponseAsync<Person>(parameters, callback);
+        }
+
+        /// <summary>
+        /// Returns the limits for a person. See <see cref="PersonLimits"/> for more details.
+        /// </summary>
+        /// <returns></returns>
+        public void PeopleGetLimitsAsync(Action<FlickrResult<PersonLimits>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.people.getLimits");
+
+            GetResponseAsync<PersonLimits>(parameters, callback);
         }
 
         /// <summary>
@@ -71,14 +102,14 @@ namespace FlickrNet
         /// </summary>
         /// <param name="userId">The user id to get groups for.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PeopleGetPublicGroupsAsync(string userId, Action<FlickrResult<PublicGroupInfoCollection>> callback)
+        public void PeopleGetPublicGroupsAsync(string userId, Action<FlickrResult<GroupInfoCollection>> callback)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicGroups");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
 
-            GetResponseAsync<PublicGroupInfoCollection>(parameters, callback);
+            GetResponseAsync<GroupInfoCollection>(parameters, callback);
         }
 
         /// <summary>

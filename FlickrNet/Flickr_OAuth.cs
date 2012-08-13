@@ -109,7 +109,7 @@ namespace FlickrNet
         private Dictionary<string, string> OAuthGetBasicParameters()
         {
             string oauthtimestamp = UtilityMethods.DateToUnixTimestamp(DateTime.UtcNow);
-            string oauthnonce = new Random().Next(100000000).ToString();
+            string oauthnonce = Guid.NewGuid().ToString("N");
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("oauth_nonce", oauthnonce);

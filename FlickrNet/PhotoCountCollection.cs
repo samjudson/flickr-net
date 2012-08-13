@@ -58,10 +58,16 @@ namespace FlickrNet
                         Count = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "fromdate":
-                        FromDate = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        if( System.Text.RegularExpressions.Regex.IsMatch(reader.Value, "^\\d+$") )
+                            FromDate = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        else
+                            FromDate = UtilityMethods.MySqlToDate(reader.Value);
                         break;
                     case "todate":
-                        ToDate = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        if( System.Text.RegularExpressions.Regex.IsMatch(reader.Value, "^\\d+$") )
+                            ToDate = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        else
+                            ToDate = UtilityMethods.MySqlToDate(reader.Value);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

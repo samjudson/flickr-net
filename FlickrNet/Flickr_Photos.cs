@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 
 namespace FlickrNet
 {
@@ -275,7 +273,7 @@ namespace FlickrNet
             if (takenDates != null && takenDates.Length > 0)
             {
                 Array.Sort<DateTime>(takenDates);
-                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
+                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToMySql(d).ToString(); })).ToArray());
             }
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
@@ -422,7 +420,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged()
         {
-            return PhotosGetUntagged(0, 0, PhotoSearchExtras.None);
+            return PhotosGetUntagged(0, 0, PhotoSearchExtras.Tags);
         }
 
         /// <summary>
@@ -443,7 +441,7 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged(int page, int perPage)
         {
-            return PhotosGetUntagged(page, perPage, PhotoSearchExtras.None);
+            return PhotosGetUntagged(page, perPage, PhotoSearchExtras.Tags);
         }
 
         /// <summary>
@@ -470,6 +468,8 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>
         public PhotoCollection PhotosGetUntagged(PartialSearchOptions options)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getUntagged");
 
@@ -534,6 +534,8 @@ namespace FlickrNet
         /// <returns>A collection of photos in the <see cref="PhotoCollection"/> class.</returns>
         public PhotoCollection PhotosGetNotInSet(PartialSearchOptions options)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getNotInSet");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);

@@ -12,22 +12,22 @@ namespace FlickrNet
         /// <summary>
         /// No member type has been specified (all should be returned).
         /// </summary>
-        None,
+        None = 0,
         /// <summary>
         /// A basic member.
         /// </summary>
-        Member,
+        Member = 1,
         /// <summary>
         /// A group moderator.
         /// </summary>
-        Moderator,
+        Moderator = 2,
         /// <summary>
         /// A group adminstrator.
         /// </summary>
-        Admin,
+        Admin = 4,
         /// <summary>
         /// Some strange kind of super-admin. Unsupported by the API.
         /// </summary>
-        Narwhal
+        Narwhal = 8
     }
 }

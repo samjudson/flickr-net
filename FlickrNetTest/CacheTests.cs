@@ -85,10 +85,9 @@ namespace FlickrNetTest
         {
             Directory.Delete(Flickr.CacheLocation, true);
 
-            Flickr.FlushCache();
-            Flickr.CacheDisabled = false;
-
             Flickr f = TestData.GetInstance();
+            Flickr.FlushCache();
+            f.InstanceCacheDisabled = false;
 
             f.PeopleGetPublicPhotos(TestData.TestUserId);
 

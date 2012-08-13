@@ -1,8 +1,6 @@
 using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FlickrNet;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlickrNetTest
 {
@@ -47,6 +45,14 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
             f.PhotosGetContactsPhotos();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void PhotosGetContactsPhotosIncorrectCountTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+            f.PhotosGetContactsPhotos(51);
         }
 
         [TestMethod]

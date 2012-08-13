@@ -55,7 +55,7 @@ namespace FlickrNet
 
             parameters.Add("method", "flickr.stats.getCollectionDomains");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
-            if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", collectionId);
+            if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -237,7 +237,7 @@ namespace FlickrNet
 
             parameters.Add("method", "flickr.stats.getCollectionStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
-            parameters.Add("collection_id", collectionId);
+            parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
 
             return GetResponseCache<Stats>(parameters);
         }
@@ -476,7 +476,7 @@ namespace FlickrNet
             parameters.Add("method", "flickr.stats.getCollectionReferrers");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
-            if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", collectionId);
+            if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 

@@ -40,6 +40,22 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Gets a list of groups the user is a member of.
+        /// </summary>
+        /// <param name="userId">The user whose groups you wish to return.</param>
+        /// <returns></returns>
+        public GroupInfoCollection PeopleGetGroups(string userId)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.people.getGroups");
+            parameters.Add("user_id", userId);
+
+            return GetResponseCache<GroupInfoCollection>(parameters);
+        }
+
+        /// <summary>
         /// Gets the <see cref="Person"/> object for the given user id.
         /// </summary>
         /// <param name="userId">The user id to find.</param>
@@ -48,10 +64,23 @@ namespace FlickrNet
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getInfo");
-            parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
 
             return GetResponseCache<Person>(parameters);
+        }
+
+        /// <summary>
+        /// Returns the limits for a person. See <see cref="PersonLimits"/> for more details.
+        /// </summary>
+        /// <returns></returns>
+        public PersonLimits PeopleGetLimits()
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.people.getLimits");
+
+            return GetResponseCache<PersonLimits>(parameters);
         }
 
         /// <summary>
@@ -70,8 +99,8 @@ namespace FlickrNet
         /// Get a list of public groups for a user.
         /// </summary>
         /// <param name="userId">The user id to get groups for.</param>
-        /// <returns>An array of <see cref="PublicGroupInfo"/> instances.</returns>
-        public PublicGroupInfoCollection PeopleGetPublicGroups(string userId)
+        /// <returns>An array of <see cref="GroupInfo"/> instances.</returns>
+        public GroupInfoCollection PeopleGetPublicGroups(string userId)
         {
             return PeopleGetPublicGroups(userId, null);
         }
@@ -81,8 +110,8 @@ namespace FlickrNet
         /// </summary>
         /// <param name="userId">The user id to get groups for.</param>
         /// <param name="includeInvitationOnly">Wheither to include public but invitation only groups in the results.</param>
-        /// <returns>An array of <see cref="PublicGroupInfo"/> instances.</returns>
-        public PublicGroupInfoCollection PeopleGetPublicGroups(string userId, bool? includeInvitationOnly)
+        /// <returns>An array of <see cref="GroupInfo"/> instances.</returns>
+        public GroupInfoCollection PeopleGetPublicGroups(string userId, bool? includeInvitationOnly)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicGroups");
@@ -91,7 +120,7 @@ namespace FlickrNet
             if (includeInvitationOnly.HasValue) parameters.Add("invitation_only", includeInvitationOnly.Value ? "1" : "0");
 
 
-            return GetResponseCache<PublicGroupInfoCollection>(parameters);
+            return GetResponseCache<GroupInfoCollection>(parameters);
         }
 
         /// <summary>

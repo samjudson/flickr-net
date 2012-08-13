@@ -30,15 +30,15 @@ namespace FlickrNet
         /// </summary>
         DateTakenDescending,
         /// <summary>
-        /// Sort by interestingness.
+        /// Sort by interestingness (least interesting first)
         /// </summary>
         InterestingnessAscending,
         /// <summary>
-        /// Sort by interestingness in descending order.
+        /// Sort by interestingness in descending order (i.e. most interesting first)
         /// </summary>
         InterestingnessDescending,
         /// <summary>
-        /// Sort by relevance
+        /// Sort by relevance (only applicable to text searches)
         /// </summary>
         Relevance
     }

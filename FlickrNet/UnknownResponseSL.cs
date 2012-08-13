@@ -68,5 +68,21 @@ namespace FlickrNet
 
             return l.ToArray<string>();
         }
+
+        /// <summary>
+        /// Gets an array of text values of an element from the given response.
+        /// </summary>
+        /// </summary>
+        /// <param name="elementName">The element name to find.</param>
+        /// <returns>An array of string values.</returns>
+        public string[] GetElementArray(string elementName, string attributeName)
+        {
+            System.Xml.Linq.XDocument doc = GetXDocument();
+            if (String.IsNullOrEmpty(elementName) || elementName == "*")
+                return doc.Descendants().Attributes(attributeName).Select( a => a.Value).ToArray();
+            else
+                return doc.Descendants(elementName).Attributes(attributeName).Select(a => a.Value).ToArray();
+        }
+
     }
 }

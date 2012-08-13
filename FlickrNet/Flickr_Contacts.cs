@@ -153,5 +153,38 @@ namespace FlickrNet
             return GetResponseCache<ContactCollection>(parameters);
         }
 
+        /// <summary>
+        /// Returns a list of contacts who Flickr suggests you might want to tag.
+        /// </summary>
+        /// <remarks>
+        /// Not sure exactly what the purpose of this function is as it appears to just return a list of all my contacts.
+        /// </remarks>
+        /// <returns></returns>
+        public ContactCollection ContactsGetTaggingSuggestions()
+        {
+            return ContactsGetTaggingSuggestions(0, 0);
+        }
+
+        /// <summary>
+        /// Returns a list of contacts who Flickr suggests you might want to tag.
+        /// </summary>
+        /// <remarks>
+        /// Not sure exactly what the purpose of this function is as it appears to just return a list of all my contacts.
+        /// </remarks>
+        /// <param name="page">The page of results to return. Default is 1.</param>
+        /// <param name="perPage">The number of contacts to return per page.</param>
+        /// <returns></returns>
+        public ContactCollection ContactsGetTaggingSuggestions(int page, int perPage)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.contacts.getTaggingSuggestions");
+            if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            return GetResponseCache<ContactCollection>(parameters);
+
+        }
+
     }
 }

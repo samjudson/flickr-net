@@ -22,6 +22,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
+            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+                throw new ArgumentException("You must pass either a placeId or a woeId");
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.batchCorrectLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -43,11 +46,14 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
+            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+                throw new ArgumentException("You must supply at least one of placeId and woeId parameters.");
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.correctLocation");
             parameters.Add("photo_id", photoId);
-            parameters.Add("place_id", placeId);
-            parameters.Add("woe_id", woeId);
+            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -102,7 +108,19 @@ namespace FlickrNet
         /// <param name="longitude">The longitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
         public void PhotosGeoSetLocation(string photoId, double latitude, double longitude)
         {
-            PhotosGeoSetLocation(photoId, latitude, longitude, GeoAccuracy.None);
+            PhotosGeoSetLocation(photoId, latitude, longitude, GeoAccuracy.None, GeoContext.NotDefined);
+        }
+
+        /// <summary>
+        /// Sets the geo location for a photo.
+        /// </summary>
+        /// <param name="photoId">The ID of the photo to set to location for.</param>
+        /// <param name="latitude">The latitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
+        /// <param name="longitude">The longitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
+        /// <param name="accuracy">The accuracy for the geo location. Default is 16 - World.</param>
+        public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy)
+        {
+            PhotosGeoSetLocation(photoId, latitude, longitude, accuracy, GeoContext.NotDefined);
         }
 
         /// <summary>
@@ -112,7 +130,8 @@ namespace FlickrNet
         /// <param name="latitude">The latitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
         /// <param name="longitude">The longitude of the geo location. A double number ranging from -180.00 to 180.00. Digits beyond 6 decimal places will be truncated.</param>
         /// <param name="accuracy">The accuracy of the photos geo location.</param>
-        public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy)
+        /// <param name="context">The context of the geolocation data, i.e. Inside or Outside.</param>
+        public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy, GeoContext context)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setLocation");
@@ -121,6 +140,8 @@ namespace FlickrNet
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (accuracy != GeoAccuracy.None)
                 parameters.Add("accuracy", accuracy.ToString("D"));
+            if (context != GeoContext.NotDefined)
+                parameters.Add("context", context.ToString("D"));
 
             GetResponseNoCache<NoResponse>(parameters);
         }

@@ -71,7 +71,7 @@ namespace FlickrNet
 
             string responseXml = String.Empty;
 
-            if (CacheDisabled)
+            if (InstanceCacheDisabled)
             {
                 responseXml = FlickrResponder.GetDataResponse(this, BaseUri.AbsoluteUri, parameters);
             }

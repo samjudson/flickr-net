@@ -209,8 +209,8 @@ namespace FlickrNetTest
         [TestMethod]
         public void GalleriesEditComplexTest()
         {
-            Flickr.FlushCache();
             Flickr.CacheDisabled = true;
+            Flickr.FlushCache();
 
             string primaryPhotoId = "486875512";
             string comment = "You don't get much better than this for the best Entrance to Hell.\n\n" + DateTime.Now.ToString();
@@ -268,19 +268,5 @@ namespace FlickrNetTest
             Assert.IsTrue(found, "Should have found the photo in the gallery.");
         }
 
-        [TestMethod]
-        public void GalleriesFlickrTest()
-        {
-            Flickr f = TestData.GetInstance();
-
-            var galleries = f.GalleriesGetList("78685728@N03");
-
-            Assert.AreEqual(0, galleries.Count);
-
-            f = TestData.GetAuthInstance();
-            galleries = f.GalleriesGetList("78685728@N03");
-
-            Assert.AreNotEqual(0, galleries.Count);
-        }
     }
 }

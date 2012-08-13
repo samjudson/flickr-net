@@ -16,6 +16,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsAddPhotoAsync(string photosetId, string photoId, Action<FlickrResult<NoResponse>> callback)
         {
+            CheckRequiresAuthentication();
+            
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.addPhoto");
             parameters.Add("photoset_id", photosetId);
@@ -44,6 +46,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsCreateAsync(string title, string description, string primaryPhotoId, Action<FlickrResult<Photoset>> callback)
         {
+            CheckRequiresAuthentication();
+            
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.create");
             parameters.Add("primary_photo_id", primaryPhotoId);
@@ -60,6 +64,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsDeleteAsync(string photosetId, Action<FlickrResult<NoResponse>> callback)
         {
+            CheckRequiresAuthentication();
+
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.delete");
             parameters.Add("photoset_id", photosetId);
@@ -76,6 +82,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsEditMetaAsync(string photosetId, string title, string description, Action<FlickrResult<NoResponse>> callback)
         {
+            CheckRequiresAuthentication();
+            
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.editMeta");
             parameters.Add("photoset_id", photosetId);
@@ -117,6 +125,8 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsEditPhotosAsync(string photosetId, string primaryPhotoId, string photoIds, Action<FlickrResult<NoResponse>> callback)
         {
+            CheckRequiresAuthentication();
+            
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.editPhotos");
             parameters.Add("photoset_id", photosetId);
@@ -163,6 +173,8 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public void PhotosetsGetListAsync(Action<FlickrResult<PhotosetCollection>> callback)
         {
+            CheckRequiresAuthentication();
+            
             PhotosetsGetListAsync(null, 0, 0, callback);
         }
 
@@ -175,6 +187,8 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public void PhotosetsGetListAsync(int page, int perPage, Action<FlickrResult<PhotosetCollection>> callback)
         {
+            CheckRequiresAuthentication();
+            
             PhotosetsGetListAsync(null, page, perPage, callback);
         }
 
@@ -336,6 +350,19 @@ namespace FlickrNet
             if (media != MediaType.None) parameters.Add("media", (media == MediaType.All ? "all" : (media == MediaType.Photos ? "photos" : (media == MediaType.Videos ? "videos" : String.Empty))));
 
             GetResponseAsync<PhotosetPhotoCollection>(parameters, callback);
+        }
+
+        /// <summary>
+        /// Changes the order of your photosets.
+        /// </summary>
+        /// <param name="photosetIds">An array of photoset IDs, 
+        /// ordered with the set to show first, first in the list. 
+        /// Any set IDs not given in the list will be set to appear at the end of the list, ordered by their IDs.</param>
+        /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        public void PhotosetsOrderSetsAsync(IEnumerable<string> photosetIds, Action<FlickrResult<NoResponse>> callback)
+        {
+            List<string> list = new List<string>(photosetIds);
+            PhotosetsOrderSetsAsync(string.Join(",", list.ToArray()), callback);
         }
 
         /// <summary>

@@ -283,6 +283,27 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Sends a request to the group admins to join an invite only group.
+        /// </summary>
+        /// <param name="groupId">The ID of the group the user wishes to join.</param>
+        /// <param name="message">The message to send to the administrator.</param>
+        /// <param name="acceptRules">A boolean confirming the user has accepted the rules of the group.</param>
+        /// <param name="callback"></param>
+        public void GroupsJoinRequestAsync(string groupId, string message, bool acceptRules, Action<FlickrResult<NoResponse>> callback)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.groups.joinRequest");
+            parameters.Add("group_id", groupId);
+            parameters.Add("message", message);
+            if (acceptRules) parameters.Add("accept_rules", "1");
+
+            GetResponseAsync<NoResponse>(parameters, callback);
+        }
+
+
+        /// <summary>
         /// Specify a group for the authenticated user to leave.
         /// </summary>
         /// <param name="groupId">The group id of the group to leave.</param>

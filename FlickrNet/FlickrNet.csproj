@@ -164,7 +164,9 @@
     <Compile Include="Flickr_Galleries.cs" />
     <Compile Include="Flickr_GalleriesAsync.cs" />
     <Compile Include="Flickr_GetResponseAsync.cs" />
+    <Compile Include="Flickr_GroupsDiscuss.cs" />
     <Compile Include="Flickr_GroupsAsync.cs" />
+    <Compile Include="Flickr_GroupsDiscussAsync.cs" />
     <Compile Include="Flickr_InterestingnessAsync.cs" />
     <Compile Include="Flickr_MachineTags.cs" />
     <Compile Include="Flickr_MachineTagsAsync.cs" />
@@ -181,8 +183,11 @@
     <Compile Include="Flickr_PhotosMiscAsync.cs" />
     <Compile Include="Flickr_PhotosPeople.cs" />
     <Compile Include="Flickr_PhotosPeopleAsync.cs" />
+    <Compile Include="Flickr_PhotosSuggestionsAsync.cs" />
     <Compile Include="Flickr_PlacesAsync.cs" />
     <Compile Include="Flickr_PrefsAsync.cs" />
+    <Compile Include="Flickr_Push.cs" />
+    <Compile Include="Flickr_PushAsync.cs" />
     <Compile Include="Flickr_ReflectionAsync.cs" />
     <Compile Include="Flickr_StatsAsync.cs" />
     <Compile Include="Flickr_TagsAsync.cs" />
@@ -228,6 +233,7 @@
     <Compile Include="PagedPhotoCollection.cs" />
     <Compile Include="Pair.cs" />
     <Compile Include="PairCollection.cs" />
+    <Compile Include="PersonLimits.cs" />
     <Compile Include="PhotoComment.cs" />
     <Compile Include="PhotoCommentCollection.cs">
       <SubType>Code</SubType>
@@ -263,6 +269,7 @@
     <Compile Include="Photoset.cs" />
     <Compile Include="PhotosetCommentCollection.cs" />
     <Compile Include="PhotosetPhotoCollection.cs" />
+    <Compile Include="Flickr_PhotosSuggestions.cs" />
     <Compile Include="PlaceCollection.cs" />
     <Compile Include="PlaceInfo.cs" />
     <Compile Include="PlaceTypeInfo.cs" />
@@ -273,8 +280,8 @@
     <Compile Include="PopularPhotoCollection.cs" />
     <Compile Include="Predicate.cs" />
     <Compile Include="PredicateCollection.cs" />
-    <Compile Include="PublicGroupInfo.cs" />
-    <Compile Include="PublicGroupInfoCollection.cs" />
+    <Compile Include="GroupInfo.cs" />
+    <Compile Include="GroupInfoCollection.cs" />
     <Compile Include="ShapeData.cs" />
     <Compile Include="ShapeDataCollection.cs" />
     <Compile Include="StatReferrer.cs" />
@@ -406,11 +413,20 @@
     <Compile Include="StatReferrerCollection.cs" />
     <Compile Include="Stats.cs" />
     <Compile Include="StatViews.cs" />
+    <Compile Include="Subscription.cs" />
+    <Compile Include="SubscriptionCollection.cs" />
+    <Compile Include="Suggestion.cs" />
+    <Compile Include="SuggestionCollection.cs" />
+    <Compile Include="SuggestionStatus.cs" />
     <Compile Include="Tags.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketCollection.cs" />
+    <Compile Include="Topic.cs" />
+    <Compile Include="TopicCollection.cs" />
+    <Compile Include="TopicReply.cs" />
+    <Compile Include="TopicReplyCollection.cs" />
     <Compile Include="UnknownResponse.cs" />
     <Compile Include="UploadProgressEvent.cs">
       <SubType>Code</SubType>

@@ -123,6 +123,8 @@ namespace FlickrNet
 
         private void LoadElements(System.Xml.XmlReader reader)
         {
+            if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "photo") return;
+
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 switch (reader.LocalName)

@@ -147,6 +147,7 @@ namespace FlickrNet
         /// and results which include private pictures the authenticated user is allowed to see
         /// (their own, or others).
         /// </remarks>
+        [Obsolete("Use OAuthToken and OAuthTokenSecret now.")]
         public string AuthToken
         {
             get { return apiToken; }
@@ -176,6 +177,11 @@ namespace FlickrNet
             get { return Cache.CacheDisabled; }
             set { Cache.CacheDisabled = value; }
         }
+
+        /// <summary>
+        /// Override if the cache is disabled for this particular instance of <see cref="Flickr"/>.
+        /// </summary>
+        public bool InstanceCacheDisabled { get; set; }
 
         /// <summary>
         /// All GET calls to Flickr are cached by the Flickr.Net API. Set the <see cref="CacheTimeout"/>
@@ -359,7 +365,7 @@ namespace FlickrNet
                 }
             }
 #endif
-
+            InstanceCacheDisabled = CacheDisabled;
             CurrentService = DefaultService;
         }
 

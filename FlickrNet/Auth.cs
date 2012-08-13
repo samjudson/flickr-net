@@ -23,7 +23,7 @@ namespace FlickrNet
         Write, 
         /// <summary>
         /// Read, write and delete access is required by your application.
-        /// Deleting does not mean deleting photos, just meta data such as tags.
+        /// Deleting does not mean just the ability to delete photos, but also other meta data such as tags.
         /// </summary>
         Delete
     }

@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FlickrNet</RootNamespace>
     <AssemblyName>FlickrNetSilverlight</AssemblyName>
-    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
@@ -22,8 +22,10 @@
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -127,6 +129,7 @@
     <Compile Include="Flickr_GalleriesAsync.cs" />
     <Compile Include="Flickr_GetResponseAsync.cs" />
     <Compile Include="Flickr_GroupsAsync.cs" />
+    <Compile Include="Flickr_GroupsDiscussAsync.cs" />
     <Compile Include="Flickr_InterestingnessAsync.cs" />
     <Compile Include="Flickr_MachineTagsAsync.cs" />
     <Compile Include="Flickr_NotesAsync.cs" />
@@ -140,8 +143,10 @@
     <Compile Include="Flickr_PhotosGeoAsync.cs" />
     <Compile Include="Flickr_PhotosMiscAsync.cs" />
     <Compile Include="Flickr_PhotosPeopleAsync.cs" />
+    <Compile Include="Flickr_PhotosSuggestionsAsync.cs" />
     <Compile Include="Flickr_PlacesAsync.cs" />
     <Compile Include="Flickr_PrefsAsync.cs" />
+    <Compile Include="Flickr_PushAsync.cs" />
     <Compile Include="Flickr_ReflectionAsync.cs" />
     <Compile Include="Flickr_StatsAsync.cs" />
     <Compile Include="Flickr_TagsAsync.cs" />
@@ -159,6 +164,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GroupCategory.cs" />
     <Compile Include="GroupFullInfo.cs" />
+    <Compile Include="GroupInfo.cs" />
+    <Compile Include="GroupInfoCollection.cs" />
     <Compile Include="Groups.cs" />
     <Compile Include="GroupSearchResultCollection.cs" />
     <Compile Include="HotTag.cs" />
@@ -196,6 +203,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Person.cs" />
+    <Compile Include="PersonLimits.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoCollection.cs" />
     <Compile Include="PhotoComment.cs" />
@@ -226,8 +234,6 @@
     <Compile Include="PopularPhotoCollection.cs" />
     <Compile Include="Predicate.cs" />
     <Compile Include="PredicateCollection.cs" />
-    <Compile Include="PublicGroupInfo.cs" />
-    <Compile Include="PublicGroupInfoCollection.cs" />
     <Compile Include="ResponseXmlException.cs" />
     <Compile Include="SafeNativeMethods.cs" />
     <Compile Include="SerializableAttribute.cs" />
@@ -241,9 +247,18 @@
     <Compile Include="StatReferrerCollection.cs" />
     <Compile Include="Stats.cs" />
     <Compile Include="StatViews.cs" />
+    <Compile Include="Subscription.cs" />
+    <Compile Include="SubscriptionCollection.cs" />
+    <Compile Include="Suggestion.cs" />
+    <Compile Include="SuggestionCollection.cs" />
+    <Compile Include="SuggestionStatus.cs" />
     <Compile Include="Tags.cs" />
     <Compile Include="Ticket.cs" />
     <Compile Include="TicketCollection.cs" />
+    <Compile Include="Topic.cs" />
+    <Compile Include="TopicCollection.cs" />
+    <Compile Include="TopicReply.cs" />
+    <Compile Include="TopicReplyCollection.cs" />
     <Compile Include="UnknownResponseSL.cs" />
     <Compile Include="UploadProgressEvent.cs" />
     <Compile Include="User.cs" />

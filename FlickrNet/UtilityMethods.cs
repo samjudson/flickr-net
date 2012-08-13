@@ -15,7 +15,7 @@ namespace FlickrNet
     /// <summary>
     /// Internal class providing certain utility functions to other classes.
     /// </summary>
-    public sealed class UtilityMethods
+    internal sealed class UtilityMethods
     {
         private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -245,6 +245,9 @@ namespace FlickrNet
         /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
         public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, string> parameters)
         {
+            if (options == null) throw new ArgumentNullException("options");
+            if (parameters == null) throw new ArgumentNullException("parameters");
+
             if (options.MinUploadDate != DateTime.MinValue) parameters.Add("min_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MinUploadDate).ToString());
             if (options.MaxUploadDate != DateTime.MinValue) parameters.Add("max_uploaded_date", UtilityMethods.DateToUnixTimestamp(options.MaxUploadDate).ToString());
             if (options.MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", DateToMySql(options.MinTakenDate));
@@ -376,28 +379,31 @@ namespace FlickrNet
             }
         }
 
+        internal static MemberTypes ParseRoleToMemberType(string memberRole)
+        {
+            switch (memberRole)
+            {
+                case "admin":
+                    return MemberTypes.Admin;
+                case "moderator":
+                    return MemberTypes.Moderator;
+                case "member":
+                    return MemberTypes.Member;
+                default:
+                    return MemberTypes.None;
+            }
+        }
+
         internal static string MemberTypeToString(MemberTypes memberTypes)
         {
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            if ((memberTypes & MemberTypes.Member) == MemberTypes.Member)
-                sb.Append("2");
-            if ((memberTypes & MemberTypes.Moderator) == MemberTypes.Moderator)
-            {
-                if (sb.Length > 0) sb.Append(",");
-                sb.Append("3");
-            }
-            if ((memberTypes & MemberTypes.Admin) == MemberTypes.Admin)
-            {
-                if (sb.Length > 0) sb.Append(",");
-                sb.Append("4");
-            }
-            if ((memberTypes & MemberTypes.Narwhal) == MemberTypes.Narwhal)
-            {
-                if (sb.Length > 0) sb.Append(",");
-                sb.Append("1");
-            }
+            List<string> types = new List<string>();
 
-            return sb.ToString();
+            if ((memberTypes & MemberTypes.Narwhal) == MemberTypes.Narwhal) types.Add("1");
+            if ((memberTypes & MemberTypes.Member) == MemberTypes.Member) types.Add("2");
+            if ((memberTypes & MemberTypes.Moderator) == MemberTypes.Moderator) types.Add("3");
+            if ((memberTypes & MemberTypes.Admin) == MemberTypes.Admin) types.Add("4");
+
+            return String.Join(",", types.ToArray());
         }
 
         /// <summary>
@@ -407,14 +413,34 @@ namespace FlickrNet
         /// <returns>The MD5 hash string.</returns>
         public static string MD5Hash(string data)
         {
+            byte[] hashedBytes;
+
 #if SILVERLIGHT
-            byte[] hashedBytes = MD5Core.GetHash(data, Encoding.UTF8);
+            hashedBytes = MD5Core.GetHash(data, Encoding.UTF8);
 #else
-            System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider();
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-            byte[] hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
+            using (System.Security.Cryptography.MD5CryptoServiceProvider csp = new System.Security.Cryptography.MD5CryptoServiceProvider())
+            {
+                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
+                hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
+            }
 #endif
             return BitConverter.ToString(hashedBytes).Replace("-", String.Empty).ToLower(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        internal static DateTime MySqlToDate(string p)
+        {
+            DateTime d1;
+            string format1 = "yyyy-MM-dd";
+            string format2 = "yyyy-MM-dd hh:mm:ss";
+            var iformat = System.Globalization.DateTimeFormatInfo.InvariantInfo;
+
+            if (DateTime.TryParseExact(p, format1, iformat, System.Globalization.DateTimeStyles.None, out d1))
+                return d1;
+            if (DateTime.TryParseExact(p, format2, iformat, System.Globalization.DateTimeStyles.None, out d1))
+                return d1;
+
+            return DateTime.MinValue;
+
         }
 
         /// <summary>
@@ -576,6 +602,16 @@ namespace FlickrNet
             //}
 
             //return result.ToString();
+        }
+
+
+        internal static string CleanCollectionId(string collectionId)
+        {
+            if (!collectionId.Contains("-"))
+                return collectionId;
+            else
+                return collectionId.Substring(collectionId.IndexOf("-")+1);
+
         }
 
     }

@@ -123,6 +123,21 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Returns a collection of the most frequently used tags for the authenticated user.
+        /// </summary>
+        /// <returns></returns>
+        public TagCollection TagsGetMostFrequentlyUsed()
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.tags.getMostFrequentlyUsed");
+
+            return GetResponseCache<TagCollection>(parameters);
+
+        }
+
+        /// <summary>
         /// Returns a list of tags 'related' to the given tag, based on clustered usage analysis.
         /// </summary>
         /// <param name="tag">The tag to fetch related tags for.</param>

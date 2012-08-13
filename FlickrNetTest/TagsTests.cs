@@ -187,5 +187,17 @@ namespace FlickrNetTest
         {
             var col = TestData.GetInstance().TagsGetListUser(TestData.TestUserId);
         }
+
+        [TestMethod]
+        public void TagsGetMostFrequentlyUsedTest()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var tags = f.TagsGetMostFrequentlyUsed();
+
+            Assert.IsNotNull(tags);
+
+            Assert.AreNotEqual(0, tags.Count);
+        }
     }
 }

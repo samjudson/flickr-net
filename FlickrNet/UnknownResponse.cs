@@ -81,5 +81,23 @@ namespace FlickrNet
             }
             return array.ToArray();
         }
+
+        /// <summary>
+        /// Gets an array of text values of an element's attribute from the given response.
+        /// </summary>
+        /// <param name="elementName">The element name to find.</param>
+        /// <param name="attributeName">The attribute name to find on the matching element.</param>
+        /// <returns>An array of string values.</returns>
+        public string[] GetElementArray(string elementName, string attributeName)
+        {
+            List<string> array = new List<string>();
+            foreach (System.Xml.XmlNode n in GetXmlDocument().SelectNodes("//" + elementName + "/@" + attributeName))
+            {
+                array.Add(n.InnerText);
+            }
+            return array.ToArray();
+        }
+
+
     }
 }

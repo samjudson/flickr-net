@@ -28,6 +28,7 @@ namespace FlickrNet
         /// </code>
         /// </example>
         /// <returns>The FROB.</returns>
+        [Obsolete("Use OAuth now.")]
         public string AuthGetFrob()
         {
             CheckSigned();
@@ -48,6 +49,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="frob">The string containing the FROB.</param>
         /// <returns>A <see cref="Auth"/> object containing user and token details.</returns>
+        [Obsolete("Use OAuth now.")]
         public Auth AuthGetToken(string frob)
         {
             CheckSigned();
@@ -67,6 +69,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="miniToken">The mini token.</param>
         /// <returns>An instance <see cref="Auth"/> class, detailing the user and their full token.</returns>
+        [Obsolete("Use OAuth now.")]
         public Auth AuthGetFullToken(string miniToken)
         {
             CheckSigned();

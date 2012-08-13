@@ -146,5 +146,15 @@ namespace FlickrNetTest
             Assert.IsNotNull(contacts, "Contacts should not be null.");
         }
 
+        [TestMethod]
+        public void ContactsGetTaggingSuggestions()
+        {
+            Flickr f = TestData.GetAuthInstance();
+
+            var contacts = f.ContactsGetTaggingSuggestions();
+
+            Assert.IsNotNull(contacts);
+        }
+
     }
 }

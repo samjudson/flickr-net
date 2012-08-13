@@ -139,8 +139,17 @@ namespace FlickrNetTest
             Assert.IsNotNull(collections);
             Assert.IsTrue(collections.Count > 0, "Global collection should be greater than zero.");
 
-            Assert.IsNotNull(collections[0].Collections);
-            Assert.IsTrue(collections[0].Collections.Count > 2, "Global collection should have more than two child collections.");
+            var col = collections[0];
+
+            Assert.AreEqual("Global Collection", col.Title, "Global Collection title should be correct.");
+
+            Assert.IsNotNull(col.Collections, "Child collections property should not be null.");
+            Assert.IsTrue(col.Collections.Count > 0, "Global collection should have child collections.");
+
+            var subsol = col.Collections[0];
+
+            Assert.IsNotNull(subsol.Collections, "Child collection Collections property should ne null.");
+            Assert.AreEqual(0, subsol.Collections.Count, "Child collection should not have and sub collections.");
 
         }
     }

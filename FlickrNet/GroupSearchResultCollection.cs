@@ -91,6 +91,42 @@ namespace FlickrNet
         /// </summary>
         public bool EighteenPlus { get; set; }
 
+        /// <summary>
+        /// Group icon server.
+        /// </summary>
+        public string IconServer { get; set; }
+
+        /// <summary>
+        /// Group icon farm.
+        /// </summary>
+        public string IconFarm { get; set; }
+
+        /// <summary>
+        /// Number of members in the group.
+        /// </summary>
+        public int Members { get; set; }
+
+        /// <summary>
+        /// The number of photos in this groups pool.
+        /// </summary>
+        public int PoolCount { get; set; }
+
+        /// <summary>
+        /// The number of topics in this groups discussion list.
+        /// </summary>
+        public int TopicCount { get; set; }
+
+        /// <summary>
+        /// The url for the group's icon. 
+        /// </summary>
+        public string GroupIconUrl
+        {
+            get
+            {
+                return UtilityMethods.BuddyIcon(IconServer, IconFarm, GroupId);
+            }
+        }
+
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "group")
@@ -108,6 +144,21 @@ namespace FlickrNet
                         break;
                     case "eighteenplus":
                         EighteenPlus = reader.Value == "1";
+                        break;
+                    case "iconserver":
+                        IconServer = reader.Value;
+                        break;
+                    case "iconfarm":
+                        IconFarm = reader.Value;
+                        break;
+                    case "members":
+                        Members = reader.ReadContentAsInt();
+                        break;
+                    case "pool_count":
+                        PoolCount = reader.ReadContentAsInt();
+                        break;
+                    case "topic_count":
+                        TopicCount = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

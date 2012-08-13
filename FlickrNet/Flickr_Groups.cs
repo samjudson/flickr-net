@@ -277,15 +277,34 @@ namespace FlickrNet
         /// Specify a group for the authenticated user to join.
         /// </summary>
         /// <param name="groupId">The group id of the group to join.</param>
-        /// <param name="acceptsRules">Specify true to signify that the user accepts the groups rules.</param>
-        public void GroupsJoin(string groupId, bool acceptsRules)
+        /// <param name="acceptRules">Specify true to signify that the user accepts the groups rules.</param>
+        public void GroupsJoin(string groupId, bool acceptRules)
         {
             CheckRequiresAuthentication();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.join");
             parameters.Add("group_id", groupId);
-            if (acceptsRules) parameters.Add("accepts_rules", "1");
+            if (acceptRules) parameters.Add("accept_rules", "1");
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+        /// <summary>
+        /// Sends a request to the group admins to join an invite only group.
+        /// </summary>
+        /// <param name="groupId">The ID of the group the user wishes to join.</param>
+        /// <param name="message">The message to send to the administrator.</param>
+        /// <param name="acceptRules">A boolean confirming the user has accepted the rules of the group.</param>
+        public void GroupsJoinRequest(string groupId, string message, bool acceptRules)
+        {
+            CheckRequiresAuthentication();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.groups.joinRequest");
+            parameters.Add("group_id", groupId);
+            parameters.Add("message", message);
+            if (acceptRules) parameters.Add("accept_rules", "1");
 
             GetResponseNoCache<NoResponse>(parameters);
         }

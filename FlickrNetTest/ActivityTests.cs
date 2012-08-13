@@ -91,10 +91,12 @@ namespace FlickrNetTest
         [TestMethod]
         public void ActivityUserPhotosBasicTests()
         {
+            int days = 50;
+
             Flickr f = TestData.GetAuthInstance();
 
             // Get last 10 days activity.
-            ActivityItemCollection items = f.ActivityUserPhotos(20, "d");
+            ActivityItemCollection items = f.ActivityUserPhotos(days, "d");
 
             Console.WriteLine(f.LastResponse);
 
@@ -112,7 +114,7 @@ namespace FlickrNetTest
                 foreach (ActivityEvent e in item.Events)
                 {
                     Assert.AreNotEqual(ActivityEventType.Unknown, e.EventType, "EventType should not be 'Unknown'.");
-                    Assert.IsTrue(e.DateAdded > DateTime.Today.AddDays(-21), "DateAdded should be within the last 20 days");
+                    Assert.IsTrue(e.DateAdded > DateTime.Today.AddDays(-days), "DateAdded should be within the last " + days + " days");
 
                     // For Gallery events the comment is optional.
                     if (e.EventType != ActivityEventType.Gallery)

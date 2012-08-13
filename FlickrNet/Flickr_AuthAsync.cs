@@ -28,6 +28,7 @@ namespace FlickrNet
         /// </code>
         /// </example>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        [Obsolete("Use OAuth now.")]
         public void AuthGetFrobAsync(Action<FlickrResult<string>> callback)
         {
             CheckSigned();
@@ -62,6 +63,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="frob">The string containing the FROB.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        [Obsolete("Use OAuth now.")]
         public void AuthGetTokenAsync(string frob, Action<FlickrResult<Auth>> callback)
         {
             CheckSigned();
@@ -88,6 +90,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="miniToken">The mini token.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
+        [Obsolete("Use OAuth now.")]
         public void AuthGetFullTokenAsync(string miniToken, Action<FlickrResult<Auth>> callback)
         {
             CheckSigned();

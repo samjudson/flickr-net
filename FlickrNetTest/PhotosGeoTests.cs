@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using FlickrNet;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FlickrNetTest
 {
@@ -15,50 +13,142 @@ namespace FlickrNetTest
     {
         public PhotosGeoTests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            Flickr.CacheDisabled = true;
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [TestMethod]
+        public void PhotoInfoParseFull()
         {
-            get
+            string x = "<photo id=\"7519320006\">"
+                    + "<location latitude=\"54.971831\" longitude=\"-1.612683\" accuracy=\"16\" context=\"0\" place_id=\"Ke8IzXlQV79yxA\" woeid=\"15532\">"
+                    + "<neighbourhood place_id=\"Ke8IzXlQV79yxA\" woeid=\"15532\">Central</neighbourhood>"
+                    + "<locality place_id=\"DW0IUrFTUrO0FQ\" woeid=\"20928\">Gateshead</locality>"
+                    + "<county place_id=\"myqh27pQULzLWcg7Kg\" woeid=\"12602156\">Tyne and Wear</county>"
+                    + "<region place_id=\"2eIY2QFTVr_DwWZNLg\" woeid=\"24554868\">England</region>"
+                    + "<country place_id=\"cnffEpdTUb5v258BBA\" woeid=\"23424975\">United Kingdom</country>"
+                    + "</location>"
+                    + "</photo>";
+
+            System.IO.StringReader sr = new System.IO.StringReader(x);
+            System.Xml.XmlTextReader xr = new System.Xml.XmlTextReader(sr);
+            xr.Read();
+
+            var info = new PhotoInfo();
+            ((IFlickrParsable)info).Load(xr);
+
+            Assert.AreEqual("7519320006", info.PhotoId);
+            Assert.IsNotNull(info.Location);
+            Assert.AreEqual((GeoAccuracy)16, info.Location.Accuracy);
+
+            Assert.IsNotNull(info.Location.Country);
+            Assert.AreEqual("cnffEpdTUb5v258BBA", info.Location.Country.PlaceId);
+        }
+
+        [TestMethod]
+        public void PhotoInfoLocationParseShortTest()
+        {
+            string x = "<photo id=\"7519320006\">"
+                + "<location latitude=\"-23.32\" longitude=\"-34.2\" accuracy=\"10\" context=\"1\" />"
+                + "</photo>";
+
+            System.IO.StringReader sr = new System.IO.StringReader(x);
+            System.Xml.XmlTextReader xr = new System.Xml.XmlTextReader(sr);
+            xr.Read();
+
+            var info = new PhotoInfo();
+            ((IFlickrParsable)info).Load(xr);
+
+            Assert.AreEqual("7519320006", info.PhotoId);
+            Assert.IsNotNull(info.Location);
+            Assert.AreEqual((GeoAccuracy)10, info.Location.Accuracy);
+
+        }
+
+        [TestMethod]
+        public void PhotosGetGetLocationTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var photos = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo });
+
+            var photo = photos.First();
+
+            Console.WriteLine(photo.PhotoId);
+
+            var location = f.PhotosGeoGetLocation(photo.PhotoId);
+
+            Assert.AreEqual(photo.Longitude, location.Longitude, "Longitudes should match exactly.");
+            Assert.AreEqual(photo.Latitude, location.Latitude, "Latitudes should match exactly.");
+        }
+
+        [TestMethod]
+        public void PhotosGetGetLocationNullTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var photos = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = false, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo });
+
+            var photo = photos.First();
+
+            var location = f.PhotosGeoGetLocation(photo.PhotoId);
+
+            Assert.IsNull(location, "Location should be null.");
+        }
+
+        [TestMethod]
+        public void PhotosGetCorrectLocationTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var photo = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
+
+            f.PhotosGeoCorrectLocation(photo.PhotoId, photo.PlaceId, null);
+        }
+
+        [TestMethod]
+        public void PhotosGeoSetContextTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var photo = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
+
+            Assert.IsTrue(photo.GeoContext.HasValue, "GeoContext should be set.");
+
+            var origContext = photo.GeoContext.Value;
+
+            var newContext = origContext == GeoContext.Indoors ? GeoContext.Outdoors : GeoContext.Indoors;
+
+            try
             {
-                return testContextInstance;
+                f.PhotosGeoSetContext(photo.PhotoId, newContext);
             }
-            set
+            finally
             {
-                testContextInstance = value;
+                f.PhotosGeoSetContext(photo.PhotoId, origContext);
             }
         }
 
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
+        [TestMethod]
+        public void PhotosGeoSetLocationTest()
+        {
+            var f = TestData.GetAuthInstance();
+            var photo = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
+
+            var origGeo = new { photo.Longitude, photo.Latitude, photo.Accuracy, Context = photo.GeoContext.Value };
+            var newGeo = new { Latitude = -23.32, Longitude = -34.2, Accuracy = GeoAccuracy.Level10, Context = GeoContext.Indoors };
+
+            try
+            {
+                f.PhotosGeoSetLocation(photo.PhotoId, newGeo.Latitude, newGeo.Longitude, newGeo.Accuracy, newGeo.Context);
+
+                var location = f.PhotosGeoGetLocation(photo.PhotoId);
+                Assert.AreEqual(newGeo.Latitude, location.Latitude, "New Latitude should be set.");
+                Assert.AreEqual(newGeo.Longitude, location.Longitude, "New Longitude should be set.");
+                Assert.AreEqual(newGeo.Context, location.Context, "New Context should be set.");
+                Assert.AreEqual(newGeo.Accuracy, location.Accuracy, "New Accuracy should be set.");
+            }
+            finally
+            {
+                f.PhotosGeoSetLocation(photo.PhotoId, origGeo.Latitude, origGeo.Longitude, origGeo.Accuracy, origGeo.Context);
+            }
+            
+        }
 
         [TestMethod]
         public void PhotosGeoPhotosForLocationBasicTest()

@@ -12,7 +12,8 @@ namespace FlickrNet
         /// <param name="appToken">The 'application id' of your application. 
         /// Go to http://www.flickr.com/services/auth/list.gne to get your application token.</param>
         /// <returns></returns>
-        public string AuthCaclRevokeUrl(string appToken)
+        [Obsolete("Use OAuth now.")]
+        public string AuthCalcRevokeUrl(string appToken)
         {
             return "http://www.flickr.com/services/auth/revoke.gne?token=" + appToken;
         }
@@ -25,6 +26,7 @@ namespace FlickrNet
         /// <param name="frob">The FROB to be used for authentication.</param>
         /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
         /// <returns>The url to redirect the user to.</returns>
+        [Obsolete("Use OAuth now.")]
         public string AuthCalcUrl(string frob, AuthLevel authLevel)
         {
             if (sharedSecret == null) throw new SignatureRequiredException();
@@ -45,6 +47,7 @@ namespace FlickrNet
         /// <param name="frob">The FROB to be used for authentication.</param>
         /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
         /// <returns>The url to redirect the user to.</returns>
+        [Obsolete("Use OAuth now.")]
         public string AuthCalcUrlMobile(string frob, AuthLevel authLevel)
         {
             return AuthCalcUrl(frob, authLevel).Replace("www.flickr.com", "m.flickr.com");
@@ -57,6 +60,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
         /// <returns>The url to redirect the user to.</returns>
+        [Obsolete("Use OAuth now.")]
         public string AuthCalcWebUrl(AuthLevel authLevel)
         {
             return AuthCalcWebUrl(authLevel, null);
@@ -70,6 +74,7 @@ namespace FlickrNet
         /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
         /// <param name="extra">An extra string value which Flickr will return to the callback URL along with the frob.</param>
         /// <returns>The url to redirect the user to.</returns>
+        [Obsolete("Use OAuth now.")]
         public string AuthCalcWebUrl(AuthLevel authLevel, string extra)
         {
             CheckApiKey();
@@ -100,6 +105,7 @@ namespace FlickrNet
         /// </summary>
         /// <param name="authLevel">The <see cref="AuthLevel"/> stating the maximum authentication level your application requires.</param>
         /// <returns>The url to redirect the user to.</returns>
+        [Obsolete("Use OAuth now.")]
         public string AuthCalcWebUrlMobile(AuthLevel authLevel)
         {
             return AuthCalcWebUrl(authLevel).Replace("www.flickr.com", "m.flickr.com");

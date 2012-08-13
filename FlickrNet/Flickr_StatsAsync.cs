@@ -238,7 +238,7 @@ namespace FlickrNet
 
             parameters.Add("method", "flickr.stats.getCollectionStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
-            parameters.Add("collection_id", collectionId);
+            parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
 
             GetResponseAsync<Stats>(parameters, callback);
         }

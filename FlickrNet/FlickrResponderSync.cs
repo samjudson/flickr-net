@@ -99,15 +99,17 @@ namespace FlickrNet
 #if !WindowsCE
         private static string DownloadData(string method, string baseUrl, string data, string contentType, string authHeader)
         {
-            WebClient client = new WebClient();
-            client.Encoding = System.Text.Encoding.UTF8;
-            if (!String.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
-            if (!String.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
+            using (WebClient client = new WebClient())
+            {
+                client.Encoding = System.Text.Encoding.UTF8;
+                if (!String.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
+                if (!String.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
 
-            if (method == "POST")
-                return client.UploadString(baseUrl, data);
-            else
-                return client.DownloadString(baseUrl);
+                if (method == "POST")
+                    return client.UploadString(baseUrl, data);
+                else
+                    return client.DownloadString(baseUrl);
+            }
         }
 #else
         private static string DownloadData(string method, string baseUrl, string data, string contentType, string authHeader)
