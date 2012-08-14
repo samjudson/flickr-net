@@ -73,8 +73,9 @@ namespace FlickrNet
             if (leaseSeconds > 0) parameters.Add("lease_seconds", leaseSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (woeIds != null && woeIds.Length > 0)
             {
-                string[] woeIdsString = Array.ConvertAll<int, string>(woeIds, i => i.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-                parameters.Add("woe_ids", String.Join(",", woeIdsString));
+                List<string> woeIdList = new List<string>();
+                foreach (int i in woeIds) { woeIdList.Add(i.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
+                parameters.Add("woe_ids", String.Join(",", woeIdList.ToArray()));
             }
             if (placeIds != null && placeIds.Length > 0) parameters.Add("place_ids", String.Join(",", placeIds));
             if (radiusUnits != RadiusUnit.None) parameters.Add("radius_units", radiusUnits.ToString("d"));

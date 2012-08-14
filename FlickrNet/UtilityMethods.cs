@@ -429,15 +429,25 @@ namespace FlickrNet
 
         internal static DateTime MySqlToDate(string p)
         {
-            DateTime d1;
             string format1 = "yyyy-MM-dd";
             string format2 = "yyyy-MM-dd hh:mm:ss";
             var iformat = System.Globalization.DateTimeFormatInfo.InvariantInfo;
 
-            if (DateTime.TryParseExact(p, format1, iformat, System.Globalization.DateTimeStyles.None, out d1))
-                return d1;
-            if (DateTime.TryParseExact(p, format2, iformat, System.Globalization.DateTimeStyles.None, out d1))
-                return d1;
+            try
+            {
+                return DateTime.ParseExact(p, format1, iformat, System.Globalization.DateTimeStyles.None);
+            }
+            catch (FormatException)
+            {
+            }
+
+            try
+            {
+                return DateTime.ParseExact(p, format2, iformat, System.Globalization.DateTimeStyles.None);
+            }
+            catch (FormatException)
+            {
+            }
 
             return DateTime.MinValue;
 
@@ -607,11 +617,10 @@ namespace FlickrNet
 
         internal static string CleanCollectionId(string collectionId)
         {
-            if (!collectionId.Contains("-"))
+            if (collectionId.IndexOf("-") < 0)
                 return collectionId;
             else
                 return collectionId.Substring(collectionId.IndexOf("-")+1);
-
         }
 
     }

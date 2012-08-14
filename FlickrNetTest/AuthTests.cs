@@ -119,6 +119,8 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        [Ignore]
+        // Test method for old auth no longer needed.
         public void AuthCheckTokenBasicTest()
         {
             Flickr f = TestData.GetOldAuthInstance();
@@ -134,6 +136,8 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
+        [Ignore]
+        // Test for old auth, which no longer is used.
         public void AuthCheckTokenCurrentTest()
         {
             Flickr f = TestData.GetOldAuthInstance();

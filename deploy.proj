@@ -5,7 +5,7 @@
 
   <PropertyGroup>
     <Major>3</Major>
-    <Minor>4</Minor>
+    <Minor>5</Minor>
     <Build>0</Build>
     <Revision>0</Revision>
 	<ShortVersion>$(Major).$(Minor).$(Build)</ShortVersion>
@@ -25,7 +25,7 @@
 	<Copy SourceFiles="@(ReleaseFiles)" DestinationFolder="Builds"/>
 	<Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>
 
-  	<XmlUpdate 
+  	<!--<XmlUpdate 
       Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
       XmlFileName="NuGet\FlickrNet.nuspec"
 	  Prefix="nu"
@@ -48,12 +48,12 @@
       XmlFileName="NuGet\FlickrNet.WP7.nuspec"
 	  Prefix="nu"
       XPath="//nu:metadata/nu:version"
-      Value="$(ShortVersion)" />
+      Value="$(ShortVersion)" />-->
 
-	<Exec Command="nuget pack FlickrNet.nuspec" WorkingDirectory="Nuget"/>
-	<Exec Command="nuget pack FlickrNet.WP7.nuspec"  WorkingDirectory="Nuget"/>
-	<Exec Command="nuget pack FlickrNet.Silverlight.nuspec"  WorkingDirectory="Nuget"/>
-	<Exec Command="nuget pack FlickrNet.CF.nuspec"  WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.WP7.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.Silverlight.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>
+	<Exec Command="nuget pack FlickrNet.CF.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>
 	
 	<WriteLinesToFile File="publish.bat" Overwrite="true" Lines="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
 	<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.CF.$(ShortVersion).nupkg"/>
