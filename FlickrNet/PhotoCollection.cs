@@ -20,17 +20,17 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "total":
-                        Total = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Total = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "perpage":
                     case "per_page":
-                        PerPage = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        PerPage = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "page":
-                        Page = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Page = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "pages":
-                        Pages = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Pages = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

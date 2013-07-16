@@ -96,6 +96,7 @@ namespace FlickrNet
         private static void DownloadDataAsync(string method, string baseUrl, string data, string contentType, string authHeader, Action<FlickrResult<string>> callback)
         {
             WebClient client = new WebClient();
+            client.Encoding = System.Text.Encoding.UTF8;
 
             if (!String.IsNullOrEmpty(contentType)) client.Headers["Content-Type"] = contentType;
             if (!String.IsNullOrEmpty(authHeader)) client.Headers["Authorization"] = authHeader;
