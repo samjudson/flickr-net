@@ -35,6 +35,11 @@ namespace FlickrNet
         public string OwnerId { get; set; }
 
         /// <summary>
+        /// The username of the owner of the photoset.
+        /// </summary>
+        public string OwnerName { get; set; }
+
+        /// <summary>
         /// The photo ID of the primary photo of the photoset.
         /// </summary>
         public string PrimaryPhotoId { get; set; }
@@ -53,6 +58,12 @@ namespace FlickrNet
         /// The server farm for the primary photo for the photoset.
         /// </summary>
         public string Farm { get; set; }
+
+        // The server for the cover photos for the owner of this photoset.
+        public string CoverPhotoServer { get; set; }
+
+        // The farm for the cover photos for the owner of this photoset.
+        public string CoverPhotoFarm { get; set; }
 
         /// <summary>
         /// The number of photos in this photoset.
@@ -142,6 +153,9 @@ namespace FlickrNet
                     case "owner":
                         OwnerId = reader.Value;
                         break;
+                    case "username":
+                        OwnerName = reader.Value;
+                        break;
                     case "primary":
                         PrimaryPhotoId = reader.Value;
                         break;
@@ -186,6 +200,12 @@ namespace FlickrNet
                         break;
                     case "can_comment":
                         CanComment = reader.Value == "1";
+                        break;
+                    case "coverphoto_server":
+                        CoverPhotoServer = reader.Value;
+                        break;
+                    case "coverphoto_farm":
+                        CoverPhotoFarm = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

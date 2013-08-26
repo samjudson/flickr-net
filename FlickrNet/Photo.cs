@@ -610,6 +610,7 @@ namespace FlickrNet
                     case "is_primary":
                         break;
                     case "pathalias":
+                    case "path_alias":
                         PathAlias = reader.Value;
                         break;
                     case "url_sq":

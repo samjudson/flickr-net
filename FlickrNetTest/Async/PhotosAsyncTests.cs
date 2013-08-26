@@ -18,6 +18,31 @@ namespace FlickrNetTest.Async
         }
 
         [TestMethod]
+        public void PhotosSearchRussianAsync()
+        {
+            var o = new PhotoSearchOptions();
+            o.UserId = "31828860@N08";
+            o.Extras = PhotoSearchExtras.Tags;
+
+            Flickr f = TestData.GetInstance();
+
+            var w = new AsyncSubject<FlickrResult<PhotoCollection>>();
+            f.PhotosSearchAsync(o, r => { w.OnNext(r); w.OnCompleted(); });
+            var result = w.Next().First();
+
+            Assert.IsFalse(result.HasError);
+            Assert.IsNotNull(result.Result);
+
+            Assert.IsTrue(result.Result.Count > 0, "Should return some photos.");
+
+            var photos = result.Result;
+            foreach (var photo in photos)
+            {
+                Console.WriteLine(photo.Title + " = " + String.Join(",", photo.Tags));
+            }
+
+        }
+        [TestMethod]
         public void PhotosGetContactsPublicPhotosAsyncTest()
         {
             Flickr f = TestData.GetInstance();
