@@ -38,6 +38,9 @@ namespace FlickrNet
         /// </summary>
         public string Farm { get; set; }
 
+        // The path alias for this user, if set.
+        public string PathAlias { get; set; }
+
         /// <summary>
         /// The original format of the image (e.g. jpg, png etc).
         /// </summary>
@@ -284,7 +287,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId, PhotoId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", PathAlias ?? OwnerUserId, PhotoId);
             }
         }
 
@@ -420,6 +423,9 @@ namespace FlickrNet
                     case "people":
                         HasPeople = reader.GetAttribute("haspeople") == "1";
                         reader.Skip();
+                        break;
+                    case "path_alias":
+                        PathAlias = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -686,6 +692,9 @@ namespace FlickrNet
                         break;
                     case "iconfarm":
                         OwnerIconFarm = reader.Value;
+                        break;
+                    case "path_alias":
+                        PathAlias = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
