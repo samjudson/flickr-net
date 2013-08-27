@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 using System.Xml;
 using System.IO;
-using System.Net;
 using System.Diagnostics;
 
 namespace FlickrNet
@@ -37,8 +34,10 @@ namespace FlickrNet
             parameters["api_key"] = ApiKey;
 
             // If performing one of the old 'flickr.auth' methods then use old authentication details.
-            string method = parameters["method"];
+            var method = parameters["method"];
 
+            // User of obsolete AuthToken property while we transition over to the new OAuth authentication process.
+#pragma warning disable 612,618
             if (method.StartsWith("flickr.auth") && !method.EndsWith("oauth.checkToken"))
             {
                 if (!String.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
@@ -56,20 +55,13 @@ namespace FlickrNet
                     parameters["auth_token"] = AuthToken;
                 }
             }
+#pragma warning restore 612,618
 
-            Uri url;
-            if (!String.IsNullOrEmpty(sharedSecret))
-            {
-                url = CalculateUri(parameters, true);
-            }
-            else
-            {
-                url = CalculateUri(parameters, false);
-            }
+            var url = CalculateUri(parameters, !String.IsNullOrEmpty(sharedSecret));
 
             lastRequest = url.AbsoluteUri;
 
-            string responseXml = String.Empty;
+            string responseXml;
 
             if (InstanceCacheDisabled)
             {
@@ -77,9 +69,9 @@ namespace FlickrNet
             }
             else
             {
-                string urlComplete = url.AbsoluteUri;
+                var urlComplete = url.AbsoluteUri;
 
-                ResponseCacheItem cached = (ResponseCacheItem)Cache.Responses.Get(urlComplete, cacheTimeout, true);
+                var cached = (ResponseCacheItem)Cache.Responses.Get(urlComplete, cacheTimeout, true);
                 if (cached != null)
                 {
                     Debug.WriteLine("Cache hit.");
@@ -90,7 +82,7 @@ namespace FlickrNet
                     Debug.WriteLine("Cache miss.");
                     responseXml = FlickrResponder.GetDataResponse(this, BaseUri.AbsoluteUri, parameters);
 
-                    ResponseCacheItem resCache = new ResponseCacheItem(new Uri(urlComplete), responseXml, DateTime.UtcNow);
+                    var resCache = new ResponseCacheItem(new Uri(urlComplete), responseXml, DateTime.UtcNow);
 
                     Cache.Responses.Shrink(Math.Max(0, Cache.CacheSizeLimit - responseXml.Length));
                     Cache.Responses[urlComplete] = resCache;
@@ -99,8 +91,10 @@ namespace FlickrNet
 
             lastResponse = responseXml;
 
-            XmlTextReader reader = new XmlTextReader(new StringReader(responseXml));
-            reader.WhitespaceHandling = WhitespaceHandling.None;
+            var reader = new XmlTextReader(new StringReader(responseXml))
+                             {
+                                 WhitespaceHandling = WhitespaceHandling.None
+                             };
 
             if (!reader.ReadToDescendant("rsp"))
             {
@@ -110,13 +104,12 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "stat" && reader.Value == "fail")
                     throw ExceptionHandler.CreateResponseException(reader);
-                continue;
             }
 
             reader.MoveToElement();
             reader.Read();
 
-            T item = new T();
+            var item = new T();
             item.Load(reader);
 
             return item;

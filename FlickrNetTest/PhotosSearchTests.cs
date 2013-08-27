@@ -14,6 +14,7 @@ namespace FlickrNetTest
         public void TestInitialize()
         {
             Flickr.CacheDisabled = true;
+            f.InstanceCacheDisabled = true;
             f.ApiKey = TestData.ApiKey;
         }
 
@@ -439,18 +440,20 @@ namespace FlickrNetTest
         [TestMethod]
         public void PhotosSearchPhotoSearchBoundaryBox()
         {
-            BoundaryBox b = new BoundaryBox(103.675997, 1.339811, 103.689456, 1.357764, GeoAccuracy.World);
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.HasGeo = true;
-            o.BoundaryBox = b;
-            o.Accuracy = b.Accuracy;
-            o.MinUploadDate = DateTime.Now.AddYears(-1);
-            o.MaxUploadDate = DateTime.Now;
-            o.Extras = PhotoSearchExtras.Geo;
+            var b = new BoundaryBox(103.675997, 1.339811, 103.689456, 1.357764, GeoAccuracy.World);
+            var o = new PhotoSearchOptions
+                        {
+                            HasGeo = true,
+                            BoundaryBox = b,
+                            Accuracy = b.Accuracy,
+                            MinUploadDate = DateTime.Now.AddYears(-1),
+                            MaxUploadDate = DateTime.Now,
+                            Extras = PhotoSearchExtras.Geo
+                        };
 
-            PhotoCollection ps = f.PhotosSearch(o);
+            var ps = f.PhotosSearch(o);
 
-            foreach (Photo p in ps)
+            foreach (var p in ps)
             {
                 // Annoying, but sometimes Flickr doesn't return the geo properties for a photo even for this type of search.
                 if (p.Latitude == 0 && p.Longitude == 0) continue;
@@ -458,7 +461,6 @@ namespace FlickrNetTest
                 Assert.IsTrue(p.Latitude > b.MinimumLatitude && b.MaximumLatitude > p.Latitude, "Latitude is not within the boundary box.");
                 Assert.IsTrue(p.Longitude > b.MinimumLongitude && b.MaximumLongitude > p.Longitude, "Longitude is not within the boundary box.");
             }
-
         }
 
         [TestMethod]
