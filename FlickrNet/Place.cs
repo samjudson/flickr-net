@@ -36,6 +36,11 @@ namespace FlickrNet
         public string WoeId { get; set; }
 
         /// <summary>
+        /// The name of the WOE location.
+        /// </summary>
+        public string WoeName { get; set; }
+
+        /// <summary>
         /// The description of this place, where provided.
         /// </summary>
         public string Description { get; set; }
@@ -90,6 +95,9 @@ namespace FlickrNet
                         break;
                     case "woeid":
                         WoeId = reader.Value;
+                        break;
+                    case "woe_name":
+                        WoeName = reader.Value;
                         break;
                     case "latitude":
                         Latitude = reader.ReadContentAsDouble();

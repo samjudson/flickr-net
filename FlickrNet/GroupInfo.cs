@@ -46,6 +46,16 @@ namespace FlickrNet
         public bool IsAdmin { get; set; }
 
         /// <summary>
+        /// Is the authenticated user a moderator of the group.
+        /// </summary>
+        public bool? IsModerator { get; set; }
+
+        /// <summary>
+        /// Is the authenticated user a member of the group.
+        /// </summary>
+        public bool? IsMember { get; set; }
+
+        /// <summary>
         /// Will contain 1 if the group is restricted to people who are 18 years old or over, 0 if it is not.
         /// </summary>
         public bool EighteenPlus { get; set; }
@@ -86,7 +96,14 @@ namespace FlickrNet
                         GroupName = reader.Value;
                         break;
                     case "admin":
+                    case "is_admin":
                         IsAdmin = reader.Value == "1";
+                        break;
+                    case "is_member":
+                        IsMember = reader.Value == "1";
+                        break;
+                    case "is_moderator":
+                        IsModerator = reader.Value == "1";
                         break;
                     case "eighteenplus":
                         EighteenPlus = reader.Value == "1";
@@ -114,5 +131,6 @@ namespace FlickrNet
 
             reader.Read();
         }
+
     }
 }

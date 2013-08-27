@@ -110,7 +110,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            PhotoCollection photos = f.PeopleGetPhotos(TestData.TestUserId, SafetyLevel.Safe, DateTime.Today.AddYears(-2), DateTime.Today, DateTime.Today.AddYears(-2), DateTime.Today, ContentTypeSearch.All, PrivacyFilter.PublicPhotos, PhotoSearchExtras.All, 1, 20);
+            PhotoCollection photos = f.PeopleGetPhotos(TestData.TestUserId, SafetyLevel.Safe, new DateTime(2010, 1, 1), new DateTime(2012, 1, 1), new DateTime(2010, 1, 1), new DateTime(2012, 1, 1), ContentTypeSearch.All, PrivacyFilter.PublicPhotos, PhotoSearchExtras.All, 1, 20);
 
             Assert.IsNotNull(photos);
             Assert.AreEqual(20, photos.Count, "Count should be twenty.");
@@ -207,9 +207,9 @@ namespace FlickrNetTest
             Assert.IsNotNull(limits);
 
             Assert.AreEqual(0, limits.MaximumDisplayPixels);
-            Assert.AreEqual(52428800, limits.MaximumPhotoUpload);
-            Assert.AreEqual(524288000, limits.MaximumVideoUpload);
-            Assert.AreEqual(90, limits.MaximumVideoDuration);
+            Assert.AreEqual(209715200, limits.MaximumPhotoUpload);
+            Assert.AreEqual(1073741824, limits.MaximumVideoUpload);
+            Assert.AreEqual(180, limits.MaximumVideoDuration);
             
         }
 

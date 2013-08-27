@@ -57,6 +57,11 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// The path alias for the comment owner's page.
+        /// </summary>
+        public string AuthorPathAlias { get; set; }
+
+        /// <summary>
         /// The comment text (can contain HTML).
         /// </summary>
         public string CommentHtml { get; set; }
@@ -90,6 +95,9 @@ namespace FlickrNet
                         break;
                     case "iconfarm":
                         IconFarm = reader.Value;
+                        break;
+                    case "path_alias":
+                        AuthorPathAlias = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

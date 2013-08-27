@@ -70,7 +70,7 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(photos, "Photos should not be null.");
 
-            Assert.AreEqual(100, photos.Count);
+            Assert.IsTrue(photos.Count > 50 && photos.Count <= 100, "Count should be at least 50, but not more than 100.");
         }
     }
 }
