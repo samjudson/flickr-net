@@ -203,15 +203,11 @@ namespace FlickrNetTest
         [TestMethod]
         public void PhotosGetSizes50Test()
         {
-            Flickr.FlushCache();
+            var o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 50};
 
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.Tags = "microsoft";
-            o.PerPage = 50;
+            var photos = TestData.GetInstance().PhotosSearch(o);
 
-            PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
-
-            foreach (Photo p in photos)
+            foreach (var p in photos)
             {
                 var sizes = TestData.GetInstance().PhotosGetSizes(p.PhotoId);
                 foreach (var s in sizes)

@@ -551,21 +551,18 @@ namespace FlickrNet
         /// <returns></returns>
         public static Dictionary<string, string> StringToDictionary(string response)
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>();
+            var dic = new Dictionary<string, string>();
 
-            string[] parts = response.Split('&');
+            var parts = response.Split('&');
 
-            foreach (string part in parts)
+            foreach (var part in parts)
             {
 #if WindowsCE || SILVERLIGHT
                 string[] bits = part.Split('=');
 #else
-                string[] bits = part.Split(new char[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
+                var bits = part.Split(new[] { '=' }, 2, StringSplitOptions.RemoveEmptyEntries);
 #endif
-                if (bits.Length == 1)
-                    dic.Add(bits[0], "");
-                else
-                    dic.Add(bits[0], Uri.UnescapeDataString(bits[1]));
+                dic.Add(bits[0], bits.Length == 1 ? "" : Uri.UnescapeDataString(bits[1]));
             }
 
             return dic;

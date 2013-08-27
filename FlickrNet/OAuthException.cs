@@ -32,7 +32,14 @@ namespace FlickrNet
         {
             FullResponse = response;
 
-            OAuthErrorPameters = UtilityMethods.StringToDictionary(response);
+            try
+            {
+                OAuthErrorPameters = UtilityMethods.StringToDictionary(response);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to parse OAuth error message: " + FullResponse);
+            }
 
             mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
         }

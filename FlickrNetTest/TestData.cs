@@ -84,39 +84,36 @@ namespace FlickrNetTest
 
         public static Flickr GetInstance()
         {
-            var f = new Flickr(ApiKey);
-            f.InstanceCacheDisabled = true;
-            return f;
+            return new Flickr(ApiKey) {InstanceCacheDisabled = true};
         }
 
         public static Flickr GetSignedInstance()
         {
-            var f = new Flickr(ApiKey, SharedSecret);
-            f.InstanceCacheDisabled = true;
-            return f;
+            return new Flickr(ApiKey, SharedSecret) {InstanceCacheDisabled = true};
         }
 
         public static Flickr GetAuthInstance()
         {
-            Flickr f = new Flickr(ApiKey, SharedSecret);
-            f.InstanceCacheDisabled = true;
-            f.OAuthAccessToken = AccessToken;
-            f.OAuthAccessTokenSecret = AccessTokenSecret;
-            return f;
+            return new Flickr(ApiKey, SharedSecret)
+                           {
+                               InstanceCacheDisabled = true,
+                               OAuthAccessToken = AccessToken,
+                               OAuthAccessTokenSecret = AccessTokenSecret
+                           };
         }
 
         public static Flickr GetOldSignedInstance()
         {
-            Flickr f = new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269");
-            f.InstanceCacheDisabled = true;
-            return f;
+            return new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269") {InstanceCacheDisabled = true};
         }
 
         public static Flickr GetOldAuthInstance()
         {
-            Flickr f = new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269", AuthToken);
-            f.InstanceCacheDisabled = true;
-            return f;
+            return new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269", AuthToken)
+                           {
+                               InstanceCacheDisabled
+                                   = true
+                           };
         }
 
     }
