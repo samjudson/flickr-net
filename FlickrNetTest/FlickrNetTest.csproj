@@ -64,6 +64,7 @@
     <Compile Include="Async\PhotosetsAsyncTests.cs" />
     <Compile Include="Async\StatsAsyncTests.cs" />
     <Compile Include="Auth\AuthHelper.cs" />
+    <Compile Include="CameraTests.cs" />
     <Compile Include="FlickrConfigurationSettingsTest.cs" />
     <Compile Include="GroupsDiscussTests.cs" />
     <Compile Include="PhotosGetContactsPublicPhotosTests.cs" />

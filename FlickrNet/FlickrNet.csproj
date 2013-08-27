@@ -40,6 +40,10 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <SignAssembly>true</SignAssembly>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -123,9 +127,13 @@
     <Compile Include="BoundaryBox.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Brand.cs" />
+    <Compile Include="BrandCollection.cs" />
     <Compile Include="Cache.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Camera.cs" />
+    <Compile Include="CameraCollection.cs" />
     <Compile Include="Cluster.cs" />
     <Compile Include="ClusterCollection.cs" />
     <Compile Include="Contact.cs" />
@@ -156,6 +164,8 @@
     <Compile Include="Flickr_AuthAsync.cs" />
     <Compile Include="Flickr_AuthCalc.cs" />
     <Compile Include="Flickr_BlogsAsync.cs" />
+    <Compile Include="Flickr_CamerasAsync.cs" />
+    <Compile Include="Flickr_Cameras.cs" />
     <Compile Include="Flickr_CollectionsAsync.cs" />
     <Compile Include="Flickr_Commons.cs" />
     <Compile Include="Flickr_CommonsAsync.cs" />
