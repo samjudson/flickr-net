@@ -190,7 +190,7 @@ namespace FlickrNetTest
         [TestMethod]
         public void MachinetagsGetRecentValuesTest()
         {
-            var items = TestData.GetInstance().MachineTagsGetRecentValues(DateTime.Now.AddDays(-1));
+            var items = TestData.GetInstance().MachineTagsGetRecentValues(DateTime.Now.AddHours(-1));
             Assert.IsNotNull(items);
 
             Assert.AreNotEqual(0, items.Count, "Count should be not be zero.");
