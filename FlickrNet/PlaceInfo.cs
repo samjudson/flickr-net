@@ -119,16 +119,17 @@ namespace FlickrNet
         /// Serializes the XML to an instance.
         /// </summary>
         /// <param name="reader"></param>
-        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        void IFlickrParsable.Load(XmlReader reader)
         {
             LoadAttributes(reader);
 
             LoadElements(reader);
         }
 
-        private void LoadElements(System.Xml.XmlReader reader)
+        private void LoadElements(XmlReader reader)
         {
             if (reader.NodeType == XmlNodeType.EndElement && reader.Name == "photo") return;
+            if (reader.NodeType == XmlNodeType.Element && reader.Name == "geoperms") return;
 
             while (reader.NodeType != XmlNodeType.EndElement)
             {

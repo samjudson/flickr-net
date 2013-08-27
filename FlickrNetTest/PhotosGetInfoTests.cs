@@ -290,5 +290,17 @@ namespace FlickrNetTest
             throw result.Error;
         }
 
+        [TestMethod]
+        public void ShouldReturnPhotoInfoWithGeoData()
+        {
+            var info = TestData.GetInstance().PhotosGetInfo("54071193");
+
+            Assert.IsNotNull(info, "PhotoInfo should not be null.");
+            Assert.IsNotNull(info.Location, "Location should not be null.");
+            Assert.AreEqual(-180, info.Location.Longitude, "Longitude should be -180");
+            Assert.AreEqual("http://www.flickr.com/photos/afdn/54071193/", info.Urls[0].Url);
+            Assert.IsTrue(info.GeoPermissions.IsPublic, "GeoPermissions should be public.");
+        }
+
     }
 }
