@@ -120,13 +120,13 @@ namespace FlickrNetTest
         public void PeopleGetInfoBasicTestUnauth()
         {
             Flickr f = TestData.GetInstance();
-            Person p = f.PeopleGetInfo("10973297@N00");
+            Person p = f.PeopleGetInfo(TestData.TestUserId);
 
-            Assert.AreEqual("Miss Aniela", p.UserName);
-            Assert.IsNull(p.RealName, "RealName should be null.");
-            Assert.AreEqual("ndybisz", p.PathAlias);
+            Assert.AreEqual("Sam Judson", p.UserName);
+            Assert.AreEqual("Sam Judson", p.RealName);
+            Assert.AreEqual("samjudson", p.PathAlias);
             Assert.IsTrue(p.IsPro, "IsPro should be true.");
-            Assert.AreEqual("London, UK", p.Location);
+            Assert.AreEqual("Newcastle, UK", p.Location);
             Assert.AreEqual("+00:00", p.TimeZoneOffset);
             Assert.AreEqual("GMT: Dublin, Edinburgh, Lisbon, London", p.TimeZoneLabel);
             Assert.IsNotNull(p.Description, "Description should not be null.");

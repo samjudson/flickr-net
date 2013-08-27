@@ -26,6 +26,11 @@ namespace FlickrNet
         public string AuthorUserName { get; set; }
 
         /// <summary>
+        /// The real name of the comment author, if known.
+        /// </summary>
+        public string AuthorRealName { get; set; }
+
+        /// <summary>
         /// The permalink to the comment on the photos web page.
         /// </summary>
         public string Permalink { get; set; }
@@ -98,6 +103,9 @@ namespace FlickrNet
                         break;
                     case "path_alias":
                         AuthorPathAlias = reader.Value;
+                        break;
+                    case "realname":
+                        AuthorRealName = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

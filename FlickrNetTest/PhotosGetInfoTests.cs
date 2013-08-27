@@ -268,7 +268,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FlickrApiException))]
+        [ExpectedException(typeof(FlickrApiException), AllowDerivedTypes = true)]
         public void TestPhotoNotFound()
         {
             Flickr f = TestData.GetInstance();
@@ -276,7 +276,7 @@ namespace FlickrNetTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FlickrApiException))]
+        [ExpectedException(typeof(FlickrApiException), AllowDerivedTypes = true)]
         public void TestPhotoNotFoundAsync()
         {
             Flickr f = TestData.GetInstance();
