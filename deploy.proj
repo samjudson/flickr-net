@@ -60,7 +60,7 @@
 
   <Target Name="Zip" DependsOnTargets="Compile;Help">
     <ItemGroup>
-      <ZipFiles Include="FlickrNet\bin\Release\*.*" Exclude="*.pdb" />
+      <ZipFiles Include="FlickrNet\bin\Release\*.*" Exclude="**\*.pdb" />
       <ZipFiles Include="Sandcastle\Help\FlickrNet.chm" />
     </ItemGroup>
     <MakeDir Directories="Builds" Condition="!Exists('Builds')" />
