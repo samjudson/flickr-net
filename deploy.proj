@@ -26,14 +26,20 @@
     <Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>
 
     <Exec Command="nuget pack FlickrNet.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
-    <Exec Command="nuget pack FlickrNet.WP7.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>
-    <Exec Command="nuget pack FlickrNet.Silverlight.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>
+    <Exec Command="nuget pack FlickrNet.WP7.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
+    <Exec Command="nuget pack FlickrNet.Silverlight.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
     <!--<Exec Command="nuget pack FlickrNet.CF.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>-->
 
     <WriteLinesToFile File="publish.bat" Overwrite="true" Lines="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
     <WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg"/>
     <WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg"/>
     <!--<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.CF.$(ShortVersion).nupkg"/>-->
+  </Target>
+
+  <Target Name="NuGetPublish" DependsOnTargets="NuGet">
+    <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
+    <Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg"/>
+    <Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg"/>
   </Target>
 
   <Target Name="Version">

@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A78529B5-8396-4ECE-84B4-E42E66B4F0F9}"
 	ProjectSection(SolutionItems) = preProject
 		deploy.proj = deploy.proj
+		NuGet\FlickrNet.nuspec = NuGet\FlickrNet.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetWP7", "FlickrNet\FlickrNetWP7.csproj", "{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}"
