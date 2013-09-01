@@ -277,6 +277,14 @@ namespace FlickrNet
         /// </summary>
         public int? Medium640Height { get; set; }
 
+        public string Large1600Url { get; set; }
+        public int? Large1600Width { get; set; }
+        public int? Large1600Height { get; set; }
+
+        public string Large2048Url { get; set; }
+        public int? Large2048Width { get; set; }
+        public int? Large2048Height { get; set; }
+
         /// <summary>
         /// The URL for the medium copy of a photo.
         /// </summary>
@@ -480,6 +488,7 @@ namespace FlickrNet
                     return false;
             }
         }
+
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -693,6 +702,24 @@ namespace FlickrNet
                         break;
                     case "height_o":
                         OriginalHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_h":
+                        Large1600Url = reader.Value;
+                        break;
+                    case "width_h":
+                        Large1600Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_h":
+                        Large1600Height = reader.ReadContentAsInt();
+                        break;
+                    case "url_k":
+                        Large2048Url = reader.Value;
+                        break;
+                    case "width_k":
+                        Large2048Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_k":
+                        Large2048Height = reader.ReadContentAsInt();
                         break;
                     case "dateadded":
                         DateAddedToGroup = UtilityMethods.UnixTimestampToDate(reader.Value);

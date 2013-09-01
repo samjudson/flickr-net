@@ -109,7 +109,7 @@ namespace FlickrNet
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
         /// </summary>
-        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | LargeUrl | OriginalUrl | LargeSquareUrl | Small320Url,
+        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | LargeUrl | OriginalUrl | LargeSquareUrl | Small320Url | Large1600Url | Large2048Url,
         /// <summary>
         /// Returns the description for the image.
         /// </summary>
@@ -135,8 +135,16 @@ namespace FlickrNet
         /// </summary>
         Rotation = 33554432,
         /// <summary>
+        /// Large (1600 on largest size) image url.
+        /// </summary>
+        Large1600Url = 33554432 * 2,
+        /// <summary>
+        /// Large (2048 on largest size) image url.
+        /// </summary>
+        Large2048Url = 33554432 * 4,
+        /// <summary>
         /// Returns all the above information.
         /// </summary>
-        All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility | Rotation
+        All = License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo | MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility | Rotation,
     }
 }

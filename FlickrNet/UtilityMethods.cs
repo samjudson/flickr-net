@@ -186,6 +186,8 @@ namespace FlickrNet
             if ((extras & PhotoSearchExtras.Usage) == PhotoSearchExtras.Usage) extraList.Add("usage");
             if ((extras & PhotoSearchExtras.Visibility) == PhotoSearchExtras.Visibility) extraList.Add("visibility");
             if ((extras & PhotoSearchExtras.Rotation) == PhotoSearchExtras.Rotation) extraList.Add("rotation");
+            if ((extras & PhotoSearchExtras.Large1600Url) == PhotoSearchExtras.Large1600Url) extraList.Add("url_h");
+            if ((extras & PhotoSearchExtras.Large2048Url) == PhotoSearchExtras.Large2048Url) extraList.Add("url_k");
 
             return String.Join(",", extraList.ToArray());
         }

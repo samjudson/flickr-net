@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Text;
 using FlickrNet;
@@ -755,6 +756,30 @@ namespace FlickrNetTest
                 if (photo.PhotoId == "6790104907")
                     Assert.AreEqual(0, photo.Rotation, "Rotation should be 0 for this photo.");
             }
+        }
+
+        [TestMethod]
+        public void PhotosSearchLarge1600ImageSize()
+        {
+            var flickr = TestData.GetInstance();
+            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large1600Url, Tags = "colorful" };
+
+            var photos = flickr.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue));
+        }
+
+        [TestMethod]
+        public void PhotosSearchLarge2048ImageSize()
+        {
+            var flickr = TestData.GetInstance();
+            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large2048Url, Tags = "colorful" };
+
+            var photos = flickr.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large2048Url) && p.Large2048Height.HasValue && p.Large2048Width.HasValue));
         }
 
     }
