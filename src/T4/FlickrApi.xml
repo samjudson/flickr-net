@@ -1,0 +1,1987 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<methods>
+
+  <method name="flickr.activity.userComments" return="ActivityItemCollection">
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+  </method>
+
+  <method name="flickr.activity.userPhotos" return="ActivityItemCollection">
+    <argument name="timeframe" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="page,per_page"/>
+    <overload parameters="timeframe"/>
+  </method>
+
+  <method name="flickr.blogs.getList" return="BlogCollection">
+  </method>
+
+  <method name="flickr.blogs.getServices" return="BlogServiceCollection">
+  </method>
+
+  <method name="flickr.blogs.postPhoto" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="title" type="string"/>
+    <argument name="description" type="string"/>
+    <argument name="blog_id" type="int" default="0"/>
+    <argument name="blog_password" type="string" default="null"/>
+    <argument name="service" type="string" default="null"/>
+    <overload parameters="photo_id,title,description,blog_id"/>
+    <overload parameters="photo_id,title,description,blog_id,blog_password"/>
+    <overload parameters="photo_id,title,description,service"/>
+    <overload parameters="photo_id,title,description,service,blog_password"/>
+  </method>
+
+  <method name="flickr.cameras.getBrandModels" return="CameraCollection">
+    <argument name="brand" type="string"/>
+  </method>
+
+  <method name="flickr.cameras.getBrands" return="CameraBrandCollection"/>
+
+  <method name="flickr.collections.getInfo" return="CollectionInfo">
+    <argument name="collection_id" type="string"/>
+  </method>
+
+  <method name="flickr.collections.getTree" return="CollectionCollection">
+    <argument name="collection_id" type="string" default="null"/>
+    <argument name="user_id" type="string" default="null"/>
+    <overload parameters="collection_id"/>
+    <overload parameters=""/>
+  </method>
+
+  <method name="flickr.commons.getInstitutions" return="InstitutionCollection"/>
+
+  <method name="flickr.contacts.getList" return="ContactCollection">
+    <argument name="filter" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="sort" type="string" default="null"/>
+
+    <overload parameters="per_page,page"/>
+    <overload parameters="per_page,page,sort"/>
+    <overload parameters="filter,sort"/>
+    <overload parameters="filter,per_page,page"/>
+  </method>
+
+  <method name="flickr.contacts.getListRecentlyUpdated" return="ContactCollection">
+    <argument name="date_lastupdated" type="Timestamp"/>
+    <argument name="filter" type="string"/>
+  </method>
+
+  <method name="flickr.contacts.getPublicList" return="ContactCollection">
+    <argument name="user_id" type="string"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="page" type="int" default="0"/>
+    <overload parameters="user_id"/>
+  </method>
+
+  <method name="flickr.contacts.getTaggingSuggestions" return="ContactCollection">
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+  </method>
+
+  <method name="flickr.favorites.add" return="void">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.favorites.getContext" return="FavoriteContext">
+    <argument name="photo_id" type="string"/>
+    <argument name="user_id" type="string"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters="photo_id,user_id"/>
+  </method>
+
+  <method name="flickr.favorites.getList" return="PhotoCollection">
+    <argument name="user_id" type="string" default="null"/>
+    <argument name="min_favorite_date" type="Timestamp?" default="null"/>
+    <argument name="max_favorite_date" type="Timestamp?" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id"/>
+    <overload parameters="user_id,min_favorite_date,max_favorite_date"/>
+    <overload parameters="extras"/>
+    <overload parameters="extras,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,extras"/>
+    <overload parameters="user_id,extras,min_favorite_date,max_favorite_date"/>
+    <overload parameters="page,per_page"/>
+    <overload parameters="min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="user_id,page,per_page"/>
+    <overload parameters="user_id,min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="extras,page,per_page"/>
+    <overload parameters="extras,min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="user_id,extras,page,per_page"/>
+  </method>
+
+  <method name="flickr.favorites.getPublicList" return="PhotoCollection">
+    <argument name="user_id" type="string"/>
+    <argument name="min_favorite_date" type="Timestamp?" default="null"/>
+    <argument name="max_favorite_date" type="Timestamp?" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="user_id"/>
+    <overload parameters="user_id,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,extras"/>
+    <overload parameters="user_id,extras,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,page,per_page"/>
+    <overload parameters="user_id,min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="user_id,extras,page,per_page"/>
+  </method>
+
+  <method name="flickr.favorites.remove" return="void">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.galleries.addPhoto" return="void">
+    <argument name="gallery_id" type="string"/>
+    <argument name="photo_id" type="string"/>
+    <argument name="comment" type="string" default="null"/>
+    <overload parameters="gallery_id,photo_id"/>
+  </method>
+
+  <method name="flickr.galleries.create" return="void">
+    <argument name="title" type="string"/>
+    <argument name="description" type="string"/>
+    <argument name="primary_photo_id" type="string" default="null"/>
+    <overload parameters="title,description"/>
+  </method>
+
+  <method name="flickr.galleries.editMeta" return="void">
+    <argument name="gallery_id" type="string"/>
+    <argument name="title" type="string"/>
+    <argument name="description" type="string" default="null"/>
+    <overload parameters="gallery_id,title"/>
+  </method>
+
+  <method name="flickr.galleries.editPhoto" return="void">
+    <argument name="gallery_id" type="string"/>
+    <argument name="photo_id" type="string"/>
+    <argument name="comment" type="string"/>
+  </method>
+
+  <method name="flickr.galleries.editPhotos" return="void">
+    <argument name="gallery_id" type="string"/>
+    <argument name="primary_photo_id" type="string"/>
+    <argument name="photo_ids" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.galleries.getInfo" return="Gallery">
+    <argument name="gallery_id" type="string"/>
+  </method>
+
+  <method name="flickr.galleries.getList" return="GalleryCollection">
+    <argument name="user_id" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="user_id"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.galleries.getListForPhoto" return="GalleryCollection">
+    <argument name="photo_id" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="photo_id"/>
+  </method>
+
+  <method name="flickr.galleries.getPhotos" return="GalleryPhotoCollection">
+    <argument name="gallery_id" type="string"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters="gallery_id"/>
+  </method>
+
+  <method name="flickr.groups.browse" return="GroupCategory">
+    <argument name="cat_id" type="string" default="null"/>
+    <overload parameters=""/>
+  </method>
+
+  <method name="flickr.groups.discuss.replies.add" return="void">
+    <argument name="topic_id" type="string"/>
+    <argument name="message" type="string"/>
+  </method>
+
+  <method name="flickr.groups.discuss.replies.delete" return="void">
+    <argument name="topic_id" type="string"/>
+    <argument name="reply_id" type="string"/>
+  </method>
+
+  <method name="flickr.groups.discuss.replies.edit" return="void">
+    <argument name="topic_id" type="string"/>
+    <argument name="reply_id" type="string"/>
+    <argument name="message" type="string"/>
+  </method>
+
+  <method name="flickr.groups.discuss.replies.getInfo" return="TopicReply">
+    <argument name="topic_id" type="string"/>
+    <argument name="reply_id" type="string"/>
+  </method>
+
+  <method name="flickr.groups.discuss.replies.getList" return="TopicReplyCollection">
+    <argument name="topic_id" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="topic_id"/>
+  </method>
+
+  <method name="flickr.groups.discuss.topics.add" return="void">
+    <argument name="group_id" type="string"/>
+    <argument name="subject" type="string"/>
+    <argument name="message" type="string"/>
+  </method>
+
+  <method name="flickr.groups.discuss.topics.getInfo" return="Topic">
+    <argument name="topic_id" type="string"/>
+    <help>
+      <summary>Gets information on a particular topic with a group.</summary>
+      <param name="topicId">The id of the topic you with information on.</param>
+      <returns></returns>
+    </help>
+  </method>
+
+  <method name="flickr.groups.discuss.topics.getList" return="TopicCollection">
+    <argument name="group_id" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="group_id"/>
+    <help>
+      <summary>
+        Gets a list of topics for a particular group.
+      </summary>
+      <param name="groupId">The id of the group.</param>
+      <param name="page">The page of topics you wish to return.</param>
+      <param name="perPage">The number of topics per page to return.</param>
+      <returns></returns>
+    </help>
+  </method>
+
+  <method name="flickr.groups.getInfo" return="GroupFullInfo">
+    <argument name="group_id" type="string"/>
+  </method>
+
+  <method name="flickr.groups.join" return="void">
+    <argument name="group_id" type="string"/>
+    <argument name="accept_rules" type="bool"/>
+  </method>
+
+  <method name="flickr.groups.join.request" return="void">
+    <argument name="group_id" type="string"/>
+    <argument name="message" type="string"/>
+    <argument name="accept_rules" type="bool"/>
+  </method>
+
+  <method name="flickr.groups.leave" return="void">
+    <argument name="group_id" type="string"/>
+    <argument name="delete_photos" type="bool?" default="null"/>
+    <overload parameters="group_id"/>
+  </method>
+
+  <method name="flickr.groups.members.getList" return="MemberCollection">
+    <argument name="group_id" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="member_type" type="MemberTypes" default="MemberTypes.None"/>
+    <overload parameters="group_id"/>
+    <overload parameters="group_id,page,per_page"/>
+    <overload parameters="group_id,member_type"/>
+  </method>
+
+  <method name="flickr.groups.pools.add" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="group_id" type="string"/>
+  </method>
+
+  <method name="flickr.groups.pools.getContext" return="Context">
+    <argument name="photo_id" type="string"/>
+    <argument name="group_id" type="string"/>
+  </method>
+
+  <method name="flickr.groups.pools.getGroups" return="MemberGroupInfoCollection">
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+  </method>
+
+  <method name="flickr.groups.pools.getPhotos" return="PhotoCollection">
+    <argument name="group_id" type="string"/>
+    <argument name="tags" type="string" default="null"/>
+    <argument name="user_id" type="string" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="group_id"/>
+    <overload parameters="group_id,tags"/>
+    <overload parameters="group_id,tags,extras"/>
+    <overload parameters="group_id,tags,page,per_page"/>
+    <overload parameters="group_id,tags,extras,page,per_page"/>
+    <overload parameters="group_id,page,per_page"/>
+    <overload parameters="group_id,extras"/>
+    <overload parameters="group_id,extras,page,per_page"/>
+  </method>
+
+  <method name="flickr.groups.pools.remove" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="group_id" type="string"/>
+  </method>
+
+  <method name="flickr.groups.search" return="GroupSearchResultCollection">
+    <argument name="text" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="text"/>
+  </method>
+
+  <method name="flickr.interestingness.getList" return="PhotoCollection">
+    <argument name="date" type="Timestamp?" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="extras"/>
+    <overload parameters="page,per_page"/>
+    <overload parameters="extras,page,per_page"/>
+    <overload parameters="date"/>
+    <overload parameters="date,page,per_page"/>
+  </method>
+
+  <method name="flickr.machinetags.getNamespaces" return="NamespaceCollection">
+    <argument name="predicate" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="1"/>
+    <overload parameters="predicate"/>
+  </method>
+
+  <method name="flickr.machinetags.getPairs" return="PairCollection">
+    <argument name="namespace" type="string" default="null"/>
+    <argument name="predicate" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="1"/>
+    <overload parameters=""/>
+    <overload parameters="namespace,predicate"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.machinetags.getPredicates" return="PredicateCollection">
+    <argument name="namespace" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="1"/>
+    <overload parameters=""/>
+    <overload parameters="namespace"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.machinetags.getRecentValues" return="ValueCollection">
+    <argument name="namespace" type="string" default="null"/>
+    <argument name="predicate" type="string" default="null"/>
+    <argument name="added_since" type="DateTime" default="DateTime.MinValue" nullable="true"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="1"/>
+    <overload parameters="added_since"/>
+    <overload parameters="added_since,page,per_page"/>
+    <overload parameters="namespace,predicate"/>
+    <overload parameters="namespace,predicate,page,per_page"/>
+  </method>
+
+  <method name="flickr.machinetags.getValues" return="ValueCollection">
+    <argument name="namespace" type="string" default="null"/>
+    <argument name="predicate" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="1"/>
+    <overload parameters="namespace,predicate"/>
+  </method>
+
+  <method name="flickr.pandas.getList" return="PandaCollection"/>
+
+  <method name="flickr.pandas.getPhotos" return="PandaPhotoCollection">
+    <argument name="panda_name" type="string"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="panda_name"/>
+    <overload parameters="panda_name,extras"/>
+    <overload parameters="panda_name,page,per_page"/>
+  </method>
+
+  <method name="flickr.people.findByEmail" return="FoundUser">
+    <argument name="email_address" type="string"/>
+  </method>
+
+  <method name="flickr.people.findByUserName" return="FoundUser">
+    <argument name="user_name" type="string"/>
+  </method>
+
+  <method name="flickr.people.getGroups" return="GroupInfoCollection">
+    <argument name="user_id" type="string"/>
+  </method>
+
+  <method name="flickr.people.getInfo" return="Person">
+    <argument name="user_id" type="string"/>
+  </method>
+
+  <method name="flickr.people.getLimits" return="PersonLimits"/>
+
+  <method name="flickr.people.getPhotos" return="PhotoCollection">
+    <argument name="user_id" type="string" default="null"/>
+    <argument name="safe_search" type="SafetyLevel" default="SafetyLevel.None"/>
+    <argument name="min_upload_date" type="Timestamp?" default="null"/>
+    <argument name="max_upload_date" type="Timestamp?" default="null"/>
+    <argument name="min_taken_date" type="Timestamp?" default="null"/>
+    <argument name="max_taken_date" type="Timestamp?" default="null"/>
+    <argument name="content_type" type="ContentTypeSearch" default="ContentTypeSearch.None"/>
+    <argument name="privacy_filter" type="PrivacyFilter" default="PrivacyFilter.None"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="user_id"/>
+    <overload parameters="extras"/>
+    <overload parameters="page,per_page"/>
+    <overload parameters="extras,page,per_page"/>
+    <overload parameters="user_id,page,per_page"/>
+    <overload parameters="user_id,extras,page,per_page"/>
+    <overload parameters="min_upload_date,max_upload_date"/>
+    <overload parameters="min_upload_date,max_upload_date,extras"/>
+    <overload parameters="min_upload_date,max_upload_date,extras,page,per_page"/>
+    <overload parameters="min_upload_date,max_upload_date,page,per_page"/>
+    <overload parameters="user_id,min_upload_date,max_upload_date"/>
+    <overload parameters="user_id,min_upload_date,max_upload_date,extras"/>
+    <overload parameters="user_id,min_upload_date,max_upload_date,page,per_page"/>
+    <overload parameters="user_id,min_upload_date,max_upload_date,extras,page,per_page"/>
+  </method>
+
+  <method name="flickr.people.getPhotosOf" return="PeoplePhotoCollection">
+    <argument name="user_id" type="string" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="user_id,extras"/>
+    <overload parameters="user_id,page,per_page"/>
+    <overload parameters="extras,page,per_page"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.people.getPublicGroups" return="GroupInfoCollection">
+    <argument name="user_id" type="string"/>
+    <argument name="include_invitation_only" type="bool?" default="null"/>
+    <overload parameters="user_id"/>
+  </method>
+
+  <method name="flickr.people.getPublicPhotos" return="PhotoCollection">
+    <argument name="user_id" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="safety_level" type="SafetyLevel" default="SafetyLevel.None"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters="user_id,page,per_page"/>
+    <overload parameters="user_id,page,per_page,extras"/>
+    <overload parameters="user_id,safety_level"/>
+    <overload parameters="user_id,safety_level,extras"/>
+    <overload parameters="user_id,page,per_page,safety_level"/>
+  </method>
+
+  <method name="flickr.people.getUploadStatus" return="UserStatus"/>
+
+  <method name="flickr.photos.addTags" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="tags" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.photos.comments.addComment" return="xpathnode" xpathelement="comment" xpathattribute="id" xpathtype="string">
+    <argument name="photo_id" type="string"/>
+    <argument name="comment_text" type="string"/>
+  </method>
+
+  <method name="flickr.photos.comments.deleteComment" return="void">
+    <argument name="comment_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.comments.editComment" return="void">
+    <argument name="comment_id" type="string"/>
+    <argument name="comment_text" type="string"/>
+  </method>
+
+  <method name="flickr.photos.comments.getList" return="PhotoCommentCollection">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.comments.getRecentForContacts" return="PhotoCollection">
+    <argument name="date_last_comment" type="Timestamp?" default="null"/>
+    <argument name="contacts_filter" type="IEnumerable(string)" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="date_last_comment"/>
+    <overload parameters="date_last_comment,contacts_filter"/>
+    <overload parameters="date_last_comment,contacts_filter,extras"/>
+    <overload parameters="date_last_comment,contacts_filter,page,per_page"/>
+    <overload parameters="date_last_comment,extras"/>
+    <overload parameters="date_last_comment,extras,page,per_page"/>
+    <overload parameters="date_last_comment,page,per_page"/>
+    <overload parameters="contacts_filter"/>
+    <overload parameters="contacts_filter,extras"/>
+    <overload parameters="contacts_filter,page,per_page"/>
+    <overload parameters="contacts_filter,extras,page,per_page"/>
+    <overload parameters="extras"/>
+    <overload parameters="extras,page,per_page"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.photos.delete" return="void">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.addPhoto" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.comments.addComment" return="string">
+    <argument name="photoset_id" type="string"/>
+    <argument name="comment_text" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.comments.deleteComment" return="void">
+    <argument name="comment_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.comments.editComment" return="void">
+    <argument name="comment_id" type="string"/>
+    <argument name="comment_text" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.comments.getList" return="PhotosetCommentCollection">
+    <argument name="photoset_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.create" return="Photoset">
+    <argument name="title" type="string"/>
+    <argument name="description" type="string"/>
+    <argument name="primary_photo_id" type="string" default="null"/>
+  </method>
+
+  <method name="flickr.photosets.delete" return="void">
+    <argument name="photoset_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.editMeta" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="title" type="string"/>
+    <argument name="description" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.editPhotos" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="primary_photo_id" type="string"/>
+    <argument name="photo_ids" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.photosets.getContext" return="Context">
+    <argument name="photo_id" type="string"/>
+    <argument name="photoset_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.getInfo" return="Photoset">
+    <argument name="photoset_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.getList" return="PhotosetCollection">
+    <argument name="user_id" type="string" default="null"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters=""/>
+    <overload parameters="page,per_page"/>
+    <overload parameters="user_id"/>
+  </method>
+
+  <method name="flickr.photosets.getPhotos" return="PhotosetPhotoCollection">
+    <argument name="photoset_id" type="string"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="privacy_filter" type="PrivacyFilter" default="PrivacyFilter.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="photoset_id,extras"/>
+    <overload parameters="photoset_id,page,per_page"/>
+    <overload parameters="photoset_id,extras,page,per_page"/>
+    <overload parameters="photoset_id,privacy_filter"/>
+    <overload parameters="photoset_id,privacy_filter,page,per_page"/>
+    <overload parameters="photoset_id,extras,privacy_filter"/>
+  </method>
+
+  <method name="flickr.photosets.orderSets" return="void">
+    <argument name="photoset_ids" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.photosets.removePhoto" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photosets.removePhotos" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="photo_ids" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.photosets.reorderPhotos" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="photo_ids" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.photosets.setPrimaryPhoto" return="void">
+    <argument name="photoset_id" type="string"/>
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.geo.batchCorrectLocation" return="void">
+    <argument name="latitude" type="double"/>
+    <argument name="longitude" type="double"/>
+    <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <overload parameters="latitude,longitude,place_id,woe_id"/>
+    <help>
+      <summary>
+        Correct the places hierarchy for all the photos for a user at a given latitude, longitude and accuracy.
+      </summary>
+      <remarks>
+        One of placeId and woeId must be provided.
+        Batch corrections are processed in a delayed queue so it may take a few minutes before the changes are reflected in a user's photos.
+      </remarks>
+      <param name="latitude">The latitude of the photos to be update whose valid range is -90 to 90. Anything more than 6 decimal places will be truncated.</param>
+      <param name="longitude">The longitude of the photos to be updated whose valid range is -180 to 180. Anything more than 6 decimal places will be truncated.</param>
+      <param name="accuracy">Recorded accuracy level of the photos to be updated. World level is 1, Country is ~3, Region ~6, City ~11, Street ~16. Current range is 1-16. Defaults to 16 if not specified.</param>
+      <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+      <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+    </help>
+  </method>
+
+  <method name="flickr.photos.geo.correctLocation" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+  </method>
+
+  <method name="flickr.photos.geo.getLocation" return="PlaceInfo">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.geo.getPerms" return="GeoPermissions">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.geo.photosForLocation" return="PhotoCollection">
+    <argument name="latitude" type="double"/>
+    <argument name="longitude" type="double"/>
+    <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="perPage" type="int" default="0"/>
+    <overload parameters="latitude,longitude"/>
+    <overload parameters="latitude,longitude,page,per_page"/>
+    <overload parameters="latitude,longitude,extras"/>
+    <overload parameters="latitude,longitude,extras,page,per_page"/>
+    <overload parameters="latitude,longitude,accuracy"/>
+    <overload parameters="latitude,longitude,accuracy,page,per_page"/>
+  </method>
+
+  <method name="flickr.photos.geo.removeLocation" return="void">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.geo.setContext" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="context" type="GeoContext"/>
+  </method>
+
+  <method name="flickr.photos.geo.setLocation" return="PhotoCollection">
+    <argument name="photo_id" type="string"/>
+    <argument name="latitude" type="double"/>
+    <argument name="longitude" type="double"/>
+    <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
+    <argument name="context" type="GeoContext" default="GeoContext.NotDefined"/>
+    <overload parameters="photo_id,latitude,longitude"/>
+    <overload parameters="photo_id,latitude,longitude,accuracy"/>
+    <overload parameters="photo_id,latitude,longitude,context"/>
+  </method>
+
+  <method name="flickr.photos.geo.setPerms" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="is_public" type="bool"/>
+    <argument name="is_contact" type="bool"/>
+    <argument name="is_family" type="bool"/>
+    <argument name="is_friend" type="bool"/>
+  </method>
+
+  <method name="flickr.photos.getAllContexts" return="AllContexts">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.getContactsPhotos" return="PhotoCollection">
+    <argument name="count" type="int?" default="null"/>
+    <argument name="just_friends" type="bool?" default="null"/>
+    <argument name="single_photo" type="bool?" default="null"/>
+    <argument name="include_self" type="bool?" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters=""/>
+    <overload parameters="count"/>
+    <overload parameters="count,extras"/>
+    <overload parameters="extras"/>
+  </method>
+
+  <method name="flickr.photos.getContactsPublicPhotos" return="PhotoCollection">
+    <argument name="user_id" type="string"/>
+    <argument name="count" type="int?" default="null"/>
+    <argument name="just_friends" type="bool?" default="null"/>
+    <argument name="single_photo" type="bool?" default="null"/>
+    <argument name="include_self" type="bool?" default="null"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters="user_id"/>
+    <overload parameters="user_id,count"/>
+    <overload parameters="user_id,count,extras"/>
+    <overload parameters="user_id,extras"/>
+  </method>
+
+  <method name="flickr.photos.getContext" return="Context">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.getCounts" return="PhotoCountCollection">
+    <argument name="dates" type="IEnumerable(Timestamp)" default="null"/>
+    <argument name="takenDates" type="IEnumerable(Timestamp)" default="null"/>
+    <overload parameters="dates"/>
+  </method>
+
+  <method name="flickr.photos.getExif" return="ExifTagCollection">
+    <argument name="photo_id" type="string"/>
+    <argument name="secret" type="string" default="null"/>
+    <overload parameters="photo_id"/>
+  </method>
+
+  <method name="flickr.photos.getFavorites" return="PhotoFavoriteCollection">
+    <argument name="photo_id" type="string"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="photo_id"/>
+  </method>
+
+  <method name="flickr.photos.getInfo" return="PhotoInfo">
+    <argument name="photo_id" type="string"/>
+    <argument name="secret" type="string" default="null"/>
+    <overload parameters="photo_id" />
+  </method>
+
+  <method name="flickr.photos.getNotInSet" return="PhotoCollection">
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters=""/>
+    <overload parameters="extras"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.photos.getPerms" return="PhotoPermissions">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.getRecent" return="PhotoCollection">
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters=""/>
+    <overload parameters="extras"/>
+    <overload parameters="page,per_page"/>
+  </method>
+
+  <method name="flickr.photos.getSizes" return="SizeCollection">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.getUntagged" return="PhotoCollection">
+    <argument name="options" type="PartialSearchOptions"/>
+  </method>
+
+  <method name="flickr.photos.getWithGeoData" return="PhotoCollection">
+    <argument name="options" type="PartialSearchOptions"/>
+  </method>
+
+  <method name="flickr.photos.getWithoutGeoData" return="PhotoCollection">
+    <argument name="options" type="PartialSearchOptions"/>
+  </method>
+
+  <method name="flickr.photos.licenses.setLicense" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="license" type="LicenseType"/>
+  </method>
+  
+  <method name="flickr.photos.licenses.getInfo" return="LicenseCollection">
+  </method>
+
+  <method name="flickr.photos.notes.add" return="string">
+    <argument name="photo_id" type="string"/>
+    <argument name="note_x" type="int"/>
+    <argument name="note_y" type="int"/>
+    <argument name="note_width" type="int"/>
+    <argument name="note_height" type="int"/>
+    <argument name="note_text" type="string"/>
+  </method>
+
+  <method name="flickr.photos.notes.delete" return="void">
+    <argument name="note_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.notes.edit" return="void">
+    <argument name="note_id" type="string"/>
+    <argument name="note_x" type="int"/>
+    <argument name="note_y" type="int"/>
+    <argument name="note_width" type="int"/>
+    <argument name="note_height" type="int"/>
+    <argument name="note_text" type="string"/>
+  </method>
+
+  <method name="flickr.photos.people.add" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="user_id" type="string"/>
+    <argument name="person_x" type="int?" default="null"/>
+    <argument name="person_y" type="int?" default="null"/>
+    <argument name="person_width" type="int?" default="null"/>
+    <argument name="person_height" type="int?" default="null"/>
+  </method>
+
+  <method name="flickr.photos.people.delete" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="user_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.people.deleteCoords" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="user_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.people.editCoords" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="user_id" type="string"/>
+    <argument name="person_x" type="int?" default="null"/>
+    <argument name="person_y" type="int?" default="null"/>
+    <argument name="person_width" type="int?" default="null"/>
+    <argument name="person_height" type="int?" default="null"/>
+  </method>
+
+  <method name="flickr.photos.people.getList" return="PhotoPersonCollection">
+    <argument name="photo_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.recentlyUpdated" return="PhotoCollection">
+    <argument name="min_date" type="Timestamp"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <overload parameters="min_date"/>
+    <overload parameters="min_date,extras"/>
+    <overload parameters="min_date,page,per_page"/>
+  </method>
+
+  <method name="flickr.photos.removeTag" return="void">
+    <argument name="tag_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.search" return="PhotoCollection">
+    <argument name="options" type="PhotoSearchOptions"/>
+  </method>
+
+  <method name="flickr.photos.setContentType" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="content_type" type="ContentType"/>
+  </method>
+
+  <method name="flickr.photos.setDates" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="date_posted" type="Timestamp?" default="null"/>
+    <argument name="date_taken" type="Timestamp?" default="null"/>
+    <argument name="granularity" type="DateGranularity" default="DateGranularity.FullDate"/>
+    <overload parameters="photo_id,date_posted"/>
+    <overload parameters="photo_id,date_taken,granularity"/>
+  </method>
+
+  <method name="flickr.photos.setMeta" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="title" type="string"/>
+    <argument name="description" type="string"/>
+  </method>
+
+  <method name="flickr.photos.setPerms" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="is_public" type="bool"/>
+    <argument name="is_friend" type="bool"/>
+    <argument name="is_family" type="bool"/>
+    <argument name="perm_comments" type="PermissionComment"/>
+    <argument name="perm_add_meta" type="PermissionAddMeta"/>
+  </method>
+
+  <method name="flickr.photos.setSafetyLevel" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="safety_level" type="SafetyLevel" default="SafetyLevel.None"/>
+    <argument name="hidden" type="HiddenFromSearch" default="HiddenFromSearch.None"/>
+    <overload parameters="photo_id,safety_level"/>
+    <overload parameters="photo_id,hidden"/>
+  </method>
+
+  <method name="flickr.photos.setTags" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="tags" type="IEnumerable(string)"/>
+  </method>
+
+  <method name="flickr.photos.suggestions.approveSuggestion" return="void">
+    <argument name="suggestion_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.suggestions.getList" return="SuggestionCollection">
+    <argument name="photo_id" type="string"/>
+    <argument name="status" type="SuggestionStatus"/>
+  </method>
+
+  <method name="flickr.photos.suggestions.rejectSuggestion" return="void">
+    <argument name="suggestion_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.suggestions.removeSuggestion" return="void">
+    <argument name="suggestion_id" type="string"/>
+  </method>
+
+  <method name="flickr.photos.suggestions.suggestLocation" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="latitude" type="double"/>
+    <argument name="longitide" type="double"/>
+    <argument name="accuracy" type="GeoAccuracy"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="note" type="string" default="null"/>
+  </method>
+
+  <method name="flickr.photos.transformRotate" return="void">
+    <argument name="photo_id" type="string"/>
+    <argument name="degrees" type="int"/>
+  </method>
+
+  <method name="flickr.photos.upload.checkTickets" return="TicketCollection">
+    <argument name="tickets" type="IEnumerable(string)"/>
+  </method>
+
+
+  <method name="flickr.places.find" return="PlaceCollection">
+    <argument name="query" type="string" />
+    <!--<argument name="bbox" type="BoundaryBox"/>
+    <argument name="extras" type="Extas" default="PhotoSearchExtras.None" />
+    <argument name="safe"/>-->
+    <help>
+      <summary>
+        Return a list of place IDs for a query string.&lt;br /&gt;&lt;br /&gt;
+        The flickr.places.find method is &lt;b&gt;not&lt;/b&gt; a geocoder. It will round &lt;q&gt;up&lt;/q&gt; to the nearest place type to which place IDs apply. For example, if you pass it a street level address it will return the city that contains the address rather than the street, or building, itself.
+      </summary>
+      <param name="query">The query string to use for place ID lookups</param>
+      <!--<param name="bbox">A bounding box for limiting the area to query.</param>
+      <param name="extras">Secret sauce.</param>
+      <param name="safe">Do we want sexy time words in our venue results?</param>-->
+    </help>
+  </method>
+  <method name="flickr.places.findByLatLon" return="PlaceCollection">
+    <argument name="lat" type="double" />
+    <argument name="lon" type="double"/>
+    <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
+    <overload parameters="lat,lon"/>
+    <help>
+      <summary>
+        Return a place ID for a latitude, longitude and accuracy triple.&lt;br /&gt;&lt;br /&gt;
+        The flickr.places.findByLatLon method is not meant to be a (reverse) geocoder in the traditional sense. It is designed to allow users to find photos for "places" and will round up to the nearest place type to which corresponding place IDs apply.&lt;br /&gt;&lt;br /&gt;
+        For example, if you pass it a street level coordinate it will return the city that contains the point rather than the street, or building, itself.&lt;br /&gt;&lt;br /&gt;
+        It will also truncate latitudes and longitudes to three decimal points.
+
+      </summary>
+      <param name="lat">The latitude whose valid range is -90 to 90. Anything more than 4 decimal places will be truncated.</param>
+      <param name="lon">The longitude whose valid range is -180 to 180. Anything more than 4 decimal places will be truncated.</param>
+      <param name="accuracy">Recorded accuracy level of the location information. World level is 1, Country is ~3, Region ~6, City ~11, Street ~16. Current range is 1-16. The default is 16.</param>
+    </help>
+  </method>
+  <method name="flickr.places.getChildrenWithPhotosPublic" return="PlaceCollection">
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <help>
+      <summary>Return a list of locations with public photos that are parented by a Where on Earth (WOE) or Places ID.</summary>
+      <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+      <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
+    </help>
+  </method>
+  <method name="flickr.places.getInfo" return="PlaceInfo">
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <help>
+      <summary>Get informations about a place.</summary>
+      <param name="placeId">A Flickr Places ID. &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;</param>
+      <param name="woeId">A Where On Earth (WOE) ID. &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;</param>
+    </help>
+  </method>
+  <method name="flickr.places.getInfoByUrl" return="PlaceInfo">
+    <argument name="url" type="string"/>
+    <help>
+      <summary>Lookup information about a place, by its flickr.com/places URL.</summary>
+      <param name="url">A flickr.com/places URL in the form of /country/region/city. For example: /Canada/Quebec/Montreal</param>
+    </help>
+  </method>
+  <method name="flickr.places.getPlaceTypes" return="PlaceTypeInfoCollection">
+    <help>
+      <summary>Fetches a list of available place types for Flickr.</summary>
+    </help>
+  </method>
+  <method name="flickr.places.getShapeHistory" return="ShapeDataCollection" >
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <help>
+      <summary>Return an historical list of all the shape data generated for a Places or Where on Earth (WOE) ID.</summary>
+      <param name="placeId">A Flickr Places ID. &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;</param>
+      <param name="woeId">A Where On Earth (WOE) ID. &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;</param>
+    </help>
+  </method>
+  <method name="flickr.places.getTopPlacesList" return="PlaceCollection">
+    <argument name="place_type_id" type="PlaceType"/>
+    <argument name="date" type="Timestamp?" default="null"/>
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <help>
+      <summary>Return the top 100 most geotagged places for a day.</summary>
+      <param name="placeTypeId">
+        The numeric ID for a specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place type IDs are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;22&lt;/strong&gt;: neighbourhood&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;7&lt;/strong&gt;: locality&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;8&lt;/strong&gt;: region&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;12&lt;/strong&gt;: country&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;29&lt;/strong&gt;: continent&lt;/li&gt;
+        &lt;/ul&gt;
+      </param>
+      <param name="date">A valid date in YYYY-MM-DD format. The default is yesterday.</param>
+      <param name="woeId">Limit your query to only those top places belonging to a specific Where on Earth (WOE) identifier.</param>
+      <param name="placeId">Limit your query to only those top places belonging to a specific Flickr Places identifier.</param>
+    </help>
+  </method>
+  <method name="flickr.places.placesForBoundingBox" return="PlaceCollection">
+    <argument name="bbox" type="BoundaryBox"/>
+    <argument name="place_type" type="PlaceType" default="PlaceType.None" />
+    <argument name="place_type_id" type="int?" default="null"/>
+    <argument name="recursive" type="bool?" default="null" />
+    <overload parameters="bbox,place_type"/>
+    <overload parameters="bbox"/>
+    <help>
+      <summary>
+        Return all the locations of a matching place type for a bounding box.&lt;br /&gt;&lt;br /&gt;
+
+        The maximum allowable size of a bounding box (the distance between the SW and NE corners) is governed by the place type you are requesting. Allowable sizes are as follows:
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;neighbourhood&lt;/strong&gt;: 3km (1.8mi)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;locality&lt;/strong&gt;: 7km (4.3mi)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;county&lt;/strong&gt;: 50km (31mi)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;region&lt;/strong&gt;: 200km (124mi)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;country&lt;/strong&gt;: 500km (310mi)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;continent&lt;/strong&gt;: 1500km (932mi)&lt;/li&gt;
+        &lt;/ul&gt;
+      </summary>
+      <param name="bbox">A comma-delimited list of 4 values defining the Bounding Box of the area that will be searched. The 4 values represent the bottom-left corner of the box and the top-right corner, minimum_longitude, minimum_latitude, maximum_longitude, maximum_latitude.</param>
+      <param name="placeType">
+        The name of place type to using as the starting point to search for places in a bounding box. Valid placetypes are:
+
+        &lt;ul&gt;
+        &lt;li&gt;neighbourhood&lt;/li&gt;
+        &lt;li&gt;locality&lt;/li&gt;
+        &lt;li&gt;county&lt;/li&gt;
+        &lt;li&gt;region&lt;/li&gt;
+        &lt;li&gt;country&lt;/li&gt;
+        &lt;li&gt;continent&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;The "place_type" argument has been deprecated in favor of the "place_type_id" argument. It won't go away but it will not be added to new methods. A complete list of place type IDs is available using the &lt;a href="http://www.flickr.com/services/api/flickr.places.getPlaceTypes.html"&gt;flickr.places.getPlaceTypes&lt;/a&gt; method. (While optional, you must pass either a valid place type or place type ID.)&lt;/span&gt;
+      </param>
+      <param name="placeTypeId">
+        The numeric ID for a specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place type IDs are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;22&lt;/strong&gt;: neighbourhood&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;7&lt;/strong&gt;: locality&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;8&lt;/strong&gt;: region&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;12&lt;/strong&gt;: country&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;29&lt;/strong&gt;: continent&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br /&gt;&lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid place type or place type ID.)&lt;/span&gt;
+      </param>
+      <param name="recursive">
+        Perform a recursive place type search. For example, if you search for neighbourhoods in a given bounding box but there are no results the method will also query for localities and so on until one or more valid places are found.&lt;br /&lt;br /&gt;
+        Recursive searches do not change the bounding box size restrictions for the initial place type passed to the method.
+      </param>
+    </help>
+  </method>
+  <method name="flickr.places.placesForContacts" return="PlaceCollection">
+    <argument name="place_type" type="PlaceType" default="PlaceType.None" />
+    <argument name="place_type_id" type="int?" default="null" />
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="woe_id" type="string" default="null"/>
+    <argument name="threshold" type="int?" default="null" />
+    <argument name="contacts" type="string" default="null" />
+    <argument name="min_upload_date" type="Timestamp?" default="null" />
+    <argument name="max_upload_date" type="Timestamp?" default="null" />
+    <argument name="min_taken_date" type="Timestamp?" default="null" />
+    <argument name="max_taken_date" type="Timestamp?" default="null" />
+    <overload parameters=""/>
+    <overload parameters="woe_id"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <help>
+      <summary>Return a list of the top 100 unique places clustered by a given placetype for a user's contacts. </summary>
+      <param name="placeType">
+        A specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place types are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;neighbourhood&lt;/strong&gt; (and neighborhood)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;locality&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;region&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;country&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;continent&lt;/strong&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;The "place_type" argument has been deprecated in favor of the "place_type_id" argument. It won't go away but it will not be added to new methods. A complete list of place type IDs is available using the &lt;a href="http://www.flickr.com/services/api/flickr.places.getPlaceTypes.html"&gt;flickr.places.getPlaceTypes&lt;/a&gt; method. (While optional, you must pass either a valid place type or place type ID.)&lt;/span&gt;
+      </param>
+      <param name="placeTypeId">
+        The numeric ID for a specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place type IDs are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;22&lt;/strong&gt;: neighbourhood&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;7&lt;/strong&gt;: locality&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;8&lt;/strong&gt;: region&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;12&lt;/strong&gt;: country&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;29&lt;/strong&gt;: continent&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br /&gt;&lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid place type or place type ID.)&lt;/span&gt;
+      </param>
+      <param name="woeId">
+        A Where on Earth identifier to use to filter photo clusters. For example all the photos clustered by &lt;strong&gt;locality&lt;/strong&gt; in the United States (WOE ID &lt;strong&gt;23424977&lt;/strong&gt;).&lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="placeId">
+        A Flickr Places identifier to use to filter photo clusters. For example all the photos clustered by &lt;strong&gt;locality&lt;/strong&gt; in the United States (Place ID &lt;strong&gt;4KO02SibApitvSBieQ&lt;/strong&gt;).
+        &lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="threshold">
+        The minimum number of photos that a place type must have to be included. If the number of photos is lowered then the parent place type for that place will be used.&lt;br /&gt;&lt;br /&gt;
+
+        For example if your contacts only have &lt;strong&gt;3&lt;/strong&gt; photos taken in the locality of Montreal&lt;/strong&gt; (WOE ID 3534) but your threshold is set to &lt;strong&gt;5&lt;/strong&gt; then those photos will be "rolled up" and included instead with a place record for the region of Quebec (WOE ID 2344924).
+      </param>
+      <param name="contacts">Search your contacts. Either 'all' or 'ff' for just friends and family. (Default is all)</param>
+      <param name="minUploadDate">Minimum upload date. Photos with an upload date greater than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="maxUploadDate">Maximum upload date. Photos with an upload date less than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+      <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+    </help>
+  </method>
+  <method name="flickr.places.placesForTags" return="PlaceCollection">
+    <argument name="place_type_id" type="PlaceType" default="PlaceType.None" />
+    <argument name="woe_id" type="string" default="null"/>
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="threshold" type="int?" default="null" />
+    <argument name="tags" type="IEnumerable(string)" default="null" />
+    <argument name="tag_mode" type="TagMode" default="TagMode.None"/>
+    <argument name="machine_tags" type="IEnumerable(string)" default="null" />
+    <argument name="machine_tag_mode" type="MachineTagMode" default="MachineTagMode.None" />
+    <argument name="min_upload_date" type="Timestamp?" default="null" />
+    <argument name="max_upload_date" type="Timestamp?" default="null" />
+    <argument name="min_taken_date" type="Timestamp?" default="null" />
+    <argument name="max_taken_date" type="Timestamp?" default="null" />
+    <overload parameters=""/>
+    <overload parameters="woe_id"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <overload parameters="woe_id,tags"/>
+    <overload parameters="woe_id,tags,tag_mode"/>
+    <overload parameters="woe_id,machine_tags,machine_tag_mode"/>
+    <overload parameters="woe_id,tags,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,tags,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <overload parameters="woe_id,tags,tag_mode,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,tags,tag_mode,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <overload parameters="woe_id,machine_tags,machine_tag_mode,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,machine_tags,machine_tag_mode,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <help>
+      <summary>Return a list of the top 100 unique places clustered by a given placetype for set of tags or machine tags. </summary>
+      <param name="placeTypeId">
+        The numeric ID for a specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place type IDs are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;22&lt;/strong&gt;: neighbourhood&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;7&lt;/strong&gt;: locality&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;8&lt;/strong&gt;: region&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;12&lt;/strong&gt;: country&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;29&lt;/strong&gt;: continent&lt;/li&gt;
+        &lt;/ul&gt;
+      </param>
+      <param name="woeId">
+        A Where on Earth identifier to use to filter photo clusters. For example all the photos clustered by &lt;strong&gt;locality&lt;/strong&gt; in the United States (WOE ID &lt;strong&gt;23424977&lt;/strong&gt;).
+        &lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="placeId">
+        A Flickr Places identifier to use to filter photo clusters. For example all the photos clustered by &lt;strong&gt;locality&lt;/strong&gt; in the United States (Place ID &lt;strong&gt;4KO02SibApitvSBieQ&lt;/strong&gt;).
+        &lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="threshold">
+        The minimum number of photos that a place type must have to be included. If the number of photos is lowered then the parent place type for that place will be used.&lt;br /&gt;&lt;br /&gt;
+
+        For example if you only have &lt;strong&gt;3&lt;/strong&gt; photos taken in the locality of Montreal&lt;/strong&gt; (WOE ID 3534) but your threshold is set to &lt;strong&gt;5&lt;/strong&gt; then those photos will be "rolled up" and included instead with a place record for the region of Quebec (WOE ID 2344924).
+      </param>
+      <param name="tags">A comma-delimited list of tags. Photos with one or more of the tags listed will be returned.</param>
+      <param name="tagMode">Either 'any' for an OR combination of tags, or 'all' for an AND combination. Defaults to 'any' if not specified.</param>
+      <param name="machineTags">
+        Aside from passing in a fully formed machine tag, there is a special syntax for searching on specific properties :
+
+        &lt;ul&gt;
+        &lt;li&gt;Find photos using the 'dc' namespace :    &lt;code&gt;"machine_tags" =&gt; "dc:"&lt;/code&gt;&lt;/li&gt;
+
+        &lt;li&gt; Find photos with a title in the 'dc' namespace : &lt;code&gt;"machine_tags" =&gt; "dc:title="&lt;/code&gt;&lt;/li&gt;
+
+        &lt;li&gt;Find photos titled "mr. camera" in the 'dc' namespace : &lt;code&gt;"machine_tags" =&gt; "dc:title=\"mr. camera\"&lt;/code&gt;&lt;/li&gt;
+
+        &lt;li&gt;Find photos whose value is "mr. camera" : &lt;code&gt;"machine_tags" =&gt; "*:*=\"mr. camera\""&lt;/code&gt;&lt;/li&gt;
+
+        &lt;li&gt;Find photos that have a title, in any namespace : &lt;code&gt;"machine_tags" =&gt; "*:title="&lt;/code&gt;&lt;/li&gt;
+
+        &lt;li&gt;Find photos that have a title, in any namespace, whose value is "mr. camera" : &lt;code&gt;"machine_tags" =&gt; "*:title=\"mr. camera\""&lt;/code&gt;&lt;/li&gt;
+
+        &lt;li&gt;Find photos, in the 'dc' namespace whose value is "mr. camera" : &lt;code&gt;"machine_tags" =&gt; "dc:*=\"mr. camera\""&lt;/code&gt;&lt;/li&gt;
+
+        &lt;/ul&gt;
+
+        Multiple machine tags may be queried by passing a comma-separated list. The number of machine tags you can pass in a single query depends on the tag mode (AND or OR) that you are querying with. "AND" queries are limited to (16) machine tags. "OR" queries are limited
+        to (8).
+      </param>
+      <param name="machineTagMode">Either 'any' for an OR combination of tags, or 'all' for an AND combination. Defaults to 'any' if not specified.</param>
+      <param name="minUploadDate">Minimum upload date. Photos with an upload date greater than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="maxUploadDate">Maximum upload date. Photos with an upload date less than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+      <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+    </help>
+  </method>
+  <method name="flickr.places.placesForUser" return="PlaceCollection">
+    <argument name="place_type_id" type="PlaceType" default="PlaceType.None" />
+    <argument name="place_type" type="string" default="null" />
+    <argument name="woe_id" type="string" default="null"/>
+    <argument name="place_id" type="string" default="null"/>
+    <argument name="threshold" type="int?" default="null" />
+    <argument name="min_upload_date" type="Timestamp?" default="null" />
+    <argument name="max_upload_date" type="Timestamp?" default="null" />
+    <argument name="min_taken_date" type="Timestamp?" default="null" />
+    <argument name="max_taken_date" type="Timestamp?" default="null" />
+    <overload parameters=""/>
+    <overload parameters="woe_id"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <help>
+      <summary>Return a list of the top 100 unique places clustered by a given placetype for a user. </summary>
+      <param name="placeTypeId">
+        The numeric ID for a specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place type IDs are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;22&lt;/strong&gt;: neighbourhood&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;7&lt;/strong&gt;: locality&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;8&lt;/strong&gt;: region&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;12&lt;/strong&gt;: country&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;29&lt;/strong&gt;: continent&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;The "place_type" argument has been deprecated in favor of the "place_type_id" argument. It won't go away but it will not be added to new methods. A complete list of place type IDs is available using the &lt;a href="http://www.flickr.com/services/api/flickr.places.getPlaceTypes.html"&gt;flickr.places.getPlaceTypes&lt;/a&gt; method. (While optional, you must pass either a valid place type or place type ID.)&lt;/span&gt;
+      </param>
+      <param name="placeType">
+        A specific place type to cluster photos by. &lt;br /&gt;&lt;br /&gt;
+
+        Valid place types are :
+
+        &lt;ul&gt;
+        &lt;li&gt;&lt;strong&gt;neighbourhood&lt;/strong&gt; (and neighborhood)&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;locality&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;region&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;country&lt;/strong&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;continent&lt;/strong&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br /&gt;&lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid place type or place type ID.)&lt;/span&gt;
+      </param>
+      <param name="woeId">
+        A Where on Earth identifier to use to filter photo clusters. For example all the photos clustered by &lt;strong&gt;locality&lt;/strong&gt; in the United States (WOE ID &lt;strong&gt;23424977&lt;/strong&gt;).&lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="placeId">
+        A Flickr Places identifier to use to filter photo clusters. For example all the photos clustered by &lt;strong&gt;locality&lt;/strong&gt; in the United States (Place ID &lt;strong&gt;4KO02SibApitvSBieQ&lt;/strong&gt;).&lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="threshold">
+        The minimum number of photos that a place type must have to be included. If the number of photos is lowered then the parent place type for that place will be used.&lt;br /&gt;&lt;br /&gt;
+
+        For example if you only have &lt;strong&gt;3&lt;/strong&gt; photos taken in the locality of Montreal&lt;/strong&gt; (WOE ID 3534) but your threshold is set to &lt;strong&gt;5&lt;/strong&gt; then those photos will be "rolled up" and included instead with a place record for the region of Quebec (WOE ID 2344924).
+      </param>
+      <param name="minUploadDate">Minimum upload date. Photos with an upload date greater than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="maxUploadDate">Maximum upload date. Photos with an upload date less than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+      <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+    </help>
+  </method>
+  <!--<method name="flickr.places.resolvePlaceId" return="PlaceInfo">
+    <argument name="place_id" type="string" />
+    <help>
+      <summary>
+        Find Flickr Places information by Place ID.&lt;br /&gt;&lt;br /&gt;
+        This method has been deprecated. It won't be removed but you should use &lt;a href="/services/api/flickr.places.getInfo.html"&gt;flickr.places.getInfo&lt;/a&gt; instead.
+      </summary>
+      <param name="placeId">A Flickr Places ID</param>
+    </help>
+  </method>-->
+  <!--<method name="flickr.places.resolvePlaceURL" return="PlaceInfo">
+    <argument name="url" type="string" />
+    <help>
+      <summary>
+        Find Flickr Places information by Place URL.&lt;br /&gt;&lt;br /&gt;
+        This method has been deprecated. It won't be removed but you should use &lt;a href="/services/api/flickr.places.getInfoByUrl.html"&gt;flickr.places.getInfoByUrl&lt;/a&gt; instead.
+      </summary>
+      <param name="url">
+        A Flickr Places URL.
+        &lt;br /&gt;&lt;br /&gt;
+        Flickr Place URLs are of the form /country/region/city
+      </param>
+    </help>
+  </method>-->
+  <method name="flickr.places.tagsForPlace" return="TagCollection">
+    <argument name="woe_id" type="string" default="null" />
+    <argument name="place_id" type="string" default="null" />
+    <argument name="min_upload_date" type="Timestamp?" default="null" />
+    <argument name="max_upload_date" type="Timestamp?" default="null" />
+    <argument name="min_taken_date" type="Timestamp?" default="null" />
+    <argument name="max_taken_date" type="Timestamp?" default="null" />
+    <overload parameters="woe_id"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date"/>
+    <overload parameters="woe_id,min_upload_date,max_upload_date,min_taken_date,max_taken_date"/>
+    <overload parameters="woe_id,place_id"/>
+    <help>
+      <summary>Return a list of the top 100 unique tags for a Flickr Places or Where on Earth (WOE) ID</summary>
+      <param name="woeId">
+        A Where on Earth identifier to use to filter photo clusters.&lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="placeId">
+        A Flickr Places identifier to use to filter photo clusters.&lt;br /&gt;&lt;br /&gt;
+        &lt;span style="font-style:italic;"&gt;(While optional, you must pass either a valid Places ID or a WOE ID.)&lt;/span&gt;
+      </param>
+      <param name="minUploadDate">Minimum upload date. Photos with an upload date greater than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="maxUploadDate">Maximum upload date. Photos with an upload date less than or equal to this value will be returned. The date should be in the form of a unix timestamp.</param>
+      <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+      <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. The date should be in the form of a mysql datetime.</param>
+    </help>
+  </method>
+  <method name="flickr.prefs.getContentType" return="xpathnode" xpathelement="person" xpathattribute="content_type" xpathtype="ContentType">
+    <help>
+      <summary>Returns the default content type preference for the user.</summary>
+    </help>
+  </method>
+  <method name="flickr.prefs.getGeoPerms" return="UserGeoPermissions">
+    <help>
+      <summary>
+        Returns the default privacy level for geographic information attached to the user's photos and whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
+
+        Possible values, for viewing geotagged photos, are:
+
+        &lt;ul&gt;
+        &lt;li&gt;0 : &lt;i&gt;No default set&lt;/i&gt;&lt;/li&gt;
+        &lt;li&gt;1 : Public&lt;/li&gt;
+        &lt;li&gt;2 : Contacts only&lt;/li&gt;
+        &lt;li&gt;3 : Friends and Family only&lt;/li&gt;
+        &lt;li&gt;4 : Friends only&lt;/li&gt;
+        &lt;li&gt;5 : Family only&lt;/li&gt;
+        &lt;li&gt;6 : Private&lt;/li&gt;
+        &lt;/ul&gt;
+
+        Users can edit this preference at &lt;a href="http://www.flickr.com/account/geo/privacy/"&gt;http://www.flickr.com/account/geo/privacy/&lt;/a&gt;.
+        &lt;br /&gt;&lt;br /&gt;
+        Possible values for whether or not geo-related EXIF information will be used to geotag a photo are:
+
+        &lt;ul&gt;
+        &lt;li&gt;0: Geo-related EXIF information will be ignored&lt;/li&gt;
+        &lt;li&gt;1: Geo-related EXIF information will be used to try and geotag photos on upload&lt;/li&gt;
+        &lt;/ul&gt;
+
+        Users can edit this preference at &lt;a href="http://www.flickr.com/account/geo/exif/?from=privacy"&gt;http://www.flickr.com/account/geo/exif/?from=privacy&lt;/a&gt;
+      </summary>
+    </help>
+  </method>
+  <method name="flickr.prefs.getHidden" return="xpathnode" xpathelement="person" xpathattribute="hidden" xpathtype="HiddenFromSearch">
+    <help>
+      <summary>Returns the default hidden preference for the user.</summary>
+    </help>
+  </method>
+  <method name="flickr.prefs.getPrivacy" return="xpathnode" xpathelement="person" xpathattribute="privacy" xpathtype="PrivacyFilter">
+    <help>
+      <summary>
+        Returns the default privacy level preference for the user.
+
+        Possible values are:
+        &lt;ul&gt;
+        &lt;li&gt;1 : Public&lt;/li&gt;
+        &lt;li&gt;2 : Friends only&lt;/li&gt;
+        &lt;li&gt;3 : Family only&lt;/li&gt;
+        &lt;li&gt;4 : Friends and Family&lt;/li&gt;
+        &lt;li&gt;5 : Private&lt;/li&gt;
+        &lt;/ul&gt;
+      </summary>
+    </help>
+  </method>
+  <method name="flickr.prefs.getSafetyLevel" return="xpathnode" xpathelement="person" xpathattribute="safety_level" xpathtype="SafetyLevel">
+    <help>
+      <summary>Returns the default safety level preference for the user.</summary>
+    </help>
+  </method>
+  <method name="flickr.push.getSubscriptions" return="SubscriptionCollection">
+    <help>
+      <summary>
+        Returns a list of the subscriptions for the logged-in user.
+        &lt;br&gt;&lt;br&gt;
+        &lt;i&gt;(this method is experimental and may change)&lt;/i&gt;
+      </summary>
+    </help>
+  </method>
+  <method name="flickr.push.getTopics" return="xpathnodes" xpathelement="topic" xpathattribute="name" xpathtype="string">
+    <help>
+      <summary>
+        All the different flavours of anteater.
+        &lt;br&gt;&lt;br&gt;
+        &lt;i&gt;(this method is experimental and may change)&lt;/i&gt;
+      </summary>
+    </help>
+  </method>
+  <method name="flickr.push.subscribe" return="void">
+    <argument name="topic" type="string" />
+    <argument name="callback" type="string"/>
+    <argument name="verify" type="string"/>
+    <argument name="verify_token" type="string" default="null"/>
+    <argument name="lease_seconds" type="int?" default="null"/>
+    <argument name="woe_ids" type="IEnumerable(int)" default="null"/>
+    <argument name="place_ids" type="IEnumerable(string)" default="null"/>
+    <argument name="lat" type="double?" default="null"/>
+    <argument name="lon" type="double?" default="null"/>
+    <argument name="radius" type="int?" default="null"/>
+    <argument name="radius_units" type="RadiusUnit" default="RadiusUnit.None"/>
+    <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
+    <argument name="nsids" type="IEnumerable(string)" default="null"/>
+    <argument name="tags" type="IEnumerable(string)" default="null" />
+    <!--<argument name="machine_tags" />
+    <argument name="update_type" />
+    <argument name="output_format" />
+    <argument name="mailto" />-->
+    <help>
+      <summary>
+        In ur pandas, tickling ur unicorn
+        &lt;br&gt;&lt;br&gt;
+        &lt;i&gt;(this method is experimental and may change)&lt;/i&gt;
+      </summary>
+      <param name="topic">The type of subscription. See &lt;a href="http://www.flickr.com/services/api/flickr.push.getTopics.htm"&gt;flickr.push.getTopics&lt;/a&gt;.</param>
+      <param name="callback">The url for the subscription endpoint. Limited to 255 bytes, and must be unique for this user, i.e. no two subscriptions for a given user may use the same callback url.</param>
+      <param name="verify">The verification mode, either &lt;code&gt;sync&lt;/code&gt; or &lt;code&gt;async&lt;/code&gt;. See the &lt;a href="http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html#subscribingl"&gt;Google PubSubHubbub spec&lt;/a&gt; for details.</param>
+      <param name="verifyToken">The verification token to be echoed back to the subscriber during the verification callback, as per the &lt;a href="http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html#subscribing"&gt;Google PubSubHubbub spec&lt;/a&gt;. Limited to 200 bytes.</param>
+      <param name="leaseSeconds">Number of seconds for which the subscription will be valid. Legal values are 60 to 86400 (1 minute to 1 day). If not present, the subscription will be auto-renewing.</param>
+      <param name="woeIds">
+        A 32-bit integer for a &lt;a href="http://developer.yahoo.com/geo/geoplanet/"&gt;Where on Earth ID&lt;/a&gt;. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt;.
+        &lt;br/&gt;&lt;br/&gt;
+        The order of precedence for geo subscriptions is : woe ids, place ids, radial i.e. the &lt;code&gt;lat, lon&lt;/code&gt; parameters will be ignored if &lt;code&gt;place_ids&lt;/code&gt; is present, which will be ignored if &lt;code&gt;woe_ids&lt;/code&gt; is present.
+      </param>
+      <param name="placeIds">
+        A comma-separated list of Flickr place IDs. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt;.
+        &lt;br/&gt;&lt;br/&gt;
+        The order of precedence for geo subscriptions is : woe ids, place ids, radial i.e. the &lt;code&gt;lat, lon&lt;/code&gt; parameters will be ignored if &lt;code&gt;place_ids&lt;/code&gt; is present, which will be ignored if &lt;code&gt;woe_ids&lt;/code&gt; is present.
+      </param>
+      <param name="lat">
+        A latitude value, in decimal format. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt;. Defines the latitude for a radial query centered around (lat, lon).
+        &lt;br/&gt;&lt;br/&gt;
+        The order of precedence for geo subscriptions is : woe ids, place ids, radial i.e. the &lt;code&gt;lat, lon&lt;/code&gt; parameters will be ignored if &lt;code&gt;place_ids&lt;/code&gt; is present, which will be ignored if &lt;code&gt;woe_ids&lt;/code&gt; is present.
+      </param>
+      <param name="lon">
+        A longitude value, in decimal format. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt;. Defines the longitude for a radial query centered around (lat, lon).
+        &lt;br/&gt;&lt;br/&gt;
+        The order of precedence for geo subscriptions is : woe ids, place ids, radial i.e. the &lt;code&gt;lat, lon&lt;/code&gt; parameters will be ignored if &lt;code&gt;place_ids&lt;/code&gt; is present, which will be ignored if &lt;code&gt;woe_ids&lt;/code&gt; is present.
+      </param>
+      <param name="radius">
+        A radius value, in the units defined by radius_units. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt;. Defines the radius of a circle for a radial query centered around (lat, lon). Default is 5 km.
+        &lt;br/&gt;&lt;br/&gt;
+        The order of precedence for geo subscriptions is : woe ids, place ids, radial i.e. the &lt;code&gt;lat, lon&lt;/code&gt; parameters will be ignored if &lt;code&gt;place_ids&lt;/code&gt; is present, which will be ignored if &lt;code&gt;woe_ids&lt;/code&gt; is present.
+      </param>
+      <param name="radiusUnits">
+        Defines the units for the radius parameter. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt;. Options are &lt;code&gt;mi&lt;/code&gt; and &lt;code&gt;km&lt;/code&gt;. Default is &lt;code&gt;km&lt;/code&gt;.
+        &lt;br/&gt;&lt;br/&gt;
+        The order of precedence for geo subscriptions is : woe ids, place ids, radial i.e. the &lt;code&gt;lat, lon&lt;/code&gt; parameters will be ignored if &lt;code&gt;place_ids&lt;/code&gt; is present, which will be ignored if &lt;code&gt;woe_ids&lt;/code&gt; is present.
+      </param>
+      <param name="accuracy">
+        Defines the minimum accuracy required for photos to be included in a subscription. Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;geo&lt;/code&gt; Legal values are 1-16, default is 1 (i.e. any accuracy level).
+        &lt;ul&gt;
+        &lt;li&gt;World level is 1&lt;/li&gt;
+        &lt;li&gt;Country is ~3&lt;/li&gt;
+        &lt;li&gt;Region is ~6&lt;/li&gt;
+        &lt;li&gt;City is ~11&lt;/li&gt;
+        &lt;li&gt;Street is ~16&lt;/li&gt;
+        &lt;/ul&gt;
+      </param>
+      <param name="nsids">A comma-separated list of nsids representing Flickr Commons institutions (see &lt;a href="http://www.flickr.com/services/api/flickr.commons.getInstitutions.html"&gt;flickr.commons.getInstitutions&lt;/a&gt;). Only valid if &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;commons&lt;/code&gt;. If not present this argument defaults to all Flickr Commons institutions.</param>
+      <param name="tags">A comma-separated list of strings to be used for tag subscriptions. Photos with one or more of the tags listed will be included in the subscription. Only valid if the &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;tags&lt;/code&gt;.</param>
+      <!--<param name="machineTags">A comma-separated list of strings to be used for machine tag subscriptions. Photos with one or more of the machine tags listed will be included in the subscription. Currently the format must be &lt;code&gt;namespace:tag_name=value&lt;/code&gt; Only valid if the &lt;code&gt;topic&lt;/code&gt; is &lt;code&gt;tags&lt;/code&gt;.</param>
+      <param name="updateType"></param>
+      <param name="outputFormat"></param>
+      <param name="mailto"></param>-->
+    </help>
+  </method>
+  <method name="flickr.push.unsubscribe" return="void">
+    <argument name="topic" type="string" />
+    <argument name="callback" type="string" />
+    <argument name="verify" type="string" />
+    <argument name="verify_token" type="string" default="null" />
+    <overload parameters="topic,callback,verify"/>
+    <help>
+      <summary>
+        Why would you want to do this?
+        &lt;br&gt;&lt;br&gt;
+        &lt;i&gt;(this method is experimental and may change)&lt;/i&gt;
+      </summary>
+      <param name="topic">The type of subscription. See &lt;a href="http://www.flickr.com/services/api/flickr.push.getTopics.htm"&gt;flickr.push.getTopics&lt;/a&gt;.</param>
+      <param name="callback">The url for the subscription endpoint (must be the same url as was used when creating the subscription).</param>
+      <param name="verify">The verification mode, either 'sync' or 'async'. See the &lt;a href="http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html#subscribingl"&gt;Google PubSubHubbub spec&lt;/a&gt; for details.</param>
+      <param name="verifyToken">The verification token to be echoed back to the subscriber during the verification callback, as per the &lt;a href="http://pubsubhubbub.googlecode.com/svn/trunk/pubsubhubbub-core-0.3.html#subscribing"&gt;Google PubSubHubbub spec&lt;/a&gt;. Limited to 200 bytes.</param>
+    </help>
+  </method>
+  <method name="flickr.reflection.getMethodInfo" return="Method">
+    <argument name="method_name" type="string" />
+    <help>
+      <summary>Returns information for a given flickr API method.</summary>
+      <param name="methodName">The name of the method to fetch information for.</param>
+    </help>
+  </method>
+  <method name="flickr.reflection.getMethods" return="MethodCollection">
+    <help>
+      <summary>Returns a list of available flickr API methods.</summary>
+    </help>
+  </method>
+  <method name="flickr.stats.getCollectionDomains" return="StatDomainCollection">
+    <argument name="date" type="Timestamp" />
+    <argument name="collection_id" type="string" default="null" />
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date"/>
+    <overload parameters="date,collection_id"/>
+    <overload parameters="date,page,per_page"/>
+    <help>
+      <summary>Get a list of referring domains for a collection</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="collectionId">The id of the collection to get stats for. If not provided, stats for all collections will be returned.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+      <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getCollectionReferrers" return="StatReferrerCollection">
+    <argument name="date" type="Timestamp" />
+    <argument name="domain" type="string" />
+    <argument name="collection_id" type="string" default="null"/>
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date,domain"/>
+    <overload parameters="date,domain,collection_id"/>
+    <overload parameters="date,domain,page,per_page"/>
+    <help>
+      <summary>Get a list of referrers from a given domain to a collection</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
+      <param name="collectionId">The id of the collection to get stats for. If not provided, stats for all collections will be returned.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+      <param name="perPage">Number of referrers to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getCollectionStats" return="Stats">
+    <argument name="date" type="Timestamp" />
+    <argument name="collection_id" type="string"/>
+    <help>
+      <summary>Get the number of views on a collection for a given date.</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="collectionId">The id of the collection to get stats for.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getCSVFiles" return="CsvFileCollection">
+    <help>
+      <summary>
+        Returns a list of URLs for text files containing &lt;i&gt;all&lt;/i&gt; your stats data (from November 26th 2007 onwards) for the currently auth'd user.
+
+        &lt;b&gt;Please note, these files will only be available until June 1, 2010 Noon PDT.&lt;/b&gt;
+        For more information &lt;a href="/help/stats/#1369409"&gt;please check out this FAQ&lt;/a&gt;, or just &lt;a href="/photos/me/stats/downloads/"&gt;go download your files&lt;/a&gt;.
+      </summary>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotoDomains" return="StatDomainCollection">
+    <argument name="date" type="Timestamp"/>
+    <argument name="photo_id" type="string" default="null" />
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date"/>
+    <overload parameters="date,photo_id"/>
+    <overload parameters="date,page,per_page"/>
+    <help>
+      <summary>Get a list of referring domains for a photo</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="photoId">The id of the photo to get stats for. If not provided, stats for all photos will be returned.</param>
+      <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotoReferrers" return="StatReferrerCollection">
+    <argument name="date" type="Timestamp" />
+    <argument name="domain" type="string"/>
+    <argument name="photo_id" type="string" default="null"/>
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date,domain"/>
+    <overload parameters="date,domain,photo_id"/>
+    <overload parameters="date,domain,page,per_page"/>
+    <help>
+      <summary>Get a list of referrers from a given domain to a photo</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
+      <param name="photoId">The id of the photo to get stats for. If not provided, stats for all photos will be returned.</param>
+      <param name="perPage">Number of referrers to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotosetDomains" return="StatDomainCollection">
+    <argument name="date" type="Timestamp"/>
+    <argument name="photoset_id" type="string" default="null" />
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date"/>
+    <overload parameters="date,photoset_id"/>
+    <overload parameters="date,page,per_page"/>
+    <help>
+      <summary>Get a list of referring domains for a photoset</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="photosetId">The id of the photoset to get stats for. If not provided, stats for all sets will be returned.</param>
+      <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotosetReferrers" return="StatReferrerCollection">
+    <argument name="date" type="Timestamp"/>
+    <argument name="domain" type="string" />
+    <argument name="photoset_id" type="string" default="null" />
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date,domain"/>
+    <overload parameters="date,domain,photoset_id"/>
+    <overload parameters="date,domain,page,per_page"/>
+    <help>
+      <summary>Get a list of referrers from a given domain to a photoset</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
+      <param name="photosetId">The id of the photoset to get stats for. If not provided, stats for all sets will be returned.</param>
+      <param name="perPage">Number of referrers to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotosetStats" return="Stats">
+    <argument name="date" type="Timestamp" />
+    <argument name="photoset_id" type="string" />
+    <help>
+      <summary>Get the number of views on a photoset for a given date.</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="photosetId">The id of the photoset to get stats for.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotoStats" return="Stats">
+    <argument name="date" type="Timestamp" />
+    <argument name="photo_id" type="string" />
+    <help>
+      <summary>Get the number of views, comments and favorites on a photo for a given date.</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="photoId">The id of the photo to get stats for.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotostreamDomains" return="StatDomainCollection">
+    <argument name="date" type="Timestamp" />
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters="date"/>
+    <help>
+      <summary>Get a list of referring domains for a photostream</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="perPage">Number of domains to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotostreamReferrers" return="StatReferrerCollection">
+    <argument name="date" type="Timestamp" />
+    <argument name="domain" type="string" />
+    <argument name="per_page" type="int" default="0" />
+    <argument name="page" type="int" default="0" />
+    <overload parameters="date,domain"/>
+    <help>
+      <summary>Get a list of referrers from a given domain to a user's photostream</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+      <param name="domain">The domain to return referrers for. This should be a hostname (eg: "flickr.com") with no protocol or pathname.</param>
+      <param name="perPage">Number of referrers to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPhotostreamStats" return="Stats">
+    <argument name="date" type="Timestamp" />
+    <help>
+      <summary>Get the number of views on a user's photostream for a given date.</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+      </param>
+    </help>
+  </method>
+  <method name="flickr.stats.getPopularPhotos" return="PopularPhotoCollection">
+    <argument name="date" type="Timestamp?" default="null" />
+    <argument name="sort" type="PopularitySort" default="PopularitySort.None" />
+    <argument name="page" type="int" default="0" />
+    <argument name="per_page" type="int" default="0" />
+    <overload parameters=""/>
+    <overload parameters="date"/>
+    <overload parameters="date,page,per_page"/>
+    <overload parameters="page,per_page"/>
+    <overload parameters="sort"/>
+    <overload parameters="sort,page,per_page"/>
+    <help>
+      <summary>List the photos with the most views, comments or favorites</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+
+        If no date is provided, all time view counts will be returned.
+      </param>
+      <param name="sort">
+        The order in which to sort returned photos. Defaults to views. The possible values are views, comments and favorites.
+
+        Other sort options are available through &lt;a href="/services/api/flickr.photos.search.html"&gt;flickr.photos.search&lt;/a&gt;.
+      </param>
+      <param name="perPage">Number of referrers to return per page. If this argument is omitted, it defaults to 25. The maximum allowed value is 100.</param>
+      <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
+    </help>
+  </method>
+  <method name="flickr.stats.getTotalViews" return="StatViews">
+    <argument name="date" type="Timestamp?" default="null" />
+    <overload parameters=""/>
+    <help>
+      <summary>Get the overall view counts for an account</summary>
+      <param name="date">
+        Stats will be returned for this date. This should be in either be in YYYY-MM-DD or unix timestamp format.
+
+        A day according to Flickr Stats starts at midnight GMT for all users, and timestamps will automatically be rounded down to the start of the day.
+
+        If no date is provided, all time view counts will be returned.
+      </param>
+    </help>
+  </method>
+  <method name="flickr.tags.getClusterPhotos" return="PhotoCollection">
+    <argument name="tag" type="string" />
+    <argument name="cluster_id" type="string" />
+    <help>
+      <summary>Returns the first 24 photos for a given tag cluster</summary>
+      <param name="tag">The tag that this cluster belongs to.</param>
+      <param name="clusterId">The top three tags for the cluster, separated by dashes (just like the url).</param>
+    </help>
+  </method>
+  <method name="flickr.tags.getClusters" return="ClusterCollection">
+    <argument name="tag" type="string" />
+    <help>
+      <summary>Gives you a list of tag clusters for the given tag.</summary>
+      <param name="tag">The tag to fetch clusters for.</param>
+    </help>
+  </method>
+  <method name="flickr.tags.getHotList" return="HotTagCollection">
+    <argument name="period" type="string" default="null" />
+    <argument name="count" type="int?" default="null" />
+    <overload parameters=""/>
+    <overload parameters="period"/>
+    <help>
+      <summary>Returns a list of hot tags for the given period.</summary>
+      <param name="period">The period for which to fetch hot tags. Valid values are &lt;code&gt;day&lt;/code&gt; and &lt;code&gt;week&lt;/code&gt; (defaults to &lt;code&gt;day&lt;/code&gt;).</param>
+      <param name="count">The number of tags to return. Defaults to 20. Maximum allowed value is 200.</param>
+    </help>
+  </method>
+  <method name="flickr.tags.getListPhoto" return="PhotoInfoTagCollection">
+    <argument name="photo_id" type="string" />
+    <help>
+      <summary>Get the tag list for a given photo.</summary>
+      <param name="photoId">The id of the photo to return tags for.</param>
+    </help>
+  </method>
+  <method name="flickr.tags.getListUser" return="TagCollection">
+    <argument name="user_id" type="string" default="null" />
+    <help>
+      <summary>Get the tag list for a given user (or the currently logged in user).</summary>
+      <param name="userId">The NSID of the user to fetch the tag list for. If this argument is not specified, the currently logged in user (if any) is assumed.</param>
+    </help>
+    <overload parameters=""/>
+  </method>
+  <method name="flickr.tags.getListUserPopular" return="TagCollection">
+    <argument name="user_id" type="string" default="null" />
+    <argument name="count" type="int?" default="null" />
+    <help>
+      <summary>Get the popular tags for a given user (or the currently logged in user).</summary>
+      <param name="userId">The NSID of the user to fetch the tag list for. If this argument is not specified, the currently logged in user (if any) is assumed.</param>
+      <param name="count">Number of popular tags to return. defaults to 10 when this argument is not present.</param>
+    </help>
+    <overload parameters=""/>
+    <overload parameters="user_id"/>
+    <overload parameters="count"/>
+  </method>
+  <method name="flickr.tags.getListUserRaw" return="RawTagCollection">
+    <argument name="tag" type="string" default="null" />
+    <help>
+      <summary>Get the raw versions of a given tag (or all tags) for the currently logged-in user.</summary>
+      <param name="tag">The tag you want to retrieve all raw versions for.</param>
+    </help>
+    <overload parameters=""/>
+  </method>
+  <method name="flickr.tags.getMostFrequentlyUsed" return="TagCollection">
+    <help>
+      <summary>Returns a list of most frequently used tags for a user.</summary>
+    </help>
+  </method>
+  <method name="flickr.tags.getRelated" return="TagCollection">
+    <argument name="tag" type="string" />
+    <help>
+      <summary>Returns a list of tags 'related' to the given tag, based on clustered usage analysis.</summary>
+      <param name="tag">The tag to fetch related tags for.</param>
+    </help>
+  </method>
+  <method name="flickr.test.echo" return="EchoResponseDictionary">
+    <argument name="parameters" type="Dictionary&lt;string,string&gt;"/>
+    <help>
+      <summary>A testing method which echo's all parameters back in the response.</summary>
+    </help>
+  </method>
+  <method name="flickr.test.login" return="FoundUser">
+    <help>
+      <summary>A testing method which checks if the caller is logged in then returns their username.</summary>
+    </help>
+  </method>
+  <method name="flickr.test.null" return="void">
+    <help>
+      <summary>Null test</summary>
+    </help>
+  </method>
+  <method name="flickr.urls.getGroup" return="string">
+    <argument name="group_id" type="string" />
+    <help>
+      <summary>Returns the url to a group's page.</summary>
+      <param name="groupId">The NSID of the group to fetch the url for.</param>
+    </help>
+  </method>
+  <method name="flickr.urls.getUserPhotos" return="string">
+    <argument name="user_id" type="string" default="null" />
+    <help>
+      <summary>Returns the url to a user's photos.</summary>
+      <param name="userId">The NSID of the user to fetch the url for. If omitted, the calling user is assumed.</param>
+    </help>
+  </method>
+  <method name="flickr.urls.getUserProfile" return="string">
+    <argument name="user_id" type="string" default="null" />
+    <help>
+      <summary>Returns the url to a user's profile.</summary>
+      <param name="userId">The NSID of the user to fetch the url for. If omitted, the calling user is assumed.</param>
+    </help>
+  </method>
+  <method name="flickr.urls.lookupGallery" return="Gallery">
+    <argument name="url" type="string" />
+    <help>
+      <summary>Returns gallery info, by url.</summary>
+      <param name="url">The gallery's URL.</param>
+    </help>
+  </method>
+  <method name="flickr.urls.lookupGroup" return="string">
+    <argument name="url" type="string" />
+    <help>
+      <summary>Returns a group NSID, given the url to a group's page or photo pool.</summary>
+      <param name="url">The url to the group's page or photo pool.</param>
+    </help>
+  </method>
+  <method name="flickr.urls.lookupUser" return="FoundUser">
+    <argument name="url" type="string" />
+    <help>
+      <summary>Returns a user NSID, given the url to a user's photos or profile.</summary>
+      <param name="url">The url to the user's profile or photos page.</param>
+    </help>
+  </method>
+
+
+</methods>

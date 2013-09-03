@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="methods">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="method">
+          <xs:complexType mixed="true">
+            <xs:sequence minOccurs="0">
+              <xs:choice maxOccurs="unbounded">
+                <xs:element maxOccurs="unbounded" name="argument">
+                  <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required" />
+                    <xs:attribute name="type" type="xs:string" use="required" />
+                    <xs:attribute name="default" type="xs:string" use="optional" />
+                    <xs:attribute name="nullable" type="xs:boolean" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="help">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="summary" type="xs:string" />
+                      <xs:element minOccurs="0" name="remarks" type="xs:string" />
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="param">
+                        <xs:complexType>
+                          <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                              <xs:attribute name="name" type="xs:string" use="required" />
+                            </xs:extension>
+                          </xs:simpleContent>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="returns" type="xs:string" minOccurs="0" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="overload">
+                  <xs:complexType>
+                    <xs:attribute name="parameters" type="xs:string" use="required" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="return" type="xs:string" use="required" />
+            <xs:attribute name="xpathelement" type="xs:string" use="optional" />
+            <xs:attribute name="xpathattribute" type="xs:string" use="optional" />
+            <xs:attribute name="xpathtype" type="xs:string" use="optional" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

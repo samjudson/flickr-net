@@ -1,0 +1,156 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Linq" #>
+<#+
+
+private string ParseName(string name)
+{
+	return Regex.Replace(name.Replace("flickr.", "."), "[.]([a-z])", match => match.Groups[1].Value.ToUpper());
+}
+
+private string ParseArguments(XElement method)
+{
+	List<string> args = new List<string>();
+	foreach(var arg in method.Descendants("argument"))
+	{
+		args.Add(ParseArgType(arg.Attribute("type").Value) + " " + ParseArg(arg.Attribute("name").Value));
+	}
+	return string.Join(", ", args.ToArray());
+}
+
+private string ParseArgumentsDefaults(XElement method)
+{
+	List<string> args = new List<string>();
+	foreach(var arg in method.Descendants("argument"))
+	{
+		bool isNullable = arg.Attributes().Any(a => a.Name == "nullable" && a.Value == "true");
+		string argText = ParseArgType(arg.Attribute("type").Value) + (isNullable?"?":"") + " " + ParseArg(arg.Attribute("name").Value);
+		if( arg.Attribute("default") != null)
+		{
+			if( isNullable )
+			{
+				argText += " = null";
+			}
+			else
+			{
+			argText += " = " + arg.Attribute("default").Value;
+			}
+		}
+		args.Add(argText);
+	}
+	return string.Join(", ", args.ToArray());
+}
+
+private string ParseArguments(XElement method, List<string> parameters)
+{
+	List<string> args = new List<string>();
+	foreach(var arg in method.Descendants("argument"))
+	{
+		var argName = arg.Attribute("name").Value;
+		if( parameters.Contains(argName) )
+		{
+			args.Add(ParseArgType(arg.Attribute("type").Value) + " " + ParseArg(arg.Attribute("name").Value));
+		}
+	}
+	return string.Join(", ", args.ToArray());
+}
+
+private string ParseArg(string name)
+{
+	if( name == "namespace" ) return "namespaceName";
+	return Regex.Replace(name, "_([a-z])", match => match.Groups[1].Value.ToUpper());
+}
+
+private string ParseArgType(string type)
+{
+	switch(type)
+	{
+		case "Timestamp":
+			return "DateTime";
+		case "Timestamp?":
+			return "DateTime?";
+		case "MySql?":
+			return "DateTime?";
+		case "Extras":
+			return "PhotoSearchExtras";
+		case "IEnumerable(string)":
+			return "IEnumerable<string>";
+		case "IEnumerable(int)":
+			return "IEnumerable<int>";
+		case "IEnumerable(Timestamp)":
+			return "IEnumerable<DateTime>";
+		default:
+			return type;
+	}
+}
+
+private string ParseConverter(string type, string varName)
+{
+	switch(type)
+	{
+		case "string":
+			return varName;
+		case "int":
+			return varName + ".ToString(CultureInfo.InvariantCulture)";
+		case "Timestamp":
+			return varName + ".ToUnixTimestamp()";
+		case "Timestamp?":
+			return varName + ".Value.ToUnixTimestamp()";
+		case "MySql?":
+			return varName + ".Value.ToMySql()";
+		case "bool":
+			return varName + " ? \"1\" : \"0\"";
+		case "bool?":
+			return varName + ".Value ? \"1\" : \"0\"";
+		case "double":
+			return varName + ".ToString(NumberFormatInfo.InvariantInfo)";
+		case "IEnumerable(string)":
+			return String.Format("{0} == null ? String.Empty : String.Join(\",\", {0}.ToArray())", varName);
+		case "IEnumerable(int)":
+			return String.Format("{0} == null ? String.Empty : String.Join(\",\", {0}.Select(d => d.ToString(CultureInfo.InvariantCulture)).ToArray())", varName);
+		case "IEnumerable(Timestamp)":
+			return String.Format("{0} == null ? String.Empty : String.Join(\",\", {0}.Select(d => d.ToUnixTimestamp()).ToArray())", varName);
+		default:
+			return varName + ".ToString()";
+	}
+}
+
+private string ParseHelp(XElement help)
+{
+	if( help == null ) return string.Empty;
+
+	var xml = help.ToString();
+
+	var lines = Regex.Split(xml, "\r\n", RegexOptions.Multiline);
+
+	return string.Join("\r\n", 
+		lines
+		.Where(l => !string.IsNullOrWhiteSpace(l) && l != "<help>" && l != "</help>")
+		.Select(l => "\t\t/// " + l.TrimStart())
+		.ToList());
+}
+
+private string ParseHelp(XElement help, List<string> parameters)
+{
+	if( help == null ) return string.Empty;
+
+	var newHelp = new XElement("help");
+
+	newHelp.Add(help.Elements().Where(x => x.Name != "param"));
+
+	var variables = parameters.Select(p => ParseArg(p));
+	foreach(var paramNode in help.Elements("param"))
+	{
+		if( variables.Contains(paramNode.Attribute("name").Value) )
+		{
+			newHelp.Add(paramNode);
+		}
+	}
+	return ParseHelp(newHelp);
+}
+
+#>

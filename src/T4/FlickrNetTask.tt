@@ -1,0 +1,130 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ include file="T4Helpers.tt" #>
+<#@ output extension=".cs" #>
+<#
+
+var doc = XDocument.Load(this.Host.ResolvePath("FlickrApi.xml"));
+
+var methods = doc.Descendants("method");
+
+#>
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+
+// ReSharper disable UseObjectOrCollectionInitializer
+
+namespace FlickrNet
+{
+	public partial class Flickr
+	{
+<#
+	foreach(var method in methods)
+	{
+		var methodName = ParseName(method.Attribute("name").Value);
+		var retAttribute = method.Attribute("return");
+		var retType = retAttribute == null ? "void" : retAttribute.Value;
+
+		string taskRetType;
+		switch(retType)
+        {
+			case "void":
+				taskRetType = "Task";
+				break;
+			case "xpathnodes":
+				taskRetType = "Task<" + method.Attribute("xpathtype").Value + "[]>";
+				break;
+			case "xpathnode":
+				taskRetType = "Task<" + method.Attribute("xpathtype").Value + ">";
+				break;
+			default:
+				taskRetType = "Task<" + retType + ">";
+				break;
+        }
+		
+		var arguments = ParseArgumentsDefaults(method);
+		var help = method.Element("help");
+
+#>
+
+		#region <#= method.Attribute("name").Value #>
+<#= ParseHelp(help) #>
+		public async <#= taskRetType #> <#= methodName #>Async(<#= arguments #>) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "<#= method.Attribute("name").Value #>");
+<#
+		foreach(var arg in method.Descendants("argument"))
+		{
+			var argName = arg.Attribute("name").Value;
+			var argType = arg.Attribute("type").Value;
+			var argVariable = ParseArg(argName);
+
+			if( argType == "PartialSearchOptions" )
+			{
+				WriteLine("\t\t\tUtilityMethods.PartialOptionsIntoArray({0}, dictionary);", argVariable);
+				continue;
+			}
+			if( argType == "PhotoSearchOptions" )
+			{
+				WriteLine("\t\t\t{0}.AddToDictionary(dictionary);", argVariable);
+				continue;
+			}
+			var argConvert = ParseConverter(argType, argVariable);
+			var isNullable = arg.Attributes().Any(a => a.Name == "nullable" && a.Value == "true");
+			if( arg.Attribute("default") != null )
+			{
+				var def = isNullable ? "null" : arg.Attribute("default").Value;
+				WriteLine("\t\t\tif ({0} != {1}) dictionary.Add(\"{2}\", {3});", argVariable, def, argName, argConvert);
+			}
+			else
+			{
+				WriteLine("\t\t\tdictionary.Add(\"{0}\", {1});", argName, argConvert);
+			}
+		}
+
+			
+		switch(retType){
+			case "void":
+				WriteLine("\t\t\t{0}(dictionary);", "await GetResponseAsync");
+				break;
+			case "string":
+				WriteLine("\t\t\t{0}(dictionary);", "var result = await GetResponseAsync<StringHolder>");
+				WriteLine("\t\t\treturn result.Value;");
+				break;
+			case "xpathnodes":
+				WriteLine("\t\t\tvar result = await GetResponseAsync<UnknownResponse>(dictionary);", "var result = await GetResponseAsync<StringHolder>");
+				WriteLine("\t\t\treturn result.GetElementArray<{2}>(\"{0}\", \"{1}\");", method.Attribute("xpathelement").Value, method.Attribute("xpathattribute").Value, method.Attribute("xpathtype").Value);
+				break;
+			case "xpathnode":
+				WriteLine("\t\t\tvar result = await GetResponseAsync<UnknownResponse>(dictionary);", "var result = await GetResponseAsync<StringHolder>");
+				WriteLine("\t\t\treturn result.GetAttributeValue<{2}>(\"{0}\", \"{1}\");", method.Attribute("xpathelement").Value, method.Attribute("xpathattribute").Value, method.Attribute("xpathtype").Value);
+				break;
+			default:
+				WriteLine("\t\t\t{0}(dictionary);", "return await GetResponseAsync<" + retType + ">");
+				break;
+		} 
+
+#>		}
+<#
+		WriteLine("\t\t#endregion");
+	
+	}	
+
+
+
+#>
+	}
+
+}

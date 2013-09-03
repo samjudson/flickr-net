@@ -1,0 +1,48 @@
+﻿using System.Xml;
+
+namespace FlickrNet
+{
+    /// <summary>
+    /// The default privacy level for geographic information attached to the user's photos and whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
+    /// </summary>
+    public sealed class UserGeoPermissions : IFlickrParsable
+    {
+        /// <summary>
+        /// The ID of the user.
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// The default privacy level for geographic information attached to the user's photos.
+        /// </summary>
+        public GeoPermissionType GeoPermissions { get; set; }
+
+        /// <summary>
+        /// Whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
+        /// </summary>
+        public bool ImportGeoExif { get; set; }
+
+        #region IFlickrParsable Members
+
+        void IFlickrParsable.Load(XmlReader reader)
+        {
+            while (reader.MoveToNextAttribute())
+            {
+                switch (reader.LocalName)
+                {
+                    case "nsid":
+                        UserId = reader.Value;
+                        break;
+                    case "geoperms":
+                        GeoPermissions = (GeoPermissionType) reader.ReadContentAsInt();
+                        break;
+                    case "importgeoexif":
+                        ImportGeoExif = reader.Value == "1";
+                        break;
+                }
+            }
+        }
+
+        #endregion
+    }
+}
