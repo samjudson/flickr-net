@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{37B6A263-A4EE-47E0-9E77-8BEADC058B91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FlickrNetWS</RootNamespace>
+    <AssemblyName>FlickrNetWS</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="T4\FlickrApi.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\ActivityEvent.cs" />
+    <Compile Include="Classes\ActivityItem.cs" />
+    <Compile Include="Classes\ActivityItemCollection.cs" />
+    <Compile Include="Classes\ApiKeyRequiredException.cs" />
+    <Compile Include="Classes\Auth.cs" />
+    <Compile Include="Classes\AuthenticationRequiredException.cs" />
+    <Compile Include="Classes\Blog.cs" />
+    <Compile Include="Classes\BlogCollection.cs" />
+    <Compile Include="Classes\BlogService.cs" />
+    <Compile Include="Classes\BlogServiceCollection.cs" />
+    <Compile Include="Classes\BoundaryBox.cs" />
+    <Compile Include="Classes\CameraBrandCollection.cs" />
+    <Compile Include="Classes\CameraCollection.cs" />
+    <Compile Include="Classes\Cluster.cs" />
+    <Compile Include="Classes\ClusterCollection.cs" />
+    <Compile Include="Classes\Collection.cs" />
+    <Compile Include="Classes\CollectionCollection.cs" />
+    <Compile Include="Classes\CollectionInfo.cs" />
+    <Compile Include="Classes\CollectionSet.cs" />
+    <Compile Include="Classes\Contact.cs" />
+    <Compile Include="Classes\ContactCollection.cs" />
+    <Compile Include="Classes\Context.cs" />
+    <Compile Include="Classes\CsvFile.cs" />
+    <Compile Include="Classes\CsvFileCollection.cs" />
+    <Compile Include="Classes\DateGranularity.cs" />
+    <Compile Include="Classes\EchoResponseDictionary.cs" />
+    <Compile Include="Classes\Enums.cs" />
+    <Compile Include="Classes\ExceptionHandler.cs" />
+    <Compile Include="Classes\ExifTag.cs" />
+    <Compile Include="Classes\ExifTagCollection.cs" />
+    <Compile Include="Classes\FavoriteContext.cs" />
+    <Compile Include="Classes\FavoriteContextPhoto.cs" />
+    <Compile Include="Classes\Gallery.cs" />
+    <Compile Include="Classes\GalleryCollection.cs" />
+    <Compile Include="Classes\GalleryPhoto.cs" />
+    <Compile Include="Classes\GalleryPhotoCollection.cs" />
+    <Compile Include="Classes\GeoAccuracy.cs" />
+    <Compile Include="Classes\GeoContext.cs" />
+    <Compile Include="Classes\GeoPermissions.cs" />
+    <Compile Include="Classes\GeoPermissionType.cs" />
+    <Compile Include="Classes\GlobalSuppressions.cs" />
+    <Compile Include="Classes\GroupCategory.cs" />
+    <Compile Include="Classes\GroupFullInfo.cs" />
+    <Compile Include="Classes\GroupInfo.cs" />
+    <Compile Include="Classes\GroupInfoCollection.cs" />
+    <Compile Include="Classes\Groups.cs" />
+    <Compile Include="Classes\GroupSearchResultCollection.cs" />
+    <Compile Include="Classes\HotTag.cs" />
+    <Compile Include="Classes\HotTagCollection.cs" />
+    <Compile Include="Classes\Institution.cs" />
+    <Compile Include="Classes\InstitutionCollection.cs" />
+    <Compile Include="Classes\LicenseCollection.cs" />
+    <Compile Include="Classes\Licenses.cs" />
+    <Compile Include="Classes\LicenseType.cs" />
+    <Compile Include="Classes\MediaType.cs" />
+    <Compile Include="Classes\Member.cs" />
+    <Compile Include="Classes\MemberCollection.cs" />
+    <Compile Include="Classes\MemberGroupInfo.cs" />
+    <Compile Include="Classes\MemberGroupInfoCollection.cs" />
+    <Compile Include="Classes\MemberTypes.cs" />
+    <Compile Include="Classes\MethodCollection.cs" />
+    <Compile Include="Classes\Namespace.cs" />
+    <Compile Include="Classes\NamespaceCollection.cs" />
+    <Compile Include="Classes\NoResponse.cs" />
+    <Compile Include="Classes\OAuthAccessToken.cs" />
+    <Compile Include="Classes\OAuthException.cs" />
+    <Compile Include="Classes\OAuthRequestToken.cs" />
+    <Compile Include="Classes\PagedPhotoCollection.cs" />
+    <Compile Include="Classes\Pair.cs" />
+    <Compile Include="Classes\PairCollection.cs" />
+    <Compile Include="Classes\PandaCollection.cs" />
+    <Compile Include="Classes\PandaPhotoCollection.cs" />
+    <Compile Include="Classes\ParsingException.cs" />
+    <Compile Include="Classes\PartialSearchOptions.cs" />
+    <Compile Include="Classes\PeoplePhotoCollection.cs" />
+    <Compile Include="Classes\Person.cs" />
+    <Compile Include="Classes\PersonLimits.cs" />
+    <Compile Include="Classes\Photo.cs" />
+    <Compile Include="Classes\PhotoCollection.cs" />
+    <Compile Include="Classes\PhotoComment.cs" />
+    <Compile Include="Classes\PhotoCommentCollection.cs" />
+    <Compile Include="Classes\PhotoCountCollection.cs" />
+    <Compile Include="Classes\PhotoFavorite.cs" />
+    <Compile Include="Classes\PhotoFavoriteCollection.cs" />
+    <Compile Include="Classes\PhotoInfo.cs" />
+    <Compile Include="Classes\PhotoInfoTag.cs" />
+    <Compile Include="Classes\PhotoInfoTagCollection.cs" />
+    <Compile Include="Classes\PhotoPermissions.cs" />
+    <Compile Include="Classes\PhotoPerson.cs" />
+    <Compile Include="Classes\PhotoPersonCollection.cs" />
+    <Compile Include="Classes\PhotoSearchExtras.cs" />
+    <Compile Include="Classes\PhotoSearchOptions.cs" />
+    <Compile Include="Classes\PhotoSearchOrder.cs" />
+    <Compile Include="Classes\Photoset.cs" />
+    <Compile Include="Classes\PhotoSetCollection.cs" />
+    <Compile Include="Classes\PhotosetCommentCollection.cs" />
+    <Compile Include="Classes\PhotosetPhotoCollection.cs" />
+    <Compile Include="Classes\Place.cs" />
+    <Compile Include="Classes\PlaceCollection.cs" />
+    <Compile Include="Classes\PlaceInfo.cs" />
+    <Compile Include="Classes\PlaceType.cs" />
+    <Compile Include="Classes\PlaceTypeInfo.cs" />
+    <Compile Include="Classes\PlaceTypeInfoCollection.cs" />
+    <Compile Include="Classes\PoolPrivacy.cs" />
+    <Compile Include="Classes\PopularitySort.cs" />
+    <Compile Include="Classes\PopularPhoto.cs" />
+    <Compile Include="Classes\PopularPhotoCollection.cs" />
+    <Compile Include="Classes\Predicate.cs" />
+    <Compile Include="Classes\PredicateCollection.cs" />
+    <Compile Include="Classes\ResponseXmlException.cs" />
+    <Compile Include="Classes\SafeNativeMethods.cs" />
+    <Compile Include="Classes\SerializableAttribute.cs" />
+    <Compile Include="Classes\ShapeData.cs" />
+    <Compile Include="Classes\ShapeDataCollection.cs" />
+    <Compile Include="Classes\SignatureRequiredException.cs" />
+    <Compile Include="Classes\Sizes.cs" />
+    <Compile Include="Classes\StatDomain.cs" />
+    <Compile Include="Classes\StatDomainCollection.cs" />
+    <Compile Include="Classes\StatReferrer.cs" />
+    <Compile Include="Classes\StatReferrerCollection.cs" />
+    <Compile Include="Classes\Stats.cs" />
+    <Compile Include="Classes\StatViews.cs" />
+    <Compile Include="Classes\Subscription.cs" />
+    <Compile Include="Classes\SubscriptionCollection.cs" />
+    <Compile Include="Classes\Suggestion.cs" />
+    <Compile Include="Classes\SuggestionCollection.cs" />
+    <Compile Include="Classes\SuggestionStatus.cs" />
+    <Compile Include="Classes\Tags.cs" />
+    <Compile Include="Classes\Ticket.cs" />
+    <Compile Include="Classes\TicketCollection.cs" />
+    <Compile Include="Classes\Topic.cs" />
+    <Compile Include="Classes\TopicCollection.cs" />
+    <Compile Include="Classes\TopicReply.cs" />
+    <Compile Include="Classes\TopicReplyCollection.cs" />
+    <Compile Include="Classes\UnknownResponse.cs" />
+    <Compile Include="Classes\UploadProgressEvent.cs" />
+    <Compile Include="Classes\UploadResponse.cs" />
+    <Compile Include="Classes\User.cs" />
+    <Compile Include="Classes\UserGeoPermissions.cs" />
+    <Compile Include="Classes\UtilityMethods.cs" />
+    <Compile Include="Classes\Value.cs" />
+    <Compile Include="Classes\ValueCollection.cs" />
+    <Compile Include="Classes\VideoInfo.cs" />
+    <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Core\FlickrResponder.cs" />
+    <Compile Include="Core\FlickrResponderAwait.cs" />
+    <Compile Include="Core\Flickr_Core.cs" />
+    <Compile Include="Core\Flickr_Properties.cs" />
+    <Compile Include="Core\IFlickrParsable.cs" />
+    <Compile Include="Core\StringHolder.cs" />
+    <Compile Include="Drawing\Point.cs" />
+    <Compile Include="Drawing\Size.cs" />
+    <Compile Include="Exceptions\BadUrlFoundException.cs" />
+    <Compile Include="Exceptions\FlickrApiException.cs" />
+    <Compile Include="Exceptions\FlickrException.cs" />
+    <Compile Include="Exceptions\FlickrWebException.cs" />
+    <Compile Include="Exceptions\FormatNotFoundException.cs" />
+    <Compile Include="Exceptions\InvalidApiKeyException.cs" />
+    <Compile Include="Exceptions\InvalidSignatureException.cs" />
+    <Compile Include="Exceptions\LoginFailedInvalidTokenException.cs" />
+    <Compile Include="Exceptions\MethodNotFoundException.cs" />
+    <Compile Include="Exceptions\MissingSignatureException.cs" />
+    <Compile Include="Exceptions\PermissionDeniedException.cs" />
+    <Compile Include="Exceptions\PhotoNotFoundException.cs" />
+    <Compile Include="Exceptions\PhotosetNotFoundException.cs" />
+    <Compile Include="Exceptions\ServiceUnavailableException.cs" />
+    <Compile Include="Exceptions\UserNotFoundException.cs" />
+    <Compile Include="Exceptions\UserNotLoggedInInsufficientPermissionsException.cs" />
+    <Compile Include="FlickrWS.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="T4\FlickrNetTask.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FlickrNetTask.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4\T4Helpers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>T4Helpers.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="T4\FlickrApi.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="T4\FlickrNetTask.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FlickrNetTask.cs</LastGenOutput>
+    </None>
+    <None Include="T4\T4Helpers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4Helpers.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
