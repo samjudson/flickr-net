@@ -12,7 +12,42 @@ namespace FlickrNet
 
         internal T GetResponse<T>(IDictionary<string, string> parameters) where T : class, IFlickrParsable, new()
         {
-            return new T();
+            if (!parameters.ContainsKey("oauth_consumer_key"))
+                parameters.Add("oauth_consumer_key", ApiKey);
+
+            var result = FlickrResponder.GetDataResponse(this, BaseApiUrl, parameters);
+
+            if (typeof(T).IsEnum)
+            {
+                return default(T);
+            }
+            if (typeof(T).GetInterface("FlickrNet.IFlickrParsable") != null)
+            {
+                using (var reader = new XmlTextReader(new StringReader(result)))
+                {
+                    reader.WhitespaceHandling = WhitespaceHandling.None;
+
+                    if (!reader.ReadToDescendant("rsp"))
+                    {
+                        throw new XmlException("Unable to find response element 'rsp' in Flickr response");
+                    }
+                    while (reader.MoveToNextAttribute())
+                    {
+                        if (reader.LocalName == "stat" && reader.Value == "fail")
+                            throw ExceptionHandler.CreateResponseException(reader);
+                    }
+
+                    reader.MoveToElement();
+                    reader.Read();
+
+                    var item = new T();
+                    item.Load(reader);
+                    return item;
+                }
+            }
+
+            return default(T);
+
         }
 
         internal async Task<T> GetResponseAsync<T>(IDictionary<string, string> parameters) where T : class, IFlickrParsable, new()

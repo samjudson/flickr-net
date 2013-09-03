@@ -17,14 +17,9 @@ namespace FlickrNet
         /// <param name="baseUrl">The base url to be called.</param>
         /// <param name="parameters">A dictionary of parameters.</param>
         /// <returns></returns>
-        public static string GetDataResponse(Flickr flickr, string baseUrl, Dictionary<string, string> parameters)
+        public static string GetDataResponse(Flickr flickr, string baseUrl, IDictionary<string, string> parameters)
         {
-            return GetDataResponseOAuth(flickr, baseUrl, parameters);
-        }
-
-        private static string GetDataResponseOAuth(Flickr flickr, string baseUrl, Dictionary<string, string> parameters)
-        {
-            string method = "POST";
+            const string method = "POST";
 
             // Remove api key if it exists.
             if (parameters.ContainsKey("api_key")) parameters.Remove("api_key");
@@ -33,11 +28,12 @@ namespace FlickrNet
             // If OAuth Access Token is set then add token and generate signature.
             if (!String.IsNullOrEmpty(flickr.OAuthAccessToken) && !parameters.ContainsKey("oauth_token"))
             {
+                OAuthGetBasicParameters(parameters);
                 parameters.Add("oauth_token", flickr.OAuthAccessToken);
             }
             if (!String.IsNullOrEmpty(flickr.OAuthAccessTokenSecret) && !parameters.ContainsKey("oauth_signature"))
             {
-                string sig = flickr.OAuthCalculateSignature(method, baseUrl, parameters, flickr.OAuthAccessTokenSecret);
+                var sig = flickr.OAuthCalculateSignature(method, baseUrl, parameters, flickr.OAuthAccessTokenSecret);
                 parameters.Add("oauth_signature", sig);
             }
 

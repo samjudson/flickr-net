@@ -59,5 +59,38 @@ namespace FlickrNet
             }
             return data;
         }
+
+        /// <summary>
+        /// Populates the given dictionary with the basic OAuth parameters, oauth_timestamp, oauth_noonce etc.
+        /// </summary>
+        /// <param name="parameters">Dictionary to be populated with the OAuth parameters.</param>
+        private static void OAuthGetBasicParameters(IDictionary<string, string> parameters)
+        {
+            var oAuthParameters = OAuthGetBasicParameters();
+            foreach (var k in oAuthParameters)
+            {
+                parameters.Add(k.Key, k.Value);
+            }
+        }
+
+        /// <summary>
+        /// Returns a new dictionary containing the basic OAuth parameters.
+        /// </summary>
+        /// <returns></returns>
+        private static IEnumerable<KeyValuePair<string, string>> OAuthGetBasicParameters()
+        {
+            var oauthtimestamp = UtilityMethods.DateToUnixTimestamp(DateTime.UtcNow);
+            var oauthnonce = Guid.NewGuid().ToString("N");
+
+            var parameters = new Dictionary<string, string>
+                                 {
+                                     {"oauth_nonce", oauthnonce},
+                                     {"oauth_timestamp", oauthtimestamp},
+                                     {"oauth_version", "1.0"},
+                                     {"oauth_signature_method", "HMAC-SHA1"}
+                                 };
+            return parameters;
+        }
+
     }
 }

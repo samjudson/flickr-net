@@ -12,9 +12,14 @@ namespace FlickrNet
         {
             const string method = "POST";
 
+            // Remove api key if it exists.
+            if (parameters.ContainsKey("api_key")) parameters.Remove("api_key");
+            if (parameters.ContainsKey("api_sig")) parameters.Remove("api_sig");
+
             // If OAuth Access Token is set then add token and generate signature.
             if (!String.IsNullOrEmpty(flickr.OAuthAccessToken) && !parameters.ContainsKey("oauth_token"))
             {
+                OAuthGetBasicParameters(parameters);
                 parameters.Add("oauth_token", flickr.OAuthAccessToken);
             }
             if (!String.IsNullOrEmpty(flickr.OAuthAccessTokenSecret) && !parameters.ContainsKey("oauth_signature"))

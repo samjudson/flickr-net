@@ -45,7 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
-    <Compile Include="PhotosSearchAsyncTests.cs" />
+    <Compile Include="PeopleGetPhotosTests.cs" />
+    <Compile Include="PhotosSearchTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

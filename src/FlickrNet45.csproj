@@ -98,8 +98,6 @@
     <Compile Include="Classes\Licenses.cs" />
     <Compile Include="Classes\LicenseType.cs" />
     <Compile Include="Classes\LockFile.cs" />
-    <Compile Include="Classes\MD5Core.cs" />
-    <Compile Include="Classes\MD5Managed.cs" />
     <Compile Include="Classes\MediaType.cs" />
     <Compile Include="Classes\Member.cs" />
     <Compile Include="Classes\MemberCollection.cs" />
@@ -193,9 +191,6 @@
     <Compile Include="Core\FlickrResponder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\FlickrResponderAsync.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\FlickrResponderAwait.cs" />
     <Compile Include="Core\FlickrResponderSync.cs" />
     <Compile Include="Core\FlickrResult.cs" />
@@ -220,6 +215,12 @@
     <Compile Include="Exceptions\UserNotLoggedInInsufficientPermissionsException.cs" />
     <Compile Include="FlickrNet45.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="T4\FlickrNetSync.cs">
+      <DependentUpon>FlickrNetSync.tt</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="T4\FlickrNetTask.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -240,6 +241,11 @@
   <ItemGroup>
     <None Include="T4\FlickrApi.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="T4\FlickrNetSync.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FlickrNetSync.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
     </None>
     <None Include="T4\FlickrNetTask.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
