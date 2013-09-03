@@ -745,49 +745,21 @@ namespace FlickrNet
         /// </summary>
         public string NoteText { get; set; }
 
-#if SILVERLIGHT
-        public System.Windows.Size Size
-        {
-            get { 
-                return new System.Windows.Size(Width, Height); 
-            }
-        }
-
-        public System.Windows.Point Location
-        {
-            get { return new System.Windows.Point(XPosition, YPosition); }
-        }
-#else
-#if NETFX_CORE
-        public Windows.Foundation.Size Size
-        {
-            get { 
-                return new Windows.Foundation.Size(Width, Height); 
-            }
-        }
-
-        public Windows.Foundation.Point Location
-        {
-            get { return new Windows.Foundation.Point(XPosition, YPosition); }
-        }
-#else
         /// <summary>
-        /// The <see cref="System.Drawing.Size"/> of this note. Derived from <see cref="Width"/> and <see cref="Height"/>.
+        /// The <see cref="Drawing.Size"/> of this note. Derived from <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
-        public System.Drawing.Size Size
+        public Drawing.Size Size
         {
-            get { return new System.Drawing.Size(Width, Height); }
+            get { return new Drawing.Size(Width, Height); }
         }
 
         /// <summary>
         /// The location of this note on the medium sized thumbnail of this photo. Derived from <see cref="XPosition"/> and <see cref="YPosition"/>.
         /// </summary>
-        public System.Drawing.Point Location
+        public Drawing.Point Location
         {
-            get { return new System.Drawing.Point(XPosition, YPosition); }
+            get { return new Drawing.Point(XPosition, YPosition); }
         }
-#endif
-#endif
 
         void IFlickrParsable.Load(XmlReader reader)
         {

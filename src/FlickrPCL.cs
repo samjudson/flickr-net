@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -9,49 +10,9 @@ namespace FlickrNet
 {
     public partial class Flickr
     {
-        internal T GetResponse<T>(IDictionary<string, string> parameters) where T : class, IFlickrParsable, new()
-        {
-            if (!parameters.ContainsKey("oauth_consumer_key"))
-                parameters.Add("oauth_consumer_key", ApiKey);
-
-            var result = FlickrResponder.GetDataResponse(this, BaseApiUrl, parameters);
-
-            if (typeof(T).IsEnum)
-            {
-                return default(T);
-            }
-            if (typeof(T).GetInterface("FlickrNet.IFlickrParsable") != null)
-            {
-                using (var reader = new XmlTextReader(new StringReader(result)))
-                {
-                    reader.WhitespaceHandling = WhitespaceHandling.None;
-
-                    if (!reader.ReadToDescendant("rsp"))
-                    {
-                        throw new XmlException("Unable to find response element 'rsp' in Flickr response");
-                    }
-                    while (reader.MoveToNextAttribute())
-                    {
-                        if (reader.LocalName == "stat" && reader.Value == "fail")
-                            throw ExceptionHandler.CreateResponseException(reader);
-                    }
-
-                    reader.MoveToElement();
-                    reader.Read();
-
-                    var item = new T();
-                    item.Load(reader);
-                    return item;
-                }
-            }
-
-            return default(T);
-
-        }
-
         internal async Task<T> GetResponseAsync<T>(IDictionary<string, string> parameters) where T : class, IFlickrParsable, new()
         {
-            if( !parameters.ContainsKey("oauth_consumer_key"))
+            if (!parameters.ContainsKey("oauth_consumer_key"))
                 parameters.Add("oauth_consumer_key", ApiKey);
 
             var result = await FlickrResponder.GetDataResponseAsync(this, BaseApiUrl, parameters);
@@ -60,12 +21,10 @@ namespace FlickrNet
             {
                 return default(T);
             }
-            if (typeof(T).GetInterface("FlickrNet.IFlickrParsable") != null)
+            if (typeof(T).GetInterfaces().Any(i => i.Name == "IFlickrParsable"))
             {
-                using (var reader = new XmlTextReader(new StringReader(result)))
+                using (var reader = XmlReader.Create(new StringReader(result), new XmlReaderSettings{ IgnoreWhitespace = true}))
                 {
-                    reader.WhitespaceHandling = WhitespaceHandling.None;
-
                     if (!reader.ReadToDescendant("rsp"))
                     {
                         throw new XmlException("Unable to find response element 'rsp' in Flickr response");
@@ -84,7 +43,7 @@ namespace FlickrNet
                     return item;
                 }
             }
-            
+
             return default(T);
         }
 
@@ -99,14 +58,8 @@ namespace FlickrNet
             var key = SharedSecret + "&" + tokenSecret;
             var keyBytes = Encoding.UTF8.GetBytes(key);
 
-            var sorted = new SortedList<string, string>();
-            foreach (var pair in parameters)
-            {
-                sorted.Add(pair.Key, pair.Value);
-            }
-
             var sb = new StringBuilder();
-            foreach (var pair in sorted)
+            foreach (var pair in parameters.OrderBy(p => p.Key))
             {
                 sb.Append(pair.Key);
                 sb.Append("=");
@@ -137,5 +90,6 @@ namespace FlickrNet
         {
             throw new NotImplementedException();
         }
+
     }
 }

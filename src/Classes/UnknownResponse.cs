@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace FlickrNet
 {
@@ -24,10 +26,9 @@ namespace FlickrNet
         /// Gets a <see cref="XmlDocument"/> containing the response XML.
         /// </summary>
         /// <returns></returns>
-        public XmlDocument GetXmlDocument()
+        private XDocument GetXmlDocument()
         {
-            var document = new XmlDocument();
-            document.LoadXml(ResponseXml);
+            var document = XDocument.Parse(ResponseXml);
 
             return document;
         }
@@ -40,18 +41,18 @@ namespace FlickrNet
         /// <returns>The string value of the given attribute, if found.</returns>
         public string GetAttributeValue(string element, string attribute)
         {
-            XmlDocument doc = GetXmlDocument();
-            XmlNode node = doc.SelectSingleNode("//" + element + "/@" + attribute);
+            var doc = GetXmlDocument();
+            var node = doc.Descendants(element).Attributes(attribute).First();
             return node != null ? node.Value : null;
         }
 
         public T GetAttributeValue<T>(string element, string attribute)
         {
             var doc = GetXmlDocument();
-            var node = doc.SelectSingleNode("//" + element + "/@" + attribute);
+            var node = doc.Descendants(element).Attributes(attribute).FirstOrDefault();
             if (node != null)
             {
-                return (T) Convert.ChangeType(node.Value, typeof (T));
+                return (T) Convert.ChangeType(node.Value, typeof (T), null);
             }
 
             return default(T);
@@ -65,8 +66,8 @@ namespace FlickrNet
         public string GetElementValue(string element)
         {
             var doc = GetXmlDocument();
-            var node = doc.SelectSingleNode("//" + element + "[1]");
-            return node != null ? node.InnerText : null;
+            var node = doc.Descendants(element).FirstOrDefault();
+            return node != null ? node.Value : null;
         }
 
 
@@ -77,32 +78,17 @@ namespace FlickrNet
         /// <returns>An array of string values.</returns>
         public string[] GetElementArray(string elementName)
         {
-            var array = new List<string>();
-            foreach (XmlNode n in GetXmlDocument().SelectNodes("//" + elementName))
-            {
-                array.Add(n.InnerText);
-            }
-            return array.ToArray();
+            return GetXmlDocument().Descendants(elementName).Select(n => n.Value).ToArray();
         }
 
         public string[] GetElementArray(string elementName, string attributeName)
         {
-            var array = new List<string>();
-            foreach (XmlNode n in GetXmlDocument().SelectNodes("//" + elementName + "/@" + attributeName))
-            {
-                array.Add(n.InnerText);
-            }
-            return array.ToArray();
+            return GetXmlDocument().Descendants(elementName).Attributes(attributeName).Select(n => n.Value).ToArray();
         }
 
         public T[] GetElementArray<T>(string elementName, string attributeName)
         {
-            var array = new List<T>();
-            foreach (XmlNode n in GetXmlDocument().SelectNodes("//" + elementName + "/@" + attributeName))
-            {
-                array.Add((T)Convert.ChangeType(n.InnerText, typeof(T)));
-            }
-            return array.ToArray();
+            return GetXmlDocument().Descendants(elementName).Attributes(attributeName).Select(n => (T) Convert.ChangeType(n.Value, typeof (T), null)).ToArray();
         }
     }
 }

@@ -543,7 +543,7 @@ namespace FlickrNet
 
             foreach (string part in parts)
             {
-#if WindowsCE || SILVERLIGHT
+#if WindowsCE || SILVERLIGHT || PCL
                 string[] bits = part.Split('=');
 #else
                 string[] bits = part.Split(new[] {'='}, 2, StringSplitOptions.RemoveEmptyEntries);
