@@ -97,7 +97,6 @@
     <Compile Include="Classes\LicenseCollection.cs" />
     <Compile Include="Classes\Licenses.cs" />
     <Compile Include="Classes\LicenseType.cs" />
-    <Compile Include="Classes\LockFile.cs" />
     <Compile Include="Classes\MediaType.cs" />
     <Compile Include="Classes\Member.cs" />
     <Compile Include="Classes\MemberCollection.cs" />
@@ -191,6 +190,7 @@
     <Compile Include="Core\FlickrResponder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\FlickrResponder45.cs" />
     <Compile Include="Core\FlickrResponderAwait.cs" />
     <Compile Include="Core\FlickrResponderSync.cs" />
     <Compile Include="Core\FlickrResult.cs" />

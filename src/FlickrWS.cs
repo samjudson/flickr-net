@@ -24,7 +24,7 @@ namespace FlickrNet
             }
             if (typeInfo.ImplementedInterfaces.Any(t => t.Name == "IFlickrParsable"))
             {
-                using (var reader = XmlReader.Create(new StringReader(result)))
+                using (var reader = XmlReader.Create(new StringReader(result), new XmlReaderSettings{ IgnoreWhitespace = true}))
                 {
                     if (!reader.ReadToDescendant("rsp"))
                     {
@@ -80,11 +80,14 @@ namespace FlickrNet
 
         internal static string Sha1Hash(byte[] key, string basestring)
         {
-            var sha1 = new System.Security.Cryptography.HMACSHA1(key);
+            var crypt = Windows.Security.Cryptography.Core.MacAlgorithmProvider.OpenAlgorithm("HMAC_SHA1");
 
-            var hashBytes = sha1.ComputeHash(Encoding.UTF8.GetBytes(basestring));
+            var input = Windows.Security.Cryptography.CryptographicBuffer.ConvertStringToBinary(basestring, Windows.Security.Cryptography.BinaryStringEncoding.Utf8);
+            var keyBuffer = Windows.Security.Cryptography.CryptographicBuffer.CreateFromByteArray(key);
+            var cryptKey = crypt.CreateKey(keyBuffer);
+            var signBuffer = Windows.Security.Cryptography.Core.CryptographicEngine.Sign(cryptKey, input);
 
-            return Convert.ToBase64String(hashBytes);
+            return Windows.Security.Cryptography.CryptographicBuffer.EncodeToBase64String(signBuffer);
         }
 
         public string UploadPicture(Stream stream, string filename, string videoUploadTest, string file, string videoTest, bool isFamily, bool isFriends, bool isPublic, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)

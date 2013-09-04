@@ -251,6 +251,7 @@
     <Compile Include="Core\Extensions.cs" />
     <Compile Include="Core\FlickrResponder.cs" />
     <Compile Include="Core\FlickrResponderAwait.cs" />
+    <Compile Include="Core\FlickrResponderW8.cs" />
     <Compile Include="Core\Flickr_Core.cs" />
     <Compile Include="Core\Flickr_Properties.cs" />
     <Compile Include="Core\IFlickrParsable.cs" />
