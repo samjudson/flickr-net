@@ -11,9 +11,9 @@ namespace FlickrNetWS.Tests
     public class PeopleGetPhotosTests : BaseTest
     {
         [Test]
-        public async void ShouldReturnReturnPhotosForAuthenticatedUserAsync()
+        public async void ShouldReturnReturnPublicPhotosForUserAsync()
         {
-            var photos = await AuthInstance.PeopleGetPhotosAsync(Data.UserId);
+            var photos = await Instance.PeopleGetPublicPhotosAsync(Data.UserId);
 
             Assert.IsNotNull(photos);
             Assert.IsNotEmpty(photos);
