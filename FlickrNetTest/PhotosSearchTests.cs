@@ -347,7 +347,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual("3547139066", photos[0].PhotoId);
             Assert.AreEqual("41888973@N00", photos[0].UserId);
-            Assert.AreEqual("38560d3e1d", photos[0].Secret);
+            Assert.AreEqual("bf4e11b1cb", photos[0].Secret);
             Assert.AreEqual("3311", photos[0].Server);
             Assert.AreEqual("Apple Store!", photos[0].Title);
             Assert.AreEqual("4", photos[0].Farm);
