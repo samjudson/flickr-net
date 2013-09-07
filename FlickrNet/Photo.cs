@@ -13,6 +13,7 @@ namespace FlickrNet
         private string urlThumbnail;
         private string urlMedium;
         private string urlMedium640;
+        private string urlMedium800;
         private string urlSmall;
         private string urlSmall320;
         private string urlLarge;
@@ -276,6 +277,31 @@ namespace FlickrNet
         /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
         /// </summary>
         public int? Medium640Height { get; set; }
+
+        /// <summary>
+        /// The URL for the medium 640 copy of a photo.
+        /// </summary>
+        /// <remarks>There is a chance that extremely small images will not have a medium 640 copy.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
+        public string Medium800Url
+        {
+            get
+            {
+                if (urlMedium800 != null)
+                    return urlMedium800;
+                else
+                    return UtilityMethods.UrlFormat(this, "_z", "jpg");
+            }
+        }
+
+        /// <summary>
+        /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
+        /// </summary>
+        public int? Medium800Width { get; set; }
+        /// <summary>
+        /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
+        /// </summary>
+        public int? Medium800Height { get; set; }
 
         public string Large1600Url { get; set; }
         public int? Large1600Width { get; set; }
@@ -675,6 +701,15 @@ namespace FlickrNet
                         break;
                     case "height_m":
                         MediumHeight = reader.ReadContentAsInt();
+                        break;
+                    case "url_c":
+                        urlMedium800 = reader.Value;
+                        break;
+                    case "width_c":
+                        Medium800Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_c":
+                        Medium800Height = reader.ReadContentAsInt();
                         break;
                     case "url_l":
                         urlLarge = reader.Value;

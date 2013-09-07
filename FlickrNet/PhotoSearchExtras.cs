@@ -109,7 +109,7 @@ namespace FlickrNet
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
         /// </summary>
-        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | LargeUrl | OriginalUrl | LargeSquareUrl | Small320Url | Large1600Url | Large2048Url,
+        AllUrls = SquareUrl | ThumbnailUrl | SmallUrl | MediumUrl | Medium640Url | Medium800Url | LargeUrl | OriginalUrl | LargeSquareUrl | Small320Url | Large1600Url | Large2048Url,
         /// <summary>
         /// Returns the description for the image.
         /// </summary>
@@ -142,6 +142,10 @@ namespace FlickrNet
         /// Large (2048 on largest size) image url.
         /// </summary>
         Large2048Url = 33554432 * 4,
+        /// <summary>
+        /// Medium (800 on largest size) image url.
+        /// </summary>
+        Medium800Url = 33554432 * 8,
         /// <summary>
         /// Returns all the above information.
         /// </summary>
