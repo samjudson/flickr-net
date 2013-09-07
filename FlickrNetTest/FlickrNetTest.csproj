@@ -82,6 +82,7 @@
     <Compile Include="PushTests.cs" />
     <Compile Include="TagsTests.cs" />
     <Compile Include="TestData.cs" />
+    <Compile Include="UrlHelper.cs" />
     <Compile Include="UtilityMethodsTests.cs" />
     <Compile Include="VSCodeGenAccessors.cs" />
   </ItemGroup>

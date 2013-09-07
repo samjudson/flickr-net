@@ -188,7 +188,6 @@ namespace FlickrNetTest
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
             Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
-
         }
 
         [TestMethod]
@@ -300,6 +299,16 @@ namespace FlickrNetTest
             Assert.AreEqual(-180, info.Location.Longitude, "Longitude should be -180");
             Assert.AreEqual("http://www.flickr.com/photos/afdn/54071193/", info.Urls[0].Url);
             Assert.IsTrue(info.GeoPermissions.IsPublic, "GeoPermissions should be public.");
+        }
+
+        [TestMethod]
+        public void ShouldReturnPhotoInfoWithValidUrls()
+        {
+            var info = TestData.GetInstance().PhotosGetInfo("9671143400");
+
+            Assert.IsTrue(UrlHelper.Exists(info.Small320Url), "Small320Url is not valid url : " + info.Small320Url);
+            Assert.IsTrue(UrlHelper.Exists(info.Medium640Url), "Medium640Url is not valid url : " + info.Medium640Url);
+            Assert.IsTrue(UrlHelper.Exists(info.Medium800Url), "Medium800Url is not valid url : " + info.Medium800Url);
         }
 
     }
