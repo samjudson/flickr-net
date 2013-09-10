@@ -61,6 +61,7 @@ namespace FlickrNetTest.Async
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosetsGeneralAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();

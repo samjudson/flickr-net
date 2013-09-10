@@ -58,6 +58,7 @@ namespace FlickrNetTest.Async
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGetCountsAsyncTest()
         {
             DateTime date1 = DateTime.Today.AddMonths(-12);

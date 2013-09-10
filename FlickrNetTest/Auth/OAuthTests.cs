@@ -57,6 +57,7 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void OAuthPeopleGetPhotosBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -76,6 +77,7 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void OAuthCheckTokenTest()
         {
             Flickr f = TestData.GetAuthInstance();

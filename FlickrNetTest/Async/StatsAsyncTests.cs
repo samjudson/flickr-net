@@ -10,6 +10,7 @@ using System.Reactive.Linq;
 namespace FlickrNetTest.Async
 {
     [TestFixture]
+    [Category("AccessTokenRequired")]
     public class StatsAsyncTests
     {
         [Test]
