@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for CommonsTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class CommonsTests
     {
         public CommonsTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void CommonsGetInstitutions()
         {
             InstitutionCollection insts = TestData.GetInstance().CommonsGetInstitutions();

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Xml;
 
@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for TestTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class TestTests
     {
         public TestTests()
@@ -61,7 +61,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestGenericGroupSearch()
         {
             Flickr f = TestData.GetInstance();
@@ -75,7 +75,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void TestGenericTestNull()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -86,7 +87,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(response.ResponseXml, "ResponseXml should not be null.");
         }
 
-        [TestMethod]
+        [Test]
         public void TestEcho()
         {
             Flickr f = TestData.GetInstance();

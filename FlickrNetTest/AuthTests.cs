@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Xml;
 using System.IO;
@@ -15,7 +15,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for AuthTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class AuthTests
     {
         public AuthTests()
@@ -65,7 +65,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void AuthGetFrobTest()
         {
             string frob = TestData.GetOldSignedInstance().AuthGetFrob();
@@ -74,7 +74,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual("", frob, "Frob should not be zero length string.");
         }
 
-        [TestMethod]
+        [Test]
         [Ignore]
         public void AuthGetFrobAsyncTest()
         {
@@ -92,14 +92,14 @@ namespace FlickrNetTest
             Assert.AreNotEqual("", frob, "Frob should not be zero length string.");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthGetFrobSignRequiredTest()
         {
             string frob = TestData.GetInstance().AuthGetFrob();
         }
 
-        [TestMethod]
+        [Test]
         public void AuthCalcUrlTest()
         {
             string frob = "abcdefgh";
@@ -109,7 +109,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(url, "url should not be null.");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthCalcUrlSignRequiredTest()
         {
@@ -118,7 +118,7 @@ namespace FlickrNetTest
             string url = TestData.GetInstance().AuthCalcUrl(frob, AuthLevel.Read);
         }
 
-        [TestMethod]
+        [Test]
         [Ignore]
         // Test method for old auth no longer needed.
         public void AuthCheckTokenBasicTest()
@@ -135,7 +135,7 @@ namespace FlickrNetTest
             Assert.AreEqual(authToken, auth.Token);
         }
 
-        [TestMethod]
+        [Test]
         [Ignore]
         // Test for old auth, which no longer is used.
         public void AuthCheckTokenCurrentTest()
@@ -148,7 +148,7 @@ namespace FlickrNetTest
             Assert.AreEqual(f.AuthToken, auth.Token);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthCheckTokenSignRequiredTest()
         {
@@ -157,7 +157,7 @@ namespace FlickrNetTest
             TestData.GetInstance().AuthCheckToken(token);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(FlickrNet.Exceptions.LoginFailedInvalidTokenException))]
         public void AuthCheckTokenInvalidTokenTest()
         {
@@ -166,7 +166,7 @@ namespace FlickrNetTest
             TestData.GetOldSignedInstance().AuthCheckToken(token);
         }
 
-        [TestMethod]
+        [Test]
         public void AuthClassBasicTest()
         {
             string authResponse = "<auth><token>TheToken</token><perms>delete</perms><user nsid=\"41888973@N00\" username=\"Sam Judson\" fullname=\"Sam Judson\" /></auth>";

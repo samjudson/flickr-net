@@ -2,14 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     /// <summary>
     /// Summary description for FlickrPhotosetsGetList
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosetsTests
     {
         public PhotosetsTests()
@@ -38,7 +38,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void GetContextTest()
         {
             var f = TestData.GetInstance();
@@ -73,7 +73,7 @@ namespace FlickrNetTest
         }
 
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetInfoBasicTest()
         {
             string photosetId = "72157594532130119";
@@ -86,7 +86,7 @@ namespace FlickrNetTest
             Assert.AreEqual("It's near work, so I go quite a bit...", p.Description);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetListBasicTest()
         {
             PhotosetCollection photosets = TestData.GetInstance().PhotosetsGetList(TestData.TestUserId);
@@ -104,7 +104,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetListWebUrlTest()
         {
             PhotosetCollection photosets = TestData.GetInstance().PhotosetsGetList(TestData.TestUserId);
@@ -115,11 +115,12 @@ namespace FlickrNetTest
             {
                 Assert.IsNotNull(set.Url);
                 string expectedUrl = "http://www.flickr.com/photos/" + TestData.TestUserId + "/sets/" + set.PhotosetId + "/";
-                Assert.AreEqual<string>(expectedUrl, set.Url);
+                Assert.AreEqual(expectedUrl, set.Url);
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosetsCreateAddPhotosTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -177,7 +178,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetInfoEncodingCorrect()
         {
             Flickr f = TestData.GetInstance();

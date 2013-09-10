@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
     public class GroupsDiscussTests
     {
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Flickr.CacheDisabled = true;
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsDiscussRepliesAddTest()
         {
             var f = TestData.GetAuthInstance();
@@ -46,7 +47,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsDiscussRepliesGetListTest()
         {
             var f = TestData.GetAuthInstance();
@@ -78,8 +80,9 @@ namespace FlickrNetTest
             Assert.AreEqual(firstReply.Message, reply.Message, "TopicReply.Message should be the same.");
         }
 
-        [TestMethod]
+        [Test]
         [Ignore] // Got this working, now ignore as there is no way to delete topics!
+        [AuthTokenRequired]
         public void GroupsDiscussTopicsAddTest()
         {
             var f = TestData.GetAuthInstance();
@@ -99,7 +102,8 @@ namespace FlickrNetTest
             Assert.AreEqual(message, topic.Message, "Message should be the same.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsDiscussTopicsGetListTest()
         {
             var f = TestData.GetAuthInstance();
@@ -130,7 +134,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsDiscussTopicsGetListEditableTest()
         {
             var groupId = "51035612836@N01"; // Flickr API group
@@ -149,7 +154,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsDiscussTopicsGetInfoStickyTest()
         {
             var topicId = "72157630982967152";
@@ -164,7 +170,8 @@ namespace FlickrNetTest
             //Assert.IsTrue(topic.CanReply, "CanReply should be true as the topic is not locked.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsDiscussTopicsGetInfoLockedTest()
         {
             var topicId = "72157630982969782";

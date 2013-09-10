@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for GroupsBrowseTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class GroupsTests
     {
         public GroupsTests()
@@ -60,7 +60,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsBrowseBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -74,7 +75,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, cat.Groups.Count, "No groups should be returned.");
         }
 
-        [TestMethod]
+        [Test]
         public void GroupsSearchBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -95,7 +96,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GroupsGetInfoBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -109,7 +110,7 @@ namespace FlickrNetTest
             Assert.AreEqual("3716", info.IconServer);
             Assert.AreEqual("4", info.IconFarm);
 
-            Assert.AreEqual<string>("http://farm4.staticflickr.com/3716/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
+            Assert.AreEqual("http://farm4.staticflickr.com/3716/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
 
             Assert.AreEqual(3, info.ThrottleInfo.Count);
             Assert.AreEqual(GroupThrottleMode.PerDay, info.ThrottleInfo.Mode);
@@ -118,7 +119,7 @@ namespace FlickrNetTest
             Assert.IsFalse(info.Restrictions.VideosAccepted, "VideosAccepted should be false.");
         }
 
-        [TestMethod]
+        [Test]
         public void GroupsGetInfoNoGroupIconTest()
         {
             string groupId = "562176@N20";
@@ -128,11 +129,12 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(info, "GroupFullInfo should not be null");
             Assert.AreEqual("0", info.IconServer, "Icon Server should be zero");
-            Assert.AreEqual<string>("http://www.flickr.com/images/buddyicon.jpg", info.GroupIconUrl);
+            Assert.AreEqual("http://www.flickr.com/images/buddyicon.jpg", info.GroupIconUrl);
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsMembersGetListBasicTest()
         {
             var ms = TestData.GetAuthInstance().GroupsMembersGetList(TestData.GroupId);

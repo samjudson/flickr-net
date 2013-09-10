@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.IO;
 using System.Net;
@@ -15,7 +15,8 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosUploadTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class PhotosUploadTests
     {
         public PhotosUploadTests()
@@ -65,7 +66,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void UploadPictureAsyncBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -97,7 +98,7 @@ namespace FlickrNetTest
             f.PhotosDelete(result.Result);
         }
 
-        [TestMethod]
+        [Test]
         public void UploadPictureBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -144,7 +145,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ReplacePictureBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -169,7 +170,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void UploadPictureFromUrl()
         {
             string url = "http://www.google.co.uk/intl/en_com/images/srpr/logo1w.png";
@@ -186,7 +187,7 @@ namespace FlickrNetTest
         }
 
         [Ignore]
-        [TestMethod]
+        [Test]
         public void UploadPictureVideoTests()
         {
             // Samples downloaded from http://support.apple.com/kb/HT1425

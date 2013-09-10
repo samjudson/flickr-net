@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for TagsGetListRaw
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class TagsTests
     {
         Flickr f = TestData.GetAuthInstance();
@@ -20,47 +20,7 @@ namespace FlickrNetTest
             Flickr.CacheDisabled = true;
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void TagsGetListUserRawAuthenticationTest()
         {
@@ -68,7 +28,8 @@ namespace FlickrNetTest
             f.TagsGetListUserRaw();
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void TagsGetListUserRawBasicTest()
         {
             var tags = f.TagsGetListUserRaw();
@@ -83,7 +44,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void TagsGetListUserPopularBasicTest()
         {
             TagCollection tags = TestData.GetAuthInstance().TagsGetListUserPopular();
@@ -98,7 +60,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void TagsGetListUserBasicTest()
         {
             TagCollection tags = TestData.GetAuthInstance().TagsGetListUser();
@@ -113,7 +76,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TagsGetListPhotoBasicTest()
         {
             var tags = TestData.GetInstance().TagsGetListPhoto(TestData.PhotoId);
@@ -131,7 +94,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void TagsGetClustersNewcastleTest()
         {
             var col = TestData.GetInstance().TagsGetClusters("newcastle");
@@ -153,7 +116,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TagsGetClusterPhotosNewcastleTest()
         {
             Flickr f = TestData.GetInstance();
@@ -167,7 +130,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TagsGetHotListTest()
         {
             var col = TestData.GetInstance().TagsGetHotList();
@@ -182,13 +145,14 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TagsGetListUserTest()
         {
             var col = TestData.GetInstance().TagsGetListUser(TestData.TestUserId);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void TagsGetMostFrequentlyUsedTest()
         {
             Flickr f = TestData.GetAuthInstance();

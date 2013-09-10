@@ -1,13 +1,13 @@
 ﻿using System;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     /// <summary>
     /// Summary description for PhotosGetFavouritesTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosGetFavouritesTests
     {
         Flickr f = TestData.GetInstance();
@@ -59,7 +59,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosGetFavoritesNoFavourites()
         {
             // No favourites
@@ -69,7 +69,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetFavoritesHasFavourites()
         {
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 500, 1);
@@ -89,7 +89,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetFavoritesPaging()
         {
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 1);
@@ -101,7 +101,7 @@ namespace FlickrNetTest
             Assert.IsTrue(favs.Pages > 10, "PhotoFavourites.Pages should be greater than 10.");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetFavoritesPagingTwo()
         {
             PhotoFavoriteCollection favs = f.PhotosGetFavorites(TestData.FavouritedPhotoId, 10, 2);

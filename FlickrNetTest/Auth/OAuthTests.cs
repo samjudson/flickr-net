@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,10 +10,10 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for OAuthTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class OAuthTests
     {
-        [TestMethod]
+        [Test]
         [Ignore]
         public void OAuthGetRequestTokenBasicTest()
         {
@@ -36,7 +36,7 @@ namespace FlickrNetTest
             TestData.RequestTokenSecret = requestToken.TokenSecret;
         }
 
-        [TestMethod]
+        [Test]
         [Ignore]
         public void OAuthGetAccessTokenBasicTest()
         {
@@ -56,7 +56,7 @@ namespace FlickrNetTest
             TestData.AccessTokenSecret = accessToken.TokenSecret;
         }
 
-        [TestMethod]
+        [Test]
         public void OAuthPeopleGetPhotosBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -64,7 +64,7 @@ namespace FlickrNetTest
             PhotoCollection photos = f.PeopleGetPhotos("me");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(OAuthException))]
         public void OAuthInvalidAccessTokenTest()
         {
@@ -75,7 +75,7 @@ namespace FlickrNetTest
             f.OAuthGetRequestToken("oob");
         }
 
-        [TestMethod]
+        [Test]
         public void OAuthCheckTokenTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -85,7 +85,7 @@ namespace FlickrNetTest
             Assert.AreEqual(a.Token, f.OAuthAccessToken);
         }
 
-        [TestMethod]
+        [Test]
         public void OAuthCheckEncoding()
         {
             // Test cases taken from OAuth spec

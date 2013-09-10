@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.IO;
 
@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for GroupsPoolsGetGroupsTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class GroupsPoolsTests
     {
         public GroupsPoolsTests()
@@ -61,7 +61,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsPoolsAddBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -86,8 +87,9 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
+        [AuthTokenRequired]
         public void GroupsPoolsAddNotAuthTestTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -112,7 +114,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void GroupsPoolGetPhotosFullParamTest()
         {
             Flickr f = TestData.GetInstance();
@@ -132,7 +134,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void GroupsPoolGetPhotosDateAddedTest()
         {
             Flickr f = TestData.GetInstance();
@@ -150,7 +152,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GroupsPoolsGetGroupsBasicTest()
         {
             MemberGroupInfoCollection groups = TestData.GetAuthInstance().GroupsPoolsGetGroups();

@@ -2,14 +2,14 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
     public class PushTests
     {
-        [TestMethod]
+        [Test]
         public void GetTopicsTest()
         {
             var f = TestData.GetInstance();
@@ -25,7 +25,8 @@ namespace FlickrNetTest
             Assert.IsTrue(topics.Contains("airports"), "Should include \"airports\".");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void SubscribeUnsubscribeTest()
         {
             var callback = "http://www.wackylabs.net/dev/push/test.php";
@@ -55,7 +56,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void SubscribeTwiceUnsubscribeTest()
         {
             var callback1 = "http://www.wackylabs.net/dev/push/test.php?id=1";

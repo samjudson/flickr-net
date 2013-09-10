@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,8 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for StatsGetReferrerTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class StatsGetReferrerTests
     {
         public StatsGetReferrerTests()
@@ -26,7 +27,7 @@ namespace FlickrNetTest
         private DateTime lastWeek = DateTime.Today.AddDays(-7);
 
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotoReferrersBasicTest()
         {
             string domain = "flickr.com";
@@ -61,7 +62,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotosetsReferrersBasicTest()
         {
             string domain = "flickr.com";
@@ -99,7 +100,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotostreamReferrersBasicTest()
         {
             string domain = "flickr.com";
@@ -130,7 +131,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(referrers);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetCollectionReferrersBasicTest()
         {
             string domain = "flickr.com";

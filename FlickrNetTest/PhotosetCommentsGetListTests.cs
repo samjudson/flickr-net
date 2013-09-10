@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosetCommentsGetListTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosetCommentsGetListTests
     {
         public PhotosetCommentsGetListTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosetsCommentsGetListBasicTest()
         {
             Flickr f = TestData.GetInstance();

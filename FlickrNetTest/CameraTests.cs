@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
     public class CameraTests
     {
-        [TestMethod]
+        [Test]
         public void ShouldReturnListOfCameraBrands()
         {
             var brands = TestData.GetInstance().CamerasGetBrands();
@@ -21,7 +21,7 @@ namespace FlickrNetTest
             Assert.IsTrue(brands.Any(b => b.BrandId == "nikon" && b.BrandName == "Nikon"));
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldReturnListOfCanonCameraModels()
         {
             var models = TestData.GetInstance().CamerasGetBrandModels("canon");

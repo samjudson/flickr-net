@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PandaGetListTest
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PandaTest
     {
         public PandaTest()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PandaGetListBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -75,7 +75,7 @@ namespace FlickrNetTest
             Assert.AreEqual("wang wang", pandas[2]);
         }
 
-        [TestMethod]
+        [Test]
         public void PandaGetPhotosLingLingTest()
         {
             Flickr f = TestData.GetInstance();

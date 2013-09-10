@@ -1,6 +1,6 @@
 ﻿using System;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace FlickrNetTest
@@ -9,7 +9,7 @@ namespace FlickrNetTest
     ///This is a test class for FlickrNet.Utils and is intended
     ///to contain all FlickrNet.Utils Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture()]
     public class UtilityMethodsTests
     {
         private Dictionary<DateTime, string> timestampTests = new Dictionary<DateTime, string>()
@@ -19,7 +19,7 @@ namespace FlickrNetTest
                 { new DateTime(2011,1, 1, 0, 20, 31), "1293841231" }
             };
 
-        [TestMethod]
+        [Test]
         public void CleanCollectionIdTest()
         {
             string orig = "78188-72157600072406095";
@@ -33,7 +33,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void DateToUnixTimestampTests()
         {
             foreach (var pair in timestampTests)
@@ -45,7 +45,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void DateToMySqlTests()
         {
             var tests = new Dictionary<DateTime, string>()
@@ -60,10 +60,10 @@ namespace FlickrNetTest
                 var orig = pair.Key;
                 var expected = pair.Value;
                 var actual = UtilityMethods.DateToMySql(orig);
-                Assert.AreEqual<string>(expected, actual, orig + " should have converted to " + expected);
+                Assert.AreEqual(expected, actual, orig + " should have converted to " + expected);
             }
         }
-        [TestMethod()]
+        [Test()]
         public void ExtrasToStringTestNoExtras()
         {
             PhotoSearchExtras extras = PhotoSearchExtras.None; // TODO: Initialize to an appropriate value
@@ -76,7 +76,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
 
-        [TestMethod()]
+        [Test()]
         public void ExtrasToStringTestTags()
         {
             PhotoSearchExtras extras = PhotoSearchExtras.Tags; // TODO: Initialize to an appropriate value
@@ -89,7 +89,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
 
-        [TestMethod()]
+        [Test()]
         public void ExtrasToStringTestMultiple()
         {
             PhotoSearchExtras extras = PhotoSearchExtras.Tags | PhotoSearchExtras.OriginalFormat; // TODO: Initialize to an appropriate value
@@ -102,7 +102,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
 
-        [TestMethod]
+        [Test]
         public void MachineTagModeToStringTests()
         {
             Dictionary<MachineTagMode, string> test = new Dictionary<MachineTagMode, string>() { 
@@ -123,7 +123,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MyTestMethod()
         {
             var tests = new Dictionary<string, DateTime>()
@@ -144,7 +144,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ParseDateWithGranularityOK()
         {
             string d = "2010-01-17 12:43:23";
@@ -158,7 +158,7 @@ namespace FlickrNetTest
             Assert.AreEqual(23, d2.Second);
         }
 
-        [TestMethod]
+        [Test]
         public void ParseDateWithGranularityZeroMonth()
         {
             string d = "2010-00-01 00:00:00";
@@ -172,7 +172,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, d2.Second);
         }
 
-        [TestMethod]
+        [Test]
         public void ParseIdToMemberTypeTests()
         {
             var tests = new Dictionary<string, MemberTypes>()
@@ -196,7 +196,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void MemberTypeToStringTests()
         {
             var tests = new Dictionary<MemberTypes, string>()
@@ -218,7 +218,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SortOrderToStringPhotoSearchSortOrderTest()
         {
             var tests = new Dictionary<PhotoSearchSortOrder, string>()
@@ -246,7 +246,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void SortOrderToStringPopularitySortTest()
         {
             var tests = new Dictionary<PopularitySort, string>()
@@ -270,7 +270,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void TagModeToStringTests()
         {
             Dictionary<TagMode, string> test = new Dictionary<TagMode, string>() { 
@@ -292,7 +292,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void UnixTimestampToDateTests()
         {
             foreach (var pair in timestampTests)
@@ -304,7 +304,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod()]
+        [Test()]
         public void UnixTimestampToDateInvalidStringTest()
         {
             string invalidTimestamp = "kjhkjh0987";
@@ -314,7 +314,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [TestMethod()]
+        [Test()]
         public void UrlEncodeTestEmpty()
         {
             string data = String.Empty;
@@ -327,7 +327,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [TestMethod()]
+        [Test()]
         public void UrlEncodeTestAmpersand()
         {
             string data = "A&B";
@@ -340,7 +340,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [TestMethod()]
+        [Test()]
         public void UrlEncodeTestPlus()
         {
             string data = "A+B";
@@ -353,7 +353,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [TestMethod()]
+        [Test()]
         public void UrlEncodeTestSpace()
         {
             string data = "A B";
@@ -366,7 +366,7 @@ namespace FlickrNetTest
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [TestMethod]
+        [Test]
         public void UrlFormatTest()
         {
             var farm = "1";
@@ -394,7 +394,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void UrlFormatPhotoInfoTest()
         {
             var photoId = "7176125763"; // Rainbow rose
@@ -411,7 +412,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void UriCreationTest()
         {
             Uri u = new Uri("/Test", UriKind.Relative);
@@ -421,7 +422,7 @@ namespace FlickrNetTest
             Console.WriteLine(u2.AbsoluteUri);
         }
 
-        [TestMethod]
+        [Test]
         public void UtilityAuthToStringTest()
         {
             AuthLevel a = AuthLevel.Delete;

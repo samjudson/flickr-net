@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -13,7 +13,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosSearchAsyncTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosSearchAsyncTests
     {
         public PhotosSearchAsyncTests()
@@ -63,7 +63,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosSearchAsyncBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -80,7 +80,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosAddTagTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -95,7 +95,7 @@ namespace FlickrNetTest
             
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosSearchAsyncShowerTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -116,7 +116,7 @@ namespace FlickrNetTest
             Assert.IsTrue(result.Result.Total > 0);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetContactsPhotosAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();

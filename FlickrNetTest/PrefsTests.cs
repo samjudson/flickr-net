@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,8 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PrefsTest
     /// </summary>
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class PrefsTests
     {
         public PrefsTests()
@@ -60,50 +61,50 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PrefsGetContentTypeTest()
         {
             var s = TestData.GetAuthInstance().PrefsGetContentType();
 
             Assert.IsNotNull(s);
-            Assert.AreNotEqual<ContentType>(ContentType.None, s);
+            Assert.AreNotEqual(ContentType.None, s);
         }
 
-        [TestMethod]
+        [Test]
         public void PrefsGetGeoPermsTest()
         {
             var p = TestData.GetAuthInstance().PrefsGetGeoPerms();
 
             Assert.IsNotNull(p);
             Assert.IsTrue(p.ImportGeoExif);
-            Assert.AreEqual<GeoPermissionType>(GeoPermissionType.Public, p.GeoPermissions);
+            Assert.AreEqual(GeoPermissionType.Public, p.GeoPermissions);
         }
 
-        [TestMethod]
+        [Test]
         public void PrefsGetHiddenTest()
         {
             var s = TestData.GetAuthInstance().PrefsGetHidden();
 
             Assert.IsNotNull(s);
-            Assert.AreNotEqual<HiddenFromSearch>(HiddenFromSearch.None, s);
+            Assert.AreNotEqual(HiddenFromSearch.None, s);
         }
 
-        [TestMethod]
+        [Test]
         public void PrefsGetPrivacyTest()
         {
             var p = TestData.GetAuthInstance().PrefsGetPrivacy();
 
             Assert.IsNotNull(p);
-            Assert.AreEqual<PrivacyFilter>(PrivacyFilter.PublicPhotos, p);
+            Assert.AreEqual(PrivacyFilter.PublicPhotos, p);
         }
 
-        [TestMethod]
+        [Test]
         public void PrefsGetSafetyLevelTest()
         {
             var s = TestData.GetAuthInstance().PrefsGetSafetyLevel();
 
             Assert.IsNotNull(s);
-            Assert.AreEqual<SafetyLevel>(SafetyLevel.Safe, s);
+            Assert.AreEqual(SafetyLevel.Safe, s);
         }
 
 

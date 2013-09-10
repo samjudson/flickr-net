@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for ActivityTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ActivityTests
     {
         public ActivityTests()
@@ -60,7 +60,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void ActivityUserCommentsBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -74,7 +75,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void ActivityUserPhotosBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -88,7 +90,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void ActivityUserPhotosBasicTests()
         {
             int days = 50;

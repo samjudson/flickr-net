@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,8 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for StatsGetCollectionDomainsTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class StatsGetDomainsTests
     {
         public StatsGetDomainsTests()
@@ -24,7 +25,7 @@ namespace FlickrNetTest
         private string photoId = "5890800";
         private string photosetId = "1493109";
 
-        [TestMethod]
+        [Test]
         public void StatsGetCollectionDomainsBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -45,7 +46,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(domains);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetCollectionStatsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -55,7 +56,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(stats, "Stats should not be null.");
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotoDomainsTests()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -82,7 +83,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotoStatsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -92,7 +93,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(stats);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotosetDomainsBasic()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -119,7 +120,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotosetStatsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -129,7 +130,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(stats);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotostreamDomainsBasic()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -148,7 +149,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(domains, "StatDomains should not be null.");
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotostreamStatsTest()
         {
             Flickr f = TestData.GetAuthInstance();

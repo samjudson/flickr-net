@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Xml.Serialization;
 using System.IO;
@@ -13,7 +13,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosSerializationTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosSerializationTests
     {
         public PhotosSerializationTests()
@@ -63,7 +63,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosSerializationSkipBlankPhotoRowTest()
         {
             string xml = @"<photos page=""1"" pages=""1"" perpage=""500"" total=""500"">

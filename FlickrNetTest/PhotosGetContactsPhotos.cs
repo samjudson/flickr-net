@@ -1,13 +1,14 @@
 using System;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     /// <summary>
     /// Summary description for FlickrPhotosGetContactsPhotos
     /// </summary>
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class PhotosGetContactsPhotos
     {
         Flickr f = TestData.GetAuthInstance();
@@ -39,7 +40,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PhotosGetContactsPhotosSignatureRequiredTest()
         {
@@ -47,7 +48,7 @@ namespace FlickrNetTest
             f.PhotosGetContactsPhotos();
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void PhotosGetContactsPhotosIncorrectCountTest()
         {
@@ -55,7 +56,7 @@ namespace FlickrNetTest
             f.PhotosGetContactsPhotos(51);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetContactsPhotosBasicTest()
         {
             PhotoCollection photos = f.PhotosGetContactsPhotos(10);
@@ -65,7 +66,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetContactsPhotosExtrasTest()
         {
             PhotoCollection photos = f.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);

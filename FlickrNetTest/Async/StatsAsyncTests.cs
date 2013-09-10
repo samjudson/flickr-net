@@ -2,17 +2,17 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
 
 namespace FlickrNetTest.Async
 {
-    [TestClass]
+    [TestFixture]
     public class StatsAsyncTests
     {
-        [TestMethod]
+        [Test]
         public void StatsGetCollectionDomainsAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -26,7 +26,7 @@ namespace FlickrNetTest.Async
             Assert.IsFalse(result.HasError);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotoDomainsAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -40,7 +40,7 @@ namespace FlickrNetTest.Async
             Assert.IsFalse(result.HasError);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotostreamDomainsAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -54,7 +54,7 @@ namespace FlickrNetTest.Async
             Assert.IsFalse(result.HasError);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotosetDomainsAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -69,7 +69,7 @@ namespace FlickrNetTest.Async
         }
 
 
-        [TestMethod]
+        [Test]
         public void StatsGetCollectionStatsAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -86,7 +86,7 @@ namespace FlickrNetTest.Async
 
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotoStatsAsyncTest()
         {
             Flickr.CacheDisabled = true;
@@ -104,7 +104,7 @@ namespace FlickrNetTest.Async
             Assert.IsFalse(result.HasError);
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPhotostreamStatsAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();

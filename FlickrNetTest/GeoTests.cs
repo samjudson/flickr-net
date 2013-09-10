@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for GeoTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class GeoTests
     {
         public GeoTests()
@@ -60,7 +60,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGeoGetPermsBasicTest()
         {
             GeoPermissions perms = TestData.GetAuthInstance().PhotosGeoGetPerms(TestData.PhotoId);
@@ -70,7 +71,8 @@ namespace FlickrNetTest
             Assert.IsTrue(perms.IsPublic, "IsPublic should be true.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetWithGeoDataBasicTest()
         {
             PhotoCollection photos = TestData.GetAuthInstance().PhotosGetWithGeoData();

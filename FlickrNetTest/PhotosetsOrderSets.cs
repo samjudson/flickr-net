@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,8 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosetsOrderSets
     /// </summary>
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class PhotosetsOrderSets
     {
         Flickr f = TestData.GetAuthInstance();
@@ -60,7 +61,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosetsOrderSetsStringTest()
         {
             PhotosetCollection mySets = f.PhotosetsGetList();
@@ -75,7 +76,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsOrderSetsArrayTest()
         {
             PhotosetCollection mySets = f.PhotosetsGetList();

@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -9,7 +9,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for FlickrPhotoSetGetPhotos
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosetsGetPhotosTests
     {
         Flickr f = new Flickr(TestData.ApiKey);
@@ -41,7 +41,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetPhotosBasicTest()
         {
             PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, PrivacyFilter.None, 1, 10);
@@ -50,7 +50,7 @@ namespace FlickrNetTest
             Assert.AreEqual(8, set.Count, "Should be 8 photos returned.");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetPhotosMachineTagsTest()
         {
             PhotosetPhotoCollection set = f.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
@@ -69,7 +69,7 @@ namespace FlickrNetTest
             Assert.IsTrue(machineTagsFound, "No machine tags were found in the photoset");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetPhotosFilterMediaTest()
         {
             // http://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
@@ -89,7 +89,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetPhotosWebUrlTest()
         {
             PhotosetPhotoCollection theset = f.PhotosetsGetPhotos("72157618515066456");
@@ -97,13 +97,13 @@ namespace FlickrNetTest
             foreach(Photo p in theset)
             {
                 Assert.IsNotNull(p.UserId, "UserId should not be null.");
-                Assert.AreNotEqual<String>(String.Empty, p.UserId, "UserId should not be an empty string.");
+                Assert.AreNotEqual(String.Empty, p.UserId, "UserId should not be an empty string.");
                 string url = "http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
-                Assert.AreEqual<string>(url, p.WebUrl);
+                Assert.AreEqual(url, p.WebUrl);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetPhotosPrimaryPhotoTest()
         {
             PhotosetPhotoCollection theset = f.PhotosetsGetPhotos("72157618515066456", 1, 100);
@@ -126,7 +126,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosetsGetPhotosOrignalTest()
         {
             Flickr f = TestData.GetAuthInstance();

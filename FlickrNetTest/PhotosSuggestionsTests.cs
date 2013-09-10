@@ -2,23 +2,24 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
     public class PhotosSuggestionsTests
     {
         private string photoId = "6282363572";
 
-        [TestInitialize]
+        [SetUp]
         public void TestInitialize()
         {
             Flickr.CacheDisabled = true;
         }
         
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GetListTest()
         {
             var f = TestData.GetAuthInstance();
@@ -66,6 +67,8 @@ namespace FlickrNetTest
 
         }
 
+        [Test]
+        [AuthTokenRequired]
         public void AddSuggestion()
         {
             var f = TestData.GetAuthInstance();

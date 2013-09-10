@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for InterestingnessGetListTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class InterestingnessTests
     {
         public InterestingnessTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void InterestingnessGetListTestsBasicTest()
         {
             DateTime date = DateTime.Today.AddDays(-2);

@@ -1,5 +1,5 @@
 ﻿using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Xml;
 
@@ -11,14 +11,14 @@ namespace FlickrNetTest
     ///This is a test class for FlickrConfigurationSettingsTest and is intended
     ///to contain all FlickrConfigurationSettingsTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture()]
     public class FlickrConfigurationSettingsTest
     {
 
         /// <summary>
         ///A test for FlickrConfigurationSettings Constructor
         ///</summary>
-        [TestMethod()]
+        [Test()]
         public void FlickrConfigurationSettingsConstructorTest()
         {
             string xml = "<flickrNet apiKey=\"apikey\" secret=\"secret\" token=\"thetoken\" cacheDisabled=\"true\" cacheSize=\"1024\" cacheTimeout=\"01:00:00\" cacheLocation=\"testlocation\" service=\"flickr\">"

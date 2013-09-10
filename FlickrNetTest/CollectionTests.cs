@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for CollectionGetTreeTest
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class CollectionTests
     {
         public CollectionTests()
@@ -60,7 +60,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void CollectionGetInfoBasicTest()
         {
             string id = "78188-72157618817175751";
@@ -80,7 +81,8 @@ namespace FlickrNetTest
             Assert.AreEqual("Tires", info.IconPhotos[0].Title, "The first IconPhoto Title should be 'Tires'.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void CollectionGetTreeRootTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -107,7 +109,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void CollectionsEditMetaTest()
         {
             string id = "78188-72157618817175751";
@@ -128,7 +131,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void CollectionsEmptyCollection()
         {
             Flickr f = TestData.GetAuthInstance();

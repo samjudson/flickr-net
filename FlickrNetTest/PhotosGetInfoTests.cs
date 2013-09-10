@@ -2,8 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FlickrNet.Exceptions;
+using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
@@ -14,7 +14,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosGetInfoTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosGetInfoTests
     {
         public PhotosGetInfoTests()
@@ -64,7 +64,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetInfoBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -124,11 +125,11 @@ namespace FlickrNetTest
 
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
-            Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
+            Assert.AreEqual("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetInfoUnauthenticatedTest()
         {
             Flickr f = TestData.GetInstance();
@@ -187,10 +188,11 @@ namespace FlickrNetTest
 
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
-            Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
+            Assert.AreEqual("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetInfoTestLocation()
         {
             string photoId = "4268756940";
@@ -202,7 +204,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(info.Location);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetInfoWithPeople()
         {
             Flickr f = TestData.GetInstance();
@@ -215,7 +217,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetInfoCanBlogTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
@@ -231,7 +233,7 @@ namespace FlickrNetTest
             Assert.AreEqual(true, info.CanDownload);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetInfoDataTakenGranularityTest()
         {
             string photoid = "4386780023";
@@ -245,7 +247,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetInfoVideoTest()
         {
             string videoId = "2926486605";
@@ -266,16 +268,16 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(FlickrApiException), AllowDerivedTypes = true)]
+        [Test]
+        [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFound()
         {
             Flickr f = TestData.GetInstance();
             f.PhotosGetInfo("abcd");
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(FlickrApiException), AllowDerivedTypes = true)]
+        [Test]
+        [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFoundAsync()
         {
             Flickr f = TestData.GetInstance();
@@ -289,7 +291,7 @@ namespace FlickrNetTest
             throw result.Error;
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldReturnPhotoInfoWithGeoData()
         {
             var info = TestData.GetInstance().PhotosGetInfo("54071193");
@@ -301,7 +303,7 @@ namespace FlickrNetTest
             Assert.IsTrue(info.GeoPermissions.IsPublic, "GeoPermissions should be public.");
         }
 
-        [TestMethod]
+        [Test]
         public void ShouldReturnPhotoInfoWithValidUrls()
         {
             var info = TestData.GetInstance().PhotosGetInfo("9671143400");

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PeopleTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PeopleTests
     {
         public PeopleTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PeopleGetPhotosOfBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -72,7 +72,7 @@ namespace FlickrNetTest
             Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
         }
 
-        [TestMethod()]
+        [Test()]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PeopleGetPhotosOfAuthRequired()
         {
@@ -81,7 +81,8 @@ namespace FlickrNetTest
             PeoplePhotoCollection p = f.PeopleGetPhotosOf();
         }
 
-        [TestMethod()]
+        [Test()]
+        [AuthTokenRequired]
         public void PeopleGetPhotosOfMe()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -93,7 +94,8 @@ namespace FlickrNetTest
             Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetPhotosBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -105,7 +107,8 @@ namespace FlickrNetTest
             Assert.IsTrue(photos.Total > 1000, "Total should be greater than 1000.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetPhotosFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -116,7 +119,7 @@ namespace FlickrNetTest
             Assert.AreEqual(20, photos.Count, "Count should be twenty.");
         }
 
-        [TestMethod]
+        [Test]
         public void PeopleGetInfoBasicTestUnauth()
         {
             Flickr f = TestData.GetInstance();
@@ -133,7 +136,7 @@ namespace FlickrNetTest
             Assert.IsTrue(p.Description.Length > 0, "Description should not be empty");
         }
 
-        [TestMethod]
+        [Test]
         public void PeopleGetInfoGenderNoAuthTest()
         {
             Flickr f = TestData.GetInstance();
@@ -148,7 +151,8 @@ namespace FlickrNetTest
             Assert.IsNull(p.IsFriend, "IsFriend should be null.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetInfoGenderTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -165,7 +169,8 @@ namespace FlickrNetTest
             Assert.IsNotNull(p.PhotosSummary, "PhotosSummary should not be null.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetInfoBuddyIconTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -173,7 +178,8 @@ namespace FlickrNetTest
             Assert.IsTrue(p.BuddyIconUrl.Contains(".staticflickr.com/"), "Buddy icon doesn't contain correct details.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetInfoSelfTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -186,7 +192,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetGroupsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -197,7 +204,8 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, groups.Count);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetLimitsTest()
         {
             var f = TestData.GetAuthInstance();
@@ -213,7 +221,8 @@ namespace FlickrNetTest
             
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleFindByUsername()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -224,7 +233,8 @@ namespace FlickrNetTest
             Assert.AreEqual("Sam Judson", user.UserName);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleFindByEmail()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -235,7 +245,7 @@ namespace FlickrNetTest
             Assert.AreEqual("Sam Judson", user.UserName);
         }
 
-        [TestMethod]
+        [Test]
         public void PeopleGetPublicPhotosBasicTest()
         {
             var photos = TestData.GetInstance().PeopleGetPublicPhotos(TestData.TestUserId);
@@ -246,11 +256,12 @@ namespace FlickrNetTest
             foreach (var photo in photos)
             {
                 Assert.IsNotNull(photo.PhotoId);
-                Assert.AreEqual<string>(TestData.TestUserId, photo.UserId);
+                Assert.AreEqual(TestData.TestUserId, photo.UserId);
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetPublicGroupsBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -266,7 +277,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PeopleGetUploadStatusBasicTest()
         {
             var u = TestData.GetAuthInstance().PeopleGetUploadStatus();
@@ -277,19 +289,19 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, u.FileSizeMax);
         }
 
-        [TestMethod]
+        [Test]
         public void PeopleGetInfoBlankDate()
         {
             var p = TestData.GetInstance().PeopleGetInfo("18387778@N00");
         }
 
-        [TestMethod]
+        [Test]
         public void PeopleGetInfoZeroDate()
         {
             var p = TestData.GetInstance().PeopleGetInfo("47963952@N03");
         }
 
-        [TestMethod]
+        [Test]
         public void PeoplGetInfoInternationalCharacters()
         {
             var p = TestData.GetInstance().PeopleGetInfo("70701693@N03");

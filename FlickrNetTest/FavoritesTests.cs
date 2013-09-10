@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for FavouritesGetPublicListTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class FavoritesTests
     {
         public FavoritesTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void FavoritesGetPublicListBasicTest()
         {
             string userId = "77788903@N00";
@@ -72,7 +72,8 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, p.Count, "PhotoCollection.Count should be greater than zero.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void FavoritesGetListBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -82,7 +83,8 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should be greater than zero.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void FavoritesGetListFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -94,7 +96,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void FavoritesGetListPartialParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -107,7 +110,7 @@ namespace FlickrNetTest
             Assert.AreEqual(20, photos.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void FavoritesGetContext()
         {
             Flickr f = TestData.GetInstance();
@@ -122,7 +125,7 @@ namespace FlickrNetTest
             Assert.AreEqual(1, context.NextPhotos.Count, "Should be 1 next photo.");
         }
 
-        [TestMethod]
+        [Test]
         public void FavoritesGetContextMorePrevious()
         {
             Flickr f = TestData.GetInstance();

@@ -2,17 +2,18 @@
 using System.Linq;
 using System.Net;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     /// <summary>
     /// Summary description for PhotosTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosTests
     {
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosSetDatesTest()
         {
             var f = TestData.GetAuthInstance();
@@ -23,7 +24,8 @@ namespace FlickrNetTest
             f.PhotosSetDates(photoId, info.DatePosted, info.DateTaken, info.DateTakenGranularity);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosAddTagsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -48,7 +50,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetAllContextsBasicTest()
         {
             var a = TestData.GetInstance().PhotosGetAllContexts("4114887196");
@@ -61,7 +63,7 @@ namespace FlickrNetTest
             Assert.AreEqual(1, a.Sets.Count, "Sets.Count should be one.");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetExifTest()
         {
             Flickr f = TestData.GetInstance();
@@ -82,18 +84,18 @@ namespace FlickrNetTest
             Assert.IsNull(tags[0].Clean, "First tags Clean should be null.");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetContextBasicTest()
         {
             var context = TestData.GetInstance().PhotosGetContext("3845365350");
 
             Assert.IsNotNull(context);
 
-            Assert.AreEqual<string>("3844573707", context.PreviousPhoto.PhotoId);
-            Assert.AreEqual<string>("3992605178", context.NextPhoto.PhotoId);
+            Assert.AreEqual("3844573707", context.PreviousPhoto.PhotoId);
+            Assert.AreEqual("3992605178", context.NextPhoto.PhotoId);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetExifIPhoneTest()
         {
             bool bFound = false;
@@ -115,7 +117,8 @@ namespace FlickrNetTest
             Assert.IsTrue(bFound, "Model tag not found.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetNotInSetAllParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -126,7 +129,8 @@ namespace FlickrNetTest
             Assert.AreEqual(10, photos.Count);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetNotInSetNoParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -134,7 +138,8 @@ namespace FlickrNetTest
             var photos = f.PhotosGetNotInSet();
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetNotInSetPagesTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -150,7 +155,8 @@ namespace FlickrNetTest
             f.PhotosGetNotInSet(new PartialSearchOptions() { Page = 1, PerPage = 10, PrivacyFilter = PrivacyFilter.CompletelyPrivate });
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetPermsBasicTest()
         {
             var p = TestData.GetAuthInstance().PhotosGetPerms("4114887196");
@@ -160,7 +166,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(PermissionComment.Nobody, p.PermissionComment);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetRecentBlankTest()
         {
             var photos = TestData.GetInstance().PhotosGetRecent();
@@ -168,7 +174,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(photos);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetRecentAllParamsTest()
         {
             var photos = TestData.GetInstance().PhotosGetRecent(1, 20, PhotoSearchExtras.All);
@@ -178,7 +184,7 @@ namespace FlickrNetTest
             Assert.AreEqual(20, photos.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetRecentPagesTest()
         {
             var photos = TestData.GetInstance().PhotosGetRecent(1, 20);
@@ -188,7 +194,7 @@ namespace FlickrNetTest
             Assert.AreEqual(20, photos.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetRecentExtrasTest()
         {
             var photos = TestData.GetInstance().PhotosGetRecent(PhotoSearchExtras.OwnerName);
@@ -200,7 +206,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(photo.OwnerName);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetSizes50Test()
         {
             var o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 50};
@@ -217,7 +223,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetSizesBasicTest()
         {
             var sizes = TestData.GetInstance().PhotosGetSizes("4114887196");
@@ -236,7 +242,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetSizesVideoTest()
         {
             //http://www.flickr.com/photos/tedsherarts/4399135415/
@@ -253,7 +259,8 @@ namespace FlickrNetTest
             Assert.IsTrue(findPhoto, "At least one size should contain a Photo media type.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetUntaggedAllParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -261,7 +268,8 @@ namespace FlickrNetTest
             var photos = f.PhotosGetUntagged(1, 10, PhotoSearchExtras.All);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetUntaggedNoParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -274,7 +282,8 @@ namespace FlickrNetTest
             var photo = photos.First();
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetUntaggedExtrasTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -289,7 +298,8 @@ namespace FlickrNetTest
             Assert.IsNotNull(photo.OwnerName);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetUntaggedPagesTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -300,7 +310,8 @@ namespace FlickrNetTest
             Assert.AreEqual(10, photos.Count);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosRecentlyUpdatedTests()
         {
             var sixMonthsAgo = DateTime.Today.AddMonths(-6);
@@ -319,7 +330,7 @@ namespace FlickrNetTest
             photos = f.PhotosRecentlyUpdated(sixMonthsAgo, 1, 10);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosSearchDoesLargeExist()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
@@ -336,7 +347,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosSetMetaLargeDescription()
         {
             string description;
@@ -355,7 +367,7 @@ namespace FlickrNetTest
             f.PhotosSetMeta(photoId, title, description);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosUploadCheckTicketsTest()
         {
             Flickr f = TestData.GetInstance();
@@ -374,7 +386,7 @@ namespace FlickrNetTest
             Assert.IsTrue(t[0].InvalidTicketId);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosPeopleGetListTest()
         {
             var photoId = "3547137580";
@@ -393,7 +405,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosPeopleGetListSpecificUserTest()
         {
             string photoId = "104267998"; // http://www.flickr.com/photos/thunderchild5/104267998/
@@ -406,7 +418,7 @@ namespace FlickrNetTest
             Assert.IsTrue(pp.BuddyIconUrl.Contains(".staticflickr.com/"), "Buddy icon doesn't contain correct details.");
         }
 
-        [TestMethod]
+        [Test]
         public void WebUrlContainsUserIdIfPathAliasIsEmpty()
         {
             var options = new PhotoSearchOptions
@@ -426,7 +438,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(userPart, string.Empty, "User part of the URL cannot be empty");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotostreamUrlContainsUserIdIfPathAliasIsEmpty()
         {
             var photoPerson = new PhotoPerson()
@@ -440,7 +452,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(userPart, string.Empty, "User part of the URL cannot be empty");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosTestLargeSquareSmall320()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();

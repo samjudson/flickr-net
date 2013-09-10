@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
 
 namespace FlickrNetTest.Async
 {
-    [TestClass]
+    [TestFixture]
     public class PhotosAsyncTests
     {
-        [TestMethod]
+        [Test]
         public void TestMethod1()
         {
             Flickr f = TestData.GetInstance();
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosSearchRussianAsync()
         {
             var o = new PhotoSearchOptions();
@@ -42,7 +42,7 @@ namespace FlickrNetTest.Async
             }
 
         }
-        [TestMethod]
+        [Test]
         public void PhotosGetContactsPublicPhotosAsyncTest()
         {
             Flickr f = TestData.GetInstance();
@@ -57,7 +57,7 @@ namespace FlickrNetTest.Async
             Assert.IsTrue(result.Result.Count > 0, "Should return some photos.");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetCountsAsyncTest()
         {
             DateTime date1 = DateTime.Today.AddMonths(-12);
@@ -89,7 +89,7 @@ namespace FlickrNetTest.Async
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetExifAsyncTest()
         {
             Flickr f = TestData.GetInstance();
@@ -102,7 +102,7 @@ namespace FlickrNetTest.Async
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetRecentAsyncTest()
         {
             Flickr f = TestData.GetInstance();

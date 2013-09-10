@@ -2,17 +2,17 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
 
 namespace FlickrNetTest.Async
 {
-    [TestClass]
+    [TestFixture]
     public class PhotosetsAsyncTests
     {
-        [TestMethod]
+        [Test]
         public void PhotosetsGetContextAsyncTest()
         {
             Flickr f = TestData.GetInstance();
@@ -47,7 +47,7 @@ namespace FlickrNetTest.Async
             Assert.IsNotNull(context.PreviousPhoto, "As this is the last photo the previous photo should not be null.");
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetInfoAsyncTest()
         {
             Flickr f = TestData.GetInstance();
@@ -60,7 +60,7 @@ namespace FlickrNetTest.Async
             var result = w.Next().First();
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGeneralAsyncTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -99,7 +99,7 @@ namespace FlickrNetTest.Async
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosetsGetPhotosAsyncTest()
         {
             Flickr f = TestData.GetInstance();

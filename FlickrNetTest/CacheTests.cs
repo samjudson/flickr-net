@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.IO;
 
@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for CacheTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class CacheTests
     {
         public CacheTests()
@@ -61,7 +61,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void CacheLocationTest()
         {
             string origLocation = Flickr.CacheLocation;
@@ -80,7 +80,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void CacheHitTest()
         {
             Directory.Delete(Flickr.CacheLocation, true);
@@ -96,7 +96,7 @@ namespace FlickrNetTest
             ICacheItem item = Cache.Responses.Get(lastUrl, TimeSpan.MaxValue, false);
 
             Assert.IsNotNull(item, "Cache should now contain the item.");
-            Assert.IsInstanceOfType(item, typeof(ResponseCacheItem));
+            Assert.IsInstanceOf<ResponseCacheItem>(item);
 
             ResponseCacheItem response = item as ResponseCacheItem;
 

@@ -2,15 +2,15 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
     public class PhotosLicensesTests
     {
-        [TestMethod]
+        [Test]
         public void PhotosLicensesGetInfoBasicTest()
         {
             LicenseCollection col = TestData.GetInstance().PhotosLicensesGetInfo();
@@ -24,7 +24,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosLicensesSetLicenseTest()
         {
             Flickr f = TestData.GetAuthInstance();

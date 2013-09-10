@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     /// <summary>
     /// Summary description for PhotosGeoTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosGeoTests
     {
         public PhotosGeoTests()
@@ -16,7 +16,7 @@ namespace FlickrNetTest
             Flickr.CacheDisabled = true;
         }
 
-        [TestMethod]
+        [Test]
         public void PhotoInfoParseFull()
         {
             string x = "<photo id=\"7519320006\">"
@@ -44,7 +44,7 @@ namespace FlickrNetTest
             Assert.AreEqual("cnffEpdTUb5v258BBA", info.Location.Country.PlaceId);
         }
 
-        [TestMethod]
+        [Test]
         public void PhotoInfoLocationParseShortTest()
         {
             string x = "<photo id=\"7519320006\">"
@@ -64,7 +64,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetGetLocationTest()
         {
             var f = TestData.GetAuthInstance();
@@ -80,7 +81,8 @@ namespace FlickrNetTest
             Assert.AreEqual(photo.Latitude, location.Latitude, "Latitudes should match exactly.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetGetLocationNullTest()
         {
             var f = TestData.GetAuthInstance();
@@ -93,7 +95,8 @@ namespace FlickrNetTest
             Assert.IsNull(location, "Location should be null.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetCorrectLocationTest()
         {
             var f = TestData.GetAuthInstance();
@@ -102,7 +105,8 @@ namespace FlickrNetTest
             f.PhotosGeoCorrectLocation(photo.PhotoId, photo.PlaceId, null);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGeoSetContextTest()
         {
             var f = TestData.GetAuthInstance();
@@ -124,7 +128,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGeoSetLocationTest()
         {
             var f = TestData.GetAuthInstance();
@@ -150,7 +155,8 @@ namespace FlickrNetTest
             
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGeoPhotosForLocationBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();

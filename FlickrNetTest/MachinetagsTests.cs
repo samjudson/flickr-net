@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for MachinetagsTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class MachinetagsTests
     {
         public MachinetagsTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetNamespacesBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -77,7 +77,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetPredicatesBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -94,7 +94,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetPairsBasicTest()
         {
             var pairs = TestData.GetInstance().MachineTagsGetPairs(null, null, 0, 0);
@@ -112,7 +112,7 @@ namespace FlickrNetTest
         }
 
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetPairsNamespaceTest()
         {
             var pairs = TestData.GetInstance().MachineTagsGetPairs("dc", null, 0, 0);
@@ -131,7 +131,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetPairsPredicateTest()
         {
             var pairs = TestData.GetInstance().MachineTagsGetPairs(null, "author", 0, 0);
@@ -150,7 +150,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetPairsDcAuthorTest()
         {
             var pairs = TestData.GetInstance().MachineTagsGetPairs("dc", "author", 0, 0);
@@ -168,7 +168,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetValuesTest()
         {
             var items = TestData.GetInstance().MachineTagsGetValues("dc", "author");
@@ -187,7 +187,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void MachinetagsGetRecentValuesTest()
         {
             var items = TestData.GetInstance().MachineTagsGetRecentValues(DateTime.Now.AddHours(-1));

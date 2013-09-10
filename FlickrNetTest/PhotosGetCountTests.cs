@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosGetCountTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosGetCountTests
     {
         public PhotosGetCountTests()
@@ -60,7 +60,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetCountTakenTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -88,7 +89,8 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosGetCountUloadTest()
         {
             Flickr f = TestData.GetAuthInstance();

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for UrlsTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class UrlsTests
     {
         public UrlsTests()
@@ -60,7 +60,8 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void UrlsLookupUserTest1()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -71,7 +72,8 @@ namespace FlickrNetTest
             Assert.AreEqual("Sam Judson", user.UserName);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void UrlsLookupGroup()
         {
             string groupUrl = "http://www.flickr.com/groups/angels_of_the_north/";
@@ -83,7 +85,7 @@ namespace FlickrNetTest
             Assert.AreEqual("71585219@N00", groupId);
         }
 
-        [TestMethod]
+        [Test]
         public void UrlsLookupGalleryTest()
         {
             string galleryUrl = "http://www.flickr.com/photos/samjudson/galleries/72157622589312064";
@@ -92,32 +94,32 @@ namespace FlickrNetTest
 
             Gallery gallery = f.UrlsLookupGallery(galleryUrl);
 
-            Assert.AreEqual<string>(galleryUrl, gallery.GalleryUrl);
+            Assert.AreEqual(galleryUrl, gallery.GalleryUrl);
 
         }
 
-        [TestMethod]
+        [Test]
         public void UrlsGetUserPhotosTest()
         {
             string url = TestData.GetInstance().UrlsGetUserPhotos(TestData.TestUserId);
 
-            Assert.AreEqual<string>("http://www.flickr.com/photos/samjudson/", url);
+            Assert.AreEqual("http://www.flickr.com/photos/samjudson/", url);
         }
 
-        [TestMethod]
+        [Test]
         public void UrlsGetUserProfileTest()
         {
             string url = TestData.GetInstance().UrlsGetUserProfile(TestData.TestUserId);
 
-            Assert.AreEqual<string>("http://www.flickr.com/people/samjudson/", url);
+            Assert.AreEqual("http://www.flickr.com/people/samjudson/", url);
         }
 
-        [TestMethod]
+        [Test]
         public void UrlsGetGroupTest()
         {
             string url = TestData.GetInstance().UrlsGetGroup(TestData.GroupId);
 
-            Assert.AreEqual<string>("http://www.flickr.com/groups/florus/", url);
+            Assert.AreEqual("http://www.flickr.com/groups/florus/", url);
         }
 
 

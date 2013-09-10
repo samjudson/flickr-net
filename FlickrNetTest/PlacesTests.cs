@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PlacesForUserTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PlacesTests
     {
         public PlacesTests()
@@ -57,7 +57,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PlacesFindBasicTest()
         {
             var places = TestData.GetInstance().PlacesFind("Newcastle");
@@ -66,7 +66,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, places.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesFindNewcastleTest()
         {
             var places = TestData.GetInstance().PlacesFind("Newcastle upon Tyne");
@@ -75,7 +75,7 @@ namespace FlickrNetTest
             Assert.AreEqual(1, places.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesFindByLatLongNewcastleTest()
         {
             double lat = 54.977;
@@ -87,7 +87,7 @@ namespace FlickrNetTest
             Assert.AreEqual("Haymarket, Newcastle upon Tyne, England, GB, United Kingdom", place.Description);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PlacesPlacesForUserAuthenticationRequiredTest()
         {
@@ -95,7 +95,8 @@ namespace FlickrNetTest
             f.PlacesPlacesForUser();
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PlacesPlacesForUserHasContinentsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -115,7 +116,7 @@ namespace FlickrNetTest
             Assert.AreEqual("North America", places[1].Description);
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetChildrenWithPhotosPublicPlaceIdTest()
         {
             string placeId = "6dCBhRRTVrJiB5xOrg"; // Europe;
@@ -130,11 +131,11 @@ namespace FlickrNetTest
 
             foreach (var place in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.AreEqual(PlaceType.Country, place.PlaceType);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetChildrenWithPhotosPublicWoeIdTest()
         {
             string woeId = "24865675"; // Europe;
@@ -145,11 +146,12 @@ namespace FlickrNetTest
 
             foreach (var place in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.AreEqual(PlaceType.Country, place.PlaceType);
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PlacesPlacesForUserContinentHasRegionsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -167,7 +169,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PlacesPlacesForContactsBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -179,12 +182,13 @@ namespace FlickrNetTest
 
             foreach (var place in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.AreEqual(PlaceType.Country, place.PlaceType);
                 Assert.IsNotNull(place.PlaceId);
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PlacesPlacesForContactsFullParamTest()
         {
             DateTime lastYear = DateTime.Today.AddYears(-1);
@@ -201,12 +205,13 @@ namespace FlickrNetTest
 
             foreach (var place in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.AreEqual(PlaceType.Country, place.PlaceType);
                 Assert.IsNotNull(place.PlaceId);
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PlacesPlacesForTagsBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -218,12 +223,13 @@ namespace FlickrNetTest
 
             foreach (var place in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Country, place.PlaceType);
+                Assert.AreEqual(PlaceType.Country, place.PlaceType);
                 Assert.IsNotNull(place.PlaceId);
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PlacesPlacesForTagsFullParamTest()
         {
             var f = TestData.GetAuthInstance();
@@ -232,7 +238,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(places);
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetInfoBasicTest()
         {
             var f = TestData.GetInstance();
@@ -261,7 +267,7 @@ namespace FlickrNetTest
             Assert.AreEqual(-1.6404060125351, p.ShapeData.PolyLines[0][88].Y);
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetInfoByUrlBasicTest()
         {
             var f = TestData.GetInstance();
@@ -278,7 +284,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(p2.PlaceFlickrUrl);
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetTopPlacesListTest()
         {
             var f = TestData.GetInstance();
@@ -289,13 +295,13 @@ namespace FlickrNetTest
 
             foreach (var p in places)
             {
-                Assert.AreEqual<PlaceType>(PlaceType.Continent, p.PlaceType);
+                Assert.AreEqual(PlaceType.Continent, p.PlaceType);
                 Assert.IsNotNull(p.PlaceId);
                 Assert.IsNotNull(p.WoeId);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetShapeHistoryTest()
         {
             var placeId = "X9sTR3BSUrqorQ";
@@ -309,7 +315,7 @@ namespace FlickrNetTest
             Assert.AreEqual(1, col[1].PolyLines.Count, "The second shape should have one polylines.");
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetTagsForPlace()
         {
             var placeId = "X9sTR3BSUrqorQ";
@@ -327,7 +333,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesGetPlaceTypes()
         {
             var pts = TestData.GetInstance().PlacesGetPlaceTypes();
@@ -345,7 +351,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void PlacesPlacesForBoundingBoxUsaTest()
         {
             Flickr f = TestData.GetInstance();
@@ -358,11 +364,11 @@ namespace FlickrNetTest
             foreach (var place in places)
             {
                 Assert.IsNotNull(place.PlaceId);
-                Assert.AreEqual<PlaceType>(PlaceType.County, place.PlaceType);
+                Assert.AreEqual(PlaceType.County, place.PlaceType);
             }
         }
 
-        [TestMethod]
+        [Test]
         public void BoundaryBoxCalculateSizesUKNewcastle()
         {
             BoundaryBox b = BoundaryBox.UKNewcastle;
@@ -370,7 +376,7 @@ namespace FlickrNetTest
             double e = b.DiagonalDistanceInMiles();
         }
 
-        [TestMethod]
+        [Test]
         public void BoundaryBoxCalculateSizesFrankfurtToBerlin()
         {
             BoundaryBox b = new BoundaryBox(8.68194, 50.11222, 13.29750, 52.52222);

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotoSearchOptionsTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotoSearchOptionsTests
     {
         public PhotoSearchOptionsTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotoSearchOptionsCalculateSlideshowUrlBasicTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
@@ -74,11 +74,11 @@ namespace FlickrNetTest
 
             string expected = "http://www.flickr.com/show.gne?api_method=flickr.photos.search&method_params=text|kittens;in_gallery|1";
 
-            Assert.AreEqual<string>(expected, url);
+            Assert.AreEqual(expected, url);
 
         }
 
-        [TestMethod]
+        [Test]
         public void PhotoSearchExtrasViews()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();

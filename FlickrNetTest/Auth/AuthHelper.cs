@@ -1,16 +1,16 @@
 using System;
 using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
     public class AuthHelper
     {
         /// <summary>
         /// This method will authenticate the current user, and then store the AuthToken in the 
         /// </summary>
-        [TestMethod]
+        [Test]
         [Ignore]
         public void AuthHelperMethod()
         {

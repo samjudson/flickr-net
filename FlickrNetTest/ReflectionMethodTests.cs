@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 using System.Reflection;
 
@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for ReflectionMethodTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ReflectionMethodTests
     {
         public ReflectionMethodTests()
@@ -61,7 +61,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void ReflectionMethodsBasic()
         {
             Flickr f = TestData.GetInstance();
@@ -74,7 +74,7 @@ namespace FlickrNetTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void ReflectionMethodsCheckWeSupport()
         {
             Flickr f = TestData.GetInstance();
@@ -112,7 +112,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, failCount, "FailCount should be zero. Currently " + failCount + " unsupported methods found.");
         }
 
-        [TestMethod]
+        [Test]
         public void ReflectionMethodsCheckWeSupportAsync()
         {
             Flickr f = TestData.GetInstance();
@@ -150,7 +150,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, failCount, "FailCount should be zero. Currently " + failCount + " unsupported methods found.");
         }
 
-        [TestMethod]
+        [Test]
         public void ReflectionGetMethodInfoSearchArgCheck()
         {
             PropertyInfo[] properties = typeof(PhotoSearchOptions).GetProperties();
@@ -199,7 +199,7 @@ namespace FlickrNetTest
             Assert.AreEqual(0, numMissing, "Number of missing arguments should be zero.");
         }
 
-        [TestMethod]
+        [Test]
         [Ignore]
         public void ReflectionMethodsCheckWeSupportAndParametersMatch()
         {
@@ -264,7 +264,7 @@ namespace FlickrNetTest
         }
 
 
-        [TestMethod]
+        [Test]
         public void ReflectionGetMethodInfoTest()
         {
             Flickr f = TestData.GetInstance();
@@ -285,7 +285,7 @@ namespace FlickrNetTest
             Assert.AreEqual("The requested method was not found.", method.Errors[0].Description, "First error should have code of 1");
         }
 
-        [TestMethod]
+        [Test]
         public void ReflectionGetMethodInfoFavContextArguments()
         {
             var methodName = "flickr.favorites.getContext";

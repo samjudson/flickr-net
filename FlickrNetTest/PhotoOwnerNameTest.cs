@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotoOwnerNameTest
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotoOwnerNameTest
     {
         public PhotoOwnerNameTest()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosSearchOwnerNameTest()
         {
             PhotoSearchOptions o = new PhotoSearchOptions();
@@ -76,7 +76,7 @@ namespace FlickrNetTest
            
         }
 
-        [TestMethod]
+        [Test]
         public void PhotosGetContactsPublicPhotosOwnerNameTest()
         {
             Flickr f = TestData.GetInstance();

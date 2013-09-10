@@ -2,12 +2,13 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
 {
-    [TestClass]
+    [TestFixture]
+    [AuthTokenRequired]
     public class StatsGetPopularPhotosTests
     {
         public StatsGetPopularPhotosTests()
@@ -17,7 +18,7 @@ namespace FlickrNetTest
             //
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPopularPhotosBasic()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -42,7 +43,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPopularPhotosNoParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -67,7 +68,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void StatsGetPopularPhotosOtherTest()
         {
             var lastWeek = DateTime.Today.AddDays(-7);

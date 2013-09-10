@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for GalleriesTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class GalleriesTests
     {
         public GalleriesTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void GalleriesGetListUserIdTest()
         {
             Flickr f = TestData.GetInstance();
@@ -79,7 +79,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GalleriesGetListForPhotoTest()
         {
             string photoId = "2891347068";
@@ -98,7 +98,7 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GalleriesGetPhotos()
         {
             // Dogs + Tennis Balls
@@ -121,7 +121,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GalleriesEditPhotosTest()
         {
             Flickr.FlushCache();
@@ -153,7 +154,8 @@ namespace FlickrNetTest
             }
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GalleriesEditMetaTest()
         {
             Flickr.FlushCache();
@@ -175,7 +177,8 @@ namespace FlickrNetTest
             Assert.AreEqual(description, gallery.Description);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GalleriesEditPhotoTest()
         {
             Flickr.FlushCache();
@@ -206,7 +209,8 @@ namespace FlickrNetTest
             Assert.IsTrue(found, "Should have found the photo in the gallery.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void GalleriesEditComplexTest()
         {
             Flickr.CacheDisabled = true;

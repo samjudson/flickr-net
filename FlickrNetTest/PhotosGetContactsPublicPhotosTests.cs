@@ -1,15 +1,15 @@
 ﻿using FlickrNet;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace FlickrNetTest
 {
     
-    [TestClass()]
+    [TestFixtureAttribute]
     public class PhotosGetContactsPublicPhotosTests
     {
 
-        [TestMethod()]
+        [TestAttribute()]
         public void PhotosGetContactsPublicPhotosUserIdExtrasTest()
         {
             Flickr f = TestData.GetInstance();
@@ -22,7 +22,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Should have returned more than 0 photos");
         }
 
-        [TestMethod()]
+        [TestAttribute()]
         public void PhotosGetContactsPublicPhotosAllParamsTest()
         {
             Flickr f = TestData.GetInstance();
@@ -41,7 +41,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Should have returned more than 0 photos");
         }
 
-        [TestMethod()]
+        [TestAttribute()]
         public void PhotosGetContactsPublicPhotosExceptExtrasTest()
         {
             Flickr f = TestData.GetInstance();
@@ -59,7 +59,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Should have returned more than 0 photos");
         }
 
-        [TestMethod()]
+        [TestAttribute()]
         public void PhotosGetContactsPublicPhotosUserIdTest()
         {
             Flickr f = TestData.GetInstance();
@@ -72,7 +72,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Should have returned more than 0 photos");
         }
 
-        [TestMethod()]
+        [TestAttribute()]
         public void PhotosGetContactsPublicPhotosUserIdCountExtrasTest()
         {
             Flickr f = TestData.GetInstance();
@@ -88,7 +88,7 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Should have returned more than 0 photos");
         }
 
-        [TestMethod()]
+        [TestAttribute()]
         public void PhotosGetContactsPublicPhotosUserIdCountTest()
         {
             Flickr f = TestData.GetInstance();

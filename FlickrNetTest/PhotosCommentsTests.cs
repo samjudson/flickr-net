@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -10,7 +10,7 @@ namespace FlickrNetTest
     /// <summary>
     /// Summary description for PhotosCommentsGetListTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class PhotosCommentsTests
     {
         public PhotosCommentsTests()
@@ -60,7 +60,7 @@ namespace FlickrNetTest
         //
         #endregion
 
-        [TestMethod]
+        [Test]
         public void PhotosCommentsGetListBasicTest()
         {
             Flickr f = TestData.GetInstance();
@@ -75,7 +75,8 @@ namespace FlickrNetTest
             Assert.AreEqual("Sam lucky you NYCis so cool can't wait to go again it's my fav city along with San fran", comments[0].CommentHtml);
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosCommentsGetRecentForContactsBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -84,7 +85,8 @@ namespace FlickrNetTest
             Assert.IsNotNull(photos, "PhotoCollection should not be null.");
         }
 
-        [TestMethod]
+        [Test]
+        [AuthTokenRequired]
         public void PhotosCommentsGetRecentForContactsFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
