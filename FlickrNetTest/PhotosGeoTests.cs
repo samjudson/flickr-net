@@ -65,7 +65,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetGetLocationTest()
         {
             var f = TestData.GetAuthInstance();
@@ -82,7 +82,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetGetLocationNullTest()
         {
             var f = TestData.GetAuthInstance();
@@ -96,7 +96,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetCorrectLocationTest()
         {
             var f = TestData.GetAuthInstance();
@@ -106,7 +106,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoSetContextTest()
         {
             var f = TestData.GetAuthInstance();
@@ -129,7 +129,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoSetLocationTest()
         {
             var f = TestData.GetAuthInstance();
@@ -156,7 +156,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoPhotosForLocationBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();

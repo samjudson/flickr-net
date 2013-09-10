@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void BlogsGetListTest()
         {
             Flickr f = TestData.GetAuthInstance();

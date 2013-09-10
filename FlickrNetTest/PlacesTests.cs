@@ -96,7 +96,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PlacesPlacesForUserHasContinentsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -151,7 +151,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PlacesPlacesForUserContinentHasRegionsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -170,7 +170,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PlacesPlacesForContactsBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -188,7 +188,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PlacesPlacesForContactsFullParamTest()
         {
             DateTime lastYear = DateTime.Today.AddYears(-1);
@@ -211,7 +211,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PlacesPlacesForTagsBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -229,7 +229,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PlacesPlacesForTagsFullParamTest()
         {
             var f = TestData.GetAuthInstance();

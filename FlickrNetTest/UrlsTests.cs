@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void UrlsLookupUserTest1()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -73,7 +73,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void UrlsLookupGroup()
         {
             string groupUrl = "http://www.flickr.com/groups/angels_of_the_north/";

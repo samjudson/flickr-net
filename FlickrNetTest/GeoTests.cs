@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoGetPermsBasicTest()
         {
             GeoPermissions perms = TestData.GetAuthInstance().PhotosGeoGetPerms(TestData.PhotoId);
@@ -72,7 +72,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetWithGeoDataBasicTest()
         {
             PhotoCollection photos = TestData.GetAuthInstance().PhotosGetWithGeoData();

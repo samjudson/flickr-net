@@ -8,7 +8,7 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class StatsGetPopularPhotosTests
     {
         public StatsGetPopularPhotosTests()

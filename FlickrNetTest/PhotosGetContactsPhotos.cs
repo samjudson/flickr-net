@@ -8,7 +8,7 @@ namespace FlickrNetTest
     /// Summary description for FlickrPhotosGetContactsPhotos
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class PhotosGetContactsPhotos
     {
         Flickr f = TestData.GetAuthInstance();

@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void TestGenericTestNull()
         {
             Flickr f = TestData.GetAuthInstance();

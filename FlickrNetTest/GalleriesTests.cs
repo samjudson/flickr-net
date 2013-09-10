@@ -122,7 +122,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GalleriesEditPhotosTest()
         {
             Flickr.FlushCache();
@@ -155,7 +155,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GalleriesEditMetaTest()
         {
             Flickr.FlushCache();
@@ -178,7 +178,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GalleriesEditPhotoTest()
         {
             Flickr.FlushCache();
@@ -210,7 +210,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GalleriesEditComplexTest()
         {
             Flickr.CacheDisabled = true;

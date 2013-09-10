@@ -29,7 +29,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void TagsGetListUserRawBasicTest()
         {
             var tags = f.TagsGetListUserRaw();
@@ -45,7 +45,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void TagsGetListUserPopularBasicTest()
         {
             TagCollection tags = TestData.GetAuthInstance().TagsGetListUserPopular();
@@ -61,7 +61,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void TagsGetListUserBasicTest()
         {
             TagCollection tags = TestData.GetAuthInstance().TagsGetListUser();
@@ -152,7 +152,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void TagsGetMostFrequentlyUsedTest()
         {
             Flickr f = TestData.GetAuthInstance();

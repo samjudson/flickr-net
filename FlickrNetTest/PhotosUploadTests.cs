@@ -16,7 +16,7 @@ namespace FlickrNetTest
     /// Summary description for PhotosUploadTests
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class PhotosUploadTests
     {
         public PhotosUploadTests()

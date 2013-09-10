@@ -26,7 +26,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void SubscribeUnsubscribeTest()
         {
             var callback = "http://www.wackylabs.net/dev/push/test.php";
@@ -57,7 +57,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void SubscribeTwiceUnsubscribeTest()
         {
             var callback1 = "http://www.wackylabs.net/dev/push/test.php?id=1";

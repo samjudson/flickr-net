@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// Summary description for StatsGetCollectionDomainsTests
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class StatsGetDomainsTests
     {
         public StatsGetDomainsTests()

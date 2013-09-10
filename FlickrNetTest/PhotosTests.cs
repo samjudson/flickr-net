@@ -13,7 +13,7 @@ namespace FlickrNetTest
     public class PhotosTests
     {
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosSetDatesTest()
         {
             var f = TestData.GetAuthInstance();
@@ -25,7 +25,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosAddTagsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -118,7 +118,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetNotInSetAllParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -130,7 +130,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetNotInSetNoParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -139,7 +139,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetNotInSetPagesTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -156,7 +156,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetPermsBasicTest()
         {
             var p = TestData.GetAuthInstance().PhotosGetPerms("4114887196");
@@ -260,7 +260,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedAllParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -269,7 +269,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedNoParamsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -283,7 +283,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedExtrasTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -299,7 +299,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedPagesTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -311,7 +311,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosRecentlyUpdatedTests()
         {
             var sixMonthsAgo = DateTime.Today.AddMonths(-6);
@@ -348,7 +348,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosSetMetaLargeDescription()
         {
             string description;

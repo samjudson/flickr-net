@@ -82,7 +82,7 @@ namespace FlickrNetTest
         }
 
         [Test()]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetPhotosOfMe()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -95,7 +95,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetPhotosBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -108,7 +108,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetPhotosFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -152,7 +152,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetInfoGenderTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -170,7 +170,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetInfoBuddyIconTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -179,7 +179,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetInfoSelfTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -193,7 +193,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetGroupsTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -205,7 +205,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetLimitsTest()
         {
             var f = TestData.GetAuthInstance();
@@ -222,7 +222,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleFindByUsername()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -234,7 +234,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleFindByEmail()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -261,7 +261,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetPublicGroupsBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -278,7 +278,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PeopleGetUploadStatusBasicTest()
         {
             var u = TestData.GetAuthInstance().PeopleGetUploadStatus();

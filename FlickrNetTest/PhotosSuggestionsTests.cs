@@ -19,7 +19,7 @@ namespace FlickrNetTest
         }
         
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GetListTest()
         {
             var f = TestData.GetAuthInstance();
@@ -67,8 +67,6 @@ namespace FlickrNetTest
 
         }
 
-        [Test]
-        [AuthTokenRequired]
         public void AddSuggestion()
         {
             var f = TestData.GetAuthInstance();

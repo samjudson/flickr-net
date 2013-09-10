@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsBrowseBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -134,7 +134,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsMembersGetListBasicTest()
         {
             var ms = TestData.GetAuthInstance().GroupsMembersGetList(TestData.GroupId);

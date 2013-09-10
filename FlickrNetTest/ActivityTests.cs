@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ActivityUserCommentsBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ActivityUserPhotosBasicTest()
         {
             var f = TestData.GetAuthInstance();
@@ -91,7 +91,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ActivityUserPhotosBasicTests()
         {
             int days = 50;

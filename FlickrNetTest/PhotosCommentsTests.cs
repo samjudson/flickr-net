@@ -76,7 +76,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosCommentsGetRecentForContactsBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -86,7 +86,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosCommentsGetRecentForContactsFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();

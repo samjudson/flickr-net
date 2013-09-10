@@ -15,7 +15,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussRepliesAddTest()
         {
             var f = TestData.GetAuthInstance();
@@ -48,7 +48,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussRepliesGetListTest()
         {
             var f = TestData.GetAuthInstance();
@@ -82,7 +82,7 @@ namespace FlickrNetTest
 
         [Test]
         [Ignore] // Got this working, now ignore as there is no way to delete topics!
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsAddTest()
         {
             var f = TestData.GetAuthInstance();
@@ -103,7 +103,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetListTest()
         {
             var f = TestData.GetAuthInstance();
@@ -135,7 +135,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetListEditableTest()
         {
             var groupId = "51035612836@N01"; // Flickr API group
@@ -155,7 +155,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetInfoStickyTest()
         {
             var topicId = "72157630982967152";
@@ -171,7 +171,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetInfoLockedTest()
         {
             var topicId = "72157630982969782";

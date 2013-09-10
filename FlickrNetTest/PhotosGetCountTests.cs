@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetCountTakenTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -90,7 +90,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetCountUloadTest()
         {
             Flickr f = TestData.GetAuthInstance();

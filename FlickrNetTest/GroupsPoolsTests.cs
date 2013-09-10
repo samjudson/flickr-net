@@ -62,7 +62,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsPoolsAddBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -89,7 +89,7 @@ namespace FlickrNetTest
 
         [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsPoolsAddNotAuthTestTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -153,7 +153,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void GroupsPoolsGetGroupsBasicTest()
         {
             MemberGroupInfoCollection groups = TestData.GetAuthInstance().GroupsPoolsGetGroups();

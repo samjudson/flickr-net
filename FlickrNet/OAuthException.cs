@@ -38,7 +38,7 @@ namespace FlickrNet
             }
             catch (Exception)
             {
-                throw new Exception("Failed to parse OAuth error message: " + FullResponse);
+                throw new Exception("Failed to parse OAuth error message: " + FullResponse, innerException);
             }
 
             mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];

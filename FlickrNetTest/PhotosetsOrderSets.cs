@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// Summary description for PhotosetsOrderSets
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class PhotosetsOrderSets
     {
         Flickr f = TestData.GetAuthInstance();

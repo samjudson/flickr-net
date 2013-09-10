@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// Summary description for PrefsTest
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class PrefsTests
     {
         public PrefsTests()

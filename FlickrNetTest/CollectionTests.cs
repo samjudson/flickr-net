@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void CollectionGetInfoBasicTest()
         {
             string id = "78188-72157618817175751";
@@ -82,7 +82,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void CollectionGetTreeRootTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -110,7 +110,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void CollectionsEditMetaTest()
         {
             string id = "78188-72157618817175751";
@@ -132,7 +132,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void CollectionsEmptyCollection()
         {
             Flickr f = TestData.GetAuthInstance();

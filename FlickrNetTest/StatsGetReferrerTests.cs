@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// Summary description for StatsGetReferrerTests
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class StatsGetReferrerTests
     {
         public StatsGetReferrerTests()

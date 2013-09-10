@@ -11,7 +11,7 @@ namespace FlickrNetTest
     /// Summary description for StatsGetTotalViewsTest
     /// </summary>
     [TestFixture]
-    [AuthTokenRequired]
+    [Category("AccessTokenRequired")]
     public class StatsGetTotalViewsTest
     {
         [Test]

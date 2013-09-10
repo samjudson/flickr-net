@@ -61,7 +61,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ContactsGetListTestBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -78,7 +78,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ContactsGetListFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -89,7 +89,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ContactsGetListFilteredTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -108,7 +108,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ContactsGetListPagedTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -141,7 +141,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ContactsGetRecentlyUpdatedTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -152,7 +152,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void ContactsGetTaggingSuggestions()
         {
             Flickr f = TestData.GetAuthInstance();

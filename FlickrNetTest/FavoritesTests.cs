@@ -73,7 +73,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void FavoritesGetListBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -84,7 +84,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void FavoritesGetListFullParamTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -97,7 +97,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void FavoritesGetListPartialParamTest()
         {
             Flickr f = TestData.GetAuthInstance();

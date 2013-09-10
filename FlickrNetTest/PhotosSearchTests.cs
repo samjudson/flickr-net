@@ -48,7 +48,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosSearchFavorites()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -64,7 +64,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosSearchCameraIphone()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -730,7 +730,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosSearchAuthRussianCharacters()
         {
             Flickr f = TestData.GetAuthInstance();

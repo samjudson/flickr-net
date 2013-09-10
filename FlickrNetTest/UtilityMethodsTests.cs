@@ -395,7 +395,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void UrlFormatPhotoInfoTest()
         {
             var photoId = "7176125763"; // Rainbow rose

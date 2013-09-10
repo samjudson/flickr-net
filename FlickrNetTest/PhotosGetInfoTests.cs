@@ -65,7 +65,7 @@ namespace FlickrNetTest
         #endregion
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetInfoBasicTest()
         {
             Flickr f = TestData.GetAuthInstance();
@@ -192,7 +192,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [AuthTokenRequired]
+        [Category("AccessTokenRequired")]
         public void PhotosGetInfoTestLocation()
         {
             string photoId = "4268756940";
