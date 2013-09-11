@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace FlickrNet
+namespace FlickrNet.Internals
 {
     internal static partial class FlickrResponder
     {
@@ -147,5 +147,17 @@ namespace FlickrNet
             return responseString;
         }
 #endif
+
+        public static string UploadData(string   url, byte[] data, string contentType, string authorizationHeader)
+        {
+            var client = new WebClient();
+            client.Headers[HttpRequestHeader.ContentType] = contentType;
+            client.Headers[HttpRequestHeader.Authorization] = authorizationHeader;
+
+            var response = client.UploadData(url, data);
+
+            return Encoding.UTF8.GetString(response);
+
+        }
     }
 }

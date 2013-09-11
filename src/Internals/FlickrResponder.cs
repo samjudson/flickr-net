@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text;
 
-namespace FlickrNet
+namespace FlickrNet.Internals
 {
     /// <summary>
     /// Flickr library interaction with the web goes in here.
@@ -64,7 +67,7 @@ namespace FlickrNet
         /// Populates the given dictionary with the basic OAuth parameters, oauth_timestamp, oauth_noonce etc.
         /// </summary>
         /// <param name="parameters">Dictionary to be populated with the OAuth parameters.</param>
-        private static void OAuthGetBasicParameters(IDictionary<string, string> parameters)
+        public static void OAuthGetBasicParameters(IDictionary<string, string> parameters)
         {
             var oAuthParameters = OAuthGetBasicParameters();
             foreach (var k in oAuthParameters)
@@ -92,5 +95,36 @@ namespace FlickrNet
             return parameters;
         }
 
+        public static byte[] CreateUploadData(Stream imageStream, string filename,
+                                              IDictionary<string, string> parameters, string boundary)
+        {
+            var body = new MimeBody
+                                {
+                                    Boundary = boundary,
+                                    MimeParts = parameters
+                                    .Where(p => !p.Key.StartsWith("oauth_"))
+                                    .Select(p => (MimePart)new FormDataPart { Name = p.Key, Value = p.Value}).ToList()
+                                };
+
+            var binaryPart = new BinaryPart
+                                 {
+                                     Name = "photo",
+                                     ContentType = "image/jpeg",
+                                     Filename = filename
+                                 };
+            binaryPart.LoadContent(imageStream);
+            body.MimeParts.Add(binaryPart);
+
+            using (var stream = new MemoryStream())
+            {
+                body.WriteTo(stream);
+                return stream.ToArray();
+            }
+        }
+
+        public static string CreateBoundary()
+        {
+            return "----FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", DateTimeFormatInfo.InvariantInfo) + "--";
+        }
     }
 }

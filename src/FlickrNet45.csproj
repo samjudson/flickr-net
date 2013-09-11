@@ -187,12 +187,12 @@
     <Compile Include="Classes\ValueCollection.cs" />
     <Compile Include="Classes\VideoInfo.cs" />
     <Compile Include="Core\Extensions.cs" />
-    <Compile Include="Core\FlickrResponder.cs">
+    <Compile Include="Internals\FlickrResponder.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\FlickrResponder45.cs" />
-    <Compile Include="Core\FlickrResponderAwait.cs" />
-    <Compile Include="Core\FlickrResponderSync.cs" />
+    <Compile Include="Internals\FlickrResponder45.cs" />
+    <Compile Include="Internals\FlickrResponderAwait.cs" />
+    <Compile Include="Internals\FlickrResponderSync.cs" />
     <Compile Include="Core\FlickrResult.cs" />
     <Compile Include="Core\Flickr_Core.cs" />
     <Compile Include="Core\Flickr_Properties.cs" />
@@ -217,6 +217,10 @@
     <Compile Include="Exceptions\UserNotFoundException.cs" />
     <Compile Include="Exceptions\UserNotLoggedInInsufficientPermissionsException.cs" />
     <Compile Include="FlickrNet45.cs" />
+    <Compile Include="Internals\BinaryPart.cs" />
+    <Compile Include="Internals\FormDataPart.cs" />
+    <Compile Include="Internals\MimeBody.cs" />
+    <Compile Include="Internals\MimePart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="T4\FlickrNetSync.cs">
       <DependentUpon>FlickrNetSync.tt</DependentUpon>

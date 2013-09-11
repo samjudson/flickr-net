@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
-namespace FlickrNet
+namespace FlickrNet.Internals
 {
     internal static partial class FlickrResponder
     {

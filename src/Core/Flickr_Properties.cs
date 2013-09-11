@@ -15,6 +15,8 @@ namespace FlickrNet
         public static string CacheLocation { get; set; }
 
         private const string BaseApiUrl = "http://api.flickr.com/services/rest";
+        private const string UploadUrl = "http://up.flickr.com/services/upload/";
+
         public string ApiKey { get; set; }
         public string SharedSecret { get; set; }
 

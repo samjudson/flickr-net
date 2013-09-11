@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FlickrNet
+namespace FlickrNet.Internals
 {
     internal static partial class FlickrResponder
     {
@@ -20,10 +17,16 @@ namespace FlickrNet
                 var content = new StringContent(data);
                 content.Headers.ContentType.MediaType = contentType;
                 var postResponse = await client.PostAsync(new Uri(baseUrl), content);
-                return await postResponse.Content.ReadAsStringAsync();
+                var result = await postResponse.Content.ReadAsStringAsync();
+                if (!postResponse.IsSuccessStatusCode)
+                {
+                    throw new OAuthException(result);
+                }
+                return result;
             }
 
             var getResponse = await client.GetAsync(new Uri(baseUrl));
+            getResponse.EnsureSuccessStatusCode();
             return await getResponse.Content.ReadAsStringAsync();
         }
 

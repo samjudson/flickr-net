@@ -54,6 +54,16 @@ namespace FlickrNet45.Tests
             set { SetRegistryKey("AccessTokenSecret", value); }
         }
 
+        public const string TestImageBase64 = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
+
+        public static byte[] TestImageBytes
+        {
+            get
+            {
+                return Convert.FromBase64String(TestImageBase64);
+            }
+        }
+
         private static void SetRegistryKey(string name, string value)
         {
             var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true) ??

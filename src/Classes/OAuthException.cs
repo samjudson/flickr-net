@@ -12,6 +12,21 @@ namespace FlickrNet
     {
         private readonly string mess;
 
+
+        /// <summary>
+        /// Constructor for the OAuthException class.
+        /// </summary>
+        /// <param name="response"></param>
+        public OAuthException(string response)
+            : base("OAuth Exception")
+        {
+            FullResponse = response;
+
+            OAuthErrorPameters = UtilityMethods.StringToDictionary(response, 1);
+
+            mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
+        }
+
         /// <summary>
         /// Constructor for the OAuthException class.
         /// </summary>

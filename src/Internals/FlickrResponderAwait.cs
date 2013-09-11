@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 
-namespace FlickrNet
+namespace FlickrNet.Internals
 {
     internal static partial class FlickrResponder
     {
-        internal static async Task<string> GetDataResponseAsync(Flickr flickr, string baseUrl, IDictionary<string, string> parameters)
+        public static async Task<string> GetDataResponseAsync(Flickr flickr, string baseUrl, IDictionary<string, string> parameters)
         {
             const string method = "POST";
 

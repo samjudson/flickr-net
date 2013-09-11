@@ -305,6 +305,18 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// The URL for the small 320 version of this photo.
+        /// </summary>
+        /// <remarks>
+        /// There is no guarentee that this size of the image actually exists.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
+        /// </remarks>
+        public string Small320Url
+        {
+            get { return UtilityMethods.UrlFormat(this, "_n", ".jpg"); }
+        }
+
+        /// <summary>
         /// The URL for the small version of this photo.
         /// </summary>
         public string SmallUrl
@@ -325,6 +337,30 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// The URL for the medium 640 version of this photo.
+        /// </summary>
+        /// <remarks>
+        /// There is no guarentee that this size of the image actually exists.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
+        /// </remarks>
+        public string Medium640Url
+        {
+            get { return UtilityMethods.UrlFormat(this, "_z", ".jpg"); }
+        }
+
+        /// <summary>
+        /// The URL for the medium 800 version of this photo.
+        /// </summary>
+        /// <remarks>
+        /// There is no guarentee that this size of the image actually exists.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
+        /// </remarks>
+        public string Medium800Url
+        {
+            get { return UtilityMethods.UrlFormat(this, "_c", ".jpg"); }
+        }
+
+        /// <summary>
         /// The URL for the large version of this photo.
         /// </summary>
         /// <remarks>
@@ -337,18 +373,32 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// The URL for the large square version of this photo.
+        /// </summary>
+        /// <remarks>
+        /// There is no guarentee that this size of the image actually exists.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get a list of existing photo URLs.
+        /// </remarks>
+        public string LargeSquareUrl
+        {
+            get { return UtilityMethods.UrlFormat(this, "_q", "jpg"); }
+        }
+
+        /// <summary>
         /// If <see cref="OriginalFormat"/> was returned then this will contain the url of the original file.
         /// </summary>
         public string OriginalUrl
         {
             get
             {
-                if (OriginalFormat == null || OriginalFormat.Length == 0)
+                if (string.IsNullOrEmpty(OriginalFormat))
                     return null;
 
                 return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
             }
         }
+
+        public string PathAlias { get; set; }
 
         #region IFlickrParsable Members
 
@@ -690,6 +740,9 @@ namespace FlickrNet
                     case "iconfarm":
                         OwnerIconFarm = reader.Value;
                         break;
+                    case "path_alias":
+                        PathAlias = reader.Value;
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
@@ -698,6 +751,7 @@ namespace FlickrNet
 
             reader.Read();
         }
+
     }
 
     /// <summary>

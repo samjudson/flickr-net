@@ -535,23 +535,20 @@ namespace FlickrNet
         /// e.g. ab=cd&amp;ef=gh will return a dictionary of { "ab" => "cd", "ef" => "gh" }.</remarks>
         /// <param name="response"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> StringToDictionary(string response)
+        public static Dictionary<string, string> StringToDictionary(string response, int maxSplits = 0)
         {
             var dic = new Dictionary<string, string>();
 
-            string[] parts = response.Split('&');
+            var parts = response.Split(new [] {'&'}, maxSplits);
 
-            foreach (string part in parts)
+            foreach (var part in parts)
             {
 #if WindowsCE || SILVERLIGHT || PCL
                 string[] bits = part.Split('=');
 #else
                 string[] bits = part.Split(new[] {'='}, 2, StringSplitOptions.RemoveEmptyEntries);
 #endif
-                if (bits.Length == 1)
-                    dic.Add(bits[0], "");
-                else
-                    dic.Add(bits[0], Uri.UnescapeDataString(bits[1]));
+                dic.Add(bits[0], bits.Length == 1 ? "" : Uri.UnescapeDataString(bits[1]));
             }
 
             return dic;
