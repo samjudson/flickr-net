@@ -30,5 +30,21 @@ namespace FlickrNet.Internals
             return await getResponse.Content.ReadAsStringAsync();
         }
 
+        public static async Task<string> UploadDataAsync(string uploadUrl, byte[] data, string contentTypeHeader, string oauthHeader)
+        {
+            var client = new HttpClient();
+
+            if (!String.IsNullOrEmpty(oauthHeader)) client.DefaultRequestHeaders.Add("Authorization", oauthHeader);
+
+            var content = new ByteArrayContent(data);
+            content.Headers.ContentType.MediaType = contentTypeHeader;
+            var postResponse = await client.PostAsync(new Uri(uploadUrl), content);
+            var result = await postResponse.Content.ReadAsStringAsync();
+            if (!postResponse.IsSuccessStatusCode)
+            {
+                throw new OAuthException(result);
+            }
+            return result;
+        }
     }
 }

@@ -26,5 +26,6 @@ namespace FlickrNetWS.Tests
         public string ApiKey = "dbc316af64fb77dae9140de64262da0a";
         public string SharedSecret = "0781969a058a2745";
         public string UserId = "41888973@N00";
+
     }
 }

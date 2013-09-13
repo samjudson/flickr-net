@@ -115,6 +115,7 @@
     <Compile Include="TestData.cs" />
     <Compile Include="PeopleGetPhotosTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UploadAsyncTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

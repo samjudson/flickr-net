@@ -1,4 +1,6 @@
-﻿namespace FlickrNetWS.MsTests
+﻿using System;
+
+namespace FlickrNetWS.MsTests
 {
     public class TestData
     {
@@ -29,5 +31,16 @@
             var settings = Windows.Storage.ApplicationData.Current;
             settings.LocalSettings.Values[key] = value;
         }
+
+        public const string TestImageBase64 = "R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==";
+
+        public static byte[] TestImageBytes
+        {
+            get
+            {
+                return Convert.FromBase64String(TestImageBase64);
+            }
+        }
+
     }
 }

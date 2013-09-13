@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using FlickrNet;
-using NUnit.Framework;
+using FlickrNetWS.MsTests;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace FlickrNet45.Tests
+namespace FlickrNetWS.MsTests
 {
-    [TestFixture]
-    public class UploadTests : BaseTest
+    [TestClass]
+    public class UploadAsyncTests : BaseTest
     {
-        [Test]
-        public void ShouldUploadSampleBinaryDataAsImage()
+        [TestMethod]
+        public void ShouldUploadImageAsync()
         {
             var imageBytes = TestData.TestImageBytes;
             Stream s = new MemoryStream(imageBytes);
@@ -23,11 +24,11 @@ namespace FlickrNet45.Tests
             const string title = "Test Title";
             const string desc = "Test Description\nSecond Line";
             const string tags = "testtag1,testtag2";
-            var photoId = AuthInstance.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+            var photoId = AuthInstance.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible).Result;
 
             try
             {
-                PhotoInfo info = AuthInstance.PhotosGetInfo(photoId);
+                PhotoInfo info = AuthInstance.PhotosGetInfoAsync(photoId).Result;
 
                 Assert.AreEqual(title, info.Title);
                 Assert.AreEqual(desc, info.Description);
@@ -39,12 +40,12 @@ namespace FlickrNet45.Tests
                 Assert.IsFalse(info.IsFamily);
                 Assert.IsFalse(info.IsFriend);
 
-                var sizes = AuthInstance.PhotosGetSizes(photoId);
+                var sizes = AuthInstance.PhotosGetSizesAsync(photoId).Result;
 
                 var url = sizes[sizes.Count - 1].Source;
-                using (var client = new WebClient())
+                using (var client = new HttpClient())
                 {
-                    var downloadBytes = client.DownloadData(url);
+                    var downloadBytes = client.GetByteArrayAsync(url).Result;
                     var downloadBase64 = Convert.ToBase64String(downloadBytes);
 
                     Assert.AreEqual(TestData.TestImageBase64, downloadBase64);
@@ -52,8 +53,9 @@ namespace FlickrNet45.Tests
             }
             finally
             {
-                AuthInstance.PhotosDelete(photoId);
+                AuthInstance.PhotosDeleteAsync(photoId).RunSynchronously();
             }
+
 
         }
     }
