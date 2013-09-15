@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace FlickrNet
 {
@@ -24,6 +25,7 @@ namespace FlickrNet
         /// <returns></returns>
         public static OAuthRequestToken ParseResponse(string response)
         {
+            Debug.WriteLine("Response = " + response);
             Dictionary<string, string> parameters = UtilityMethods.StringToDictionary(response);
             var token = new OAuthRequestToken();
             token.Token = parameters["oauth_token"];

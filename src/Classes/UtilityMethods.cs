@@ -539,7 +539,12 @@ namespace FlickrNet
         {
             var dic = new Dictionary<string, string>();
 
-            var parts = response.Split(new [] {'&'}, maxSplits);
+            if (response.Contains("://"))
+            {
+                response = response.Substring(response.IndexOf("?", StringComparison.Ordinal)+1);
+            }
+
+            var parts = maxSplits == 0 ? response.Split(new[] {'&'}) : response.Split(new[] {'&'}, maxSplits);
 
             foreach (var part in parts)
             {

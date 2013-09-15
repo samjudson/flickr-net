@@ -198,7 +198,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.favorites.getContext");
 			dictionary.Add("photo_id", photoId);
 			dictionary.Add("user_id", userId);
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<FavoriteContext>(dictionary);
 		}
 		#endregion
@@ -212,7 +212,7 @@ namespace FlickrNet
 			if (userId != null) dictionary.Add("user_id", userId);
 			if (minFavoriteDate != null) dictionary.Add("min_favorite_date", minFavoriteDate.Value.ToUnixTimestamp());
 			if (maxFavoriteDate != null) dictionary.Add("max_favorite_date", maxFavoriteDate.Value.ToUnixTimestamp());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -228,7 +228,7 @@ namespace FlickrNet
 			dictionary.Add("user_id", userId);
 			if (minFavoriteDate != null) dictionary.Add("min_favorite_date", minFavoriteDate.Value.ToUnixTimestamp());
 			if (maxFavoriteDate != null) dictionary.Add("max_favorite_date", maxFavoriteDate.Value.ToUnixTimestamp());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -355,7 +355,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.galleries.getPhotos");
 			dictionary.Add("gallery_id", galleryId);
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<GalleryPhotoCollection>(dictionary);
 		}
 		#endregion
@@ -585,7 +585,7 @@ namespace FlickrNet
 			dictionary.Add("group_id", groupId);
 			if (tags != null) dictionary.Add("tags", tags);
 			if (userId != null) dictionary.Add("user_id", userId);
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -624,7 +624,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.interestingness.getList");
 			if (date != null) dictionary.Add("date", date.Value.ToUnixTimestamp());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -717,7 +717,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.pandas.getPhotos");
 			dictionary.Add("panda_name", pandaName);
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PandaPhotoCollection>(dictionary);
@@ -792,7 +792,7 @@ namespace FlickrNet
 			if (maxTakenDate != null) dictionary.Add("max_taken_date", maxTakenDate.Value.ToUnixTimestamp());
 			if (contentType != ContentTypeSearch.None) dictionary.Add("content_type", contentType.ToString());
 			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -806,7 +806,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.getPhotosOf");
 			if (userId != null) dictionary.Add("user_id", userId);
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PeoplePhotoCollection>(dictionary);
@@ -835,7 +835,7 @@ namespace FlickrNet
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
 		#endregion
@@ -917,7 +917,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.photos.comments.getRecentForContacts");
 			if (dateLastComment != null) dictionary.Add("date_last_comment", dateLastComment.Value.ToUnixTimestamp());
 			if (contactsFilter != null) dictionary.Add("contacts_filter", contactsFilter == null ? String.Empty : String.Join(",", contactsFilter.ToArray()));
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -1087,7 +1087,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photosets.getPhotos");
 			dictionary.Add("photoset_id", photosetId);
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString());
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -1224,7 +1224,7 @@ namespace FlickrNet
 			dictionary.Add("latitude", latitude.ToString(NumberFormatInfo.InvariantInfo));
 			dictionary.Add("longitude", longitude.ToString(NumberFormatInfo.InvariantInfo));
 			if (accuracy != GeoAccuracy.None) dictionary.Add("accuracy", accuracy.ToString());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("perPage", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
@@ -1305,7 +1305,7 @@ namespace FlickrNet
 			if (justFriends != null) dictionary.Add("just_friends", justFriends.Value ? "1" : "0");
 			if (singlePhoto != null) dictionary.Add("single_photo", singlePhoto.Value ? "1" : "0");
 			if (includeSelf != null) dictionary.Add("include_self", includeSelf.Value ? "1" : "0");
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
 		#endregion
@@ -1321,7 +1321,7 @@ namespace FlickrNet
 			if (justFriends != null) dictionary.Add("just_friends", justFriends.Value ? "1" : "0");
 			if (singlePhoto != null) dictionary.Add("single_photo", singlePhoto.Value ? "1" : "0");
 			if (includeSelf != null) dictionary.Add("include_self", includeSelf.Value ? "1" : "0");
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
 		#endregion
@@ -1394,7 +1394,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.photos.getNotInSet");
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
 		#endregion
@@ -1418,7 +1418,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.photos.getRecent");
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
 		#endregion
@@ -1607,7 +1607,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.recentlyUpdated");
 			dictionary.Add("min_date", minDate.ToUnixTimestamp());
-			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", extras.ToString());
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<PhotoCollection>(dictionary);

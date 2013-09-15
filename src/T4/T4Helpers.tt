@@ -114,6 +114,8 @@ private string ParseConverter(string type, string varName)
 			return String.Format("{0} == null ? String.Empty : String.Join(\",\", {0}.Select(d => d.ToString(CultureInfo.InvariantCulture)).ToArray())", varName);
 		case "IEnumerable(Timestamp)":
 			return String.Format("{0} == null ? String.Empty : String.Join(\",\", {0}.Select(d => d.ToUnixTimestamp()).ToArray())", varName);
+		case "Extras":
+			return "UtilityMethods.ExtrasToString(" + varName + ")";
 		default:
 			return varName + ".ToString()";
 	}

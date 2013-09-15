@@ -12,7 +12,7 @@ namespace FlickrNet.Internals
     /// </summary>
     internal static partial class FlickrResponder
     {
-        private const string PostContentType = "application/x-www-form-urlencoded";
+        public const string PostContentType = "application/x-www-form-urlencoded";
 
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace FlickrNet.Internals
             if (method == "POST")
             {
                 var content = new StringContent(data);
-                content.Headers.ContentType.MediaType = contentType;
+                content.Headers.ContentType.MediaType = PostContentType;
                 var postResponse = await client.PostAsync(new Uri(baseUrl), content);
                 var result = await postResponse.Content.ReadAsStringAsync();
                 if (!postResponse.IsSuccessStatusCode)

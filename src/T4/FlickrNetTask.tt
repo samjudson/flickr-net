@@ -35,7 +35,7 @@ namespace FlickrNet
 		var methodName = ParseName(method.Attribute("name").Value);
 		var retAttribute = method.Attribute("return");
 		var retType = retAttribute == null ? "void" : retAttribute.Value;
-
+		
 		string taskRetType;
 		switch(retType)
         {

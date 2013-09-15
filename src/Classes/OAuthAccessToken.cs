@@ -60,6 +60,10 @@ namespace FlickrNet
         /// <returns></returns>
         internal static OAuthAccessToken ParseResponse(string response)
         {
+            if (response.Contains("//:"))
+            {
+                response = response.Substring(response.IndexOf("?", StringComparison.Ordinal));
+            }
             Dictionary<string, string> parts = UtilityMethods.StringToDictionary(response);
 
             var token = new OAuthAccessToken();
