@@ -35,8 +35,10 @@ namespace FlickrNetTest
         }
 
         [SetUp]
-        public void InitialiseLogging()
+        public void InitialiseLoggingAndFlickr()
         {
+            _instance = null;
+            _authInstance = null;
             _errorLog = new Dictionary<string, string>();
         }
 

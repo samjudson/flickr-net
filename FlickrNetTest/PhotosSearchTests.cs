@@ -622,7 +622,7 @@ namespace FlickrNetTest
                 Assert.AreNotEqual(0, photo.Longitude, "Longitude should not be zero.");
                 Assert.AreNotEqual(0, photo.Latitude, "Latitude should not be zero.");
 
-                LogOnError("Photo Lat Long", String.Format("Photo {0}, Lat={1}, Long={2}", photo.PhotoId, photo.Latitude, photo.Longitude));
+                LogOnError("Photo ID " + photo.PhotoId, String.Format("Lat={0}, Long={1}", photo.Latitude, photo.Longitude));
 
                 // Note: +/-1 is not an exact match to 5.4km, but anything outside of these bounds is definitely wrong.
                 Assert.IsTrue(photo.Latitude > lat - 1 && photo.Latitude < lat + 1, "Latitude not within acceptable range.");
