@@ -279,7 +279,7 @@ namespace FlickrNetTest
             Assert.AreEqual("api_key", method.Arguments[0].Name, "First argument should be api_key.");
             Assert.IsFalse(method.Arguments[0].IsOptional, "First argument should not be optional.");
 
-            Assert.AreEqual(8, method.Errors.Count, "There should be 8 errors.");
+            Assert.AreEqual(9, method.Errors.Count, "There should be 8 errors.");
             Assert.AreEqual(1, method.Errors[0].Code, "First error should have code of 1");
             Assert.AreEqual("Method not found", method.Errors[0].Message, "First error should have code of 1");
             Assert.AreEqual("The requested method was not found.", method.Errors[0].Description, "First error should have code of 1");
