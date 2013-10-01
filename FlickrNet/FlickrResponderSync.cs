@@ -78,20 +78,29 @@ namespace FlickrNet
             {
                 if (ex.Status != WebExceptionStatus.ProtocolError) throw;
 
-                HttpWebResponse response = ex.Response as HttpWebResponse;
+                var response = ex.Response as HttpWebResponse;
                 if (response == null) throw;
 
-                if (response.StatusCode != HttpStatusCode.BadRequest && response.StatusCode != HttpStatusCode.Unauthorized) throw;
+                string responseData = null;
 
-                using (StreamReader responseReader = new StreamReader(response.GetResponseStream()))
+                using (var stream = response.GetResponseStream())
                 {
-                    string responseData = responseReader.ReadToEnd();
-                    responseReader.Close();
-
-                    Debug.WriteLine("OAuth response = " + responseData);
+                    if( stream != null)
+                        using (var responseReader = new StreamReader(stream))
+                        {
+                            responseData = responseReader.ReadToEnd();
+                            responseReader.Close();
+                        }
+                }
+                if (response.StatusCode == HttpStatusCode.BadRequest ||
+                    response.StatusCode == HttpStatusCode.Unauthorized)
+                {
 
                     throw new OAuthException(responseData, ex);
                 }
+
+                if (String.IsNullOrEmpty(responseData)) throw;
+                throw new WebException("WebException occurred with the following body content: " + responseData, ex, ex.Status, ex.Response);
             }
         }
 

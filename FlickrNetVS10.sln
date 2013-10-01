@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetTest", "FlickrNetT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetSilverlight", "FlickrNet\FlickrNetSilverlight.csproj", "{99FD3B5A-FAB3-488E-8169-37842B4F0B18}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6B0B4EB0-4A9F-45D5-B79D-F7234CC7B4C8}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 5

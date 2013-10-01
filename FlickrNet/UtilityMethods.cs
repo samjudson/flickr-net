@@ -111,7 +111,7 @@ namespace FlickrNet
         public static string DateToUnixTimestamp(DateTime date)
         {
             TimeSpan ts = date - unixStartDate;
-            return ts.TotalSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo);
+            return ts.TotalSeconds.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>
@@ -555,6 +555,8 @@ namespace FlickrNet
         public static Dictionary<string, string> StringToDictionary(string response)
         {
             var dic = new Dictionary<string, string>();
+
+            if (String.IsNullOrEmpty(response)) return dic;
 
             var parts = response.Split('&');
 

@@ -47,6 +47,7 @@ namespace FlickrNet
                 // If OAuth Token exists or no authentication required then use new OAuth
                 if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
                 {
+                    parameters.Remove("api_key");
                     OAuthGetBasicParameters(parameters);
                     if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
                 }

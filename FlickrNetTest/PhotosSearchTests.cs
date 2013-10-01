@@ -548,7 +548,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        public void PhotosSearchGoeContext()
+        public void PhotosSearchGeoContext()
         {
             var o = new PhotoSearchOptions
                         {
@@ -733,22 +733,24 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchLarge1600ImageSize()
         {
-            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large1600Url, Tags = "colorful" };
+            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large1600Url, Tags = "colorful", MinUploadDate = DateTime.UtcNow.AddDays(-1) };
 
             var photos = Instance.PhotosSearch(o);
 
-            Assert.IsNotNull(photos);
-            Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue));
+            Assert.IsNotNull(photos, "PhotosSearch should not return a null instance.");
+            Assert.IsTrue(photos.Any(), "PhotoSearch should have returned some photos.");
+            Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue), "At least one photo should have a large1600 image url and height and width.");
         }
 
         [Test]
         public void PhotosSearchLarge2048ImageSize()
         {
-            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large2048Url, Tags = "colorful" };
+            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large2048Url, Tags = "colorful", MinUploadDate = DateTime.UtcNow.AddDays(-1)};
 
             var photos = Instance.PhotosSearch(o);
 
-            Assert.IsNotNull(photos);
+            Assert.IsNotNull(photos, "PhotosSearch should not return a null instance.");
+            Assert.IsTrue(photos.Any(), "PhotoSearch should have returned some photos.");
             Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large2048Url) && p.Large2048Height.HasValue && p.Large2048Width.HasValue));
         }
 

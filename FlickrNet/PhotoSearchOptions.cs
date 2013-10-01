@@ -326,12 +326,12 @@ namespace FlickrNet
         /// <param name="parameters">The <see cref="Dictionary{K,V}"/> to add the options to.</param>
         public void AddToDictionary(Dictionary<string, string> parameters)
         {
-            if (UserId != null && UserId.Length > 0) parameters.Add("user_id", UserId);
-            if (GroupId != null && GroupId.Length > 0) parameters.Add("group_id", GroupId);
-            if (Text != null && Text.Length > 0) parameters.Add("text", Text);
-            if (Tags != null && Tags.Length > 0) parameters.Add("tags", Tags);
+            if (!string.IsNullOrEmpty(UserId)) parameters.Add("user_id", UserId);
+            if (!string.IsNullOrEmpty(GroupId)) parameters.Add("group_id", GroupId);
+            if (!string.IsNullOrEmpty(Text)) parameters.Add("text", Text);
+            if (!string.IsNullOrEmpty(Tags)) parameters.Add("tags", Tags);
             if (TagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(TagMode));
-            if (MachineTags != null && MachineTags.Length > 0) parameters.Add("machine_tags", MachineTags);
+            if (!string.IsNullOrEmpty(MachineTags)) parameters.Add("machine_tags", MachineTags);
             if (MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(MachineTagMode));
             if (MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(MinUploadDate).ToString());
             if (MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(MaxUploadDate).ToString());
@@ -339,8 +339,8 @@ namespace FlickrNet
             if (MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(MaxTakenDate));
             if (Licenses.Count != 0)
             {
-                List<string> licenseArray = new List<string>();
-                foreach (LicenseType license in Licenses)
+                var licenseArray = new List<string>();
+                foreach (var license in Licenses)
                 {
                     licenseArray.Add(license.ToString("d"));
                 }
