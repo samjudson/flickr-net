@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FlickrNet
 {
@@ -13,9 +12,7 @@ namespace FlickrNet
         /// <param name="photoId">The id of the photograph to add.</param>
         public void FavoritesAdd(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.favorites.add");
-            parameters.Add("photo_id", photoId);
+            var parameters = new Dictionary<string, string> {{"method", "flickr.favorites.add"}, {"photo_id", photoId}};
             GetResponseNoCache<NoResponse>(parameters);
         }
 
@@ -26,9 +23,11 @@ namespace FlickrNet
         /// <param name="photoId">The id of the photograph to remove.</param>
         public void FavoritesRemove(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.favorites.remove");
-            parameters.Add("photo_id", photoId);
+            var parameters = new Dictionary<string, string>
+                                 {
+                                     {"method", "flickr.favorites.remove"},
+                                     {"photo_id", photoId}
+                                 };
             GetResponseNoCache<NoResponse>(parameters);
         }
 
@@ -138,11 +137,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.favorites.getList");
+            var parameters = new Dictionary<string, string> {{"method", "flickr.favorites.getList"}};
+
             if (userId != null) parameters.Add("user_id", userId);
-            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
-            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
+            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fave_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
+            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fave_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -176,11 +175,14 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotoCollection"/> object containing a collection of <see cref="Photo"/> objects.</returns>
         public PhotoCollection FavoritesGetPublicList(string userId, DateTime minFavoriteDate, DateTime maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.favorites.getPublicList");
-            parameters.Add("user_id", userId);
-            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
-            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
+            var parameters = new Dictionary<string, string>
+                                 {
+                                     {"method", "flickr.favorites.getPublicList"},
+                                     {"user_id", userId}
+                                 };
+
+            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fave_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
+            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fave_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -235,7 +237,8 @@ namespace FlickrNet
         /// <returns></returns>
         public FavoriteContext FavoritesGetContext(string photoId, string userId, int numPrevious, int numNext, PhotoSearchExtras extras)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
+
             parameters.Add("method", "flickr.favorites.getContext");
             parameters.Add("user_id", userId);
             parameters.Add("photo_id", photoId);

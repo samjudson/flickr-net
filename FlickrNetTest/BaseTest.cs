@@ -55,12 +55,12 @@ namespace FlickrNetTest
 
             if (InstanceUsed)
             {
-                Console.WriteLine(_instance.LastRequest);
+                Console.WriteLine("LastRequest: " + _instance.LastRequest);
                 Console.WriteLine(_instance.LastResponse);
             }
-            else
+            if (AuthInstanceUsed)
             {
-                Console.WriteLine(_authInstance.LastRequest);
+                Console.WriteLine("LastRequest (Auth): " +_authInstance.LastRequest);
                 Console.WriteLine(_authInstance.LastResponse);
             }
 

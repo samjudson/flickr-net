@@ -9,28 +9,24 @@ namespace FlickrNetTest
     /// Summary description for PhotosGeoTests
     /// </summary>
     [TestFixture]
-    public class PhotosGeoTests
+    public class PhotosGeoTests : BaseTest
     {
-        public PhotosGeoTests()
-        {
-            Flickr.CacheDisabled = true;
-        }
 
         [Test]
         public void PhotoInfoParseFull()
         {
-            string x = "<photo id=\"7519320006\">"
-                    + "<location latitude=\"54.971831\" longitude=\"-1.612683\" accuracy=\"16\" context=\"0\" place_id=\"Ke8IzXlQV79yxA\" woeid=\"15532\">"
-                    + "<neighbourhood place_id=\"Ke8IzXlQV79yxA\" woeid=\"15532\">Central</neighbourhood>"
-                    + "<locality place_id=\"DW0IUrFTUrO0FQ\" woeid=\"20928\">Gateshead</locality>"
-                    + "<county place_id=\"myqh27pQULzLWcg7Kg\" woeid=\"12602156\">Tyne and Wear</county>"
-                    + "<region place_id=\"2eIY2QFTVr_DwWZNLg\" woeid=\"24554868\">England</region>"
-                    + "<country place_id=\"cnffEpdTUb5v258BBA\" woeid=\"23424975\">United Kingdom</country>"
-                    + "</location>"
-                    + "</photo>";
+            const string xml = "<photo id=\"7519320006\">"
+                             + "<location latitude=\"54.971831\" longitude=\"-1.612683\" accuracy=\"16\" context=\"0\" place_id=\"Ke8IzXlQV79yxA\" woeid=\"15532\">"
+                             + "<neighbourhood place_id=\"Ke8IzXlQV79yxA\" woeid=\"15532\">Central</neighbourhood>"
+                             + "<locality place_id=\"DW0IUrFTUrO0FQ\" woeid=\"20928\">Gateshead</locality>"
+                             + "<county place_id=\"myqh27pQULzLWcg7Kg\" woeid=\"12602156\">Tyne and Wear</county>"
+                             + "<region place_id=\"2eIY2QFTVr_DwWZNLg\" woeid=\"24554868\">England</region>"
+                             + "<country place_id=\"cnffEpdTUb5v258BBA\" woeid=\"23424975\">United Kingdom</country>"
+                             + "</location>"
+                             + "</photo>";
 
-            System.IO.StringReader sr = new System.IO.StringReader(x);
-            System.Xml.XmlTextReader xr = new System.Xml.XmlTextReader(sr);
+            var sr = new System.IO.StringReader(xml);
+            var xr = new System.Xml.XmlTextReader(sr);
             xr.Read();
 
             var info = new PhotoInfo();
@@ -47,12 +43,12 @@ namespace FlickrNetTest
         [Test]
         public void PhotoInfoLocationParseShortTest()
         {
-            string x = "<photo id=\"7519320006\">"
-                + "<location latitude=\"-23.32\" longitude=\"-34.2\" accuracy=\"10\" context=\"1\" />"
-                + "</photo>";
+            const string xml = "<photo id=\"7519320006\">"
+                             + "<location latitude=\"-23.32\" longitude=\"-34.2\" accuracy=\"10\" context=\"1\" />"
+                             + "</photo>";
 
-            System.IO.StringReader sr = new System.IO.StringReader(x);
-            System.Xml.XmlTextReader xr = new System.Xml.XmlTextReader(sr);
+            var sr = new System.IO.StringReader(xml);
+            var xr = new System.Xml.XmlTextReader(sr);
             xr.Read();
 
             var info = new PhotoInfo();
@@ -66,16 +62,29 @@ namespace FlickrNetTest
 
         [Test]
         [Category("AccessTokenRequired")]
+        public void PhotosForLocationReturnsPhotos()
+        {
+            var photos = Instance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo, PerPage = 10 });
+
+            var geoPhoto = photos.First();
+
+            var geoPhotos = AuthInstance.PhotosGeoPhotosForLocation(geoPhoto.Latitude, geoPhoto.Longitude,
+                                                                    GeoAccuracy.Street, PhotoSearchExtras.None, 100, 1);
+
+            Assert.IsTrue(geoPhotos.Select(p => p.PhotoId).Contains(geoPhoto.PhotoId));
+        }
+
+        [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGetGetLocationTest()
         {
-            var f = TestData.GetAuthInstance();
-            var photos = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo });
+            var photos = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo });
 
             var photo = photos.First();
 
             Console.WriteLine(photo.PhotoId);
 
-            var location = f.PhotosGeoGetLocation(photo.PhotoId);
+            var location = AuthInstance.PhotosGeoGetLocation(photo.PhotoId);
 
             Assert.AreEqual(photo.Longitude, location.Longitude, "Longitudes should match exactly.");
             Assert.AreEqual(photo.Latitude, location.Latitude, "Latitudes should match exactly.");
@@ -85,12 +94,11 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetGetLocationNullTest()
         {
-            var f = TestData.GetAuthInstance();
-            var photos = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = false, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo });
+            var photos = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = false, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo });
 
             var photo = photos.First();
 
-            var location = f.PhotosGeoGetLocation(photo.PhotoId);
+            var location = AuthInstance.PhotosGeoGetLocation(photo.PhotoId);
 
             Assert.IsNull(location, "Location should be null.");
         }
@@ -99,18 +107,16 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetCorrectLocationTest()
         {
-            var f = TestData.GetAuthInstance();
-            var photo = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
+            var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
 
-            f.PhotosGeoCorrectLocation(photo.PhotoId, photo.PlaceId, null);
+            AuthInstance.PhotosGeoCorrectLocation(photo.PhotoId, photo.PlaceId, null);
         }
 
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGeoSetContextTest()
         {
-            var f = TestData.GetAuthInstance();
-            var photo = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
+            var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
 
             Assert.IsTrue(photo.GeoContext.HasValue, "GeoContext should be set.");
 
@@ -120,11 +126,11 @@ namespace FlickrNetTest
 
             try
             {
-                f.PhotosGeoSetContext(photo.PhotoId, newContext);
+                AuthInstance.PhotosGeoSetContext(photo.PhotoId, newContext);
             }
             finally
             {
-                f.PhotosGeoSetContext(photo.PhotoId, origContext);
+                AuthInstance.PhotosGeoSetContext(photo.PhotoId, origContext);
             }
         }
 
@@ -132,17 +138,21 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGeoSetLocationTest()
         {
-            var f = TestData.GetAuthInstance();
-            var photo = f.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
+            var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
 
-            var origGeo = new { photo.Longitude, photo.Latitude, photo.Accuracy, Context = photo.GeoContext.Value };
-            var newGeo = new { Latitude = -23.32, Longitude = -34.2, Accuracy = GeoAccuracy.Level10, Context = GeoContext.Indoors };
+            if (photo.GeoContext == null)
+            {
+                Assert.Fail("GeoContext should not be null");
+            }
+
+            var origGeo = new {photo.Latitude, photo.Longitude, photo.Accuracy, Context = photo.GeoContext.Value};
+            var newGeo = new {Latitude = -23.32, Longitude = -34.2, Accuracy = GeoAccuracy.Level10, Context = GeoContext.Indoors};
 
             try
             {
-                f.PhotosGeoSetLocation(photo.PhotoId, newGeo.Latitude, newGeo.Longitude, newGeo.Accuracy, newGeo.Context);
+                AuthInstance.PhotosGeoSetLocation(photo.PhotoId, newGeo.Latitude, newGeo.Longitude, newGeo.Accuracy, newGeo.Context);
 
-                var location = f.PhotosGeoGetLocation(photo.PhotoId);
+                var location = AuthInstance.PhotosGeoGetLocation(photo.PhotoId);
                 Assert.AreEqual(newGeo.Latitude, location.Latitude, "New Latitude should be set.");
                 Assert.AreEqual(newGeo.Longitude, location.Longitude, "New Longitude should be set.");
                 Assert.AreEqual(newGeo.Context, location.Context, "New Context should be set.");
@@ -150,26 +160,26 @@ namespace FlickrNetTest
             }
             finally
             {
-                f.PhotosGeoSetLocation(photo.PhotoId, origGeo.Latitude, origGeo.Longitude, origGeo.Accuracy, origGeo.Context);
+                AuthInstance.PhotosGeoSetLocation(photo.PhotoId, origGeo.Latitude, origGeo.Longitude, origGeo.Accuracy, origGeo.Context);
             }
-            
         }
 
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGeoPhotosForLocationBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.UserId = TestData.TestUserId;
-            o.HasGeo = true;
-            o.PerPage = 1;
-            o.Extras = PhotoSearchExtras.Geo;
+            var o = new PhotoSearchOptions
+                        {
+                            UserId = TestData.TestUserId,
+                            HasGeo = true,
+                            PerPage = 1,
+                            Extras = PhotoSearchExtras.Geo
+                        };
 
-            var photos = f.PhotosSearch(o);
+            var photos = AuthInstance.PhotosSearch(o);
             var photo = photos[0];
 
-            var photos2 = f.PhotosGeoPhotosForLocation(photo.Latitude, photo.Longitude, photo.Accuracy, PhotoSearchExtras.All, 0, 0);
+            var photos2 = AuthInstance.PhotosGeoPhotosForLocation(photo.Latitude, photo.Longitude, photo.Accuracy, PhotoSearchExtras.All, 0, 0);
 
             Assert.IsNotNull(photos2, "PhotosGeoPhotosForLocation should not return null.");
             Assert.IsTrue(photos2.Count > 0, "Should return one or more photos.");

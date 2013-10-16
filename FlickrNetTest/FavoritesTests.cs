@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
@@ -11,74 +12,40 @@ namespace FlickrNetTest
     /// Summary description for FavouritesGetPublicListTests
     /// </summary>
     [TestFixture]
-    public class FavoritesTests
+    public class FavoritesTests : BaseTest
     {
-        public FavoritesTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [Test]
         public void FavoritesGetPublicListBasicTest()
         {
-            string userId = "77788903@N00";
-            Flickr f = TestData.GetInstance();
+            const string userId = "77788903@N00";
 
-            PhotoCollection p = f.FavoritesGetPublicList(userId);
+            var p = Instance.FavoritesGetPublicList(userId);
 
             Assert.IsNotNull(p, "PhotoCollection should not be null instance.");
             Assert.AreNotEqual(0, p.Count, "PhotoCollection.Count should be greater than zero.");
         }
 
         [Test]
+        public void FavouritesGetPublicListWithDates()
+        {
+            var allFavourites = Instance.FavoritesGetPublicList(TestData.TestUserId);
+
+            var firstFiveFavourites = allFavourites.OrderBy(p => p.DateFavorited).Take(5).ToList();
+
+            var minDate = firstFiveFavourites.Min(p => p.DateFavorited).GetValueOrDefault();
+            var maxDate = firstFiveFavourites.Max(p => p.DateFavorited).GetValueOrDefault();
+
+            var subsetOfFavourites = Instance.FavoritesGetPublicList(TestData.TestUserId, minDate, maxDate,
+                                                                     PhotoSearchExtras.None, 0, 0);
+
+            Assert.AreEqual(5, subsetOfFavourites.Count, "Should be 5 favourites in subset");
+        }
+
+        [Test]
         [Category("AccessTokenRequired")]
         public void FavoritesGetListBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PhotoCollection photos = f.FavoritesGetList();
+            var photos = AuthInstance.FavoritesGetList();
             Assert.IsNotNull(photos, "PhotoCollection should not be null instance.");
             Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should be greater than zero.");
         }
@@ -87,9 +54,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void FavoritesGetListFullParamTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            var photos = f.FavoritesGetList(TestData.TestUserId, DateTime.Now.AddYears(-1), DateTime.Now, PhotoSearchExtras.All, 1, 10);
+            var photos = AuthInstance.FavoritesGetList(TestData.TestUserId, DateTime.Now.AddYears(-1), DateTime.Now, PhotoSearchExtras.All, 1, 10);
             Assert.IsNotNull(photos, "PhotoCollection should not be null.");
 
             Assert.IsTrue(photos.Count > 0, "Count should be greater than zero.");
@@ -100,9 +65,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void FavoritesGetListPartialParamTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PhotoCollection photos = f.FavoritesGetList(TestData.TestUserId, 2, 20);
+            PhotoCollection photos = AuthInstance.FavoritesGetList(TestData.TestUserId, 2, 20);
             Assert.IsNotNull(photos, "PhotoCollection should not be null instance.");
             Assert.AreNotEqual(0, photos.Count, "PhotoCollection.Count should be greater than zero.");
             Assert.AreEqual(2, photos.Page);
@@ -113,11 +76,10 @@ namespace FlickrNetTest
         [Test]
         public void FavoritesGetContext()
         {
-            Flickr f = TestData.GetInstance();
-            string photoId = "2502963121";
-            string userId = "41888973@N00";
+            const string photoId = "2502963121";
+            const string userId = "41888973@N00";
 
-            var context = f.FavoritesGetContext(photoId, userId);
+            var context = Instance.FavoritesGetContext(photoId, userId);
 
             Assert.IsNotNull(context);
             Assert.AreNotEqual(0, context.Count, "Count should be greater than zero");
@@ -128,11 +90,10 @@ namespace FlickrNetTest
         [Test]
         public void FavoritesGetContextMorePrevious()
         {
-            Flickr f = TestData.GetInstance();
-            string photoId = "2502963121";
-            string userId = "41888973@N00";
+            const string photoId = "2502963121";
+            const string userId = "41888973@N00";
 
-            var context = f.FavoritesGetContext(photoId, userId, 3, 4, PhotoSearchExtras.Description);
+            var context = Instance.FavoritesGetContext(photoId, userId, 3, 4, PhotoSearchExtras.Description);
 
             Assert.IsNotNull(context);
             Assert.AreNotEqual(0, context.Count, "Count should be greater than zero");
