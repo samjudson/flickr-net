@@ -406,7 +406,7 @@ namespace FlickrNet
 
         private void CheckApiKey()
         {
-            if (ApiKey == null || ApiKey.Length == 0)
+            if (string.IsNullOrEmpty(ApiKey))
                 throw new ApiKeyRequiredException();
         }
 
@@ -414,7 +414,7 @@ namespace FlickrNet
         {
             CheckApiKey();
 
-            if (ApiSecret == null || ApiSecret.Length == 0)
+            if (string.IsNullOrEmpty(ApiSecret))
                 throw new SignatureRequiredException();
         }
 
@@ -427,7 +427,7 @@ namespace FlickrNet
 
             if (String.IsNullOrEmpty(ApiSecret))
                 throw new SignatureRequiredException();
-            if (String.IsNullOrEmpty(AuthToken))
+            if (String.IsNullOrEmpty(AuthToken) || String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(OAuthAccessTokenSecret))
                 throw new AuthenticationRequiredException();
         }
 
@@ -476,27 +476,27 @@ namespace FlickrNet
 
         private byte[] ConvertNonSeekableStreamToByteArray(Stream nonSeekableStream)
         {
-            MemoryStream ms = new MemoryStream();
-            byte[] buffer = new byte[1024];
+            var ms = new MemoryStream();
+            var buffer = new byte[1024];
             int bytes;
             while ((bytes = nonSeekableStream.Read(buffer, 0, buffer.Length)) > 0)
             {
                 ms.Write(buffer, 0, bytes);
             }
-            byte[] output = ms.ToArray();
+            var output = ms.ToArray();
             return output;
         }
 
         private byte[] CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
         {
-            bool oAuth = parameters.ContainsKey("oauth_consumer_key");
+            var oAuth = parameters.ContainsKey("oauth_consumer_key");
 
-            string[] keys = new string[parameters.Keys.Count];
+            var keys = new string[parameters.Keys.Count];
             parameters.Keys.CopyTo(keys, 0);
             Array.Sort(keys);
 
-            StringBuilder hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
-            StringBuilder contentStringBuilder = new StringBuilder();
+            var hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
+            var contentStringBuilder = new StringBuilder();
 
             foreach (string key in keys)
             {
@@ -527,7 +527,7 @@ namespace FlickrNet
             contentStringBuilder.Append("Content-Type: image/jpeg\r\n");
             contentStringBuilder.Append("\r\n");
 
-            UTF8Encoding encoding = new UTF8Encoding();
+            var encoding = new UTF8Encoding();
 
             byte[] postContents = encoding.GetBytes(contentStringBuilder.ToString());
 

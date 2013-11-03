@@ -15,10 +15,14 @@ namespace FlickrNet
         /// <param name="photoId">The ID of the photo to add.</param>
         public void PhotosetsAddPhoto(string photosetId, string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.photosets.addPhoto");
-            parameters.Add("photoset_id", photosetId);
-            parameters.Add("photo_id", photoId);
+            CheckRequiresAuthentication();
+
+            var parameters = new Dictionary<string, string>
+                                 {
+                                     {"method", "flickr.photosets.addPhoto"},
+                                     {"photoset_id", photosetId},
+                                     {"photo_id", photoId}
+                                 };
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -43,9 +47,13 @@ namespace FlickrNet
         /// <returns>The <see cref="Photoset"/> that is created.</returns>
         public Photoset PhotosetsCreate(string title, string description, string primaryPhotoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.photosets.create");
-            parameters.Add("primary_photo_id", primaryPhotoId);
+            CheckRequiresAuthentication();
+
+            var parameters = new Dictionary<string, string>
+                                 {
+                                     {"method", "flickr.photosets.create"},
+                                     {"primary_photo_id", primaryPhotoId}
+                                 };
             if (!String.IsNullOrEmpty(title)) parameters.Add("title", title);
             if (!String.IsNullOrEmpty(description)) parameters.Add("description", description);
 
