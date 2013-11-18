@@ -302,12 +302,12 @@ namespace FlickrNetTest
         }
 
         [Test]
-        public void PeoplGetInfoInternationalCharacters()
+        public void PeopleGetInfoInternationalCharacters()
         {
-            var p = TestData.GetInstance().PeopleGetInfo("70701693@N03");
+            var p = TestData.GetInstance().PeopleGetInfo("24754141@N08");
 
-            Assert.AreEqual("70701693@N03", p.UserId, "UserId should match.");
-            Assert.AreEqual("朋斌 冯", p.RealName, "RealName should match");
+            Assert.AreEqual("24754141@N08", p.UserId, "UserId should match.");
+            Assert.AreEqual("Pierre Hsiu 脩丕政", p.RealName, "RealName should match");
         }
     }
 }
