@@ -37,6 +37,8 @@ namespace FlickrNetTest
             // Set contains videos and photos
             var theset = Instance.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
 
+            Assert.AreEqual("Canon 5D", theset.Title);
+
             foreach (var p in theset)
             {
                 Assert.AreEqual("video", p.Media, "Should be video.");
