@@ -103,6 +103,16 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [ExpectedException(typeof(ApiKeyRequiredException))]
+        public void GetOauthRequestTokenNoApiKey()
+        {
+            Instance.ApiKey = "";
+            Instance.OAuthGetRequestToken("oob");
+
+            Assert.Fail("Shouldn't get here");
+        }
+
+        [Test]
         [Ignore("Flickr still doesn't seem to sort correctly by date posted.")]
         public void PhotosSearchSortDateTakenAscending()
         {

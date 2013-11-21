@@ -14,6 +14,8 @@ namespace FlickrNet
         /// <returns></returns>
         public OAuthRequestToken OAuthGetRequestToken(string callback)
         {
+            CheckApiKey();
+
             string url = "http://www.flickr.com/services/oauth/request_token";
 
             Dictionary<string, string> parameters = OAuthGetBasicParameters();
@@ -49,6 +51,8 @@ namespace FlickrNet
         /// <returns></returns>
         public OAuthAccessToken OAuthGetAccessToken(string requestToken, string requestTokenSecret, string verifier)
         {
+            CheckApiKey();
+
             string url = "http://www.flickr.com/services/oauth/access_token";
 
             Dictionary<string, string> parameters = OAuthGetBasicParameters();

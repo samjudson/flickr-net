@@ -14,6 +14,8 @@ namespace FlickrNet
         /// <param name="callback"></param>
         public void OAuthGetRequestTokenAsync(string callbackUrl, Action<FlickrResult<OAuthRequestToken>> callback)
         {
+            CheckApiKey();
+
 #if SILVERLIGHT
             string url = "http://api.flickr.com/services/oauth/request_token";
 #else
@@ -70,6 +72,8 @@ namespace FlickrNet
         /// <param name="callback"></param>
         public void OAuthGetAccessTokenAsync(string requestToken, string requestTokenSecret, string verifier, Action<FlickrResult<OAuthAccessToken>> callback)
         {
+            CheckApiKey();
+
 #if SILVERLIGHT
             string url = "http://api.flickr.com/services/oauth/access_token";
 #else
