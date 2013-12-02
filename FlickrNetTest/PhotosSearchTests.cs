@@ -93,7 +93,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(ApiKeyRequiredException))]
+        [ExpectedException(typeof (ApiKeyRequiredException))]
         public void PhotosSearchNoApiKey()
         {
             Instance.ApiKey = "";
@@ -103,7 +103,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(ApiKeyRequiredException))]
+        [ExpectedException(typeof (ApiKeyRequiredException))]
         public void GetOauthRequestTokenNoApiKey()
         {
             Instance.ApiKey = "";
@@ -460,8 +460,10 @@ namespace FlickrNetTest
                 // Annoying, but sometimes Flickr doesn't return the geo properties for a photo even for this type of search.
                 if (Math.Abs(p.Latitude - 0) < 1e-8 && Math.Abs(p.Longitude - 0) < 1e-8) continue;
 
-                Assert.IsTrue(p.Latitude > b.MinimumLatitude && b.MaximumLatitude > p.Latitude, "Latitude is not within the boundary box.");
-                Assert.IsTrue(p.Longitude > b.MinimumLongitude && b.MaximumLongitude > p.Longitude, "Longitude is not within the boundary box.");
+                Assert.IsTrue(p.Latitude > b.MinimumLatitude && b.MaximumLatitude > p.Latitude,
+                              "Latitude is not within the boundary box.");
+                Assert.IsTrue(p.Longitude > b.MinimumLongitude && b.MaximumLongitude > p.Longitude,
+                              "Longitude is not within the boundary box.");
             }
         }
 
@@ -566,7 +568,7 @@ namespace FlickrNetTest
                             GeoContext = GeoContext.Outdoors,
                             Tags = "landscape"
                         };
-                
+
             o.Extras |= PhotoSearchExtras.Geo;
 
             var col = Instance.PhotosSearch(o);
@@ -632,11 +634,14 @@ namespace FlickrNetTest
                 Assert.AreNotEqual(0, photo.Longitude, "Longitude should not be zero.");
                 Assert.AreNotEqual(0, photo.Latitude, "Latitude should not be zero.");
 
-                LogOnError("Photo ID " + photo.PhotoId, String.Format("Lat={0}, Long={1}", photo.Latitude, photo.Longitude));
+                LogOnError("Photo ID " + photo.PhotoId,
+                           String.Format("Lat={0}, Long={1}", photo.Latitude, photo.Longitude));
 
                 // Note: +/-1 is not an exact match to 5.4km, but anything outside of these bounds is definitely wrong.
-                Assert.IsTrue(photo.Latitude > lat - 1 && photo.Latitude < lat + 1, "Latitude not within acceptable range.");
-                Assert.IsTrue(photo.Longitude > lon - 1 && photo.Longitude < lon + 1, "Latitude not within acceptable range.");
+                Assert.IsTrue(photo.Latitude > lat - 1 && photo.Latitude < lat + 1,
+                              "Latitude not within acceptable range.");
+                Assert.IsTrue(photo.Longitude > lon - 1 && photo.Longitude < lon + 1,
+                              "Latitude not within acceptable range.");
 
             }
         }
@@ -728,7 +733,12 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchRotation()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Rotation, UserId = TestData.TestUserId, PerPage = 100 };
+            PhotoSearchOptions o = new PhotoSearchOptions
+                                       {
+                                           Extras = PhotoSearchExtras.Rotation,
+                                           UserId = TestData.TestUserId,
+                                           PerPage = 100
+                                       };
             var photos = Instance.PhotosSearch(o);
             foreach (var photo in photos)
             {
@@ -743,27 +753,73 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchLarge1600ImageSize()
         {
-            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large1600Url, Tags = "colorful", MinUploadDate = DateTime.UtcNow.AddDays(-1) };
+            var o = new PhotoSearchOptions
+                        {
+                            Extras = PhotoSearchExtras.Large1600Url,
+                            Tags = "colorful",
+                            MinUploadDate = DateTime.UtcNow.AddDays(-1)
+                        };
 
             var photos = Instance.PhotosSearch(o);
 
             Assert.IsNotNull(photos, "PhotosSearch should not return a null instance.");
             Assert.IsTrue(photos.Any(), "PhotoSearch should have returned some photos.");
-            Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue), "At least one photo should have a large1600 image url and height and width.");
+            Assert.IsTrue(
+                photos.Any(
+                    p =>
+                    !String.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue),
+                "At least one photo should have a large1600 image url and height and width.");
         }
 
         [Test]
         public void PhotosSearchLarge2048ImageSize()
         {
-            var o = new PhotoSearchOptions { Extras = PhotoSearchExtras.Large2048Url, Tags = "colorful", MinUploadDate = DateTime.UtcNow.AddDays(-1)};
+            var o = new PhotoSearchOptions
+                        {
+                            Extras = PhotoSearchExtras.Large2048Url,
+                            Tags = "colorful",
+                            MinUploadDate = DateTime.UtcNow.AddDays(-1)
+                        };
 
             var photos = Instance.PhotosSearch(o);
 
             Assert.IsNotNull(photos, "PhotosSearch should not return a null instance.");
             Assert.IsTrue(photos.Any(), "PhotoSearch should have returned some photos.");
-            Assert.IsTrue(photos.Any(p => !String.IsNullOrEmpty(p.Large2048Url) && p.Large2048Height.HasValue && p.Large2048Width.HasValue));
+            Assert.IsTrue(
+                photos.Any(
+                    p =>
+                    !String.IsNullOrEmpty(p.Large2048Url) && p.Large2048Height.HasValue && p.Large2048Width.HasValue));
         }
 
+        [Test]
+        [Category("AccessTokenRequired")]
+        public void PhotosSearchContactsPhotos()
+        {
+            var contacts = AuthInstance.ContactsGetList(1, 1000).Select(c => c.UserId).ToList();
+
+            // Test with user id = "me"
+            var o = new PhotoSearchOptions
+                        {
+                            UserId = "me",
+                            Contacts = ContactSearch.AllContacts
+                        };
+
+            var photos = AuthInstance.PhotosSearch(o);
+
+            Assert.IsNotNull(photos, "PhotosSearch should not return a null instance.");
+            Assert.IsTrue(photos.Any(), "PhotoSearch should have returned some photos.");
+            Assert.IsTrue(photos.All(p => p.UserId != TestData.TestUserId), "None of the photos should be mine.");
+            Assert.IsTrue(photos.All(p => contacts.Contains(p.UserId)), "UserID not found in list of contacts.");
+
+            // Retest with user id specified explicitly
+            o.UserId = TestData.TestUserId;
+            photos = AuthInstance.PhotosSearch(o);
+
+            Assert.IsNotNull(photos, "PhotosSearch should not return a null instance.");
+            Assert.IsTrue(photos.Any(), "PhotoSearch should have returned some photos.");
+            Assert.IsTrue(photos.All(p => p.UserId != TestData.TestUserId), "None of the photos should be mine.");
+            Assert.IsTrue(photos.All(p => contacts.Contains(p.UserId)), "UserID not found in list of contacts.");
+        }
     }
 }
 // ReSharper restore SuggestUseVarKeywordEvident
