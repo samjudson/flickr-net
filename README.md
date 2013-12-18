@@ -14,4 +14,4 @@ Change Log
 
 September 2013: First initial checkins. 
 Currently contains code for most public method calls for both .Net 4.5 and Windows 8
-as seperate DLLs. Plan to retrofit .Net 2.0 in and add Upload support (the main missing feature) in the next few weeks.
+as seperate DLLs. Windows 8 authentication, Upload support, and example Windows 8 app added.
