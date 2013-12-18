@@ -25,6 +25,11 @@ namespace FlickrNet
         public string OwnerId { get; set; }
 
         /// <summary>
+        /// The title of the photoset.
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
         /// The real name of the owner of this photoset.
         /// </summary>
         public string OwnerName { get; set; }
@@ -64,6 +69,9 @@ namespace FlickrNet
                     case "perpage":
                     case "per_page":
                         PerPage = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "title":
+                        Title = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

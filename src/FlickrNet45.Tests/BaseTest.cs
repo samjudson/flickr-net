@@ -29,6 +29,7 @@ namespace FlickrNet45.Tests
         public string SharedSecret = "0781969a058a2745";
 
         public string UserId = "41888973@N00";
+        public string PhotosetId = "72157627145038616";
 
         public string RequestToken
         {
