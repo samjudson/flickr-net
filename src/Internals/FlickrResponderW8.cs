@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace FlickrNet.Internals
@@ -37,7 +38,7 @@ namespace FlickrNet.Internals
             if (!String.IsNullOrEmpty(oauthHeader)) client.DefaultRequestHeaders.Add("Authorization", oauthHeader);
 
             var content = new ByteArrayContent(data);
-            content.Headers.ContentType.MediaType = contentTypeHeader;
+            content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeHeader);
             var postResponse = await client.PostAsync(new Uri(uploadUrl), content);
             var result = await postResponse.Content.ReadAsStringAsync();
             if (!postResponse.IsSuccessStatusCode)
