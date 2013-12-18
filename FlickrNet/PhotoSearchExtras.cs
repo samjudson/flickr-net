@@ -115,11 +115,6 @@ namespace FlickrNet
         [Description("url_m")] MediumUrl = 131072,
 
         /// <summary>
-        /// Returns the URL for the medium 640 image, as well as the image size.
-        /// </summary>
-        [Description("url_z")] Medium640Url = 8388608,
-
-        /// <summary>
         /// Returns the URL for the large image, as well as the image size.
         /// </summary>
         [Description("url_l")] LargeUrl = 262144,
@@ -173,6 +168,11 @@ namespace FlickrNet
         /// Medium (800 on largest size) image url.
         /// </summary>
         [Description("url_c")] Medium800Url = 33554432*8,
+
+        /// <summary>
+        /// Returns the URL for the medium 640 image, as well as the image size.
+        /// </summary>
+        [Description("url_z")] Medium640Url = 33554432 * 16,
 
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
