@@ -116,11 +116,15 @@ namespace FlickrNet
                         }
                         catch (ArgumentException ex)
                         {
-                            throw new System.Configuration.ConfigurationErrorsException("service must be one of the supported services (See SupportedServices enum)", ex, configNode);
+                            throw new System.Configuration.ConfigurationErrorsException(
+                                "service must be one of the supported services (See SupportedServices enum)", ex, configNode);
                         }
 
                     default:
-                        throw new System.Configuration.ConfigurationErrorsException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
+                        throw new System.Configuration.ConfigurationErrorsException(
+                            String.Format(
+                                System.Globalization.CultureInfo.InvariantCulture, 
+                                "Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
                 }
             }
 
@@ -132,7 +136,9 @@ namespace FlickrNet
                         ProcessProxyNode(node, configNode);
                         break;
                     default:
-                        throw new System.Configuration.ConfigurationErrorsException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown node '{0}' in flickrNet node", node.Name), configNode);
+                        throw new System.Configuration.ConfigurationErrorsException(
+                            String.Format(System.Globalization.CultureInfo.InvariantCulture, 
+                            "Unknown node '{0}' in flickrNet node", node.Name), configNode);
                 }
             }
         }
@@ -172,7 +178,9 @@ namespace FlickrNet
                         proxyDomain = attribute.Value;
                         break;
                     default:
-                        throw new System.Configuration.ConfigurationErrorsException(String.Format(System.Globalization.CultureInfo.InvariantCulture, "Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
+                        throw new System.Configuration.ConfigurationErrorsException(
+                            String.Format(System.Globalization.CultureInfo.InvariantCulture, 
+                            "Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
                 }
             }
 

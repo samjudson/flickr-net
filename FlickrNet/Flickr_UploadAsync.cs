@@ -26,7 +26,10 @@ namespace FlickrNet
         /// <param name="safetyLevel">The safety level of the photo, i.e. Safe, Moderate or Restricted.</param>
         /// <param name="hiddenFromSearch">Is the photo hidden from public searches.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void UploadPictureAsync(Stream stream, string fileName, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch, Action<FlickrResult<string>> callback)
+        public void UploadPictureAsync(Stream stream, string fileName, string title, string description, string tags,
+                                       bool isPublic, bool isFamily, bool isFriend, ContentType contentType,
+                                       SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch,
+                                       Action<FlickrResult<string>> callback)
         {
             CheckRequiresAuthentication();
 
@@ -75,7 +78,7 @@ namespace FlickrNet
                 parameters.Add("oauth_signature", sig);
             }
             else
-            { 
+            {
                 parameters.Add("auth_token", apiToken);
             }
 

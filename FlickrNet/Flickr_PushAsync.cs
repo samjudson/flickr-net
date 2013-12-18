@@ -61,10 +61,16 @@ namespace FlickrNet
         /// <param name="radius">The radius to subscribe to. Only applies if topic is 'geo'.</param>
         /// <param name="radiusUnits">The raduis units to subscribe to. Only applies if topic is 'geo'.</param>
         /// <param name="accuracy">The accuracy of the geo search to subscribe to. Only applies if topic is 'geo'.</param>
-        /// <param name="nsids">A list of Commons Institutes to subscribe to. Only applies if topic is 'commons'. If not present this argument defaults to all Flickr Commons institutions.</param>
-        /// <param name="tags">A list of strings to be used for tag subscriptions. Photos with one or more of the tags listed will be included in the subscription. Only valid if the topic is 'tags'</param>
+        /// <param name="nsids">A list of Commons Institutes to subscribe to. 
+        /// Only applies if topic is 'commons'. If not present this argument defaults to all Flickr Commons institutions.</param>
+        /// <param name="tags">A list of strings to be used for tag subscriptions. 
+        /// Photos with one or more of the tags listed will be included in the subscription. 
+        /// Only valid if the topic is 'tags'</param>
         /// <param name="callbackAction"></param>
-        public void PushSubscribeAsync(string topic, string callback, string verify, string verifyToken, int leaseSeconds, int[] woeIds, string[] placeIds, double latitude, double longitude, int radius, RadiusUnit radiusUnits, GeoAccuracy accuracy, string[] nsids, string[] tags, Action<FlickrResult<NoResponse>> callbackAction)
+        public void PushSubscribeAsync(string topic, string callback, string verify, string verifyToken,
+                                       int leaseSeconds, int[] woeIds, string[] placeIds, double latitude,
+                                       double longitude, int radius, RadiusUnit radiusUnits, GeoAccuracy accuracy,
+                                       string[] nsids, string[] tags, Action<FlickrResult<NoResponse>> callbackAction)
         {
             CheckRequiresAuthentication();
 
@@ -72,7 +78,8 @@ namespace FlickrNet
             if (String.IsNullOrEmpty(callback)) throw new ArgumentNullException("callback");
             if (String.IsNullOrEmpty(verify)) throw new ArgumentNullException("verify");
 
-            if (topic == "tags" && (tags == null || tags.Length == 0)) throw new InvalidOperationException("Must specify at least one tag is using topic of 'tags'");
+            if (topic == "tags" && (tags == null || tags.Length == 0))
+                throw new InvalidOperationException("Must specify at least one tag is using topic of 'tags'");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.push.subscribe");
@@ -80,11 +87,16 @@ namespace FlickrNet
             parameters.Add("callback", callback);
             parameters.Add("verify", verify);
             if (!String.IsNullOrEmpty(verifyToken)) parameters.Add("verify_token", verifyToken);
-            if (leaseSeconds > 0) parameters.Add("lease_seconds", leaseSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (leaseSeconds > 0)
+                parameters.Add("lease_seconds",
+                               leaseSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (woeIds != null && woeIds.Length > 0)
             {
                 List<string> woeIdList = new List<string>();
-                foreach (int i in woeIds) { woeIdList.Add(i.ToString(System.Globalization.NumberFormatInfo.InvariantInfo)); }
+                foreach (int i in woeIds)
+                {
+                    woeIdList.Add(i.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+                }
                 parameters.Add("woe_ids", String.Join(",", woeIdList.ToArray()));
             }
             if (placeIds != null && placeIds.Length > 0) parameters.Add("place_ids", String.Join(",", placeIds));

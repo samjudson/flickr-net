@@ -338,16 +338,19 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="media">Filter on the type of media.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosetsGetPhotosAsync(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter, int page, int perPage, MediaType media, Action<FlickrResult<PhotosetPhotoCollection>> callback)
+        public void PhotosetsGetPhotosAsync(string photosetId, PhotoSearchExtras extras, PrivacyFilter privacyFilter,
+                                            int page, int perPage, MediaType media,
+                                            Action<FlickrResult<PhotosetPhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getPhotos");
             parameters.Add("photoset_id", photosetId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (privacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (media != MediaType.None) parameters.Add("media", (media == MediaType.All ? "all" : (media == MediaType.Photos ? "photos" : (media == MediaType.Videos ? "videos" : String.Empty))));
+            if (perPage > 0)
+                parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (media != MediaType.None) parameters.Add("media",(media == MediaType.All? "all": (media == MediaType.Photos? "photos": (media == MediaType.Videos ? "videos" : String.Empty))));
 
             GetResponseAsync<PhotosetPhotoCollection>(parameters, callback);
         }

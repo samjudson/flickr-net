@@ -17,53 +17,6 @@ namespace FlickrNetTest
     [TestFixture]
     public class PhotosGetInfoTests
     {
-        public PhotosGetInfoTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGetInfoBasicTest()
@@ -88,7 +41,8 @@ namespace FlickrNetTest
             Assert.AreEqual(MediaType.Photos, info.Media);
 
             Assert.AreEqual("12. Sudoku", info.Title);
-            Assert.AreEqual("It scares me sometimes how much some of my handwriting reminds me of Dad's - in this photo there is one 5 that especially reminds me of his handwriting.", info.Description);
+            Assert.AreEqual("It scares me sometimes how much some of my handwriting reminds me of Dad's " +
+                            "- in this photo there is one 5 that especially reminds me of his handwriting.", info.Description);
 
             //Owner
             Assert.AreEqual("41888973@N00", info.OwnerUserId);
@@ -152,7 +106,8 @@ namespace FlickrNetTest
             Assert.AreEqual(MediaType.Photos, info.Media);
 
             Assert.AreEqual("12. Sudoku", info.Title);
-            Assert.AreEqual("It scares me sometimes how much some of my handwriting reminds me of Dad's - in this photo there is one 5 that especially reminds me of his handwriting.", info.Description);
+            Assert.AreEqual("It scares me sometimes how much some of my handwriting reminds me of Dad's " +
+                            "- in this photo there is one 5 that especially reminds me of his handwriting.", info.Description);
 
             //Owner
             Assert.AreEqual("41888973@N00", info.OwnerUserId);

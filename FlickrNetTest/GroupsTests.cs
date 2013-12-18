@@ -13,53 +13,6 @@ namespace FlickrNetTest
     [TestFixture]
     public class GroupsTests
     {
-        public GroupsTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [Test]
         [Category("AccessTokenRequired")]
         public void GroupsBrowseBasicTest()
@@ -87,7 +40,6 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, results.Total, "Total should not be zero.");
             Assert.AreNotEqual(0, results.PerPage, "PerPage should not be zero.");
             Assert.AreEqual(1, results.Page, "Page should be 1.");
-            //Assert.AreEqual(Math.Min(results.Total, results.PerPage), results.Count, "Count should be minimum of Total and PerPage.");
 
             foreach (GroupSearchResult result in results)
             {

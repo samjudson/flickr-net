@@ -13,50 +13,6 @@ namespace FlickrNetTest
     [TestFixture]
     public class PlacesTests
     {
-        public PlacesTests()
-        {
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [Test]
         public void PlacesFindBasicTest()
         {
@@ -119,7 +75,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesGetChildrenWithPhotosPublicPlaceIdTest()
         {
-            string placeId = "6dCBhRRTVrJiB5xOrg"; // Europe;
+            string placeId = "6dCBhRRTVrJiB5xOrg"; // Europe
             Flickr f = TestData.GetInstance();
 
             var places = f.PlacesGetChildrenWithPhotosPublic(placeId, null);
@@ -138,7 +94,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesGetChildrenWithPhotosPublicWoeIdTest()
         {
-            string woeId = "24865675"; // Europe;
+            string woeId = "24865675"; // Europe
 
             var places = TestData.GetInstance().PlacesGetChildrenWithPhotosPublic(null, woeId);
             Assert.IsNotNull(places);
@@ -215,7 +171,9 @@ namespace FlickrNetTest
         public void PlacesPlacesForTagsBasicTest()
         {
             var f = TestData.GetAuthInstance();
-            var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] { "newcastle" }, TagMode.AllTags, null, MachineTagMode.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+            var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] {"newcastle"},
+                                               TagMode.AllTags, null, MachineTagMode.None, DateTime.MinValue,
+                                               DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
 
             Assert.IsNotNull(places);
 
@@ -233,7 +191,10 @@ namespace FlickrNetTest
         public void PlacesPlacesForTagsFullParamTest()
         {
             var f = TestData.GetAuthInstance();
-            var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] { "newcastle" }, TagMode.AllTags, new string[] { "dc:author=*" }, MachineTagMode.AllTags, DateTime.Today.AddYears(-10), DateTime.Today, DateTime.Today.AddYears(-10), DateTime.Today);
+            var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] {"newcastle"},
+                                               TagMode.AllTags, new string[] {"dc:author=*"}, MachineTagMode.AllTags,
+                                               DateTime.Today.AddYears(-10), DateTime.Today,
+                                               DateTime.Today.AddYears(-10), DateTime.Today);
 
             Assert.IsNotNull(places);
         }

@@ -29,9 +29,9 @@ namespace FlickrNet
 
         private static void GetDataResponseNormalAsync(Flickr flickr, string baseUrl, Dictionary<string, string> parameters, Action<FlickrResult<string>> callback) 
         {
-            string method = flickr.CurrentService == SupportedService.Zooomr ? "GET" : "POST";
+            var method = flickr.CurrentService == SupportedService.Zooomr ? "GET" : "POST";
 
-            string data = String.Empty;
+            var data = String.Empty;
 
             foreach (var k in parameters)
             {
@@ -48,7 +48,7 @@ namespace FlickrNet
 
         private static void GetDataResponseOAuthAsync(Flickr flickr, string baseUrl, Dictionary<string, string> parameters, Action<FlickrResult<string>> callback)
         {
-            string method = "POST";
+            const string method = "POST";
 
             // Remove api key if it exists.
             if (parameters.ContainsKey("api_key")) parameters.Remove("api_key");
@@ -76,14 +76,12 @@ namespace FlickrNet
             }
             catch (WebException ex)
             {
-                //if (ex.Status != WebExceptionStatus.ProtocolError) throw;
-
-                HttpWebResponse response = ex.Response as HttpWebResponse;
+                var response = ex.Response as HttpWebResponse;
                 if (response == null) throw;
 
                 if (response.StatusCode != HttpStatusCode.BadRequest && response.StatusCode != HttpStatusCode.Unauthorized) throw;
 
-                using (StreamReader responseReader = new StreamReader(response.GetResponseStream()))
+                using (var responseReader = new StreamReader(response.GetResponseStream()))
                 {
                     string responseData = responseReader.ReadToEnd();
                     responseReader.Close();

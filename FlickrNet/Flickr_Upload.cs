@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Net;
-using System.Collections;
-using System.Xml.Serialization;
 using System.Xml;
 
 namespace FlickrNet
@@ -62,10 +59,10 @@ namespace FlickrNet
         /// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
         public string UploadPicture(string fileName, string title, string description, string tags)
         {
-            string file = Path.GetFileName(fileName);
+            var file = Path.GetFileName(fileName);
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                string photoId = UploadPicture(stream, file, title, description, tags, false, false, false, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
+                var photoId = UploadPicture(stream, file, title, description, tags, false, false, false, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
                 stream.Close();
                 return photoId;
             }
@@ -86,10 +83,10 @@ namespace FlickrNet
         /// <remarks>Other exceptions may be thrown, see <see cref="FileStream"/> constructors for more details.</remarks>
         public string UploadPicture(string fileName, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend)
         {
-            string file = Path.GetFileName(fileName);
+            var file = Path.GetFileName(fileName);
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                string photoId = UploadPicture(stream, file, title, description, tags, isPublic, isFamily, isFriend, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
+                var photoId = UploadPicture(stream, file, title, description, tags, isPublic, isFamily, isFriend, ContentType.None, SafetyLevel.None, HiddenFromSearch.None);
                 stream.Close();
                 return photoId;
             }
@@ -110,23 +107,25 @@ namespace FlickrNet
         /// <param name="safetyLevel">The safety level of the photo, i.e. Safe, Moderate or Restricted.</param>
         /// <param name="hiddenFromSearch">Is the photo hidden from public searches.</param>
         /// <returns>The id of the photograph after successful uploading.</returns>
-        public string UploadPicture(Stream stream, string fileName, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
+        public string UploadPicture(Stream stream, string fileName, string title, string description, string tags,
+                                    bool isPublic, bool isFamily, bool isFriend, ContentType contentType,
+                                    SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
         {
             CheckRequiresAuthentication();
 
-            Uri uploadUri = new Uri(UploadUrl);
+            var uploadUri = new Uri(UploadUrl);
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
-            if (title != null && title.Length > 0)
+            if (!string.IsNullOrEmpty(title))
             {
                 parameters.Add("title", title);
             }
-            if (description != null && description.Length > 0)
+            if (!string.IsNullOrEmpty(description))
             {
                 parameters.Add("description", description);
             }
-            if (tags != null && tags.Length > 0)
+            if (!string.IsNullOrEmpty(tags))
             {
                 parameters.Add("tags", tags);
             }
@@ -164,9 +163,8 @@ namespace FlickrNet
 
             string responseXml = UploadData(stream, fileName, uploadUri, parameters);
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreWhitespace = true;
-            XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
+            var settings = new XmlReaderSettings {IgnoreWhitespace = true};
+            var reader = XmlReader.Create(new StringReader(responseXml), settings);
 
             if (!reader.ReadToDescendant("rsp"))
             {
@@ -176,31 +174,29 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "stat" && reader.Value == "fail")
                     throw ExceptionHandler.CreateResponseException(reader);
-                continue;
             }
 
             reader.MoveToElement();
             reader.Read();
 
-            UnknownResponse t = new UnknownResponse();
-            ((IFlickrParsable)t).Load(reader);
+            var t = new UnknownResponse();
+            ((IFlickrParsable) t).Load(reader);
             return t.GetElementValue("photoid");
         }
 
         private string UploadData(Stream imageStream, string fileName, Uri uploadUri, Dictionary<string, string> parameters)
         {
-            string boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+            var boundary = "FLICKR_MIME_" + DateTime.Now.ToString("yyyyMMddhhmmss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
 
-            string authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
-            byte[] dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
+            var authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
+            var dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
             
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
-            //req.UserAgent = "Mozilla/4.0 FlickrNet API (compatible; MSIE 6.0; Windows NT 5.1)";
+            var req = (HttpWebRequest)WebRequest.Create(uploadUri);
             req.Method = "POST";
             if (Proxy != null) req.Proxy = Proxy;
             req.Timeout = HttpTimeout;
             req.ContentType = "multipart/form-data; boundary=" + boundary;
-            //req.Expect = String.Empty;
+
             if (!String.IsNullOrEmpty(authHeader))
             {
                 req.Headers["Authorization"] = authHeader;
@@ -208,31 +204,31 @@ namespace FlickrNet
 
             req.ContentLength = dataBuffer.Length;
 
-            using (Stream reqStream = req.GetRequestStream())
+            using (var reqStream = req.GetRequestStream())
             {
-                int bufferSize = 32 * 1024;
+                var bufferSize = 32 * 1024;
                 if (dataBuffer.Length / 100 > bufferSize) bufferSize = bufferSize * 2;
 
-                int uploadedSoFar = 0;
+                var uploadedSoFar = 0;
 
                 while (uploadedSoFar < dataBuffer.Length)
                 {
                     reqStream.Write(dataBuffer, uploadedSoFar, Math.Min(bufferSize, dataBuffer.Length - uploadedSoFar));
                     uploadedSoFar += bufferSize;
 
-                    if (OnUploadProgress != null)
-                    {
-                        UploadProgressEventArgs args = new UploadProgressEventArgs(uploadedSoFar, dataBuffer.Length);
-                        OnUploadProgress(this, args);
-                    }
+                    if (OnUploadProgress == null) continue;
+                    var args = new UploadProgressEventArgs(uploadedSoFar, dataBuffer.Length);
+                    OnUploadProgress(this, args);
                 }
                 reqStream.Close();
             }
 
-            HttpWebResponse res = (HttpWebResponse)req.GetResponse();
+            var res = (HttpWebResponse)req.GetResponse();
+            var stream = res.GetResponseStream();
+            if( stream == null) throw new FlickrWebException("Unable to retrieve stream from web response.");
 
-            StreamReader sr = new StreamReader(res.GetResponseStream());
-            string s = sr.ReadToEnd();
+            var sr = new StreamReader(stream);
+            var s = sr.ReadToEnd();
             sr.Close();
             return s;
         }
@@ -268,18 +264,19 @@ namespace FlickrNet
         public string ReplacePicture(Stream stream, string fileName, string photoId)
         {
 
-            Uri replaceUri = new Uri(ReplaceUrl);
+            var replaceUri = new Uri(ReplaceUrl);
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-
-            parameters.Add("photo_id", photoId);
+            var parameters = new Dictionary<string, string>
+                                 {
+                                     {"photo_id", photoId}
+                                 };
 
             if (!String.IsNullOrEmpty(OAuthAccessToken))
             {
                 OAuthGetBasicParameters(parameters);
                 parameters.Add("oauth_token", OAuthAccessToken);
 
-                string sig = OAuthCalculateSignature("POST", replaceUri.AbsoluteUri, parameters, OAuthAccessTokenSecret);
+                var sig = OAuthCalculateSignature("POST", replaceUri.AbsoluteUri, parameters, OAuthAccessTokenSecret);
                 parameters.Add("oauth_signature", sig);
             }
             else
@@ -288,11 +285,10 @@ namespace FlickrNet
                 parameters.Add("auth_token", apiToken);
             }
 
-            string responseXml = UploadData(stream, fileName, replaceUri, parameters);
+            var responseXml = UploadData(stream, fileName, replaceUri, parameters);
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreWhitespace = true;
-            XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
+            var settings = new XmlReaderSettings {IgnoreWhitespace = true};
+            var reader = XmlReader.Create(new StringReader(responseXml), settings);
 
             if (!reader.ReadToDescendant("rsp"))
             {
@@ -302,13 +298,12 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "stat" && reader.Value == "fail")
                     throw ExceptionHandler.CreateResponseException(reader);
-                continue;
             }
 
             reader.MoveToElement();
             reader.Read();
 
-            UnknownResponse t = new UnknownResponse();
+            var t = new UnknownResponse();
             ((IFlickrParsable)t).Load(reader);
             return t.GetElementValue("photoid");
         }

@@ -11,13 +11,6 @@ namespace FlickrNetTest
     [Category("AccessTokenRequired")]
     public class StatsGetPopularPhotosTests
     {
-        public StatsGetPopularPhotosTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
         [Test]
         public void StatsGetPopularPhotosBasic()
         {

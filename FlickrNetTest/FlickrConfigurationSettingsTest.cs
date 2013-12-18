@@ -21,14 +21,17 @@ namespace FlickrNetTest
         [Test()]
         public void FlickrConfigurationSettingsConstructorTest()
         {
-            string xml = "<flickrNet apiKey=\"apikey\" secret=\"secret\" token=\"thetoken\" cacheDisabled=\"true\" cacheSize=\"1024\" cacheTimeout=\"01:00:00\" cacheLocation=\"testlocation\" service=\"flickr\">"
-                + "<proxy ipaddress=\"localhost\" port=\"8800\" username=\"testusername\" password=\"testpassword\" domain=\"testdomain\"/>"
-                + "</flickrNet>";
-            XmlDocument doc = new XmlDocument();
+            const string xml = "<flickrNet apiKey=\"apikey\" secret=\"secret\" token=\"thetoken\" " +
+                               "cacheDisabled=\"true\" cacheSize=\"1024\" cacheTimeout=\"01:00:00\" " +
+                               "cacheLocation=\"testlocation\" service=\"flickr\">"
+                               + "<proxy ipaddress=\"localhost\" port=\"8800\" username=\"testusername\" " +
+                               "password=\"testpassword\" domain=\"testdomain\"/>"
+                               + "</flickrNet>";
+            var doc = new XmlDocument();
             doc.LoadXml(xml);
 
-            XmlNode configNode = doc.SelectSingleNode("flickrNet");
-            FlickrConfigurationSettings target = new FlickrConfigurationSettings(configNode);
+            var configNode = doc.SelectSingleNode("flickrNet");
+            var target = new FlickrConfigurationSettings(configNode);
 
             Assert.AreEqual("apikey", target.ApiKey);
             Assert.AreEqual("secret", target.SharedSecret);

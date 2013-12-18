@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using System.Xml;
 
 namespace FlickrNet
 {
@@ -15,7 +12,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosCommentsGetListAsync(string photoId, Action<FlickrResult<PhotoCommentCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.getList");
             parameters.Add("photo_id", photoId);
 
@@ -30,7 +27,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosCommentsAddCommentAsync(string photoId, string commentText, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.addComment");
             parameters.Add("photo_id", photoId);
             parameters.Add("comment_text", commentText);
@@ -97,7 +94,8 @@ namespace FlickrNet
         /// Return the list of photos belonging to your contacts that have been commented on recently.
         /// </summary>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
-        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100.
+        ///  The maximum allowed value is 500.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosCommentsGetRecentForContactsAsync(int page, int perPage, Action<FlickrResult<PhotoCollection>> callback)
         {
@@ -107,12 +105,15 @@ namespace FlickrNet
         /// <summary>
         /// Return the list of photos belonging to your contacts that have been commented on recently.
         /// </summary>
-        /// <param name="dateLastComment">Limits the resultset to photos that have been commented on since this date. The default, and maximum, offset is (1) hour.</param>
+        /// <param name="dateLastComment">Limits the resultset to photos that have been commented on since this date. 
+        /// The default, and maximum, offset is (1) hour.</param>
         /// <param name="extras"></param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
-        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. 
+        /// The maximum allowed value is 500.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosCommentsGetRecentForContactsAsync(DateTime dateLastComment, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PhotoCollection>> callback)
+        public void PhotosCommentsGetRecentForContactsAsync(DateTime dateLastComment, PhotoSearchExtras extras, int page,
+                                                            int perPage, Action<FlickrResult<PhotoCollection>> callback)
         {
             PhotosCommentsGetRecentForContactsAsync(dateLastComment, null, extras, page, perPage, callback);
         }
@@ -120,23 +121,30 @@ namespace FlickrNet
         /// <summary>
         /// Return the list of photos belonging to your contacts that have been commented on recently.
         /// </summary>
-        /// <param name="dateLastComment">Limits the resultset to photos that have been commented on since this date. The default, and maximum, offset is (1) hour.</param>
+        /// <param name="dateLastComment">Limits the resultset to photos that have been commented on since this date. 
+        /// The default, and maximum, offset is (1) hour.</param>
         /// <param name="contactsFilter">A list of contact NSIDs to limit the scope of the query to.</param>
         /// <param name="extras"></param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
-        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. 
+        /// The maximum allowed value is 500.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosCommentsGetRecentForContactsAsync(DateTime dateLastComment, string[] contactsFilter, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PhotoCollection>> callback)
+        public void PhotosCommentsGetRecentForContactsAsync(DateTime dateLastComment, string[] contactsFilter,
+                                                            PhotoSearchExtras extras, int page, int perPage,
+                                                            Action<FlickrResult<PhotoCollection>> callback)
         {
             CheckRequiresAuthentication();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.getRecentForContacts");
-            if (dateLastComment != DateTime.MinValue) parameters.Add("date_lastcomment", UtilityMethods.DateToUnixTimestamp(dateLastComment));
-            if (contactsFilter != null && contactsFilter.Length > 0) parameters.Add("contacts_filter", String.Join(",", contactsFilter));
+            if (dateLastComment != DateTime.MinValue)
+                parameters.Add("date_lastcomment", UtilityMethods.DateToUnixTimestamp(dateLastComment));
+            if (contactsFilter != null && contactsFilter.Length > 0)
+                parameters.Add("contacts_filter", String.Join(",", contactsFilter));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0)
+                parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<PhotoCollection>(parameters, callback);
         }

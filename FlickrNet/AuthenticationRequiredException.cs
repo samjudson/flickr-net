@@ -25,7 +25,8 @@ namespace FlickrNet
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthenticationRequiredException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Initializes a new instance of the <see cref="AuthenticationRequiredException"/> class 
+        /// with a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>

@@ -111,17 +111,22 @@ namespace FlickrNet
         /// <param name="perPage">Number of photos to include per page.</param>
         /// <param name="page">The page to download this time.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void FavoritesGetListAsync(string userId, DateTime minFavoriteDate, DateTime maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PhotoCollection>> callback)
+        public void FavoritesGetListAsync(string userId, DateTime minFavoriteDate, DateTime maxFavoriteDate,
+                                          PhotoSearchExtras extras, int page, int perPage,
+                                          Action<FlickrResult<PhotoCollection>> callback)
         {
             CheckRequiresAuthentication();
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.getList");
             if (userId != null) parameters.Add("user_id", userId);
-            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
-            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
+            if (minFavoriteDate != DateTime.MinValue)
+                parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
+            if (maxFavoriteDate != DateTime.MinValue)
+                parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0)
+                parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<PhotoCollection>(parameters, callback);
@@ -151,15 +156,20 @@ namespace FlickrNet
         /// <param name="perPage">The number of photos to return per page.</param>
         /// <param name="page">The specific page to return.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void FavoritesGetPublicListAsync(string userId, DateTime minFavoriteDate, DateTime maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PhotoCollection>> callback)
+        public void FavoritesGetPublicListAsync(string userId, DateTime minFavoriteDate, DateTime maxFavoriteDate,
+                                                PhotoSearchExtras extras, int page, int perPage,
+                                                Action<FlickrResult<PhotoCollection>> callback)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.getPublicList");
             parameters.Add("user_id", userId);
-            if (minFavoriteDate != DateTime.MinValue) parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
-            if (maxFavoriteDate != DateTime.MinValue) parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
+            if (minFavoriteDate != DateTime.MinValue)
+                parameters.Add("min_fav_date", UtilityMethods.DateToUnixTimestamp(minFavoriteDate));
+            if (maxFavoriteDate != DateTime.MinValue)
+                parameters.Add("max_fav_date", UtilityMethods.DateToUnixTimestamp(maxFavoriteDate));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0)
+                parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<PhotoCollection>(parameters, callback);

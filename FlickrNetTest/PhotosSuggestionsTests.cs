@@ -55,8 +55,6 @@ namespace FlickrNetTest
             Assert.AreEqual("I really think this is a good suggestion.", suggestion.Note);
             Assert.AreEqual(54.977, suggestion.Latitude, "Latitude should be the same.");
 
-            // Reject then remove - For some reason rejection is not working
-//            f.PhotosSuggestionsRejectSuggestion(suggestion.SuggestionId);
             f.PhotosSuggestionsRemoveSuggestion(suggestion.SuggestionId);
 
             // Add test suggestion

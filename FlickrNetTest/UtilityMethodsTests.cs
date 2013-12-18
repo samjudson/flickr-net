@@ -9,11 +9,11 @@ namespace FlickrNetTest
     ///This is a test class for FlickrNet.Utils and is intended
     ///to contain all FlickrNet.Utils Unit Tests
     ///</summary>
-    [TestFixture()]
+    [TestFixture]
     public class UtilityMethodsTests
     {
-        private Dictionary<DateTime, string> timestampTests = new Dictionary<DateTime, string>()
-            {
+        private readonly Dictionary<DateTime, string> _timestampTests = new Dictionary<DateTime, string>
+                                                                            {
                 { new DateTime(1970, 1, 1), "0" },
                 { new DateTime(2011, 1, 1), "1293840000" },
                 { new DateTime(2011,1, 1, 0, 20, 31), "1293841231" }
@@ -22,10 +22,10 @@ namespace FlickrNetTest
         [Test]
         public void CleanCollectionIdTest()
         {
-            string orig = "78188-72157600072406095";
-            string expected = "72157600072406095";
+            const string orig = "78188-72157600072406095";
+            const string expected = "72157600072406095";
 
-            string actual = UtilityMethods.CleanCollectionId(orig);
+            var actual = UtilityMethods.CleanCollectionId(orig);
             Assert.AreEqual(expected, actual);
 
             actual = UtilityMethods.CleanCollectionId(expected);
@@ -36,7 +36,7 @@ namespace FlickrNetTest
         [Test]
         public void DateToUnixTimestampTests()
         {
-            foreach (var pair in timestampTests)
+            foreach (var pair in _timestampTests)
             {
                 var orig = pair.Key;
                 var expected = pair.Value;
@@ -48,8 +48,8 @@ namespace FlickrNetTest
         [Test]
         public void DateToMySqlTests()
         {
-            var tests = new Dictionary<DateTime, string>()
-            {
+            var tests = new Dictionary<DateTime, string>
+                            {
                 { new DateTime(2009, 1, 12), "2009-01-12 00:00:00" },
                 { new DateTime(2009, 7, 12), "2009-07-12 00:00:00" },
                 { new DateTime(2009, 12, 12), "2009-12-12 00:00:00" }
@@ -63,41 +63,53 @@ namespace FlickrNetTest
                 Assert.AreEqual(expected, actual, orig + " should have converted to " + expected);
             }
         }
-        [Test()]
+        [Test]
         public void ExtrasToStringTestNoExtras()
         {
-            PhotoSearchExtras extras = PhotoSearchExtras.None; // TODO: Initialize to an appropriate value
+            const PhotoSearchExtras extras = PhotoSearchExtras.None; 
 
-            string expected = String.Empty;
-            string actual;
+            var expected = String.Empty;
 
-            actual = FlickrNet.UtilityMethods.ExtrasToString(extras);
+            var actual = UtilityMethods.ExtrasToString(extras);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
 
-        [Test()]
+        [Test]
         public void ExtrasToStringTestTags()
         {
-            PhotoSearchExtras extras = PhotoSearchExtras.Tags; // TODO: Initialize to an appropriate value
+            const PhotoSearchExtras extras = PhotoSearchExtras.Tags; 
 
-            string expected = "tags";
-            string actual;
+            const string expected = "tags";
 
-            actual = FlickrNet.UtilityMethods.ExtrasToString(extras);
+            var actual = UtilityMethods.ExtrasToString(extras);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
 
-        [Test()]
+        [Test]
         public void ExtrasToStringTestMultiple()
         {
-            PhotoSearchExtras extras = PhotoSearchExtras.Tags | PhotoSearchExtras.OriginalFormat; // TODO: Initialize to an appropriate value
+            const PhotoSearchExtras extras = PhotoSearchExtras.Tags | PhotoSearchExtras.OriginalFormat; 
 
-            string expected = "original_format,tags";
-            string actual;
+            const string expected = "original_format,tags";
 
-            actual = FlickrNet.UtilityMethods.ExtrasToString(extras);
+            var actual = UtilityMethods.ExtrasToString(extras);
+
+            Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
+        }
+
+        [Test]
+        public void ExtrasToStringTestAll()
+        {
+            const PhotoSearchExtras extras = PhotoSearchExtras.All;
+
+            const string expected =
+                "license,date_upload,date_taken,owner_name,icon_server,original_format,last_update,tags," +
+                "geo,machine_tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_l,url_o," +
+                "description,usage,visibility,url_q,url_q,url_n,rotation,url_h,url_k,url_c";
+
+            var actual = UtilityMethods.ExtrasToString(extras);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.ExtrasToString did not return the expected value.");
         }
@@ -105,7 +117,8 @@ namespace FlickrNetTest
         [Test]
         public void MachineTagModeToStringTests()
         {
-            Dictionary<MachineTagMode, string> test = new Dictionary<MachineTagMode, string>() { 
+            var test = new Dictionary<MachineTagMode, string>
+                           { 
                 { MachineTagMode.AllTags, "all" } ,
                 { MachineTagMode.AnyTag, "any" },
                 { MachineTagMode.None, "" },
@@ -126,8 +139,8 @@ namespace FlickrNetTest
         [Test]
         public void MyTestMethod()
         {
-            var tests = new Dictionary<string, DateTime>()
-            {
+            var tests = new Dictionary<string, DateTime>
+                            {
                 { "2009-07-12", new DateTime(2009, 7, 12) },
                 { "2009-12-12", new DateTime(2009, 12, 12) },
                 { "2009-01-12 00:00:00", new DateTime(2009, 1, 12) }
@@ -147,8 +160,8 @@ namespace FlickrNetTest
         [Test]
         public void ParseDateWithGranularityOK()
         {
-            string d = "2010-01-17 12:43:23";
-            DateTime d2 = UtilityMethods.ParseDateWithGranularity(d);
+            const string d = "2010-01-17 12:43:23";
+            var d2 = UtilityMethods.ParseDateWithGranularity(d);
 
             Assert.AreEqual(2010, d2.Year);
             Assert.AreEqual(1, d2.Month);
@@ -161,7 +174,7 @@ namespace FlickrNetTest
         [Test]
         public void ParseDateWithGranularityZeroMonth()
         {
-            string d = "2010-00-01 00:00:00";
+            const string d = "2010-00-01 00:00:00";
             DateTime d2 = UtilityMethods.ParseDateWithGranularity(d);
 
             Assert.AreEqual(2010, d2.Year);
@@ -175,8 +188,8 @@ namespace FlickrNetTest
         [Test]
         public void ParseIdToMemberTypeTests()
         {
-            var tests = new Dictionary<string, MemberTypes>()
-            {
+            var tests = new Dictionary<string, MemberTypes>
+                            {
                 { "1", MemberTypes.Narwhal },
                 { "2", MemberTypes.Member },
                 { "3", MemberTypes.Moderator },
@@ -199,8 +212,8 @@ namespace FlickrNetTest
         [Test]
         public void MemberTypeToStringTests()
         {
-            var tests = new Dictionary<MemberTypes, string>()
-            {
+            var tests = new Dictionary<MemberTypes, string>
+                            {
                 { MemberTypes.Admin, "4" },
                 { MemberTypes.Member, "2" },
                 { MemberTypes.Member | MemberTypes.Admin, "2,4" },
@@ -221,8 +234,8 @@ namespace FlickrNetTest
         [Test]
         public void SortOrderToStringPhotoSearchSortOrderTest()
         {
-            var tests = new Dictionary<PhotoSearchSortOrder, string>()
-            {
+            var tests = new Dictionary<PhotoSearchSortOrder, string>
+                            {
                 { PhotoSearchSortOrder.DatePostedAscending, "date-posted-asc"},
                 { PhotoSearchSortOrder.DatePostedDescending, "date-posted-desc"},
                 { PhotoSearchSortOrder.DateTakenAscending, "date-taken-asc"},
@@ -249,8 +262,8 @@ namespace FlickrNetTest
         [Test]
         public void SortOrderToStringPopularitySortTest()
         {
-            var tests = new Dictionary<PopularitySort, string>()
-            {
+            var tests = new Dictionary<PopularitySort, string>
+                            {
                 { PopularitySort.Comments, "comments"},
                 { PopularitySort.Favorites, "favorites"},
                 { PopularitySort.Views, "views"},
@@ -273,7 +286,8 @@ namespace FlickrNetTest
         [Test]
         public void TagModeToStringTests()
         {
-            Dictionary<TagMode, string> test = new Dictionary<TagMode, string>() { 
+            var test = new Dictionary<TagMode, string>
+                           { 
                 { TagMode.AllTags, "all" } ,
                 { TagMode.AnyTag, "any" },
                 { TagMode.Boolean, "bool" },
@@ -295,7 +309,7 @@ namespace FlickrNetTest
         [Test]
         public void UnixTimestampToDateTests()
         {
-            foreach (var pair in timestampTests)
+            foreach (var pair in _timestampTests)
             {
                 var expected = pair.Key;
                 var orig = pair.Value;
@@ -304,17 +318,17 @@ namespace FlickrNetTest
             }
         }
 
-        [Test()]
+        [Test]
         public void UnixTimestampToDateInvalidStringTest()
         {
-            string invalidTimestamp = "kjhkjh0987";
+            const string invalidTimestamp = "kjhkjh0987";
             DateTime expectedResult = DateTime.MinValue;
             DateTime actualResult = UtilityMethods.UnixTimestampToDate(invalidTimestamp);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [Test()]
+        [Test]
         public void UrlEncodeTestEmpty()
         {
             string data = String.Empty;
@@ -322,12 +336,12 @@ namespace FlickrNetTest
             string expected = String.Empty;
             string actual;
 
-            actual = FlickrNet.UtilityMethods.UrlEncode(data);
+            actual = UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [Test()]
+        [Test]
         public void UrlEncodeTestAmpersand()
         {
             string data = "A&B";
@@ -335,12 +349,12 @@ namespace FlickrNetTest
             string expected = "A%26B";
             string actual;
 
-            actual = FlickrNet.UtilityMethods.UrlEncode(data);
+            actual = UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [Test()]
+        [Test]
         public void UrlEncodeTestPlus()
         {
             string data = "A+B";
@@ -348,12 +362,12 @@ namespace FlickrNetTest
             string expected = "A%2BB";
             string actual;
 
-            actual = FlickrNet.UtilityMethods.UrlEncode(data);
+            actual = UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
 
-        [Test()]
+        [Test]
         public void UrlEncodeTestSpace()
         {
             string data = "A B";
@@ -361,7 +375,7 @@ namespace FlickrNetTest
             string expected = "A%20B";
             string actual;
 
-            actual = FlickrNet.UtilityMethods.UrlEncode(data);
+            actual = UtilityMethods.UrlEncode(data);
 
             Assert.AreEqual(expected, actual, "FlickrNet.Utils.UrlEncode did not return the expected value.");
         }
@@ -375,8 +389,8 @@ namespace FlickrNetTest
             var secret = "4";
             var extension = "jpg";
 
-            var sizeTests = new Dictionary<string, string>()
-            {
+            var sizeTests = new Dictionary<string, string>
+                                {
                 { "square", "http://farm1.staticflickr.com/2/3_4_s.jpg"},
                 { "thumbnail", "http://farm1.staticflickr.com/2/3_4_t.jpg"},
                 { "small", "http://farm1.staticflickr.com/2/3_4_m.jpg"},

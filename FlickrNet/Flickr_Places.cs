@@ -183,6 +183,7 @@ namespace FlickrNet
         {
             return PlacesGetTopPlacesList(placeType, date, null, null);
         }
+
         /// <summary>
         /// Return the top 100 most geotagged places for a day.
         /// </summary>
@@ -197,7 +198,9 @@ namespace FlickrNet
             parameters.Add("method", "flickr.places.getTopPlacesList");
 
             parameters.Add("place_type_id", placeType.ToString("D"));
-            if (date != DateTime.MinValue) parameters.Add("date", date.ToString("yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo));
+            if (date != DateTime.MinValue)
+                parameters.Add("date",
+                               date.ToString("yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo));
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
@@ -210,7 +213,8 @@ namespace FlickrNet
         /// <returns>The list of places of that type.</returns>
         public PlaceCollection PlacesPlacesForUser()
         {
-            return PlacesPlacesForUser(PlaceType.Continent, null, null, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+            return PlacesPlacesForUser(PlaceType.Continent, null, null, 0, DateTime.MinValue, DateTime.MinValue,
+                                       DateTime.MinValue, DateTime.MinValue);
         }
 
         /// <summary>
@@ -231,14 +235,19 @@ namespace FlickrNet
         /// <param name="placeType">The type of places to return.</param>
         /// <param name="woeId">A Where on Earth identifier to use to filter photo clusters.</param>
         /// <param name="placeId">A Flickr Places identifier to use to filter photo clusters. </param>
-        /// <param name="threshold">The minimum number of photos that a place type must have to be included. If the number of photos is lowered then the parent place type for that place will be used.
-        /// For example if you only have 3 photos taken in the locality of Montreal (WOE ID 3534) but your threshold is set to 5 then those photos will be "rolled up" and included instead with a place record for the region of Quebec (WOE ID 2344924).</param>
+        /// <param name="threshold">The minimum number of photos that a place type must have to be included. 
+        /// If the number of photos is lowered then the parent place type for that place will be used.
+        /// For example if you only have 3 photos taken in the locality of Montreal (WOE ID 3534) 
+        /// but your threshold is set to 5 then those photos will be "rolled up" 
+        /// and included instead with a place record for the region of Quebec (WOE ID 2344924).</param>
         /// <param name="minUploadDate">Minimum upload date. Photos with an upload date greater than or equal to this value will be returned.</param>
         /// <param name="maxUploadDate">Maximum upload date. Photos with an upload date less than or equal to this value will be returned. </param>
         /// <param name="minTakenDate">Minimum taken date. Photos with an taken date greater than or equal to this value will be returned. </param>
         /// <param name="maxTakenDate">Maximum taken date. Photos with an taken date less than or equal to this value will be returned. </param>
         /// <returns>The list of places of that type.</returns>
-        public PlaceCollection PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId, int threshold, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
+        public PlaceCollection PlacesPlacesForUser(PlaceType placeType, string woeId, string placeId, int threshold,
+                                                   DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate,
+                                                   DateTime maxTakenDate)
         {
             CheckRequiresAuthentication();
 
@@ -248,11 +257,16 @@ namespace FlickrNet
             parameters.Add("place_type_id", placeType.ToString("D"));
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (threshold > 0) parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (threshold > 0)
+                parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (minTakenDate != DateTime.MinValue)
+                parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue)
+                parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue)
+                parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue)
+                parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }
@@ -263,9 +277,11 @@ namespace FlickrNet
         /// <param name="placeType">The ID for a specific place type to cluster photos by. </param>
         /// <param name="woeId">A Where on Earth identifier to use to filter photo clusters. </param>
         /// <param name="placeId">A Flickr Places identifier to use to filter photo clusters. </param>
-        /// <param name="threshold">The minimum number of photos that a place type must have to be included. If the number of photos is lowered then the parent place type for that place will be used.</param>
+        /// <param name="threshold">The minimum number of photos that a place type must have to be included. 
+        /// If the number of photos is lowered then the parent place type for that place will be used.</param>
         /// <param name="tags">A list of tags. Photos with one or more of the tags listed will be returned.</param>
-        /// <param name="tagMode">Either 'any' for an OR combination of tags, or 'all' for an AND combination. Defaults to 'any' if not specified.</param>
+        /// <param name="tagMode">Either 'any' for an OR combination of tags, or 'all' for an AND combination. 
+        /// Defaults to 'any' if not specified.</param>
         /// <param name="machineTags"></param>
         /// <param name="machineTagMode"></param>
         /// <param name="minUploadDate">Minimum upload date.</param>
@@ -273,7 +289,10 @@ namespace FlickrNet
         /// <param name="minTakenDate">Minimum taken date.</param>
         /// <param name="maxTakenDate">Maximum taken date.</param>
         /// <returns></returns>
-        public PlaceCollection PlacesPlacesForTags(PlaceType placeType, string woeId, string placeId, int threshold, string[] tags, TagMode tagMode, string[] machineTags, MachineTagMode machineTagMode, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
+        public PlaceCollection PlacesPlacesForTags(PlaceType placeType, string woeId, string placeId, int threshold,
+                                                   string[] tags, TagMode tagMode, string[] machineTags,
+                                                   MachineTagMode machineTagMode, DateTime minUploadDate,
+                                                   DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForTags");
@@ -281,15 +300,22 @@ namespace FlickrNet
             parameters.Add("place_type_id", placeType.ToString("D"));
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (threshold > 0) parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (threshold > 0)
+                parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (tags != null && tags.Length > 0) parameters.Add("tags", String.Join(",", tags));
             if (tagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(tagMode));
-            if (machineTags != null && machineTags.Length > 0) parameters.Add("machine_tags", String.Join(",", machineTags));
-            if (machineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(machineTagMode));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (machineTags != null && machineTags.Length > 0)
+                parameters.Add("machine_tags", String.Join(",", machineTags));
+            if (machineTagMode != MachineTagMode.None)
+                parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(machineTagMode));
+            if (minTakenDate != DateTime.MinValue)
+                parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue)
+                parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue)
+                parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue)
+                parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }
@@ -300,14 +326,18 @@ namespace FlickrNet
         /// <param name="placeType">The ID for a specific place type to cluster photos by. </param>
         /// <param name="woeId">A Where on Earth identifier to use to filter photo clusters. </param>
         /// <param name="placeId">A Flickr Places identifier to use to filter photo clusters. </param>
-        /// <param name="threshold">The minimum number of photos that a place type must have to be included. If the number of photos is lowered then the parent place type for that place will be used.</param>
+        /// <param name="threshold">The minimum number of photos that a place type must have to be included. 
+        /// If the number of photos is lowered then the parent place type for that place will be used.</param>
         /// <param name="contactType">The type of contacts to return places for. Either all, or friends and family only.</param>
         /// <param name="minUploadDate">Minimum upload date.</param>
         /// <param name="maxUploadDate">Maximum upload date.</param>
         /// <param name="minTakenDate">Minimum taken date.</param>
         /// <param name="maxTakenDate">Maximum taken date.</param>
         /// <returns></returns>
-        public PlaceCollection PlacesPlacesForContacts(PlaceType placeType, string woeId, string placeId, int threshold, ContactSearch contactType, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate)
+        public PlaceCollection PlacesPlacesForContacts(PlaceType placeType, string woeId, string placeId, int threshold,
+                                                       ContactSearch contactType, DateTime minUploadDate,
+                                                       DateTime maxUploadDate, DateTime minTakenDate,
+                                                       DateTime maxTakenDate)
         {
             CheckRequiresAuthentication();
 
@@ -317,12 +347,18 @@ namespace FlickrNet
             parameters.Add("place_type_id", placeType.ToString("D"));
             if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
             if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (threshold > 0) parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (contactType != ContactSearch.None) parameters.Add("contacts", (contactType == ContactSearch.AllContacts ? "all" : "ff"));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (threshold > 0)
+                parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (contactType != ContactSearch.None)
+                parameters.Add("contacts", (contactType == ContactSearch.AllContacts ? "all" : "ff"));
+            if (minUploadDate != DateTime.MinValue)
+                parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue)
+                parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue)
+                parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue)
+                parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
 
             return GetResponseCache<PlaceCollection>(parameters);
         }

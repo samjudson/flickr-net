@@ -5,7 +5,8 @@ using System.Text;
 namespace FlickrNet
 {
     /// <summary>
-    /// The default privacy level for geographic information attached to the user's photos and whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
+    /// The default privacy level for geographic information attached to the user's photos 
+    /// and whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
     /// </summary>
     public sealed class UserGeoPermissions : IFlickrParsable
     {

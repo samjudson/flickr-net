@@ -184,69 +184,11 @@ namespace FlickrNet
                     {
                         result.Error = ex;
                         if (null != callback) callback(result);
-                        return;
                     }
                 }, null);
 
             }, null);
 
-            //WebClient client = new WebClient();
-            //client.UploadStringCompleted += delegate(object sender, UploadStringCompletedEventArgs e)
-            //{
-            //    FlickrResult<T> result = new FlickrResult<T>();
-
-            //    if (e.Error != null)
-            //    {
-            //        result.Error = e.Error;
-            //        callback(result);
-            //        return;
-            //    }
-
-            //    try
-            //    {
-            //        string responseXml = e.Result;
-
-            //        lastResponse = responseXml;
-
-            //        XmlReaderSettings settings = new XmlReaderSettings();
-            //        settings.IgnoreWhitespace = true;
-            //        XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
-
-            //        if (!reader.ReadToDescendant("rsp"))
-            //        {
-            //            throw new XmlException("Unable to find response element 'rsp' in Flickr response");
-            //        }
-            //        while (reader.MoveToNextAttribute())
-            //        {
-            //            if (reader.LocalName == "stat" && reader.Value == "fail")
-            //                throw ExceptionHandler.CreateResponseException(reader);
-            //            continue;
-            //        }
-
-            //        reader.MoveToElement();
-            //        reader.Read();
-
-            //        T t = new T();
-            //        ((IFlickrParsable)t).Load(reader);
-            //        result.Result = t;
-            //        result.HasError = false;
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        result.HasError = true;
-            //        result.Error = ex;
-            //    }
-
-            //    if (callback != null)
-            //    {
-            //        callback(result);
-            //    }
-
-            //};
-
-            //client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-            //client.UploadStringAsync(url, "POST", postContents);
         }
     }
 }

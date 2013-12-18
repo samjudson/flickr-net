@@ -194,7 +194,9 @@ namespace FlickrNet
         /// <param name="includeSelf">True to include photos from the user ID specified as well.</param>
         /// <param name="extras">A list of extra details to return for each photo.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosGetContactsPublicPhotosAsync(string userId, int count, bool justFriends, bool singlePhoto, bool includeSelf, PhotoSearchExtras extras, Action<FlickrResult<PhotoCollection>> callback)
+        public void PhotosGetContactsPublicPhotosAsync(string userId, int count, bool justFriends, bool singlePhoto,
+                                                       bool includeSelf, PhotoSearchExtras extras,
+                                                       Action<FlickrResult<PhotoCollection>> callback)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getContactsPublicPhotos");
@@ -276,7 +278,10 @@ namespace FlickrNet
             {
                 Array.Sort<DateTime>(dates);
 #if !SILVERLIGHT
-                dateString = String.Join(",", new List<DateTime>(dates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
+                dateString = String.Join(",", new List<DateTime>(dates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) 
+                {
+                    return UtilityMethods.DateToUnixTimestamp(d).ToString(); 
+                })).ToArray());
 #else
                 dateString = String.Join(",", (from d in dates select UtilityMethods.DateToUnixTimestamp(d)).ToArray<string>());
 #endif
@@ -286,7 +291,10 @@ namespace FlickrNet
             {
                 Array.Sort<DateTime>(takenDates);
 #if !SILVERLIGHT
-                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
+                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) 
+                    {
+                        return UtilityMethods.DateToUnixTimestamp(d).ToString(); 
+                    })).ToArray());
 #else
                 takenDateString = String.Join(",", (from d in takenDates select UtilityMethods.DateToUnixTimestamp(d)).ToArray<string>());
 #endif
@@ -341,7 +349,8 @@ namespace FlickrNet
         /// Get information about a photo. The calling user must have permission to view the photo.
         /// </summary>
         /// <param name="photoId">The id of the photo to fetch information for.</param>
-        /// <param name="secret">The secret for the photo. If the correct secret is passed then permissions checking is skipped. This enables the 'sharing' of individual photos by passing around the id and secret.</param>
+        /// <param name="secret">The secret for the photo. If the correct secret is passed then permissions checking is skipped. 
+        /// This enables the 'sharing' of individual photos by passing around the id and secret.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetInfoAsync(string photoId, string secret, Action<FlickrResult<PhotoInfo>> callback)
         {
@@ -574,7 +583,8 @@ namespace FlickrNet
         /// Sets the license for a photo.
         /// </summary>
         /// <param name="photoId">The photo to update the license for.</param>
-        /// <param name="license">The license to apply, or <see cref="LicenseType.AllRightsReserved"/> (0) to remove the current license. Note : as of this writing the <see cref="LicenseType.NoKnownCopyrightRestrictions"/> license (7) is not a valid argument.</param>
+        /// <param name="license">The license to apply, or <see cref="LicenseType.AllRightsReserved"/> (0) to remove the current license. 
+        /// Note : as of this writing the <see cref="LicenseType.NoKnownCopyrightRestrictions"/> license (7) is not a valid argument.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosLicensesSetLicenseAsync(string photoId, LicenseType license, Action<FlickrResult<NoResponse>> callback)
         {
@@ -770,9 +780,12 @@ namespace FlickrNet
         /// <param name="permComment">Who can add comments. See <see cref="PermissionComment"/> for more details.</param>
         /// <param name="permAddMeta">Who can add metadata (notes and tags). See <see cref="PermissionAddMeta"/> for more details.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosSetPermsAsync(string photoId, int isPublic, int isFriend, int isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta, Action<FlickrResult<NoResponse>> callback)
+        public void PhotosSetPermsAsync(string photoId, int isPublic, int isFriend, int isFamily,
+                                        PermissionComment permComment, PermissionAddMeta permAddMeta,
+                                        Action<FlickrResult<NoResponse>> callback)
         {
-            PhotosSetPermsAsync(photoId, (isPublic == 1), (isFriend == 1), (isFamily == 1), permComment, permAddMeta, callback);
+            PhotosSetPermsAsync(photoId, (isPublic == 1), (isFriend == 1), (isFamily == 1), permComment, permAddMeta,
+                                callback);
         }
 
         /// <summary>
@@ -785,9 +798,11 @@ namespace FlickrNet
         /// <param name="permComment">Who can add comments. See <see cref="PermissionComment"/> for more details.</param>
         /// <param name="permAddMeta">Who can add metadata (notes and tags). See <see cref="PermissionAddMeta"/> for more details.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosSetPermsAsync(string photoId, bool isPublic, bool isFriend, bool isFamily, PermissionComment permComment, PermissionAddMeta permAddMeta, Action<FlickrResult<NoResponse>> callback)
+        public void PhotosSetPermsAsync(string photoId, bool isPublic, bool isFriend, bool isFamily,
+                                        PermissionComment permComment, PermissionAddMeta permAddMeta,
+                                        Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.setPerms");
             parameters.Add("photo_id", photoId);
             parameters.Add("is_public", (isPublic ? "1" : "0"));

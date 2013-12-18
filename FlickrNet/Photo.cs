@@ -527,7 +527,8 @@ namespace FlickrNet
         /// Protected method that does the actual initialization of the Photo instance. Should be called by subclasses of the Photo class.
         /// </summary>
         /// <param name="reader">The reader containing the XML to be parsed.</param>
-        /// <param name="allowExtraAtrributes">Wheither to allow unknown extra attributes. In debug builds will throw an exception if this parameter is false and an unknown attribute is found.</param>
+        /// <param name="allowExtraAtrributes">Wheither to allow unknown extra attributes. 
+        /// In debug builds will throw an exception if this parameter is false and an unknown attribute is found.</param>
         protected void Load(XmlReader reader, bool allowExtraAtrributes)
         {
             if (reader.LocalName != "photo")

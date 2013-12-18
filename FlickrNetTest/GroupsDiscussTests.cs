@@ -158,7 +158,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetInfoStickyTest()
         {
-            var topicId = "72157630982967152";
+            const string topicId = "72157630982967152";
             var f = TestData.GetAuthInstance();
 
             var topic = f.GroupsDiscussTopicsGetInfo(topicId);
@@ -166,8 +166,7 @@ namespace FlickrNetTest
             Assert.IsTrue(topic.IsSticky, "This topic should be marked as sticky.");
             Assert.IsFalse(topic.IsLocked, "This topic should not be marked as locked.");
 
-            // This assert should pass, but Flickr returns 0 for can_reply, even though I am an admin of this group.
-            //Assert.IsTrue(topic.CanReply, "CanReply should be true as the topic is not locked.");
+            // topic.CanReply should be true, but for some reason isn't, so we cannot test it.
         }
 
         [Test]

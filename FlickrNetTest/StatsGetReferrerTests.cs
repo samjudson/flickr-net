@@ -14,13 +14,6 @@ namespace FlickrNetTest
     [Category("AccessTokenRequired")]
     public class StatsGetReferrerTests
     {
-        public StatsGetReferrerTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
         private string collectionId = "78188-72157600072356354";
         private string photoId = "5890800";
         private string photosetId = "1493109";
@@ -74,7 +67,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 
             // I often get 0 referrers for a particular given date. As this method only works for the previous 28 days I cannot pick a fixed date.
-            //Assert.AreNotEqual(0, referrers.Total, "StatReferrers.Total should not be zero.");
+            // Therefore we cannot confirm that regerrers.Total is always greater than zero.
 
             Assert.AreEqual(referrers.Count, Math.Min(referrers.Total, referrers.PerPage), "Count should either be equal to Total or PerPage.");
 
@@ -112,7 +105,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(referrers, "StatReferrers should not be null.");
 
             // I often get 0 referrers for a particular given date. As this method only works for the previous 28 days I cannot pick a fixed date.
-            //Assert.AreNotEqual(0, referrers.Total, "StatReferrers.Total should not be zero.");
+            // Therefore we cannot confirm that regerrers.Total is always greater than zero.
 
             Assert.AreEqual(referrers.Count, Math.Min(referrers.Total, referrers.PerPage), "Count should either be equal to Total or PerPage.");
 

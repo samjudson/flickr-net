@@ -9,7 +9,9 @@ namespace FlickrNet
         /// <summary>
         /// Add a photo to a gallery.
         /// </summary>
-        /// <param name="galleryId">he ID of the gallery to add a photo to. Note: this is the compound ID returned in methods like <see cref="Flickr.GalleriesGetList(string, int, int)"/>, and <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.</param>
+        /// <param name="galleryId">The ID of the gallery to add a photo to. 
+        /// Note: this is the compound ID returned in methods like <see cref="Flickr.GalleriesGetList(string, int, int)"/>, 
+        /// and <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.</param>
         /// <param name="photoId">The photo ID to add to the gallery</param>
         public void GalleriesAddPhoto(string galleryId, string photoId)
         {
@@ -19,7 +21,9 @@ namespace FlickrNet
         /// <summary>
         /// Add a photo to a gallery.
         /// </summary>
-        /// <param name="galleryId">he ID of the gallery to add a photo to. Note: this is the compound ID returned in methods like <see cref="Flickr.GalleriesGetList(string, int, int)"/>, and <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.</param>
+        /// <param name="galleryId">The ID of the gallery to add a photo to. 
+        /// Note: this is the compound ID returned in methods like <see cref="Flickr.GalleriesGetList(string, int, int)"/>, 
+        /// and <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.</param>
         /// <param name="photoId">The photo ID to add to the gallery</param>
         /// <param name="comment">A short comment or story to accompany the photo.</param>
         public void GalleriesAddPhoto(string galleryId, string photoId, string comment)
@@ -94,7 +98,9 @@ namespace FlickrNet
         /// <summary>
         /// Edit the comment for a gallery photo.
         /// </summary>
-        /// <param name="galleryId">The ID of the gallery to add a photo to. Note: this is the compound ID returned in methods like <see cref="Flickr.GalleriesGetList(string, int, int)"/>, and <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.</param>
+        /// <param name="galleryId">The ID of the gallery to add a photo to. 
+        /// Note: this is the compound ID returned in methods like <see cref="Flickr.GalleriesGetList(string, int, int)"/>, 
+        /// and <see cref="Flickr.GalleriesGetListForPhoto(string, int, int)"/>.</param>
         /// <param name="photoId">The photo ID to add to the gallery.</param>
         /// <param name="comment">The updated comment the photo.</param>
         public void GalleriesEditPhoto(string galleryId, string photoId, string comment)
@@ -114,8 +120,11 @@ namespace FlickrNet
         /// Modify the photos in a gallery. Use this method to add, remove and re-order photos.
         /// </summary>
         /// <param name="galleryId">The id of the gallery to modify. The gallery must belong to the calling user.</param>
-        /// <param name="primaryPhotoId">The id of the photo to use as the 'primary' photo for the gallery. This id must also be passed along in photo_ids list argument.</param>
-        /// <param name="photoIds">An enumeration of photo ids to include in the gallery. They will appear in the set in the order sent. This list must contain the primary photo id. This list of photos replaces the existing list.</param>
+        /// <param name="primaryPhotoId">The id of the photo to use as the 'primary' photo for the gallery. 
+        /// This id must also be passed along in photo_ids list argument.</param>
+        /// <param name="photoIds">An enumeration of photo ids to include in the gallery. 
+        /// They will appear in the set in the order sent. This list must contain the primary photo id. 
+        /// This list of photos replaces the existing list.</param>
         public void GalleriesEditPhotos(string galleryId, string primaryPhotoId, IEnumerable<string> photoIds)
         {
             CheckRequiresAuthentication();

@@ -15,7 +15,9 @@ namespace FlickrNet
         /// </remarks>
         /// <param name="latitude">The latitude of the photos to be update whose valid range is -90 to 90. Anything more than 6 decimal places will be truncated.</param>
         /// <param name="longitude">The longitude of the photos to be updated whose valid range is -180 to 180. Anything more than 6 decimal places will be truncated.</param>
-        /// <param name="accuracy">Recorded accuracy level of the photos to be updated. World level is 1, Country is ~3, Region ~6, City ~11, Street ~16. Current range is 1-16. Defaults to 16 if not specified.</param>
+        /// <param name="accuracy">Recorded accuracy level of the photos to be updated. 
+        /// World level is 1, Country is ~3, Region ~6, City ~11, Street ~16. Current range is 1-16. 
+        /// Defaults to 16 if not specified.</param>
         /// <param name="placeId">A Flickr Places ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
         /// <param name="woeId">A Where On Earth (WOE) ID. (While optional, you must pass either a valid Places ID or a WOE ID.)</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
@@ -99,7 +101,8 @@ namespace FlickrNet
         /// Note : photos passed to this method must already be geotagged (using the flickr.photos.geo.setLocation method).
         /// </remarks>
         /// <param name="photoId">The id of the photo to set context data for.</param>
-        /// <param name="context">ontext is a numeric value representing the photo's geotagginess beyond latitude and longitude. For example, you may wish to indicate that a photo was taken "indoors" or "outdoors". </param>
+        /// <param name="context">Context is a numeric value representing the photo's geotagginess beyond latitude and longitude. 
+        /// For example, you may wish to indicate that a photo was taken "indoors" or "outdoors". </param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGeoSetContextAsync(string photoId, GeoContext context, Action<FlickrResult<NoResponse>> callback)
         {
@@ -150,12 +153,17 @@ namespace FlickrNet
         /// </summary>
         /// <param name="latitude">The latitude whose valid range is -90 to 90. Anything more than 6 decimal places will be truncated.</param>
         /// <param name="longitude">The longitude whose valid range is -180 to 180. Anything more than 6 decimal places will be truncated.</param>
-        /// <param name="accuracy">Recorded accuracy level of the location information. World level is 1, Country is ~3, Region ~6, City ~11, Street ~16. Current range is 1-16. Defaults to 16 if not specified.</param>
+        /// <param name="accuracy">Recorded accuracy level of the location information. 
+        /// World level is 1, Country is ~3, Region ~6, City ~11, Street ~16. Current range is 1-16. 
+        /// Defaults to 16 if not specified.</param>
         /// <param name="extras"></param>
-        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
+        /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. 
+        /// The maximum allowed value is 500.</param>
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosGeoPhotosForLocationAsync(double latitude, double longitude, GeoAccuracy accuracy, PhotoSearchExtras extras, int perPage, int page, Action<FlickrResult<PhotoCollection>> callback)
+        public void PhotosGeoPhotosForLocationAsync(double latitude, double longitude, GeoAccuracy accuracy,
+                                                    PhotoSearchExtras extras, int perPage, int page,
+                                                    Action<FlickrResult<PhotoCollection>> callback)
         {
             CheckRequiresAuthentication();
 
@@ -166,7 +174,8 @@ namespace FlickrNet
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("accuracy", accuracy.ToString("D"));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0)
+                parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<PhotoCollection>(parameters, callback);
@@ -266,9 +275,10 @@ namespace FlickrNet
         /// <param name="isFamily"></param>
         /// <param name="isFriend"></param>
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
-        public void PhotosGeoSetPermsAsync(string photoId, bool isPublic, bool isContact, bool isFamily, bool isFriend, Action<FlickrResult<NoResponse>> callback)
+        public void PhotosGeoSetPermsAsync(string photoId, bool isPublic, bool isContact, bool isFamily, bool isFriend,
+                                           Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setPerms");
             parameters.Add("photo_id", photoId);
             parameters.Add("is_public", isPublic ? "1" : "0");

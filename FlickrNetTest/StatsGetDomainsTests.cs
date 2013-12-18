@@ -14,13 +14,6 @@ namespace FlickrNetTest
     [Category("AccessTokenRequired")]
     public class StatsGetDomainsTests
     {
-        public StatsGetDomainsTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
         private string collectionId = "78188-72157600072356354";
         private string photoId = "5890800";
         private string photosetId = "1493109";

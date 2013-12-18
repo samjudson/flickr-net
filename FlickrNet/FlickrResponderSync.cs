@@ -131,9 +131,6 @@ namespace FlickrNet
 
             if (req.Method == "POST") req.ContentLength = postArray.Length;
 
-            //req.UserAgent = Flickr.UserAgent;
-            //if (Proxy != null) req.Proxy = Proxy;
-            //req.Timeout = HttpTimeout;
             req.KeepAlive = false;
 
             if (data.Length > 0)

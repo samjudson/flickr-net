@@ -266,20 +266,20 @@ namespace FlickrNet
 
             if (dates != null && dates.Length > 0)
             {
-                Array.Sort<DateTime>(dates);
-                dateString = String.Join(",", new List<DateTime>(dates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToUnixTimestamp(d).ToString(); })).ToArray());
+                Array.Sort(dates);
+                dateString = String.Join(",", new List<DateTime>(dates).ConvertAll(UtilityMethods.DateToUnixTimestamp).ToArray());
             }
 
             if (takenDates != null && takenDates.Length > 0)
             {
-                Array.Sort<DateTime>(takenDates);
-                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll<string>(new Converter<DateTime, string>(delegate(DateTime d) { return UtilityMethods.DateToMySql(d).ToString(); })).ToArray());
+                Array.Sort(takenDates);
+                takenDateString = String.Join(",", new List<DateTime>(takenDates).ConvertAll(UtilityMethods.DateToMySql).ToArray());
             }
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getCounts");
-            if (dateString != null && dateString.Length > 0) parameters.Add("dates", dateString);
-            if (takenDateString != null && takenDateString.Length > 0) parameters.Add("taken_dates", takenDateString);
+            if (!string.IsNullOrEmpty(dateString)) parameters.Add("dates", dateString);
+            if (!string.IsNullOrEmpty(takenDateString)) parameters.Add("taken_dates", takenDateString);
 
             return GetResponseCache<PhotoCountCollection>(parameters);
         }
@@ -325,7 +325,8 @@ namespace FlickrNet
         /// Get information about a photo. The calling user must have permission to view the photo.
         /// </summary>
         /// <param name="photoId">The id of the photo to fetch information for.</param>
-        /// <param name="secret">The secret for the photo. If the correct secret is passed then permissions checking is skipped. This enables the 'sharing' of individual photos by passing around the id and secret.</param>
+        /// <param name="secret">The secret for the photo. If the correct secret is passed then permissions checking is skipped. 
+        /// This enables the 'sharing' of individual photos by passing around the id and secret.</param>
         /// <returns>A <see cref="PhotoInfo"/> class detailing the properties of the photo.</returns>
         public PhotoInfo PhotosGetInfo(string photoId, string secret)
         {
@@ -560,7 +561,8 @@ namespace FlickrNet
         /// Sets the license for a photo.
         /// </summary>
         /// <param name="photoId">The photo to update the license for.</param>
-        /// <param name="license">The license to apply, or <see cref="LicenseType.AllRightsReserved"/> (0) to remove the current license. Note : as of this writing the <see cref="LicenseType.NoKnownCopyrightRestrictions"/> license (7) is not a valid argument.</param>
+        /// <param name="license">The license to apply, or <see cref="LicenseType.AllRightsReserved"/> (0) to remove the current license. 
+        /// Note : as of this writing the <see cref="LicenseType.NoKnownCopyrightRestrictions"/> license (7) is not a valid argument.</param>
         public void PhotosLicensesSetLicense(string photoId, LicenseType license)
         {
             CheckRequiresAuthentication();

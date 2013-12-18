@@ -108,7 +108,10 @@ namespace FlickrNet
                             {
                                 string[] xy = point.Split(',');
                                 if (xy.Length != 2) throw new ParsingException("Invalid polypoint found in polyline : '" + polystring + "'");
-                                polyline.Add(new PointD(double.Parse(xy[0], System.Globalization.NumberFormatInfo.InvariantInfo), double.Parse(xy[1], System.Globalization.NumberFormatInfo.InvariantInfo)));
+                                polyline.Add(
+                                    new PointD(
+                                        double.Parse(xy[0], System.Globalization.NumberFormatInfo.InvariantInfo),
+                                        double.Parse(xy[1], System.Globalization.NumberFormatInfo.InvariantInfo)));
                             }
                             PolyLines.Add(polyline);
                         }

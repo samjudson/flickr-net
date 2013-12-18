@@ -29,7 +29,8 @@ namespace FlickrNet
         }
 
         /// <summary>
-        /// Returns the default privacy level for geographic information attached to the user's photos and whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
+        /// Returns the default privacy level for geographic information attached to the user's photos 
+        /// and whether or not the user has chosen to use geo-related EXIF information to automatically geotag their photos.
         /// </summary>
         public UserGeoPermissions PrefsGetGeoPerms()
         {

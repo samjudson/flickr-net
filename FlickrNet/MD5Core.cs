@@ -57,7 +57,8 @@ public sealed class MD5Core
         if (null == input)
             throw new System.ArgumentNullException("input", "Unable to calculate hash over null input data");
         if (null == encoding)
-            throw new System.ArgumentNullException("encoding", "Unable to calculate hash over a string without a default encoding. Consider using the GetHashString(string) overload to use UTF8 Encoding");
+            throw new System.ArgumentNullException("encoding", "Unable to calculate hash over a string without a default encoding. " +
+                                                               "Consider using the GetHashString(string) overload to use UTF8 Encoding");
 
         byte[] target = encoding.GetBytes(input);
 
@@ -127,10 +128,10 @@ public sealed class MD5Core
 
     // Performs a single block transform of MD5 for a given set of ABCD inputs
     /* If implementing your own hashing framework, be sure to set the initial ABCD correctly according to RFC 1321:
-    //    A = 0x67452301;
-    //    B = 0xefcdab89;
-    //    C = 0x98badcfe;
-    //    D = 0x10325476;
+    //    A = 0x67452301
+    //    B = 0xefcdab89
+    //    C = 0x98badcfe
+    //    D = 0x10325476
     */
     internal static void GetHashBlock(byte[] input, ref ABCDStruct ABCDValue, int ibStart)
     {

@@ -342,7 +342,6 @@ namespace FlickrNetTest
                                            UserId = "41888973@N00",
                                            Extras = PhotoSearchExtras.All
                                        };
-            //o.Text = "Apple Store";
             PhotoCollection photos = Instance.PhotosSearch(o);
 
             Assert.AreEqual(100, photos.PerPage);
@@ -536,8 +535,6 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(ps, "Photos should not be null");
             Assert.AreEqual(500, ps.PerPage, "PhotosPerPage should be 500");
-            // Due to instabilities in the Flickr API at the moment the following assert would likely fail.
-            //Assert.AreEqual(500, ps.Count, "Count should be 500 as well");
             Assert.AreNotEqual(0, ps.Count, "Count should be greater than zero.");
         }
 
@@ -686,11 +683,9 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchUrlLimitTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
-            o.Extras = PhotoSearchExtras.All;
-            o.TagMode = TagMode.AnyTag;
+            PhotoSearchOptions o = new PhotoSearchOptions {Extras = PhotoSearchExtras.All, TagMode = TagMode.AnyTag};
             StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < 200; i++) sb.Append("tagnumber" + i);
+            for (var i = 1; i < 200; i++) sb.Append("tagnumber" + i);
             o.Tags = sb.ToString();
 
             Instance.PhotosSearch(o);
@@ -798,7 +793,7 @@ namespace FlickrNetTest
             var contacts = AuthInstance.ContactsGetList(1, 1000).Select(c => c.UserId).ToList();
 
             // Test with user id = "me"
-            var o = new PhotoSearchOptions
+            PhotoSearchOptions o = new PhotoSearchOptions
                         {
                             UserId = "me",
                             Contacts = ContactSearch.AllContacts

@@ -1,6 +1,8 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Collections;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
@@ -15,13 +17,9 @@ namespace FlickrNet
     /// <summary>
     /// Internal class providing certain utility functions to other classes.
     /// </summary>
-    internal sealed class UtilityMethods
+    internal static class UtilityMethods
     {
-        private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        private UtilityMethods()
-        {
-        }
+        private static readonly DateTime UnixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Converts <see cref="AuthLevel"/> to a string.
@@ -90,9 +88,6 @@ namespace FlickrNet
         }
 
 
-        
-
-
         /// <summary>
         /// Encodes a URL quesrystring data component.
         /// </summary>
@@ -110,7 +105,7 @@ namespace FlickrNet
         /// <returns>A long for the number of seconds since 1st January 1970, as per unix specification.</returns>
         public static string DateToUnixTimestamp(DateTime date)
         {
-            TimeSpan ts = date - unixStartDate;
+            TimeSpan ts = date - UnixStartDate;
             return ts.TotalSeconds.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
@@ -139,7 +134,7 @@ namespace FlickrNet
         /// <returns>The <see cref="DateTime"/> object the time represents.</returns>
         public static DateTime UnixTimestampToDate(long timestamp)
         {
-            return unixStartDate.AddSeconds(timestamp);
+            return UnixStartDate.AddSeconds(timestamp);
         }
 
         /// <summary>
@@ -157,40 +152,37 @@ namespace FlickrNet
         /// <returns></returns>
         public static string ExtrasToString(PhotoSearchExtras extras)
         {
-            List<string> extraList = new List<string>();
-
-            if ((extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken) extraList.Add("date_taken");
-            if ((extras & PhotoSearchExtras.DateUploaded) == PhotoSearchExtras.DateUploaded) extraList.Add("date_upload");
-            if ((extras & PhotoSearchExtras.IconServer) == PhotoSearchExtras.IconServer) extraList.Add("icon_server");
-            if ((extras & PhotoSearchExtras.License) == PhotoSearchExtras.License) extraList.Add("license");
-            if ((extras & PhotoSearchExtras.OwnerName) == PhotoSearchExtras.OwnerName) extraList.Add("owner_name");
-            if ((extras & PhotoSearchExtras.OriginalFormat) == PhotoSearchExtras.OriginalFormat) extraList.Add("original_format");
-            if ((extras & PhotoSearchExtras.LastUpdated) == PhotoSearchExtras.LastUpdated) extraList.Add("last_update");
-            if ((extras & PhotoSearchExtras.Tags) == PhotoSearchExtras.Tags) extraList.Add("tags");
-            if ((extras & PhotoSearchExtras.Geo) == PhotoSearchExtras.Geo) extraList.Add("geo");
-            if ((extras & PhotoSearchExtras.MachineTags) == PhotoSearchExtras.MachineTags) extraList.Add("machine_tags");
-            if ((extras & PhotoSearchExtras.OriginalDimensions) == PhotoSearchExtras.OriginalDimensions) extraList.Add("o_dims");
-            if ((extras & PhotoSearchExtras.Views) == PhotoSearchExtras.Views) extraList.Add("views");
-            if ((extras & PhotoSearchExtras.Media) == PhotoSearchExtras.Media) extraList.Add("media");
-            if ((extras & PhotoSearchExtras.PathAlias) == PhotoSearchExtras.PathAlias) extraList.Add("path_alias");
-            if ((extras & PhotoSearchExtras.SquareUrl) == PhotoSearchExtras.SquareUrl) extraList.Add("url_sq");
-            if ((extras & PhotoSearchExtras.ThumbnailUrl) == PhotoSearchExtras.ThumbnailUrl) extraList.Add("url_t");
-            if ((extras & PhotoSearchExtras.SmallUrl) == PhotoSearchExtras.SmallUrl) extraList.Add("url_s");
-            if ((extras & PhotoSearchExtras.MediumUrl) == PhotoSearchExtras.MediumUrl) extraList.Add("url_m");
-            if ((extras & PhotoSearchExtras.Medium640Url) == PhotoSearchExtras.Medium640Url) extraList.Add("url_z");
-            if ((extras & PhotoSearchExtras.LargeSquareUrl) == PhotoSearchExtras.LargeSquareUrl) extraList.Add("url_q");
-            if ((extras & PhotoSearchExtras.Small320Url) == PhotoSearchExtras.Small320Url) extraList.Add("url_n");
-            if ((extras & PhotoSearchExtras.LargeUrl) == PhotoSearchExtras.LargeUrl) extraList.Add("url_l");
-            if ((extras & PhotoSearchExtras.OriginalUrl) == PhotoSearchExtras.OriginalUrl) extraList.Add("url_o");
-            if ((extras & PhotoSearchExtras.Description) == PhotoSearchExtras.Description) extraList.Add("description");
-            if ((extras & PhotoSearchExtras.Usage) == PhotoSearchExtras.Usage) extraList.Add("usage");
-            if ((extras & PhotoSearchExtras.Visibility) == PhotoSearchExtras.Visibility) extraList.Add("visibility");
-            if ((extras & PhotoSearchExtras.Rotation) == PhotoSearchExtras.Rotation) extraList.Add("rotation");
-            if ((extras & PhotoSearchExtras.Large1600Url) == PhotoSearchExtras.Large1600Url) extraList.Add("url_h");
-            if ((extras & PhotoSearchExtras.Large2048Url) == PhotoSearchExtras.Large2048Url) extraList.Add("url_k");
-            if ((extras & PhotoSearchExtras.Medium800Url) == PhotoSearchExtras.Medium800Url) extraList.Add("url_c");
+            var extraList = new List<string>();
+            var e = typeof (PhotoSearchExtras);
+            foreach (PhotoSearchExtras extra in GetFlags(extras))
+            {
+                var info = e.GetField(extra.ToString("G"));
+                var o = info.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                if (o.Length == 0) continue;
+                var att = (DescriptionAttribute)o[0];
+                extraList.Add(att.Description);
+            }
 
             return String.Join(",", extraList.ToArray());
+
+        }
+
+        private static IEnumerable<Enum> GetFlags(Enum input)
+        {
+            var i = Convert.ToInt64(input);
+            foreach (Enum value in GetValues(input))
+                if ((i & Convert.ToInt64(value)) != 0)
+                    yield return value;
+        }
+
+        private static IEnumerable<Enum> GetValues(Enum enumeration )
+        {
+            List<Enum> enumerations = new List<Enum>();
+            foreach (FieldInfo fieldInfo in enumeration.GetType().GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                enumerations.Add((Enum)fieldInfo.GetValue(enumeration));
+            }
+            return enumerations;
         }
 
         /// <summary>
@@ -334,29 +326,30 @@ namespace FlickrNet
 
         internal static string UrlFormat(string farm, string server, string photoid, string secret, string size, string extension)
         {
+            string sizeAbbreviation;
             switch (size)
             {
                 case "square":
-                    size = "_s";
+                    sizeAbbreviation = "_s";
                     break;
                 case "thumbnail":
-                    size = "_t";
+                    sizeAbbreviation = "_t";
                     break;
                 case "small":
-                    size = "_m";
-                    break;
-                case "medium":
-                    size = String.Empty;
+                    sizeAbbreviation = "_m";
                     break;
                 case "large":
-                    size = "_b";
+                    sizeAbbreviation = "_b";
                     break;
                 case "original":
-                    size = "_o";
+                    sizeAbbreviation = "_o";
+                    break;
+                default: // Covers "medium" case
+                    sizeAbbreviation = String.Empty;
                     break;
             }
 
-            return UrlFormat(PhotoUrlFormat, farm, server, photoid, secret, size, extension);
+            return UrlFormat(PhotoUrlFormat, farm, server, photoid, secret, sizeAbbreviation, extension);
         }
 
         private static string UrlFormat(string format, params object[] parameters)
@@ -596,35 +589,15 @@ namespace FlickrNet
             value = value.Replace("%7E", "~");
 
             return value;
-
-            //string unreservedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~";
-
-            //StringBuilder result = new StringBuilder(text.Length * 2);
-
-            //foreach (char symbol in text)
-            //{
-            //    if (unreservedChars.IndexOf(symbol) != -1)
-            //    {
-            //        result.Append(symbol);
-            //    }
-            //    else
-            //    {
-            //        result.Append('%' + String.Format("{0:X2}", (int)symbol));
-            //    }
-            //}
-
-            //return result.ToString();
         }
 
 
         internal static string CleanCollectionId(string collectionId)
         {
-            if (collectionId.IndexOf("-") < 0)
-                return collectionId;
-            else
-                return collectionId.Substring(collectionId.IndexOf("-")+1);
+            return collectionId.IndexOf("-", StringComparison.Ordinal) < 0
+                       ? collectionId
+                       : collectionId.Substring(collectionId.IndexOf("-", StringComparison.Ordinal) + 1);
         }
-
     }
 
 }

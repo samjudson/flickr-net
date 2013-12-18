@@ -178,7 +178,9 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos()
         {
-            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None,
+                                   0, 0);
         }
 
         /// <summary>
@@ -189,7 +191,9 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(int page, int perPage)
         {
-            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None,
+                                   page, perPage);
         }
 
         /// <summary>
@@ -199,7 +203,8 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(PhotoSearchExtras extras)
         {
-            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
         }
 
         /// <summary>
@@ -211,7 +216,8 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(PhotoSearchExtras extras, int page, int perPage)
         {
-            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
+            return PeopleGetPhotos(null, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
         }
 
         /// <summary>
@@ -221,7 +227,9 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(string userId)
         {
-            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None,
+                                   0, 0);
         }
 
         /// <summary>
@@ -233,7 +241,9 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(string userId, int page, int perPage)
         {
-            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None,
+                                   page, perPage);
         }
 
         /// <summary>
@@ -244,7 +254,8 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(string userId, PhotoSearchExtras extras)
         {
-            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
         }
 
         /// <summary>
@@ -257,7 +268,8 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection PeopleGetPhotos(string userId, PhotoSearchExtras extras, int page, int perPage)
         {
-            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
+            return PeopleGetPhotos(userId, SafetyLevel.None, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+                                   DateTime.MinValue, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
         }
 
         /// <summary>
@@ -275,7 +287,10 @@ namespace FlickrNet
         /// <param name="page">The page of results to return. If this argument is omitted, it defaults to 1.</param>
         /// <param name="perPage">Number of photos to return per page. If this argument is omitted, it defaults to 100. The maximum allowed value is 500.</param>
         /// <returns></returns>
-        public PhotoCollection PeopleGetPhotos(string userId, SafetyLevel safeSearch, DateTime minUploadDate, DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate, ContentTypeSearch contentType, PrivacyFilter privacyFilter, PhotoSearchExtras extras, int page, int perPage)
+        public PhotoCollection PeopleGetPhotos(string userId, SafetyLevel safeSearch, DateTime minUploadDate,
+                                               DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate,
+                                               ContentTypeSearch contentType, PrivacyFilter privacyFilter,
+                                               PhotoSearchExtras extras, int page, int perPage)
         {
             CheckRequiresAuthentication();
 
@@ -284,17 +299,22 @@ namespace FlickrNet
             parameters.Add("method", "flickr.people.getPhotos");
             parameters.Add("user_id", userId ?? "me");
             if (safeSearch != SafetyLevel.None) parameters.Add("safe_search", safeSearch.ToString("d"));
-            if (minUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
-            if (maxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
-            if (minTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
-            if (maxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
+            if (minUploadDate != DateTime.MinValue)
+                parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(minUploadDate));
+            if (maxUploadDate != DateTime.MinValue)
+                parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(maxUploadDate));
+            if (minTakenDate != DateTime.MinValue)
+                parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
+            if (maxTakenDate != DateTime.MinValue)
+                parameters.Add("max_taken_date", UtilityMethods.DateToMySql(maxTakenDate));
 
             if (contentType != ContentTypeSearch.None) parameters.Add("content_type", contentType.ToString("d"));
             if (privacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", privacyFilter.ToString("d"));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
 
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (perPage > 0)
+                parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<PhotoCollection>(parameters);
         }
