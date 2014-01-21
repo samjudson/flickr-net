@@ -27,6 +27,11 @@ namespace FlickrNet
         public string UserName { get; set; }
 
         /// <summary>
+        /// The real name of the user who made the comment or note.
+        /// </summary>
+        public string RealName { get; set; }
+
+        /// <summary>
         /// Server for the buddy icon for the event user.
         /// </summary>
         public string IconServer { get; set; }
@@ -116,6 +121,9 @@ namespace FlickrNet
                         break;
                     case "iconfarm":
                         IconFarm = reader.Value;
+                        break;
+                    case "realname":
+                        RealName = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

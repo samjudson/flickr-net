@@ -115,6 +115,11 @@ namespace FlickrNet
         public string OwnerId { get; set; }
 
         /// <summary>
+        /// The real name of the activity item owner.
+        /// </summary>
+        public string RealName { get; set; }
+
+        /// <summary>
         /// The username of the owner of this item.
         /// </summary>
         public string OwnerName { get; set; }
@@ -342,6 +347,9 @@ namespace FlickrNet
                         break;
                     case "faves":
                         Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "realname":
+                        RealName = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
