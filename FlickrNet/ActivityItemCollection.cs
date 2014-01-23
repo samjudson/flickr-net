@@ -19,7 +19,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "item")
             {
-                ActivityItem item = new ActivityItem();
+                var item = new ActivityItem();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

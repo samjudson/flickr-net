@@ -11,17 +11,14 @@ namespace FlickrNetTest
     /// Summary description for ActivityTests
     /// </summary>
     [TestFixture]
-    public class ActivityTests
+    public class ActivityTests : BaseTest
     {
-
-        public TestContext TestContext { get; set; }
 
         [Test]
         [Category("AccessTokenRequired")]
         public void ActivityUserCommentsBasicTest()
         {
-            var f = TestData.GetAuthInstance();
-            ActivityItemCollection activity = f.ActivityUserComments(0, 0);
+            ActivityItemCollection activity = AuthInstance.ActivityUserComments(0, 0);
 
             Assert.IsNotNull(activity, "ActivityItemCollection should not be null.");
 
@@ -35,8 +32,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void ActivityUserPhotosBasicTest()
         {
-            var f = TestData.GetAuthInstance();
-            ActivityItemCollection activity = f.ActivityUserPhotos(20, "d");
+            ActivityItemCollection activity = AuthInstance.ActivityUserPhotos(20, "d");
 
             Assert.IsNotNull(activity, "ActivityItemCollection should not be null.");
 
@@ -52,12 +48,8 @@ namespace FlickrNetTest
         {
             int days = 50;
 
-            Flickr f = TestData.GetAuthInstance();
-
             // Get last 10 days activity.
-            ActivityItemCollection items = f.ActivityUserPhotos(days, "d");
-
-            Console.WriteLine(f.LastResponse);
+            ActivityItemCollection items = AuthInstance.ActivityUserPhotos(days, "d");
 
             Assert.IsNotNull(items, "ActivityItemCollection should not be null.");
 
@@ -78,10 +70,10 @@ namespace FlickrNetTest
                     // For Gallery events the comment is optional.
                     if (e.EventType != ActivityEventType.Gallery)
                     {
-                        if (e.EventType == ActivityEventType.Favorite)
-                            Assert.IsNull(e.Value, "Value should be null for a favorite event.");
-                        else
+                        if (e.EventType == ActivityEventType.Note || e.EventType == ActivityEventType.Comment)
                             Assert.IsNotNull(e.Value, "Value should not be null for a non-favorite event.");
+                        else
+                            Assert.IsNull(e.Value, "Value should be null for a favorite event.");
                     }
 
                     if (e.EventType == ActivityEventType.Comment)

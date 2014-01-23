@@ -77,9 +77,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.activity.userPhotos");
-            if (timeframe != null && timeframe.Length > 0) parameters.Add("timeframe", timeframe);
+            if (!string.IsNullOrEmpty(timeframe)) parameters.Add("timeframe", timeframe);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 

@@ -62,6 +62,16 @@ namespace FlickrNet
         public string NoteId { get; set; }
 
         /// <summary>
+        /// If this is group invite, then this is the group ID of the group it has been invited to.
+        /// </summary>
+        public string GroupId { get; set; }
+
+        /// <summary>
+        /// If this is group invite, then this is the name of the group it has been invited to.
+        /// </summary>
+        public string GroupName { get; set; }
+
+        /// <summary>
         /// If this is a gallery activityits then this will contain the ID of the gallery.
         /// </summary>
         public string GalleryId { get; set; }
@@ -124,6 +134,12 @@ namespace FlickrNet
                         break;
                     case "realname":
                         RealName = reader.Value;
+                        break;
+                    case "group_id":
+                        GroupId = reader.Value;
+                        break;
+                    case "group_name":
+                        GroupName = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
