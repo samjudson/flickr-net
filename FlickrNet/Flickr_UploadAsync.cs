@@ -111,9 +111,9 @@ namespace FlickrNet
 
             string authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
 
-            byte[] dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
+            var dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
 
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(uploadUri);
+            var req = WebRequest.Create(uploadUri);
             req.Method = "POST";
             req.ContentType = "multipart/form-data; boundary=" + boundary;
             if (!String.IsNullOrEmpty(authHeader))
@@ -124,42 +124,29 @@ namespace FlickrNet
             req.BeginGetRequestStream(
                 r =>
                 {
-                    using (Stream reqStream = req.EndGetRequestStream(r))
+                    using (var reqStream = req.EndGetRequestStream(r))
                     {
-                        int bufferSize = 32 * 1024;
+                        var bufferSize = 32 * 1024;
                         if (dataBuffer.Length / 100 > bufferSize) bufferSize = bufferSize * 2;
-
-                        int uploadedSoFar = 0;
-
-                        while (uploadedSoFar < dataBuffer.Length)
-                        {
-                            reqStream.Write(dataBuffer, uploadedSoFar, Math.Min(bufferSize, dataBuffer.Length - uploadedSoFar));
-                            uploadedSoFar += bufferSize;
-
-                            if (OnUploadProgress != null)
-                            {
-                                UploadProgressEventArgs args = new UploadProgressEventArgs(uploadedSoFar, dataBuffer.Length);
-                                OnUploadProgress(this, args);
-                            }
-                        }
+                        dataBuffer.UploadProgress += (o, e) => { if (OnUploadProgress != null) OnUploadProgress(this, e); };
+                        dataBuffer.CopyTo(reqStream, bufferSize);
                         reqStream.Close();
                     }
 
                     req.BeginGetResponse(
                         r2 =>
                         {
-                            FlickrResult<string> result = new FlickrResult<string>();
+                            var result = new FlickrResult<string>();
 
                             try
                             {
-                                WebResponse res = req.EndGetResponse(r2);
-                                StreamReader sr = new StreamReader(res.GetResponseStream());
-                                string responseXml = sr.ReadToEnd();
+                                var res = req.EndGetResponse(r2);
+                                var sr = new StreamReader(res.GetResponseStream());
+                                var responseXml = sr.ReadToEnd();
                                 sr.Close();
 
-                                XmlReaderSettings settings = new XmlReaderSettings();
-                                settings.IgnoreWhitespace = true;
-                                XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
+                                var settings = new XmlReaderSettings {IgnoreWhitespace = true};
+                                var reader = XmlReader.Create(new StringReader(responseXml), settings);
 
                                 if (!reader.ReadToDescendant("rsp"))
                                 {
@@ -169,13 +156,12 @@ namespace FlickrNet
                                 {
                                     if (reader.LocalName == "stat" && reader.Value == "fail")
                                         throw ExceptionHandler.CreateResponseException(reader);
-                                    continue;
                                 }
 
                                 reader.MoveToElement();
                                 reader.Read();
 
-                                UnknownResponse t = new UnknownResponse();
+                                var t = new UnknownResponse();
                                 ((IFlickrParsable)t).Load(reader);
                                 result.Result = t.GetElementValue("photoid");
                                 result.HasError = false;
@@ -184,11 +170,8 @@ namespace FlickrNet
                             {
                                 if (ex is WebException)
                                 {
-                                    OAuthException oauthEx = new OAuthException(ex);
-                                    if (String.IsNullOrEmpty(oauthEx.Message))
-                                        result.Error = ex;
-                                    else
-                                        result.Error = oauthEx;
+                                    var oauthEx = new OAuthException(ex);
+                                    result.Error = String.IsNullOrEmpty(oauthEx.Message) ? ex : oauthEx;
                                 }
                                 else
                                 {

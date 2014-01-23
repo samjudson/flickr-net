@@ -56,7 +56,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            f.OnUploadProgress += new EventHandler<UploadProgressEventArgs>((sender, args) => { /* Do nothing */});
+            f.OnUploadProgress += (sender, args) => { /* Do nothing */};
 
             byte[] imageBytes = TestData.TestImageBytes;
             Stream s = new MemoryStream(imageBytes);

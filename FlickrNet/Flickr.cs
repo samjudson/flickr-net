@@ -452,24 +452,29 @@ namespace FlickrNet
         private string CalculateAuthSignature(Dictionary<string, string> parameters)
         {
 #if !SILVERLIGHT
-            SortedList<string, string> sorted = new SortedList<string, string>();
-            foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
+            var sorted = new SortedList<string, string>();
+            foreach (var pair in parameters) { sorted.Add(pair.Key, pair.Value); }
 #else
-                var sorted = parameters.OrderBy(p => p.Key);
+            var sorted = parameters.OrderBy(p => p.Key);
 #endif
 
-            StringBuilder sb = new StringBuilder(ApiSecret);
-            foreach (KeyValuePair<string, string> pair in sorted)
+            var sb = new StringBuilder(ApiSecret);
+            foreach (var pair in sorted)
             {
                 sb.Append(pair.Key);
                 sb.Append(pair.Value);
             }
-            string signature = UtilityMethods.MD5Hash(sb.ToString());
-            return signature;
+            return UtilityMethods.MD5Hash(sb.ToString());
         }
 
-        private byte[] ConvertNonSeekableStreamToByteArray(Stream nonSeekableStream)
+        private static Stream ConvertNonSeekableStreamToByteArray(Stream nonSeekableStream)
         {
+            if (nonSeekableStream.CanSeek)
+            {
+                nonSeekableStream.Position = 0;
+                return nonSeekableStream;
+            }
+
             var ms = new MemoryStream();
             var buffer = new byte[1024];
             int bytes;
@@ -477,11 +482,11 @@ namespace FlickrNet
             {
                 ms.Write(buffer, 0, bytes);
             }
-            var output = ms.ToArray();
-            return output;
+            ms.Position = 0;
+            return ms;
         }
 
-        private byte[] CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
+        private StreamCollection CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
         {
             var oAuth = parameters.ContainsKey("oauth_consumer_key");
 
@@ -490,9 +495,10 @@ namespace FlickrNet
             Array.Sort(keys);
 
             var hashStringBuilder = new StringBuilder(sharedSecret, 2 * 1024);
-            var contentStringBuilder = new StringBuilder();
+            var ms1 = new MemoryStream();
+            var contentStringBuilder = new StreamWriter(ms1, new UTF8Encoding(false));
 
-            foreach (string key in keys)
+            foreach (var key in keys)
             {
 
 #if !SILVERLIGHT
@@ -501,41 +507,100 @@ namespace FlickrNet
 #endif
                 hashStringBuilder.Append(key);
                 hashStringBuilder.Append(parameters[key]);
-                contentStringBuilder.Append("--" + boundary + "\r\n");
-                contentStringBuilder.Append("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
-                contentStringBuilder.Append("\r\n");
-                contentStringBuilder.Append(parameters[key] + "\r\n");
+                contentStringBuilder.Write("--" + boundary + "\r\n");
+                contentStringBuilder.Write("Content-Disposition: form-data; name=\"" + key + "\"\r\n");
+                contentStringBuilder.Write("\r\n");
+                contentStringBuilder.Write(parameters[key] + "\r\n");
             }
 
             if (!oAuth)
             {
-                contentStringBuilder.Append("--" + boundary + "\r\n");
-                contentStringBuilder.Append("Content-Disposition: form-data; name=\"api_sig\"\r\n");
-                contentStringBuilder.Append("\r\n");
-                contentStringBuilder.Append(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
+                contentStringBuilder.Write("--" + boundary + "\r\n");
+                contentStringBuilder.Write("Content-Disposition: form-data; name=\"api_sig\"\r\n");
+                contentStringBuilder.Write("\r\n");
+                contentStringBuilder.Write(UtilityMethods.MD5Hash(hashStringBuilder.ToString()) + "\r\n");
             }
 
             // Photo
-            contentStringBuilder.Append("--" + boundary + "\r\n");
-            contentStringBuilder.Append("Content-Disposition: form-data; name=\"photo\"; filename=\"" + Path.GetFileName(fileName) + "\"\r\n");
-            contentStringBuilder.Append("Content-Type: image/jpeg\r\n");
-            contentStringBuilder.Append("\r\n");
+            contentStringBuilder.Write("--" + boundary + "\r\n");
+            contentStringBuilder.Write("Content-Disposition: form-data; name=\"photo\"; filename=\"" + Path.GetFileName(fileName) + "\"\r\n");
+            contentStringBuilder.Write("Content-Type: image/jpeg\r\n");
+            contentStringBuilder.Write("\r\n");
 
-            var encoding = new UTF8Encoding();
+            contentStringBuilder.Flush();
 
-            byte[] postContents = encoding.GetBytes(contentStringBuilder.ToString());
+            var photoContents = ConvertNonSeekableStreamToByteArray(imageStream);
 
-            byte[] photoContents = ConvertNonSeekableStreamToByteArray(imageStream);
+            var ms2 = new MemoryStream();
+            var postFooterWriter = new StreamWriter(ms2, new UTF8Encoding(false));
+            postFooterWriter.Write("\r\n--" + boundary + "--\r\n");
+            postFooterWriter.Flush();
 
-            byte[] postFooter = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
+            var collection = new StreamCollection(new[] { ms1, photoContents, ms2 });
 
-            byte[] dataBuffer = new byte[postContents.Length + photoContents.Length + postFooter.Length];
+            return collection;
+        }
 
-            Buffer.BlockCopy(postContents, 0, dataBuffer, 0, postContents.Length);
-            Buffer.BlockCopy(photoContents, 0, dataBuffer, postContents.Length, photoContents.Length);
-            Buffer.BlockCopy(postFooter, 0, dataBuffer, postContents.Length + photoContents.Length, postFooter.Length);
+        internal class StreamCollection : IDisposable
+        {
+            public List<Stream> Streams { get; private set; }
 
-            return dataBuffer;
+            public StreamCollection(IEnumerable<Stream> streams)
+            {
+                Streams = new List<Stream>(streams);
+            }
+
+            public void ResetPosition()
+            {
+                Streams.ForEach(s => s.Position = 0);
+            }
+
+            public long Length
+            {
+                get
+                {
+                    long l = 0;
+                    foreach (var s in Streams)
+                    {
+                        l += s.Length;
+                    }
+                    return l;
+                }
+            }
+
+            public EventHandler<UploadProgressEventArgs> UploadProgress;
+
+            public void CopyTo(Stream stream, int bufferSize = 1024*16)
+            {
+                ResetPosition();
+
+                var buffer = new byte[bufferSize];
+                var l = Length;
+
+                foreach (var s in Streams)
+                {
+                    var soFar = 0;
+                    int read;
+                    while(0 < (read = s.Read(buffer, 0, buffer.Length)))
+                    {
+                        soFar += read;
+                        stream.Write(buffer, 0, read);
+                        if( UploadProgress != null)
+                            UploadProgress(this, new UploadProgressEventArgs{ BytesSent = soFar, TotalBytesToSend = l});
+                    }
+                    stream.Flush();
+                }
+                stream.Flush();
+            }
+
+            public void Dispose()
+            {
+                Streams.ForEach(s =>
+                                    {
+                                        if( s != null)
+                                            s.Dispose();
+                                    });
+            }
         }
 
     }
