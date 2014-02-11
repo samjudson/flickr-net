@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -8,9 +10,7 @@ namespace FlickrNet
     /// </summary>
     public sealed class ActivityItemCollection : Collection<ActivityItem>, IFlickrParsable
     {
-        #region IFlickrParsable Members
-
-        void IFlickrParsable.Load(XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "items")
                 UtilityMethods.CheckParsingException(reader);
@@ -20,13 +20,11 @@ namespace FlickrNet
             while (reader.LocalName == "item")
             {
                 var item = new ActivityItem();
-                ((IFlickrParsable) item).Load(reader);
+                ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }
 
             reader.Skip();
         }
-
-        #endregion
     }
 }

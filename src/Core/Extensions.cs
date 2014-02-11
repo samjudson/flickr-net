@@ -9,9 +9,12 @@ namespace FlickrNet
 {
     internal static class Extensions
     {
+        private static readonly DateTime UnixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         public static string ToUnixTimestamp(this DateTime date)
         {
-            return date.ToString(CultureInfo.InvariantCulture);
+            TimeSpan ts = date - UnixStartDate;
+            return ts.TotalSeconds.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo);
         }
 
         public static string ToString(this PhotoSearchExtras extras)

@@ -44,7 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityTests.cs" />
     <Compile Include="BaseTest.cs" />
+    <Compile Include="BlogTests.cs" />
+    <Compile Include="CameraTests.cs" />
+    <Compile Include="CollectionTests.cs" />
+    <Compile Include="CommonsTests.cs" />
+    <Compile Include="ContactsTests.cs" />
+    <Compile Include="FavoritesTests.cs" />
+    <Compile Include="GalleriesTests.cs" />
     <Compile Include="PeopleGetPhotosTests.cs" />
     <Compile Include="PhotoSearchOptionsTests.cs" />
     <Compile Include="PhotosetCommentsGetListTests.cs" />

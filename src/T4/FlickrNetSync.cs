@@ -136,11 +136,11 @@ namespace FlickrNet
 
 		#region flickr.cameras.getBrands
 
-		public CameraBrandCollection CamerasGetBrands() 
+		public BrandCollection CamerasGetBrands() 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.cameras.getBrands");
-			return GetResponse<CameraBrandCollection>(dictionary);
+			return GetResponse<BrandCollection>(dictionary);
 		}
 		#endregion
 
@@ -202,6 +202,12 @@ namespace FlickrNet
 			return GetResponse<ContactCollection>(dictionary);
 		}
 
+		public ContactCollection ContactsGetList() 
+		{
+			return ContactsGetList(null, 0, 0, null);
+		}
+
+
 		public ContactCollection ContactsGetList(int page, int perPage) 
 		{
 			return ContactsGetList(null, page, perPage, null);
@@ -211,6 +217,12 @@ namespace FlickrNet
 		public ContactCollection ContactsGetList(int page, int perPage, string sort) 
 		{
 			return ContactsGetList(null, page, perPage, sort);
+		}
+
+
+		public ContactCollection ContactsGetList(string filter) 
+		{
+			return ContactsGetList(filter, 0, 0, null);
 		}
 
 
@@ -227,16 +239,34 @@ namespace FlickrNet
 
 		#endregion
 
-		#region flickr.contacts.getListRecentlyUpdated
+		#region flickr.contacts.getListRecentlyUploaded
 
-		public ContactCollection ContactsGetListRecentlyUpdated(DateTime dateLastupdated, string filter) 
+		public ContactCollection ContactsGetListRecentlyUploaded(DateTime dateLastupdated, string filter) 
 		{
 			var dictionary = new Dictionary<string, string>();
-			dictionary.Add("method", "flickr.contacts.getListRecentlyUpdated");
-			dictionary.Add("date_lastupdated", dateLastupdated.ToUnixTimestamp());
-			dictionary.Add("filter", filter);
+			dictionary.Add("method", "flickr.contacts.getListRecentlyUploaded");
+			if (dateLastupdated != DateTime.UtcNow.AddHours(-1)) dictionary.Add("date_lastupdated", dateLastupdated.ToUnixTimestamp());
+			if (filter != null) dictionary.Add("filter", filter);
 			return GetResponse<ContactCollection>(dictionary);
 		}
+
+		public ContactCollection ContactsGetListRecentlyUploaded(DateTime dateLastupdated) 
+		{
+			return ContactsGetListRecentlyUploaded(dateLastupdated, null);
+		}
+
+
+		public ContactCollection ContactsGetListRecentlyUploaded(string filter) 
+		{
+			return ContactsGetListRecentlyUploaded(DateTime.UtcNow.AddHours(-1), filter);
+		}
+
+
+		public ContactCollection ContactsGetListRecentlyUploaded() 
+		{
+			return ContactsGetListRecentlyUploaded(DateTime.UtcNow.AddHours(-1), null);
+		}
+
 		#endregion
 
 		#region flickr.contacts.getPublicList
@@ -289,32 +319,46 @@ namespace FlickrNet
 
 		#region flickr.favorites.getContext
 
-		public FavoriteContext FavoritesGetContext(string photoId, string userId, PhotoSearchExtras extras) 
+		public FavoriteContext FavoritesGetContext(string photoId, string userId, int numPrev, int numNext, PhotoSearchExtras extras) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.favorites.getContext");
 			dictionary.Add("photo_id", photoId);
 			dictionary.Add("user_id", userId);
+			dictionary.Add("num_prev", numPrev.ToString(CultureInfo.InvariantCulture));
+			dictionary.Add("num_next", numNext.ToString(CultureInfo.InvariantCulture));
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return GetResponse<FavoriteContext>(dictionary);
 		}
 
 		public FavoriteContext FavoritesGetContext(string photoId, string userId) 
 		{
-			return FavoritesGetContext(photoId, userId, PhotoSearchExtras.None);
+			return FavoritesGetContext(photoId, userId, 1, 1, PhotoSearchExtras.None);
+		}
+
+
+		public FavoriteContext FavoritesGetContext(string photoId, string userId, PhotoSearchExtras extras) 
+		{
+			return FavoritesGetContext(photoId, userId, 1, 1, extras);
+		}
+
+
+		public FavoriteContext FavoritesGetContext(string photoId, string userId, int numPrev, int numNext) 
+		{
+			return FavoritesGetContext(photoId, userId, numPrev, numNext, PhotoSearchExtras.None);
 		}
 
 		#endregion
 
 		#region flickr.favorites.getList
 
-		public PhotoCollection FavoritesGetList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage) 
+		public PhotoCollection FavoritesGetList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate, PhotoSearchExtras extras, int page, int perPage) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.favorites.getList");
 			if (userId != null) dictionary.Add("user_id", userId);
-			if (minFavoriteDate != null) dictionary.Add("min_favorite_date", minFavoriteDate.Value.ToUnixTimestamp());
-			if (maxFavoriteDate != null) dictionary.Add("max_favorite_date", maxFavoriteDate.Value.ToUnixTimestamp());
+			if (minFaveDate != null) dictionary.Add("min_fave_date", minFaveDate.Value.ToUnixTimestamp());
+			if (maxFaveDate != null) dictionary.Add("max_fave_date", maxFaveDate.Value.ToUnixTimestamp());
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -327,9 +371,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(DateTime? minFavoriteDate, DateTime? maxFavoriteDate) 
+		public PhotoCollection FavoritesGetList(DateTime? minFaveDate, DateTime? maxFaveDate) 
 		{
-			return FavoritesGetList(null, minFavoriteDate, maxFavoriteDate, PhotoSearchExtras.None, 0, 0);
+			return FavoritesGetList(null, minFaveDate, maxFaveDate, PhotoSearchExtras.None, 0, 0);
 		}
 
 
@@ -339,9 +383,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate) 
+		public PhotoCollection FavoritesGetList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate) 
 		{
-			return FavoritesGetList(userId, minFavoriteDate, maxFavoriteDate, PhotoSearchExtras.None, 0, 0);
+			return FavoritesGetList(userId, minFaveDate, maxFaveDate, PhotoSearchExtras.None, 0, 0);
 		}
 
 
@@ -351,9 +395,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(DateTime? minFavoriteDate, DateTime? maxFavoriteDate, PhotoSearchExtras extras) 
+		public PhotoCollection FavoritesGetList(DateTime? minFaveDate, DateTime? maxFaveDate, PhotoSearchExtras extras) 
 		{
-			return FavoritesGetList(null, minFavoriteDate, maxFavoriteDate, extras, 0, 0);
+			return FavoritesGetList(null, minFaveDate, maxFaveDate, extras, 0, 0);
 		}
 
 
@@ -363,9 +407,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate, PhotoSearchExtras extras) 
+		public PhotoCollection FavoritesGetList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate, PhotoSearchExtras extras) 
 		{
-			return FavoritesGetList(userId, minFavoriteDate, maxFavoriteDate, extras, 0, 0);
+			return FavoritesGetList(userId, minFaveDate, maxFaveDate, extras, 0, 0);
 		}
 
 
@@ -375,9 +419,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(DateTime? minFavoriteDate, DateTime? maxFavoriteDate, int page, int perPage) 
+		public PhotoCollection FavoritesGetList(DateTime? minFaveDate, DateTime? maxFaveDate, int page, int perPage) 
 		{
-			return FavoritesGetList(null, minFavoriteDate, maxFavoriteDate, PhotoSearchExtras.None, page, perPage);
+			return FavoritesGetList(null, minFaveDate, maxFaveDate, PhotoSearchExtras.None, page, perPage);
 		}
 
 
@@ -387,9 +431,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate, int page, int perPage) 
+		public PhotoCollection FavoritesGetList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate, int page, int perPage) 
 		{
-			return FavoritesGetList(userId, minFavoriteDate, maxFavoriteDate, PhotoSearchExtras.None, page, perPage);
+			return FavoritesGetList(userId, minFaveDate, maxFaveDate, PhotoSearchExtras.None, page, perPage);
 		}
 
 
@@ -399,9 +443,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetList(DateTime? minFavoriteDate, DateTime? maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage) 
+		public PhotoCollection FavoritesGetList(DateTime? minFaveDate, DateTime? maxFaveDate, PhotoSearchExtras extras, int page, int perPage) 
 		{
-			return FavoritesGetList(null, minFavoriteDate, maxFavoriteDate, extras, page, perPage);
+			return FavoritesGetList(null, minFaveDate, maxFaveDate, extras, page, perPage);
 		}
 
 
@@ -414,13 +458,13 @@ namespace FlickrNet
 
 		#region flickr.favorites.getPublicList
 
-		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate, PhotoSearchExtras extras, int page, int perPage) 
+		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate, PhotoSearchExtras extras, int page, int perPage) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.favorites.getPublicList");
 			dictionary.Add("user_id", userId);
-			if (minFavoriteDate != null) dictionary.Add("min_favorite_date", minFavoriteDate.Value.ToUnixTimestamp());
-			if (maxFavoriteDate != null) dictionary.Add("max_favorite_date", maxFavoriteDate.Value.ToUnixTimestamp());
+			if (minFaveDate != null) dictionary.Add("min_fave_date", minFaveDate.Value.ToUnixTimestamp());
+			if (maxFaveDate != null) dictionary.Add("max_fave_date", maxFaveDate.Value.ToUnixTimestamp());
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -433,9 +477,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate) 
+		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate) 
 		{
-			return FavoritesGetPublicList(userId, minFavoriteDate, maxFavoriteDate, PhotoSearchExtras.None, 0, 0);
+			return FavoritesGetPublicList(userId, minFaveDate, maxFaveDate, PhotoSearchExtras.None, 0, 0);
 		}
 
 
@@ -445,9 +489,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate, PhotoSearchExtras extras) 
+		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate, PhotoSearchExtras extras) 
 		{
-			return FavoritesGetPublicList(userId, minFavoriteDate, maxFavoriteDate, extras, 0, 0);
+			return FavoritesGetPublicList(userId, minFaveDate, maxFaveDate, extras, 0, 0);
 		}
 
 
@@ -457,9 +501,9 @@ namespace FlickrNet
 		}
 
 
-		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFavoriteDate, DateTime? maxFavoriteDate, int page, int perPage) 
+		public PhotoCollection FavoritesGetPublicList(string userId, DateTime? minFaveDate, DateTime? maxFaveDate, int page, int perPage) 
 		{
-			return FavoritesGetPublicList(userId, minFavoriteDate, maxFavoriteDate, PhotoSearchExtras.None, page, perPage);
+			return FavoritesGetPublicList(userId, minFaveDate, maxFaveDate, PhotoSearchExtras.None, page, perPage);
 		}
 
 

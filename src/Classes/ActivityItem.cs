@@ -1,9 +1,10 @@
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Xml;
 
 namespace FlickrNet
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Xml;
+    
     /// <summary>
     /// The type of the <see cref="ActivityItem"/>.
     /// </summary>
@@ -13,17 +14,14 @@ namespace FlickrNet
         /// The type is unknown, either not set of a new unsupported type.
         /// </summary>
         Unknown,
-
         /// <summary>
         /// The activity item is on a photoset.
         /// </summary>
         Photoset,
-
         /// <summary>
         /// The activitiy item is on a photo.
         /// </summary>
         Photo,
-
         /// <summary>
         /// The activity item is on a gallery.
         /// </summary>
@@ -41,7 +39,7 @@ namespace FlickrNet
         /// </summary>
         public ActivityItem()
         {
-            Events = new Collection<ActivityEvent>();
+            Events = new System.Collections.ObjectModel.Collection<ActivityEvent>();
         }
 
         /// <summary>
@@ -117,6 +115,11 @@ namespace FlickrNet
         public string OwnerId { get; set; }
 
         /// <summary>
+        /// The real name of the activity item owner.
+        /// </summary>
+        public string RealName { get; set; }
+
+        /// <summary>
         /// The username of the owner of this item.
         /// </summary>
         public string OwnerName { get; set; }
@@ -136,7 +139,10 @@ namespace FlickrNet
         /// </summary>
         public string OwnerBuddyIcon
         {
-            get { return UtilityMethods.BuddyIcon(OwnerServer, OwnerFarm, OwnerId); }
+            get
+            {
+                return UtilityMethods.BuddyIcon(OwnerServer, OwnerFarm, OwnerId);
+            }
         }
 
         /// <summary>
@@ -186,7 +192,7 @@ namespace FlickrNet
         /// <summary>
         /// The events that comprise this activity item.
         /// </summary>
-        public Collection<ActivityEvent> Events { get; set; }
+        public System.Collections.ObjectModel.Collection<ActivityEvent> Events { get; set; }
 
         /// <summary>
         /// The URL for the square thumbnail of a photo or the primary photo for a photoset or gallery.
@@ -218,16 +224,12 @@ namespace FlickrNet
             }
         }
 
-        #region IFlickrParsable Members
-
         void IFlickrParsable.Load(XmlReader reader)
         {
             LoadAttributes(reader);
 
             LoadElements(reader);
         }
-
-        #endregion
 
         private void LoadElements(XmlReader reader)
         {
@@ -242,8 +244,8 @@ namespace FlickrNet
                         reader.ReadToDescendant("event");
                         while (reader.LocalName == "event")
                         {
-                            var e = new ActivityEvent();
-                            ((IFlickrParsable) e).Load(reader);
+                            ActivityEvent e = new ActivityEvent();
+                            ((IFlickrParsable)e).Load(reader);
                             Events.Add(e);
                         }
                         reader.Read();
@@ -314,19 +316,19 @@ namespace FlickrNet
                         OwnerFarm = reader.Value;
                         break;
                     case "commentsnew":
-                        NewComments = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        NewComments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "commentsold":
-                        OldComments = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        OldComments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "comments":
-                        Comments = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        Comments = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "views":
-                        Views = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        Views = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "photos":
-                        Photos = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        Photos = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "more":
                         More = reader.Value == "0";
@@ -335,16 +337,19 @@ namespace FlickrNet
                         PrimaryPhotoId = reader.Value;
                         break;
                     case "notesnew":
-                        NewNotes = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        NewNotes = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "notesold":
-                        OldNotes = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        OldNotes = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "notes":
-                        Notes = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        Notes = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "faves":
-                        Favorites = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        Favorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "realname":
+                        RealName = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -354,5 +359,7 @@ namespace FlickrNet
 
             reader.Read();
         }
+
     }
+
 }

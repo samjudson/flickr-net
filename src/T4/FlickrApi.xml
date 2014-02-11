@@ -39,7 +39,7 @@
     <argument name="brand" type="string"/>
   </method>
 
-  <method name="flickr.cameras.getBrands" return="CameraBrandCollection"/>
+  <method name="flickr.cameras.getBrands" return="BrandCollection"/>
 
   <method name="flickr.collections.getInfo" return="CollectionInfo">
     <argument name="collection_id" type="string"/>
@@ -60,15 +60,20 @@
     <argument name="per_page" type="int" default="0"/>
     <argument name="sort" type="string" default="null"/>
 
+    <overload parameters=""/>
     <overload parameters="per_page,page"/>
     <overload parameters="per_page,page,sort"/>
+    <overload parameters="filter"/>
     <overload parameters="filter,sort"/>
     <overload parameters="filter,per_page,page"/>
   </method>
 
-  <method name="flickr.contacts.getListRecentlyUpdated" return="ContactCollection">
-    <argument name="date_lastupdated" type="Timestamp"/>
-    <argument name="filter" type="string"/>
+  <method name="flickr.contacts.getListRecentlyUploaded" return="ContactCollection">
+    <argument name="date_lastupdated" type="Timestamp" default="DateTime.UtcNow.AddHours(-1)"/>
+    <argument name="filter" type="string" default="null"/>
+    <overload parameters="date_lastupdated"/>
+    <overload parameters="filter"/>
+    <overload parameters=""/>
   </method>
 
   <method name="flickr.contacts.getPublicList" return="ContactCollection">
@@ -91,47 +96,51 @@
   <method name="flickr.favorites.getContext" return="FavoriteContext">
     <argument name="photo_id" type="string"/>
     <argument name="user_id" type="string"/>
+    <argument name="num_prev" type="int" default="1" alwayssend="true"/>
+    <argument name="num_next" type="int" default="1" alwayssend="true"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <overload parameters="photo_id,user_id"/>
+    <overload parameters="photo_id,user_id,extras"/>
+    <overload parameters="photo_id,user_id,num_prev,num_next"/>
   </method>
 
   <method name="flickr.favorites.getList" return="PhotoCollection">
     <argument name="user_id" type="string" default="null"/>
-    <argument name="min_favorite_date" type="Timestamp?" default="null"/>
-    <argument name="max_favorite_date" type="Timestamp?" default="null"/>
+    <argument name="min_fave_date" type="Timestamp?" default="null"/>
+    <argument name="max_fave_date" type="Timestamp?" default="null"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="0"/>
     <overload parameters=""/>
-    <overload parameters="min_favorite_date,max_favorite_date"/>
+    <overload parameters="min_fave_date,max_fave_date"/>
     <overload parameters="user_id"/>
-    <overload parameters="user_id,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,min_fave_date,max_fave_date"/>
     <overload parameters="extras"/>
-    <overload parameters="extras,min_favorite_date,max_favorite_date"/>
+    <overload parameters="extras,min_fave_date,max_fave_date"/>
     <overload parameters="user_id,extras"/>
-    <overload parameters="user_id,extras,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,extras,min_fave_date,max_fave_date"/>
     <overload parameters="page,per_page"/>
-    <overload parameters="min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="min_fave_date,max_fave_date,page,per_page"/>
     <overload parameters="user_id,page,per_page"/>
-    <overload parameters="user_id,min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="user_id,min_fave_date,max_fave_date,page,per_page"/>
     <overload parameters="extras,page,per_page"/>
-    <overload parameters="extras,min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="extras,min_fave_date,max_fave_date,page,per_page"/>
     <overload parameters="user_id,extras,page,per_page"/>
   </method>
 
   <method name="flickr.favorites.getPublicList" return="PhotoCollection">
     <argument name="user_id" type="string"/>
-    <argument name="min_favorite_date" type="Timestamp?" default="null"/>
-    <argument name="max_favorite_date" type="Timestamp?" default="null"/>
+    <argument name="min_fave_date" type="Timestamp?" default="null"/>
+    <argument name="max_fave_date" type="Timestamp?" default="null"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="0"/>
     <overload parameters="user_id"/>
-    <overload parameters="user_id,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,min_fave_date,max_fave_date"/>
     <overload parameters="user_id,extras"/>
-    <overload parameters="user_id,extras,min_favorite_date,max_favorite_date"/>
+    <overload parameters="user_id,extras,min_fave_date,max_fave_date"/>
     <overload parameters="user_id,page,per_page"/>
-    <overload parameters="user_id,min_favorite_date,max_favorite_date,page,per_page"/>
+    <overload parameters="user_id,min_fave_date,max_fave_date,page,per_page"/>
     <overload parameters="user_id,extras,page,per_page"/>
   </method>
 

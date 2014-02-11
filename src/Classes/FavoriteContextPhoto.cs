@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FlickrNet
 {
@@ -17,9 +19,7 @@ namespace FlickrNet
         /// </summary>
         public string FavoriteUrl { get; set; }
 
-        #region IFlickrParsable Members
-
-        void IFlickrParsable.Load(XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             FavoriteThumbnailUrl = reader.GetAttribute("thumb");
             FavoriteUrl = reader.GetAttribute("url");
@@ -29,6 +29,5 @@ namespace FlickrNet
             reader.Skip();
         }
 
-        #endregion
     }
 }

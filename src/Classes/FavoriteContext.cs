@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
@@ -8,15 +10,6 @@ namespace FlickrNet
     /// </summary>
     public sealed class FavoriteContext : IFlickrParsable
     {
-        /// <summary>
-        /// Default constructor for <see cref="FavoriteContext"/>
-        /// </summary>
-        public FavoriteContext()
-        {
-            PreviousPhotos = new Collection<FavoriteContextPhoto>();
-            NextPhotos = new Collection<FavoriteContextPhoto>();
-        }
-
         /// <summary>
         /// The number of favorites the user has.
         /// </summary>
@@ -32,10 +25,18 @@ namespace FlickrNet
         /// </summary>
         public Collection<FavoriteContextPhoto> NextPhotos { get; set; }
 
-        #region IFlickrParsable Members
-
-        void IFlickrParsable.Load(XmlReader reader)
+        /// <summary>
+        /// Default constructor for <see cref="FavoriteContext"/>
+        /// </summary>
+        public FavoriteContext()
         {
+            PreviousPhotos = new Collection<FavoriteContextPhoto>();
+            NextPhotos = new Collection<FavoriteContextPhoto>();
+        }
+
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
+        {
+
             if (reader.LocalName != "count" && !reader.ReadToFollowing("count"))
             {
                 UtilityMethods.CheckParsingException(reader);
@@ -44,12 +45,12 @@ namespace FlickrNet
 
             Count = reader.ReadElementContentAsInt();
 
-            if (reader.LocalName != "prevphotos") reader.ReadToFollowing("prevphotos");
+            if( reader.LocalName != "prevphotos" ) reader.ReadToFollowing("prevphotos");
             reader.ReadToDescendant("photo");
             while (reader.LocalName == "photo")
             {
-                var photo = new FavoriteContextPhoto();
-                ((IFlickrParsable) photo).Load(reader);
+                FavoriteContextPhoto photo = new FavoriteContextPhoto();
+                ((IFlickrParsable)photo).Load(reader);
                 PreviousPhotos.Add(photo);
             }
 
@@ -57,12 +58,10 @@ namespace FlickrNet
             reader.ReadToDescendant("photo");
             while (reader.LocalName == "photo")
             {
-                var photo = new FavoriteContextPhoto();
-                ((IFlickrParsable) photo).Load(reader);
+                FavoriteContextPhoto photo = new FavoriteContextPhoto();
+                ((IFlickrParsable)photo).Load(reader);
                 NextPhotos.Add(photo);
             }
         }
-
-        #endregion
     }
 }

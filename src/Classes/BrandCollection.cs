@@ -4,27 +4,26 @@ using System.Xml;
 namespace FlickrNet
 {
     /// <summary>
-    /// A collection of camera models for a particular brand.
+    /// A collection of camera brands
     /// </summary>
-    public class CameraCollection : Collection<Camera>, IFlickrParsable
+    public class BrandCollection : Collection<Brand>, IFlickrParsable
     {
         void IFlickrParsable.Load(XmlReader reader)
         {
-            if (reader.LocalName != "cameras")
+            if (reader.LocalName != "brands")
                 UtilityMethods.CheckParsingException(reader);
 
             reader.Read();
 
-            while (reader.LocalName == "camera")
+            while (reader.LocalName == "brand")
             {
-                var c = new Camera();
-                ((IFlickrParsable)c).Load(reader);
-                Add(c);
+                var b = new Brand();
+                ((IFlickrParsable)b).Load(reader);
+                Add(b);
             }
 
             // Skip to next element (if any)
             reader.Skip();
-
         }
     }
 }

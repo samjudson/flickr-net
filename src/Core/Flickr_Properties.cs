@@ -20,8 +20,8 @@ namespace FlickrNet
         public string ApiKey { get; set; }
         public string SharedSecret { get; set; }
 
-        public string LastRequest { get; private set; }
-        public string LastResponse { get; private set; }
+        public string LastRequest { get; internal set; }
+        public string LastResponse { get; internal set; }
 
     }
 }

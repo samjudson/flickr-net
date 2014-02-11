@@ -80,7 +80,7 @@ namespace FlickrNet
 				continue;
 			}
 			var isNullable = arg.Attributes().Any(a => a.Name == "nullable" && a.Value == "true");
-			if( arg.Attribute("default") != null )
+			if( arg.Attribute("default") != null && (arg.Attribute("alwayssend") == null || arg.Attribute("alwayssend").Value == "false") )
 			{
 				var def = isNullable ? "null" : arg.Attribute("default").Value;
 				WriteLine("\t\t\tif ({0} != {1}) dictionary.Add(\"{2}\", {3});", argVariable, def, argName, argConvert);
