@@ -18,6 +18,8 @@ namespace FlickrNet
 
             var result = FlickrResponder.GetDataResponse(this, BaseApiUrl, parameters);
 
+            LastResponse = result;
+
             if (typeof(T).IsEnum)
             {
                 return default(T);

@@ -120,6 +120,8 @@ namespace FlickrNet
         /// <param name="reader"></param>
         void IFlickrParsable.Load(XmlReader reader)
         {
+            if (reader.NodeType == XmlNodeType.Element && reader.Name == "photo") reader.ReadToDescendant("location");
+
             LoadAttributes(reader);
 
             LoadElements(reader);
@@ -213,6 +215,9 @@ namespace FlickrNet
                         break;
                     case "has_shapedata":
                         HasShapeData = reader.Value == "1";
+                        break;
+                    case "id":
+                        // Ignore the Photo ID
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

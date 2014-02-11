@@ -46,7 +46,12 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="PeopleGetPhotosTests.cs" />
+    <Compile Include="PhotoSearchOptionsTests.cs" />
+    <Compile Include="PhotosetCommentsGetListTests.cs" />
+    <Compile Include="PhotosetsGetPhotosTests.cs" />
+    <Compile Include="PhotosetsOrderSets.cs" />
     <Compile Include="PhotosetsTests.cs" />
+    <Compile Include="PhotosGeoTests.cs" />
     <Compile Include="PhotosSearchTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UploadTests.cs" />

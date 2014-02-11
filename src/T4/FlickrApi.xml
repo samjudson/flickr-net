@@ -608,12 +608,15 @@
     <argument name="privacy_filter" type="PrivacyFilter" default="PrivacyFilter.None"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="0"/>
+    <argument name="media" type="MediaType" default="MediaType.None"/>
+    <overload parameters="photoset_id"/>
     <overload parameters="photoset_id,extras"/>
     <overload parameters="photoset_id,page,per_page"/>
     <overload parameters="photoset_id,extras,page,per_page"/>
     <overload parameters="photoset_id,privacy_filter"/>
     <overload parameters="photoset_id,privacy_filter,page,per_page"/>
     <overload parameters="photoset_id,extras,privacy_filter"/>
+    <overload parameters="photoset_id,extras,privacy_filter,page,per_page"/>
   </method>
 
   <method name="flickr.photosets.orderSets" return="void">
@@ -678,18 +681,18 @@
   </method>
 
   <method name="flickr.photos.geo.photosForLocation" return="PhotoCollection">
-    <argument name="latitude" type="double"/>
-    <argument name="longitude" type="double"/>
+    <argument name="lat" type="double"/>
+    <argument name="lon" type="double"/>
     <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <argument name="page" type="int" default="0"/>
     <argument name="perPage" type="int" default="0"/>
-    <overload parameters="latitude,longitude"/>
-    <overload parameters="latitude,longitude,page,per_page"/>
-    <overload parameters="latitude,longitude,extras"/>
-    <overload parameters="latitude,longitude,extras,page,per_page"/>
-    <overload parameters="latitude,longitude,accuracy"/>
-    <overload parameters="latitude,longitude,accuracy,page,per_page"/>
+    <overload parameters="lat,lon"/>
+    <overload parameters="lat,lon,page,per_page"/>
+    <overload parameters="lat,lon,extras"/>
+    <overload parameters="lat,lon,extras,page,per_page"/>
+    <overload parameters="lat,lon,accuracy"/>
+    <overload parameters="lat,lon,accuracy,page,per_page"/>
   </method>
 
   <method name="flickr.photos.geo.removeLocation" return="void">
@@ -701,15 +704,15 @@
     <argument name="context" type="GeoContext"/>
   </method>
 
-  <method name="flickr.photos.geo.setLocation" return="PhotoCollection">
+  <method name="flickr.photos.geo.setLocation" return="void">
     <argument name="photo_id" type="string"/>
-    <argument name="latitude" type="double"/>
-    <argument name="longitude" type="double"/>
+    <argument name="lat" type="double"/>
+    <argument name="lon" type="double"/>
     <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
     <argument name="context" type="GeoContext" default="GeoContext.NotDefined"/>
-    <overload parameters="photo_id,latitude,longitude"/>
-    <overload parameters="photo_id,latitude,longitude,accuracy"/>
-    <overload parameters="photo_id,latitude,longitude,context"/>
+    <overload parameters="photo_id,lat,lon"/>
+    <overload parameters="photo_id,lat,lon,accuracy"/>
+    <overload parameters="photo_id,lat,lon,context"/>
   </method>
 
   <method name="flickr.photos.geo.setPerms" return="void">
