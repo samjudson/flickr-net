@@ -142,14 +142,14 @@ namespace FlickrNet
 		}
 		#endregion
 
-		#region flickr.contacts.getListRecentlyUpdated
+		#region flickr.contacts.getListRecentlyUploaded
 
-		public async Task<ContactCollection> ContactsGetListRecentlyUpdatedAsync(DateTime dateLastupdated, string filter) 
+		public async Task<ContactCollection> ContactsGetListRecentlyUploadedAsync(DateTime? dateLastupdated = null, string filter = null) 
 		{
 			var dictionary = new Dictionary<string, string>();
-			dictionary.Add("method", "flickr.contacts.getListRecentlyUpdated");
-			dictionary.Add("date_lastupdated", dateLastupdated.ToUnixTimestamp());
-			dictionary.Add("filter", filter);
+			dictionary.Add("method", "flickr.contacts.getListRecentlyUploaded");
+			if (dateLastupdated != null) dictionary.Add("date_lastupdated", dateLastupdated.Value.ToUnixTimestamp());
+			if (filter != null) dictionary.Add("filter", filter);
 			return await GetResponseAsync<ContactCollection>(dictionary);
 		}
 		#endregion
@@ -192,14 +192,14 @@ namespace FlickrNet
 
 		#region flickr.favorites.getContext
 
-		public async Task<FavoriteContext> FavoritesGetContextAsync(string photoId, string userId, int page = 0, int perPage = 0, PhotoSearchExtras extras = PhotoSearchExtras.None) 
+		public async Task<FavoriteContext> FavoritesGetContextAsync(string photoId, string userId, int numPrev = 1, int numNext = 1, PhotoSearchExtras extras = PhotoSearchExtras.None) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.favorites.getContext");
 			dictionary.Add("photo_id", photoId);
 			dictionary.Add("user_id", userId);
-			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
-			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
+			if (numPrev != 1) dictionary.Add("num_prev", numPrev.ToString(CultureInfo.InvariantCulture));
+			if (numNext != 1) dictionary.Add("num_next", numNext.ToString(CultureInfo.InvariantCulture));
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<FavoriteContext>(dictionary);
 		}
@@ -207,13 +207,13 @@ namespace FlickrNet
 
 		#region flickr.favorites.getList
 
-		public async Task<PhotoCollection> FavoritesGetListAsync(string userId = null, DateTime? minFavoriteDate = null, DateTime? maxFavoriteDate = null, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
+		public async Task<PhotoCollection> FavoritesGetListAsync(string userId = null, DateTime? minFaveDate = null, DateTime? maxFaveDate = null, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.favorites.getList");
 			if (userId != null) dictionary.Add("user_id", userId);
-			if (minFavoriteDate != null) dictionary.Add("min_favorite_date", minFavoriteDate.Value.ToUnixTimestamp());
-			if (maxFavoriteDate != null) dictionary.Add("max_favorite_date", maxFavoriteDate.Value.ToUnixTimestamp());
+			if (minFaveDate != null) dictionary.Add("min_fave_date", minFaveDate.Value.ToUnixTimestamp());
+			if (maxFaveDate != null) dictionary.Add("max_fave_date", maxFaveDate.Value.ToUnixTimestamp());
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -223,13 +223,13 @@ namespace FlickrNet
 
 		#region flickr.favorites.getPublicList
 
-		public async Task<PhotoCollection> FavoritesGetPublicListAsync(string userId, DateTime? minFavoriteDate = null, DateTime? maxFavoriteDate = null, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
+		public async Task<PhotoCollection> FavoritesGetPublicListAsync(string userId, DateTime? minFaveDate = null, DateTime? maxFaveDate = null, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.favorites.getPublicList");
 			dictionary.Add("user_id", userId);
-			if (minFavoriteDate != null) dictionary.Add("min_favorite_date", minFavoriteDate.Value.ToUnixTimestamp());
-			if (maxFavoriteDate != null) dictionary.Add("max_favorite_date", maxFavoriteDate.Value.ToUnixTimestamp());
+			if (minFaveDate != null) dictionary.Add("min_fave_date", minFaveDate.Value.ToUnixTimestamp());
+			if (maxFaveDate != null) dictionary.Add("max_fave_date", maxFaveDate.Value.ToUnixTimestamp());
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));

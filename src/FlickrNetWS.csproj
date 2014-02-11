@@ -116,7 +116,9 @@
     <Compile Include="Classes\BlogService.cs" />
     <Compile Include="Classes\BlogServiceCollection.cs" />
     <Compile Include="Classes\BoundaryBox.cs" />
-    <Compile Include="Classes\CameraBrandCollection.cs" />
+    <Compile Include="Classes\Brand.cs" />
+    <Compile Include="Classes\BrandCollection.cs" />
+    <Compile Include="Classes\Camera.cs" />
     <Compile Include="Classes\CameraCollection.cs" />
     <Compile Include="Classes\Cluster.cs" />
     <Compile Include="Classes\ClusterCollection.cs" />

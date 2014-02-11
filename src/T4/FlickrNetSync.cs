@@ -241,16 +241,16 @@ namespace FlickrNet
 
 		#region flickr.contacts.getListRecentlyUploaded
 
-		public ContactCollection ContactsGetListRecentlyUploaded(DateTime dateLastupdated, string filter) 
+		public ContactCollection ContactsGetListRecentlyUploaded(DateTime? dateLastupdated, string filter) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.contacts.getListRecentlyUploaded");
-			if (dateLastupdated != DateTime.UtcNow.AddHours(-1)) dictionary.Add("date_lastupdated", dateLastupdated.ToUnixTimestamp());
+			if (dateLastupdated != null) dictionary.Add("date_lastupdated", dateLastupdated.Value.ToUnixTimestamp());
 			if (filter != null) dictionary.Add("filter", filter);
 			return GetResponse<ContactCollection>(dictionary);
 		}
 
-		public ContactCollection ContactsGetListRecentlyUploaded(DateTime dateLastupdated) 
+		public ContactCollection ContactsGetListRecentlyUploaded(DateTime? dateLastupdated) 
 		{
 			return ContactsGetListRecentlyUploaded(dateLastupdated, null);
 		}
@@ -258,13 +258,13 @@ namespace FlickrNet
 
 		public ContactCollection ContactsGetListRecentlyUploaded(string filter) 
 		{
-			return ContactsGetListRecentlyUploaded(DateTime.UtcNow.AddHours(-1), filter);
+			return ContactsGetListRecentlyUploaded(null, filter);
 		}
 
 
 		public ContactCollection ContactsGetListRecentlyUploaded() 
 		{
-			return ContactsGetListRecentlyUploaded(DateTime.UtcNow.AddHours(-1), null);
+			return ContactsGetListRecentlyUploaded(null, null);
 		}
 
 		#endregion

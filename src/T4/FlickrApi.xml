@@ -69,7 +69,7 @@
   </method>
 
   <method name="flickr.contacts.getListRecentlyUploaded" return="ContactCollection">
-    <argument name="date_lastupdated" type="Timestamp" default="DateTime.UtcNow.AddHours(-1)"/>
+    <argument name="date_lastupdated" type="Timestamp?" default="null"/>
     <argument name="filter" type="string" default="null"/>
     <overload parameters="date_lastupdated"/>
     <overload parameters="filter"/>
