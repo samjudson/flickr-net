@@ -12,6 +12,11 @@ or better still just download it from http://www.nuget.org/packages/FlickrNet.
 Change Log
 ==========
 
+Feb 2014: Loads of tests being added. I've got the .Net 4.5 branch stable now. 
+I have a few more tests I want to migrate over, 
+and then I'd like to try creating a portable library version of the library, 
+which should reduce the number of seperate configurations I actually need.
+
 September 2013: First initial checkins. 
 Currently contains code for most public method calls for both .Net 4.5 and Windows 8
 as seperate DLLs. Windows 8 authentication, Upload support, and example Windows 8 app added.
