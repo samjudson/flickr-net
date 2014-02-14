@@ -19,7 +19,10 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "total":
-                        Total = int.Parse(reader.Value, CultureInfo.InvariantCulture);
+                        if (reader.Value == "")
+                            Total = -1;
+                        else
+                            Total = int.Parse(reader.Value, CultureInfo.InvariantCulture);
                         break;
                     case "perpage":
                     case "per_page":

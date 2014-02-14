@@ -1044,7 +1044,7 @@ namespace FlickrNet
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.interestingness.getList");
-			if (date != null) dictionary.Add("date", date.Value.ToUnixTimestamp());
+			if (date != null) dictionary.Add("date", date.Value.ToMySql());
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -1094,7 +1094,7 @@ namespace FlickrNet
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.machinetags.getNamespaces");
-			dictionary.Add("predicate", predicate);
+			if (predicate != null) dictionary.Add("predicate", predicate);
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 1) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return GetResponse<NamespaceCollection>(dictionary);
@@ -1103,6 +1103,12 @@ namespace FlickrNet
 		public NamespaceCollection MachinetagsGetNamespaces(string predicate) 
 		{
 			return MachinetagsGetNamespaces(predicate, 0, 1);
+		}
+
+
+		public NamespaceCollection MachinetagsGetNamespaces() 
+		{
+			return MachinetagsGetNamespaces(null, 0, 1);
 		}
 
 		#endregion
@@ -1172,25 +1178,25 @@ namespace FlickrNet
 
 		#region flickr.machinetags.getRecentValues
 
-		public ValueCollection MachinetagsGetRecentValues(string namespaceName, string predicate, DateTime addedSince, int page, int perPage) 
+		public ValueCollection MachinetagsGetRecentValues(string namespaceName, string predicate, DateTime? addedSince, int page, int perPage) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.machinetags.getRecentValues");
 			if (namespaceName != null) dictionary.Add("namespace", namespaceName);
 			if (predicate != null) dictionary.Add("predicate", predicate);
-			if (addedSince != null) dictionary.Add("added_since", addedSince.ToString().ToLower());
+			if (addedSince != null) dictionary.Add("added_since", addedSince.Value.ToUnixTimestamp());
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 1) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return GetResponse<ValueCollection>(dictionary);
 		}
 
-		public ValueCollection MachinetagsGetRecentValues(DateTime addedSince) 
+		public ValueCollection MachinetagsGetRecentValues(DateTime? addedSince) 
 		{
 			return MachinetagsGetRecentValues(null, null, addedSince, 0, 1);
 		}
 
 
-		public ValueCollection MachinetagsGetRecentValues(DateTime addedSince, int page, int perPage) 
+		public ValueCollection MachinetagsGetRecentValues(DateTime? addedSince, int page, int perPage) 
 		{
 			return MachinetagsGetRecentValues(null, null, addedSince, page, perPage);
 		}
@@ -1198,13 +1204,13 @@ namespace FlickrNet
 
 		public ValueCollection MachinetagsGetRecentValues(string namespaceName, string predicate) 
 		{
-			return MachinetagsGetRecentValues(namespaceName, predicate, DateTime.MinValue, 0, 1);
+			return MachinetagsGetRecentValues(namespaceName, predicate, null, 0, 1);
 		}
 
 
 		public ValueCollection MachinetagsGetRecentValues(string namespaceName, string predicate, int page, int perPage) 
 		{
-			return MachinetagsGetRecentValues(namespaceName, predicate, DateTime.MinValue, page, perPage);
+			return MachinetagsGetRecentValues(namespaceName, predicate, null, page, perPage);
 		}
 
 		#endregion
@@ -1229,22 +1235,22 @@ namespace FlickrNet
 
 		#endregion
 
-		#region flickr.pandas.getList
+		#region flickr.panda.getList
 
-		public PandaCollection PandasGetList() 
+		public PandaCollection PandaGetList() 
 		{
 			var dictionary = new Dictionary<string, string>();
-			dictionary.Add("method", "flickr.pandas.getList");
+			dictionary.Add("method", "flickr.panda.getList");
 			return GetResponse<PandaCollection>(dictionary);
 		}
 		#endregion
 
-		#region flickr.pandas.getPhotos
+		#region flickr.panda.getPhotos
 
-		public PandaPhotoCollection PandasGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage) 
+		public PandaPhotoCollection PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage) 
 		{
 			var dictionary = new Dictionary<string, string>();
-			dictionary.Add("method", "flickr.pandas.getPhotos");
+			dictionary.Add("method", "flickr.panda.getPhotos");
 			dictionary.Add("panda_name", pandaName);
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
@@ -1252,43 +1258,43 @@ namespace FlickrNet
 			return GetResponse<PandaPhotoCollection>(dictionary);
 		}
 
-		public PandaPhotoCollection PandasGetPhotos(string pandaName) 
+		public PandaPhotoCollection PandaGetPhotos(string pandaName) 
 		{
-			return PandasGetPhotos(pandaName, PhotoSearchExtras.None, 0, 0);
+			return PandaGetPhotos(pandaName, PhotoSearchExtras.None, 0, 0);
 		}
 
 
-		public PandaPhotoCollection PandasGetPhotos(string pandaName, PhotoSearchExtras extras) 
+		public PandaPhotoCollection PandaGetPhotos(string pandaName, PhotoSearchExtras extras) 
 		{
-			return PandasGetPhotos(pandaName, extras, 0, 0);
+			return PandaGetPhotos(pandaName, extras, 0, 0);
 		}
 
 
-		public PandaPhotoCollection PandasGetPhotos(string pandaName, int page, int perPage) 
+		public PandaPhotoCollection PandaGetPhotos(string pandaName, int page, int perPage) 
 		{
-			return PandasGetPhotos(pandaName, PhotoSearchExtras.None, page, perPage);
+			return PandaGetPhotos(pandaName, PhotoSearchExtras.None, page, perPage);
 		}
 
 		#endregion
 
 		#region flickr.people.findByEmail
 
-		public FoundUser PeopleFindByEmail(string emailAddress) 
+		public FoundUser PeopleFindByEmail(string findEmail) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.findByEmail");
-			dictionary.Add("email_address", emailAddress);
+			dictionary.Add("find_email", findEmail);
 			return GetResponse<FoundUser>(dictionary);
 		}
 		#endregion
 
 		#region flickr.people.findByUserName
 
-		public FoundUser PeopleFindByUserName(string userName) 
+		public FoundUser PeopleFindByUserName(string username) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.findByUserName");
-			dictionary.Add("user_name", userName);
+			dictionary.Add("username", username);
 			return GetResponse<FoundUser>(dictionary);
 		}
 		#endregion
@@ -1331,14 +1337,14 @@ namespace FlickrNet
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.getPhotos");
-			if (userId != null) dictionary.Add("user_id", userId);
-			if (safeSearch != SafetyLevel.None) dictionary.Add("safe_search", safeSearch.ToString().ToLower());
+			dictionary.Add("user_id", userId);
+			if (safeSearch != SafetyLevel.None) dictionary.Add("safe_search", safeSearch.ToString("d"));
 			if (minUploadDate != null) dictionary.Add("min_upload_date", minUploadDate.Value.ToUnixTimestamp());
 			if (maxUploadDate != null) dictionary.Add("max_upload_date", maxUploadDate.Value.ToUnixTimestamp());
-			if (minTakenDate != null) dictionary.Add("min_taken_date", minTakenDate.Value.ToUnixTimestamp());
-			if (maxTakenDate != null) dictionary.Add("max_taken_date", maxTakenDate.Value.ToUnixTimestamp());
-			if (contentType != ContentTypeSearch.None) dictionary.Add("content_type", contentType.ToString().ToLower());
-			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString().ToLower());
+			if (minTakenDate != null) dictionary.Add("min_taken_date", minTakenDate.Value.ToMySql());
+			if (maxTakenDate != null) dictionary.Add("max_taken_date", maxTakenDate.Value.ToMySql());
+			if (contentType != ContentTypeSearch.None) dictionary.Add("content_type", contentType.ToString("d"));
+			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString("d"));
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -1347,7 +1353,7 @@ namespace FlickrNet
 
 		public PhotoCollection PeopleGetPhotos() 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
+			return PeopleGetPhotos("me", SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
 		}
 
 
@@ -1359,19 +1365,19 @@ namespace FlickrNet
 
 		public PhotoCollection PeopleGetPhotos(PhotoSearchExtras extras) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
+			return PeopleGetPhotos("me", SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
 		}
 
 
 		public PhotoCollection PeopleGetPhotos(int page, int perPage) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
+			return PeopleGetPhotos("me", SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
 		}
 
 
 		public PhotoCollection PeopleGetPhotos(PhotoSearchExtras extras, int page, int perPage) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
+			return PeopleGetPhotos("me", SafetyLevel.None, null, null, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
 		}
 
 
@@ -1389,25 +1395,25 @@ namespace FlickrNet
 
 		public PhotoCollection PeopleGetPhotos(DateTime? minUploadDate, DateTime? maxUploadDate) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
+			return PeopleGetPhotos("me", SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, 0, 0);
 		}
 
 
 		public PhotoCollection PeopleGetPhotos(DateTime? minUploadDate, DateTime? maxUploadDate, PhotoSearchExtras extras) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
+			return PeopleGetPhotos("me", SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, 0, 0);
 		}
 
 
 		public PhotoCollection PeopleGetPhotos(DateTime? minUploadDate, DateTime? maxUploadDate, PhotoSearchExtras extras, int page, int perPage) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
+			return PeopleGetPhotos("me", SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, extras, page, perPage);
 		}
 
 
 		public PhotoCollection PeopleGetPhotos(DateTime? minUploadDate, DateTime? maxUploadDate, int page, int perPage) 
 		{
-			return PeopleGetPhotos(null, SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
+			return PeopleGetPhotos("me", SafetyLevel.None, minUploadDate, maxUploadDate, null, null, ContentTypeSearch.None, PrivacyFilter.None, PhotoSearchExtras.None, page, perPage);
 		}
 
 
@@ -1442,7 +1448,7 @@ namespace FlickrNet
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.getPhotosOf");
-			if (userId != null) dictionary.Add("user_id", userId);
+			dictionary.Add("user_id", userId);
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -1451,7 +1457,13 @@ namespace FlickrNet
 
 		public PeoplePhotoCollection PeopleGetPhotosOf() 
 		{
-			return PeopleGetPhotosOf(null, PhotoSearchExtras.None, 0, 0);
+			return PeopleGetPhotosOf("me", PhotoSearchExtras.None, 0, 0);
+		}
+
+
+		public PeoplePhotoCollection PeopleGetPhotosOf(string userId) 
+		{
+			return PeopleGetPhotosOf(userId, PhotoSearchExtras.None, 0, 0);
 		}
 
 
@@ -1469,13 +1481,13 @@ namespace FlickrNet
 
 		public PeoplePhotoCollection PeopleGetPhotosOf(PhotoSearchExtras extras, int page, int perPage) 
 		{
-			return PeopleGetPhotosOf(null, extras, page, perPage);
+			return PeopleGetPhotosOf("me", extras, page, perPage);
 		}
 
 
 		public PeoplePhotoCollection PeopleGetPhotosOf(int page, int perPage) 
 		{
-			return PeopleGetPhotosOf(null, PhotoSearchExtras.None, page, perPage);
+			return PeopleGetPhotosOf("me", PhotoSearchExtras.None, page, perPage);
 		}
 
 		#endregion
@@ -1507,10 +1519,16 @@ namespace FlickrNet
 			dictionary.Add("user_id", userId);
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
-			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString().ToLower());
+			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString("d"));
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return GetResponse<PhotoCollection>(dictionary);
 		}
+
+		public PhotoCollection PeopleGetPublicPhotos(string userId) 
+		{
+			return PeopleGetPublicPhotos(userId, 0, 0, SafetyLevel.None, PhotoSearchExtras.None);
+		}
+
 
 		public PhotoCollection PeopleGetPublicPhotos(string userId, int page, int perPage) 
 		{
@@ -1899,7 +1917,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.photosets.getPhotos");
 			dictionary.Add("photoset_id", photosetId);
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
-			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString().ToLower());
+			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString("d"));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			if (media != MediaType.None) dictionary.Add("media", media.ToString().ToLower());
@@ -2471,6 +2489,12 @@ namespace FlickrNet
 			UtilityMethods.PartialOptionsIntoArray(options, dictionary);
 			return GetResponse<PhotoCollection>(dictionary);
 		}
+
+		public PhotoCollection PhotosGetWithGeoData() 
+		{
+			return PhotosGetWithGeoData(PartialSearchOptions.Empty);
+		}
+
 		#endregion
 
 		#region flickr.photos.getWithoutGeoData
@@ -2482,6 +2506,12 @@ namespace FlickrNet
 			UtilityMethods.PartialOptionsIntoArray(options, dictionary);
 			return GetResponse<PhotoCollection>(dictionary);
 		}
+
+		public PhotoCollection PhotosGetWithoutGeoData() 
+		{
+			return PhotosGetWithoutGeoData(PartialSearchOptions.Empty);
+		}
+
 		#endregion
 
 		#region flickr.photos.licenses.setLicense
@@ -2745,7 +2775,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.setSafetyLevel");
 			dictionary.Add("photo_id", photoId);
-			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString().ToLower());
+			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString("d"));
 			if (hidden != HiddenFromSearch.None) dictionary.Add("hidden", hidden.ToString().ToLower());
 			GetResponse<NoResponse>(dictionary);
 		}

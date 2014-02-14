@@ -14,7 +14,12 @@ namespace FlickrNet
         public static string ToUnixTimestamp(this DateTime date)
         {
             TimeSpan ts = date - UnixStartDate;
-            return ts.TotalSeconds.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo);
+            return ts.TotalSeconds.ToString("0", NumberFormatInfo.InvariantInfo);
+        }
+
+        public static string ToMySql(this DateTime date)
+        {
+            return date.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo);
         }
 
         public static string ToString(this PhotoSearchExtras extras)

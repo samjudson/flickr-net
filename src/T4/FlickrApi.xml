@@ -348,7 +348,7 @@
   </method>
 
   <method name="flickr.interestingness.getList" return="PhotoCollection">
-    <argument name="date" type="Timestamp?" default="null"/>
+    <argument name="date" type="MySql?" default="null"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="0"/>
@@ -361,10 +361,11 @@
   </method>
 
   <method name="flickr.machinetags.getNamespaces" return="NamespaceCollection">
-    <argument name="predicate" type="string"/>
+    <argument name="predicate" type="string" default="null"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="1"/>
     <overload parameters="predicate"/>
+    <overload parameters=""/>
   </method>
 
   <method name="flickr.machinetags.getPairs" return="PairCollection">
@@ -389,7 +390,7 @@
   <method name="flickr.machinetags.getRecentValues" return="ValueCollection">
     <argument name="namespace" type="string" default="null"/>
     <argument name="predicate" type="string" default="null"/>
-    <argument name="added_since" type="DateTime" default="DateTime.MinValue" nullable="true"/>
+    <argument name="added_since" type="Timestamp?" default="null"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="1"/>
     <overload parameters="added_since"/>
@@ -406,9 +407,9 @@
     <overload parameters="namespace,predicate"/>
   </method>
 
-  <method name="flickr.pandas.getList" return="PandaCollection"/>
+  <method name="flickr.panda.getList" return="PandaCollection"/>
 
-  <method name="flickr.pandas.getPhotos" return="PandaPhotoCollection">
+  <method name="flickr.panda.getPhotos" return="PandaPhotoCollection">
     <argument name="panda_name" type="string"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <argument name="page" type="int" default="0"/>
@@ -419,11 +420,11 @@
   </method>
 
   <method name="flickr.people.findByEmail" return="FoundUser">
-    <argument name="email_address" type="string"/>
+    <argument name="find_email" type="string"/>
   </method>
 
   <method name="flickr.people.findByUserName" return="FoundUser">
-    <argument name="user_name" type="string"/>
+    <argument name="username" type="string"/>
   </method>
 
   <method name="flickr.people.getGroups" return="GroupInfoCollection">
@@ -437,12 +438,12 @@
   <method name="flickr.people.getLimits" return="PersonLimits"/>
 
   <method name="flickr.people.getPhotos" return="PhotoCollection">
-    <argument name="user_id" type="string" default="null"/>
+    <argument name="user_id" type="string" default="&quot;me&quot;" alwayssend="true"/>
     <argument name="safe_search" type="SafetyLevel" default="SafetyLevel.None"/>
     <argument name="min_upload_date" type="Timestamp?" default="null"/>
     <argument name="max_upload_date" type="Timestamp?" default="null"/>
-    <argument name="min_taken_date" type="Timestamp?" default="null"/>
-    <argument name="max_taken_date" type="Timestamp?" default="null"/>
+    <argument name="min_taken_date" type="MySql?" default="null"/>
+    <argument name="max_taken_date" type="MySql?" default="null"/>
     <argument name="content_type" type="ContentTypeSearch" default="ContentTypeSearch.None"/>
     <argument name="privacy_filter" type="PrivacyFilter" default="PrivacyFilter.None"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
@@ -466,11 +467,12 @@
   </method>
 
   <method name="flickr.people.getPhotosOf" return="PeoplePhotoCollection">
-    <argument name="user_id" type="string" default="null"/>
+    <argument name="user_id" type="string" default="&quot;me&quot;" alwayssend="true"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="0"/>
     <overload parameters=""/>
+    <overload parameters="user_id"/>
     <overload parameters="user_id,extras"/>
     <overload parameters="user_id,page,per_page"/>
     <overload parameters="extras,page,per_page"/>
@@ -489,6 +491,7 @@
     <argument name="per_page" type="int" default="0"/>
     <argument name="safety_level" type="SafetyLevel" default="SafetyLevel.None"/>
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters="user_id"/>
     <overload parameters="user_id,page,per_page"/>
     <overload parameters="user_id,page,per_page,extras"/>
     <overload parameters="user_id,safety_level"/>
@@ -821,11 +824,13 @@
   </method>
 
   <method name="flickr.photos.getWithGeoData" return="PhotoCollection">
-    <argument name="options" type="PartialSearchOptions"/>
+    <argument name="options" type="PartialSearchOptions" default="PartialSearchOptions.Empty"/>
+    <overload parameters=""/>
   </method>
 
   <method name="flickr.photos.getWithoutGeoData" return="PhotoCollection">
-    <argument name="options" type="PartialSearchOptions"/>
+    <argument name="options" type="PartialSearchOptions" default="PartialSearchOptions.Empty"/>
+    <overload parameters=""/>
   </method>
 
   <method name="flickr.photos.licenses.setLicense" return="void">

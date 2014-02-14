@@ -91,6 +91,13 @@ namespace FlickrNet45.Tests
         public string UserId = "41888973@N00";
         public string PhotosetId = "72157627145038616";
 
+        // http://www.flickr.com/photos/samjudson/3547139066 - Apple Store
+        public string PhotoId = "3547139066";
+
+        // FLOWERS
+        public string GroupId = "13378274@N00";
+        public string FlickrNetTestGroupId = "1368041@N20";
+
         public string RequestToken
         {
             get { return GetRegistryKey("RequestToken"); }

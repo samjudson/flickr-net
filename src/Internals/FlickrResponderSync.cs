@@ -42,7 +42,7 @@ namespace FlickrNet.Internals
             string data = OAuthCalculatePostData(parameters);
             string authHeader = OAuthCalculateAuthHeader(parameters);
 
-            flickr.LastRequest = baseUrl + data;
+            flickr.LastRequest = baseUrl + "?" + data;
 
             // Download data.
             try

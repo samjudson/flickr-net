@@ -118,6 +118,9 @@ private string ParseConverter(string type, string varName)
 			return "UtilityMethods.ExtrasToString(" + varName + ")";
 		case "GeoAccuracy":
 		case "GeoContext":
+		case "PrivacyFilter":
+		case "ContentTypeSearch":
+		case "SafetyLevel":
 			return varName + ".ToString(\"d\")";
 		default:
 			return varName + ".ToString().ToLower()";

@@ -53,7 +53,15 @@
     <Compile Include="ContactsTests.cs" />
     <Compile Include="FavoritesTests.cs" />
     <Compile Include="GalleriesTests.cs" />
+    <Compile Include="GeoTests.cs" />
+    <Compile Include="GroupsDiscussTests.cs" />
+    <Compile Include="GroupsPoolsTests.cs" />
+    <Compile Include="GroupsTests.cs" />
+    <Compile Include="InterestingnessTests.cs" />
+    <Compile Include="MachinetagsTests.cs" />
+    <Compile Include="PandaTest.cs" />
     <Compile Include="PeopleGetPhotosTests.cs" />
+    <Compile Include="PeopleTests.cs" />
     <Compile Include="PhotoSearchOptionsTests.cs" />
     <Compile Include="PhotosetCommentsGetListTests.cs" />
     <Compile Include="PhotosetsGetPhotosTests.cs" />

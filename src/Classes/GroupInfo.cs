@@ -60,6 +60,9 @@ namespace FlickrNet
         /// </summary>
         public long PoolCount { get; set; }
 
+        public bool? IsMember { get; set; }
+        public bool? IsModerator { get; set; }
+
         /// <summary>
         /// The URL for the group web page.
         /// </summary>
@@ -102,6 +105,15 @@ namespace FlickrNet
                         break;
                     case "pool_count":
                         PoolCount = reader.ReadContentAsLong();
+                        break;
+                    case "is_member":
+                        IsMember = reader.Value == "1";
+                        break;
+                    case "is_moderator":
+                        IsModerator = reader.Value == "1";
+                        break;
+                    case "is_admin":
+                        IsAdmin = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -11,7 +11,12 @@ namespace FlickrNet
     {
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
-            throw new NotImplementedException();
+            reader.ReadToFollowing("panda");
+
+            while (reader.LocalName == "panda")
+            {
+                Add(reader.ReadElementContentAsString());
+            }
         }
     }
 }

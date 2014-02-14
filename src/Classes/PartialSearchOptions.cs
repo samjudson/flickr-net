@@ -16,6 +16,11 @@ namespace FlickrNet
         private PrivacyFilter privacyFilter = PrivacyFilter.None;
         private PhotoSearchSortOrder sort = PhotoSearchSortOrder.None;
 
+        public static PartialSearchOptions Empty
+        {
+            get { return new PartialSearchOptions(); }
+        }
+
         /// <summary>
         /// Default constructor.
         /// </summary>

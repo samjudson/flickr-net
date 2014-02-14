@@ -247,8 +247,8 @@ namespace FlickrNet
         /// <param name="parameters">The <see cref="Hashtable"/> to add the option key value pairs to.</param>
         public static void PartialOptionsIntoArray(PartialSearchOptions options, Dictionary<string, string> parameters)
         {
-            if (options == null) throw new ArgumentNullException("options");
             if (parameters == null) throw new ArgumentNullException("parameters");
+            if (options == null) return;
 
             if (options.MinUploadDate != DateTime.MinValue)
                 parameters.Add("min_uploaded_date", DateToUnixTimestamp(options.MinUploadDate));
