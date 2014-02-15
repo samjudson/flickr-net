@@ -1,11 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using FlickrNet45.Tests;
-using NUnit.Framework;
-using FlickrNet;
+﻿using NUnit.Framework;
 
-namespace FlickrNetTest
+namespace FlickrNet45.Tests
 {
     /// <summary>
     /// Summary description for PandaGetListTest

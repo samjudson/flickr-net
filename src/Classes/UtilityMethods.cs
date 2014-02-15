@@ -421,7 +421,7 @@ namespace FlickrNet
 
             try
             {
-                return DateTime.ParseExact(p, format1, iformat, DateTimeStyles.None);
+                return DateTime.ParseExact(p, format2, iformat, DateTimeStyles.None);
             }
             catch (FormatException)
             {
@@ -429,7 +429,7 @@ namespace FlickrNet
 
             try
             {
-                return DateTime.ParseExact(p, format2, iformat, DateTimeStyles.None);
+                return DateTime.ParseExact(p, format1, iformat, DateTimeStyles.None);
             }
             catch (FormatException)
             {

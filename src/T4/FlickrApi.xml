@@ -760,6 +760,7 @@
     <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
     <overload parameters="user_id"/>
     <overload parameters="user_id,count"/>
+    <overload parameters="user_id,count,just_friends,single_photo,include_self"/>
     <overload parameters="user_id,count,extras"/>
     <overload parameters="user_id,extras"/>
   </method>
@@ -770,7 +771,7 @@
 
   <method name="flickr.photos.getCounts" return="PhotoCountCollection">
     <argument name="dates" type="IEnumerable(Timestamp)" default="null"/>
-    <argument name="takenDates" type="IEnumerable(Timestamp)" default="null"/>
+    <argument name="taken_dates" type="IEnumerable(Timestamp)" default="null"/>
     <overload parameters="dates"/>
   </method>
 
@@ -835,7 +836,7 @@
 
   <method name="flickr.photos.licenses.setLicense" return="void">
     <argument name="photo_id" type="string"/>
-    <argument name="license" type="LicenseType"/>
+    <argument name="license_id" type="LicenseType"/>
   </method>
   
   <method name="flickr.photos.licenses.getInfo" return="LicenseCollection">

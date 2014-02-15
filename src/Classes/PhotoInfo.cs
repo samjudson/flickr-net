@@ -313,7 +313,7 @@ namespace FlickrNet
         /// </remarks>
         public string Small320Url
         {
-            get { return UtilityMethods.UrlFormat(this, "_n", ".jpg"); }
+            get { return UtilityMethods.UrlFormat(this, "_n", "jpg"); }
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace FlickrNet
         /// </remarks>
         public string Medium640Url
         {
-            get { return UtilityMethods.UrlFormat(this, "_z", ".jpg"); }
+            get { return UtilityMethods.UrlFormat(this, "_z", "jpg"); }
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace FlickrNet
         /// </remarks>
         public string Medium800Url
         {
-            get { return UtilityMethods.UrlFormat(this, "_c", ".jpg"); }
+            get { return UtilityMethods.UrlFormat(this, "_c", "jpg"); }
         }
 
         /// <summary>

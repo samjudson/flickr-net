@@ -1,11 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using FlickrNet45.Tests;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using FlickrNet;
 
-namespace FlickrNetTest
+namespace FlickrNet45.Tests
 {
     /// <summary>
     /// Summary description for GroupsBrowseTests

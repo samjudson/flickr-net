@@ -121,6 +121,7 @@ private string ParseConverter(string type, string varName)
 		case "PrivacyFilter":
 		case "ContentTypeSearch":
 		case "SafetyLevel":
+		case "LicenseType":
 			return varName + ".ToString(\"d\")";
 		default:
 			return varName + ".ToString().ToLower()";

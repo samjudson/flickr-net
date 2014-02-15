@@ -45,11 +45,16 @@ namespace FlickrNet
         public string IconFarm { get; set; }
 
         /// <summary>
+        /// The path alias for the author, if know.
+        /// </summary>
+        public string PathAlias { get; set; }
+
+        /// <summary>
         /// The comment authors buddy icon.
         /// </summary>
         public string AuthorBuddyIcon
         {
-            get { return UtilityMethods.BuddyIcon(IconServer, IconFarm, AuthorUserId); }
+            get { return UtilityMethods.BuddyIcon(IconServer, IconFarm, PathAlias ?? AuthorUserId); }
         }
 
         /// <summary>
@@ -88,6 +93,9 @@ namespace FlickrNet
                         break;
                     case "iconfarm":
                         IconFarm = reader.Value;
+                        break;
+                    case "path_alias":
+                        PathAlias = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

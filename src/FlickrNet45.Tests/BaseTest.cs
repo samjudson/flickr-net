@@ -9,6 +9,7 @@ namespace FlickrNet45.Tests
     {
         private Flickr _instance;
         private Flickr _authInstance;
+        private Flickr _ignoreInstance;
         private Dictionary<string, string> _errorLog;
 
         protected readonly TestData Data = new TestData();
@@ -35,6 +36,11 @@ namespace FlickrNet45.Tests
         protected Flickr AuthInstance
         {
             get { return _authInstance ?? (_authInstance = GetAuthInstance()); }
+        }
+
+        protected Flickr IgnoreInstance
+        {
+            get { return _ignoreInstance ?? (_ignoreInstance = GetAuthInstance()); }
         }
 
         protected bool InstanceUsed
@@ -93,7 +99,8 @@ namespace FlickrNet45.Tests
 
         // http://www.flickr.com/photos/samjudson/3547139066 - Apple Store
         public string PhotoId = "3547139066";
-
+        // http://www.flickr.com/photos/samjudson/5890800 - Grey Street
+        public string FavouritedPhotoId = "5890800";
         // FLOWERS
         public string GroupId = "13378274@N00";
         public string FlickrNetTestGroupId = "1368041@N20";

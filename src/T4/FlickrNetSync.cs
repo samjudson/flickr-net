@@ -2288,6 +2288,12 @@ namespace FlickrNet
 		}
 
 
+		public PhotoCollection PhotosGetContactsPublicPhotos(string userId, int? count, bool? justFriends, bool? singlePhoto, bool? includeSelf) 
+		{
+			return PhotosGetContactsPublicPhotos(userId, count, justFriends, singlePhoto, includeSelf, PhotoSearchExtras.None);
+		}
+
+
 		public PhotoCollection PhotosGetContactsPublicPhotos(string userId, int? count, PhotoSearchExtras extras) 
 		{
 			return PhotosGetContactsPublicPhotos(userId, count, null, null, null, extras);
@@ -2319,7 +2325,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.getCounts");
 			if (dates != null) dictionary.Add("dates", dates == null ? String.Empty : String.Join(",", dates.Select(d => d.ToUnixTimestamp()).ToArray()));
-			if (takenDates != null) dictionary.Add("takenDates", takenDates == null ? String.Empty : String.Join(",", takenDates.Select(d => d.ToUnixTimestamp()).ToArray()));
+			if (takenDates != null) dictionary.Add("taken_dates", takenDates == null ? String.Empty : String.Join(",", takenDates.Select(d => d.ToUnixTimestamp()).ToArray()));
 			return GetResponse<PhotoCountCollection>(dictionary);
 		}
 
@@ -2516,12 +2522,12 @@ namespace FlickrNet
 
 		#region flickr.photos.licenses.setLicense
 
-		public void PhotosLicensesSetLicense(string photoId, LicenseType license) 
+		public void PhotosLicensesSetLicense(string photoId, LicenseType licenseId) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.licenses.setLicense");
 			dictionary.Add("photo_id", photoId);
-			dictionary.Add("license", license.ToString().ToLower());
+			dictionary.Add("license_id", licenseId.ToString("d"));
 			GetResponse<NoResponse>(dictionary);
 		}
 		#endregion

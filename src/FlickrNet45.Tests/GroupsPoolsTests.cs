@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using FlickrNet45.Tests;
 using NUnit.Framework;
 using FlickrNet;
 using System.IO;
 
-namespace FlickrNetTest
+namespace FlickrNet45.Tests
 {
     /// <summary>
     /// Summary description for GroupsPoolsGetGroupsTests
