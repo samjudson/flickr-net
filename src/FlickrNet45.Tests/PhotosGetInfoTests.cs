@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FlickrNet.Exceptions;
 using NUnit.Framework;
 using FlickrNet;
@@ -207,7 +208,14 @@ namespace FlickrNet45.Tests
         [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFoundAsync()
         {
-            var result = Instance.PhotosGetInfoAsync("abcd").Result;
+            try
+            {
+                var result = Instance.PhotosGetInfoAsync("abcd").Result;
+            }
+            catch (AggregateException exception)
+            {
+                throw exception.InnerExceptions.First();
+            }
         }
 
         [Test]

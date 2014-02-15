@@ -12,17 +12,10 @@ namespace FlickrNet45.Tests
     public class PhotosGetContactsPhotos : BaseTest
     {
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
+        [ExpectedException(typeof(OAuthException))]
         public void PhotosGetContactsPhotosSignatureRequiredTest()
         {
             Instance.PhotosGetContactsPhotos();
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void PhotosGetContactsPhotosIncorrectCountTest()
-        {
-            AuthInstance.PhotosGetContactsPhotos(51);
         }
 
         [Test]
