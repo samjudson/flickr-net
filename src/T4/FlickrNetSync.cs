@@ -14,6 +14,17 @@ namespace FlickrNet
 	public partial class Flickr
 	{
 
+		#region flickr.auth.oauth.checkToken
+
+		public OAuthAccessToken AuthOauthCheckToken(string oauthToken) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "flickr.auth.oauth.checkToken");
+			dictionary.Add("oauth_token", oauthToken);
+			return GetResponse<OAuthAccessToken>(dictionary);
+		}
+		#endregion
+
 		#region flickr.activity.userComments
 
 		public ActivityItemCollection ActivityUserComments(int page, int perPage) 
@@ -2498,7 +2509,7 @@ namespace FlickrNet
 
 		public PhotoCollection PhotosGetWithGeoData() 
 		{
-			return PhotosGetWithGeoData(PartialSearchOptions.Empty);
+			return PhotosGetWithGeoData(null);
 		}
 
 		#endregion
@@ -2515,7 +2526,7 @@ namespace FlickrNet
 
 		public PhotoCollection PhotosGetWithoutGeoData() 
 		{
-			return PhotosGetWithoutGeoData(PartialSearchOptions.Empty);
+			return PhotosGetWithoutGeoData(null);
 		}
 
 		#endregion

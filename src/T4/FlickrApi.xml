@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <methods>
 
+  <method name="flickr.auth.oauth.checkToken" return="OAuthAccessToken">
+    <argument name="oauth_token" type="string"/>
+  </method>
   <method name="flickr.activity.userComments" return="ActivityItemCollection">
     <argument name="page" type="int" default="0"/>
     <argument name="per_page" type="int" default="0"/>
@@ -825,12 +828,12 @@
   </method>
 
   <method name="flickr.photos.getWithGeoData" return="PhotoCollection">
-    <argument name="options" type="PartialSearchOptions" default="PartialSearchOptions.Empty"/>
+    <argument name="options" type="PartialSearchOptions" default="null"/>
     <overload parameters=""/>
   </method>
 
   <method name="flickr.photos.getWithoutGeoData" return="PhotoCollection">
-    <argument name="options" type="PartialSearchOptions" default="PartialSearchOptions.Empty"/>
+    <argument name="options" type="PartialSearchOptions" default="null"/>
     <overload parameters=""/>
   </method>
 

@@ -13,6 +13,17 @@ namespace FlickrNet
 	public partial class Flickr
 	{
 
+		#region flickr.auth.oauth.checkToken
+
+		public async Task<OAuthAccessToken> AuthOauthCheckTokenAsync(string oauthToken) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "flickr.auth.oauth.checkToken");
+			dictionary.Add("oauth_token", oauthToken);
+			return await GetResponseAsync<OAuthAccessToken>(dictionary);
+		}
+		#endregion
+
 		#region flickr.activity.userComments
 
 		public async Task<ActivityItemCollection> ActivityUserCommentsAsync(int page = 0, int perPage = 0) 
@@ -625,7 +636,7 @@ namespace FlickrNet
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.interestingness.getList");
-			if (date != null) dictionary.Add("date", date.Value.ToUnixTimestamp());
+			if (date != null) dictionary.Add("date", date.Value.ToMySql());
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -635,11 +646,11 @@ namespace FlickrNet
 
 		#region flickr.machinetags.getNamespaces
 
-		public async Task<NamespaceCollection> MachinetagsGetNamespacesAsync(string predicate, int page = 0, int perPage = 1) 
+		public async Task<NamespaceCollection> MachinetagsGetNamespacesAsync(string predicate = null, int page = 0, int perPage = 1) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.machinetags.getNamespaces");
-			dictionary.Add("predicate", predicate);
+			if (predicate != null) dictionary.Add("predicate", predicate);
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 1) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<NamespaceCollection>(dictionary);
@@ -681,7 +692,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.machinetags.getRecentValues");
 			if (namespaceName != null) dictionary.Add("namespace", namespaceName);
 			if (predicate != null) dictionary.Add("predicate", predicate);
-			if (addedSince != null) dictionary.Add("added_since", addedSince.ToString().ToLower());
+			if (addedSince != null) dictionary.Add("added_since", addedSince.Value.ToUnixTimestamp());
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 1) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			return await GetResponseAsync<ValueCollection>(dictionary);
@@ -702,22 +713,22 @@ namespace FlickrNet
 		}
 		#endregion
 
-		#region flickr.pandas.getList
+		#region flickr.panda.getList
 
-		public async Task<PandaCollection> PandasGetListAsync() 
+		public async Task<PandaCollection> PandaGetListAsync() 
 		{
 			var dictionary = new Dictionary<string, string>();
-			dictionary.Add("method", "flickr.pandas.getList");
+			dictionary.Add("method", "flickr.panda.getList");
 			return await GetResponseAsync<PandaCollection>(dictionary);
 		}
 		#endregion
 
-		#region flickr.pandas.getPhotos
+		#region flickr.panda.getPhotos
 
-		public async Task<PandaPhotoCollection> PandasGetPhotosAsync(string pandaName, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
+		public async Task<PandaPhotoCollection> PandaGetPhotosAsync(string pandaName, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
 		{
 			var dictionary = new Dictionary<string, string>();
-			dictionary.Add("method", "flickr.pandas.getPhotos");
+			dictionary.Add("method", "flickr.panda.getPhotos");
 			dictionary.Add("panda_name", pandaName);
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
@@ -728,22 +739,22 @@ namespace FlickrNet
 
 		#region flickr.people.findByEmail
 
-		public async Task<FoundUser> PeopleFindByEmailAsync(string emailAddress) 
+		public async Task<FoundUser> PeopleFindByEmailAsync(string findEmail) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.findByEmail");
-			dictionary.Add("email_address", emailAddress);
+			dictionary.Add("find_email", findEmail);
 			return await GetResponseAsync<FoundUser>(dictionary);
 		}
 		#endregion
 
 		#region flickr.people.findByUserName
 
-		public async Task<FoundUser> PeopleFindByUserNameAsync(string userName) 
+		public async Task<FoundUser> PeopleFindByUserNameAsync(string username) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.findByUserName");
-			dictionary.Add("user_name", userName);
+			dictionary.Add("username", username);
 			return await GetResponseAsync<FoundUser>(dictionary);
 		}
 		#endregion
@@ -782,18 +793,18 @@ namespace FlickrNet
 
 		#region flickr.people.getPhotos
 
-		public async Task<PhotoCollection> PeopleGetPhotosAsync(string userId = null, SafetyLevel safeSearch = SafetyLevel.None, DateTime? minUploadDate = null, DateTime? maxUploadDate = null, DateTime? minTakenDate = null, DateTime? maxTakenDate = null, ContentTypeSearch contentType = ContentTypeSearch.None, PrivacyFilter privacyFilter = PrivacyFilter.None, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
+		public async Task<PhotoCollection> PeopleGetPhotosAsync(string userId = "me", SafetyLevel safeSearch = SafetyLevel.None, DateTime? minUploadDate = null, DateTime? maxUploadDate = null, DateTime? minTakenDate = null, DateTime? maxTakenDate = null, ContentTypeSearch contentType = ContentTypeSearch.None, PrivacyFilter privacyFilter = PrivacyFilter.None, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.getPhotos");
-			if (userId != null) dictionary.Add("user_id", userId);
-			if (safeSearch != SafetyLevel.None) dictionary.Add("safe_search", safeSearch.ToString().ToLower());
+			if (userId != "me") dictionary.Add("user_id", userId);
+			if (safeSearch != SafetyLevel.None) dictionary.Add("safe_search", safeSearch.ToString("d"));
 			if (minUploadDate != null) dictionary.Add("min_upload_date", minUploadDate.Value.ToUnixTimestamp());
 			if (maxUploadDate != null) dictionary.Add("max_upload_date", maxUploadDate.Value.ToUnixTimestamp());
-			if (minTakenDate != null) dictionary.Add("min_taken_date", minTakenDate.Value.ToUnixTimestamp());
-			if (maxTakenDate != null) dictionary.Add("max_taken_date", maxTakenDate.Value.ToUnixTimestamp());
-			if (contentType != ContentTypeSearch.None) dictionary.Add("content_type", contentType.ToString().ToLower());
-			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString().ToLower());
+			if (minTakenDate != null) dictionary.Add("min_taken_date", minTakenDate.Value.ToMySql());
+			if (maxTakenDate != null) dictionary.Add("max_taken_date", maxTakenDate.Value.ToMySql());
+			if (contentType != ContentTypeSearch.None) dictionary.Add("content_type", contentType.ToString("d"));
+			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString("d"));
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -803,11 +814,11 @@ namespace FlickrNet
 
 		#region flickr.people.getPhotosOf
 
-		public async Task<PeoplePhotoCollection> PeopleGetPhotosOfAsync(string userId = null, PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
+		public async Task<PeoplePhotoCollection> PeopleGetPhotosOfAsync(string userId = "me", PhotoSearchExtras extras = PhotoSearchExtras.None, int page = 0, int perPage = 0) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.people.getPhotosOf");
-			if (userId != null) dictionary.Add("user_id", userId);
+			if (userId != "me") dictionary.Add("user_id", userId);
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
@@ -836,7 +847,7 @@ namespace FlickrNet
 			dictionary.Add("user_id", userId);
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
-			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString().ToLower());
+			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString("d"));
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
@@ -1090,7 +1101,7 @@ namespace FlickrNet
 			dictionary.Add("method", "flickr.photosets.getPhotos");
 			dictionary.Add("photoset_id", photosetId);
 			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
-			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString().ToLower());
+			if (privacyFilter != PrivacyFilter.None) dictionary.Add("privacy_filter", privacyFilter.ToString("d"));
 			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
 			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
 			if (media != MediaType.None) dictionary.Add("media", media.ToString().ToLower());
@@ -1347,7 +1358,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.getCounts");
 			if (dates != null) dictionary.Add("dates", dates == null ? String.Empty : String.Join(",", dates.Select(d => d.ToUnixTimestamp()).ToArray()));
-			if (takenDates != null) dictionary.Add("takenDates", takenDates == null ? String.Empty : String.Join(",", takenDates.Select(d => d.ToUnixTimestamp()).ToArray()));
+			if (takenDates != null) dictionary.Add("taken_dates", takenDates == null ? String.Empty : String.Join(",", takenDates.Select(d => d.ToUnixTimestamp()).ToArray()));
 			return await GetResponseAsync<PhotoCountCollection>(dictionary);
 		}
 		#endregion
@@ -1450,7 +1461,7 @@ namespace FlickrNet
 
 		#region flickr.photos.getWithGeoData
 
-		public async Task<PhotoCollection> PhotosGetWithGeoDataAsync(PartialSearchOptions options) 
+		public async Task<PhotoCollection> PhotosGetWithGeoDataAsync(PartialSearchOptions options = null) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.getWithGeoData");
@@ -1461,7 +1472,7 @@ namespace FlickrNet
 
 		#region flickr.photos.getWithoutGeoData
 
-		public async Task<PhotoCollection> PhotosGetWithoutGeoDataAsync(PartialSearchOptions options) 
+		public async Task<PhotoCollection> PhotosGetWithoutGeoDataAsync(PartialSearchOptions options = null) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.getWithoutGeoData");
@@ -1472,12 +1483,12 @@ namespace FlickrNet
 
 		#region flickr.photos.licenses.setLicense
 
-		public async Task PhotosLicensesSetLicenseAsync(string photoId, LicenseType license) 
+		public async Task PhotosLicensesSetLicenseAsync(string photoId, LicenseType licenseId) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.licenses.setLicense");
 			dictionary.Add("photo_id", photoId);
-			dictionary.Add("license", license.ToString().ToLower());
+			dictionary.Add("license_id", licenseId.ToString("d"));
 			await GetResponseAsync(dictionary);
 		}
 		#endregion
@@ -1701,7 +1712,7 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.setSafetyLevel");
 			dictionary.Add("photo_id", photoId);
-			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString().ToLower());
+			if (safetyLevel != SafetyLevel.None) dictionary.Add("safety_level", safetyLevel.ToString("d"));
 			if (hidden != HiddenFromSearch.None) dictionary.Add("hidden", hidden.ToString().ToLower());
 			await GetResponseAsync(dictionary);
 		}
