@@ -79,7 +79,7 @@ namespace FlickrNet45.Tests
         [Category("AccessTokenRequired")]
         public void GroupsMembersGetListBasicTest()
         {
-            var ms = AuthInstance.GroupsMembersGetList(Data.GroupId);
+            var ms = AuthInstance.GroupsMembersGetList(Data.GroupId, 1, 10);
 
             Assert.IsNotNull(ms);
             Assert.AreNotEqual(0, ms.Count, "Count should not be zero.");

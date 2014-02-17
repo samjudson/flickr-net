@@ -27,4 +27,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: AssemblyFileVersion("4.0.0.0")]
 
-[assembly:InternalsVisibleTo("FlickrNetTest")]
+[assembly:InternalsVisibleTo("FlickrNet45.Tests")]

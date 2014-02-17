@@ -806,7 +806,11 @@
     <overload parameters="page,per_page"/>
   </method>
 
-  <method name="flickr.photos.getPerms" return="PhotoPermissions">
+  <method name="flickr.photos.getNotInSet" return="PhotoCollection">
+    <argument name="options" type="PartialSearchOptions"/>
+  </method>
+
+    <method name="flickr.photos.getPerms" return="PhotoPermissions">
     <argument name="photo_id" type="string"/>
   </method>
 
@@ -825,6 +829,15 @@
 
   <method name="flickr.photos.getUntagged" return="PhotoCollection">
     <argument name="options" type="PartialSearchOptions"/>
+  </method>
+
+  <method name="flickr.photos.getUntagged" return="PhotoCollection">
+    <argument name="page" type="int" default="0"/>
+    <argument name="per_page" type="int" default="0"/>
+    <argument name="extras" type="Extras" default="PhotoSearchExtras.None"/>
+    <overload parameters=""/>
+    <overload parameters="extras"/>
+    <overload parameters="page,per_page"/>
   </method>
 
   <method name="flickr.photos.getWithGeoData" return="PhotoCollection">
@@ -978,12 +991,16 @@
 
   <method name="flickr.photos.suggestions.suggestLocation" return="void">
     <argument name="photo_id" type="string"/>
-    <argument name="latitude" type="double"/>
-    <argument name="longitide" type="double"/>
-    <argument name="accuracy" type="GeoAccuracy"/>
+    <argument name="lat" type="double"/>
+    <argument name="lon" type="double"/>
+    <argument name="accuracy" type="GeoAccuracy" default="GeoAccuracy.None"/>
     <argument name="woe_id" type="string" default="null"/>
     <argument name="place_id" type="string" default="null"/>
     <argument name="note" type="string" default="null"/>
+    <overload parameters="photo_id,lat,lon"/>
+    <overload parameters="photo_id,lat,lon,accuracy"/>
+    <overload parameters="photo_id,lat,lon,accuracy,woe_id"/>
+    <overload parameters="photo_id,lat,lon,woe_id"/>
   </method>
 
   <method name="flickr.photos.transformRotate" return="void">

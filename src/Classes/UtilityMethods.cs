@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -156,40 +158,36 @@ namespace FlickrNet
         public static string ExtrasToString(PhotoSearchExtras extras)
         {
             var extraList = new List<string>();
-
-            if ((extras & PhotoSearchExtras.DateTaken) == PhotoSearchExtras.DateTaken) extraList.Add("date_taken");
-            if ((extras & PhotoSearchExtras.DateUploaded) == PhotoSearchExtras.DateUploaded)
-                extraList.Add("date_upload");
-            if ((extras & PhotoSearchExtras.IconServer) == PhotoSearchExtras.IconServer) extraList.Add("icon_server");
-            if ((extras & PhotoSearchExtras.License) == PhotoSearchExtras.License) extraList.Add("license");
-            if ((extras & PhotoSearchExtras.OwnerName) == PhotoSearchExtras.OwnerName) extraList.Add("owner_name");
-            if ((extras & PhotoSearchExtras.OriginalFormat) == PhotoSearchExtras.OriginalFormat)
-                extraList.Add("original_format");
-            if ((extras & PhotoSearchExtras.LastUpdated) == PhotoSearchExtras.LastUpdated) extraList.Add("last_update");
-            if ((extras & PhotoSearchExtras.Tags) == PhotoSearchExtras.Tags) extraList.Add("tags");
-            if ((extras & PhotoSearchExtras.Geo) == PhotoSearchExtras.Geo) extraList.Add("geo");
-            if ((extras & PhotoSearchExtras.MachineTags) == PhotoSearchExtras.MachineTags)
-                extraList.Add("machine_tags");
-            if ((extras & PhotoSearchExtras.OriginalDimensions) == PhotoSearchExtras.OriginalDimensions)
-                extraList.Add("o_dims");
-            if ((extras & PhotoSearchExtras.Views) == PhotoSearchExtras.Views) extraList.Add("views");
-            if ((extras & PhotoSearchExtras.Media) == PhotoSearchExtras.Media) extraList.Add("media");
-            if ((extras & PhotoSearchExtras.PathAlias) == PhotoSearchExtras.PathAlias) extraList.Add("path_alias");
-            if ((extras & PhotoSearchExtras.SquareUrl) == PhotoSearchExtras.SquareUrl) extraList.Add("url_sq");
-            if ((extras & PhotoSearchExtras.ThumbnailUrl) == PhotoSearchExtras.ThumbnailUrl) extraList.Add("url_t");
-            if ((extras & PhotoSearchExtras.SmallUrl) == PhotoSearchExtras.SmallUrl) extraList.Add("url_s");
-            if ((extras & PhotoSearchExtras.MediumUrl) == PhotoSearchExtras.MediumUrl) extraList.Add("url_m");
-            if ((extras & PhotoSearchExtras.Medium640Url) == PhotoSearchExtras.Medium640Url) extraList.Add("url_z");
-            if ((extras & PhotoSearchExtras.LargeSquareUrl) == PhotoSearchExtras.LargeSquareUrl) extraList.Add("url_q");
-            if ((extras & PhotoSearchExtras.Small320Url) == PhotoSearchExtras.Small320Url) extraList.Add("url_n");
-            if ((extras & PhotoSearchExtras.LargeUrl) == PhotoSearchExtras.LargeUrl) extraList.Add("url_l");
-            if ((extras & PhotoSearchExtras.OriginalUrl) == PhotoSearchExtras.OriginalUrl) extraList.Add("url_o");
-            if ((extras & PhotoSearchExtras.Description) == PhotoSearchExtras.Description) extraList.Add("description");
-            if ((extras & PhotoSearchExtras.Usage) == PhotoSearchExtras.Usage) extraList.Add("usage");
-            if ((extras & PhotoSearchExtras.Visibility) == PhotoSearchExtras.Visibility) extraList.Add("visibility");
-            if ((extras & PhotoSearchExtras.Rotation) == PhotoSearchExtras.Rotation) extraList.Add("rotation");
+            var e = typeof(PhotoSearchExtras);
+            foreach (PhotoSearchExtras extra in GetFlags(extras))
+            {
+                var info = e.GetField(extra.ToString("G"));
+                var o = info.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                if (o.Length == 0) continue;
+                var att = (DescriptionAttribute)o[0];
+                extraList.Add(att.Description);
+            }
 
             return String.Join(",", extraList.ToArray());
+
+        }
+
+        private static IEnumerable<Enum> GetFlags(Enum input)
+        {
+            var i = Convert.ToInt64(input);
+            foreach (Enum value in GetValues(input))
+                if ((i & Convert.ToInt64(value)) != 0)
+                    yield return value;
+        }
+
+        private static IEnumerable<Enum> GetValues(Enum enumeration)
+        {
+            List<Enum> enumerations = new List<Enum>();
+            foreach (FieldInfo fieldInfo in enumeration.GetType().GetFields(BindingFlags.Static | BindingFlags.Public))
+            {
+                enumerations.Add((Enum)fieldInfo.GetValue(enumeration));
+            }
+            return enumerations;
         }
 
         /// <summary>

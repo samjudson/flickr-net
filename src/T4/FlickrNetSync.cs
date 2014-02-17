@@ -2433,6 +2433,17 @@ namespace FlickrNet
 
 		#endregion
 
+		#region flickr.photos.getNotInSet
+
+		public PhotoCollection PhotosGetNotInSet(PartialSearchOptions options) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "flickr.photos.getNotInSet");
+			UtilityMethods.PartialOptionsIntoArray(options, dictionary);
+			return GetResponse<PhotoCollection>(dictionary);
+		}
+		#endregion
+
 		#region flickr.photos.getPerms
 
 		public PhotoPermissions PhotosGetPerms(string photoId) 
@@ -2495,6 +2506,37 @@ namespace FlickrNet
 			UtilityMethods.PartialOptionsIntoArray(options, dictionary);
 			return GetResponse<PhotoCollection>(dictionary);
 		}
+		#endregion
+
+		#region flickr.photos.getUntagged
+
+		public PhotoCollection PhotosGetUntagged(int page, int perPage, PhotoSearchExtras extras) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "flickr.photos.getUntagged");
+			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
+			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
+			return GetResponse<PhotoCollection>(dictionary);
+		}
+
+		public PhotoCollection PhotosGetUntagged() 
+		{
+			return PhotosGetUntagged(0, 0, PhotoSearchExtras.None);
+		}
+
+
+		public PhotoCollection PhotosGetUntagged(PhotoSearchExtras extras) 
+		{
+			return PhotosGetUntagged(0, 0, extras);
+		}
+
+
+		public PhotoCollection PhotosGetUntagged(int page, int perPage) 
+		{
+			return PhotosGetUntagged(page, perPage, PhotoSearchExtras.None);
+		}
+
 		#endregion
 
 		#region flickr.photos.getWithGeoData
@@ -2869,19 +2911,43 @@ namespace FlickrNet
 
 		#region flickr.photos.suggestions.suggestLocation
 
-		public void PhotosSuggestionsSuggestLocation(string photoId, double latitude, double longitide, GeoAccuracy accuracy, string woeId, string placeId, string note) 
+		public void PhotosSuggestionsSuggestLocation(string photoId, double lat, double lon, GeoAccuracy accuracy, string woeId, string placeId, string note) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.suggestions.suggestLocation");
 			dictionary.Add("photo_id", photoId);
-			dictionary.Add("latitude", latitude.ToString(NumberFormatInfo.InvariantInfo));
-			dictionary.Add("longitide", longitide.ToString(NumberFormatInfo.InvariantInfo));
-			dictionary.Add("accuracy", accuracy.ToString("d"));
+			dictionary.Add("lat", lat.ToString(NumberFormatInfo.InvariantInfo));
+			dictionary.Add("lon", lon.ToString(NumberFormatInfo.InvariantInfo));
+			if (accuracy != GeoAccuracy.None) dictionary.Add("accuracy", accuracy.ToString("d"));
 			if (woeId != null) dictionary.Add("woe_id", woeId);
 			if (placeId != null) dictionary.Add("place_id", placeId);
 			if (note != null) dictionary.Add("note", note);
 			GetResponse<NoResponse>(dictionary);
 		}
+
+		public void PhotosSuggestionsSuggestLocation(string photoId, double lat, double lon) 
+		{
+			PhotosSuggestionsSuggestLocation(photoId, lat, lon, GeoAccuracy.None, null, null, null);
+		}
+
+
+		public void PhotosSuggestionsSuggestLocation(string photoId, double lat, double lon, GeoAccuracy accuracy) 
+		{
+			PhotosSuggestionsSuggestLocation(photoId, lat, lon, accuracy, null, null, null);
+		}
+
+
+		public void PhotosSuggestionsSuggestLocation(string photoId, double lat, double lon, GeoAccuracy accuracy, string woeId) 
+		{
+			PhotosSuggestionsSuggestLocation(photoId, lat, lon, accuracy, woeId, null, null);
+		}
+
+
+		public void PhotosSuggestionsSuggestLocation(string photoId, double lat, double lon, string woeId) 
+		{
+			PhotosSuggestionsSuggestLocation(photoId, lat, lon, GeoAccuracy.None, woeId, null, null);
+		}
+
 		#endregion
 
 		#region flickr.photos.transformRotate
