@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 using System.Xml;
 
 namespace FlickrNet
@@ -21,7 +20,7 @@ namespace FlickrNet
         /// <remarks>
         /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings",
+        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings",
             Justification = "Although called 'URL' by the Flickr API it is not an actual URI.")]
         public string PlaceUrl { get; set; }
 
@@ -30,10 +29,7 @@ namespace FlickrNet
         /// </summary>
         public string PlaceFlickrUrl
         {
-            get
-            {
-                return "http://www.flickr.com/places" + PlaceUrl;
-            }
+            get { return "http://www.flickr.com/places" + PlaceUrl; }
         }
 
         /// <summary>
@@ -47,7 +43,7 @@ namespace FlickrNet
         public string WoeId { get; set; }
 
         /// <summary>
-        /// The name of the WOE location.
+        /// The name for the WOE id.
         /// </summary>
         public string WoeName { get; set; }
 
@@ -116,16 +112,22 @@ namespace FlickrNet
         /// </summary>
         public ShapeData ShapeData { get; set; }
 
+        #region IFlickrParsable Members
+
         /// <summary>
         /// Serializes the XML to an instance.
         /// </summary>
         /// <param name="reader"></param>
         void IFlickrParsable.Load(XmlReader reader)
         {
+            if (reader.NodeType == XmlNodeType.Element && reader.Name == "photo") reader.ReadToDescendant("location");
+
             LoadAttributes(reader);
 
             LoadElements(reader);
         }
+
+        #endregion
 
         private void LoadElements(XmlReader reader)
         {
@@ -170,7 +172,7 @@ namespace FlickrNet
             reader.Read();
         }
 
-        private void LoadAttributes(System.Xml.XmlReader reader)
+        private void LoadAttributes(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
             {
@@ -214,6 +216,9 @@ namespace FlickrNet
                         break;
                     case "has_shapedata":
                         HasShapeData = reader.Value == "1";
+                        break;
+                    case "id":
+                        // Ignore the Photo ID
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
