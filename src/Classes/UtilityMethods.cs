@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -161,10 +162,10 @@ namespace FlickrNet
             var e = typeof(PhotoSearchExtras);
             foreach (PhotoSearchExtras extra in GetFlags(extras))
             {
-                var info = e.GetField(extra.ToString("G"));
-                var o = info.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                if (o.Length == 0) continue;
-                var att = (DescriptionAttribute)o[0];
+                var info = e.GetRuntimeField(extra.ToString("G"));
+                var o = info.GetCustomAttributes(typeof(DescriptionAttribute), false).ToList();
+                if (o == null || !o.Any()) continue;
+                var att = (DescriptionAttribute)o.First();
                 extraList.Add(att.Description);
             }
 
@@ -182,10 +183,10 @@ namespace FlickrNet
 
         private static IEnumerable<Enum> GetValues(Enum enumeration)
         {
-            List<Enum> enumerations = new List<Enum>();
-            foreach (FieldInfo fieldInfo in enumeration.GetType().GetFields(BindingFlags.Static | BindingFlags.Public))
+            var enumerations = new List<Enum>();
+            foreach (var fieldInfo in enumeration.GetType().GetRuntimeFields())
             {
-                enumerations.Add((Enum)fieldInfo.GetValue(enumeration));
+                enumerations.Add(fieldInfo.GetValue(enumeration) as Enum);
             }
             return enumerations;
         }

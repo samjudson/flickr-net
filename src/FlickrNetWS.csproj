@@ -251,6 +251,7 @@
     <Compile Include="Classes\ValueCollection.cs" />
     <Compile Include="Classes\VideoInfo.cs" />
     <Compile Include="Core\Extensions.cs" />
+    <Compile Include="Internals\DescriptionAttribute.cs" />
     <Compile Include="Internals\FlickrResponderW8.cs" />
     <Compile Include="Core\FlickrResult.cs" />
     <Compile Include="Core\Flickr_Core.cs" />
