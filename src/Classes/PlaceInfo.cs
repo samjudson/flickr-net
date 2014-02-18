@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Text;
 using System.Xml;
 
 namespace FlickrNet
@@ -20,7 +21,7 @@ namespace FlickrNet
         /// <remarks>
         /// The 'URL' returned is only a sudo url such as '/Canada/Quebec/Montreal'.
         /// </remarks>
-        [SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings",
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings",
             Justification = "Although called 'URL' by the Flickr API it is not an actual URI.")]
         public string PlaceUrl { get; set; }
 
@@ -29,7 +30,10 @@ namespace FlickrNet
         /// </summary>
         public string PlaceFlickrUrl
         {
-            get { return "http://www.flickr.com/places" + PlaceUrl; }
+            get
+            {
+                return "http://www.flickr.com/places" + PlaceUrl;
+            }
         }
 
         /// <summary>
@@ -43,7 +47,7 @@ namespace FlickrNet
         public string WoeId { get; set; }
 
         /// <summary>
-        /// The name for the WOE id.
+        /// The name of the WOE location.
         /// </summary>
         public string WoeName { get; set; }
 
@@ -112,22 +116,16 @@ namespace FlickrNet
         /// </summary>
         public ShapeData ShapeData { get; set; }
 
-        #region IFlickrParsable Members
-
         /// <summary>
         /// Serializes the XML to an instance.
         /// </summary>
         /// <param name="reader"></param>
         void IFlickrParsable.Load(XmlReader reader)
         {
-            if (reader.NodeType == XmlNodeType.Element && reader.Name == "photo") reader.ReadToDescendant("location");
-
             LoadAttributes(reader);
 
             LoadElements(reader);
         }
-
-        #endregion
 
         private void LoadElements(XmlReader reader)
         {
@@ -140,27 +138,27 @@ namespace FlickrNet
                 {
                     case "neighbourhood":
                         Neighbourhood = new Place();
-                        ((IFlickrParsable) Neighbourhood).Load(reader);
+                        ((IFlickrParsable)Neighbourhood).Load(reader);
                         break;
                     case "locality":
                         Locality = new Place();
-                        ((IFlickrParsable) Locality).Load(reader);
+                        ((IFlickrParsable)Locality).Load(reader);
                         break;
                     case "county":
                         County = new Place();
-                        ((IFlickrParsable) County).Load(reader);
+                        ((IFlickrParsable)County).Load(reader);
                         break;
                     case "region":
                         Region = new Place();
-                        ((IFlickrParsable) Region).Load(reader);
+                        ((IFlickrParsable)Region).Load(reader);
                         break;
                     case "country":
                         Country = new Place();
-                        ((IFlickrParsable) Country).Load(reader);
+                        ((IFlickrParsable)Country).Load(reader);
                         break;
                     case "shapedata":
                         ShapeData = new ShapeData();
-                        ((IFlickrParsable) ShapeData).Load(reader);
+                        ((IFlickrParsable)ShapeData).Load(reader);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -172,7 +170,7 @@ namespace FlickrNet
             reader.Read();
         }
 
-        private void LoadAttributes(XmlReader reader)
+        private void LoadAttributes(System.Xml.XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
             {
@@ -188,10 +186,10 @@ namespace FlickrNet
                         PlaceUrl = reader.Value;
                         break;
                     case "place_type_id":
-                        PlaceType = (PlaceType) reader.ReadContentAsInt();
+                        PlaceType = (PlaceType)reader.ReadContentAsInt();
                         break;
                     case "place_type":
-                        PlaceType = (PlaceType) Enum.Parse(typeof (PlaceType), reader.Value, true);
+                        PlaceType = (PlaceType)Enum.Parse(typeof(PlaceType), reader.Value, true);
                         break;
                     case "woeid":
                         WoeId = reader.Value;
@@ -206,19 +204,16 @@ namespace FlickrNet
                         Longitude = reader.ReadContentAsDouble();
                         break;
                     case "accuracy":
-                        Accuracy = (GeoAccuracy) reader.ReadContentAsInt();
+                        Accuracy = (GeoAccuracy)reader.ReadContentAsInt();
                         break;
                     case "context":
-                        Context = (GeoContext) reader.ReadContentAsInt();
+                        Context = (GeoContext)reader.ReadContentAsInt();
                         break;
                     case "timezone":
                         TimeZone = reader.Value;
                         break;
                     case "has_shapedata":
                         HasShapeData = reader.Value == "1";
-                        break;
-                    case "id":
-                        // Ignore the Photo ID
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -1,22 +1,23 @@
 using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Xml;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace FlickrNet
 {
     /// <remarks/>
     public class Photo : IFlickrParsable
     {
-        private string urlLarge;
+        private string urlSquare;
         private string urlLargeSquare;
+        private string urlThumbnail;
         private string urlMedium;
         private string urlMedium640;
-        private string urlOriginal;
+        private string urlMedium800;
         private string urlSmall;
         private string urlSmall320;
-        private string urlSquare;
-        private string urlThumbnail;
+        private string urlLarge;
+        private string urlOriginal;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Photo"/> class.
@@ -33,28 +34,28 @@ namespace FlickrNet
 
         /// <remarks/>
         public string PhotoId { get; set; }
-
+    
         /// <remarks/>
         public string UserId { get; set; }
-
+    
         /// <remarks/>
         public string Secret { get; set; }
-
+    
         /// <remarks/>
         public string Server { get; set; }
-
+    
         /// <remarks/>
         public string Farm { get; set; }
-
+    
         /// <remarks/>
         public string Title { get; set; }
-
+    
         /// <remarks/>
         public bool IsPublic { get; set; }
-
+    
         /// <remarks/>
         public bool IsFriend { get; set; }
-
+    
         /// <remarks/>
         public bool IsFamily { get; set; }
 
@@ -134,8 +135,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/",
-                                     String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
             }
         }
 
@@ -157,7 +157,6 @@ namespace FlickrNet
         /// The width of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
         /// </summary>
         public int? SquareThumbnailWidth { get; set; }
-
         /// <summary>
         /// The height of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
         /// </summary>
@@ -181,12 +180,10 @@ namespace FlickrNet
         /// The width of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
         /// </summary>
         public int? LargeSquareThumbnailWidth { get; set; }
-
         /// <summary>
         /// The height of the square thumbnail image. Only returned if <see cref="PhotoSearchExtras.SquareUrl"/> is specified.
         /// </summary>
         public int? LargeSquareThumbnailHeight { get; set; }
-
         /// <summary>
         /// The URL for the thumbnail of a photo.
         /// </summary>
@@ -205,7 +202,6 @@ namespace FlickrNet
         /// The width of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
         /// </summary>
         public int? ThumbnailWidth { get; set; }
-
         /// <summary>
         /// The height of the thumbnail image. Only returned if <see cref="PhotoSearchExtras.ThumbnailUrl"/> is specified.
         /// </summary>
@@ -229,7 +225,6 @@ namespace FlickrNet
         /// The width of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
         /// </summary>
         public int? SmallWidth { get; set; }
-
         /// <summary>
         /// The height of the small image. Only returned if <see cref="PhotoSearchExtras.SmallUrl"/> is specified.
         /// </summary>
@@ -253,7 +248,6 @@ namespace FlickrNet
         /// The width of the small 320 image. Only returned if <see cref="PhotoSearchExtras.Small320Url"/> is specified.
         /// </summary>
         public int? Small320Width { get; set; }
-
         /// <summary>
         /// The height of the small 320 image. Only returned if <see cref="PhotoSearchExtras.Small320Url"/> is specified.
         /// </summary>
@@ -279,11 +273,43 @@ namespace FlickrNet
         /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
         /// </summary>
         public int? Medium640Width { get; set; }
-
         /// <summary>
         /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
         /// </summary>
         public int? Medium640Height { get; set; }
+
+        /// <summary>
+        /// The URL for the medium 640 copy of a photo.
+        /// </summary>
+        /// <remarks>There is a chance that extremely small images will not have a medium 640 copy.
+        /// Use <see cref="Flickr.PhotosGetSizes"/> to get the available URLs for a photo.</remarks>
+        public string Medium800Url
+        {
+            get
+            {
+                if (urlMedium800 != null)
+                    return urlMedium800;
+                else
+                    return UtilityMethods.UrlFormat(this, "_z", "jpg");
+            }
+        }
+
+        /// <summary>
+        /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
+        /// </summary>
+        public int? Medium800Width { get; set; }
+        /// <summary>
+        /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.Medium640Url"/> is specified.
+        /// </summary>
+        public int? Medium800Height { get; set; }
+
+        public string Large1600Url { get; set; }
+        public int? Large1600Width { get; set; }
+        public int? Large1600Height { get; set; }
+
+        public string Large2048Url { get; set; }
+        public int? Large2048Width { get; set; }
+        public int? Large2048Height { get; set; }
 
         /// <summary>
         /// The URL for the medium copy of a photo.
@@ -305,7 +331,6 @@ namespace FlickrNet
         /// The width of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
         /// </summary>
         public int? MediumWidth { get; set; }
-
         /// <summary>
         /// The height of the medium image. Only returned if <see cref="PhotoSearchExtras.MediumUrl"/> is specified.
         /// </summary>
@@ -331,7 +356,6 @@ namespace FlickrNet
         /// The width of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
         /// </summary>
         public int? LargeWidth { get; set; }
-
         /// <summary>
         /// The height of the large image, if one exists. Only returned if <see cref="PhotoSearchExtras.LargeUrl"/> is specified and a large image exists.
         /// </summary>
@@ -342,7 +366,7 @@ namespace FlickrNet
         /// </summary>
         public string OriginalUrl
         {
-            get
+            get 
             {
                 if (urlOriginal != null)
                     return urlOriginal;
@@ -491,7 +515,6 @@ namespace FlickrNet
             }
         }
 
-        #region IFlickrParsable Members
 
         void IFlickrParsable.Load(XmlReader reader)
         {
@@ -500,13 +523,12 @@ namespace FlickrNet
             if (reader.LocalName == "photo" && reader.NodeType == XmlNodeType.EndElement) reader.Read();
         }
 
-        #endregion
-
         /// <summary>
         /// Protected method that does the actual initialization of the Photo instance. Should be called by subclasses of the Photo class.
         /// </summary>
         /// <param name="reader">The reader containing the XML to be parsed.</param>
-        /// <param name="allowExtraAtrributes">Wheither to allow unknown extra attributes. In debug builds will throw an exception if this parameter is false and an unknown attribute is found.</param>
+        /// <param name="allowExtraAtrributes">Wheither to allow unknown extra attributes. 
+        /// In debug builds will throw an exception if this parameter is false and an unknown attribute is found.</param>
         protected void Load(XmlReader reader, bool allowExtraAtrributes)
         {
             if (reader.LocalName != "photo")
@@ -564,7 +586,7 @@ namespace FlickrNet
                         DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "license":
-                        License = (LicenseType) int.Parse(reader.Value, CultureInfo.InvariantCulture);
+                        License = (LicenseType)int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "ownername":
                         OwnerName = reader.Value;
@@ -585,7 +607,7 @@ namespace FlickrNet
                         WoeId = reader.Value;
                         break;
                     case "accuracy":
-                        Accuracy = (GeoAccuracy) reader.ReadContentAsInt();
+                        Accuracy = (GeoAccuracy)reader.ReadContentAsInt();
                         break;
                     case "latitude":
                         Latitude = reader.ReadContentAsDouble();
@@ -597,13 +619,13 @@ namespace FlickrNet
                         MachineTags = reader.Value;
                         break;
                     case "o_width":
-                        OriginalWidth = int.Parse(reader.Value, CultureInfo.InvariantCulture);
+                        OriginalWidth = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "o_height":
-                        OriginalHeight = int.Parse(reader.Value, CultureInfo.InvariantCulture);
+                        OriginalHeight = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "views":
-                        Views = int.Parse(reader.Value, CultureInfo.InvariantCulture);
+                        Views = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "media":
                         Media = reader.Value;
@@ -624,6 +646,7 @@ namespace FlickrNet
                     case "is_primary":
                         break;
                     case "pathalias":
+                    case "path_alias":
                         PathAlias = reader.Value;
                         break;
                     case "url_sq":
@@ -680,6 +703,15 @@ namespace FlickrNet
                     case "height_m":
                         MediumHeight = reader.ReadContentAsInt();
                         break;
+                    case "url_c":
+                        urlMedium800 = reader.Value;
+                        break;
+                    case "width_c":
+                        Medium800Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_c":
+                        Medium800Height = reader.ReadContentAsInt();
+                        break;
                     case "url_l":
                         urlLarge = reader.Value;
                         break;
@@ -707,14 +739,31 @@ namespace FlickrNet
                     case "height_o":
                         OriginalHeight = reader.ReadContentAsInt();
                         break;
+                    case "url_h":
+                        Large1600Url = reader.Value;
+                        break;
+                    case "width_h":
+                        Large1600Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_h":
+                        Large1600Height = reader.ReadContentAsInt();
+                        break;
+                    case "url_k":
+                        Large2048Url = reader.Value;
+                        break;
+                    case "width_k":
+                        Large2048Width = reader.ReadContentAsInt();
+                        break;
+                    case "height_k":
+                        Large2048Height = reader.ReadContentAsInt();
+                        break;
                     case "dateadded":
                         DateAddedToGroup = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "date_faved":
                         DateFavorited = UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
-                    case "has_comment":
-                        // Gallery photos return this, but we ignore it and set GalleryPhoto.Comment instead.
+                    case "has_comment": // Gallery photos return this, but we ignore it and set GalleryPhoto.Comment instead.
                         break;
                     case "can_comment":
                         CanComment = reader.Value == "1";
@@ -737,7 +786,7 @@ namespace FlickrNet
                     case "geo_is_family":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions();
+                            GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsFamily = reader.Value == "1";
@@ -745,7 +794,7 @@ namespace FlickrNet
                     case "geo_is_friend":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions();
+                            GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsFriend = reader.Value == "1";
@@ -753,7 +802,7 @@ namespace FlickrNet
                     case "geo_is_public":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions();
+                            GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsPublic = reader.Value == "1";
@@ -761,13 +810,13 @@ namespace FlickrNet
                     case "geo_is_contact":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions();
+                            GeoPermissions = new GeoPermissions(); 
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsContact = reader.Value == "1";
                         break;
                     case "context":
-                        GeoContext = (GeoContext) reader.ReadContentAsInt();
+                        GeoContext = (GeoContext)reader.ReadContentAsInt();
                         break;
                     case "rotation":
                         Rotation = reader.ReadContentAsInt();
@@ -782,6 +831,7 @@ namespace FlickrNet
 
             if (reader.LocalName == "description")
                 Description = reader.ReadElementContentAsString();
+
         }
     }
 }
