@@ -56,7 +56,7 @@ namespace FlickrNetTest
         public void GalleriesGetPhotos()
         {
             // Dogs + Tennis Balls
-            // http://www.flickr.com/photos/lesliescarter/galleries/72157622656415345
+            // https://www.flickr.com/photos/lesliescarter/galleries/72157622656415345
             string galleryId = "13834290-72157622656415345";
 
             Flickr f = TestData.GetInstance();
@@ -121,7 +121,7 @@ namespace FlickrNetTest
 
             string title = "Great Entrances to Hell";
             string description = "A guide to what makes a great photo for the Entrances to Hell group: " +
-                                 "<a href=\"http://www.flickr.com/groups/entrancetohell\">www.flickr.com/groups/entrancetohell</a>\n\n";
+                                 "<a href=\"https://www.flickr.com/groups/entrancetohell\">www.flickr.com/groups/entrancetohell</a>\n\n";
             description += DateTime.Now.ToString();
 
             f.GalleriesEditMeta(galleryId, title, description);

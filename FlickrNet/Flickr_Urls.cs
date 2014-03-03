@@ -21,7 +21,7 @@ namespace FlickrNet
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
             System.Xml.XmlNode node = response.GetXmlDocument().SelectSingleNode("*/@url");
-            return node == null ? null : node.Value;
+            return node == null ? null : node.Value.Replace("http://", "https://");
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace FlickrNet
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
             System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@url");
-            return nav == null ? null : nav.Value;
+            return nav == null ? null : nav.Value.Replace("http://", "https://");
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace FlickrNet
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
             System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@url");
-            return nav == null ? null : nav.Value;
+            return nav == null ? null : nav.Value.Replace("http://", "https://");
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace FlickrNet
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
             System.Xml.XmlNode nav = response.GetXmlDocument().SelectSingleNode("*/@id");
-            return nav == null ? null : nav.Value;
+            return nav == null ? null : nav.Value.Replace("http://", "https://");
         }
 
         /// <summary>

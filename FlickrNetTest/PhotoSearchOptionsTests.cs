@@ -22,7 +22,7 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(url);
 
-            const string expected = "http://www.flickr.com/show.gne?api_method=flickr.photos.search&method_params=text|kittens;in_gallery|1";
+            const string expected = "https://www.flickr.com/show.gne?api_method=flickr.photos.search&method_params=text|kittens;in_gallery|1";
 
             Assert.AreEqual(expected, url);
 

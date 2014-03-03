@@ -62,7 +62,7 @@ namespace FlickrNetTest
             Assert.AreEqual("3716", info.IconServer);
             Assert.AreEqual("4", info.IconFarm);
 
-            Assert.AreEqual("http://farm4.staticflickr.com/3716/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
+            Assert.AreEqual("https://farm4.staticflickr.com/3716/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
 
             Assert.AreEqual(3, info.ThrottleInfo.Count);
             Assert.AreEqual(GroupThrottleMode.PerDay, info.ThrottleInfo.Mode);
@@ -81,7 +81,7 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(info, "GroupFullInfo should not be null");
             Assert.AreEqual("0", info.IconServer, "Icon Server should be zero");
-            Assert.AreEqual("http://www.flickr.com/images/buddyicon.jpg", info.GroupIconUrl);
+            Assert.AreEqual("https://www.flickr.com/images/buddyicon.jpg", info.GroupIconUrl);
 
         }
 

@@ -359,7 +359,7 @@ namespace FlickrNetTest
             Assert.AreEqual(true, photos[0].IsPublic);
             Assert.AreEqual(false, photos[0].IsFriend);
 
-            DateTime dateTaken = new DateTime(2009, 5, 19, 22, 21, 46);
+            DateTime dateTaken = new DateTime(2009, 5, 18, 11, 21, 46);
             DateTime dateUploaded = new DateTime(2009, 5, 19, 21, 21, 46);
             Assert.IsTrue(photos[0].LastUpdated > dateTaken, "Last updated date was not correct.");
             Assert.AreEqual(dateTaken, photos[0].DateTaken, "Date taken date was not correct.");

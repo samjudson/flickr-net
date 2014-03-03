@@ -86,7 +86,7 @@ namespace FlickrNet
         {
             string permsString = (perms == AuthLevel.None) ? "" : "&perms=" + UtilityMethods.AuthLevelToString(perms);
             
-            return "http://" + (mobile?"m":"www") + ".flickr.com/services/oauth/authorize?oauth_token=" + requestToken + permsString;
+            return "https://" + (mobile?"m":"www") + ".flickr.com/services/oauth/authorize?oauth_token=" + requestToken + permsString;
         }
 
         /// <summary>

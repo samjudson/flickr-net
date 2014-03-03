@@ -8,7 +8,7 @@ namespace FlickrNet
     /// The limits for a person returned by <see cref="Flickr.PeopleGetLimits"/>.
     /// </summary>
     /// <remarks>
-    /// For more details on limits see help here: http://www.flickr.com/help/limits/
+    /// For more details on limits see help here: https://www.flickr.com/help/limits/
     /// </remarks>
     public class PersonLimits : IFlickrParsable
     {

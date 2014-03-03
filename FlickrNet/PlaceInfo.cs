@@ -32,7 +32,7 @@ namespace FlickrNet
         {
             get
             {
-                return "http://www.flickr.com/places" + PlaceUrl;
+                return "https://www.flickr.com/places" + PlaceUrl;
             }
         }
 

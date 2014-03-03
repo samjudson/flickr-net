@@ -287,7 +287,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", PathAlias ?? OwnerUserId, PhotoId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", PathAlias ?? OwnerUserId, PhotoId);
             }
         }
 
@@ -394,7 +394,7 @@ namespace FlickrNet
         {
             get 
             {
-                if (OriginalFormat == null || OriginalFormat.Length == 0)
+                if (string.IsNullOrEmpty(OriginalFormat))
                     return null;
 
                 return UtilityMethods.UrlFormat(this, "_o", OriginalFormat);
@@ -546,7 +546,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "url")
             {
-                PhotoInfoUrl url = new PhotoInfoUrl();
+                var url = new PhotoInfoUrl();
                 ((IFlickrParsable)url).Load(reader);
                 Urls.Add(url);
             }
@@ -986,6 +986,8 @@ namespace FlickrNet
             reader.Read();
 
             Url = reader.ReadContentAsString();
+
+            if (Url.Contains("www.flickr.com")) Url = Url.Replace("http://", "https://");
 
             reader.Skip();
         }

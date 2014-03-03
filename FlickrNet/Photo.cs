@@ -135,7 +135,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
             }
         }
 

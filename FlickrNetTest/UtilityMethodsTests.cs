@@ -391,12 +391,12 @@ namespace FlickrNetTest
 
             var sizeTests = new Dictionary<string, string>
                                 {
-                { "square", "http://farm1.staticflickr.com/2/3_4_s.jpg"},
-                { "thumbnail", "http://farm1.staticflickr.com/2/3_4_t.jpg"},
-                { "small", "http://farm1.staticflickr.com/2/3_4_m.jpg"},
-                { "medium", "http://farm1.staticflickr.com/2/3_4.jpg"},
-                { "large", "http://farm1.staticflickr.com/2/3_4_b.jpg"},
-                { "original", "http://farm1.staticflickr.com/2/3_4_o.jpg"}
+                { "square", "https://farm1.staticflickr.com/2/3_4_s.jpg"},
+                { "thumbnail", "https://farm1.staticflickr.com/2/3_4_t.jpg"},
+                { "small", "https://farm1.staticflickr.com/2/3_4_m.jpg"},
+                { "medium", "https://farm1.staticflickr.com/2/3_4.jpg"},
+                { "large", "https://farm1.staticflickr.com/2/3_4_b.jpg"},
+                { "original", "https://farm1.staticflickr.com/2/3_4_o.jpg"}
             };
 
             foreach(var pair in sizeTests)
@@ -415,7 +415,7 @@ namespace FlickrNetTest
             var photoId = "7176125763"; // Rainbow rose
             var size = "medium";
             var extension = "jpg";
-            var expected = "http://farm9.staticflickr.com/8162/7176125763_7eac68f450.jpg";
+            var expected = "https://farm9.staticflickr.com/8162/7176125763_7eac68f450.jpg";
 
             var photoInfo = TestData.GetAuthInstance().PhotosGetInfo(photoId);
 

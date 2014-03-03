@@ -301,7 +301,7 @@ namespace FlickrNet
             return new string(chars);
         }
 
-        private const string PhotoUrlFormat = "http://farm{0}.staticflickr.com/{1}/{2}_{3}{4}.{5}";
+        private const string PhotoUrlFormat = "https://farm{0}.staticflickr.com/{1}/{2}_{3}{4}.{5}";
 
         internal static string UrlFormat(Photo p, string size, string extension)
         {
@@ -533,9 +533,9 @@ namespace FlickrNet
         public static string BuddyIcon(string server, string farm, string userId)
         {
             if (String.IsNullOrEmpty(server) || server == "0")
-                return "http://www.flickr.com/images/buddyicon.jpg";
+                return "https://www.flickr.com/images/buddyicon.jpg";
             else
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://farm{0}.staticflickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://farm{0}.staticflickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
         }
 
         /// <summary>

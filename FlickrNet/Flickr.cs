@@ -57,7 +57,7 @@ namespace FlickrNet
         }
 
         private readonly Uri[] baseUri = new Uri[] { 
-                                                     new Uri("http://api.flickr.com/services/rest/"), 
+                                                     new Uri("https://api.flickr.com/services/rest/"), 
                                                      new Uri("http://beta.zooomr.com/bluenote/api/rest"),
                                                      new Uri("http://www.23hq.com/services/rest/")
         };
@@ -67,7 +67,7 @@ namespace FlickrNet
             get { return uploadUrl[(int)service]; }
         }
         private static string[] uploadUrl = new string[] {
-                                                              "http://api.flickr.com/services/upload/",
+                                                              "https://up.flickr.com/services/upload/",
                                                               "http://beta.zooomr.com/bluenote/api/upload",
                                                               "http://www.23hq.com/services/upload/"
         };
@@ -77,7 +77,7 @@ namespace FlickrNet
             get { return replaceUrl[(int)service]; }
         }
         private static string[] replaceUrl = new string[] {
-                                                               "http://api.flickr.com/services/replace/",
+                                                               "https://up.flickr.com/services/replace/",
                                                                "http://beta.zooomr.com/bluenote/api/replace",
                                                                "http://www.23hq.com/services/replace/"
         };
@@ -87,7 +87,7 @@ namespace FlickrNet
             get { return authUrl[(int)service]; }
         }
         private static string[] authUrl = new string[] {
-                                                            "http://www.flickr.com/services/auth/",
+                                                            "https://www.flickr.com/services/auth/",
                                                             "http://beta.zooomr.com/auth/",
                                                             "http://www.23hq.com/services/auth/"
         };

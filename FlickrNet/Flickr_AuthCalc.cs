@@ -10,12 +10,12 @@ namespace FlickrNet
         /// Calculates a URL for revoking permissions for your application by the user.
         /// </summary>
         /// <param name="appToken">The 'application id' of your application. 
-        /// Go to http://www.flickr.com/services/auth/list.gne to get your application token.</param>
+        /// Go to https://www.flickr.com/services/auth/list.gne to get your application token.</param>
         /// <returns></returns>
         [Obsolete("Use OAuth now.")]
         public string AuthCalcRevokeUrl(string appToken)
         {
-            return "http://www.flickr.com/services/auth/revoke.gne?token=" + appToken;
+            return "https://www.flickr.com/services/auth/revoke.gne?token=" + appToken;
         }
 
         /// <summary>

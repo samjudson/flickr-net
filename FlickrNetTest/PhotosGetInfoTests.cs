@@ -79,7 +79,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
-            Assert.AreEqual("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
+            Assert.AreEqual("https://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
 
         }
 
@@ -143,7 +143,7 @@ namespace FlickrNetTest
 
             Assert.AreEqual(1, info.Urls.Count);
             Assert.AreEqual("photopage", info.Urls[0].UrlType);
-            Assert.AreEqual("http://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
+            Assert.AreEqual("https://www.flickr.com/photos/samjudson/4268023123/", info.Urls[0].Url);
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace FlickrNetTest
         public void PhotosGetInfoWithPeople()
         {
             Flickr f = TestData.GetInstance();
-            string photoId = "3547137580"; // http://www.flickr.com/photos/samjudson/3547137580/in/photosof-samjudson/
+            string photoId = "3547137580"; // https://www.flickr.com/photos/samjudson/3547137580/in/photosof-samjudson/
 
             PhotoInfo info = f.PhotosGetInfo(photoId);
 
@@ -254,7 +254,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(info, "PhotoInfo should not be null.");
             Assert.IsNotNull(info.Location, "Location should not be null.");
             Assert.AreEqual(-180, info.Location.Longitude, "Longitude should be -180");
-            Assert.AreEqual("http://www.flickr.com/photos/afdn/54071193/", info.Urls[0].Url);
+            Assert.AreEqual("https://www.flickr.com/photos/afdn/54071193/", info.Urls[0].Url);
             Assert.IsTrue(info.GeoPermissions.IsPublic, "GeoPermissions should be public.");
         }
 

@@ -10,9 +10,9 @@ namespace FlickrNetTest
         public const string ApiKey = "dbc316af64fb77dae9140de64262da0a";
         public const string SharedSecret = "0781969a058a2745";
 
-        // http://www.flickr.com/photos/samjudson/3547139066 - Apple Store
+        // https://www.flickr.com/photos/samjudson/3547139066 - Apple Store
         public const string PhotoId = "3547139066";
-        // http://www.flickr.com/photos/samjudson/5890800 - Grey Street
+        // https://www.flickr.com/photos/samjudson/5890800 - Grey Street
         public const string FavouritedPhotoId = "5890800";
 
         // FLOWERS

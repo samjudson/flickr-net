@@ -19,7 +19,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            FoundUser user = f.UrlsLookupUser("http://www.flickr.com/photos/samjudson");
+            FoundUser user = f.UrlsLookupUser("https://www.flickr.com/photos/samjudson");
 
             Assert.AreEqual("41888973@N00", user.UserId);
             Assert.AreEqual("Sam Judson", user.UserName);
@@ -29,7 +29,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void UrlsLookupGroup()
         {
-            string groupUrl = "http://www.flickr.com/groups/angels_of_the_north/";
+            string groupUrl = "https://www.flickr.com/groups/angels_of_the_north/";
 
             Flickr f = TestData.GetAuthInstance();
 
@@ -41,7 +41,7 @@ namespace FlickrNetTest
         [Test]
         public void UrlsLookupGalleryTest()
         {
-            string galleryUrl = "http://www.flickr.com/photos/samjudson/galleries/72157622589312064";
+            string galleryUrl = "https://www.flickr.com/photos/samjudson/galleries/72157622589312064";
 
             Flickr f = TestData.GetInstance();
 
@@ -56,7 +56,7 @@ namespace FlickrNetTest
         {
             string url = TestData.GetInstance().UrlsGetUserPhotos(TestData.TestUserId);
 
-            Assert.AreEqual("http://www.flickr.com/photos/samjudson/", url);
+            Assert.AreEqual("https://www.flickr.com/photos/samjudson/", url);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace FlickrNetTest
         {
             string url = TestData.GetInstance().UrlsGetUserProfile(TestData.TestUserId);
 
-            Assert.AreEqual("http://www.flickr.com/people/samjudson/", url);
+            Assert.AreEqual("https://www.flickr.com/people/samjudson/", url);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace FlickrNetTest
         {
             string url = TestData.GetInstance().UrlsGetGroup(TestData.GroupId);
 
-            Assert.AreEqual("http://www.flickr.com/groups/florus/", url);
+            Assert.AreEqual("https://www.flickr.com/groups/florus/", url);
         }
 
 

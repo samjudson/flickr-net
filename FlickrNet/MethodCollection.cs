@@ -28,7 +28,7 @@ namespace FlickrNet
     /// A method supported by the Flickr API.
     /// </summary>
     /// <remarks>
-    /// See <a href="http://www.flickr.com/services/api">Flickr API Documentation</a> for a complete list
+    /// See <a href="https://www.flickr.com/services/api">Flickr API Documentation</a> for a complete list
     /// of methods.
     /// </remarks>
     public sealed class Method : IFlickrParsable

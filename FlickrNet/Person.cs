@@ -87,19 +87,19 @@ namespace FlickrNet
 
         /// <summary>
         /// The users photo location on Flickr
-        /// http://www.flickr.com/photos/username/
+        /// https://www.flickr.com/photos/username/
         /// </summary>
         public string PhotosUrl { get; set; }
 
         /// <summary>
         /// The users profile location on Flickr
-        /// http://www.flickr.com/people/username/
+        /// https://www.flickr.com/people/username/
         /// </summary>
         public string ProfileUrl { get; set; }
 
         /// <summary>
         /// The users profile location on Flickr
-        /// http://m.flickr.com/photostream.gne?id=ID
+        /// https://m.flickr.com/photostream.gne?id=ID
         /// </summary>
         public string MobileUrl { get; set; }
 

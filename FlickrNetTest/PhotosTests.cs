@@ -248,7 +248,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetSizesVideoTest()
         {
-            //http://www.flickr.com/photos/tedsherarts/4399135415/
+            //https://www.flickr.com/photos/tedsherarts/4399135415/
             var sizes = TestData.GetInstance().PhotosGetSizes("4399135415");
 
             bool findVideo = false;
@@ -411,7 +411,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosPeopleGetListSpecificUserTest()
         {
-            string photoId = "104267998"; // http://www.flickr.com/photos/thunderchild5/104267998/
+            string photoId = "104267998"; // https://www.flickr.com/photos/thunderchild5/104267998/
             string userId = "41888973@N00"; //sam judsons nsid
 
             Flickr f = TestData.GetInstance();

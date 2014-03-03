@@ -92,7 +92,7 @@ namespace FlickrNet
         /// Search for the given machine tags.
         /// </summary>
         /// <remarks>
-        /// See http://www.flickr.com/services/api/flickr.photos.search.html for details 
+        /// See https://www.flickr.com/services/api/flickr.photos.search.html for details 
         /// on how to search for machine tags.
         /// </remarks>
         public string MachineTags { get; set; }
@@ -302,7 +302,7 @@ namespace FlickrNet
         public string CalculateSlideshowUrl()
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            sb.Append("http://www.flickr.com/show.gne");
+            sb.Append("https://www.flickr.com/show.gne");
             sb.Append("?api_method=flickr.photos.search&method_params=");
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();

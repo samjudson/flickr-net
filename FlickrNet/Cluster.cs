@@ -52,7 +52,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/tags/{0}/clusters/{1}/", SourceTag, ClusterId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/tags/{0}/clusters/{1}/", SourceTag, ClusterId);
             }
         }
 

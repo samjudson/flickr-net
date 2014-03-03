@@ -64,7 +64,7 @@ namespace FlickrNet
         {
             get
             {
-                return "http://www.flickr.com/photos/" + (String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias);
+                return "https://www.flickr.com/photos/" + (String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias);
             }
         }
         /// <summary>
