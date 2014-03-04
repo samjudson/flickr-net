@@ -9,7 +9,7 @@ namespace FlickrNetTest
 {
     [TestFixture]
     [Category("AccessTokenRequired")]
-    public class StatsGetPopularPhotosTests
+    public class StatsGetPopularPhotosTests : BaseTest
     {
         [Test]
         public void StatsGetPopularPhotosBasic()
@@ -66,19 +66,17 @@ namespace FlickrNetTest
         {
             var lastWeek = DateTime.Today.AddDays(-7);
 
-            Flickr f = TestData.GetAuthInstance();
-
-            var photos = f.StatsGetPopularPhotos(lastWeek);
+            var photos = AuthInstance.StatsGetPopularPhotos(lastWeek);
             Assert.IsNotNull(photos, "PopularPhotos should not be null.");
 
-            photos = f.StatsGetPopularPhotos(PopularitySort.Favorites);
+            photos = AuthInstance.StatsGetPopularPhotos(PopularitySort.Favorites);
             Assert.IsNotNull(photos, "PopularPhotos should not be null.");
 
-            photos = f.StatsGetPopularPhotos(lastWeek, 1, 10);
+            photos = AuthInstance.StatsGetPopularPhotos(lastWeek, 1, 10);
             Assert.IsNotNull(photos, "PopularPhotos should not be null.");
             Assert.AreEqual(10, photos.Count, "Date search popular photos should return 10 photos.");
 
-            photos = f.StatsGetPopularPhotos(PopularitySort.Favorites, 1, 10);
+            photos = AuthInstance.StatsGetPopularPhotos(PopularitySort.Favorites, 1, 10);
             Assert.IsNotNull(photos, "PopularPhotos should not be null.");
             Assert.AreEqual(10, photos.Count, "Favorite search popular photos should return 10 photos.");
 
