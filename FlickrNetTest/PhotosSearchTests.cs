@@ -796,7 +796,8 @@ namespace FlickrNetTest
             PhotoSearchOptions o = new PhotoSearchOptions
                         {
                             UserId = "me",
-                            Contacts = ContactSearch.AllContacts
+                            Contacts = ContactSearch.AllContacts,
+                            PerPage = 50
                         };
 
             var photos = AuthInstance.PhotosSearch(o);
