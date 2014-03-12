@@ -210,9 +210,9 @@ namespace FlickrNetTest
         }
 
         [Test]
-        public void PhotosGetSizes50Test()
+        public void PhotosGetSizes10Test()
         {
-            var o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 50};
+            var o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 10};
 
             var photos = TestData.GetInstance().PhotosSearch(o);
 
