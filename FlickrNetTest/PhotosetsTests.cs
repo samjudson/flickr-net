@@ -10,20 +10,19 @@ namespace FlickrNetTest
     /// Summary description for FlickrPhotosetsGetList
     /// </summary>
     [TestFixture]
-    public class PhotosetsTests
+    public class PhotosetsTests : BaseTest
     {
         [Test]
         public void GetContextTest()
         {
-            var f = TestData.GetInstance();
-            string photosetId = "72157594532130119";
+            const string photosetId = "72157594532130119";
 
-            var photos = f.PhotosetsGetPhotos(photosetId);
+            var photos = Instance.PhotosetsGetPhotos(photosetId);
 
             var firstPhoto = photos.First();
             var lastPhoto = photos.Last();
 
-            var context1 = f.PhotosetsGetContext(firstPhoto.PhotoId, photosetId);
+            var context1 = Instance.PhotosetsGetContext(firstPhoto.PhotoId, photosetId);
 
             Assert.IsNotNull(context1, "Context should not be null.");
             Assert.IsNull(context1.PreviousPhoto, "PreviousPhoto should be null for first photo.");
@@ -34,7 +33,7 @@ namespace FlickrNetTest
                 Assert.AreEqual(photos[1].PhotoId, context1.NextPhoto.PhotoId, "NextPhoto should be the second photo in photoset.");
             }
 
-            var context2 = f.PhotosetsGetContext(lastPhoto.PhotoId, photosetId);
+            var context2 = Instance.PhotosetsGetContext(lastPhoto.PhotoId, photosetId);
 
             Assert.IsNotNull(context2, "Last photo context should not be null.");
             Assert.IsNotNull(context2.PreviousPhoto, "PreviousPhoto should not be null for first photo.");
@@ -50,9 +49,9 @@ namespace FlickrNetTest
         [Test]
         public void PhotosetsGetInfoBasicTest()
         {
-            string photosetId = "72157594532130119";
+            const string photosetId = "72157594532130119";
 
-            var p = TestData.GetInstance().PhotosetsGetInfo(photosetId);
+            var p = Instance.PhotosetsGetInfo(photosetId);
 
             Assert.IsNotNull(p);
             Assert.AreEqual(photosetId, p.PhotosetId);
@@ -63,7 +62,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosetsGetListBasicTest()
         {
-            PhotosetCollection photosets = TestData.GetInstance().PhotosetsGetList(TestData.TestUserId);
+            PhotosetCollection photosets = Instance.PhotosetsGetList(TestData.TestUserId);
 
             Assert.IsTrue(photosets.Count > 0, "Should be at least one photoset");
             Assert.IsTrue(photosets.Count > 100, "Should be greater than 100 photosets. (" + photosets.Count + " returned)");
@@ -79,9 +78,23 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
+        public void PhotosetsGetListWithExtras()
+        {
+            var sets = AuthInstance.PhotosetsGetList(TestData.TestUserId, 1, 5, PhotoSearchExtras.All);
+
+            Assert.AreNotEqual(0, sets.Count, "Should have returned at least 1 set for the authenticated user.");
+
+            var firstSet = sets.First();
+
+            Assert.IsNotNull(firstSet.PrimaryPhoto, "Primary Photo should not be null.");
+            Assert.IsNotNullOrEmpty(firstSet.PrimaryPhoto.LargeSquareThumbnailUrl, "LargeSquareThumbnailUrl should not be empty.");
+        }
+
+        [Test]
         public void PhotosetsGetListWebUrlTest()
         {
-            PhotosetCollection photosets = TestData.GetInstance().PhotosetsGetList(TestData.TestUserId);
+            PhotosetCollection photosets = Instance.PhotosetsGetList(TestData.TestUserId);
 
             Assert.IsTrue(photosets.Count > 0, "Should be at least one photoset");
 
@@ -97,67 +110,63 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosetsCreateAddPhotosTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
             byte[] imageBytes = TestData.TestImageBytes;
             Stream s = new MemoryStream(imageBytes);
 
-            string title = "Test Title";
-            string title2 = "New Test Title";
-            string desc = "Test Description\nSecond Line";
-            string desc2 = "New Test Description";
-            string tags = "testtag1,testtag2";
+            const string title = "Test Title";
+            const string title2 = "New Test Title";
+            const string desc = "Test Description\nSecond Line";
+            const string desc2 = "New Test Description";
+            const string tags = "testtag1,testtag2";
 
             s.Position = 0;
             // Upload photo once
-            string photoId1 = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+            var photoId1 = AuthInstance.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
             Console.WriteLine("Photo 1 created: " + photoId1);
 
             s.Position = 0;
             // Upload photo a second time
-            string photoId2 = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
+            var photoId2 = AuthInstance.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
             Console.WriteLine("Photo 2 created: " + photoId2);
 
             // Creat photoset
-            Photoset photoset = f.PhotosetsCreate("Test photoset", photoId1);
+            Photoset photoset = AuthInstance.PhotosetsCreate("Test photoset", photoId1);
             Console.WriteLine("Photoset created: " + photoset.PhotosetId);
 
             try
             {
                 // Add second photo to photoset.
-                f.PhotosetsAddPhoto(photoset.PhotosetId, photoId2);
+                AuthInstance.PhotosetsAddPhoto(photoset.PhotosetId, photoId2);
 
                 // Remove second photo from photoset
-                f.PhotosetsRemovePhoto(photoset.PhotosetId, photoId2);
+                AuthInstance.PhotosetsRemovePhoto(photoset.PhotosetId, photoId2);
 
-                f.PhotosetsEditMeta(photoset.PhotosetId, title2, desc2);
+                AuthInstance.PhotosetsEditMeta(photoset.PhotosetId, title2, desc2);
 
-                photoset = f.PhotosetsGetInfo(photoset.PhotosetId);
+                photoset = AuthInstance.PhotosetsGetInfo(photoset.PhotosetId);
 
                 Assert.AreEqual(title2, photoset.Title, "New Title should be set.");
                 Assert.AreEqual(desc2, photoset.Description, "New description should be set");
 
-                f.PhotosetsEditPhotos(photoset.PhotosetId, photoId1, new string[] { photoId2, photoId1 });
+                AuthInstance.PhotosetsEditPhotos(photoset.PhotosetId, photoId1, new[] { photoId2, photoId1 });
 
-                f.PhotosetsRemovePhoto(photoset.PhotosetId, photoId2);
+                AuthInstance.PhotosetsRemovePhoto(photoset.PhotosetId, photoId2);
             }
             finally
             {
                 // Delete photoset completely
-                f.PhotosetsDelete(photoset.PhotosetId);
+                AuthInstance.PhotosetsDelete(photoset.PhotosetId);
 
                 // Delete both photos.
-                f.PhotosDelete(photoId1);
-                f.PhotosDelete(photoId2);
+                AuthInstance.PhotosDelete(photoId1);
+                AuthInstance.PhotosDelete(photoId2);
             }
         }
 
         [Test]
         public void PhotosetsGetInfoEncodingCorrect()
         {
-            Flickr f = TestData.GetInstance();
-
-            Photoset pset = f.PhotosetsGetInfo("72157627650627399");
+            Photoset pset = Instance.PhotosetsGetInfo("72157627650627399");
 
             Assert.AreEqual("Sítio em Arujá - 14/08/2011", pset.Title);
         }

@@ -531,7 +531,7 @@ namespace FlickrNet
         /// In debug builds will throw an exception if this parameter is false and an unknown attribute is found.</param>
         protected void Load(XmlReader reader, bool allowExtraAtrributes)
         {
-            if (reader.LocalName != "photo")
+            if (reader.LocalName != "photo" && reader.LocalName != "primary_photo_extras")
                 UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())

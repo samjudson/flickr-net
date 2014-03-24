@@ -59,10 +59,16 @@ namespace FlickrNet
         /// </summary>
         public string Farm { get; set; }
 
-        // The server for the cover photos for the owner of this photoset.
+        /// <summary>
+        /// The server for the cover photos for the owner of this photoset. 
+        /// </summary>
+        [Obsolete("User PrimaryPhoto property instead")]
         public string CoverPhotoServer { get; set; }
 
-        // The farm for the cover photos for the owner of this photoset.
+        /// <summary>
+        /// The farm for the cover photos for the owner of this photoset.
+        /// </summary>
+        [Obsolete("User PrimaryPhoto property instead")]
         public string CoverPhotoFarm { get; set; }
 
         /// <summary>
@@ -202,10 +208,7 @@ namespace FlickrNet
                         CanComment = reader.Value == "1";
                         break;
                     case "coverphoto_server":
-                        CoverPhotoServer = reader.Value;
-                        break;
                     case "coverphoto_farm":
-                        CoverPhotoFarm = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -214,6 +217,14 @@ namespace FlickrNet
             }
 
             reader.Read();
+
+            PrimaryPhoto = new Photo
+            {
+                PhotoId = PrimaryPhotoId,
+                Secret = Secret,
+                Server = Server,
+                Farm = Farm
+            };
 
             while (reader.LocalName != "photoset" && reader.NodeType != System.Xml.XmlNodeType.EndElement)
             {
@@ -225,6 +236,9 @@ namespace FlickrNet
                     case "description":
                         Description = reader.ReadElementContentAsString();
                         break;
+                    case "primary_photo_extras":
+                        ((IFlickrParsable)PrimaryPhoto).Load(reader);
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         reader.Skip();
@@ -234,5 +248,10 @@ namespace FlickrNet
 
             reader.Read();
         }
+
+        /// <summary>
+        /// The full details of the primary photo, as well as any extras requested.
+        /// </summary>
+        public Photo PrimaryPhoto { get; set; }
     }
 }

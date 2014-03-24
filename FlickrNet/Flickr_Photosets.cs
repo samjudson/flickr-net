@@ -167,7 +167,19 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            return PhotosetsGetList(null, 0, 0);
+            return PhotosetsGetList(null, 0, 0, PhotoSearchExtras.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the currently authenticated users photosets.
+        /// </summary>
+        /// <param name="primaryPhotoExtras">The extra information to return for the photosets primary photo.</param>
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList(PhotoSearchExtras primaryPhotoExtras)
+        {
+            CheckRequiresAuthentication();
+
+            return PhotosetsGetList(null, 0, 0, primaryPhotoExtras);
         }
 
         /// <summary>
@@ -180,7 +192,21 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            return PhotosetsGetList(null, page, perPage);
+            return PhotosetsGetList(null, page, perPage, PhotoSearchExtras.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the currently authenticated users photosets.
+        /// </summary>
+        /// <param name="page">The page of the results to return. Defaults to page 1.</param>
+        /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <param name="primaryPhotoExtras">The extra information to return for the photosets primary photo.</param>
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList(int page, int perPage, PhotoSearchExtras primaryPhotoExtras)
+        {
+            CheckRequiresAuthentication();
+
+            return PhotosetsGetList(null, page, perPage, primaryPhotoExtras);
         }
 
         /// <summary>
@@ -190,7 +216,18 @@ namespace FlickrNet
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
         public PhotosetCollection PhotosetsGetList(string userId)
         {
-            return PhotosetsGetList(userId, 0, 0);
+            return PhotosetsGetList(userId, 0, 0, PhotoSearchExtras.None);
+        }
+
+        /// <summary>
+        /// Gets a list of the specified users photosets.
+        /// </summary>
+        /// <param name="userId">The ID of the user to return the photosets of.</param>
+        /// <param name="primaryPhotoExtras">The extra information to return for the photosets primary photo.</param>
+        /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
+        public PhotosetCollection PhotosetsGetList(string userId, PhotoSearchExtras primaryPhotoExtras)
+        {
+            return PhotosetsGetList(userId, 0, 0, primaryPhotoExtras);
         }
 
         /// <summary>
@@ -199,17 +236,19 @@ namespace FlickrNet
         /// <param name="userId">The ID of the user to return the photosets of.</param>
         /// <param name="page">The page of the results to return. Defaults to page 1.</param>
         /// <param name="perPage">The number of photosets to return per page. Defaults to 500.</param>
+        /// <param name="primaryPhotoExtras">The extra information to return for the photosets primary photo.</param>
         /// <returns>A <see cref="PhotosetCollection"/> instance containing a collection of photosets.</returns>
-        public PhotosetCollection PhotosetsGetList(string userId, int page, int perPage)
+        public PhotosetCollection PhotosetsGetList(string userId, int page, int perPage, PhotoSearchExtras primaryPhotoExtras)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
-            parameters.Add("method", "flickr.photosets.getList");
+            var parameters = new Dictionary<string, string> {{"method", "flickr.photosets.getList"}};
+
             if (userId != null) parameters.Add("user_id", userId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if( primaryPhotoExtras != PhotoSearchExtras.None ) parameters.Add("primary_photo_extras", UtilityMethods.ExtrasToString(primaryPhotoExtras));
 
-            PhotosetCollection photosets = GetResponseCache<PhotosetCollection>(parameters);
-            foreach (Photoset photoset in photosets)
+            var photosets = GetResponseCache<PhotosetCollection>(parameters);
+            foreach (var photoset in photosets)
             {
                 photoset.OwnerId = userId;
             }

@@ -750,7 +750,7 @@ namespace FlickrNetTest
         {
             var o = new PhotoSearchOptions
                         {
-                            Extras = PhotoSearchExtras.Large1600Url,
+                            Extras = PhotoSearchExtras.AllUrls,
                             Tags = "colorful",
                             MinUploadDate = DateTime.UtcNow.AddDays(-1)
                         };
