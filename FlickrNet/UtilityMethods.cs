@@ -344,8 +344,11 @@ namespace FlickrNet
                 case "original":
                     sizeAbbreviation = "_o";
                     break;
-                default: // Covers "medium" case
-                    sizeAbbreviation = String.Empty;
+                case "medium":
+                    sizeAbbreviation = string.Empty;
+                    break;
+                default: 
+                    sizeAbbreviation = size;
                     break;
             }
 

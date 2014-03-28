@@ -15,15 +15,13 @@ namespace FlickrNetTest
     /// Summary description for PhotosGetInfoTests
     /// </summary>
     [TestFixture]
-    public class PhotosGetInfoTests
+    public class PhotosGetInfoTests : BaseTest
     {
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGetInfoBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PhotoInfo info = f.PhotosGetInfo("4268023123");
+            PhotoInfo info = AuthInstance.PhotosGetInfo("4268023123");
 
             Assert.IsNotNull(info);
 
@@ -86,9 +84,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetInfoUnauthenticatedTest()
         {
-            Flickr f = TestData.GetInstance();
-
-            PhotoInfo info = f.PhotosGetInfo("4268023123");
+            PhotoInfo info = Instance.PhotosGetInfo("4268023123");
 
             Assert.IsNotNull(info);
 
@@ -150,11 +146,9 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetInfoTestLocation()
         {
-            string photoId = "4268756940";
+            const string photoId = "4268756940";
 
-            Flickr f = TestData.GetAuthInstance();
-
-            PhotoInfo info = f.PhotosGetInfo(photoId);
+            PhotoInfo info = AuthInstance.PhotosGetInfo(photoId);
 
             Assert.IsNotNull(info.Location);
         }
@@ -162,10 +156,9 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetInfoWithPeople()
         {
-            Flickr f = TestData.GetInstance();
-            string photoId = "3547137580"; // https://www.flickr.com/photos/samjudson/3547137580/in/photosof-samjudson/
+            const string photoId = "3547137580"; // https://www.flickr.com/photos/samjudson/3547137580/in/photosof-samjudson/
 
-            PhotoInfo info = f.PhotosGetInfo(photoId);
+            PhotoInfo info = Instance.PhotosGetInfo(photoId);
 
             Assert.IsNotNull(info);
             Assert.IsTrue(info.HasPeople, "HasPeople should be true.");
@@ -179,10 +172,8 @@ namespace FlickrNetTest
             o.UserId = TestData.TestUserId;
             o.PerPage = 5;
 
-            Flickr f = TestData.GetInstance();
-
-            PhotoCollection photos = f.PhotosSearch(o);
-            PhotoInfo info = f.PhotosGetInfo(photos[0].PhotoId);
+            PhotoCollection photos = Instance.PhotosSearch(o);
+            PhotoInfo info = Instance.PhotosGetInfo(photos[0].PhotoId);
 
             Assert.AreEqual(false, info.CanBlog);
             Assert.AreEqual(true, info.CanDownload);
@@ -191,11 +182,9 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetInfoDataTakenGranularityTest()
         {
-            string photoid = "4386780023";
+            const string photoid = "4386780023";
 
-            Flickr f = TestData.GetInstance();
-
-            PhotoInfo info = f.PhotosGetInfo(photoid);
+            PhotoInfo info = Instance.PhotosGetInfo(photoid);
 
             Assert.AreEqual(new DateTime(2009, 1, 1), info.DateTaken);
             Assert.AreEqual(DateGranularity.Circa, info.DateTakenGranularity);
@@ -205,41 +194,28 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetInfoVideoTest()
         {
-            string videoId = "2926486605";
+            const string videoId = "2926486605";
 
-            Flickr f = TestData.GetInstance();
+            var info = Instance.PhotosGetInfo(videoId);
 
-            try
-            {
-                var info = f.PhotosGetInfo(videoId);
-
-                Assert.IsNotNull(info);
-                Assert.AreEqual(videoId, info.PhotoId);
-            }
-            catch
-            {
-                Console.WriteLine(f.LastResponse);
-                throw;
-            }
+            Assert.IsNotNull(info);
+            Assert.AreEqual(videoId, info.PhotoId);
         }
 
         [Test]
         [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFound()
         {
-            Flickr f = TestData.GetInstance();
-            f.PhotosGetInfo("abcd");
+            Instance.PhotosGetInfo("abcd");
         }
 
         [Test]
         [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFoundAsync()
         {
-            Flickr f = TestData.GetInstance();
-
             var w = new AsyncSubject<FlickrResult<PhotoInfo>>();
 
-            f.PhotosGetInfoAsync("abcd", r => { w.OnNext(r); w.OnCompleted(); });
+            Instance.PhotosGetInfoAsync("abcd", r => { w.OnNext(r); w.OnCompleted(); });
             var result = w.Next().First();
 
             Assert.IsTrue(result.HasError);
@@ -249,7 +225,7 @@ namespace FlickrNetTest
         [Test]
         public void ShouldReturnPhotoInfoWithGeoData()
         {
-            var info = TestData.GetInstance().PhotosGetInfo("54071193");
+            var info = Instance.PhotosGetInfo("54071193");
 
             Assert.IsNotNull(info, "PhotoInfo should not be null.");
             Assert.IsNotNull(info.Location, "Location should not be null.");
@@ -261,11 +237,31 @@ namespace FlickrNetTest
         [Test]
         public void ShouldReturnPhotoInfoWithValidUrls()
         {
-            var info = TestData.GetInstance().PhotosGetInfo("9671143400");
+            var info = Instance.PhotosGetInfo("9671143400");
 
             Assert.IsTrue(UrlHelper.Exists(info.Small320Url), "Small320Url is not valid url : " + info.Small320Url);
             Assert.IsTrue(UrlHelper.Exists(info.Medium640Url), "Medium640Url is not valid url : " + info.Medium640Url);
             Assert.IsTrue(UrlHelper.Exists(info.Medium800Url), "Medium800Url is not valid url : " + info.Medium800Url);
+            Assert.AreNotEqual(info.SmallUrl, info.LargeUrl, "URLs should all be different.");
+        }
+
+        [Test]
+        public void PhotoInfoUrlsShouldMatchSizes()
+        {
+            var photos =
+                Instance.PhotosSearch(new PhotoSearchOptions
+                                          {
+                                              UserId = TestData.TestUserId,
+                                              PerPage = 1,
+                                              Extras = PhotoSearchExtras.AllUrls
+                                          });
+
+            var photo = photos.First();
+
+            var info = Instance.PhotosGetInfo(photo.PhotoId);
+
+            Assert.AreEqual(photo.LargeUrl, info.LargeUrl);
+            Assert.AreEqual(photo.Small320Url, info.Small320Url);
         }
 
     }
