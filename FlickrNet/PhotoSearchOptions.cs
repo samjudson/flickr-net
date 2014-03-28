@@ -296,6 +296,41 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Search for photos by the users 'username'
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
+        /// The minimum exposure to return photos for.
+        /// </summary>
+        public double? ExifMinExposure { get; set; }
+
+        /// <summary>
+        /// The maximum exposure to return photos for.
+        /// </summary>
+        public double? ExifMaxExposure { get; set; }
+
+        /// <summary>
+        /// The minimum aperture to return photos for.
+        /// </summary>
+        public double? ExifMinAperture { get; set; }
+
+        /// <summary>
+        /// The maximum aperture to return photos for.
+        /// </summary>
+        public double? ExifMaxAperture { get; set; }
+
+        /// <summary>
+        /// The minimum focal length to return photos for.
+        /// </summary>
+        public int? ExifMinFocalLength { get; set; }
+
+        /// <summary>
+        /// The maximum focal length to return photos for.
+        /// </summary>
+        public int? ExifMaxFocalLength { get; set; }
+
+        /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
@@ -372,7 +407,15 @@ namespace FlickrNet
             if (PersonId != null) parameters.Add("person_id", PersonId);
             if (Camera != null) parameters.Add("camera", Camera);
             if (JumpTo != null) parameters.Add("jump_to", JumpTo);
+            if (!String.IsNullOrEmpty(Username)) parameters.Add("username", Username);
+            if (ExifMinExposure != null) parameters.Add("exif_min_exposure", ExifMinExposure.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMaxExposure != null) parameters.Add("exif_max_exposure", ExifMaxExposure.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMinAperture != null) parameters.Add("exif_min_aperture", ExifMinAperture.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMaxAperture != null) parameters.Add("exif_max_aperture", ExifMaxAperture.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMinFocalLength != null) parameters.Add("exif_min_focallen", ExifMinFocalLength.Value.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMaxFocalLength != null) parameters.Add("exif_max_focallen", ExifMaxFocalLength.Value.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo));
         }
+
     }
 
 }

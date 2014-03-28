@@ -449,7 +449,8 @@ namespace FlickrNetTest
                             Accuracy = b.Accuracy,
                             MinUploadDate = DateTime.Now.AddYears(-1),
                             MaxUploadDate = DateTime.Now,
-                            Extras = PhotoSearchExtras.Geo
+                            Extras = PhotoSearchExtras.Geo | PhotoSearchExtras.PathAlias,
+                            Tags = "colorful"
                         };
 
             var ps = Instance.PhotosSearch(o);
@@ -460,9 +461,9 @@ namespace FlickrNetTest
                 if (Math.Abs(p.Latitude - 0) < 1e-8 && Math.Abs(p.Longitude - 0) < 1e-8) continue;
 
                 Assert.IsTrue(p.Latitude > b.MinimumLatitude && b.MaximumLatitude > p.Latitude,
-                              "Latitude is not within the boundary box.");
+                              "Latitude is not within the boundary box. {0} outside {1} and {2} for photo {3}", p.Latitude, b.MinimumLatitude, b.MaximumLatitude, p.WebUrl);
                 Assert.IsTrue(p.Longitude > b.MinimumLongitude && b.MaximumLongitude > p.Longitude,
-                              "Longitude is not within the boundary box.");
+                              "Longitude is not within the boundary box. {0} outside {1} and {2} for photo {3}", p.Longitude, b.MinimumLongitude, b.MaximumLongitude, p.WebUrl);
             }
         }
 
@@ -816,6 +817,74 @@ namespace FlickrNetTest
             Assert.IsTrue(photos.All(p => p.UserId != TestData.TestUserId), "None of the photos should be mine.");
             Assert.IsTrue(photos.All(p => contacts.Contains(p.UserId)), "UserID not found in list of contacts.");
         }
+
+        [Test]
+        public void SearchByUsername()
+        {
+            var user = Instance.PeopleFindByUserName("Jesus Solana");
+
+            var photos = Instance.PhotosSearch(new PhotoSearchOptions {Username = "Jesus Solana"});
+
+            Assert.AreEqual(user.UserId, photos.First().UserId);
+        }
+
+        [Test]
+        public void SearchByExifExposure()
+        {
+            var options = new PhotoSearchOptions
+                              {
+                                  ExifMinExposure = 10,
+                                  ExifMaxExposure = 30,
+                                  Extras = PhotoSearchExtras.PathAlias,
+                                  PerPage = 5
+                              };
+
+            var photos = Instance.PhotosSearch(options);
+
+            foreach (var photo in photos)
+            {
+                Console.WriteLine(photo.WebUrl);
+            }
+        }
+
+        [Test]
+        public void SearchByExifAperture()
+        {
+            var options = new PhotoSearchOptions
+            {
+                ExifMinAperture = 0.0,
+                ExifMaxAperture = 1/2,
+                Extras = PhotoSearchExtras.PathAlias,
+                PerPage = 5
+            };
+
+            var photos = Instance.PhotosSearch(options);
+
+            foreach (var photo in photos)
+            {
+                Console.WriteLine(photo.WebUrl);
+            }
+        }
+
+        [Test]
+        public void SearchByExifFocalLength()
+        {
+            var options = new PhotoSearchOptions
+            {
+                ExifMinFocalLength = 400,
+                ExifMaxFocalLength = 800,
+                Extras = PhotoSearchExtras.PathAlias,
+                PerPage = 5
+            };
+
+            var photos = Instance.PhotosSearch(options);
+
+            foreach (var photo in photos)
+            {
+                Console.WriteLine(photo.WebUrl);
+            }
+        }
+
     }
 }
 // ReSharper restore SuggestUseVarKeywordEvident
