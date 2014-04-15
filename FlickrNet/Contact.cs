@@ -117,6 +117,8 @@ namespace FlickrNet
                     case "photos_uploaded":
                         PhotosUploaded = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
+                    case "rev_ignored":
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
