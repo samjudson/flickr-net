@@ -331,6 +331,21 @@ namespace FlickrNet
         public int? ExifMaxFocalLength { get; set; }
 
         /// <summary>
+        /// Exclude a specific user ID from the search results.
+        /// </summary>
+        public string ExcludeUserID { get; set; }
+
+        /// <summary>
+        /// The ID of the Foursquare Venue to return photos for.
+        /// </summary>
+        public string FoursquareVenueID { get; set; }
+
+        /// <summary>
+        /// The WOE ID of the Foursquare Venue to return photos for.
+        /// </summary>
+        public string FoursquareWoeID { get; set; }
+
+        /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
@@ -414,6 +429,9 @@ namespace FlickrNet
             if (ExifMaxAperture != null) parameters.Add("exif_max_aperture", ExifMaxAperture.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
             if (ExifMinFocalLength != null) parameters.Add("exif_min_focallen", ExifMinFocalLength.Value.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo));
             if (ExifMaxFocalLength != null) parameters.Add("exif_max_focallen", ExifMaxFocalLength.Value.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExcludeUserID != null) parameters.Add("exclude_user_id", ExcludeUserID);
+            if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
+            if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
         }
 
     }

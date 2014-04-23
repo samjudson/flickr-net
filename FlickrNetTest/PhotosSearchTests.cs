@@ -885,6 +885,62 @@ namespace FlickrNetTest
             }
         }
 
+        [Test]
+        public void ExcludeUserTest()
+        {
+            var options = new PhotoSearchOptions
+            {
+                Tags = "colorful",
+                MinTakenDate = DateTime.Today.AddDays(-7),
+                MaxTakenDate = DateTime.Today.AddDays(-1),
+                PerPage = 10
+            };
+
+            var photos = Instance.PhotosSearch(options);
+
+
+            var firstUserId = photos.First().UserId;
+
+            options.ExcludeUserID = firstUserId;
+
+            var nextPhotos = Instance.PhotosSearch(options);
+
+            Assert.IsFalse(nextPhotos.Any(p => p.UserId == firstUserId), "Should not be any photos for user {0}", firstUserId);
+        }
+
+        [Test]
+        public void GetPhotosByFoursquareVenueId()
+        {
+            var venueid = "4ac518cef964a520f6a520e3";
+
+            var options = new PhotoSearchOptions
+            {
+                FoursquareVenueID = venueid
+            };
+
+            var photos = Instance.PhotosSearch(options);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual(0, photos.Count, "Should have returned some photos for 'Big Ben'");
+        }
+
+        [Test]
+        public void GetPhotosByFoursquareWoeId()
+        {
+            // Seems to be the same as normal WOE IDs, so not sure what is different about the foursquare ones.
+            var woeId = "44417";
+
+            var options = new PhotoSearchOptions
+            {
+                FoursquareWoeID = woeId
+            };
+
+            var photos = Instance.PhotosSearch(options);
+
+            Assert.IsNotNull(photos);
+            Assert.AreNotEqual(0, photos.Count, "Should have returned some photos for 'Big Ben'");
+        }
+
     }
 }
 // ReSharper restore SuggestUseVarKeywordEvident

@@ -172,7 +172,13 @@ namespace FlickrNet
         /// <summary>
         /// Returns the URL for the medium 640 image, as well as the image size.
         /// </summary>
-        [Description("url_z")] Medium640Url = 33554432 * 16,
+        [Description("url_z")] Medium640Url = 536870912,
+
+        /// <summary>
+        /// Returns the URL for the medium 640 image, as well as the image size.
+        /// </summary>
+        [Description("count_faves")]
+        CountFaves = 1073741824,
 
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
@@ -187,6 +193,6 @@ namespace FlickrNet
         All =
             License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo |
             MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility |
-            Rotation,
+            Rotation | CountFaves,
     }
 }

@@ -482,6 +482,14 @@ namespace FlickrNet
         public int? Rotation { get; set; }
 
         /// <summary>
+        /// The number of favorites for this photo. 
+        /// </summary>
+        /// <remarks>
+        /// Only returned if you specify the <see cref="PhotoSearchExtras.CountFaves"/> property.
+        /// </remarks>
+        public int? CountFaves { get; set; }
+
+        /// <summary>
         /// A helper method which tries to guess if a large image will be available for this photograph
         /// based on the original dimensions returned with the photo.
         /// </summary>
@@ -820,6 +828,9 @@ namespace FlickrNet
                         break;
                     case "rotation":
                         Rotation = reader.ReadContentAsInt();
+                        break;
+                    case "count_faves":
+                        CountFaves = reader.ReadContentAsInt();
                         break;
                     default:
                         if (!allowExtraAtrributes) UtilityMethods.CheckParsingException(reader);
