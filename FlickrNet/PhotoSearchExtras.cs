@@ -17,7 +17,7 @@ namespace FlickrNet
     /// </example>
     [Flags]
     [Serializable]
-    public enum PhotoSearchExtras
+    public enum PhotoSearchExtras : long
     {
         /// <summary>
         /// No extras selected.
@@ -180,6 +180,11 @@ namespace FlickrNet
         [Description("count_faves")]
         CountFaves = 1073741824,
 
+        /// Returns the URL for the medium 640 image, as well as the image size.
+        /// </summary>
+        [Description("count_comments")]
+        CountComments = 2147483648L,
+
         /// <summary>
         /// Returns the URL for all the images, as well as the image sizes.
         /// </summary>
@@ -193,6 +198,6 @@ namespace FlickrNet
         All =
             License | DateUploaded | DateTaken | OwnerName | IconServer | OriginalFormat | LastUpdated | Tags | Geo |
             MachineTags | OriginalDimensions | Views | Media | PathAlias | AllUrls | Description | Usage | Visibility |
-            Rotation | CountFaves,
+            Rotation | CountFaves | CountComments,
     }
 }

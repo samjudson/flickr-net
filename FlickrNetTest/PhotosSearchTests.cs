@@ -941,6 +941,20 @@ namespace FlickrNetTest
             Assert.AreNotEqual(0, photos.Count, "Should have returned some photos for 'Big Ben'");
         }
 
+        [Test]
+        public void CountFavesAndCountComments()
+        {
+            var options = new PhotoSearchOptions
+            {
+                Extras = PhotoSearchExtras.CountFaves | PhotoSearchExtras.CountComments,
+                Tags = "colorful"
+            };
+
+            var photos = Instance.PhotosSearch(options);
+
+            Assert.IsFalse(photos.Any(p => p.CountFaves == null), "Should not have any null CountFaves");
+            Assert.IsFalse(photos.Any(p => p.CountComments == null), "Should not have any null CountComments");
+        }
     }
 }
 // ReSharper restore SuggestUseVarKeywordEvident
