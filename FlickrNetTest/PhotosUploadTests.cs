@@ -17,7 +17,7 @@ namespace FlickrNetTest
     /// </summary>
     [TestFixture]
     [Category("AccessTokenRequired")]
-    public class PhotosUploadTests
+    public class PhotosUploadTests : BaseTest
     {
         [Test]
         public void UploadPictureAsyncBasicTest()
@@ -96,6 +96,25 @@ namespace FlickrNetTest
             {
                 f.PhotosDelete(photoId);
             }
+        }
+
+        [Test]
+        public void DownloadAndUploadImage()
+        {
+            var photos = AuthInstance.PeopleGetPhotos(PhotoSearchExtras.AllUrls);
+
+            var photo = photos.First();
+            var url = photo.Small320Url;
+
+            WebClient client = new WebClient();
+            var data = client.DownloadData(url);
+
+            MemoryStream ms = new MemoryStream(data);
+            ms.Position = 0;
+
+            var photoId = AuthInstance.UploadPicture(ms, "test.jpg", "Test Photo", "Test Description", "", false, false, false, ContentType.Photo, SafetyLevel.Safe, HiddenFromSearch.Hidden);
+
+            Assert.IsNotNull(photoId, "PhotoId should not be null");
         }
 
         [Test]

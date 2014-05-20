@@ -143,6 +143,17 @@ namespace FlickrNetTest
         }
 
         [Test]
+        public void PhotosGetInfoTestUserIssue()
+        {
+            var photoId = "14042679057";
+            var info = Instance.PhotosGetInfo(photoId);
+
+            Assert.AreEqual(photoId, info.PhotoId);
+            Assert.AreEqual("63226137@N02", info.OwnerUserId);
+            Assert.AreEqual("https://www.flickr.com/photos/63226137@N02/14042679057/", info.WebUrl);
+
+        }
+        [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGetInfoTestLocation()
         {

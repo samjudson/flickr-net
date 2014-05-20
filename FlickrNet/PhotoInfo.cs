@@ -287,7 +287,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", PathAlias ?? OwnerUserId, PhotoId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? OwnerUserId : PathAlias, PhotoId);
             }
         }
 
@@ -742,7 +742,7 @@ namespace FlickrNet
                         OwnerIconFarm = reader.Value;
                         break;
                     case "path_alias":
-                        PathAlias = reader.Value;
+                        PathAlias = String.IsNullOrEmpty(reader.Value) ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
