@@ -12,7 +12,7 @@ namespace FlickrNetTest
     /// Summary description for GroupsPoolsGetGroupsTests
     /// </summary>
     [TestFixture]
-    public class GroupsPoolsTests
+    public class GroupsPoolsTests : BaseTest
     {
        
         [Test]
@@ -110,7 +110,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsPoolsGetGroupsBasicTest()
         {
-            MemberGroupInfoCollection groups = TestData.GetAuthInstance().GroupsPoolsGetGroups();
+            MemberGroupInfoCollection groups = AuthInstance.GroupsPoolsGetGroups();
 
             Assert.IsNotNull(groups, "MemberGroupInfoCollection should not be null.");
             Assert.AreNotEqual(0, groups.Count, "MemberGroupInfoCollection.Count should not be zero.");

@@ -87,7 +87,17 @@ namespace FlickrNet
                         IconFarm = reader.Value;
                         break;
                     case "photos":
+                    case "pool_count":
                         Photos = long.Parse(reader.Value, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "member":
+                        IsMember = reader.Value == "1";
+                        break;
+                    case "moderator":
+                        IsModerator = reader.Value == "1";
+                        break;
+                    case "member_count":
+                        MemberCount = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -97,6 +107,21 @@ namespace FlickrNet
 
             reader.Read();
         }
+
+        /// <summary>
+        /// Is the current authenticated user a member of this group. Null if the call is not authenticated.
+        /// </summary>
+        public bool? IsMember { get; set; }
+
+        /// <summary>
+        /// Is the current authenticated user a moderator of this group. Null if the call is not authenticated.
+        /// </summary>
+        public bool? IsModerator { get; set; }
+
+        /// <summary>
+        /// Number of members of this group.
+        /// </summary>
+        public int MemberCount { get; set; }
     }
 
 }
