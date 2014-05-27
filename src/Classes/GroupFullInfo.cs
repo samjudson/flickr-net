@@ -45,6 +45,9 @@ namespace FlickrNet
         /// </summary>
         public string IconFarm { get; set; }
 
+        // The path alias for the group
+        public string PathAlias { get; set; }
+
         /// <summary>
         /// The language that the group information has been returned in.
         /// </summary>
@@ -132,6 +135,9 @@ namespace FlickrNet
                         break;
                     case "ispoolmoderated":
                         IsPoolModerated = reader.Value == "1";
+                        break;
+                    case "path_alias":
+                        PathAlias = String.IsNullOrEmpty(reader.Value) ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
