@@ -41,6 +41,11 @@ namespace FlickrNet
         public string IconServer { get; set; }
 
         /// <summary>
+        /// The Path alias for the group icon
+        /// </summary>
+        public string PathAlias { get; set; }
+
+        /// <summary>
         /// The server farm for the group icon. If zero then the group uses the default icon.
         /// </summary>
         public string IconFarm { get; set; }
@@ -159,6 +164,9 @@ namespace FlickrNet
                         break;
                     case "ispoolmoderated":
                         IsPoolModerated = reader.Value == "1";
+                        break;
+                    case "path_alias":
+                        PathAlias = reader.Value == "" ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -99,6 +99,9 @@ namespace FlickrNet
                     case "member_count":
                         MemberCount = reader.ReadContentAsInt();
                         break;
+                    case "topic_count":
+                        TopicCount = reader.ReadContentAsInt();
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
@@ -122,6 +125,11 @@ namespace FlickrNet
         /// Number of members of this group.
         /// </summary>
         public int MemberCount { get; set; }
+
+        /// <summary>
+        /// The number of discussion topics in this group.
+        /// </summary>
+        public int TopicCount { get; set; }
     }
 
 }
