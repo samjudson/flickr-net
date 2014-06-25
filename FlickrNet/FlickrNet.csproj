@@ -451,10 +451,13 @@
     <Compile Include="Value.cs" />
     <Compile Include="ValueCollection.cs" />
     <Compile Include="VideoInfo.cs" />
+    <Content Include="Notice-Apache-2.0.txt" />
     <None Include="example_app.config" />
     <None Include="FlickrNet.ndoc" />
     <None Include="FlickrNet.snk" />
     <CodeAnalysisDictionary Include="CodeAnalysisDictionary.xml" />
+    <Content Include="License-LGPL-2.1.txt" />
+    <Content Include="License-Apache-2.0.txt" />
     <Content Include="License.txt" />
   </ItemGroup>
   <ItemGroup>

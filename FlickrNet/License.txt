@@ -1,20 +1,38 @@
 Flickr .Net API Library
------------------------
-All source code and information supplied as part of the Flick .Net API Library is copyright too its contributers.
+Copyright 2014 Sam Judson
+-------------------------------
+All source code and information supplied as part of the Flick .Net API Library is copyright to its contributers.
 
 The source code has been released under a dual license - meaning you can use either licensed version of the library with your code.
 
-It is released under the Common Public License 1.0, a copy of which can be found at the link below.
-http://www.opensource.org/licenses/cpl.php
+-------------------------------
+LGPL 2.1 License
+-------------------------------
+It is released under the LGPL (GNU Lesser General Public License) 2.1 License, 
+a copy of which can be found at the link below.
+https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 
-It is released under the LGPL (GNU Lesser General Public License), a copy of which can be found at the link below.
-http://www.gnu.org/copyleft/lesser.html
+It is also included in this project as License-LGPL-2.1.txt
 
-You are free to distribute copies of this Program in its compiled, unaltered form, including, but not limited to using it (in library form) in other .Net application, without use of this license.
-You are free to modify this code, however you must release the resulting Contributions under the CPL or the LGPL (or compatible license).
+-------------------------------
+Apache 2.0 License
+-------------------------------
+It is released under the Apache 2.0 License, a copy of which can be found at the link below.
+http://www.apache.org/licenses/LICENSE-2.0
 
-Flickr API Key
---------------
+It is also included in this project as License-Apache-2.0.txt
+
+-------------------------------
+Distribution/Contribution
+-------------------------------
+
+You are free to distribute copies of this Program in its compiled, unaltered form, including, 
+but not limited to using it (in library form) in other .Net application, without use of this license.
+
+You are free to modify this code, under the agreements laid out in these licenses.
+
+-------------------------------
+Exception: Flickr API Key
+-------------------------------
 I do not have permission to include a Flickr API Key in any distribution which includes source code.
 If I do by accident then it is not included in the above license and should not be used. 
-
