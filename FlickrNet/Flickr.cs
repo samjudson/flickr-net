@@ -398,13 +398,13 @@ namespace FlickrNet
             AuthToken = token;
         }
 
-        private void CheckApiKey()
+        internal void CheckApiKey()
         {
             if (string.IsNullOrEmpty(ApiKey))
                 throw new ApiKeyRequiredException();
         }
 
-        private void CheckSigned()
+        internal void CheckSigned()
         {
             CheckApiKey();
 
@@ -412,17 +412,21 @@ namespace FlickrNet
                 throw new SignatureRequiredException();
         }
 
-        private void CheckRequiresAuthentication()
+        internal void CheckRequiresAuthentication()
         {
-            CheckApiKey();
+            CheckSigned();
 
             if (!String.IsNullOrEmpty(OAuthAccessToken) && !String.IsNullOrEmpty(OAuthAccessTokenSecret))
+            {
                 return;
+            }
 
-            if (String.IsNullOrEmpty(ApiSecret))
-                throw new SignatureRequiredException();
-            if (String.IsNullOrEmpty(AuthToken) || String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(OAuthAccessTokenSecret))
-                throw new AuthenticationRequiredException();
+            if (!String.IsNullOrEmpty(AuthToken))
+            {
+                return;
+            }
+
+            throw new AuthenticationRequiredException();
         }
 
         /// <summary>

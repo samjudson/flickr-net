@@ -70,6 +70,7 @@
     <Compile Include="Auth\AuthHelper.cs" />
     <Compile Include="BaseTest.cs" />
     <Compile Include="CameraTests.cs" />
+    <Compile Include="CheckTests.cs" />
     <Compile Include="FlickrConfigurationSettingsTest.cs" />
     <Compile Include="GroupsDiscussTests.cs" />
     <Compile Include="PhotosGetContactsPublicPhotosTests.cs" />
