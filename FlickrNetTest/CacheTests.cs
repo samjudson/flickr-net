@@ -36,7 +36,10 @@ namespace FlickrNetTest
         [Test]
         public void CacheHitTest()
         {
-            Directory.Delete(Flickr.CacheLocation, true);
+            if (Directory.Exists(Flickr.CacheLocation))
+            {
+                Directory.Delete(Flickr.CacheLocation, true);
+            }
 
             Flickr f = TestData.GetInstance();
             Flickr.FlushCache();
