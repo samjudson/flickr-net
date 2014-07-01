@@ -43,7 +43,7 @@ namespace FlickrNetTest
 
             PhotoCollection p = AuthInstance.PhotosSearch(o);
 
-            Assert.IsTrue(p.Count > 10, "Should have returned more than 10 result returned. Count = " + p.Count);
+            Assert.IsTrue(p.Count > 5, "Should have returned more than 5 result returned. Count = " + p.Count);
             Assert.IsTrue(p.Count < 100, "Should be less than 100 results returned. Count = " + p.Count);
         }
 
@@ -60,6 +60,21 @@ namespace FlickrNetTest
                                        };
 
             var ps = AuthInstance.PhotosSearch(o);
+
+            Assert.IsNotNull(ps);
+            Assert.AreNotEqual(0, ps.Count);
+        }
+
+        [Test]
+        public void PhotoSearchByPathAlias()
+        {
+            PhotoSearchOptions o = new PhotoSearchOptions
+            {
+                GroupPathAlias = "api",
+                PerPage = 10
+            };
+
+            var ps = Instance.PhotosSearch(o);
 
             Assert.IsNotNull(ps);
             Assert.AreNotEqual(0, ps.Count);

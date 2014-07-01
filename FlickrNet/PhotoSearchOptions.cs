@@ -346,6 +346,11 @@ namespace FlickrNet
         public string FoursquareWoeID { get; set; }
 
         /// <summary>
+        /// The path alias for a group to search.
+        /// </summary>
+        public string GroupPathAlias { get; set; }
+
+        /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
@@ -432,6 +437,7 @@ namespace FlickrNet
             if (ExcludeUserID != null) parameters.Add("exclude_user_id", ExcludeUserID);
             if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
             if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
+            if (GroupPathAlias != null) parameters.Add("group_path_alias", GroupPathAlias);
         }
 
     }
