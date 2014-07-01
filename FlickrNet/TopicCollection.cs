@@ -14,6 +14,10 @@ namespace FlickrNet
         /// </summary>
         public string GroupId { get; set; }
         /// <summary>
+        /// The path alias for the group's url.
+        /// </summary>
+        public string PathAlias { get; set; }
+        /// <summary>
         /// The server for the group's icon.
         /// </summary>
         public string GroupIconServer { get; set; }
@@ -110,6 +114,9 @@ namespace FlickrNet
                         break;
                     case "per_page":
                         PerPage = reader.ReadContentAsInt();
+                        break;
+                    case "path_alias":
+                        PathAlias = reader.Value == "" ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -47,14 +47,14 @@ namespace FlickrNetTest
             Assert.IsTrue(p.Count < 100, "Should be less than 100 results returned. Count = " + p.Count);
         }
 
-        [Test]
+        [Test, Ignore("Currently 'Camera' searches are not working.")]
         [Category("AccessTokenRequired")]
         public void PhotosSearchCameraIphone()
         {
             PhotoSearchOptions o = new PhotoSearchOptions
                                        {
-                                           Camera = "iPhone 4",
-                                           MinUploadDate = DateTime.Now.AddDays(-2),
+                                           Camera = "iPhone 5S",
+                                           MinUploadDate = DateTime.Now.AddDays(-7),
                                            MaxUploadDate = DateTime.Now,
                                            Extras = PhotoSearchExtras.Tags
                                        };

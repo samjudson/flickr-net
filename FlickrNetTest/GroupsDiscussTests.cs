@@ -6,7 +6,7 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     [TestFixture]
-    public class GroupsDiscussTests
+    public class GroupsDiscussTests : BaseTest
     {
         [SetUp]
         public void TestInitialize()
@@ -139,9 +139,8 @@ namespace FlickrNetTest
         public void GroupsDiscussTopicsGetListEditableTest()
         {
             var groupId = "51035612836@N01"; // Flickr API group
-            var f = TestData.GetAuthInstance();
 
-            var topics = f.GroupsDiscussTopicsGetList(groupId, 1, 20);
+            var topics = AuthInstance.GroupsDiscussTopicsGetList(groupId, 1, 20);
 
             Assert.AreNotEqual(0, topics.Count);
 

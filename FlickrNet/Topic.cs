@@ -22,6 +22,10 @@ namespace FlickrNet
         /// </summary>
         public string AuthorUserId { get; set; }
         /// <summary>
+        /// The path alias for the author of this topic.
+        /// </summary>
+        public string AuthorPathAlias { get; set; }
+        /// <summary>
         /// The user name of the author of the topic.
         /// </summary>
         public string AuthorName { get; set; }
@@ -162,6 +166,9 @@ namespace FlickrNet
                         break;
                     case "name":
                         // Group Name
+                        break;
+                    case "author_path_alias":
+                        AuthorPathAlias = reader.Value == "" ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
