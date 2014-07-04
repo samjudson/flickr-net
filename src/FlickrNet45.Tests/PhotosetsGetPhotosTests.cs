@@ -41,7 +41,7 @@ namespace FlickrNet45.Tests
         [Test]
         public void PhotosetsGetPhotosFilterMediaTest()
         {
-            // http://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
+            // https://www.flickr.com/photos/sgoralnick/sets/72157600283870192/
             // Set contains videos and photos
             PhotosetPhotoCollection theset = Instance.PhotosetsGetPhotos("72157600283870192", PhotoSearchExtras.Media, PrivacyFilter.None, 1, 100, MediaType.Videos);
 
@@ -67,7 +67,7 @@ namespace FlickrNet45.Tests
             {
                 Assert.IsNotNull(p.UserId, "UserId should not be null.");
                 Assert.AreNotEqual(String.Empty, p.UserId, "UserId should not be an empty string.");
-                string url = "http://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
+                string url = "https://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
                 Assert.AreEqual(url, p.WebUrl);
             }
         }
