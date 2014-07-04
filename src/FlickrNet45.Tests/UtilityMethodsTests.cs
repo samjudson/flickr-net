@@ -415,7 +415,7 @@ namespace FlickrNet45.Tests
             var photoId = "7176125763"; // Rainbow rose
             var size = "medium";
             var extension = "jpg";
-            var expected = "http://farm9.staticflickr.com/8162/7176125763_7eac68f450.jpg";
+            var expected = "https://farm9.staticflickr.com/8162/7176125763_7eac68f450.jpg";
 
             var photoInfo = AuthInstance.PhotosGetInfo(photoId);
 

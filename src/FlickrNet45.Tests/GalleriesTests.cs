@@ -103,7 +103,7 @@ namespace FlickrNet45.Tests
 
             string title = "Great Entrances to Hell";
             string description = "A guide to what makes a great photo for the Entrances to Hell group: " +
-                                 "<a href=\"http://www.flickr.com/groups/entrancetohell\">www.flickr.com/groups/entrancetohell</a>\n\n";
+                                 "<a href=\"https://www.flickr.com/groups/entrancetohell\">www.flickr.com/groups/entrancetohell</a>\n\n";
             description += DateTime.Now.ToString();
 
             AuthInstance.GalleriesEditMeta(galleryId, title, description);

@@ -15,7 +15,7 @@ namespace FlickrNet
     {
         public async Task<OAuthRequestToken> OAuthRequestTokenAsync(string callbackUrl)
         {
-            const string url = "http://www.flickr.com/services/oauth/request_token";
+            const string url = "https://www.flickr.com/services/oauth/request_token";
 
             IDictionary<string, string> parameters = new Dictionary<string, string>();
             FlickrResponder.OAuthGetBasicParameters(parameters);
@@ -36,7 +36,7 @@ namespace FlickrNet
 
         public async Task<OAuthAccessToken> OAuthAccessTokenAsync(string requestToken, string requestTokenSecret, string verifier)
         {
-            const string url = "http://www.flickr.com/services/oauth/access_token";
+            const string url = "https://www.flickr.com/services/oauth/access_token";
 
             if (verifier.Contains("://"))
             {
