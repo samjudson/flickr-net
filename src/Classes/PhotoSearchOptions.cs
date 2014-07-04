@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Text;
 
 namespace FlickrNet
 {
@@ -11,8 +9,6 @@ namespace FlickrNet
     /// </summary>
     public class PhotoSearchOptions
     {
-        private readonly Collection<LicenseType> licenses = new Collection<LicenseType>();
-
         /// <summary>
         /// Creates a new instance of the search options.
         /// </summary>
@@ -25,7 +21,8 @@ namespace FlickrNet
         /// passed in.
         /// </summary>
         /// <param name="userId">The ID of the User to search for.</param>
-        public PhotoSearchOptions(string userId) : this(userId, null, TagMode.AllTags, null)
+        public PhotoSearchOptions(string userId)
+            : this(userId, null, TagMode.AllTags, null)
         {
         }
 
@@ -61,10 +58,10 @@ namespace FlickrNet
         /// <param name="text">The text to search for in photo title and descriptions.</param>
         public PhotoSearchOptions(string userId, string tags, TagMode tagMode, string text)
         {
-            UserId = userId;
-            Tags = tags;
-            TagMode = tagMode;
-            Text = text;
+            this.UserId = userId;
+            this.Tags = tags;
+            this.TagMode = tagMode;
+            this.Text = text;
         }
 
         /// <summary>
@@ -96,7 +93,7 @@ namespace FlickrNet
         /// Search for the given machine tags.
         /// </summary>
         /// <remarks>
-        /// See http://www.flickr.com/services/api/flickr.photos.search.html for details 
+        /// See https://www.flickr.com/services/api/flickr.photos.search.html for details 
         /// on how to search for machine tags.
         /// </remarks>
         public string MachineTags { get; set; }
@@ -142,6 +139,8 @@ namespace FlickrNet
         /// Filter by media type.
         /// </summary>
         public MediaType MediaType { get; set; }
+
+        private Collection<LicenseType> licenses = new Collection<LicenseType>();
 
         /// <summary>
         /// The licenses you wish to search for.
@@ -192,12 +191,10 @@ namespace FlickrNet
             get { return BoundaryBox == null ? GeoAccuracy.None : BoundaryBox.Accuracy; }
             set
             {
-                if (BoundaryBox == null)
-                {
-                    BoundaryBox = new BoundaryBox();
-                }
+                if (BoundaryBox == null) { BoundaryBox = new BoundaryBox(); }
                 BoundaryBox.Accuracy = value;
             }
+
         }
 
         /// <summary>
@@ -300,21 +297,76 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Search for photos by the users 'username'
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
+        /// The minimum exposure to return photos for.
+        /// </summary>
+        public double? ExifMinExposure { get; set; }
+
+        /// <summary>
+        /// The maximum exposure to return photos for.
+        /// </summary>
+        public double? ExifMaxExposure { get; set; }
+
+        /// <summary>
+        /// The minimum aperture to return photos for.
+        /// </summary>
+        public double? ExifMinAperture { get; set; }
+
+        /// <summary>
+        /// The maximum aperture to return photos for.
+        /// </summary>
+        public double? ExifMaxAperture { get; set; }
+
+        /// <summary>
+        /// The minimum focal length to return photos for.
+        /// </summary>
+        public int? ExifMinFocalLength { get; set; }
+
+        /// <summary>
+        /// The maximum focal length to return photos for.
+        /// </summary>
+        public int? ExifMaxFocalLength { get; set; }
+
+        /// <summary>
+        /// Exclude a specific user ID from the search results.
+        /// </summary>
+        public string ExcludeUserID { get; set; }
+
+        /// <summary>
+        /// The ID of the Foursquare Venue to return photos for.
+        /// </summary>
+        public string FoursquareVenueID { get; set; }
+
+        /// <summary>
+        /// The WOE ID of the Foursquare Venue to return photos for.
+        /// </summary>
+        public string FoursquareWoeID { get; set; }
+
+        /// <summary>
+        /// The path alias for a group to search.
+        /// </summary>
+        public string GroupPathAlias { get; set; }
+
+        /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
         public string CalculateSlideshowUrl()
         {
-            var sb = new StringBuilder();
-            sb.Append("http://www.flickr.com/show.gne");
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("https://www.flickr.com/show.gne");
             sb.Append("?api_method=flickr.photos.search&method_params=");
 
-            var parameters = new Dictionary<string, string>();
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
 
             AddToDictionary(parameters);
 
-            var parts = new List<string>();
-            foreach (var pair in parameters)
+            List<string> parts = new List<string>();
+            foreach (KeyValuePair<string, string> pair in parameters)
             {
                 parts.Add(Uri.EscapeDataString(pair.Key) + "|" + Uri.EscapeDataString(pair.Value));
             }
@@ -330,33 +382,28 @@ namespace FlickrNet
         /// <param name="parameters">The <see cref="Dictionary{K,V}"/> to add the options to.</param>
         public void AddToDictionary(Dictionary<string, string> parameters)
         {
-            if (UserId != null && UserId.Length > 0) parameters.Add("user_id", UserId);
-            if (GroupId != null && GroupId.Length > 0) parameters.Add("group_id", GroupId);
-            if (Text != null && Text.Length > 0) parameters.Add("text", Text);
-            if (Tags != null && Tags.Length > 0) parameters.Add("tags", Tags);
+            if (!string.IsNullOrEmpty(UserId)) parameters.Add("user_id", UserId);
+            if (!string.IsNullOrEmpty(GroupId)) parameters.Add("group_id", GroupId);
+            if (!string.IsNullOrEmpty(Text)) parameters.Add("text", Text);
+            if (!string.IsNullOrEmpty(Tags)) parameters.Add("tags", Tags);
             if (TagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(TagMode));
-            if (MachineTags != null && MachineTags.Length > 0) parameters.Add("machine_tags", MachineTags);
-            if (MachineTagMode != MachineTagMode.None)
-                parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(MachineTagMode));
-            if (MinUploadDate != DateTime.MinValue)
-                parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(MinUploadDate));
-            if (MaxUploadDate != DateTime.MinValue)
-                parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(MaxUploadDate));
-            if (MinTakenDate != DateTime.MinValue)
-                parameters.Add("min_taken_date", UtilityMethods.DateToMySql(MinTakenDate));
-            if (MaxTakenDate != DateTime.MinValue)
-                parameters.Add("max_taken_date", UtilityMethods.DateToMySql(MaxTakenDate));
+            if (!string.IsNullOrEmpty(MachineTags)) parameters.Add("machine_tags", MachineTags);
+            if (MachineTagMode != MachineTagMode.None) parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(MachineTagMode));
+            if (MinUploadDate != DateTime.MinValue) parameters.Add("min_upload_date", UtilityMethods.DateToUnixTimestamp(MinUploadDate).ToString());
+            if (MaxUploadDate != DateTime.MinValue) parameters.Add("max_upload_date", UtilityMethods.DateToUnixTimestamp(MaxUploadDate).ToString());
+            if (MinTakenDate != DateTime.MinValue) parameters.Add("min_taken_date", UtilityMethods.DateToMySql(MinTakenDate));
+            if (MaxTakenDate != DateTime.MinValue) parameters.Add("max_taken_date", UtilityMethods.DateToMySql(MaxTakenDate));
             if (Licenses.Count != 0)
             {
                 var licenseArray = new List<string>();
-                foreach (LicenseType license in Licenses)
+                foreach (var license in Licenses)
                 {
                     licenseArray.Add(license.ToString("d"));
                 }
                 parameters.Add("license", String.Join(",", licenseArray.ToArray()));
             }
-            if (PerPage != 0) parameters.Add("per_page", PerPage.ToString(NumberFormatInfo.InvariantInfo));
-            if (Page != 0) parameters.Add("page", Page.ToString(NumberFormatInfo.InvariantInfo));
+            if (PerPage != 0) parameters.Add("per_page", PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (Page != 0) parameters.Add("page", Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (Extras != PhotoSearchExtras.None) parameters.Add("extras", ExtrasString);
             if (SortOrder != PhotoSearchSortOrder.None) parameters.Add("sort", SortOrderString);
             if (PrivacyFilter != PrivacyFilter.None) parameters.Add("privacy_filter", PrivacyFilter.ToString("d"));
@@ -365,14 +412,11 @@ namespace FlickrNet
             if (SafeSearch != SafetyLevel.None) parameters.Add("safe_search", SafeSearch.ToString("d"));
             if (ContentType != ContentTypeSearch.None) parameters.Add("content_type", ContentType.ToString("d"));
             if (HasGeo != null) parameters.Add("has_geo", HasGeo.Value ? "1" : "0");
-            if (Latitude != null) parameters.Add("lat", Latitude.Value.ToString(NumberFormatInfo.InvariantInfo));
-            if (Longitude != null) parameters.Add("lon", Longitude.Value.ToString(NumberFormatInfo.InvariantInfo));
-            if (Radius != null)
-                parameters.Add("radius", Radius.Value.ToString("0.00000", NumberFormatInfo.InvariantInfo));
-            if (RadiusUnits != RadiusUnit.None)
-                parameters.Add("radius_units", (RadiusUnits == RadiusUnit.Miles ? "mi" : "km"));
-            if (Contacts != ContactSearch.None)
-                parameters.Add("contacts", (Contacts == ContactSearch.AllContacts ? "all" : "ff"));
+            if (Latitude != null) parameters.Add("lat", Latitude.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (Longitude != null) parameters.Add("lon", Longitude.Value.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (Radius != null) parameters.Add("radius", Radius.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (RadiusUnits != RadiusUnit.None) parameters.Add("radius_units", (RadiusUnits == RadiusUnit.Miles ? "mi" : "km"));
+            if (Contacts != ContactSearch.None) parameters.Add("contacts", (Contacts == ContactSearch.AllContacts ? "all" : "ff"));
             if (WoeId != null) parameters.Add("woe_id", WoeId);
             if (PlaceId != null) parameters.Add("place_id", PlaceId);
             if (IsCommons) parameters.Add("is_commons", "1");
@@ -384,6 +428,19 @@ namespace FlickrNet
             if (PersonId != null) parameters.Add("person_id", PersonId);
             if (Camera != null) parameters.Add("camera", Camera);
             if (JumpTo != null) parameters.Add("jump_to", JumpTo);
+            if (!String.IsNullOrEmpty(Username)) parameters.Add("username", Username);
+            if (ExifMinExposure != null) parameters.Add("exif_min_exposure", ExifMinExposure.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMaxExposure != null) parameters.Add("exif_max_exposure", ExifMaxExposure.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMinAperture != null) parameters.Add("exif_min_aperture", ExifMinAperture.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMaxAperture != null) parameters.Add("exif_max_aperture", ExifMaxAperture.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMinFocalLength != null) parameters.Add("exif_min_focallen", ExifMinFocalLength.Value.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExifMaxFocalLength != null) parameters.Add("exif_max_focallen", ExifMaxFocalLength.Value.ToString("0", System.Globalization.NumberFormatInfo.InvariantInfo));
+            if (ExcludeUserID != null) parameters.Add("exclude_user_id", ExcludeUserID);
+            if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
+            if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
+            if (GroupPathAlias != null) parameters.Add("group_path_alias", GroupPathAlias);
         }
+
     }
+
 }

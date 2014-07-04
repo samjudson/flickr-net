@@ -121,6 +121,8 @@ namespace FlickrNet45.Tests
             exceptions.Add("lat", "latitude"); // Latitude
             exceptions.Add("lon", "longitude"); // Longitude
             exceptions.Add("media", "mediatype"); // MediaType
+            exceptions.Add("exifminfocallen", "exifminfocallength"); // Focal Length
+            exceptions.Add("exifmaxfocallen", "exifmaxfocallength"); // Focal Length
 
             int numMissing = 0;
 

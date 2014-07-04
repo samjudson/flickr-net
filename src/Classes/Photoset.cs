@@ -24,7 +24,7 @@ namespace FlickrNet
             get
             {
                 if (url == null)
-                    url = String.Format(CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/sets/{1}/",
+                    url = String.Format(CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/sets/{1}/",
                                         OwnerId, PhotosetId);
                 return url;
             }

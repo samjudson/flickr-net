@@ -123,7 +123,7 @@ namespace FlickrNet
                         Title = reader.Value;
                         break;
                     case "url":
-                        Url = "http://www.flickr.com" + reader.Value;
+                        Url = "https://www.flickr.com" + reader.Value;
                         break;
                     case "thumb":
                         ThumbnailUrl = reader.Value;

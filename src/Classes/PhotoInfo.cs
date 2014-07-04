@@ -283,7 +283,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", OwnerUserId,
+                return String.Format(CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", OwnerUserId,
                                      PhotoId);
             }
         }

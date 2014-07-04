@@ -68,7 +68,7 @@ namespace FlickrNet
         /// </summary>
         public string GroupUrl
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "http://www.flickr.com/groups/{0}/", GroupId); }
+            get { return String.Format(CultureInfo.InvariantCulture, "https://www.flickr.com/groups/{0}/", GroupId); }
         }
 
         #region IFlickrParsable Members

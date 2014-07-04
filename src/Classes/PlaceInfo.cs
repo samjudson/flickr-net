@@ -29,7 +29,7 @@ namespace FlickrNet
         /// </summary>
         public string PlaceFlickrUrl
         {
-            get { return "http://www.flickr.com/places" + PlaceUrl; }
+            get { return "https://www.flickr.com/places" + PlaceUrl; }
         }
 
         /// <summary>

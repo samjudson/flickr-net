@@ -50,10 +50,10 @@ namespace FlickrNet45.Tests
             Assert.AreEqual(Data.GroupId, info.GroupId);
             Assert.AreEqual("FLOWERS", info.GroupName);
 
-            Assert.AreEqual("7368", info.IconServer);
-            Assert.AreEqual("8", info.IconFarm);
+            Assert.AreEqual("3910", info.IconServer);
+            Assert.AreEqual("4", info.IconFarm);
 
-            Assert.AreEqual("http://farm8.staticflickr.com/7368/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
+            Assert.AreEqual("http://farm4.staticflickr.com/3910/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
 
             Assert.AreEqual(3, info.ThrottleInfo.Count);
             Assert.AreEqual(GroupThrottleMode.PerDay, info.ThrottleInfo.Mode);

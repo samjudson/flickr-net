@@ -169,7 +169,7 @@ namespace FlickrNet
                         if (reader.Value.IndexOf("www.flickr.com") > 0)
                             GalleryUrl = reader.Value;
                         else
-                            GalleryUrl = "http://www.flickr.com" + reader.Value;
+                            GalleryUrl = "https://www.flickr.com" + reader.Value;
                         break;
                     case "owner":
                         OwnerId = reader.Value;

@@ -60,7 +60,7 @@ namespace FlickrNet
         /// </summary>
         public string PhotostreamUrl
         {
-            get { return "http://www.flickr.com/photos/" + (String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias); }
+            get { return "https://www.flickr.com/photos/" + (String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias); }
         }
 
         /// <summary>

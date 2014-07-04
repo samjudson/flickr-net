@@ -34,28 +34,28 @@ namespace FlickrNet
 
         /// <remarks/>
         public string PhotoId { get; set; }
-    
+
         /// <remarks/>
         public string UserId { get; set; }
-    
+
         /// <remarks/>
         public string Secret { get; set; }
-    
+
         /// <remarks/>
         public string Server { get; set; }
-    
+
         /// <remarks/>
         public string Farm { get; set; }
-    
+
         /// <remarks/>
         public string Title { get; set; }
-    
+
         /// <remarks/>
         public bool IsPublic { get; set; }
-    
+
         /// <remarks/>
         public bool IsFriend { get; set; }
-    
+
         /// <remarks/>
         public bool IsFamily { get; set; }
 
@@ -135,7 +135,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "http://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
+                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
             }
         }
 
@@ -366,7 +366,7 @@ namespace FlickrNet
         /// </summary>
         public string OriginalUrl
         {
-            get 
+            get
             {
                 if (urlOriginal != null)
                     return urlOriginal;
@@ -482,6 +482,22 @@ namespace FlickrNet
         public int? Rotation { get; set; }
 
         /// <summary>
+        /// The number of favorites for this photo. 
+        /// </summary>
+        /// <remarks>
+        /// Only returned if you specify the <see cref="PhotoSearchExtras.CountFaves"/> property.
+        /// </remarks>
+        public int? CountFaves { get; set; }
+
+        /// <summary>
+        /// The number of comments for this photo. 
+        /// </summary>
+        /// <remarks>
+        /// Only returned if you specify the <see cref="PhotoSearchExtras.CountComments"/> property.
+        /// </remarks>
+        public int? CountComments { get; set; }
+
+        /// <summary>
         /// A helper method which tries to guess if a large image will be available for this photograph
         /// based on the original dimensions returned with the photo.
         /// </summary>
@@ -531,7 +547,7 @@ namespace FlickrNet
         /// In debug builds will throw an exception if this parameter is false and an unknown attribute is found.</param>
         protected void Load(XmlReader reader, bool allowExtraAtrributes)
         {
-            if (reader.LocalName != "photo")
+            if (reader.LocalName != "photo" && reader.LocalName != "primary_photo_extras")
                 UtilityMethods.CheckParsingException(reader);
 
             while (reader.MoveToNextAttribute())
@@ -786,7 +802,7 @@ namespace FlickrNet
                     case "geo_is_family":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions = new GeoPermissions();
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsFamily = reader.Value == "1";
@@ -794,7 +810,7 @@ namespace FlickrNet
                     case "geo_is_friend":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions = new GeoPermissions();
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsFriend = reader.Value == "1";
@@ -802,7 +818,7 @@ namespace FlickrNet
                     case "geo_is_public":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions = new GeoPermissions();
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsPublic = reader.Value == "1";
@@ -810,7 +826,7 @@ namespace FlickrNet
                     case "geo_is_contact":
                         if (GeoPermissions == null)
                         {
-                            GeoPermissions = new GeoPermissions(); 
+                            GeoPermissions = new GeoPermissions();
                             GeoPermissions.PhotoId = PhotoId;
                         }
                         GeoPermissions.IsContact = reader.Value == "1";
@@ -820,6 +836,12 @@ namespace FlickrNet
                         break;
                     case "rotation":
                         Rotation = reader.ReadContentAsInt();
+                        break;
+                    case "count_faves":
+                        CountFaves = reader.ReadContentAsInt();
+                        break;
+                    case "count_comments":
+                        CountComments = reader.ReadContentAsInt();
                         break;
                     default:
                         if (!allowExtraAtrributes) UtilityMethods.CheckParsingException(reader);

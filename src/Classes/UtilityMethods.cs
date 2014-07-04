@@ -22,7 +22,7 @@ namespace FlickrNet
     /// </summary>
     public sealed class UtilityMethods
     {
-        private const string PhotoUrlFormat = "http://farm{0}.staticflickr.com/{1}/{2}_{3}{4}.{5}";
+        private const string PhotoUrlFormat = "https://farm{0}.staticflickr.com/{1}/{2}_{3}{4}.{5}";
         private static readonly DateTime unixStartDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         private UtilityMethods()
@@ -521,10 +521,10 @@ namespace FlickrNet
         public static string BuddyIcon(string server, string farm, string userId)
         {
             if (String.IsNullOrEmpty(server) || server == "0")
-                return "http://www.flickr.com/images/buddyicon.jpg";
+                return "https://www.flickr.com/images/buddyicon.jpg";
             else
                 return String.Format(CultureInfo.InvariantCulture,
-                                     "http://farm{0}.staticflickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
+                                     "https://farm{0}.staticflickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
         }
 
         /// <summary>

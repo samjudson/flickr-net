@@ -1,5 +1,6 @@
-﻿using System.Globalization;
-using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FlickrNet
 {
@@ -48,7 +49,10 @@ namespace FlickrNet
         /// </summary>
         public string BuddyIconUrl
         {
-            get { return UtilityMethods.BuddyIcon(IconServer, IconFarm, UserId); }
+            get
+            {
+                return UtilityMethods.BuddyIcon(IconServer, IconFarm, UserId);
+            }
         }
 
         /// <summary>
@@ -71,9 +75,7 @@ namespace FlickrNet
         /// </summary>
         public bool? IsIgnored { get; set; }
 
-        #region IFlickrParsable Members
-
-        void IFlickrParsable.Load(XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "contact")
                 UtilityMethods.CheckParsingException(reader);
@@ -113,7 +115,9 @@ namespace FlickrNet
                         PathAlias = reader.Value;
                         break;
                     case "photos_uploaded":
-                        PhotosUploaded = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        PhotosUploaded = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "rev_ignored":
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -124,6 +128,5 @@ namespace FlickrNet
             reader.Skip();
         }
 
-        #endregion
     }
 }

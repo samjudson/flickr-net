@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Globalization;
-using System.Xml;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FlickrNet
 {
@@ -47,7 +47,10 @@ namespace FlickrNet
         /// </summary>
         public string GroupIconUrl
         {
-            get { return UtilityMethods.BuddyIcon(IconServer, IconFarm, GroupId); }
+            get
+            {
+                return UtilityMethods.BuddyIcon(IconServer, IconFarm, GroupId);
+            }
         }
 
         /// <summary>
@@ -55,12 +58,10 @@ namespace FlickrNet
         /// </summary>
         public string GroupUrl
         {
-            get { return String.Format(CultureInfo.InvariantCulture, "http://www.flickr.com/groups/{0}/", GroupId); }
+            get { return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/groups/{0}/", GroupId); }
         }
 
-        #region IFlickrParsable Members
-
-        void IFlickrParsable.Load(XmlReader reader)
+        void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
             {
@@ -77,7 +78,7 @@ namespace FlickrNet
                         IsAdmin = reader.Value == "1";
                         break;
                     case "privacy":
-                        Privacy = (PoolPrivacy) Enum.Parse(typeof (PoolPrivacy), reader.Value, true);
+                        Privacy = (PoolPrivacy)Enum.Parse(typeof(PoolPrivacy), reader.Value, true);
                         break;
                     case "iconserver":
                         IconServer = reader.Value;
@@ -86,7 +87,20 @@ namespace FlickrNet
                         IconFarm = reader.Value;
                         break;
                     case "photos":
-                        Photos = long.Parse(reader.Value, NumberStyles.Any, NumberFormatInfo.InvariantInfo);
+                    case "pool_count":
+                        Photos = long.Parse(reader.Value, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "member":
+                        IsMember = reader.Value == "1";
+                        break;
+                    case "moderator":
+                        IsModerator = reader.Value == "1";
+                        break;
+                    case "member_count":
+                        MemberCount = reader.ReadContentAsInt();
+                        break;
+                    case "topic_count":
+                        TopicCount = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -97,6 +111,25 @@ namespace FlickrNet
             reader.Read();
         }
 
-        #endregion
+        /// <summary>
+        /// Is the current authenticated user a member of this group. Null if the call is not authenticated.
+        /// </summary>
+        public bool? IsMember { get; set; }
+
+        /// <summary>
+        /// Is the current authenticated user a moderator of this group. Null if the call is not authenticated.
+        /// </summary>
+        public bool? IsModerator { get; set; }
+
+        /// <summary>
+        /// Number of members of this group.
+        /// </summary>
+        public int MemberCount { get; set; }
+
+        /// <summary>
+        /// The number of discussion topics in this group.
+        /// </summary>
+        public int TopicCount { get; set; }
     }
+
 }
