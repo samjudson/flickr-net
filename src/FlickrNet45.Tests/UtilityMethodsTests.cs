@@ -107,7 +107,7 @@ namespace FlickrNet45.Tests
             const string expected =
                 "license,date_upload,date_taken,owner_name,icon_server,original_format,last_update,tags," +
                 "geo,machine_tags,o_dims,views,media,path_alias,url_sq,url_t,url_s,url_m,url_l,url_o," +
-                "description,usage,visibility,url_q,url_n,rotation,url_h,url_k,url_c,url_z";
+                "description,usage,visibility,url_q,url_n,rotation,url_h,url_k,url_c,url_z,count_faves,count_comments";
 
             var actual = UtilityMethods.ExtrasToString(extras);
 
@@ -391,12 +391,12 @@ namespace FlickrNet45.Tests
 
             var sizeTests = new Dictionary<string, string>
                                 {
-                { "square", "http://farm1.staticflickr.com/2/3_4_s.jpg"},
-                { "thumbnail", "http://farm1.staticflickr.com/2/3_4_t.jpg"},
-                { "small", "http://farm1.staticflickr.com/2/3_4_m.jpg"},
-                { "medium", "http://farm1.staticflickr.com/2/3_4.jpg"},
-                { "large", "http://farm1.staticflickr.com/2/3_4_b.jpg"},
-                { "original", "http://farm1.staticflickr.com/2/3_4_o.jpg"}
+                { "square", "https://farm1.staticflickr.com/2/3_4_s.jpg"},
+                { "thumbnail", "https://farm1.staticflickr.com/2/3_4_t.jpg"},
+                { "small", "https://farm1.staticflickr.com/2/3_4_m.jpg"},
+                { "medium", "https://farm1.staticflickr.com/2/3_4.jpg"},
+                { "large", "https://farm1.staticflickr.com/2/3_4_b.jpg"},
+                { "original", "https://farm1.staticflickr.com/2/3_4_o.jpg"}
             };
 
             foreach(var pair in sizeTests)
