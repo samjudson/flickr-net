@@ -20,3 +20,5 @@ which should reduce the number of seperate configurations I actually need.
 September 2013: First initial checkins. 
 Currently contains code for most public method calls for both .Net 4.5 and Windows 8
 as seperate DLLs. Windows 8 authentication, Upload support, and example Windows 8 app added.
+
+[![Build status](https://ci.appveyor.com/api/projects/status/32k42uv0kdtmfvn1)](https://ci.appveyor.com/project/samjudson/flickrnet-experimental)
