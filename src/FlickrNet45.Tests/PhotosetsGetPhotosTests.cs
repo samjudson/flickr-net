@@ -96,7 +96,7 @@ namespace FlickrNet45.Tests
         }
 
         [Test]
-        [Category("RequiresAuthentication")]
+        [Category("AccessTokenRequired")]
         public void PhotosetsGetPhotosOrignalTest()
         {
             var photos = AuthInstance.PhotosetsGetPhotos("72157623027759445", PhotoSearchExtras.AllUrls);

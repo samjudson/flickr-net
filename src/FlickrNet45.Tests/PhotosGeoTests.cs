@@ -60,6 +60,7 @@ namespace FlickrNet45.Tests
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGetGetLocationTest()
         {
             var photos = AuthInstance.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = Data.UserId, Extras = PhotoSearchExtras.Geo });
@@ -76,6 +77,7 @@ namespace FlickrNet45.Tests
 
         [Test]
         [ExpectedException(typeof(FlickrApiException))]
+        [Category("AccessTokenRequired")]
         public void PhotosGetGetLocationNullTest()
         {
             var photos = AuthInstance.PhotosSearch(new PhotoSearchOptions() { HasGeo = false, UserId = Data.UserId, Extras = PhotoSearchExtras.Geo });
@@ -88,6 +90,7 @@ namespace FlickrNet45.Tests
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGetCorrectLocationTest()
         {
             var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = Data.UserId, Extras = PhotoSearchExtras.Geo }).First();
@@ -96,6 +99,7 @@ namespace FlickrNet45.Tests
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoSetContextTest()
         {
             var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = Data.UserId, Extras = PhotoSearchExtras.Geo }).First();
@@ -117,6 +121,7 @@ namespace FlickrNet45.Tests
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoSetLocationTest()
         {
             var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions() { HasGeo = true, UserId = Data.UserId, Extras = PhotoSearchExtras.Geo }).First();
@@ -142,6 +147,7 @@ namespace FlickrNet45.Tests
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosGeoPhotosForLocationBasicTest()
         {
             var o = new PhotoSearchOptions

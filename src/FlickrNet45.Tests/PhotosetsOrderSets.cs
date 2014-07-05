@@ -13,6 +13,7 @@ namespace FlickrNet45.Tests
     public class PhotosetsOrderSets : BaseTest
     {
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosetsOrderSetsArrayTest()
         {
             PhotosetCollection mySets = AuthInstance.PhotosetsGetList();

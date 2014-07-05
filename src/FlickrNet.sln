@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A78529B5-8396-4ECE-84B4-E42E66B4F0F9}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
@@ -25,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetWS.MsTests", "Flic
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		AppVeyor|Any CPU = AppVeyor|Any CPU
+		AppVeyor|ARM = AppVeyor|ARM
+		AppVeyor|x64 = AppVeyor|x64
+		AppVeyor|x86 = AppVeyor|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
@@ -35,6 +41,11 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.AppVeyor|Any CPU.ActiveCfg = AppVeyor|Any CPU
+		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.AppVeyor|Any CPU.Build.0 = AppVeyor|Any CPU
+		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.AppVeyor|ARM.ActiveCfg = AppVeyor|Any CPU
+		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.AppVeyor|x64.ActiveCfg = AppVeyor|Any CPU
+		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.AppVeyor|x86.ActiveCfg = AppVeyor|Any CPU
 		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -45,6 +56,11 @@ Global
 		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.Release|ARM.ActiveCfg = Release|Any CPU
 		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.Release|x64.ActiveCfg = Release|Any CPU
 		{22FEB4EC-ABD5-4FB5-B2C7-131C014B6E8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.AppVeyor|Any CPU.ActiveCfg = AppVeyor|Any CPU
+		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.AppVeyor|Any CPU.Build.0 = AppVeyor|Any CPU
+		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.AppVeyor|ARM.ActiveCfg = AppVeyor|Any CPU
+		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.AppVeyor|x64.ActiveCfg = AppVeyor|Any CPU
+		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.AppVeyor|x86.ActiveCfg = AppVeyor|Any CPU
 		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -55,6 +71,13 @@ Global
 		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.Release|ARM.ActiveCfg = Release|Any CPU
 		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.Release|x64.ActiveCfg = Release|Any CPU
 		{C41CCBD0-3EE1-4B94-A0D1-BB372CE0ECB2}.Release|x86.ActiveCfg = Release|Any CPU
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|Any CPU.ActiveCfg = AppVeyor|Any CPU
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|ARM.ActiveCfg = AppVeyor|ARM
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|ARM.Build.0 = AppVeyor|ARM
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|x64.ActiveCfg = AppVeyor|x64
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|x64.Build.0 = AppVeyor|x64
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|x86.ActiveCfg = AppVeyor|x86
+		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.AppVeyor|x86.Build.0 = AppVeyor|x86
 		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -71,6 +94,13 @@ Global
 		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.Release|x64.Build.0 = Release|x64
 		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.Release|x86.ActiveCfg = Release|x86
 		{37B6A263-A4EE-47E0-9E77-8BEADC058B91}.Release|x86.Build.0 = Release|x86
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|Any CPU.ActiveCfg = AppVeyor|Any CPU
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|ARM.ActiveCfg = AppVeyor|ARM
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|ARM.Build.0 = AppVeyor|ARM
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|x64.ActiveCfg = AppVeyor|x64
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|x64.Build.0 = AppVeyor|x64
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|x86.ActiveCfg = AppVeyor|x86
+		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.AppVeyor|x86.Build.0 = AppVeyor|x86
 		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -87,6 +117,16 @@ Global
 		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.Release|x64.Build.0 = Release|x64
 		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.Release|x86.ActiveCfg = Release|x86
 		{0F84A16C-A7DC-4734-9039-3360B851BD2D}.Release|x86.Build.0 = Release|x86
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|Any CPU.ActiveCfg = AppVeyor|Any CPU
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|ARM.ActiveCfg = AppVeyor|ARM
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|ARM.Build.0 = AppVeyor|ARM
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|ARM.Deploy.0 = AppVeyor|ARM
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|x64.ActiveCfg = AppVeyor|x64
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|x64.Build.0 = AppVeyor|x64
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|x64.Deploy.0 = AppVeyor|x64
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|x86.ActiveCfg = AppVeyor|x86
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|x86.Build.0 = AppVeyor|x86
+		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.AppVeyor|x86.Deploy.0 = AppVeyor|x86
 		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

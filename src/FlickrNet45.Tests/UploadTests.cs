@@ -14,6 +14,7 @@ namespace FlickrNet45.Tests
     public class UploadTests : BaseTest
     {
         [Test]
+        [Category("AccessTokenRequired")]
         public void ShouldUploadSampleBinaryDataAsImage()
         {
             var imageBytes = TestData.TestImageBytes;
