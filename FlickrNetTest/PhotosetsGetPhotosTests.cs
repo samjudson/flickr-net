@@ -91,5 +91,27 @@ namespace FlickrNetTest
                 Assert.IsNotNull(photo.OriginalUrl, "Original URL should not be null.");
             }
         }
+
+        [Test]
+        public void ShouldReturnDateTakenWhenAsked()
+        {
+            var theset = Instance.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.DateTaken | PhotoSearchExtras.DateUploaded, 1, 10);
+
+            var firstInvalid = theset.FirstOrDefault(p => p.DateTaken == DateTime.MinValue || p.DateUploaded == DateTime.MinValue);
+
+            Assert.IsNull(firstInvalid, "There should not be a photo with not date taken or date uploaded");
+
+            theset = Instance.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.All, 1, 10);
+
+            firstInvalid = theset.FirstOrDefault(p => p.DateTaken == DateTime.MinValue || p.DateUploaded == DateTime.MinValue);
+
+            Assert.IsNull(firstInvalid, "There should not be a photo with not date taken or date uploaded");
+
+            theset = Instance.PhotosetsGetPhotos("72157618515066456", PhotoSearchExtras.None, 1, 10);
+
+            var noDateCount = theset.Count(p => p.DateTaken == DateTime.MinValue || p.DateUploaded == DateTime.MinValue);
+
+            Assert.AreEqual(theset.Count, noDateCount, "All photos should have no date taken set.");
+        }
     }
 }
