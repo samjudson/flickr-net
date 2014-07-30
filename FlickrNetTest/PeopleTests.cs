@@ -204,15 +204,18 @@ namespace FlickrNetTest
         [Test]
         public void PeopleGetPublicPhotosBasicTest()
         {
-            var photos = TestData.GetInstance().PeopleGetPublicPhotos(TestData.TestUserId);
+            var f = TestData.GetInstance();
+            var photos = f.PeopleGetPublicPhotos(TestData.TestUserId, 1, 100, SafetyLevel.None, PhotoSearchExtras.OriginalDimensions);
 
             Assert.IsNotNull(photos);
             Assert.AreNotEqual(0, photos.Count);
 
             foreach (var photo in photos)
             {
-                Assert.IsNotNull(photo.PhotoId);
+                Assert.IsNotNull(photo.PhotoId, "PhotoId should not be null.");
                 Assert.AreEqual(TestData.TestUserId, photo.UserId);
+                Assert.AreNotEqual(0, photo.OriginalWidth, "OriginalWidth should not be zero.");
+                Assert.AreNotEqual(0, photo.OriginalHeight, "OriginalHeight should not be zero.");
             }
         }
 

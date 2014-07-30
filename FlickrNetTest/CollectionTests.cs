@@ -63,6 +63,59 @@ namespace FlickrNetTest
         }
 
         [Test]
+        public void CollectionGetTreeRootForSpecificUser()
+        {
+            Flickr f = TestData.GetInstance();
+            CollectionCollection tree = f.CollectionsGetTree(null, TestData.TestUserId);
+
+            Assert.IsNotNull(tree, "CollectionList should not be null.");
+            Assert.AreNotEqual(0, tree.Count, "CollectionList.Count should not be zero.");
+
+            foreach (Collection coll in tree)
+            {
+                Assert.IsNotNull(coll.CollectionId, "CollectionId should not be null.");
+                Assert.IsNotNull(coll.Title, "Title should not be null.");
+                Assert.IsNotNull(coll.Description, "Description should not be null.");
+                Assert.IsNotNull(coll.IconSmall, "IconSmall should not be null.");
+                Assert.IsNotNull(coll.IconLarge, "IconLarge should not be null.");
+
+                Assert.AreNotEqual(0, coll.Sets.Count + coll.Collections.Count, "Should be either some sets or some collections.");
+
+                foreach (CollectionSet set in coll.Sets)
+                {
+                    Assert.IsNotNull(set.SetId, "SetId should not be null.");
+                }
+            }
+        }
+
+        [Test]
+        public void CollectionGetSubTreeForSpecificUser()
+        {
+            string id = "78188-72157618817175751";
+            Flickr f = TestData.GetInstance();
+            CollectionCollection tree = f.CollectionsGetTree(id, TestData.TestUserId);
+
+            Assert.IsNotNull(tree, "CollectionList should not be null.");
+            Assert.AreNotEqual(0, tree.Count, "CollectionList.Count should not be zero.");
+
+            foreach (Collection coll in tree)
+            {
+                Assert.IsNotNull(coll.CollectionId, "CollectionId should not be null.");
+                Assert.IsNotNull(coll.Title, "Title should not be null.");
+                Assert.IsNotNull(coll.Description, "Description should not be null.");
+                Assert.IsNotNull(coll.IconSmall, "IconSmall should not be null.");
+                Assert.IsNotNull(coll.IconLarge, "IconLarge should not be null.");
+
+                Assert.AreNotEqual(0, coll.Sets.Count + coll.Collections.Count, "Should be either some sets or some collections.");
+
+                foreach (CollectionSet set in coll.Sets)
+                {
+                    Assert.IsNotNull(set.SetId, "SetId should not be null.");
+                }
+            }
+        }
+
+        [Test]
         [Category("AccessTokenRequired")]
         public void CollectionsEditMetaTest()
         {
