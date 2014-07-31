@@ -435,7 +435,7 @@ namespace FlickrNet
         /// <param name="parameters">A Dictionary containing a list of parameters to add to the method call.</param>
         /// <param name="includeSignature">Boolean use to decide whether to generate the api call signature as well.</param>
         /// <returns>The <see cref="Uri"/> for the method call.</returns>
-        public Uri CalculateUri(Dictionary<string, string> parameters, bool includeSignature)
+        public string CalculateUri(Dictionary<string, string> parameters, bool includeSignature)
         {
             if (includeSignature)
             {
@@ -447,10 +447,11 @@ namespace FlickrNet
             url.Append("?");
             foreach (KeyValuePair<string, string> pair in parameters)
             {
-                url.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}={1}&", pair.Key, Uri.EscapeDataString(pair.Value ?? ""));
+                var escapedValue = UtilityMethods.EscapeDataString(pair.Value ?? "");
+                url.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}={1}&", pair.Key, escapedValue);
             }
 
-            return new Uri(BaseUri, new Uri(url.ToString(), UriKind.Relative));
+            return BaseUri.AbsoluteUri + url.ToString();
         }
 
         private string CalculateAuthSignature(Dictionary<string, string> parameters)

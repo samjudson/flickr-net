@@ -579,7 +579,7 @@ namespace FlickrNet
         {
             string value = text;
 
-            value = Uri.EscapeDataString(value).Replace("+", "%20");
+            value = UtilityMethods.EscapeDataString(value).Replace("+", "%20");
 
             // UrlEncode escapes with lowercase characters (e.g. %2f) but oAuth needs %2F
             value = Regex.Replace(value, "(%[0-9a-f][0-9a-f])", c => c.Value.ToUpper());
@@ -600,6 +600,27 @@ namespace FlickrNet
             return collectionId.IndexOf("-", StringComparison.Ordinal) < 0
                        ? collectionId
                        : collectionId.Substring(collectionId.IndexOf("-", StringComparison.Ordinal) + 1);
+        }
+
+        internal static string EscapeDataString(string value)
+        {
+            var limit = 2000;
+            var sb = new StringBuilder(value.Length + value.Length / 2);
+            var loops = value.Length / limit;
+
+            for (int i = 0; i <= loops; i++)
+            {
+                if (i < loops)
+                {
+                    sb.Append(Uri.EscapeDataString(value.Substring(limit * i, limit)));
+                }
+                else
+                {
+                    sb.Append(Uri.EscapeDataString(value.Substring(limit * i)));
+                }
+            }
+
+            return sb.ToString();
         }
     }
 

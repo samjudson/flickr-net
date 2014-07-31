@@ -60,7 +60,7 @@ namespace FlickrNet
 
             var url = CalculateUri(parameters, !String.IsNullOrEmpty(sharedSecret));
 
-            lastRequest = url.AbsoluteUri;
+            lastRequest = url;
 
             string responseXml;
 
@@ -70,7 +70,7 @@ namespace FlickrNet
             }
             else
             {
-                var urlComplete = url.AbsoluteUri;
+                var urlComplete = url;
 
                 var cached = (ResponseCacheItem)Cache.Responses.Get(urlComplete, cacheTimeout, true);
                 if (cached != null)

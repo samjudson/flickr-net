@@ -970,6 +970,18 @@ namespace FlickrNetTest
             Assert.IsFalse(photos.Any(p => p.CountFaves == null), "Should not have any null CountFaves");
             Assert.IsFalse(photos.Any(p => p.CountComments == null), "Should not have any null CountComments");
         }
+
+        [Test]
+        [ExpectedException(typeof(FlickrApiException))]
+        public void ExcessiveTagsShouldNotThrowUriFormatException()
+        {
+            var list = Enumerable.Range(1, 9000).Select(i => "reallybigtag" + i).ToList();
+            var options = new PhotoSearchOptions{
+                Tags = string.Join(",", list)
+            };
+
+            var photos = Instance.PhotosSearch(options);
+        }
     }
 }
 // ReSharper restore SuggestUseVarKeywordEvident

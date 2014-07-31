@@ -35,7 +35,7 @@ namespace FlickrNet
 
             foreach (var k in parameters)
             {
-                data += k.Key + "=" + Uri.EscapeDataString(k.Value) + "&";
+                data += k.Key + "=" + UtilityMethods.EscapeDataString(k.Value) + "&";
             }
 
             if (method == "GET" && data.Length > 2000) method = "POST";
