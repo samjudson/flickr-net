@@ -9,6 +9,7 @@ using System.Net;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
+using System.Diagnostics;
 
 namespace FlickrNetTest
 {
@@ -56,7 +57,9 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            f.OnUploadProgress += (sender, args) => { /* Do nothing */};
+            f.OnUploadProgress += (sender, args) => {
+                // Do nothing
+            };
 
             byte[] imageBytes = TestData.TestImageBytes;
             Stream s = new MemoryStream(imageBytes);

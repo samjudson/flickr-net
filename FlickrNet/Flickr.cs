@@ -581,17 +581,17 @@ namespace FlickrNet
 
                 var buffer = new byte[bufferSize];
                 var l = Length;
+                var soFar = 0;
 
                 foreach (var s in Streams)
                 {
-                    var soFar = 0;
                     int read;
                     while(0 < (read = s.Read(buffer, 0, buffer.Length)))
                     {
                         soFar += read;
                         stream.Write(buffer, 0, read);
                         if( UploadProgress != null)
-                            UploadProgress(this, new UploadProgressEventArgs{ BytesSent = soFar, TotalBytesToSend = l});
+                            UploadProgress(this, new UploadProgressEventArgs { BytesSent = soFar, TotalBytesToSend = l });
                     }
                     stream.Flush();
                 }
