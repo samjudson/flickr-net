@@ -132,6 +132,17 @@ namespace FlickrNet
             }
         }
 
+        /// <summary>
+        /// The alias for the group url
+        /// </summary>
+        public string GroupAlias { get; set; }
+
+        /// <summary>
+        /// Has the author of this topic been deleted
+        /// </summary>
+        public bool? AuthorIsDeleted { get; set;}
+
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader == null) throw new ArgumentNullException("reader");
@@ -213,7 +224,12 @@ namespace FlickrNet
                     case "per_page":
                         PerPage = reader.ReadContentAsInt();
                         break;
-
+                    case "group_alias":
+                        GroupAlias = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "author_is_deleted":
+                        AuthorIsDeleted = reader.Value == "1";
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;

@@ -59,6 +59,11 @@ namespace FlickrNet
         public string Message { get; set; }
 
         /// <summary>
+        /// Has the author of this topic been deleted
+        /// </summary>
+        public bool? AuthorIsDeleted { get; set; }
+
+        /// <summary>
         /// The buddy icon for the author of the reply.
         /// </summary>
         public string AuthorBuddyIcon
@@ -110,6 +115,9 @@ namespace FlickrNet
                         break;
                     case "lastedit":
                         DateLastEdited = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "author_is_deleted":
+                        AuthorIsDeleted = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

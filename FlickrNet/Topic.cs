@@ -91,6 +91,16 @@ namespace FlickrNet
         public string GroupId { get; set; }
 
         /// <summary>
+        /// Has the author of this post been deleted?
+        /// </summary>
+        public bool? AuthorIsDeleted { get; set; }
+
+        /// <summary>
+        /// What was the last edit date of this post (if null then it has not been edited)
+        /// </summary>
+        public DateTime? DateLastEdited { get; set; }
+
+        /// <summary>
         /// The url for the buddy icon for the author of this topic.
         /// </summary>
         public string AuthorBuddyIcon
@@ -170,6 +180,12 @@ namespace FlickrNet
                     case "author_path_alias":
                         AuthorPathAlias = reader.Value == "" ? null : reader.Value;
                         break;
+                    case "author_is_deleted":
+                        AuthorIsDeleted = reader.Value == "1";
+                        break;
+                    case "lastedit":
+                        DateLastEdited = reader.Value == "" || reader.Value == "0" ? (DateTime?)null : UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
@@ -183,5 +199,7 @@ namespace FlickrNet
 
             reader.Skip();
         }
+
+        
     }
 }
