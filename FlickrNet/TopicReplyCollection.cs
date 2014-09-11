@@ -142,6 +142,11 @@ namespace FlickrNet
         /// </summary>
         public bool? AuthorIsDeleted { get; set;}
 
+        /// <summary>
+        /// The path alias of the author, if set.
+        /// </summary>
+        public string AuthorPathAlias { get; set; }
+
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -229,6 +234,9 @@ namespace FlickrNet
                         break;
                     case "author_is_deleted":
                         AuthorIsDeleted = reader.Value == "1";
+                        break;
+                    case "author_path_alias":
+                        AuthorPathAlias = reader.Value == "" ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

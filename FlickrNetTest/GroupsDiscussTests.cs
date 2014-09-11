@@ -8,38 +8,32 @@ namespace FlickrNetTest
     [TestFixture]
     public class GroupsDiscussTests : BaseTest
     {
-        [SetUp]
-        public void TestInitialize()
-        {
-            Flickr.CacheDisabled = true;
-        }
-
+        
         [Test]
         [Category("AccessTokenRequired")]
         public void GroupsDiscussRepliesAddTest()
         {
-            var f = TestData.GetAuthInstance();
             var topicId = "72157630982877126";
             var message = "Test message reply\r\n" + DateTime.Now.ToString("o");
             var newMessage = "New Message reply\r\n" + DateTime.Now.ToString("o");
 
-            f.GroupsDiscussRepliesAdd(topicId, message);
+            AuthInstance.GroupsDiscussRepliesAdd(topicId, message);
 
-            var topicReplies = f.GroupsDiscussRepliesGetList(topicId, 1, 100);
+            var topicReplies = AuthInstance.GroupsDiscussRepliesGetList(topicId, 1, 100);
 
             var reply = topicReplies.FirstOrDefault(r => r.Message == message);
 
             Assert.IsNotNull(reply, "Cannot find matching message.");
 
-            f.GroupsDiscussRepliesEdit(topicId, reply.ReplyId, newMessage);
+            AuthInstance.GroupsDiscussRepliesEdit(topicId, reply.ReplyId, newMessage);
 
-            var reply2 = f.GroupsDiscussRepliesGetInfo(topicId, reply.ReplyId);
+            var reply2 = AuthInstance.GroupsDiscussRepliesGetInfo(topicId, reply.ReplyId);
 
             Assert.AreEqual(newMessage, reply2.Message, "Message should have been updated.");
 
-            f.GroupsDiscussRepliesDelete(topicId, reply.ReplyId);
+            AuthInstance.GroupsDiscussRepliesDelete(topicId, reply.ReplyId);
 
-            topicReplies = f.GroupsDiscussRepliesGetList(topicId, 1, 100);
+            topicReplies = AuthInstance.GroupsDiscussRepliesGetList(topicId, 1, 100);
 
             var reply3 = topicReplies.FirstOrDefault(r => r.ReplyId == reply.ReplyId);
 
@@ -51,9 +45,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsDiscussRepliesGetListTest()
         {
-            var f = TestData.GetAuthInstance();
-
-            var topics = f.GroupsDiscussTopicsGetList(TestData.GroupId, 1, 10);
+            var topics = AuthInstance.GroupsDiscussTopicsGetList(TestData.GroupId, 1, 10);
 
             Assert.IsNotNull(topics, "Topics should not be null.");
 
@@ -61,7 +53,7 @@ namespace FlickrNetTest
 
             var firstTopic = topics.First();
 
-            var replies = f.GroupsDiscussRepliesGetList(firstTopic.TopicId, 1, 10);
+            var replies = AuthInstance.GroupsDiscussRepliesGetList(firstTopic.TopicId, 1, 10);
             Assert.AreEqual(firstTopic.TopicId, replies.TopicId, "TopicId's should be the same.");
             Assert.AreEqual(firstTopic.Subject, replies.Subject, "Subject's should be the same.");
             Assert.AreEqual(firstTopic.Message, replies.Message, "Message's should be the same.");
@@ -75,7 +67,7 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(firstReply.ReplyId, "ReplyId should not be null.");
 
-            var reply = f.GroupsDiscussRepliesGetInfo(firstTopic.TopicId, firstReply.ReplyId);
+            var reply = AuthInstance.GroupsDiscussRepliesGetInfo(firstTopic.TopicId, firstReply.ReplyId);
             Assert.IsNotNull(reply, "Reply should not be null.");
             Assert.AreEqual(firstReply.Message, reply.Message, "TopicReply.Message should be the same.");
         }
@@ -85,15 +77,14 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsAddTest()
         {
-            var f = TestData.GetAuthInstance();
             var groupId = TestData.FlickrNetTestGroupId;
 
             var subject = "Test subject line: " + DateTime.Now.ToString("o");
             var message = "Subject message line.";
 
-            f.GroupsDiscussTopicsAdd(groupId, subject, message);
+            AuthInstance.GroupsDiscussTopicsAdd(groupId, subject, message);
 
-            var topics = f.GroupsDiscussTopicsGetList(groupId, 1, 5);
+            var topics = AuthInstance.GroupsDiscussTopicsGetList(groupId, 1, 5);
 
             var topic = topics.SingleOrDefault(t => t.Subject == subject);
 
@@ -106,9 +97,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetListTest()
         {
-            var f = TestData.GetAuthInstance();
-
-            var topics = f.GroupsDiscussTopicsGetList(TestData.GroupId, 1, 10);
+            var topics = AuthInstance.GroupsDiscussTopicsGetList(TestData.GroupId, 1, 10);
 
             Assert.IsNotNull(topics, "Topics should not be null.");
 
@@ -125,7 +114,7 @@ namespace FlickrNetTest
 
             var firstTopic = topics.First();
 
-            var secondTopic = f.GroupsDiscussTopicsGetInfo(firstTopic.TopicId);
+            var secondTopic = AuthInstance.GroupsDiscussTopicsGetInfo(firstTopic.TopicId);
             Assert.AreEqual(firstTopic.TopicId, secondTopic.TopicId, "TopicId's should be the same.");
             Assert.AreEqual(firstTopic.Subject, secondTopic.Subject, "Subject's should be the same.");
             Assert.AreEqual(firstTopic.Message, secondTopic.Message, "Message's should be the same.");
@@ -158,9 +147,7 @@ namespace FlickrNetTest
         public void GroupsDiscussTopicsGetInfoStickyTest()
         {
             const string topicId = "72157630982967152";
-            var f = TestData.GetAuthInstance();
-
-            var topic = f.GroupsDiscussTopicsGetInfo(topicId);
+            var topic = AuthInstance.GroupsDiscussTopicsGetInfo(topicId);
 
             Assert.IsTrue(topic.IsSticky, "This topic should be marked as sticky.");
             Assert.IsFalse(topic.IsLocked, "This topic should not be marked as locked.");
@@ -172,10 +159,9 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsGetInfoLockedTest()
         {
-            var topicId = "72157630982969782";
-            var f = TestData.GetAuthInstance();
+            const string topicId = "72157630982969782";
 
-            var topic = f.GroupsDiscussTopicsGetInfo(topicId);
+            var topic = AuthInstance.GroupsDiscussTopicsGetInfo(topicId);
 
             Assert.IsTrue(topic.IsLocked, "This topic should be marked as locked.");
             Assert.IsFalse(topic.IsSticky, "This topic should not be marked as sticky.");

@@ -351,6 +351,11 @@ namespace FlickrNet
         public string GroupPathAlias { get; set; }
 
         /// <summary>
+        /// No idea...
+        /// </summary>
+        public string ColorCodes { get; set; }
+
+        /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
@@ -438,6 +443,7 @@ namespace FlickrNet
             if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
             if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
             if (GroupPathAlias != null) parameters.Add("group_path_alias", GroupPathAlias);
+            if( ColorCodes != null ) parameters.Add("color_codes", ColorCodes);
         }
 
     }

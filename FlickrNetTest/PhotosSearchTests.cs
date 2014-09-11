@@ -316,6 +316,26 @@ namespace FlickrNetTest
         }
 
         [Test]
+        public void PhotosSearchByColorCode()
+        {
+            var o = new PhotoSearchOptions
+                    {
+                        ColorCodes = "0000ff",
+                        Tags = "colorful"
+                    };
+
+            var photos = Instance.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            //Assert.AreNotEqual(0, photos.Count, "Count should not be zero.");
+
+            foreach (var photo in photos)
+            {
+                Console.WriteLine(photo.WebUrl);
+            }
+        }
+
+        [Test]
         public void PhotosSearchIsCommons()
         {
             PhotoSearchOptions o = new PhotoSearchOptions

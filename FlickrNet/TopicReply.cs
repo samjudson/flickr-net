@@ -38,6 +38,10 @@ namespace FlickrNet
         /// </summary>
         public string AuthorIconFarm { get; set; }
         /// <summary>
+        /// THe path alias for the author, if set.
+        /// </summary>
+        public string AuthorPathAlias { get; set; }
+        /// <summary>
         /// Can the calling user edit the reply.
         /// </summary>
         public bool CanEdit { get; set; }
@@ -118,6 +122,9 @@ namespace FlickrNet
                         break;
                     case "author_is_deleted":
                         AuthorIsDeleted = reader.Value == "1";
+                        break;
+                    case "author_path_alias":
+                        AuthorPathAlias = reader.Value == "" ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -130,7 +130,7 @@ namespace FlickrNetTest
                 bool found = false;
 
                 string arg = argument.Name.Replace("_", "").ToLower();
-
+                
                 if (exceptions.ContainsKey(arg)) arg = exceptions[arg];
 
                 foreach (PropertyInfo info in properties)
@@ -147,7 +147,8 @@ namespace FlickrNetTest
                 if (!found)
                 {
                     numMissing++;
-                    Console.WriteLine("Argument " + argument.Name + " not found.");
+                    Console.WriteLine("Argument    : " + argument.Name + " not found.");
+                    Console.WriteLine("Description : " + argument.Description);
                 }
             }
 
