@@ -72,7 +72,7 @@ namespace FlickrNetTest
         {
             string url = TestData.GetInstance().UrlsGetGroup(TestData.GroupId);
 
-            Assert.AreEqual("https://www.flickr.com/groups/florus/", url);
+            Assert.AreEqual("https://www.flickr.com/groups/lakedistrict/", url);
         }
 
 
