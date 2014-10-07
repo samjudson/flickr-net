@@ -92,6 +92,8 @@ namespace FlickrNet
 
             lastResponse = responseXml;
 
+            responseXml = responseXml.Trim();
+
             var reader = new XmlTextReader(new StringReader(responseXml))
                              {
                                  WhitespaceHandling = WhitespaceHandling.None
