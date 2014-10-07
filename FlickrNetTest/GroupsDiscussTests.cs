@@ -45,13 +45,13 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsDiscussRepliesGetListTest()
         {
-            var topics = AuthInstance.GroupsDiscussTopicsGetList(TestData.GroupId, 1, 10);
+            var topics = AuthInstance.GroupsDiscussTopicsGetList(TestData.GroupId, 1, 100);
 
             Assert.IsNotNull(topics, "Topics should not be null.");
 
             Assert.AreNotEqual(0, topics.Count, "Should be more than one topics return.");
 
-            var firstTopic = topics.First();
+            var firstTopic = topics.First(t => t.RepliesCount > 0);
 
             var replies = AuthInstance.GroupsDiscussRepliesGetList(firstTopic.TopicId, 1, 10);
             Assert.AreEqual(firstTopic.TopicId, replies.TopicId, "TopicId's should be the same.");
@@ -61,7 +61,6 @@ namespace FlickrNetTest
             Assert.AreEqual(firstTopic.DateLastPost, replies.DateLastPost, "DateLastPost's should be the same.");
 
             Assert.IsNotNull(replies, "Replies should not be null.");
-            Assert.AreNotEqual(0, replies.Count, "Replies Count should be greater than zero.");
 
             var firstReply = replies.First();
 

@@ -63,6 +63,11 @@ namespace FlickrNet
         /// </summary>
         public bool? IsReverseFamily { get; set; }
 
+        /// <summary>
+        /// Not sure?
+        /// </summary>
+        public bool? CanBuyPro { get; set; }
+
         /// <summary>The users username, also known as their screenname.</summary>
         public string UserName { get; set; }
     
@@ -231,6 +236,9 @@ namespace FlickrNet
                         break;
                     case "revfamily":
                         IsReverseFamily = reader.Value == "1";
+                        break;
+                    case "can_buy_pro":
+                        CanBuyPro = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

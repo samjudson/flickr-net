@@ -10,6 +10,7 @@
     <Revision>0</Revision>
     <ShortVersion>$(Major).$(Minor).$(Build)</ShortVersion>
     <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+    <NugetKey></NugetKey>
   </PropertyGroup>
 
   <Target Name="Build" DependsOnTargets="Version;Compile;Help;Zip">
@@ -37,9 +38,9 @@
   </Target>
 
   <Target Name="NuGetPublish" DependsOnTargets="NuGet">
-    <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
-    <Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg"/>
-    <Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg"/>
+    <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg $(NugetKey)"/>
+    <Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg $(NugetKey)"/>
+    <Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg $(NugetKey)"/>
   </Target>
 
   <Target Name="Version">

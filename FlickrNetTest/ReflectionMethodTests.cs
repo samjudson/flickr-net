@@ -247,9 +247,9 @@ namespace FlickrNetTest
             var methodName = "flickr.favorites.getContext";
             var method = TestData.GetInstance().ReflectionGetMethodInfo(methodName);
 
-            Assert.AreEqual(6, method.Arguments.Count);
+            Assert.AreEqual(3, method.Arguments.Count);
             Assert.AreEqual("The id of the photo to fetch the context for.", method.Arguments[1].Description);
-            Assert.IsNull(method.Arguments[4].Description);
+            //Assert.IsNull(method.Arguments[4].Description);
         }
 
         private void GetExceptionList()

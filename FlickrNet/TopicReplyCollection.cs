@@ -22,6 +22,10 @@ namespace FlickrNet
         /// </summary>
         public string Subject { get; set; }
         /// <summary>
+        /// The last time the topic was edited, if at all.
+        /// </summary>
+        public DateTime? LastEdit { get; set; }
+        /// <summary>
         /// The group id for the topic.
         /// </summary>
         public string GroupId { get; set; }
@@ -237,6 +241,11 @@ namespace FlickrNet
                         break;
                     case "author_path_alias":
                         AuthorPathAlias = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "lastedit":
+                        LastEdit = reader.Value == "" || reader.Value == "0"
+                            ? (DateTime?)null
+                            : UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

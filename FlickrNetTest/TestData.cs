@@ -16,7 +16,7 @@ namespace FlickrNetTest
         public const string FavouritedPhotoId = "5890800";
 
         // FLOWERS
-        public const string GroupId = "13378274@N00";
+        public const string GroupId = "53837206@N00";
 
         // Test user is Sam Judson (i.e. Me)
         public const string TestUserId = "41888973@N00";
