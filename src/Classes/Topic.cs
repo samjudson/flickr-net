@@ -26,6 +26,10 @@ namespace FlickrNet
         /// </summary>
         public string AuthorPathAlias { get; set; }
         /// <summary>
+        /// The author of this topic is a deleted account.
+        /// </summary>
+        public bool AuthorIsDeleted { get; set; }
+        /// <summary>
         /// The user name of the author of the topic.
         /// </summary>
         public string AuthorName { get; set; }
@@ -77,6 +81,10 @@ namespace FlickrNet
         /// Date the last reply was made to this property.
         /// </summary>
         public DateTime DateLastPost { get; set; }
+        /// <summary>
+        /// The date of the last edit to this topic, if any.
+        /// </summary>
+        public DateTime? DateLastEdit { get; set; }
         /// <summary>
         /// The id of the last reply to this topic.
         /// </summary>
@@ -161,6 +169,11 @@ namespace FlickrNet
                     case "last_reply":
                         LastReplyId = reader.Value;
                         break;
+                    case "lastedit":
+                        DateLastEdit = reader.Value == "0"
+                            ? null
+                            : (DateTime?) UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
                     case "group_id":
                         GroupId = reader.Value;
                         break;
@@ -169,6 +182,9 @@ namespace FlickrNet
                         break;
                     case "author_path_alias":
                         AuthorPathAlias = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "author_is_deleted":
+                        AuthorIsDeleted = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
