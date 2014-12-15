@@ -96,6 +96,10 @@ namespace FlickrNet45.Tests
             Assert.AreNotEqual(0, context.Count, "Count should be greater than zero");
             Assert.AreEqual(3, context.PreviousPhotos.Count, "Should be 3 previous photo.");
             Assert.AreEqual(4, context.NextPhotos.Count, "Should be 4 next photo.");
+
+            context = Instance.FavoritesGetContext(photoId, userId, 1, 2, PhotoSearchExtras.Description);
+            Assert.AreEqual(1, context.PreviousPhotos.Count, "Should be 1 previous photo.");
+            Assert.AreEqual(2, context.NextPhotos.Count, "Should be 2 next photo.");
         }
 
     }
