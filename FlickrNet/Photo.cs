@@ -92,6 +92,11 @@ namespace FlickrNet
         public DateTime DateTaken { get; set; }
 
         /// <summary>
+        /// Is the date taken unknown?
+        /// </summary>
+        public bool DateTakenUnknown { get; set; }
+
+        /// <summary>
         /// The date the photo was added to the group. Only returned by <see cref="Flickr.GroupsPoolsGetPhotos(string)"/>.
         /// </summary>
         public DateTime? DateAddedToGroup { get; set; }
@@ -597,6 +602,9 @@ namespace FlickrNet
                         DateTaken = UtilityMethods.ParseDateWithGranularity(reader.Value);
                         break;
                     case "datetakengranularity":
+                        break;
+                    case "datetakenunknown":
+                        DateTakenUnknown = reader.Value == "1";
                         break;
                     case "dateupload":
                         DateUploaded = UtilityMethods.UnixTimestampToDate(reader.Value);

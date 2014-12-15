@@ -92,6 +92,11 @@ namespace FlickrNet
         public bool EighteenPlus { get; set; }
 
         /// <summary>
+        /// THe privacy setting for this groups photo pool.
+        /// </summary>
+        public PoolPrivacy Privacy { get; set; }
+
+        /// <summary>
         /// Group icon server.
         /// </summary>
         public string IconServer { get; set; }
@@ -159,6 +164,9 @@ namespace FlickrNet
                         break;
                     case "topic_count":
                         TopicCount = reader.ReadContentAsInt();
+                        break;
+                    case "privacy":
+                        Privacy = (PoolPrivacy) reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

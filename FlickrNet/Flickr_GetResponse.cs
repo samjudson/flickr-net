@@ -92,11 +92,11 @@ namespace FlickrNet
 
             lastResponse = responseXml;
 
-            responseXml = responseXml.Trim();
+            //responseXml = responseXml.Trim();
 
             var reader = new XmlTextReader(new StringReader(responseXml))
                              {
-                                 WhitespaceHandling = WhitespaceHandling.None
+                                 WhitespaceHandling = WhitespaceHandling.None,
                              };
 
             if (!reader.ReadToDescendant("rsp"))
