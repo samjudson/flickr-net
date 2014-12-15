@@ -243,6 +243,11 @@ namespace FlickrNet
         public DateGranularity DateTakenGranularity { get; set; }
 
         /// <summary>
+        /// Weither the date taken is known or not.
+        /// </summary>
+        public bool? DateTakenUnknown { get; set; }
+
+        /// <summary>
         /// Who has permissions to add comments to this photo.
         /// </summary>
         public PermissionComment? PermissionComment { get; set; }
@@ -703,6 +708,9 @@ namespace FlickrNet
                         break;
                     case "takengranularity":
                         DateTakenGranularity = (DateGranularity) int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "takenunknown":
+                        DateTakenUnknown = reader.Value == "1";
                         break;
                     case "lastupdate":
                         DateLastUpdated = UtilityMethods.UnixTimestampToDate(reader.Value);
