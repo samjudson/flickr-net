@@ -44,6 +44,10 @@ namespace FlickrNet
         public string GroupIconFarm { get; set; }
 
         /// <summary>
+        /// URL
+        /// </summary>
+        public string GroupAlias { get; set; }
+        /// <summary>
         /// The topic authos user id.
         /// </summary>
         public string AuthorUserId { get; set; }
@@ -146,7 +150,7 @@ namespace FlickrNet
         /// </summary>
         public string GroupIconUrl
         {
-            get { return UtilityMethods.BuddyIcon(GroupIconServer, GroupIconFarm, GroupId); }
+            get { return UtilityMethods.BuddyIcon(GroupIconServer, GroupIconFarm, GroupAlias ?? GroupId); }
         }
 
         #region IFlickrParsable Members
@@ -201,6 +205,10 @@ namespace FlickrNet
                     case "iconfarm":
                         GroupIconFarm = reader.Value;
                         break;
+                    case "group_alias":
+                        GroupAlias = reader.ReadContentAsString();
+                        if (GroupAlias == String.Empty) { GroupAlias = null; }
+                        break;
                     case "author_iconfarm":
                         AuthorIconFarm = reader.Value;
                         break;
@@ -240,7 +248,6 @@ namespace FlickrNet
                     case "per_page":
                         PerPage = reader.ReadContentAsInt();
                         break;
-
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
