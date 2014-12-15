@@ -121,6 +121,11 @@ namespace FlickrNet
         public int TopicCount { get; set; }
 
         /// <summary>
+        /// The privacy setting on this group.
+        /// </summary>
+        public PoolPrivacy Privacy { get; set; }
+
+        /// <summary>
         /// The url for the group's icon. 
         /// </summary>
         public string GroupIconUrl
@@ -163,6 +168,9 @@ namespace FlickrNet
                     case "topic_count":
                         TopicCount = reader.ReadContentAsInt();
                         break;
+                    case "privacy":
+                        Privacy = (PoolPrivacy) reader.ReadContentAsInt();
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
@@ -171,6 +179,7 @@ namespace FlickrNet
 
             reader.Skip();
         }
+
 
         #endregion
     }
