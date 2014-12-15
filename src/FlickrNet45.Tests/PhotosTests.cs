@@ -393,7 +393,7 @@ namespace FlickrNet45.Tests
         {
             var options = new PhotoSearchOptions
                         {
-                            UserId = "25515003@N03",
+                            UserId = "94495029@N07",
                             PerPage = 1,
                             Extras = PhotoSearchExtras.PathAlias
                         };
