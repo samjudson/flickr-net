@@ -17,6 +17,11 @@ namespace FlickrNet
         /// 0 = free acouunt, 1 = pro account holder.</summary>
         public bool IsPro { get; set; }
 
+        /// <summary>
+        /// Can this user buy a pro account (old style Pro I assume?)
+        /// </summary>
+        public bool CanBuyPro { get; set; }
+
         /// <summary>The server that will serve up the users Buddy Icon.</summary>
         public string IconServer { get; set; }
 
@@ -230,6 +235,9 @@ namespace FlickrNet
                         break;
                     case "revfamily":
                         IsReverseFamily = reader.Value == "1";
+                        break;
+                    case "can_buy_pro":
+                        CanBuyPro = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
