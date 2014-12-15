@@ -78,6 +78,11 @@ namespace FlickrNet
         public string AuthorIconServer { get; set; }
 
         /// <summary>
+        /// Is the author from a deleted account.
+        /// </summary>
+        public bool AuthorIsDeleted { get; set; }
+
+        /// <summary>
         /// The farm for the author's buddy icon.
         /// </summary>
         public string AuthorIconFarm { get; set; }
@@ -116,6 +121,11 @@ namespace FlickrNet
         /// Date of the last post to this topic.
         /// </summary>
         public DateTime DateLastPost { get; set; }
+
+        /// <summary>
+        /// Date of the last edit, if any.
+        /// </summary>
+        public DateTime? DateLastEdit { get; set; }
 
         /// <summary>
         /// The message body for this topic.
@@ -214,7 +224,7 @@ namespace FlickrNet
                         GroupIconFarm = reader.Value;
                         break;
                     case "group_alias":
-                        GroupAlias = reader.ReadContentAsString();
+                        GroupAlias = reader.Value;
                         if (GroupAlias == String.Empty) { GroupAlias = null; }
                         break;
                     case "author_iconfarm":
@@ -222,6 +232,9 @@ namespace FlickrNet
                         break;
                     case "author_iconserver":
                         AuthorIconServer = reader.Value;
+                        break;
+                    case "author_is_deleted":
+                        AuthorIsDeleted = reader.Value == "1";
                         break;
                     case "can_edit":
                         CanEdit = reader.Value == "1";
@@ -243,6 +256,9 @@ namespace FlickrNet
                         break;
                     case "datelastpost":
                         DateLastPost = UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "lastedit":
+                        DateLastEdit = reader.Value == "0" ? null : (DateTime?)UtilityMethods.UnixTimestampToDate(reader.Value);
                         break;
                     case "total":
                         Total = reader.ReadContentAsInt();

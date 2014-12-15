@@ -24,6 +24,16 @@ namespace FlickrNet
         public string AuthorName { get; set; }
 
         /// <summary>
+        /// The path alias for the author of this topic.
+        /// </summary>
+        public string AuthorPathAlias { get; set; }
+
+        /// <summary>
+        /// Is the author of this topic from a deleted account.
+        /// </summary>
+        public bool AuthorIsDeleted { get; set; }
+
+        /// <summary>
         /// True if the author of the reply has a pro account.
         /// </summary>
         public bool AuthorIsPro { get; set; }
@@ -73,7 +83,7 @@ namespace FlickrNet
         /// </summary>
         public string AuthorBuddyIcon
         {
-            get { return UtilityMethods.BuddyIcon(AuthorIconServer, AuthorIconFarm, AuthorUserId); }
+            get { return UtilityMethods.BuddyIcon(AuthorIconServer, AuthorIconFarm, AuthorPathAlias ?? AuthorUserId); }
         }
 
         #region IFlickrParsable Members
@@ -99,6 +109,12 @@ namespace FlickrNet
                         break;
                     case "authorname":
                         AuthorName = reader.Value;
+                        break;
+                    case "author_path_alias":
+                        AuthorPathAlias = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "author_is_deleted":
+                        AuthorIsDeleted = reader.Value == "1";
                         break;
                     case "is_pro":
                         AuthorIsPro = reader.Value == "1";
