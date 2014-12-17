@@ -72,7 +72,7 @@ namespace FlickrNetTest
             Assert.AreEqual("North America", places[1].Description);
         }
 
-        [Test]
+        [Test, Ignore("Not currently returning any records for some reason.")]
         public void PlacesGetChildrenWithPhotosPublicPlaceIdTest()
         {
             string placeId = "6dCBhRRTVrJiB5xOrg"; // Europe
@@ -91,7 +91,7 @@ namespace FlickrNetTest
             }
         }
 
-        [Test]
+        [Test, Ignore("Not currently returning any records for some reason.")]
         public void PlacesGetChildrenWithPhotosPublicWoeIdTest()
         {
             string woeId = "24865675"; // Europe
