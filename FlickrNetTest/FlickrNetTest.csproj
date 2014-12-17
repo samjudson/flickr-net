@@ -69,6 +69,7 @@
     <Compile Include="Async\StatsAsyncTests.cs" />
     <Compile Include="Auth\AuthHelper.cs" />
     <Compile Include="BaseTest.cs" />
+    <Compile Include="BoundaryTests.cs" />
     <Compile Include="CameraTests.cs" />
     <Compile Include="CheckTests.cs" />
     <Compile Include="FlickrConfigurationSettingsTest.cs" />

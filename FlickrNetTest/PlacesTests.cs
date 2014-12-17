@@ -329,22 +329,5 @@ namespace FlickrNetTest
             }
         }
 
-        [Test]
-        public void BoundaryBoxCalculateSizesUKNewcastle()
-        {
-            BoundaryBox b = BoundaryBox.UKNewcastle;
-
-            double e = b.DiagonalDistanceInMiles();
-        }
-
-        [Test]
-        public void BoundaryBoxCalculateSizesFrankfurtToBerlin()
-        {
-            BoundaryBox b = new BoundaryBox(8.68194, 50.11222, 13.29750, 52.52222);
-
-            double e = b.DiagonalDistanceInMiles();
-            Assert.IsTrue(259.9 < e && e < 260.0);
-        }
-
     }
 }
