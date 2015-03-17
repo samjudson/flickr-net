@@ -13,8 +13,15 @@ e.g. if you retrieve a list of photosets for a user (i.e. by calling Flickr.Phot
 there is no direct property on each photoset to get the photos for that set, 
 you must go back to the Flickr object and call Flickr.PhotosetsGetPhotos passing in the photoset id.
 
+# Getting Started
+
+The FlickrNet API library is available via NuGet.org. SImply run the following command:
+
+~~~
+Install-Package FlickrNet
+~~~
+
 # Examples
-## Getting Started
 
 You can create a new instance of the Flickr class, and set its properties, or you can use one of the parameterised constructors:
 
