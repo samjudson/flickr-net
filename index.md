@@ -2,7 +2,7 @@
 title: Flickr-net by samjudson
 ---
 
-        # Flickr-Net
+# Flickr-Net
 
 The Flickr.Net API Library is a .Net Library for accessing the Flickr API. 
 It is written entirely in C#.
