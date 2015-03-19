@@ -33,7 +33,9 @@ You can create a new instance of the Flickr class, and set its properties, or yo
 Flickr flickr = new Flickr();
 flickr.ApiKey = myApiKey;
 ~~~
+
 or
+
 ~~~
 Flickr flickr = new Flickr(myApiKey);
 ~~~
@@ -54,6 +56,7 @@ foreach(Photo photo in photos)
 ## Photo Extras
 One of the hardest things to understand initially is that not all properties are returned by Flickr, you have to explicity request them.  
 For example the following code would be used to return the Tags and the LargeUrl for a selection of photos:
+
 ~~~
 var options = new PhotoSearchOptions { 
   Tags = "colorful", 
