@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Flickr-net by samjudson</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Flickr-net</h1>
+        <p class="header">Home of the FlickrNet API libary</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/samjudson/flickr-net/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/samjudson/flickr-net/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/samjudson/flickr-net">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/samjudson">samjudson</a></p>
+
+
+      </header>
+      <section>
+        <hr>
+
+<hr>
+
+<h1>
+<a id="flickr-net" class="anchor" href="#flickr-net" aria-hidden="true"><span class="octicon octicon-link"></span></a>Flickr-Net</h1>
+
+<p>The Flickr.Net API Library is a .Net Library for accessing the Flickr API. 
+It is written entirely in C#.</p>
+
+<p>The library provides a simple one-to-one mapping to the methods of the Flickr REST API, 
+hopefully hiding all of the complexity of calling the API, especially when it comes to authentication. 
+Check the Flickr API web site for the full list of commands, and then use the corresponding method in the Flickr library, 
+e.g. to call flickr.photos.search use the Flickr.PhotosSearch method.</p>
+
+<p>The library is not an attempt to provide an ORM layer over the Flickr API, 
+e.g. if you retrieve a list of photosets for a user (i.e. by calling Flickr.PhotosetsGetList) 
+there is no direct property on each photoset to get the photos for that set, 
+you must go back to the Flickr object and call Flickr.PhotosetsGetPhotos passing in the photoset id.</p>
+
+<h1>
+<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h1>
+
+<p>The FlickrNet API library is available via NuGet.org. SImply run the following command:</p>
+
+<pre><code>Install-Package FlickrNet
+</code></pre>
+
+<h1>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h1>
+
+<p>You can create a new instance of the Flickr class, and set its properties, or you can use one of the parameterised constructors:</p>
+
+<pre><code>Flickr flickr = new Flickr();
+flickr.ApiKey = myApiKey;
+</code></pre>
+
+<p>or</p>
+
+<pre><code>Flickr flickr = new Flickr(myApiKey);
+</code></pre>
+
+<p>The simplest method (although it has the most parameters) is probably the PhotosSearch method, 
+which is best used by passing in a PhotoSearchOptions instance:</p>
+
+<pre><code>var options = new PhotoSearchOptions { Tags = "colorful", PerPage = 20, Page = 1 };
+PhotoCollection photos = flickr.PhotosSearch(options);
+
+foreach(Photo photo in photos) 
+{
+  Console.WriteLine("Photo {0} has title {1}", photo.PhotoID, photo.Title);
+}
+</code></pre>
+
+<h2>
+<a id="photo-extras" class="anchor" href="#photo-extras" aria-hidden="true"><span class="octicon octicon-link"></span></a>Photo Extras</h2>
+
+<p>One of the hardest things to understand initially is that not all properties are returned by Flickr, you have to explicity request them.<br>
+For example the following code would be used to return the Tags and the LargeUrl for a selection of photos:</p>
+
+<pre><code>var options = new PhotoSearchOptions { 
+  Tags = "colorful", 
+  PerPage = 20, 
+  Page = 1, 
+  Extras = PhotoSearchExtras.LargeUrl | PhotoSearchExtras.Tags 
+};
+
+PhotoCollection photos = flickr.PhotosSearch(options);
+// Each photos Tags and LargeUrl properties should now be set, 
+// assuming that the photo has any tags, and is large enough to have a LargeUrl image available.
+</code></pre>
+
+<h1>
+<a id="sample-applications" class="anchor" href="#sample-applications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample Applications</h1>
+
+<p>I've started a separate CodePlex project to host sample applications: </p>
+
+<p><a href="http://flickrnetsamples.codeplex.com/">http://flickrnetsamples.codeplex.com/</a></p>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>The project is licensed under both the LGPL 2.1 license, and the Apache 2.0 license. 
+This gives you the flexibility to do pretty much anything you want with the code. Enjoy!</p>
+
+<h1>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h1>
+
+<p>You can contact me at via the People tab or post a discussion here on codeplex if you require further help.</p>
+
+<p>See my Flickr homepage at <a href="http://www.flickr.com/photos/samjudson">http://www.flickr.com/photos/samjudson</a></p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
