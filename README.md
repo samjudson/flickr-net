@@ -68,7 +68,11 @@ PhotoCollection photos = flickr.PhotosSearch(options);
 
 I've started a separate CodePlex project to host sample applications: 
 
-http://flickrnetsamples.codeplex.com/
+https://github.com/samjudson/flickrnet-samples
+
+View the sample app live on the web here:
+
+http://wackylabs.azurewebsites.net/
 
 # License
 
