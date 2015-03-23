@@ -48,14 +48,14 @@ namespace FlickrNet45.Tests
 
             Assert.IsNotNull(info, "GroupFullInfo should not be null");
             Assert.AreEqual(Data.GroupId, info.GroupId);
-            Assert.AreEqual("FLOWERS", info.GroupName);
+            Assert.AreEqual("The Lake District UK", info.GroupName);
 
-            Assert.AreEqual("5562", info.IconServer);
+            Assert.AreEqual("5128", info.IconServer);
             Assert.AreEqual("6", info.IconFarm);
 
-            Assert.AreEqual("https://farm6.staticflickr.com/5562/buddyicons/13378274@N00.jpg", info.GroupIconUrl);
+            Assert.AreEqual("https://farm6.staticflickr.com/5128/buddyicons/53837206@N00.jpg", info.GroupIconUrl);
 
-            Assert.AreEqual(3, info.ThrottleInfo.Count);
+            Assert.AreEqual(2, info.ThrottleInfo.Count);
             Assert.AreEqual(GroupThrottleMode.PerDay, info.ThrottleInfo.Mode);
 
             Assert.IsTrue(info.Restrictions.PhotosAccepted, "PhotosAccepted should be true.");
