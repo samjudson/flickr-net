@@ -18,12 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetWS.Tests", "Flickr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetWS.MsTests", "FlickrNetWS.MsTests\FlickrNetWS.MsTests.csproj", "{D3FF6F73-DD88-460E-B5D1-62078EFA3958}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{80034AB7-708A-484D-B401-A72D60742652}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetPCL", "FlickrNetPCL.csproj", "{0F196C06-C9ED-479B-8844-F85E791709ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetPCL.Tests", "..\FlickrNetPCL.Tests\FlickrNetPCL.Tests.csproj", "{C6159511-3C62-4858-B7A1-07E455A9FE6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,6 +148,36 @@ Global
 		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.Release|x86.ActiveCfg = Release|x86
 		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.Release|x86.Build.0 = Release|x86
 		{D3FF6F73-DD88-460E-B5D1-62078EFA3958}.Release|x86.Deploy.0 = Release|x86
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.AppVeyor|ARM.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.AppVeyor|x64.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.AppVeyor|x86.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F196C06-C9ED-479B-8844-F85E791709ED}.Release|x86.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.AppVeyor|Any CPU.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.AppVeyor|Any CPU.Build.0 = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.AppVeyor|ARM.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.AppVeyor|x64.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.AppVeyor|x86.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Release|x64.ActiveCfg = Release|Any CPU
+		{C6159511-3C62-4858-B7A1-07E455A9FE6A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

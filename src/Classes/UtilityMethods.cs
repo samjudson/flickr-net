@@ -162,10 +162,16 @@ namespace FlickrNet
             var e = typeof(PhotoSearchExtras);
             foreach (PhotoSearchExtras extra in GetFlags(extras))
             {
+#if PCL
+                var o = e.GetCustomAttributes(typeof(DescriptionAttribute), false).ToList();
+                if (!o.Any()) continue;
+                var att = (DescriptionAttribute)o.First();
+#else
                 var info = e.GetRuntimeField(extra.ToString("G"));
                 var o = info.GetCustomAttributes(typeof(DescriptionAttribute), false).ToList();
                 if (o == null || !o.Any()) continue;
                 var att = (DescriptionAttribute)o.First();
+#endif
                 extraList.Add(att.Description);
             }
 
@@ -184,10 +190,17 @@ namespace FlickrNet
         private static IEnumerable<Enum> GetValues(Enum enumeration)
         {
             var enumerations = new List<Enum>();
+#if PCL
+            foreach (var fieldInfo in enumeration.GetType().GetFields())
+            {
+                enumerations.Add(fieldInfo.GetValue(enumeration) as Enum);
+            }
+#else
             foreach (var fieldInfo in enumeration.GetType().GetRuntimeFields())
             {
                 enumerations.Add(fieldInfo.GetValue(enumeration) as Enum);
             }
+#endif
             return enumerations;
         }
 
@@ -543,8 +556,11 @@ namespace FlickrNet
                 response = response.Substring(response.IndexOf("?", StringComparison.Ordinal)+1);
             }
 
+            #if WindowsCE || SILVERLIGHT || PCL
+            var parts = maxSplits == 0 ? response.Split(new[] {'&'}) : response.Split(new[] {'&'}, StringSplitOptions.None);
+#else
             var parts = maxSplits == 0 ? response.Split(new[] {'&'}) : response.Split(new[] {'&'}, maxSplits);
-
+#endif
             foreach (var part in parts)
             {
 #if WindowsCE || SILVERLIGHT || PCL
