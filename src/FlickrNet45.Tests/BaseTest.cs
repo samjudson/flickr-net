@@ -102,7 +102,7 @@ namespace FlickrNet45.Tests
         // http://www.flickr.com/photos/samjudson/5890800 - Grey Street
         public string FavouritedPhotoId = "5890800";
         // FLOWERS
-        public string GroupId = "13378274@N00";
+        public string GroupId = "53837206@N00";
         public string FlickrNetTestGroupId = "1368041@N20";
 
         public string RequestToken

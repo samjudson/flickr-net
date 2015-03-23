@@ -56,7 +56,7 @@ namespace FlickrNet45.Tests
 
             Assert.AreNotEqual(0, topics.Count, "Should be more than one topics return.");
 
-            var firstTopic = topics.First();
+            var firstTopic = topics.First(t => t.RepliesCount > 0);
 
             var replies = AuthInstance.GroupsDiscussRepliesGetList(firstTopic.TopicId, 1, 10);
             Assert.AreEqual(firstTopic.TopicId, replies.TopicId, "TopicId's should be the same.");
