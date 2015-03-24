@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using FlickrNet.Internals;
+using PCLCrypto;
 
 namespace FlickrNet
 {
@@ -79,16 +82,68 @@ namespace FlickrNet
 
         internal static string Sha1Hash(byte[] key, string basestring)
         {
-            var sha1 = new System.Security.Cryptography.HMACSHA1(key);
-
-            var hashBytes = sha1.ComputeHash(Encoding.UTF8.GetBytes(basestring));
-
-            return Convert.ToBase64String(hashBytes);
+            var data = Encoding.UTF8.GetBytes(basestring);
+            var algorithm = WinRTCrypto.MacAlgorithmProvider.OpenAlgorithm(MacAlgorithm.HmacSha1);
+            var hasher = algorithm.CreateHash(key);
+            hasher.Append(data);
+            var mac = hasher.GetValueAndReset();
+            return Convert.ToBase64String(mac);
         }
 
-        public string UploadPicture(Stream stream, string filename, string videoUploadTest, string file, string videoTest, bool isFamily, bool isFriends, bool isPublic, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
+        public async Task<string> UploadPictureAsync(Stream stream, string filename, string title, string description, string tags, bool isPublic, bool isFamily, bool isFriend, ContentType contentType, SafetyLevel safetyLevel, HiddenFromSearch hiddenFromSearch)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<string, string>();
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                parameters.Add("title", title);
+            }
+            if (!string.IsNullOrEmpty(description))
+            {
+                parameters.Add("description", description);
+            }
+            if (!string.IsNullOrEmpty(tags))
+            {
+                parameters.Add("tags", tags);
+            }
+
+            parameters.Add("is_public", isPublic ? "1" : "0");
+            parameters.Add("is_friend", isFriend ? "1" : "0");
+            parameters.Add("is_family", isFamily ? "1" : "0");
+
+            if (safetyLevel != SafetyLevel.None)
+            {
+                parameters.Add("safety_level", safetyLevel.ToString("D"));
+            }
+            if (contentType != ContentType.None)
+            {
+                parameters.Add("content_type", contentType.ToString("D"));
+            }
+            if (hiddenFromSearch != HiddenFromSearch.None)
+            {
+                parameters.Add("hidden", hiddenFromSearch.ToString("D"));
+            }
+
+            FlickrResponder.OAuthGetBasicParameters(parameters);
+            parameters.Add("oauth_consumer_key", ApiKey);
+            parameters.Add("oauth_token", OAuthAccessToken);
+            parameters.Add("oauth_signature",
+                           OAuthCalculateSignature("POST", UploadUrl, parameters, OAuthAccessTokenSecret));
+
+            var boundary = FlickrResponder.CreateBoundary();
+            var data = FlickrResponder.CreateUploadData(stream, filename, parameters, boundary);
+
+            var oauthHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
+            var contentTypeHeader = "multipart/form-data; boundary=" + boundary;
+
+            var response = await FlickrResponder.UploadDataAsync(UploadUrl, data, contentTypeHeader, oauthHeader);
+
+            var match = Regex.Match(response, "<photoid>(\\d+)</photoid>");
+
+            if (!match.Success)
+                throw new FlickrException("Unable to determine photo id from upload response: " + response);
+
+            return match.Groups[1].Value;
         }
 
     }

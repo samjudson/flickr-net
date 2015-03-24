@@ -1413,6 +1413,17 @@ namespace FlickrNet
 		}
 		#endregion
 
+		#region flickr.photos.getNotInSet
+
+		public async Task<PhotoCollection> PhotosGetNotInSetAsync(PartialSearchOptions options) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "flickr.photos.getNotInSet");
+			UtilityMethods.PartialOptionsIntoArray(options, dictionary);
+			return await GetResponseAsync<PhotoCollection>(dictionary);
+		}
+		#endregion
+
 		#region flickr.photos.getPerms
 
 		public async Task<PhotoPermissions> PhotosGetPermsAsync(string photoId) 
@@ -1455,6 +1466,19 @@ namespace FlickrNet
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.getUntagged");
 			UtilityMethods.PartialOptionsIntoArray(options, dictionary);
+			return await GetResponseAsync<PhotoCollection>(dictionary);
+		}
+		#endregion
+
+		#region flickr.photos.getUntagged
+
+		public async Task<PhotoCollection> PhotosGetUntaggedAsync(int page = 0, int perPage = 0, PhotoSearchExtras extras = PhotoSearchExtras.None) 
+		{
+			var dictionary = new Dictionary<string, string>();
+			dictionary.Add("method", "flickr.photos.getUntagged");
+			if (page != 0) dictionary.Add("page", page.ToString(CultureInfo.InvariantCulture));
+			if (perPage != 0) dictionary.Add("per_page", perPage.ToString(CultureInfo.InvariantCulture));
+			if (extras != PhotoSearchExtras.None) dictionary.Add("extras", UtilityMethods.ExtrasToString(extras));
 			return await GetResponseAsync<PhotoCollection>(dictionary);
 		}
 		#endregion
@@ -1777,14 +1801,14 @@ namespace FlickrNet
 
 		#region flickr.photos.suggestions.suggestLocation
 
-		public async Task PhotosSuggestionsSuggestLocationAsync(string photoId, double latitude, double longitide, GeoAccuracy accuracy, string woeId = null, string placeId = null, string note = null) 
+		public async Task PhotosSuggestionsSuggestLocationAsync(string photoId, double lat, double lon, GeoAccuracy accuracy = GeoAccuracy.None, string woeId = null, string placeId = null, string note = null) 
 		{
 			var dictionary = new Dictionary<string, string>();
 			dictionary.Add("method", "flickr.photos.suggestions.suggestLocation");
 			dictionary.Add("photo_id", photoId);
-			dictionary.Add("latitude", latitude.ToString(NumberFormatInfo.InvariantInfo));
-			dictionary.Add("longitide", longitide.ToString(NumberFormatInfo.InvariantInfo));
-			dictionary.Add("accuracy", accuracy.ToString("d"));
+			dictionary.Add("lat", lat.ToString(NumberFormatInfo.InvariantInfo));
+			dictionary.Add("lon", lon.ToString(NumberFormatInfo.InvariantInfo));
+			if (accuracy != GeoAccuracy.None) dictionary.Add("accuracy", accuracy.ToString("d"));
 			if (woeId != null) dictionary.Add("woe_id", woeId);
 			if (placeId != null) dictionary.Add("place_id", placeId);
 			if (note != null) dictionary.Add("note", note);
