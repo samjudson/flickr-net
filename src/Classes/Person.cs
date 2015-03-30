@@ -22,6 +22,11 @@ namespace FlickrNet
         /// </summary>
         public bool CanBuyPro { get; set; }
 
+        /// <summary>
+        /// Does the user have stats?
+        /// </summary>
+        public bool? HasStats { get; set; }
+
         /// <summary>The server that will serve up the users Buddy Icon.</summary>
         public string IconServer { get; set; }
 
@@ -238,6 +243,9 @@ namespace FlickrNet
                         break;
                     case "can_buy_pro":
                         CanBuyPro = reader.Value == "1";
+                        break;
+                    case "has_stats":
+                        HasStats = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
