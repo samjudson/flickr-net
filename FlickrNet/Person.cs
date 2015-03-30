@@ -68,6 +68,11 @@ namespace FlickrNet
         /// </summary>
         public bool? CanBuyPro { get; set; }
 
+        /// <summary>
+        /// Not sure?
+        /// </summary>
+        public bool? HasStats { get; set; }
+
         /// <summary>The users username, also known as their screenname.</summary>
         public string UserName { get; set; }
     
@@ -239,6 +244,9 @@ namespace FlickrNet
                         break;
                     case "can_buy_pro":
                         CanBuyPro = reader.Value == "1";
+                        break;
+                    case "has_stats":
+                        HasStats = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
