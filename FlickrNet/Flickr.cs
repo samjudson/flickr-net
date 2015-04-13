@@ -335,8 +335,12 @@ namespace FlickrNet
         /// </summary>
         public Flickr()
         {
+            InstanceCacheDisabled = CacheDisabled;
+            CurrentService = DefaultService;
+
 #if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-            FlickrConfigurationSettings settings = FlickrConfigurationManager.Settings;
+
+            var settings = FlickrConfigurationManager.Settings;
             if (settings == null) return;
 
             if (settings.CacheSize != 0) CacheSizeLimit = settings.CacheSize;
@@ -345,22 +349,21 @@ namespace FlickrNet
             AuthToken = settings.ApiToken;
             ApiSecret = settings.SharedSecret;
 
-            if (settings.IsProxyDefined)
-            {
-                Proxy = new WebProxy();
-                Proxy.Address = new Uri("http://" + settings.ProxyIPAddress + ":" + settings.ProxyPort);
-                if (settings.ProxyUsername != null && settings.ProxyUsername.Length > 0)
-                {
-                    NetworkCredential creds = new NetworkCredential();
-                    creds.UserName = settings.ProxyUsername;
-                    creds.Password = settings.ProxyPassword;
-                    creds.Domain = settings.ProxyDomain;
-                    Proxy.Credentials = creds;
-                }
-            }
+            if (!settings.IsProxyDefined) return;
+
+            Proxy = new WebProxy {Address = new Uri("http://" + settings.ProxyIPAddress + ":" + settings.ProxyPort)};
+
+            if (string.IsNullOrEmpty(settings.ProxyUsername)) return;
+
+            var creds = new NetworkCredential
+                        {
+                            UserName = settings.ProxyUsername,
+                            Password = settings.ProxyPassword,
+                            Domain = settings.ProxyDomain
+                        };
+            Proxy.Credentials = creds;
+
 #endif
-            InstanceCacheDisabled = CacheDisabled;
-            CurrentService = DefaultService;
         }
 
         /// <summary>
