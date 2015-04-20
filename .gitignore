@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/FlickrNet/Bin
+/FlickrNet/obj
+/FlickrNetTest/bin
+/packages/
+/FlickrNetTest/obj/
+*.suo
+*.user
