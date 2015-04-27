@@ -21,6 +21,18 @@ namespace FlickrNet
         /// The number of favorites this photo has received in the context of the calling time period.
         /// </summary>
         public int StatFavorites { get; set; }
+        /// <summary>
+        /// The number of views this photo has received in total.
+        /// </summary>
+        public int TotalViews { get; set; }
+        /// <summary>
+        /// The number of comments this photo has received in total.
+        /// </summary>
+        public int TotalComments { get; set; }
+        /// <summary>
+        /// The number of favorites this photo has received in total.
+        /// </summary>
+        public int TotalFavorites { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -45,6 +57,15 @@ namespace FlickrNet
                         break;
                     case "favorites":
                         StatFavorites = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
+                        break;
+                    case "total_views":
+                        TotalViews = reader.ReadContentAsInt();
+                        break;
+                    case "total_comments":
+                        TotalComments = reader.ReadContentAsInt();
+                        break;
+                    case "total_favorites":
+                        TotalFavorites = reader.ReadContentAsInt();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

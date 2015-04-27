@@ -14,9 +14,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPopularPhotosBasic()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PopularPhotoCollection photos = f.StatsGetPopularPhotos(DateTime.MinValue, PopularitySort.None, 0, 0);
+            PopularPhotoCollection photos = AuthInstance.StatsGetPopularPhotos(DateTime.MinValue, PopularitySort.None, 0, 0);
 
             Assert.IsNotNull(photos, "PopularPhotos should not be null.");
 

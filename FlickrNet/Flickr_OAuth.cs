@@ -57,10 +57,6 @@ namespace FlickrNet
 
             string hash = Convert.ToBase64String(hashBytes);
 
-            Debug.WriteLine("key  = " + key);
-            Debug.WriteLine("base = " + baseString);
-            Debug.WriteLine("sig  = " + hash);
-
             return hash;
         }
 

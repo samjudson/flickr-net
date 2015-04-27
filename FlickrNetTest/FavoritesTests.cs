@@ -54,7 +54,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void FavoritesGetListFullParamTest()
         {
-            var photos = AuthInstance.FavoritesGetList(TestData.TestUserId, DateTime.Now.AddYears(-1), DateTime.Now, PhotoSearchExtras.All, 1, 10);
+            var photos = AuthInstance.FavoritesGetList(TestData.TestUserId, DateTime.Now.AddYears(-2), DateTime.Now, PhotoSearchExtras.All, 1, 10);
             Assert.IsNotNull(photos, "PhotoCollection should not be null.");
 
             Assert.IsTrue(photos.Count > 0, "Count should be greater than zero.");
