@@ -136,7 +136,7 @@ namespace FlickrNet45.Tests
         [Test]
         public void MachinetagsGetRecentValuesTest()
         {
-            var items = Instance.MachinetagsGetRecentValues(DateTime.Now.AddHours(-1));
+            var items = Instance.MachinetagsGetRecentValues(DateTime.Now.AddHours(-5));
             Assert.IsNotNull(items);
 
             Assert.AreNotEqual(0, items.Count, "Count should be not be zero.");

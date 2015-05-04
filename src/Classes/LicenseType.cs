@@ -48,6 +48,14 @@
         /// <summary>
         /// United States Government Work
         /// </summary>
-        UnitedStatesGovernmentWork = 8
+        UnitedStatesGovernmentWork = 8,
+        /// <summary>
+        /// Public Domain Dedication, CC0
+        /// </summary>
+        PublicDomainDedicationCC0 = 9,
+        /// <summary>
+        /// Public Domain Mark
+        /// </summary>
+        PublicDomainMark = 10
     }
 }
