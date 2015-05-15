@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Text;
 using FlickrNet;
+using System.Collections.Generic;
 
 namespace FlickrNetTest
 {
@@ -320,14 +321,14 @@ namespace FlickrNetTest
         {
             var o = new PhotoSearchOptions
                     {
-                        ColorCodes = "0000ff",
+                        ColorCodes = new List<string> { "orange" },
                         Tags = "colorful"
                     };
 
             var photos = Instance.PhotosSearch(o);
 
             Assert.IsNotNull(photos);
-            //Assert.AreNotEqual(0, photos.Count, "Count should not be zero.");
+            Assert.AreNotEqual(0, photos.Count, "Count should not be zero.");
 
             foreach (var photo in photos)
             {

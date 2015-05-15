@@ -14,6 +14,7 @@ namespace FlickrNet
         /// </summary>
         public PhotoSearchOptions()
         {
+            ColorCodes = new List<string>();
         }
 
         /// <summary>
@@ -290,6 +291,11 @@ namespace FlickrNet
             get { return UtilityMethods.ExtrasToString(Extras); }
         }
 
+        internal string ColorCodeString
+        {
+            get { return UtilityMethods.ColorCodesToString(ColorCodes); }
+        }
+
         internal string SortOrderString
         {
             get { return UtilityMethods.SortOrderToString(SortOrder); }
@@ -351,9 +357,12 @@ namespace FlickrNet
         public string GroupPathAlias { get; set; }
 
         /// <summary>
-        /// No idea...
+        /// A list of the new color codes.
         /// </summary>
-        public string ColorCodes { get; set; }
+        /// <remarks>
+        /// Acceptable values are "0"-"9" and "a"-"e". Or you can use a color name such as "yellow", "blue", "green" etc.
+        /// </remarks>
+        public IEnumerable<string> ColorCodes { get; set; }
 
         /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
@@ -443,7 +452,7 @@ namespace FlickrNet
             if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
             if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
             if (GroupPathAlias != null) parameters.Add("group_path_alias", GroupPathAlias);
-            if( ColorCodes != null ) parameters.Add("color_codes", ColorCodes);
+            if( ColorCodes != null ) parameters.Add("color_codes", ColorCodeString);
         }
 
     }

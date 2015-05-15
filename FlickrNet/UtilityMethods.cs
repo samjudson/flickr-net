@@ -167,6 +167,54 @@ namespace FlickrNet
 
         }
 
+        public static string ColorCodesToString(IEnumerable<string> codes)
+        {
+            var colorList = new List<string>();
+            var codeMap = new Dictionary<string, string> {
+                { "red", "0" },
+                { "darkorange", "1" },
+                { "dark orange", "1" },
+                { "orange", "2" },
+                { "palepink", "b" },
+                { "pale pink", "b" },
+                { "yellow", "3" },
+                { "lemonyellow", "4" },
+                { "lemon yellow", "4" },
+                { "school bus yellow", "3" },
+                { "schoolbusyellow", "3" },
+                { "green", "5" },
+                { "darklimegreen", "6" },
+                { "dark lime green", "6" },
+                { "limegreen", "6" },
+                { "lime green", "6" },
+                { "cyan", "7" },
+                { "blue", "8" },
+                { "violet", "9" },
+                { "purple", "9" },
+                { "pink", "a" },
+                { "white", "c" },
+                { "grey", "d" },
+                { "black", "e" },
+            };
+
+            foreach(var code in codes)
+            {
+                if (string.IsNullOrEmpty(code)) continue;
+                var c = code.ToLower();
+                if( c.Length == 1 && codeMap.ContainsValue(c) )
+                {
+                    colorList.Add(c);
+                }
+                if(codeMap.ContainsKey(c))
+                {
+                    colorList.Add(codeMap[c]);
+                }
+            }
+
+            return String.Join(",", colorList.ToArray());
+
+        }
+
         private static IEnumerable<Enum> GetFlags(Enum input)
         {
             var i = Convert.ToInt64(input);
