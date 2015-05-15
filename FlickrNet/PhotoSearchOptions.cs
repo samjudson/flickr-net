@@ -14,7 +14,7 @@ namespace FlickrNet
         /// </summary>
         public PhotoSearchOptions()
         {
-            ColorCodes = new List<string>();
+            ColorCodes = new Collection<string>();
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace FlickrNet
         /// <remarks>
         /// Acceptable values are "0"-"9" and "a"-"e". Or you can use a color name such as "yellow", "blue", "green" etc.
         /// </remarks>
-        public IEnumerable<string> ColorCodes { get; set; }
+        public ICollection<string> ColorCodes { get; set; }
 
         /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
@@ -452,7 +452,7 @@ namespace FlickrNet
             if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
             if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
             if (GroupPathAlias != null) parameters.Add("group_path_alias", GroupPathAlias);
-            if( ColorCodes != null ) parameters.Add("color_codes", ColorCodeString);
+            if( ColorCodes != null && ColorCodes.Count != 0 ) parameters.Add("color_codes", ColorCodeString);
         }
 
     }
