@@ -6,6 +6,7 @@ using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
+using Shouldly;
 
 namespace FlickrNetTest.Async
 {
@@ -110,15 +111,26 @@ namespace FlickrNetTest.Async
         {
             Flickr f = TestData.GetAuthInstance();
 
-            DateTime d = DateTime.Today.AddDays(-7);
+            var range = Enumerable.Range(7, 5);
+            var list = new List<Stats>();
 
-            var w = new AsyncSubject<FlickrResult<Stats>>();
-            f.StatsGetPhotostreamStatsAsync(d, r => { w.OnNext(r); w.OnCompleted(); });
+            foreach(var i in range)
+            {
+                var d = DateTime.Today.AddDays(-i);
 
-            var result = w.Next().First();
-            Assert.IsFalse(result.HasError);
+                var w = new AsyncSubject<FlickrResult<Stats>>();
+                f.StatsGetPhotostreamStatsAsync(d, r => { w.OnNext(r); w.OnCompleted(); });
 
-            Assert.IsTrue(result.Result.Views > 0, "Views should be greater than 0");
+                var result = w.Next().First();
+
+                result.HasError.ShouldBe(false);
+                result.Result.ShouldNotBe(null);
+
+                list.Add(result.Result);
+            }
+
+            list.Count.ShouldBe(5);
+            list.ShouldContain(s => s.Views > 0);
         }
     }
 }
