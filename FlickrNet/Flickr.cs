@@ -95,7 +95,8 @@ namespace FlickrNet
         private string apiKey;
         private string apiToken;
         private string sharedSecret;
-        private int timeout = 100000;
+        // private int timeout = 100000;  // original value
+        private int timeout = 3600000;  // (Andrew Keil) Changed to 1 hour in milliseconds to avoid timeout issues when uploading picture & videos
 
         private string lastRequest;
         private string lastResponse;
