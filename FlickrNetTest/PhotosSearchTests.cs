@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using FlickrNet;
 using System.Collections.Generic;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -742,12 +743,13 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchRussianTagsReturned()
         {
-            var o = new PhotoSearchOptions {UserId = "31828860@N08", Extras = PhotoSearchExtras.Tags};
+            var o = new PhotoSearchOptions {PerPage = 100, Extras = PhotoSearchExtras.Tags, Tags = "фото"};
 
             var photos = Instance.PhotosSearch(o);
 
-
-            Assert.IsTrue(photos.Any(p => p.Title.Contains("роддоме")));
+            photos.Count.ShouldNotBe(0);
+            photos.ShouldContain(p => p.Tags.Any(t => t == "фото"));
+            photos.ShouldContain(p => p.Title.Contains("фото"));
         }
 
         [Test]
