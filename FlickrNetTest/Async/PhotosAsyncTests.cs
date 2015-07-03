@@ -4,6 +4,7 @@ using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
+using Shouldly;
 
 namespace FlickrNetTest.Async
 {
@@ -21,8 +22,9 @@ namespace FlickrNetTest.Async
         public void PhotosSearchRussianAsync()
         {
             var o = new PhotoSearchOptions();
-            o.UserId = "31828860@N08";
             o.Extras = PhotoSearchExtras.Tags;
+            o.Tags = "фото";
+            o.PerPage = 100;
 
             Flickr f = TestData.GetInstance();
 
@@ -33,7 +35,7 @@ namespace FlickrNetTest.Async
             Assert.IsFalse(result.HasError);
             Assert.IsNotNull(result.Result);
 
-            Assert.IsTrue(result.Result.Count > 0, "Should return some photos.");
+            result.Result.Count.ShouldBeGreaterThan(0);
 
             var photos = result.Result;
             foreach (var photo in photos)
