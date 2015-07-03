@@ -44,6 +44,8 @@ namespace FlickrNet
         /// </summary>
         public string IconFarm { get; set; }
 
+        public bool? IsPro { get; set; }
+
         /// <summary>
         /// The buddy icon for this contact.
         /// </summary>
@@ -118,6 +120,9 @@ namespace FlickrNet
                         PhotosUploaded = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "rev_ignored":
+                        break;
+                    case "ispro":
+                        IsPro = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
