@@ -970,6 +970,43 @@ namespace FlickrNet45.Tests
             Assert.IsFalse(photos.Any(p => p.CountFaves == null), "Should not have any null CountFaves");
             Assert.IsFalse(photos.Any(p => p.CountComments == null), "Should not have any null CountComments");
         }
+
+        [Test]
+        public void IsCommonsMultiplePages()
+        {
+            var options = new PhotoSearchOptions
+            {
+                IsCommons = true,
+                Text = "photochrom",
+                SortOrder = PhotoSearchSortOrder.DatePostedDescending,
+                PerPage = 10,
+                Page = 1,
+                Extras = PhotoSearchExtras.DateUploaded
+            };
+
+            var allPhotos = new PhotoCollection();
+
+            for(var i = 0; i < 10; i++)
+            {
+                options.Page = i + 1;
+                var photos = Instance.PhotosSearch(options);
+                var ids = photos.Select(p => p.PhotoId).ToArray();
+                var photo = allPhotos.FirstOrDefault(p => ids.Contains(p.PhotoId));
+
+                if( photo != null)
+                {
+                    Assert.Fail("Duplicate photo {0} found on page {1}", photo.PhotoId, i + 1);
+                }
+
+                Console.WriteLine(Instance.LastRequest);
+                Console.WriteLine(Instance.LastResponse);
+
+                foreach (var p in photos)
+                {
+                    allPhotos.Add(p);
+                }
+            }
+        }
     }
 }
 // ReSharper restore SuggestUseVarKeywordEvident

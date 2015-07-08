@@ -75,6 +75,9 @@ namespace FlickrNet
         /// </summary>
         public bool? IsIgnored { get; set; }
 
+        // Does the contact have a Pro account
+        public bool? IsPro { get; set; }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "contact")
@@ -118,6 +121,9 @@ namespace FlickrNet
                         PhotosUploaded = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "rev_ignored":
+                        break;
+                    case "ispro":
+                        IsPro = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
