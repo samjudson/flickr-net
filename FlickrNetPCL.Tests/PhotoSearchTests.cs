@@ -17,11 +17,26 @@ namespace FlickrNetPCL.Tests
         [Test]
         public async void SearchForTagShouldReturnResults()
         {
-            var o = new PhotoSearchOptions {Tags = "colorful"};
+            var o = new PhotoSearchOptions {Tags = "colorful", Extras = PhotoSearchExtras.All};
             var result = await Instance.PhotosSearchAsync(o);
 
             Assert.NotNull(result);
             Assert.AreNotEqual(0, result.Count);
+
+            foreach(var photo in result)
+            {
+                Console.WriteLine("Photo {0}, {1}, {2}", photo.PhotoId, photo.Title, photo.DateTaken);
+            }
+        }
+
+        [Test]
+        public void ExtrasToStringShouldWork()
+        {
+            var extras = PhotoSearchExtras.All;
+
+            var result = UtilityMethods.ExtrasToString(extras);
+
+            Assert.IsNotNullOrEmpty(result);
         }
 
         [Test]

@@ -163,7 +163,8 @@ namespace FlickrNet
             foreach (PhotoSearchExtras extra in GetFlags(extras))
             {
 #if PCL
-                var o = e.GetCustomAttributes(typeof(DescriptionAttribute), false).ToList();
+                var info = e.GetField(extra.ToString());
+                var o = info.GetCustomAttributes(typeof(DescriptionAttribute), false).ToList();
                 if (!o.Any()) continue;
                 var att = (DescriptionAttribute)o.First();
 #else
