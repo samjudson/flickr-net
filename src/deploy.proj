@@ -1,0 +1,46 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+
+  <Import Project="$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks"/>
+
+  <PropertyGroup>
+    <Major>4</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+    <ShortVersion>$(Major).$(Minor).$(Build)-alpha</ShortVersion>
+    <Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+    <NugetKey></NugetKey>
+  </PropertyGroup>
+
+  <Target Name="Build" DependsOnTargets="Version;Compile;Zip">
+  </Target>
+
+  <Target Name="NuGet" DependsOnTargets="Build">
+    <ItemGroup>
+      <ReleaseFiles Include="bin\Release\FlickrNetPCL*.*"/>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(ReleaseFiles)" DestinationFolder="Builds"/>
+
+    <Exec Command="nuget pack FlickrNet.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
+
+    <WriteLinesToFile File="publish.bat" Overwrite="true" Lines="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg"/>
+  </Target>
+
+  <Target Name="NuGetPublish" DependsOnTargets="NuGet">
+    <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg $(NugetKey)"/>
+  </Target>
+
+  <Target Name="Version">
+
+    <ItemGroup>
+      <AssemblyInfoFiles Include="Properties\AssemblyInfo.cs"/>
+    </ItemGroup>
+    <AssemblyInfo AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyVersion="$(Version)"/>
+  </Target>
+
+  <Target Name="Compile" DependsOnTargets="Version">
+    <MSBuild Projects="FlickrNet.sln" Properties="Configuration=Release" Targets="Rebuild"/>
+  </Target>
+
+</Project>

@@ -12,6 +12,8 @@ or better still just download it from http://www.nuget.org/packages/FlickrNet.
 Change Log
 ==========
 
+July 2015: PCL version released via NuGet. Get [Flickr-4.0.2-alpha](http://www.nuget.org/packages/FlickrNet/4.0.2-alpha) to use.
+
 Feb 2014: Loads of tests being added. I've got the .Net 4.5 branch stable now. 
 I have a few more tests I want to migrate over, 
 and then I'd like to try creating a portable library version of the library, 

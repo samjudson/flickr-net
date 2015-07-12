@@ -13,6 +13,71 @@ namespace FlickrNet
 {
     public partial class Flickr
     {
+        public async Task<OAuthRequestToken> OAuthRequestTokenAsync(string callbackUrl)
+        {
+            const string url = "https://www.flickr.com/services/oauth/request_token";
+
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            FlickrResponder.OAuthGetBasicParameters(parameters);
+            parameters.Add("oauth_callback", callbackUrl);
+            parameters.Add("oauth_consumer_key", ApiKey);
+
+            var sig = OAuthCalculateSignature("POST", url, parameters, null);
+
+            parameters.Add("oauth_signature", sig);
+
+            var data = FlickrResponder.OAuthCalculatePostData(parameters);
+            var authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
+
+            var response = await FlickrResponder.DownloadDataAsync("POST", url, data, null, authHeader);
+
+            return OAuthRequestToken.ParseResponse(response);
+        }
+
+        public async Task<OAuthAccessToken> OAuthAccessTokenAsync(string requestToken, string requestTokenSecret, string verifier)
+        {
+            const string url = "https://www.flickr.com/services/oauth/access_token";
+
+            if (verifier.Contains("://"))
+            {
+                var uri = new Uri(verifier);
+                verifier =
+                    uri.Query.Split(new[] { '&' })
+                       .Select(s => s.Split(new[] { '=' }))
+                       .First(s => s[0] == "oauth_verifier")[1];
+            }
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            FlickrResponder.OAuthGetBasicParameters(parameters);
+
+            parameters.Add("oauth_consumer_key", ApiKey);
+            parameters.Add("oauth_verifier", verifier);
+            parameters.Add("oauth_token", requestToken);
+
+            var sig = OAuthCalculateSignature("POST", url, parameters, requestTokenSecret);
+
+            parameters.Add("oauth_signature", sig);
+
+            var data = FlickrResponder.OAuthCalculatePostData(parameters);
+            var authHeader = FlickrResponder.OAuthCalculateAuthHeader(parameters);
+            var response = await FlickrResponder.DownloadDataAsync("POST", url, data, null, authHeader);
+
+            var accessToken = FlickrNet.OAuthAccessToken.ParseResponse(response);
+
+            // Set current access token.
+            OAuthAccessToken = accessToken.Token;
+            OAuthAccessTokenSecret = accessToken.TokenSecret;
+
+            return accessToken;
+        }
+
+        public string OAuthCalculateAuthorizationUrl(string requestToken, AuthLevel perms, bool mobile = false)
+        {
+            var permsString = (perms == AuthLevel.None) ? "" : "&perms=" + UtilityMethods.AuthLevelToString(perms);
+
+            return "https://" + (mobile ? "m" : "www") + ".flickr.com/services/oauth/authorize?oauth_token=" +
+                   requestToken + permsString;
+        }
+
         internal async Task<T> GetResponseAsync<T>(IDictionary<string, string> parameters) where T : class, IFlickrParsable, new()
         {
             if (!parameters.ContainsKey("oauth_consumer_key"))

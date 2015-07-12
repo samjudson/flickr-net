@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>FlickrNet</id>
+        <version>4.0.0-alpha</version>
+        <title>FlickrNet API Library</title>
+        <authors>Sam Judson</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>My package description.</description>
+        <dependencies>
+            <group targetFramework=".NETPortable0.0-net45+sl5+wp8+win8">
+                <dependency id="Microsoft.Bcl" version="1.1.10" />
+                <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+                <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
+                <dependency id="Microsoft.Net.Http" version="2.2.29" />
+                <dependency id="PCLCrypto" version="1.0.0.15071" />
+                <dependency id="Validation" version="2.0.6.15003" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\FlickrNet45.dll" target="lib\net45\FlickrNet45.dll" />
+        <file src="bin\Release\FlickrNet45.pdb" target="lib\net45\FlickrNet45.pdb" />
+        <file src="bin\Release\FlickrNetPCL.dll" target="lib\portable-net45+sl5+wp8+win8\FlickrNetPCL.dll" />
+        <file src="bin\Release\FlickrNetPCL.pdb" target="lib\portable-net45+sl5+wp8+win8\FlickrNetPCL.pdb" />
+    </files>
+</package>
