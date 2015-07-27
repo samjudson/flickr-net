@@ -24,7 +24,7 @@
       <Output TaskParameter="Include" ItemName="HelpFile"/>
     </CreateItem>-->
     <Copy SourceFiles="@(ReleaseFiles)" DestinationFolder="Builds"/>
-    <Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>
+    <!--<Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>-->
 
     <Exec Command="nuget pack FlickrNet.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
     <Exec Command="nuget pack FlickrNet.WP7.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
@@ -65,10 +65,10 @@
     <MSBuild Projects="FlickrNetVS10.sln" Properties="Configuration=Release" Targets="Rebuild"/>
   </Target>
 
-  <Target Name="Zip" DependsOnTargets="Compile;Help">
+  <Target Name="Zip" DependsOnTargets="Compile">
     <ItemGroup>
       <ZipFiles Include="FlickrNet\bin\Release\*.*" Exclude="**\*.pdb" />
-      <ZipFiles Include="Sandcastle\Help\FlickrNet.chm" />
+      <!--<ZipFiles Include="Sandcastle\Help\FlickrNet.chm" />-->
     </ItemGroup>
     <MakeDir Directories="Builds" Condition="!Exists('Builds')" />
     <Zip Files="@(ZipFiles)" ZipFileName="Builds\FlickrNet-$(ShortVersion).zip" ZipLevel="9" Flatten="true"/>
