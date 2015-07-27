@@ -44,10 +44,10 @@ namespace FlickrNet
         /// <returns></returns>
         public NamespaceCollection MachineTagsGetNamespaces(string predicate, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.machinetags.getNamespaces");
-            if (!String.IsNullOrEmpty(predicate)) parameters.Add("predicate", predicate);
+            if (!string.IsNullOrEmpty(predicate)) parameters.Add("predicate", predicate);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -94,10 +94,10 @@ namespace FlickrNet
         /// <returns></returns>
         public PredicateCollection MachineTagsGetPredicates(string namespaceName, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.machinetags.getPredicates");
-            if (!String.IsNullOrEmpty(namespaceName)) parameters.Add("namespace", namespaceName);
+            if (!string.IsNullOrEmpty(namespaceName)) parameters.Add("namespace", namespaceName);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -145,11 +145,11 @@ namespace FlickrNet
         /// <returns></returns>
         public PairCollection MachineTagsGetPairs(string namespaceName, string predicate, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.machinetags.getPairs");
-            if (!String.IsNullOrEmpty(namespaceName)) parameters.Add("namespace", namespaceName);
-            if (!String.IsNullOrEmpty(predicate)) parameters.Add("predicate", predicate);
+            if (!string.IsNullOrEmpty(namespaceName)) parameters.Add("namespace", namespaceName);
+            if (!string.IsNullOrEmpty(predicate)) parameters.Add("predicate", predicate);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -177,7 +177,7 @@ namespace FlickrNet
         /// <returns></returns>
         public ValueCollection MachineTagsGetValues(string namespaceName, string predicate, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.machinetags.getValues");
             parameters.Add("namespace", namespaceName);
@@ -245,16 +245,16 @@ namespace FlickrNet
         /// <returns></returns>
         public ValueCollection MachineTagsGetRecentValues(string namespaceName, string predicate, DateTime addedSince, int page, int perPage)
         {
-            if (String.IsNullOrEmpty(namespaceName) && String.IsNullOrEmpty(predicate) && addedSince == DateTime.MinValue)
+            if (string.IsNullOrEmpty(namespaceName) && string.IsNullOrEmpty(predicate) && addedSince == DateTime.MinValue)
             {
                 throw new ArgumentException("Must supply one of namespaceName, predicate or addedSince");
             }
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.machinetags.getRecentValues");
-            if (!String.IsNullOrEmpty(namespaceName)) parameters.Add("namespace", namespaceName);
-            if (!String.IsNullOrEmpty(predicate)) parameters.Add("predicate", predicate);
+            if (!string.IsNullOrEmpty(namespaceName)) parameters.Add("namespace", namespaceName);
+            if (!string.IsNullOrEmpty(predicate)) parameters.Add("predicate", predicate);
             if (addedSince != DateTime.MinValue) parameters.Add("added_since", UtilityMethods.DateToUnixTimestamp(addedSince));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));

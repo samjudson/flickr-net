@@ -179,7 +179,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetInfoCanBlogTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.UserId = TestData.TestUserId;
             o.PerPage = 5;
 

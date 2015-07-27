@@ -16,7 +16,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "size")
             {
-                Size size = new Size();
+                var size = new Size();
                 ((IFlickrParsable)size).Load(reader);
                 Add(size);
             }

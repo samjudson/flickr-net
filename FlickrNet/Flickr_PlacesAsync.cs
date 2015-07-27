@@ -17,7 +17,7 @@ namespace FlickrNet
         {
             if (query == null) throw new ArgumentNullException("query");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.find");
             parameters.Add("query", query);
 
@@ -45,7 +45,7 @@ namespace FlickrNet
         public void PlacesFindByLatLonAsync(double latitude, double longitude, GeoAccuracy accuracy,
                                             Action<FlickrResult<Place>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.findByLatLon");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -57,7 +57,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                     {
-                        FlickrResult<Place> result = new FlickrResult<Place>();
+                        var result = new FlickrResult<Place>();
                         result.Error = r.Error;
                         if (!r.HasError)
                         {
@@ -75,7 +75,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PlacesGetChildrenWithPhotosPublicAsync(string placeId, string woeId, Action<FlickrResult<PlaceCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getChildrenWithPhotosPublic");
 
             if ((placeId == null || placeId.Length == 0) && (woeId == null || woeId.Length == 0))
@@ -83,8 +83,8 @@ namespace FlickrNet
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
 
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
             GetResponseAsync<PlaceCollection>(parameters, callback);
         }
@@ -97,16 +97,16 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PlacesGetInfoAsync(string placeId, string woeId, Action<FlickrResult<PlaceInfo>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getInfo");
 
-            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+            if (string.IsNullOrEmpty(placeId) && string.IsNullOrEmpty(woeId))
             {
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
 
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
             GetResponseAsync<PlaceInfo>(parameters, callback);
         }
@@ -118,7 +118,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PlacesGetInfoByUrlAsync(string url, Action<FlickrResult<PlaceInfo>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getInfoByUrl");
             parameters.Add("url", url);
 
@@ -134,7 +134,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PlacesGetPlaceTypesAsync(Action<FlickrResult<PlaceTypeInfoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getPlaceTypes");
 
             GetResponseAsync<PlaceTypeInfoCollection>(parameters, callback);
@@ -148,16 +148,16 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PlacesGetShapeHistoryAsync(string placeId, string woeId, Action<FlickrResult<ShapeDataCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getShapeHistory");
 
-            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+            if (string.IsNullOrEmpty(placeId) && string.IsNullOrEmpty(woeId))
             {
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
 
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
             GetResponseAsync<ShapeDataCollection>(parameters, callback);
 
@@ -209,15 +209,15 @@ namespace FlickrNet
         public void PlacesGetTopPlacesListAsync(PlaceType placeType, DateTime date, string placeId, string woeId,
                                                 Action<FlickrResult<PlaceCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.getTopPlacesList");
 
             parameters.Add("place_type_id", placeType.ToString("D"));
             if (date != DateTime.MinValue)
                 parameters.Add("date",
                                date.ToString("yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo));
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
             GetResponseAsync<PlaceCollection>(parameters, callback);
         }
@@ -268,12 +268,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForUser");
 
             parameters.Add("place_type_id", placeType.ToString("D"));
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (threshold > 0)
                 parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (minTakenDate != DateTime.MinValue)
@@ -312,18 +312,18 @@ namespace FlickrNet
                                              DateTime maxUploadDate, DateTime minTakenDate, DateTime maxTakenDate,
                                              Action<FlickrResult<PlaceCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForTags");
 
             parameters.Add("place_type_id", placeType.ToString("D"));
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (threshold > 0)
                 parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (tags != null && tags.Length > 0) parameters.Add("tags", String.Join(",", tags));
+            if (tags != null && tags.Length > 0) parameters.Add("tags", string.Join(",", tags));
             if (tagMode != TagMode.None) parameters.Add("tag_mode", UtilityMethods.TagModeToString(tagMode));
             if (machineTags != null && machineTags.Length > 0)
-                parameters.Add("machine_tags", String.Join(",", machineTags));
+                parameters.Add("machine_tags", string.Join(",", machineTags));
             if (machineTagMode != MachineTagMode.None)
                 parameters.Add("machine_tag_mode", UtilityMethods.MachineTagModeToString(machineTagMode));
             if (minTakenDate != DateTime.MinValue)
@@ -359,12 +359,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForContacts");
 
             parameters.Add("place_type_id", placeType.ToString("D"));
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (threshold > 0)
                 parameters.Add("threshold", threshold.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (contactType != ContactSearch.None)
@@ -393,12 +393,12 @@ namespace FlickrNet
                                                     BoundaryBox boundaryBox,
                                                     Action<FlickrResult<PlaceCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.placesForBoundingBox");
 
             parameters.Add("place_type_id", placeType.ToString("D"));
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             parameters.Add("bbox", boundaryBox.ToString());
 
             GetResponseAsync<PlaceCollection>(parameters, callback);
@@ -460,16 +460,16 @@ namespace FlickrNet
                                             DateTime minTakenDate, DateTime maxTakenDate,
                                             Action<FlickrResult<TagCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.places.tagsForPlace");
 
-            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+            if (string.IsNullOrEmpty(placeId) && string.IsNullOrEmpty(woeId))
             {
                 throw new FlickrException("Both placeId and woeId cannot be null or empty.");
             }
 
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
             if (minTakenDate != DateTime.MinValue)
                 parameters.Add("min_taken_date", UtilityMethods.DateToMySql(minTakenDate));
             if (maxTakenDate != DateTime.MinValue)

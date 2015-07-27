@@ -31,7 +31,7 @@ namespace FlickrNetTest
         public void PhotosSearchSignedTest()
         {
             Flickr f = TestData.GetSignedInstance();
-            PhotoSearchOptions o = new PhotoSearchOptions {Tags = "Test", PerPage = 5};
+            var o = new PhotoSearchOptions {Tags = "Test", PerPage = 5};
             PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.AreEqual(5, photos.PerPage, "PerPage should equal 5.");
@@ -41,7 +41,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosSearchFavorites()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {UserId = "me", Faves = true, Tags = "cat"};
+            var o = new PhotoSearchOptions {UserId = "me", Faves = true, Tags = "cat"};
 
             PhotoCollection p = AuthInstance.PhotosSearch(o);
 
@@ -53,7 +53,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosSearchCameraIphone()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Camera = "iPhone 5S",
                                            MinUploadDate = DateTime.Now.AddDays(-7),
@@ -70,7 +70,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotoSearchByPathAlias()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
             {
                 GroupPathAlias = "api",
                 PerPage = 10
@@ -99,7 +99,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchUserIdTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {UserId = TestData.TestUserId};
+            var o = new PhotoSearchOptions {UserId = TestData.TestUserId};
 
             PhotoCollection photos = Instance.PhotosSearch(o);
 
@@ -212,7 +212,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchGetLicenseNotNull()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Tags = "microsoft",
                                            SortOrder = PhotoSearchSortOrder.DatePostedDescending,
@@ -230,7 +230,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchGetLicenseAttributionNoDerivs()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Tags = "microsoft",
                                            SortOrder = PhotoSearchSortOrder.DatePostedDescending
@@ -249,7 +249,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchGetMultipleLicenses()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Tags = "microsoft",
                                            PerPage = 500,
@@ -274,7 +274,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchGetLicenseNoKnownCopright()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Tags = "microsoft",
                                            SortOrder = PhotoSearchSortOrder.DatePostedDescending
@@ -293,7 +293,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchSearchTwice()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 10};
+            var o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 10};
 
             PhotoCollection photos = Instance.PhotosSearch(o);
 
@@ -310,7 +310,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchPageTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {Tags = "colorful", PerPage = 10, Page = 3};
+            var o = new PhotoSearchOptions {Tags = "colorful", PerPage = 10, Page = 3};
 
             PhotoCollection photos = Instance.PhotosSearch(o);
 
@@ -340,7 +340,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchIsCommons()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            IsCommons = true,
                                            Tags = "newyork",
@@ -359,7 +359,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchDateTakenGranualityTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            UserId = "8748614@N05",
                                            Tags = "primavera",
@@ -373,7 +373,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchDetailedTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Tags = "applestore",
                                            UserId = "41888973@N00",
@@ -396,8 +396,8 @@ namespace FlickrNetTest
             Assert.AreEqual(true, photos[0].IsPublic);
             Assert.AreEqual(false, photos[0].IsFriend);
 
-            DateTime dateTaken = new DateTime(2009, 5, 18, 4, 21, 46);
-            DateTime dateUploaded = new DateTime(2009, 5, 19, 21, 21, 46);
+            var dateTaken = new DateTime(2009, 5, 18, 4, 21, 46);
+            var dateUploaded = new DateTime(2009, 5, 19, 21, 21, 46);
             Assert.IsTrue(photos[0].LastUpdated > dateTaken, "Last updated date was not correct.");
             Assert.AreEqual(dateTaken, photos[0].DateTaken, "Date taken date was not correct.");
             Assert.AreEqual(dateUploaded, photos[0].DateUploaded, "Date uploaded date was not correct.");
@@ -419,7 +419,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchTagsTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {PerPage = 10, Tags = "test", Extras = PhotoSearchExtras.Tags};
+            var o = new PhotoSearchOptions {PerPage = 10, Tags = "test", Extras = PhotoSearchExtras.Tags};
 
             PhotoCollection photos = Instance.PhotosSearch(o);
 
@@ -442,7 +442,7 @@ namespace FlickrNetTest
         [Ignore]
         public void PhotosSearchPerPageMultipleTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {Tags = "microsoft"};
+            var o = new PhotoSearchOptions {Tags = "microsoft"};
             o.Licenses.Add(LicenseType.AttributionCC);
             o.Licenses.Add(LicenseType.AttributionNoDerivativesCC);
             o.Licenses.Add(LicenseType.AttributionNoncommercialCC);
@@ -509,7 +509,7 @@ namespace FlickrNetTest
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("nb-NO");
 
-            PhotoSearchOptions o = new PhotoSearchOptions {HasGeo = true};
+            var o = new PhotoSearchOptions {HasGeo = true};
             o.Extras |= PhotoSearchExtras.Geo;
             o.Tags = "colorful";
             o.TagMode = TagMode.AllTags;
@@ -522,7 +522,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchTagCollectionTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            UserId = TestData.TestUserId,
                                            PerPage = 10,
@@ -542,7 +542,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchMultipleTagsTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.Tags = "art,collection";
             o.TagMode = TagMode.AllTags;
             o.PerPage = 10;
@@ -579,7 +579,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchGroupIdTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.GroupId = TestData.GroupId;
             o.PerPage = 10;
 
@@ -617,7 +617,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchLatLongGeoRadiusTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.HasGeo = true;
             o.MinTakenDate = DateTime.Today.AddYears(-3);
             o.PerPage = 10;
@@ -670,7 +670,7 @@ namespace FlickrNetTest
                 Assert.AreNotEqual(0, photo.Latitude, "Latitude should not be zero.");
 
                 LogOnError("Photo ID " + photo.PhotoId,
-                           String.Format("Lat={0}, Long={1}", photo.Latitude, photo.Longitude));
+                           string.Format("Lat={0}, Long={1}", photo.Latitude, photo.Longitude));
 
                 // Note: +/-1 is not an exact match to 5.4km, but anything outside of these bounds is definitely wrong.
                 Assert.IsTrue(photo.Latitude > lat - 1 && photo.Latitude < lat + 1,
@@ -721,8 +721,8 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchUrlLimitTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions {Extras = PhotoSearchExtras.All, TagMode = TagMode.AnyTag};
-            StringBuilder sb = new StringBuilder();
+            var o = new PhotoSearchOptions {Extras = PhotoSearchExtras.All, TagMode = TagMode.AnyTag};
+            var sb = new StringBuilder();
             for (var i = 1; i < 200; i++) sb.Append("tagnumber" + i);
             o.Tags = sb.ToString();
 
@@ -732,7 +732,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchRussianCharacters()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.Tags = "снег";
 
             var photos = Instance.PhotosSearch(o);
@@ -743,20 +743,32 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchRussianTagsReturned()
         {
-            var o = new PhotoSearchOptions {PerPage = 100, Extras = PhotoSearchExtras.Tags, Tags = "фото"};
+            var o = new PhotoSearchOptions { PerPage = 200, Extras = PhotoSearchExtras.Tags, Tags = "фото" };
 
             var photos = Instance.PhotosSearch(o);
 
             photos.Count.ShouldNotBe(0);
             photos.ShouldContain(p => p.Tags.Any(t => t == "фото"));
-            photos.ShouldContain(p => p.Title.Contains("фото"));
+        }
+
+        [Test]
+        public void PhotosSearchRussianTextReturned()
+        {
+            const string russian = "фото";
+
+            var o = new PhotoSearchOptions { PerPage = 200, Extras = PhotoSearchExtras.Tags | PhotoSearchExtras.Description, Text = russian };
+
+            var photos = Instance.PhotosSearch(o);
+
+            photos.Count.ShouldNotBe(0);
+            photos.ShouldContain(p => p.Tags.Any(t => t == russian) || p.Title.Contains(russian) || p.Description.Contains(russian));
         }
 
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosSearchAuthRussianCharacters()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.Tags = "снег";
 
             var photos = AuthInstance.PhotosSearch(o);
@@ -767,7 +779,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchRotation()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                                        {
                                            Extras = PhotoSearchExtras.Rotation,
                                            UserId = TestData.TestUserId,
@@ -801,7 +813,7 @@ namespace FlickrNetTest
             Assert.IsTrue(
                 photos.Any(
                     p =>
-                    !String.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue),
+                    !string.IsNullOrEmpty(p.Large1600Url) && p.Large1600Height.HasValue && p.Large1600Width.HasValue),
                 "At least one photo should have a large1600 image url and height and width.");
         }
 
@@ -822,7 +834,7 @@ namespace FlickrNetTest
             Assert.IsTrue(
                 photos.Any(
                     p =>
-                    !String.IsNullOrEmpty(p.Large2048Url) && p.Large2048Height.HasValue && p.Large2048Width.HasValue));
+                    !string.IsNullOrEmpty(p.Large2048Url) && p.Large2048Height.HasValue && p.Large2048Width.HasValue));
         }
 
         [Test]
@@ -832,7 +844,7 @@ namespace FlickrNetTest
             var contacts = AuthInstance.ContactsGetList(1, 1000).Select(c => c.UserId).ToList();
 
             // Test with user id = "me"
-            PhotoSearchOptions o = new PhotoSearchOptions
+            var o = new PhotoSearchOptions
                         {
                             UserId = "me",
                             Contacts = ContactSearch.AllContacts,

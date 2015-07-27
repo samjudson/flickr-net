@@ -111,7 +111,7 @@ namespace FlickrNetTest
         public void PhotosetsCreateAddPhotosTest()
         {
             byte[] imageBytes = TestData.TestImageBytes;
-            Stream s = new MemoryStream(imageBytes);
+            var s = new MemoryStream(imageBytes);
 
             const string title = "Test Title";
             const string title2 = "New Test Title";

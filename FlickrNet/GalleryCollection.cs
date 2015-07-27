@@ -79,7 +79,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "gallery")
             {
-                Gallery r = new Gallery();
+                var r = new Gallery();
                 ((IFlickrParsable)r).Load(reader);
                 Add(r);
             }

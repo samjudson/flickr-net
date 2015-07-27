@@ -18,7 +18,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
             
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.addPhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
@@ -48,11 +48,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
             
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.create");
             parameters.Add("primary_photo_id", primaryPhotoId);
-            if (!String.IsNullOrEmpty(title)) parameters.Add("title", title);
-            if (!String.IsNullOrEmpty(description)) parameters.Add("description", description);
+            if (!string.IsNullOrEmpty(title)) parameters.Add("title", title);
+            if (!string.IsNullOrEmpty(description)) parameters.Add("description", description);
 
             GetResponseAsync<Photoset>(parameters, callback);
         }
@@ -66,7 +66,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.delete");
             parameters.Add("photoset_id", photosetId);
 
@@ -84,7 +84,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
             
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.editMeta");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("title", title);
@@ -127,7 +127,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
             
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.editPhotos");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("primary_photo_id", primaryPhotoId);
@@ -144,7 +144,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsGetContextAsync(string photoId, string photosetId, Action<FlickrResult<Context>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getContext");
             parameters.Add("photo_id", photoId);
             parameters.Add("photoset_id", photosetId);
@@ -159,7 +159,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsGetInfoAsync(string photosetId, Action<FlickrResult<Photoset>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getInfo");
             parameters.Add("photoset_id", photosetId);
 
@@ -211,7 +211,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsGetListAsync(string userId, int page, int perPage, Action<FlickrResult<PhotosetCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.getList");
             if (userId != null) parameters.Add("user_id", userId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -350,7 +350,7 @@ namespace FlickrNet
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0)
                 parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
-            if (media != MediaType.None) parameters.Add("media",(media == MediaType.All? "all": (media == MediaType.Photos? "photos": (media == MediaType.Videos ? "videos" : String.Empty))));
+            if (media != MediaType.None) parameters.Add("media",(media == MediaType.All? "all": (media == MediaType.Photos? "photos": (media == MediaType.Videos ? "videos" : string.Empty))));
 
             GetResponseAsync<PhotosetPhotoCollection>(parameters, callback);
         }
@@ -364,7 +364,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsOrderSetsAsync(IEnumerable<string> photosetIds, Action<FlickrResult<NoResponse>> callback)
         {
-            List<string> list = new List<string>(photosetIds);
+            var list = new List<string>(photosetIds);
             PhotosetsOrderSetsAsync(string.Join(",", list.ToArray()), callback);
         }
 
@@ -389,7 +389,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsOrderSetsAsync(string photosetIds, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.orderSets");
             parameters.Add("photoset_ids", photosetIds);
 
@@ -407,7 +407,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsRemovePhotoAsync(string photosetId, string photoId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.removePhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
@@ -426,10 +426,10 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsRemovePhotosAsync(string photosetId, string[] photoIds, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.removePhotos");
             parameters.Add("photoset_id", photosetId);
-            parameters.Add("photo_ids", String.Join(",", photoIds));
+            parameters.Add("photo_ids", string.Join(",", photoIds));
 
             GetResponseAsync<NoResponse>(parameters, callback);
         }
@@ -445,10 +445,10 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsReorderPhotosAsync(string photosetId, string[] photoIds, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.reorderPhotos");
             parameters.Add("photoset_id", photosetId);
-            parameters.Add("photo_ids", String.Join(",", photoIds));
+            parameters.Add("photo_ids", string.Join(",", photoIds));
 
             GetResponseAsync<NoResponse>(parameters, callback);
         }
@@ -464,7 +464,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsSetPrimaryPhotoAsync(string photosetId, string photoId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.setPrimaryPhoto");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("photo_id", photoId);
@@ -480,7 +480,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsCommentsGetListAsync(string photosetId, Action<FlickrResult<PhotosetCommentCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.getList");
             parameters.Add("photoset_id", photosetId);
 
@@ -495,7 +495,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsCommentsAddCommentAsync(string photosetId, string commentText, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.addComment");
             parameters.Add("photoset_id", photosetId);
             parameters.Add("comment_text", commentText);
@@ -504,7 +504,7 @@ namespace FlickrNet
                 parameters, 
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.HasError = r.HasError;
                     if (r.HasError)
                         result.Error = r.Error;
@@ -523,7 +523,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsCommentsDeleteCommentAsync(string commentId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.deleteComment");
             parameters.Add("comment_id", commentId);
 
@@ -538,7 +538,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosetsCommentsEditCommentAsync(string commentId, string commentText, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photosets.comments.editComment");
             parameters.Add("comment_id", commentId);
             parameters.Add("comment_text", commentText);

@@ -80,7 +80,7 @@ namespace FlickrNet
         /// </summary>
         public string GroupUrl
         {
-            get { return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/groups/{0}/", GroupId); }
+            get { return string.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/groups/{0}/", GroupId); }
         }
 
         void IFlickrParsable.Load(XmlReader reader)

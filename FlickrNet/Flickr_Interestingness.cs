@@ -48,7 +48,7 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection InterestingnessGetList(DateTime date, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.interestingness.getList");
 
             if (date > DateTime.MinValue) parameters.Add("date", date.ToString("yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo));

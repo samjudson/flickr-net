@@ -38,7 +38,9 @@ namespace FlickrNet
         /// </summary>
         public string Farm { get; set; }
 
-        // The path alias for this user, if set.
+        /// <summary>
+        /// The path alias for this user, if set.
+        /// </summary>
         public string PathAlias { get; set; }
 
         /// <summary>
@@ -292,7 +294,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? OwnerUserId : PathAlias, PhotoId);
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", string.IsNullOrEmpty(PathAlias) ? OwnerUserId : PathAlias, PhotoId);
             }
         }
 
@@ -341,7 +343,7 @@ namespace FlickrNet
         /// </remarks>
         public string MediumUrl
         {
-            get { return UtilityMethods.UrlFormat(this, String.Empty, "jpg"); }
+            get { return UtilityMethods.UrlFormat(this, string.Empty, "jpg"); }
         }
 
         /// <summary>
@@ -563,7 +565,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "tag")
             {
-                PhotoInfoTag tag = new PhotoInfoTag();
+                var tag = new PhotoInfoTag();
                 ((IFlickrParsable)tag).Load(reader);
                 Tags.Add(tag);
             }
@@ -575,7 +577,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "note")
             {
-                PhotoInfoNote note = new PhotoInfoNote();
+                var note = new PhotoInfoNote();
                 ((IFlickrParsable)note).Load(reader);
                 Notes.Add(note);
             }
@@ -750,7 +752,7 @@ namespace FlickrNet
                         OwnerIconFarm = reader.Value;
                         break;
                     case "path_alias":
-                        PathAlias = String.IsNullOrEmpty(reader.Value) ? null : reader.Value;
+                        PathAlias = string.IsNullOrEmpty(reader.Value) ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

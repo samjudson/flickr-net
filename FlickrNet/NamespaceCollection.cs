@@ -59,7 +59,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "namespace")
             {
-                Namespace ns = new Namespace();
+                var ns = new Namespace();
                 ((IFlickrParsable)ns).Load(reader);
                 Add(ns);
             }

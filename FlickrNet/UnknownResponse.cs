@@ -23,7 +23,7 @@ namespace FlickrNet
         /// <returns></returns>
         public XmlDocument GetXmlDocument()
         {
-            XmlDocument document = new XmlDocument();
+            var document = new XmlDocument();
             document.LoadXml(ResponseXml);
 
             return document;
@@ -74,7 +74,7 @@ namespace FlickrNet
         /// <returns>An array of string values.</returns>
         public string[] GetElementArray(string elementName)
         {
-            List<string> array = new List<string>();
+            var array = new List<string>();
             foreach (System.Xml.XmlNode n in GetXmlDocument().SelectNodes("//" + elementName))
             {
                 array.Add(n.InnerText);
@@ -90,7 +90,7 @@ namespace FlickrNet
         /// <returns>An array of string values.</returns>
         public string[] GetElementArray(string elementName, string attributeName)
         {
-            List<string> array = new List<string>();
+            var array = new List<string>();
             foreach (System.Xml.XmlNode n in GetXmlDocument().SelectNodes("//" + elementName + "/@" + attributeName))
             {
                 array.Add(n.InnerText);

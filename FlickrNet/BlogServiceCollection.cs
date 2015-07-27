@@ -19,7 +19,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "service")
             {
-                BlogService service = new BlogService();
+                var service = new BlogService();
                 ((IFlickrParsable)service).Load(reader);
                 Add(service);
             }

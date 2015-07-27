@@ -44,6 +44,9 @@ namespace FlickrNet
         /// </summary>
         public string IconFarm { get; set; }
 
+        /// <summary>
+        /// Is the contact a Pro user.
+        /// </summary>
         public bool? IsPro { get; set; }
 
         /// <summary>

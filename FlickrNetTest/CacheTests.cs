@@ -54,7 +54,7 @@ namespace FlickrNetTest
             Assert.IsNotNull(item, "Cache should now contain the item.");
             Assert.IsInstanceOf<ResponseCacheItem>(item);
 
-            ResponseCacheItem response = item as ResponseCacheItem;
+            var response = item as ResponseCacheItem;
 
             Assert.IsNotNull(response.Url, "Url should not be null.");
             Assert.AreEqual(lastUrl, response.Url.AbsoluteUri, "Url should match the url requested from the cache.");

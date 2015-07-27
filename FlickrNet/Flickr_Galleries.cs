@@ -28,11 +28,11 @@ namespace FlickrNet
         /// <param name="comment">A short comment or story to accompany the photo.</param>
         public void GalleriesAddPhoto(string galleryId, string photoId, string comment)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.addPhoto");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("photo_id", photoId);
-            if (!String.IsNullOrEmpty(comment)) parameters.Add("comment", comment);
+            if (!string.IsNullOrEmpty(comment)) parameters.Add("comment", comment);
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -57,11 +57,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.create");
             parameters.Add("title", title);
             parameters.Add("description", description);
-            if (!String.IsNullOrEmpty(primaryPhotoId)) parameters.Add("primary_photo_id", primaryPhotoId);
+            if (!string.IsNullOrEmpty(primaryPhotoId)) parameters.Add("primary_photo_id", primaryPhotoId);
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -86,11 +86,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.editMeta");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("title", title);
-            if (!String.IsNullOrEmpty(description)) parameters.Add("description", description);
+            if (!string.IsNullOrEmpty(description)) parameters.Add("description", description);
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -107,7 +107,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.editPhoto");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("photo_id", photoId);
@@ -129,12 +129,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.editPhotos");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("primary_photo_id", primaryPhotoId);
-            List<string> ids = new List<string>(photoIds);
-            parameters.Add("photo_ids", String.Join(",", ids.ToArray()));
+            var ids = new List<string>(photoIds);
+            parameters.Add("photo_ids", string.Join(",", ids.ToArray()));
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -146,7 +146,7 @@ namespace FlickrNet
         /// <returns></returns>
         public Gallery GalleriesGetInfo(string galleryId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getInfo");
             parameters.Add("gallery_id", galleryId);
 
@@ -196,9 +196,9 @@ namespace FlickrNet
         /// <returns></returns>
         public GalleryCollection GalleriesGetList(string userId, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getList");
-            if (!String.IsNullOrEmpty(userId)) parameters.Add("user_id", userId);
+            if (!string.IsNullOrEmpty(userId)) parameters.Add("user_id", userId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -224,7 +224,7 @@ namespace FlickrNet
         /// <returns></returns>
         public GalleryCollection GalleriesGetListForPhoto(string photoId, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getListForPhoto");
             parameters.Add("photo_id", photoId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -251,7 +251,7 @@ namespace FlickrNet
         /// <returns></returns>
         public GalleryPhotoCollection GalleriesGetPhotos(string galleryId, PhotoSearchExtras extras)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getPhotos");
             parameters.Add("gallery_id", galleryId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));

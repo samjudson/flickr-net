@@ -14,7 +14,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(suggestionId)) throw new ArgumentNullException("suggestionId");
+            if (string.IsNullOrEmpty(suggestionId)) throw new ArgumentNullException("suggestionId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.suggestions.approveSuggestion");
@@ -50,7 +50,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(suggestionId)) throw new ArgumentNullException("suggestionId");
+            if (string.IsNullOrEmpty(suggestionId)) throw new ArgumentNullException("suggestionId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.suggestions.rejectSuggestion");
@@ -68,7 +68,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(suggestionId)) throw new ArgumentNullException("suggestionId");
+            if (string.IsNullOrEmpty(suggestionId)) throw new ArgumentNullException("suggestionId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.suggestions.removeSuggestion");

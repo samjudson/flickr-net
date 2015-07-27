@@ -16,7 +16,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetListPhotoAsync(string photoId, Action<FlickrResult<Collection<PhotoInfoTag>>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListPhoto");
             parameters.Add("api_key", apiKey);
             parameters.Add("photo_id", photoId);
@@ -25,7 +25,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<Collection<PhotoInfoTag>> result = new FlickrResult<Collection<PhotoInfoTag>>();
+                    var result = new FlickrResult<Collection<PhotoInfoTag>>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -51,7 +51,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetListUserAsync(string userId, Action<FlickrResult<TagCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUser");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -99,7 +99,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetListUserPopularAsync(string userId, int count, Action<FlickrResult<TagCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUserPopular");
             if (userId != null) parameters.Add("user_id", userId);
             if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -125,7 +125,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUserRaw");
             if (tag != null && tag.Length > 0) parameters.Add("tag", tag);
 
@@ -140,7 +140,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getMostFrequentlyUsed");
 
             GetResponseAsync<TagCollection>(parameters, callback);
@@ -153,7 +153,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetRelatedAsync(string tag, Action<FlickrResult<TagCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getRelated");
             parameters.Add("api_key", apiKey);
             parameters.Add("tag", tag);
@@ -168,7 +168,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetClustersAsync(string tag, Action<FlickrResult<ClusterCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getClusters");
             parameters.Add("tag", tag);
 
@@ -205,7 +205,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetClusterPhotosAsync(string tag, string clusterId, PhotoSearchExtras extras, Action<FlickrResult<PhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getClusterPhotos");
             parameters.Add("tag", tag);
             parameters.Add("cluster_id", clusterId);
@@ -231,14 +231,14 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TagsGetHotListAsync(string period, int count, Action<FlickrResult<HotTagCollection>> callback)
         {
-            if (!String.IsNullOrEmpty(period) && period != "day" && period != "week")
+            if (!string.IsNullOrEmpty(period) && period != "day" && period != "week")
             {
                 throw new ArgumentException("Period must be either 'day' or 'week'.", "period");
             }
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getHotList");
-            if (!String.IsNullOrEmpty(period)) parameters.Add("period", period);
+            if (!string.IsNullOrEmpty(period)) parameters.Add("period", period);
             if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             GetResponseAsync<HotTagCollection>(parameters, callback);

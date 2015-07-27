@@ -42,8 +42,8 @@ namespace FlickrNet
         public PersistentCache(string filename, CacheItemPersister persister)
         {
             this.persister = persister;
-            this.dataFile = new FileInfo(filename);
-            this.lockFile = new LockFile(filename + ".lock");
+            dataFile = new FileInfo(filename);
+            lockFile = new LockFile(filename + ".lock");
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace FlickrNet
             if (size < 0)
                 throw new ArgumentException("Cannot shrink to a negative size", "size");
 
-            List<ICacheItem> flushed = new List<ICacheItem>();
+            var flushed = new List<ICacheItem>();
 
             using (lockFile.Acquire())
             {
@@ -155,7 +155,7 @@ namespace FlickrNet
                 {
                     if (totalSize <= size)
                         break;
-                    ICacheItem cacheItem = (ICacheItem)values.GetValue(i);
+                    var cacheItem = (ICacheItem)values.GetValue(i);
                     totalSize -= cacheItem.FileSize;
                     flushed.Add(RemoveKey(keys[i]));
                 }
@@ -227,7 +227,7 @@ namespace FlickrNet
         {
             if (!dataTable.ContainsKey(key)) return null;
 
-            ICacheItem cacheItem = (ICacheItem)dataTable[key];
+            var cacheItem = (ICacheItem)dataTable[key];
             dataTable.Remove(key);
             dirty = true;
             return cacheItem;
@@ -288,7 +288,7 @@ namespace FlickrNet
 
         private Dictionary<string, ICacheItem> Load(Stream s)
         {
-            Dictionary<string, ICacheItem> table = new Dictionary<string, ICacheItem>();
+            var table = new Dictionary<string, ICacheItem>();
             int itemCount = UtilityMethods.ReadInt32(s);
             for (int i = 0; i < itemCount; i++)
             {

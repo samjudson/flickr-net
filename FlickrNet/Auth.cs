@@ -34,12 +34,6 @@ namespace FlickrNet
     [Serializable]
     public sealed class Auth : IFlickrParsable
     {
-        /// <summary>
-        /// Creates a new instance of the <see cref="Auth"/> class.
-        /// </summary>
-        public Auth()
-        {
-        }
 
         /// <summary>
         /// The authentication token returned by the <see cref="Flickr.AuthGetToken"/> or <see cref="Flickr.AuthCheckToken(string)"/> methods.

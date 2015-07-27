@@ -18,7 +18,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "csv" && reader.NodeType != System.Xml.XmlNodeType.EndElement)
             {
-                CsvFile file = new CsvFile();
+                var file = new CsvFile();
                 ((IFlickrParsable)file).Load(reader);
                 Add(file);
             }

@@ -16,7 +16,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "tag")
             {
-                Tag member = new Tag();
+                var member = new Tag();
                 ((IFlickrParsable)member).Load(reader);
                 Add(member);
             }
@@ -75,7 +75,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "tag")
             {
-                RawTag member = new RawTag();
+                var member = new RawTag();
                 ((IFlickrParsable)member).Load(reader);
                 Add(member);
             }

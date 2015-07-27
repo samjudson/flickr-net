@@ -26,7 +26,7 @@ namespace FlickrNet
 
             parameters.Add("oauth_signature", sig);
 
-            string response = FlickrResponder.GetDataResponse(this, url, parameters); ;
+            string response = FlickrResponder.GetDataResponse(this, url, parameters); 
 
             return OAuthRequestToken.ParseResponse(response);
         }

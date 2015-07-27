@@ -25,10 +25,10 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+            if (string.IsNullOrEmpty(placeId) && string.IsNullOrEmpty(woeId))
                 throw new ArgumentException("You must pass either a placeId or a woeId");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.batchCorrectLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -49,14 +49,14 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(placeId) && String.IsNullOrEmpty(woeId))
+            if (string.IsNullOrEmpty(placeId) && string.IsNullOrEmpty(woeId))
                 throw new ArgumentException("You must supply at least one of placeId and woeId parameters.");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.correctLocation");
             parameters.Add("photo_id", photoId);
-            if (!String.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
-            if (!String.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
+            if (!string.IsNullOrEmpty(placeId)) parameters.Add("place_id", placeId);
+            if (!string.IsNullOrEmpty(woeId)) parameters.Add("woe_id", woeId);
 
             GetResponseNoCache<NoResponse>(parameters);
         }
@@ -68,7 +68,7 @@ namespace FlickrNet
         /// <returns>Returns null if the photo has no location information, otherwise returns the location information.</returns>
         public PlaceInfo PhotosGeoGetLocation(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getLocation");
             parameters.Add("photo_id", photoId);
 
@@ -95,7 +95,7 @@ namespace FlickrNet
         /// For example, you may wish to indicate that a photo was taken "indoors" or "outdoors". </param>
         public void PhotosGeoSetContext(string photoId, GeoContext context)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.photos.geo.setContext");
             parameters.Add("photo_id", photoId);
@@ -143,7 +143,7 @@ namespace FlickrNet
         /// <param name="context">The context of the geolocation data, i.e. Inside or Outside.</param>
         public void PhotosGeoSetLocation(string photoId, double latitude, double longitude, GeoAccuracy accuracy, GeoContext context)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setLocation");
             parameters.Add("photo_id", photoId);
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -174,7 +174,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.photos.geo.photosForLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -196,7 +196,7 @@ namespace FlickrNet
         /// <returns>Returns true if the location information as found and removed. Returns false if no photo information was found.</returns>
         public void PhotosGeoRemoveLocation(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.removeLocation");
             parameters.Add("photo_id", photoId);
 
@@ -209,7 +209,7 @@ namespace FlickrNet
         /// <returns>A list of photos that do not contain location information.</returns>
         public PhotoCollection PhotosGetWithoutGeoData()
         {
-            PartialSearchOptions options = new PartialSearchOptions();
+            var options = new PartialSearchOptions();
             return PhotosGetWithoutGeoData(options);
         }
 
@@ -220,7 +220,7 @@ namespace FlickrNet
         /// <returns>A list of photos that do not contain location information.</returns>
         public PhotoCollection PhotosGetWithoutGeoData(PartialSearchOptions options)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getWithoutGeoData");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -237,7 +237,7 @@ namespace FlickrNet
         [Obsolete("Use the PartialSearchOptions instead")]
         public PhotoCollection PhotosGetWithoutGeoData(PhotoSearchOptions options)
         {
-            PartialSearchOptions newOptions = new PartialSearchOptions(options);
+            var newOptions = new PartialSearchOptions(options);
             return PhotosGetWithoutGeoData(newOptions);
         }
 
@@ -251,7 +251,7 @@ namespace FlickrNet
         /// <returns>A list of photos that contain Location information.</returns>
         public PhotoCollection PhotosGetWithGeoData()
         {
-            PartialSearchOptions options = new PartialSearchOptions();
+            var options = new PartialSearchOptions();
             return PhotosGetWithGeoData(options);
         }
 
@@ -269,7 +269,7 @@ namespace FlickrNet
         [Obsolete("Use the new PartialSearchOptions instead")]
         public PhotoCollection PhotosGetWithGeoData(PhotoSearchOptions options)
         {
-            PartialSearchOptions newOptions = new PartialSearchOptions(options);
+            var newOptions = new PartialSearchOptions(options);
             return PhotosGetWithGeoData(newOptions);
         }
 
@@ -284,7 +284,7 @@ namespace FlickrNet
         /// <returns>A list of photos that contain Location information.</returns>
         public PhotoCollection PhotosGetWithGeoData(PartialSearchOptions options)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getWithGeoData");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -298,7 +298,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoPermissions"/> class containing the permissions of the specified photo.</returns>
         public GeoPermissions PhotosGeoGetPerms(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getPerms");
             parameters.Add("photo_id", photoId);
 
@@ -315,7 +315,7 @@ namespace FlickrNet
         /// <param name="isFriend"></param>
         public void PhotosGeoSetPerms(string photoId, bool isPublic, bool isContact, bool isFamily, bool isFriend)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setPerms");
             parameters.Add("photo_id", photoId);
             parameters.Add("is_public", isPublic ? "1" : "0");

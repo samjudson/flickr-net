@@ -4,7 +4,7 @@ using System.Net.Cache;
 
 namespace FlickrNetTest
 {
-    public class UrlHelper
+    public static class UrlHelper
     {
         public static bool Exists(string url)
         {

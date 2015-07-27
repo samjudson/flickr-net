@@ -59,7 +59,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "predicate")
             {
-                Predicate item = new Predicate();
+                var item = new Predicate();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

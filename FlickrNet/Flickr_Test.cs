@@ -35,7 +35,7 @@ namespace FlickrNet
         /// <returns>The <see cref="FoundUser"/> object containing the username and userid of the current user.</returns>
         public FoundUser TestLogin()
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.test.login");
 
             return GetResponseCache<FoundUser>(parameters);
@@ -46,7 +46,7 @@ namespace FlickrNet
         /// </summary>
         public void TestNull()
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.test.null");
 
             GetResponseNoCache<NoResponse>(parameters);

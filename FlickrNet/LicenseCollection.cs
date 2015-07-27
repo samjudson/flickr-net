@@ -16,7 +16,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "license")
             {
-                License license = new License();
+                var license = new License();
                 ((IFlickrParsable)license).Load(reader);
                 Add(license);
             }

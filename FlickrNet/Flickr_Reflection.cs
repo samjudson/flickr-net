@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <returns></returns>
         public MethodCollection ReflectionGetMethods()
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.reflection.getMethods");
 
             return GetResponseNoCache<MethodCollection>(parameters);
@@ -28,7 +28,7 @@ namespace FlickrNet
         /// <returns>Returns a <see cref="Method"/> instance for the given method name.</returns>
         public Method ReflectionGetMethodInfo(string methodName)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.reflection.getMethodInfo");
             parameters.Add("api_key", apiKey);
             parameters.Add("method_name", methodName);

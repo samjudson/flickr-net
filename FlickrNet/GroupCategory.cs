@@ -85,14 +85,14 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "subcat")
                 {
-                    Subcategory c = new Subcategory();
+                    var c = new Subcategory();
                     ((IFlickrParsable)c).Load(reader);
                     Subcategories.Add(c);
 
                 }
                 else
                 {
-                    Group s = new Group();
+                    var s = new Group();
                     ((IFlickrParsable)s).Load(reader);
                     Groups.Add(s);
                 }

@@ -28,7 +28,7 @@ namespace FlickrNetTest
             var w = new AsyncSubject<FlickrResult<string>>();
 
             byte[] imageBytes = TestData.TestImageBytes;
-            Stream s = new MemoryStream(imageBytes);
+            var s = new MemoryStream(imageBytes);
             s.Position = 0;
 
             string title = "Test Title";
@@ -62,7 +62,7 @@ namespace FlickrNetTest
             };
 
             byte[] imageBytes = TestData.TestImageBytes;
-            Stream s = new MemoryStream(imageBytes);
+            var s = new MemoryStream(imageBytes);
             s.Position = 0;
 
             string title = "Test Title";
@@ -127,7 +127,7 @@ namespace FlickrNetTest
             Flickr f = TestData.GetAuthInstance();
 
             byte[] imageBytes = TestData.TestImageBytes;
-            Stream s = new MemoryStream(imageBytes);
+            var s = new MemoryStream(imageBytes);
             s.Position = 0;
 
             string title = "Test Title";
@@ -168,7 +168,7 @@ namespace FlickrNetTest
         {
             // Samples downloaded from http://support.apple.com/kb/HT1425
             // sample_mpeg2.m2v does not upload
-            string[] filenames = new string[] { "sample_mpeg4.mp4", "sample_sorenson.mov", "sample_iTunes.mov", "sample_iPod.m4v", "sample.3gp", "sample_3GPP2.3g2" };
+            string[] filenames = { "sample_mpeg4.mp4", "sample_sorenson.mov", "sample_iTunes.mov", "sample_iPod.m4v", "sample.3gp", "sample_3GPP2.3g2" };
             // Copy files to this directory.
             string directory = @"Z:\Code Projects\FlickrNet\Samples\";
 

@@ -92,7 +92,7 @@ namespace FlickrNetTest
 
             var photos = f.GalleriesGetPhotos(galleryId);
 
-            List<string> photoIds = new List<string>();
+            var photoIds = new List<string>();
 
             foreach (var photo in photos) photoIds.Add(photo.PhotoId);
 
@@ -181,7 +181,7 @@ namespace FlickrNetTest
             // Get photos
             var photos = f.GalleriesGetPhotos(galleryId);
 
-            List<string> photoIds = new List<string>();
+            var photoIds = new List<string>();
             foreach (var p in photos) photoIds.Add(p.PhotoId);
 
             // Remove the last one.

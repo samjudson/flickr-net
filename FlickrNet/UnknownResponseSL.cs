@@ -33,7 +33,7 @@ namespace FlickrNet
         public string GetAttributeValue(string element, string attribute)
         {
             System.Xml.Linq.XDocument doc = GetXDocument();
-            if (String.IsNullOrEmpty(element) || element == "*")
+            if (string.IsNullOrEmpty(element) || element == "*")
                 return doc.Descendants().Attributes(attribute).First().Value;
             else
                 return doc.Descendants(element).Attributes(attribute).First().Value;
@@ -78,7 +78,7 @@ namespace FlickrNet
         public string[] GetElementArray(string elementName, string attributeName)
         {
             System.Xml.Linq.XDocument doc = GetXDocument();
-            if (String.IsNullOrEmpty(elementName) || elementName == "*")
+            if (string.IsNullOrEmpty(elementName) || elementName == "*")
                 return doc.Descendants().Attributes(attributeName).Select( a => a.Value).ToArray();
             else
                 return doc.Descendants(elementName).Attributes(attributeName).Select(a => a.Value).ToArray();

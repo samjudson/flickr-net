@@ -85,7 +85,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "shape")
             {
-                ShapeData item = new ShapeData();
+                var item = new ShapeData();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

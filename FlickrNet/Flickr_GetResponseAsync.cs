@@ -27,17 +27,17 @@ namespace FlickrNet
             // If performing one of the old 'flickr.auth' methods then use old authentication details.
             string method = parameters["method"];
             
-            if (method.StartsWith("flickr.auth") && !method.EndsWith("oauth.checkToken"))
+            if (method.StartsWith("flickr.auth", StringComparison.Ordinal) && !method.EndsWith("oauth.checkToken", StringComparison.Ordinal))
             {
-                if (!String.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
+                if (!string.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
             }
             else
             {
                 // If OAuth Token exists or no authentication required then use new OAuth
-                if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
+                if (!string.IsNullOrEmpty(OAuthAccessToken) || string.IsNullOrEmpty(AuthToken))
                 {
                     OAuthGetBasicParameters(parameters);
-                    if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
+                    if (!string.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
                 }
                 else
                 {
@@ -46,11 +46,7 @@ namespace FlickrNet
             }
 
 
-            string url;
-            if (!String.IsNullOrEmpty(sharedSecret))
-                url = CalculateUri(parameters, true);
-            else
-                url = CalculateUri(parameters, false);
+            var url = CalculateUri(parameters, !string.IsNullOrEmpty(sharedSecret));
 
             lastRequest = url;
 
@@ -59,7 +55,7 @@ namespace FlickrNet
                 FlickrResponder.GetDataResponseAsync(this, BaseUri.AbsoluteUri, parameters, (r)
                     =>
                     {
-                        FlickrResult<T> result = new FlickrResult<T>();
+                        var result = new FlickrResult<T>();
                         if (r.HasError)
                         {
                             result.Error = r.Error;
@@ -70,7 +66,7 @@ namespace FlickrNet
                             {
                                 lastResponse = r.Result;
 
-                                XmlReaderSettings settings = new XmlReaderSettings();
+                                var settings = new XmlReaderSettings();
                                 settings.IgnoreWhitespace = true;
                                 XmlReader reader = XmlReader.Create(new StringReader(r.Result), settings);
 
@@ -90,7 +86,7 @@ namespace FlickrNet
                                 reader.MoveToElement();
                                 reader.Read();
 
-                                T t = new T();
+                                var t = new T();
                                 ((IFlickrParsable)t).Load(reader);
                                 result.Result = t;
                                 result.HasError = false;
@@ -106,7 +102,7 @@ namespace FlickrNet
             }
             catch (Exception ex)
             {
-                FlickrResult<T> result = new FlickrResult<T>();
+                var result = new FlickrResult<T>();
                 result.Error = ex;
                 if (null != callback) callback(result);
             }
@@ -115,17 +111,17 @@ namespace FlickrNet
 
         private void DoGetResponseAsync<T>(Uri url, Action<FlickrResult<T>> callback) where T : IFlickrParsable, new()
         {
-            string postContents = String.Empty;
+            string postContents = string.Empty;
 
             if (url.AbsoluteUri.Length > 2000)
             {
                 postContents = url.Query.Substring(1);
-                url = new Uri(url, String.Empty);
+                url = new Uri(url, string.Empty);
             }
 
-            FlickrResult<T> result = new FlickrResult<T>();
+            var result = new FlickrResult<T>();
 
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            var request = (HttpWebRequest)WebRequest.Create(url);
             request.ContentType = "application/x-www-form-urlencoded";
             request.Method = "POST";
             request.BeginGetRequestStream(requestAsyncResult =>
@@ -144,14 +140,14 @@ namespace FlickrNet
                 {
                     try
                     {
-                        HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(responseAsyncResult);
+                        var response = (HttpWebResponse)request.EndGetResponse(responseAsyncResult);
                         using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                         {
                             string responseXml = sr.ReadToEnd();
 
                             lastResponse = responseXml;
 
-                            XmlReaderSettings settings = new XmlReaderSettings();
+                            var settings = new XmlReaderSettings();
                             settings.IgnoreWhitespace = true;
                             XmlReader reader = XmlReader.Create(new StringReader(responseXml), settings);
 
@@ -169,7 +165,7 @@ namespace FlickrNet
                             reader.MoveToElement();
                             reader.Read();
 
-                            T t = new T();
+                            var t = new T();
                             ((IFlickrParsable)t).Load(reader);
                             result.Result = t;
                             result.HasError = false;

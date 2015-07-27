@@ -20,17 +20,17 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "total":
-                        Total = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Total = string.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "perpage":
                     case "per_page":
-                        PerPage = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        PerPage = string.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "page":
-                        Page = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Page = string.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     case "pages":
-                        Pages = String.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
+                        Pages = string.IsNullOrEmpty(reader.Value) ? 0 : int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -43,9 +43,9 @@ namespace FlickrNet
 
             while (reader.LocalName == "photo")
             {
-                Photo p = new Photo();
+                var p = new Photo();
                 ((IFlickrParsable)p).Load(reader);
-                if (!String.IsNullOrEmpty(p.PhotoId)) Add(p);
+                if (!string.IsNullOrEmpty(p.PhotoId)) Add(p);
             }
 
             // Skip to next element (if any)

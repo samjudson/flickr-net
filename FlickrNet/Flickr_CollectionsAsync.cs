@@ -17,7 +17,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.collections.getInfo");
             parameters.Add("collection_id", collectionId);
 
@@ -42,9 +42,9 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void CollectionsGetTreeAsync(string collectionId, string userId, Action<FlickrResult<CollectionCollection>> callback)
         {
-            if (String.IsNullOrEmpty(userId)) CheckRequiresAuthentication();
+            if (string.IsNullOrEmpty(userId)) CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.collections.getTree");
             if (collectionId != null) parameters.Add("collection_id", collectionId);
             if (userId != null) parameters.Add("user_id", userId);

@@ -32,12 +32,12 @@ namespace FlickrNet
 
             FlickrResponder.GetDataResponseAsync(this, url, parameters, (r) =>
             {
-                FlickrResult<OAuthRequestToken> result = new FlickrResult<OAuthRequestToken>();
+                var result = new FlickrResult<OAuthRequestToken>();
                 if (r.Error != null)
                 {
                     if (r.Error is System.Net.WebException)
                     {
-                        OAuthException ex = new OAuthException(r.Error);
+                        var ex = new OAuthException(r.Error);
                         result.Error = ex;
                     }
                     else
@@ -91,12 +91,12 @@ namespace FlickrNet
 
             FlickrResponder.GetDataResponseAsync(this, url, parameters, (r) =>
                 {
-                    FlickrResult<OAuthAccessToken> result = new FlickrResult<OAuthAccessToken>();
+                    var result = new FlickrResult<OAuthAccessToken>();
                     if (r.Error != null)
                     {
                         if (r.Error is System.Net.WebException)
                         {
-                            OAuthException ex = new OAuthException(r.Error);
+                            var ex = new OAuthException(r.Error);
                             result.Error = ex;
                         }
                         else

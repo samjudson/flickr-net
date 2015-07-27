@@ -20,7 +20,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchAsyncBasicTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.Tags = "microsoft";
 
             var w = new AsyncSubject<FlickrResult<PhotoCollection>>();
@@ -51,7 +51,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosSearchAsyncShowerTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.UserId = "78507951@N00";
             o.Tags = "shower";
             o.SortOrder = PhotoSearchSortOrder.DatePostedDescending;

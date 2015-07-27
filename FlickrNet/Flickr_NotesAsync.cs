@@ -20,7 +20,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosNotesAddAsync(string photoId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.notes.add");
             parameters.Add("photo_id", photoId);
             parameters.Add("note_x", noteX.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -33,7 +33,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.HasError = r.HasError;
                     if (r.HasError)
                     {
@@ -59,7 +59,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosNotesEditAsync(string noteId, int noteX, int noteY, int noteWidth, int noteHeight, string noteText, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.notes.edit");
             parameters.Add("note_id", noteId);
             parameters.Add("note_x", noteX.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -78,7 +78,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosNotesDeleteAsync(string noteId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.notes.delete");
             parameters.Add("note_id", noteId);
 

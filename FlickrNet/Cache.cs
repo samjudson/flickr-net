@@ -86,7 +86,7 @@ namespace FlickrNet
                         cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FlickrNetCache");
 #endif
 #if SILVERLIGHT
-                        cacheLocation = String.Empty;
+                        cacheLocation = string.Empty;
 #endif
 
                     }
@@ -215,15 +215,15 @@ namespace FlickrNet
                 throw new IOException("Unexpected number of chunks found");
 
             string url = chunks[0];
-            DateTime creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
-            ResponseCacheItem item = new ResponseCacheItem(new Uri(url), response, creationTime);
+            var creationTime = new DateTime(long.Parse(chunks[1], System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
+            var item = new ResponseCacheItem(new Uri(url), response, creationTime);
             return item;
         }
 
         public override void Write(Stream outputStream, ICacheItem cacheItem)
         {
-            ResponseCacheItem item = (ResponseCacheItem)cacheItem;
-            StringBuilder result = new StringBuilder();
+            var item = (ResponseCacheItem)cacheItem;
+            var result = new StringBuilder();
             result.Append(item.Url.AbsoluteUri + "\n");
             result.Append(item.CreationTime.Ticks.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             UtilityMethods.WriteString(outputStream, result.ToString());

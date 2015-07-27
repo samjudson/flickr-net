@@ -49,7 +49,7 @@ namespace FlickrNet
             reader.ReadToDescendant("photo");
             while (reader.LocalName == "photo")
             {
-                FavoriteContextPhoto photo = new FavoriteContextPhoto();
+                var photo = new FavoriteContextPhoto();
                 ((IFlickrParsable)photo).Load(reader);
                 PreviousPhotos.Add(photo);
             }
@@ -58,7 +58,7 @@ namespace FlickrNet
             reader.ReadToDescendant("photo");
             while (reader.LocalName == "photo")
             {
-                FavoriteContextPhoto photo = new FavoriteContextPhoto();
+                var photo = new FavoriteContextPhoto();
                 ((IFlickrParsable)photo).Load(reader);
                 NextPhotos.Add(photo);
             }

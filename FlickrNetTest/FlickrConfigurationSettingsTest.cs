@@ -11,14 +11,14 @@ namespace FlickrNetTest
     ///This is a test class for FlickrConfigurationSettingsTest and is intended
     ///to contain all FlickrConfigurationSettingsTest Unit Tests
     ///</summary>
-    [TestFixture()]
+    [TestFixture]
     public class FlickrConfigurationSettingsTest
     {
 
         /// <summary>
         ///A test for FlickrConfigurationSettings Constructor
         ///</summary>
-        [Test()]
+        [Test]
         public void FlickrConfigurationSettingsConstructorTest()
         {
             const string xml = "<flickrNet apiKey=\"apikey\" secret=\"secret\" token=\"thetoken\" " +

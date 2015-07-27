@@ -30,11 +30,11 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GalleriesAddPhotoAsync(string galleryId, string photoId, string comment, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.addPhoto");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("photo_id", photoId);
-            if (!String.IsNullOrEmpty(comment)) parameters.Add("comment", comment);
+            if (!string.IsNullOrEmpty(comment)) parameters.Add("comment", comment);
 
             GetResponseAsync<NoResponse>(parameters, callback);
         }
@@ -61,11 +61,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.create");
             parameters.Add("title", title);
             parameters.Add("description", description);
-            if (!String.IsNullOrEmpty(primaryPhotoId)) parameters.Add("primary_photo_id", primaryPhotoId);
+            if (!string.IsNullOrEmpty(primaryPhotoId)) parameters.Add("primary_photo_id", primaryPhotoId);
 
             GetResponseAsync<NoResponse>(parameters, callback);
         }
@@ -92,11 +92,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.editMeta");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("title", title);
-            if (!String.IsNullOrEmpty(description)) parameters.Add("description", description);
+            if (!string.IsNullOrEmpty(description)) parameters.Add("description", description);
 
             GetResponseAsync<NoResponse>(parameters, callback);
         }
@@ -114,7 +114,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.editPhoto");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("photo_id", photoId);
@@ -136,12 +136,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.editPhotos");
             parameters.Add("gallery_id", galleryId);
             parameters.Add("primary_photo_id", primaryPhotoId);
-            List<string> ids = new List<string>(photoIds);
-            parameters.Add("photo_ids", String.Join(",", ids.ToArray()));
+            var ids = new List<string>(photoIds);
+            parameters.Add("photo_ids", string.Join(",", ids.ToArray()));
 
             GetResponseAsync<NoResponse>(parameters, callback);
         }
@@ -153,7 +153,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GalleriesGetInfoAsync(string galleryId, Action<FlickrResult<Gallery>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getInfo");
             parameters.Add("gallery_id", galleryId);
 
@@ -203,9 +203,9 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GalleriesGetListAsync(string userId, int page, int perPage, Action<FlickrResult<GalleryCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getList");
-            if (!String.IsNullOrEmpty(userId)) parameters.Add("user_id", userId);
+            if (!string.IsNullOrEmpty(userId)) parameters.Add("user_id", userId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -231,7 +231,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GalleriesGetListForPhotoAsync(string photoId, int page, int perPage, Action<FlickrResult<GalleryCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getListForPhoto");
             parameters.Add("photo_id", photoId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -258,7 +258,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GalleriesGetPhotosAsync(string galleryId, PhotoSearchExtras extras, Action<FlickrResult<GalleryPhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.getPhotos");
             parameters.Add("gallery_id", galleryId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));

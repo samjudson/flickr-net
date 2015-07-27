@@ -21,7 +21,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "place_type")
             {
-                PlaceTypeInfo item = new PlaceTypeInfo();
+                var item = new PlaceTypeInfo();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

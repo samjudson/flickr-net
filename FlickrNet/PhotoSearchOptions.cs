@@ -58,10 +58,10 @@ namespace FlickrNet
         /// <param name="text">The text to search for in photo title and descriptions.</param>
         public PhotoSearchOptions(string userId, string tags, TagMode tagMode, string text)
         {
-            this.UserId = userId;
-            this.Tags = tags;
-            this.TagMode = tagMode;
-            this.Text = text;
+            UserId = userId;
+            Tags = tags;
+            TagMode = tagMode;
+            Text = text;
         }
 
         /// <summary>
@@ -370,21 +370,21 @@ namespace FlickrNet
         /// <returns></returns>
         public string CalculateSlideshowUrl()
         {
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            var sb = new System.Text.StringBuilder();
             sb.Append("https://www.flickr.com/show.gne");
             sb.Append("?api_method=flickr.photos.search&method_params=");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             AddToDictionary(parameters);
 
-            List<string> parts = new List<string>();
+            var parts = new List<string>();
             foreach (KeyValuePair<string, string> pair in parameters)
             {
                 parts.Add(Uri.EscapeDataString(pair.Key) + "|" + Uri.EscapeDataString(pair.Value));
             }
 
-            sb.Append(String.Join(";", parts.ToArray()));
+            sb.Append(string.Join(";", parts.ToArray()));
 
             return sb.ToString();
         }
@@ -413,7 +413,7 @@ namespace FlickrNet
                 {
                     licenseArray.Add(license.ToString("d"));
                 }
-                parameters.Add("license", String.Join(",", licenseArray.ToArray()));
+                parameters.Add("license", string.Join(",", licenseArray.ToArray()));
             }
             if (PerPage != 0) parameters.Add("per_page", PerPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (Page != 0) parameters.Add("page", Page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -441,7 +441,7 @@ namespace FlickrNet
             if (PersonId != null) parameters.Add("person_id", PersonId);
             if (Camera != null) parameters.Add("camera", Camera);
             if (JumpTo != null) parameters.Add("jump_to", JumpTo);
-            if (!String.IsNullOrEmpty(Username)) parameters.Add("username", Username);
+            if (!string.IsNullOrEmpty(Username)) parameters.Add("username", Username);
             if (ExifMinExposure != null) parameters.Add("exif_min_exposure", ExifMinExposure.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
             if (ExifMaxExposure != null) parameters.Add("exif_max_exposure", ExifMaxExposure.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));
             if (ExifMinAperture != null) parameters.Add("exif_min_aperture", ExifMinAperture.Value.ToString("0.00000", System.Globalization.NumberFormatInfo.InvariantInfo));

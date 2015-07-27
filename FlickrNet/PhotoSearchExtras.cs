@@ -175,12 +175,13 @@ namespace FlickrNet
         [Description("url_z")] Medium640Url = 536870912,
 
         /// <summary>
-        /// Returns the URL for the medium 640 image, as well as the image size.
+        /// The number of favorites for this image.
         /// </summary>
         [Description("count_faves")]
         CountFaves = 1073741824,
 
-        /// Returns the URL for the medium 640 image, as well as the image size.
+        /// <summary>
+        /// THe number of comments for this image.
         /// </summary>
         [Description("count_comments")]
         CountComments = 2147483648L,

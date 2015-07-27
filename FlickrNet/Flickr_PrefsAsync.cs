@@ -16,14 +16,14 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getContentType");
 
             GetResponseAsync<UnknownResponse>(
                 parameters, 
                 r =>
                 {
-                    FlickrResult<ContentType> result = new FlickrResult<ContentType>();
+                    var result = new FlickrResult<ContentType>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -42,7 +42,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getGeoPerms");
 
             GetResponseAsync<UserGeoPermissions>(parameters, callback);
@@ -56,14 +56,14 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getHidden");
 
             GetResponseAsync<UnknownResponse>(
                 parameters,
                 r =>
                 {
-                    FlickrResult<HiddenFromSearch> result = new FlickrResult<HiddenFromSearch>();
+                    var result = new FlickrResult<HiddenFromSearch>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -81,14 +81,14 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getPrivacy");
 
             GetResponseAsync<UnknownResponse>(
                 parameters,
                 r =>
                 {
-                    FlickrResult<PrivacyFilter> result = new FlickrResult<PrivacyFilter>();
+                    var result = new FlickrResult<PrivacyFilter>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -107,14 +107,14 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.prefs.getSafetyLevel");
 
             GetResponseAsync<UnknownResponse>(
                 parameters,
                 r =>
                 {
-                    FlickrResult<SafetyLevel> result = new FlickrResult<SafetyLevel>();
+                    var result = new FlickrResult<SafetyLevel>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {

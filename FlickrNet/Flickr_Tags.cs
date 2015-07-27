@@ -16,7 +16,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="PhotoInfo"/> class containing only the <see cref="PhotoInfo.Tags"/> property.</returns>
         public Collection<PhotoInfoTag> TagsGetListPhoto(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListPhoto");
             parameters.Add("api_key", apiKey);
             parameters.Add("photo_id", photoId);
@@ -41,7 +41,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
         public TagCollection TagsGetListUser(string userId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUser");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -89,7 +89,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
         public TagCollection TagsGetListUserPopular(string userId, int count)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUserPopular");
             if (userId != null) parameters.Add("user_id", userId);
             if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -115,7 +115,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getListUserRaw");
             if (tag != null && tag.Length > 0) parameters.Add("tag", tag);
 
@@ -130,7 +130,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getMostFrequentlyUsed");
 
             return GetResponseCache<TagCollection>(parameters);
@@ -144,7 +144,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="Tag"/> objects.</returns>
         public TagCollection TagsGetRelated(string tag)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getRelated");
             parameters.Add("api_key", apiKey);
             parameters.Add("tag", tag);
@@ -159,7 +159,7 @@ namespace FlickrNet
         /// <returns></returns>
         public ClusterCollection TagsGetClusters(string tag)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getClusters");
             parameters.Add("tag", tag);
 
@@ -196,7 +196,7 @@ namespace FlickrNet
         /// <returns></returns>
         public PhotoCollection TagsGetClusterPhotos(string tag, string clusterId, PhotoSearchExtras extras)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getClusterPhotos");
             parameters.Add("tag", tag);
             parameters.Add("cluster_id", clusterId);
@@ -222,14 +222,14 @@ namespace FlickrNet
         /// <returns></returns>
         public HotTagCollection TagsGetHotList(string period, int count)
         {
-            if (!String.IsNullOrEmpty(period) && period != "day" && period != "week")
+            if (!string.IsNullOrEmpty(period) && period != "day" && period != "week")
             {
                 throw new ArgumentException("Period must be either 'day' or 'week'.", "period");
             }
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.tags.getHotList");
-            if (!String.IsNullOrEmpty(period)) parameters.Add("period", period);
+            if (!string.IsNullOrEmpty(period)) parameters.Add("period", period);
             if (count > 0) parameters.Add("count", count.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
             return GetResponseCache<HotTagCollection>(parameters);

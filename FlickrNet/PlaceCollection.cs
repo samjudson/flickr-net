@@ -15,7 +15,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "place")
             {
-                Place place = new Place();
+                var place = new Place();
                 ((IFlickrParsable)place).Load(reader);
                 Add(place);
             }

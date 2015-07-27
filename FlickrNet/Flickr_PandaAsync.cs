@@ -13,14 +13,14 @@ namespace FlickrNet
         /// <returns>An array of panda names.</returns>
         public void PandaGetListAsync(Action<FlickrResult<string[]>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getList");
 
             GetResponseAsync<UnknownResponse>(
                 parameters,
                 r =>
                 {
-                    FlickrResult<string[]> result = new FlickrResult<string[]>();
+                    var result = new FlickrResult<string[]>();
                     result.HasError = r.HasError;
                     if (r.HasError)
                     {
@@ -78,7 +78,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PandaGetPhotosAsync(string pandaName, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PandaPhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getPhotos");
             parameters.Add("panda_name", pandaName);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));

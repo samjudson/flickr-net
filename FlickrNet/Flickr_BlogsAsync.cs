@@ -17,7 +17,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.blogs.getList");
             GetResponseAsync<BlogCollection>(parameters, callback);
         }
@@ -28,7 +28,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void BlogsGetServicesAsync(Action<FlickrResult<BlogServiceCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.blogs.getServices");
 
             GetResponseAsync<BlogServiceCollection>(parameters, callback);
@@ -60,7 +60,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void BlogsPostPhotoAsync(string blogId, string photoId, string title, string description, string blogPassword, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.blogs.postPhoto");
             parameters.Add("blog_id", blogId);
             parameters.Add("photo_id", photoId);

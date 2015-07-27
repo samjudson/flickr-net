@@ -84,7 +84,7 @@ namespace FlickrNet
             string textToHash = sharedSecret + "api_key" + apiKey;
             string url = AuthUrl + "?api_key=" + apiKey + "&perms=" + UtilityMethods.AuthLevelToString(authLevel);
 
-            if (!String.IsNullOrEmpty(extra))
+            if (!string.IsNullOrEmpty(extra))
             {
                 textToHash += "extra" + extra;
                 url += "&extra=" + Uri.EscapeDataString(extra);

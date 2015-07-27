@@ -33,7 +33,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFrob");
 
             UnknownResponse response = GetResponseNoCache<UnknownResponse>(parameters);
@@ -54,7 +54,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getToken");
             parameters.Add("frob", frob);
 
@@ -74,9 +74,9 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFullToken");
-            parameters.Add("mini_token", miniToken.Replace("-", String.Empty));
+            parameters.Add("mini_token", miniToken.Replace("-", string.Empty));
 
             Auth auth = GetResponseNoCache<Auth>(parameters);
             AuthToken = auth.Token;
@@ -105,7 +105,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.checkToken");
             parameters.Add("auth_token", token);
 
@@ -124,7 +124,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.oauth.getAccessToken");
 
             OAuthAccessToken token = GetResponseNoCache<OAuthAccessToken>(parameters);
@@ -146,7 +146,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.oauth.checkToken");
 
             var o = GetResponseNoCache<Auth>(parameters);

@@ -25,7 +25,7 @@ namespace FlickrNet
         /// <summary>
         /// The total number of pages of suggestions available.
         /// </summary>
-        public int Pages { get { return (int)Math.Ceiling(1.0 * Total / PerPage); } set { } }
+        public int Pages { get { return (int)Math.Ceiling(1.0 * Total / PerPage); } }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -52,7 +52,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "suggestion")
             {
-                Suggestion suggestion = new Suggestion();
+                var suggestion = new Suggestion();
                 ((IFlickrParsable)suggestion).Load(reader);
                 Add(suggestion);
             }

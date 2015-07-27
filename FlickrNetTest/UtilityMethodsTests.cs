@@ -12,7 +12,7 @@ namespace FlickrNetTest
     [TestFixture]
     public class UtilityMethodsTests
     {
-        private readonly Dictionary<DateTime, string> _timestampTests = new Dictionary<DateTime, string>
+        readonly Dictionary<DateTime, string> _timestampTests = new Dictionary<DateTime, string>
                                                                             {
                 { new DateTime(1970, 1, 1), "0" },
                 { new DateTime(2011, 1, 1), "1293840000" },
@@ -68,7 +68,7 @@ namespace FlickrNetTest
         {
             const PhotoSearchExtras extras = PhotoSearchExtras.None; 
 
-            var expected = String.Empty;
+            var expected = string.Empty;
 
             var actual = UtilityMethods.ExtrasToString(extras);
 
@@ -331,9 +331,9 @@ namespace FlickrNetTest
         [Test]
         public void UrlEncodeTestEmpty()
         {
-            string data = String.Empty;
+            string data = string.Empty;
 
-            string expected = String.Empty;
+            string expected = string.Empty;
             string actual;
 
             actual = UtilityMethods.UrlEncode(data);
@@ -429,9 +429,9 @@ namespace FlickrNetTest
         [Test]
         public void UriCreationTest()
         {
-            Uri u = new Uri("/Test", UriKind.Relative);
+            var u = new Uri("/Test", UriKind.Relative);
 
-            Uri u2 = new Uri(new Uri("http://www.test.com"), u);
+            var u2 = new Uri(new Uri("http://www.test.com"), u);
 
             Console.WriteLine(u2.AbsoluteUri);
         }
@@ -458,7 +458,7 @@ namespace FlickrNetTest
             // Invalid auth level
             a = (AuthLevel)99;
             b = UtilityMethods.AuthLevelToString(a);
-            Assert.AreEqual(String.Empty, b);
+            Assert.AreEqual(string.Empty, b);
         }
 
     }

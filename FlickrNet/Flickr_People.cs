@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <exception cref="FlickrApiException">A FlickrApiException is raised if the email address is not found.</exception>
         public FoundUser PeopleFindByEmail(string emailAddress)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.findByEmail");
             parameters.Add("api_key", apiKey);
             parameters.Add("find_email", emailAddress);
@@ -31,7 +31,7 @@ namespace FlickrNet
         /// <exception cref="FlickrApiException">A FlickrApiException is raised if the email address is not found.</exception>
         public FoundUser PeopleFindByUserName(string userName)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.findByUsername");
             parameters.Add("api_key", apiKey);
             parameters.Add("username", userName);
@@ -48,7 +48,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getGroups");
             parameters.Add("user_id", userId);
 
@@ -62,7 +62,7 @@ namespace FlickrNet
         /// <returns>The <see cref="Person"/> object containing the users details.</returns>
         public Person PeopleGetInfo(string userId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getInfo");
             parameters.Add("user_id", userId);
 
@@ -77,7 +77,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getLimits");
 
             return GetResponseCache<PersonLimits>(parameters);
@@ -89,7 +89,7 @@ namespace FlickrNet
         /// <returns>The <see cref="UserStatus"/> object containing the users details.</returns>
         public UserStatus PeopleGetUploadStatus()
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getUploadStatus");
 
             return GetResponseCache<UserStatus>(parameters);
@@ -113,7 +113,7 @@ namespace FlickrNet
         /// <returns>An array of <see cref="GroupInfo"/> instances.</returns>
         public GroupInfoCollection PeopleGetPublicGroups(string userId, bool? includeInvitationOnly)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicGroups");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
@@ -160,7 +160,7 @@ namespace FlickrNet
             if (!IsAuthenticated && safetyLevel > SafetyLevel.Safe)
                 throw new ArgumentException("Safety level may only be 'Safe' for unauthenticated calls", "safetyLevel");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicPhotos");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
@@ -294,7 +294,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.people.getPhotos");
             parameters.Add("user_id", userId ?? "me");
@@ -373,7 +373,7 @@ namespace FlickrNet
         /// <returns>A list of photos in the <see cref="PeoplePhotoCollection"/> class.</returns>
         public PeoplePhotoCollection PeopleGetPhotosOf(string userId, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPhotosOf");
             parameters.Add("user_id", userId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));

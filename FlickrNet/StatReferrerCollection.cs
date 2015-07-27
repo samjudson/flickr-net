@@ -64,7 +64,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "referrer")
             {
-                StatReferrer referrer = new StatReferrer();
+                var referrer = new StatReferrer();
                 ((IFlickrParsable)referrer).Load(reader);
                 Add(referrer);
             }

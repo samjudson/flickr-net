@@ -19,10 +19,10 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            List<DateTime> dates = new List<DateTime>();
-            DateTime date1 = new DateTime(2009, 1, 12);
-            DateTime date2 = new DateTime(2009, 9, 12);
-            DateTime date3 = new DateTime(2009, 12, 12);
+            var dates = new List<DateTime>();
+            var date1 = new DateTime(2009, 1, 12);
+            var date2 = new DateTime(2009, 9, 12);
+            var date3 = new DateTime(2009, 12, 12);
 
             dates.Add(date2);
             dates.Add(date1);
@@ -48,10 +48,10 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetAuthInstance();
 
-            List<DateTime> dates = new List<DateTime>();
-            DateTime date1 = new DateTime(2009, 7, 12);
-            DateTime date2 = new DateTime(2009, 9, 12);
-            DateTime date3 = new DateTime(2009, 12, 12);
+            var dates = new List<DateTime>();
+            var date1 = new DateTime(2009, 7, 12);
+            var date2 = new DateTime(2009, 9, 12);
+            var date3 = new DateTime(2009, 12, 12);
 
             dates.Add(date2);
             dates.Add(date1);

@@ -58,7 +58,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "photo")
             {
-                GalleryPhoto photo = new GalleryPhoto();
+                var photo = new GalleryPhoto();
                 ((IFlickrParsable)photo).Load(reader);
                 Add(photo);
             }

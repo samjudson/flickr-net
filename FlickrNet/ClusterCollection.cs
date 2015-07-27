@@ -39,7 +39,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "cluster")
             {
-                Cluster item = new Cluster();
+                var item = new Cluster();
                 ((IFlickrParsable)item).Load(reader);
                 item.SourceTag = SourceTag;
                 Add(item);

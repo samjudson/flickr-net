@@ -38,18 +38,18 @@ namespace FlickrNet
 
             // User of obsolete AuthToken property while we transition over to the new OAuth authentication process.
 #pragma warning disable 612,618
-            if (method.StartsWith("flickr.auth") && !method.EndsWith("oauth.checkToken"))
+            if (method.StartsWith("flickr.auth", StringComparison.Ordinal) && !method.EndsWith("oauth.checkToken", StringComparison.Ordinal))
             {
-                if (!String.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
+                if (!string.IsNullOrEmpty(AuthToken)) parameters["auth_token"] = AuthToken;
             }
             else
             {
                 // If OAuth Token exists or no authentication required then use new OAuth
-                if (!String.IsNullOrEmpty(OAuthAccessToken) || String.IsNullOrEmpty(AuthToken))
+                if (!string.IsNullOrEmpty(OAuthAccessToken) || string.IsNullOrEmpty(AuthToken))
                 {
                     parameters.Remove("api_key");
                     OAuthGetBasicParameters(parameters);
-                    if (!String.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
+                    if (!string.IsNullOrEmpty(OAuthAccessToken)) parameters["oauth_token"] = OAuthAccessToken;
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace FlickrNet
             }
 #pragma warning restore 612,618
 
-            var url = CalculateUri(parameters, !String.IsNullOrEmpty(sharedSecret));
+            var url = CalculateUri(parameters, !string.IsNullOrEmpty(sharedSecret));
 
             lastRequest = url;
 

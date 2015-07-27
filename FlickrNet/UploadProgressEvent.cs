@@ -36,8 +36,8 @@ namespace FlickrNet
 
         internal UploadProgressEventArgs(long bytes, long totalBytes)
         {
-            this.BytesSent = bytes;
-            this.TotalBytesToSend = totalBytes;
+            BytesSent = bytes;
+            TotalBytesToSend = totalBytes;
         }
     }
 }

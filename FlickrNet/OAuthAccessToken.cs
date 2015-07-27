@@ -40,7 +40,7 @@ namespace FlickrNet
         {
             Dictionary<string, string> parts = UtilityMethods.StringToDictionary(response);
 
-            OAuthAccessToken token = new OAuthAccessToken();
+            var token = new OAuthAccessToken();
             if( parts.ContainsKey("oauth_token") )
                 token.Token = parts["oauth_token"];
             if (parts.ContainsKey("oauth_token_secret"))

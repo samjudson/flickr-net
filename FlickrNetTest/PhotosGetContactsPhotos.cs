@@ -11,7 +11,7 @@ namespace FlickrNetTest
     [Category("AccessTokenRequired")]
     public class PhotosGetContactsPhotos
     {
-        Flickr f = TestData.GetAuthInstance();
+        readonly Flickr f = TestData.GetAuthInstance();
 
         public PhotosGetContactsPhotos()
         {

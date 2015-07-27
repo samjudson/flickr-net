@@ -41,7 +41,7 @@ namespace FlickrNetTest
             var tags = f.TagsGetListPhoto(photoId);
 
             // Find the tag in the collection
-            var tagsToRemove = tags.Where(t => t.TagText.StartsWith(testtag));
+            var tagsToRemove = tags.Where(t => t.TagText.StartsWith(testtag, StringComparison.Ordinal));
 
             foreach (var tag in tagsToRemove)
             {
@@ -255,8 +255,7 @@ namespace FlickrNetTest
             bool findPhoto = false;
             foreach (var s in sizes)
             {
-                if (s.MediaType == MediaType.Videos) findVideo = true;
-                if (s.MediaType == MediaType.Photos) findPhoto = true;
+                findVideo |= (s.MediaType == MediaType.Videos || s.MediaType == MediaType.Photos);
             }
             Assert.IsTrue(findVideo, "At least one size should contain a Video media type.");
             Assert.IsTrue(findPhoto, "At least one size should contain a Photo media type.");
@@ -336,7 +335,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchDoesLargeExist()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.Extras = PhotoSearchExtras.AllUrls;
             o.PerPage = 50;
             o.Tags = "test";
@@ -458,7 +457,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosTestLargeSquareSmall320()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
             o.Extras = PhotoSearchExtras.LargeSquareUrl | PhotoSearchExtras.Small320Url;
             o.UserId = TestData.TestUserId;
             o.PerPage = 10;

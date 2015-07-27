@@ -263,7 +263,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "reply" && reader.NodeType == System.Xml.XmlNodeType.Element)
             {
-                TopicReply reply = new TopicReply();
+                var reply = new TopicReply();
                 ((IFlickrParsable)reply).Load(reader);
                 Add(reply);
             }

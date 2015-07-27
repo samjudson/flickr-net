@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <returns>An list of <see cref="PhotoComment"/> objects.</returns>
         public PhotoCommentCollection PhotosCommentsGetList(string photoId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.getList");
             parameters.Add("photo_id", photoId);
 
@@ -30,7 +30,7 @@ namespace FlickrNet
         /// <returns>The new ID of the created comment.</returns>
         public string PhotosCommentsAddComment(string photoId, string commentText)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.addComment");
             parameters.Add("photo_id", photoId);
             parameters.Add("comment_text", commentText);
@@ -47,7 +47,7 @@ namespace FlickrNet
         /// <param name="commentId">The ID of the comment to delete.</param>
         public void PhotosCommentsDeleteComment(string commentId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.deleteComment");
             parameters.Add("comment_id", commentId);
 
@@ -61,7 +61,7 @@ namespace FlickrNet
         /// <param name="commentText">The new text for the comment.</param>
         public void PhotosCommentsEditComment(string commentId, string commentText)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.editComment");
             parameters.Add("comment_id", commentId);
             parameters.Add("comment_text", commentText);
@@ -116,10 +116,10 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.getRecentForContacts");
             if (dateLastComment != DateTime.MinValue) parameters.Add("date_lastcomment", UtilityMethods.DateToUnixTimestamp(dateLastComment));
-            if (contactsFilter != null && contactsFilter.Length > 0) parameters.Add("contacts_filter", String.Join(",", contactsFilter));
+            if (contactsFilter != null && contactsFilter.Length > 0) parameters.Add("contacts_filter", string.Join(",", contactsFilter));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));

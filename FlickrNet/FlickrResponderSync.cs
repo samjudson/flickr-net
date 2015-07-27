@@ -31,7 +31,7 @@ namespace FlickrNet
         {
             string method = flickr.CurrentService == SupportedService.Zooomr ? "GET" : "POST";
 
-            string data = String.Empty;
+            string data = string.Empty;
 
             foreach (var k in parameters)
             {
@@ -55,11 +55,11 @@ namespace FlickrNet
             if (parameters.ContainsKey("api_sig")) parameters.Remove("api_sig");
 
             // If OAuth Access Token is set then add token and generate signature.
-            if (!String.IsNullOrEmpty(flickr.OAuthAccessToken) && !parameters.ContainsKey("oauth_token"))
+            if (!string.IsNullOrEmpty(flickr.OAuthAccessToken) && !parameters.ContainsKey("oauth_token"))
             {
                 parameters.Add("oauth_token", flickr.OAuthAccessToken);
             }
-            if (!String.IsNullOrEmpty(flickr.OAuthAccessTokenSecret) && !parameters.ContainsKey("oauth_signature"))
+            if (!string.IsNullOrEmpty(flickr.OAuthAccessTokenSecret) && !parameters.ContainsKey("oauth_signature"))
             {
                 string sig = flickr.OAuthCalculateSignature(method, baseUrl, parameters, flickr.OAuthAccessTokenSecret);
                 parameters.Add("oauth_signature", sig);
@@ -99,7 +99,7 @@ namespace FlickrNet
                     throw new OAuthException(responseData, ex);
                 }
 
-                if (String.IsNullOrEmpty(responseData)) throw;
+                if (string.IsNullOrEmpty(responseData)) throw;
                 throw new WebException("WebException occurred with the following body content: " + responseData, ex, ex.Status, ex.Response);
             }
         }
@@ -111,8 +111,8 @@ namespace FlickrNet
             using (WebClient client = new WebClient())
             {
                 client.Encoding = System.Text.Encoding.UTF8;
-                if (!String.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
-                if (!String.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
+                if (!string.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
+                if (!string.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
 
                 if (method == "POST")
                     return client.UploadString(baseUrl, data);

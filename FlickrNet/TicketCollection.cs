@@ -16,7 +16,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "ticket")
             {
-                Ticket ticket = new Ticket();
+                var ticket = new Ticket();
                 ((IFlickrParsable)ticket).Load(reader);
                 Add(ticket);
             }

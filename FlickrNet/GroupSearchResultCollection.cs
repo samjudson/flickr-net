@@ -62,7 +62,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "group")
             {
-                GroupSearchResult r = new GroupSearchResult();
+                var r = new GroupSearchResult();
                 ((IFlickrParsable)r).Load(reader);
                 Add(r);
             }

@@ -147,7 +147,7 @@ namespace FlickrNet
                 parameters.Add("hidden", hiddenFromSearch.ToString("D"));
             }
 
-            if (!String.IsNullOrEmpty(OAuthAccessToken))
+            if (!string.IsNullOrEmpty(OAuthAccessToken))
             {
                 OAuthGetBasicParameters(parameters);
                 parameters.Add("oauth_token", OAuthAccessToken);
@@ -197,7 +197,7 @@ namespace FlickrNet
             req.Timeout = HttpTimeout;
             req.ContentType = "multipart/form-data; boundary=" + boundary;
 
-            if (!String.IsNullOrEmpty(authHeader))
+            if (!string.IsNullOrEmpty(authHeader))
             {
                 req.Headers["Authorization"] = authHeader;
             }
@@ -261,7 +261,7 @@ namespace FlickrNet
                                      {"photo_id", photoId}
                                  };
 
-            if (!String.IsNullOrEmpty(OAuthAccessToken))
+            if (!string.IsNullOrEmpty(OAuthAccessToken))
             {
                 OAuthGetBasicParameters(parameters);
                 parameters.Add("oauth_token", OAuthAccessToken);

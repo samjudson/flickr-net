@@ -63,7 +63,7 @@ namespace FlickrNetTest
             set { SetRegistryKey("AccessTokenSecret", value); }
         }
 
-        private static void SetRegistryKey(string name, string value)
+        static void SetRegistryKey(string name, string value)
         {
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
             if (key == null)
@@ -71,7 +71,7 @@ namespace FlickrNetTest
             key.SetValue(name, value);
         }
 
-        private static string GetRegistryKey(string name)
+        static string GetRegistryKey(string name)
         {
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
             if (key != null && key.GetValue(name) != null)

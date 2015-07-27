@@ -168,20 +168,18 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "set":
-                        ContextSet set = new ContextSet();
+                        var set = new ContextSet();
                         set.PhotosetId = reader.GetAttribute("id");
                         set.Title = reader.GetAttribute("title");
                         Sets.Add(set);
                         reader.Read();
                         break;
                     case "pool":
-                        ContextGroup group = new ContextGroup();
+                        var group = new ContextGroup();
                         group.GroupId = reader.GetAttribute("id");
                         group.Title = reader.GetAttribute("title");
                         Groups.Add(group);
                         reader.Read();
-                        break;
-                    default:
                         break;
                 }
             }

@@ -26,9 +26,9 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsBrowseAsync(string catId, Action<FlickrResult<GroupCategory>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.browse");
-            if (!String.IsNullOrEmpty(catId)) parameters.Add("cat_id", catId);
+            if (!string.IsNullOrEmpty(catId)) parameters.Add("cat_id", catId);
 
             GetResponseAsync<GroupCategory>(parameters, callback);
         }
@@ -63,7 +63,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsSearchAsync(string text, int page, int perPage, Action<FlickrResult<GroupSearchResultCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.search");
             parameters.Add("api_key", apiKey);
             parameters.Add("text", text);
@@ -80,7 +80,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsGetInfoAsync(string groupId, Action<FlickrResult<GroupFullInfo>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.getInfo");
             parameters.Add("api_key", apiKey);
             parameters.Add("group_id", groupId);
@@ -112,7 +112,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.members.getList");
             parameters.Add("api_key", apiKey);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -133,7 +133,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.add");
             parameters.Add("photo_id", photoId);
             parameters.Add("group_id", groupId);
@@ -149,7 +149,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsPoolsGetContextAsync(string photoId, string groupId, Action<FlickrResult<Context>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getContext");
             parameters.Add("photo_id", photoId);
             parameters.Add("group_id", groupId);
@@ -164,7 +164,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsPoolsRemoveAsync(string photoId, string groupId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.remove");
             parameters.Add("photo_id", photoId);
             parameters.Add("group_id", groupId);
@@ -177,7 +177,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsPoolsGetGroupsAsync(Action<FlickrResult<MemberGroupInfoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getGroups");
 
             GetResponseAsync<MemberGroupInfoCollection>(parameters, callback);
@@ -242,7 +242,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void GroupsPoolsGetPhotosAsync(string groupId, string tags, string userId, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.pools.getPhotos");
             parameters.Add("group_id", groupId);
             if (tags != null && tags.Length > 0) parameters.Add("tags", tags);
@@ -274,7 +274,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.join");
             parameters.Add("group_id", groupId);
             if (acceptsRules) parameters.Add("accepts_rules", "1");
@@ -293,7 +293,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.joinRequest");
             parameters.Add("group_id", groupId);
             parameters.Add("message", message);
@@ -323,7 +323,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.leave");
             parameters.Add("group_id", groupId);
             if (deletePhotos) parameters.Add("delete_photos", "1");

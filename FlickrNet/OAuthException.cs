@@ -11,7 +11,7 @@ namespace FlickrNet
     /// </summary>
     public class OAuthException : Exception
     {
-        private string mess;
+        private readonly string _mess;
 
         /// <summary>
         /// The full response of the exception.
@@ -41,7 +41,7 @@ namespace FlickrNet
                 throw new Exception("Failed to parse OAuth error message: " + FullResponse, innerException);
             }
 
-            mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
+            _mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace FlickrNet
                 FullResponse = response;
 
                 OAuthErrorPameters = UtilityMethods.StringToDictionary(response);
-                mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
+                _mess = "OAuth Exception occurred: " + OAuthErrorPameters["oauth_problem"];
                 sr.Close();
             }
         }
@@ -75,7 +75,7 @@ namespace FlickrNet
         {
             get
             {
-                return mess;
+                return _mess;
             }
         }
     }

@@ -24,11 +24,12 @@ namespace FlickrNet
             set
             {
                 error = value;
-                if (value is FlickrApiException)
+                var flickrApiException = value as FlickrApiException;
+
+                if (flickrApiException != null)
                 {
-                    FlickrApiException ex = value as FlickrApiException;
-                    ErrorCode = ex.Code;
-                    ErrorMessage = ex.OriginalMessage;
+                    ErrorCode = flickrApiException.Code;
+                    ErrorMessage = flickrApiException.OriginalMessage;
                     HasError = true;
                 }
             }
@@ -73,11 +74,11 @@ namespace FlickrNet
                     return;
                 }
                 HasError = true;
-                if (value is FlickrApiException)
+                var flickrApiException = value as FlickrApiException;
+                if (flickrApiException != null)
                 {
-                    FlickrApiException ex = value as FlickrApiException;
-                    ErrorCode = ex.Code;
-                    ErrorMessage = ex.OriginalMessage;
+                    ErrorCode = flickrApiException.Code;
+                    ErrorMessage = flickrApiException.OriginalMessage;
                 }
             }
         }

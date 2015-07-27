@@ -22,7 +22,7 @@ namespace FlickrNetTest
             Flickr f = TestData.GetAuthInstance();
 
             byte[] imageBytes = TestData.TestImageBytes;
-            Stream s = new MemoryStream(imageBytes);
+            var s = new MemoryStream(imageBytes);
             s.Position = 0;
 
             string title = "Test Title";
@@ -49,7 +49,7 @@ namespace FlickrNetTest
             Flickr f = TestData.GetAuthInstance();
 
             byte[] imageBytes = TestData.TestImageBytes;
-            Stream s = new MemoryStream(imageBytes);
+            var s = new MemoryStream(imageBytes);
             s.Position = 0;
 
             string title = "Test Title";

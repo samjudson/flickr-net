@@ -33,14 +33,14 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFrob");
 
             GetResponseAsync<UnknownResponse>(
                 parameters, 
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.HasError = r.HasError;
                     if (r.HasError)
                     {
@@ -68,7 +68,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getToken");
             parameters.Add("frob", frob);
 
@@ -95,9 +95,9 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.getFullToken");
-            parameters.Add("mini_token", miniToken.Replace("-", String.Empty));
+            parameters.Add("mini_token", miniToken.Replace("-", string.Empty));
 
             GetResponseAsync<Auth>(
                 parameters,
@@ -131,7 +131,7 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.checkToken");
             parameters.Add("auth_token", token);
 
@@ -159,7 +159,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.oauth.getAccessToken");
 
             GetResponseAsync<OAuthAccessToken>(parameters,
@@ -187,7 +187,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.auth.oauth.checkToken");
 
             GetResponseAsync<Auth>(parameters, callback);

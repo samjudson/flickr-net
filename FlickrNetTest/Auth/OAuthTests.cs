@@ -42,7 +42,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetSignedInstance();
 
-            OAuthRequestToken requestToken = new OAuthRequestToken();
+            var requestToken = new OAuthRequestToken();
             requestToken.Token = TestData.RequestToken;
             requestToken.TokenSecret = TestData.RequestTokenSecret;
             string verifier = "736-824-579";

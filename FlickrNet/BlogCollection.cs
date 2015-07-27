@@ -18,7 +18,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "blog")
             {
-                Blog b = new Blog();
+                var b = new Blog();
                 ((IFlickrParsable)b).Load(reader);
                 Add(b);
             }

@@ -111,7 +111,7 @@ namespace FlickrNetTest
             Method flickrMethod = TestData.GetInstance().ReflectionGetMethodInfo("flickr.photos.search");
 
             // These arguments are covered, but are named slightly differently from Flickr.
-            Dictionary<string, string> exceptions = new Dictionary<string, string>();
+            var exceptions = new Dictionary<string, string>();
             exceptions.Add("license", "licenses"); // Licenses
             exceptions.Add("sort", "sortorder"); // SortOrder
             exceptions.Add("bbox", "boundarybox"); // BoundaryBox
@@ -159,7 +159,7 @@ namespace FlickrNetTest
         [Ignore]
         public void ReflectionMethodsCheckWeSupportAndParametersMatch()
         {
-            List<string> exceptions = new List<string>();
+            var exceptions = new List<string>();
             exceptions.Add("flickr.photos.getWithGeoData");
             exceptions.Add("flickr.photos.getWithouGeoData");
             exceptions.Add("flickr.photos.search");
@@ -252,9 +252,9 @@ namespace FlickrNetTest
             //Assert.IsNull(method.Arguments[4].Description);
         }
 
-        private void GetExceptionList()
+        void GetExceptionList()
         {
-            Dictionary<int, List<string>> errors = new Dictionary<int, List<string>>();
+            var errors = new Dictionary<int, List<string>>();
             Flickr.CacheDisabled = true;
 
             Flickr f = TestData.GetInstance();

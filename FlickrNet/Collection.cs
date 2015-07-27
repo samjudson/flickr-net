@@ -8,8 +8,8 @@ namespace FlickrNet
     /// <remarks/>
     public sealed class Collection : IFlickrParsable
     {
-        private Collection<CollectionSet> subsets = new Collection<CollectionSet>();
-        private Collection<Collection> subcollections = new Collection<Collection>();
+        private readonly Collection<CollectionSet> _subsets = new Collection<CollectionSet>();
+        private readonly Collection<Collection> _subcollections = new Collection<Collection>();
 
         /// <remarks/>
         public string CollectionId { get; set; }
@@ -36,7 +36,7 @@ namespace FlickrNet
         /// </summary>
         public Collection<CollectionSet> Sets
         {
-            get { return subsets; }
+            get { return _subsets; }
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace FlickrNet
         /// </summary>
         public Collection<Collection> Collections
         {
-            get { return subcollections; }
+            get { return _subcollections; }
         }
 
         void IFlickrParsable.Load(XmlReader reader)
@@ -96,16 +96,16 @@ namespace FlickrNet
             {
                 if (reader.LocalName == "collection")
                 {
-                    Collection c = new Collection();
+                    var c = new Collection();
                     ((IFlickrParsable)c).Load(reader);
-                    subcollections.Add(c);
+                    _subcollections.Add(c);
 
                 }
                 else
                 {
-                    CollectionSet s = new CollectionSet();
+                    var s = new CollectionSet();
                     ((IFlickrParsable)s).Load(reader);
-                    subsets.Add(s);
+                    _subsets.Add(s);
                 }
             }
 

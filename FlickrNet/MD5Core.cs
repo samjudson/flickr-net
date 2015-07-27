@@ -76,7 +76,7 @@ public sealed class MD5Core
             throw new System.ArgumentNullException("input", "Unable to calculate hash over null input data");
 
         //Intitial values defined in RFC 1321
-        ABCDStruct abcd = new ABCDStruct();
+        var abcd = new ABCDStruct();
         abcd.A = 0x67452301;
         abcd.B = 0xefcdab89;
         abcd.C = 0x98badcfe;

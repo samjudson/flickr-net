@@ -23,7 +23,7 @@ namespace FlickrNet
             if (degrees != 90 && degrees != 180 && degrees != 270)
                 throw new ArgumentException("Must be 90, 180 or 270", "degrees");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.transform.rotate");
             parameters.Add("photo_id", photoId);
             parameters.Add("degrees", degrees.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -38,9 +38,9 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosUploadCheckTicketsAsync(string[] tickets, Action<FlickrResult<TicketCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.upload.checkTickets");
-            parameters.Add("tickets", String.Join(",", tickets));
+            parameters.Add("tickets", string.Join(",", tickets));
 
             GetResponseAsync<TicketCollection>(parameters, callback);
         }

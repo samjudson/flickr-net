@@ -11,9 +11,9 @@ namespace FlickrNetTest
     [TestFixture]
     public class BaseTest
     {
-        private Flickr _instance;
-        private Flickr _authInstance;
-        private Dictionary<string, string> _errorLog;
+        Flickr _instance;
+        Flickr _authInstance;
+        Dictionary<string, string> _errorLog;
 
         protected Flickr Instance
         {

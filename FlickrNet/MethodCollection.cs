@@ -135,7 +135,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "argument")
             {
-                MethodArgument a = new MethodArgument();
+                var a = new MethodArgument();
                 ((IFlickrParsable)a).Load(reader);
                 Arguments.Add(a);
             }
@@ -143,7 +143,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "error")
             {
-                MethodError e = new MethodError();
+                var e = new MethodError();
                 ((IFlickrParsable)e).Load(reader);
                 Errors.Add(e);
             }

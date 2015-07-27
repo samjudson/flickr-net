@@ -17,7 +17,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "collection")
             {
-                Collection c = new Collection();
+                var c = new Collection();
                 ((IFlickrParsable)c).Load(reader);
                 Add(c);
             }

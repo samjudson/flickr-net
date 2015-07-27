@@ -14,7 +14,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void FavoritesAddAsync(string photoId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.add");
             parameters.Add("photo_id", photoId);
             GetResponseAsync<NoResponse>(parameters, callback);
@@ -28,7 +28,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void FavoritesRemoveAsync(string photoId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.remove");
             parameters.Add("photo_id", photoId);
             GetResponseAsync<NoResponse>(parameters, callback);
@@ -117,7 +117,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.getList");
             if (userId != null) parameters.Add("user_id", userId);
             if (minFavoriteDate != DateTime.MinValue)
@@ -160,7 +160,7 @@ namespace FlickrNet
                                                 PhotoSearchExtras extras, int page, int perPage,
                                                 Action<FlickrResult<PhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.getPublicList");
             parameters.Add("user_id", userId);
             if (minFavoriteDate != DateTime.MinValue)
@@ -227,7 +227,7 @@ namespace FlickrNet
         /// <returns></returns>
         public void FavoritesGetContextAsync(string photoId, string userId, int numPrevious, int numNext, PhotoSearchExtras extras, Action<FlickrResult<FavoriteContext>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.favorites.getContext");
             parameters.Add("user_id", userId);
             parameters.Add("photo_id", photoId);

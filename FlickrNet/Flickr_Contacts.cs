@@ -52,9 +52,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.contacts.getList");
-            if (!String.IsNullOrEmpty(filter)) parameters.Add("filter", filter);
+            if (!string.IsNullOrEmpty(filter)) parameters.Add("filter", filter);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -116,11 +116,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.contacts.getListRecentlyUploaded");
             if (dateLastUpdated != DateTime.MinValue) parameters.Add("date_lastupload", UtilityMethods.DateToUnixTimestamp(dateLastUpdated));
-            if (!String.IsNullOrEmpty(filter)) parameters.Add("filter", filter);
+            if (!string.IsNullOrEmpty(filter)) parameters.Add("filter", filter);
 
             return GetResponseNoCache<ContactCollection>(parameters);
 
@@ -145,7 +145,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="ContactCollection"/> class containing the list of contacts.</returns>
         public ContactCollection ContactsGetPublicList(string userId, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.contacts.getPublicList");
             parameters.Add("user_id", userId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -178,7 +178,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.contacts.getTaggingSuggestions");
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));

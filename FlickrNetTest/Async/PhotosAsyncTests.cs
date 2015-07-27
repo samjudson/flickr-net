@@ -40,7 +40,7 @@ namespace FlickrNetTest.Async
             var photos = result.Result;
             foreach (var photo in photos)
             {
-                Console.WriteLine(photo.Title + " = " + String.Join(",", photo.Tags));
+                Console.WriteLine(photo.Title + " = " + string.Join(",", photo.Tags));
             }
 
         }
@@ -67,7 +67,7 @@ namespace FlickrNetTest.Async
             DateTime date2 = DateTime.Today.AddMonths(-6);
             DateTime date3 = DateTime.Today;
 
-            DateTime[] uploadDates = new DateTime[] { date1, date2, date3 };
+            DateTime[] uploadDates = { date1, date2, date3 };
 
             Flickr f = TestData.GetAuthInstance();
 

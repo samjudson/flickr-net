@@ -43,7 +43,7 @@ namespace FlickrNet
             {
                 if (reader.Name == "member")
                 {
-                    Member m = new Member();
+                    var m = new Member();
                     ((IFlickrParsable)m).Load(reader);
                     Add(m);
                 }

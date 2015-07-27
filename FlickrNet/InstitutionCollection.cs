@@ -16,7 +16,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "institution")
             {
-                Institution service = new Institution();
+                var service = new Institution();
                 ((IFlickrParsable)service).Load(reader);
                 Add(service);
             }

@@ -122,7 +122,7 @@ namespace FlickrNet
 
                     default:
                         throw new System.Configuration.ConfigurationErrorsException(
-                            String.Format(
+                            string.Format(
                                 System.Globalization.CultureInfo.InvariantCulture, 
                                 "Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
                 }
@@ -137,7 +137,7 @@ namespace FlickrNet
                         break;
                     default:
                         throw new System.Configuration.ConfigurationErrorsException(
-                            String.Format(System.Globalization.CultureInfo.InvariantCulture, 
+                            string.Format(System.Globalization.CultureInfo.InvariantCulture, 
                             "Unknown node '{0}' in flickrNet node", node.Name), configNode);
                 }
             }
@@ -179,7 +179,7 @@ namespace FlickrNet
                         break;
                     default:
                         throw new System.Configuration.ConfigurationErrorsException(
-                            String.Format(System.Globalization.CultureInfo.InvariantCulture, 
+                            string.Format(System.Globalization.CultureInfo.InvariantCulture, 
                             "Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
                 }
             }

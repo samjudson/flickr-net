@@ -14,7 +14,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Uri"/> class containing the URL of the group page.</returns>
         public string UrlsGetGroup(string groupId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.getGroup");
             parameters.Add("group_id", groupId);
 
@@ -42,7 +42,7 @@ namespace FlickrNet
         /// <returns>The URL of the users photos.</returns>
         public string UrlsGetUserPhotos(string userId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.getUserPhotos");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -70,7 +70,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="Uri"/> class containing the URL for the users profile.</returns>
         public string UrlsGetUserProfile(string userId)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.getUserProfile");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -87,7 +87,7 @@ namespace FlickrNet
         /// <returns></returns>
         public Gallery UrlsLookupGallery(string url)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGallery");
             parameters.Add("api_key", apiKey);
             parameters.Add("url", url);
@@ -102,7 +102,7 @@ namespace FlickrNet
         /// <returns>The ID of the group at the specified URL on success, a null reference (Nothing in Visual Basic) if the group cannot be found.</returns>
         public string UrlsLookupGroup(string urlToFind)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGroup");
             parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
@@ -120,7 +120,7 @@ namespace FlickrNet
         /// <returns>An instance of the <see cref="FoundUser"/> class containing the users ID and username.</returns>
         public FoundUser UrlsLookupUser(string urlToFind)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupUser");
             parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);

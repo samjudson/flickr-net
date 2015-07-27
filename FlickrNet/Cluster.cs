@@ -38,9 +38,9 @@ namespace FlickrNet
                 }
                 else
                 {
-                    List<string> ids = new List<string>();
+                    var ids = new List<string>();
                     foreach (string s in Tags) ids.Add(s);
-                    return String.Join("-", ids.ToArray());
+                    return string.Join("-", ids.ToArray());
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/tags/{0}/clusters/{1}/", SourceTag, ClusterId);
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/tags/{0}/clusters/{1}/", SourceTag, ClusterId);
             }
         }
 

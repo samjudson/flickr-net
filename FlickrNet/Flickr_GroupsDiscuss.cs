@@ -15,8 +15,8 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
-            if (String.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
+            if (string.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
+            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.replies.add");
@@ -35,8 +35,8 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
-            if (String.IsNullOrEmpty(replyId)) throw new ArgumentNullException("replyId");
+            if (string.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
+            if (string.IsNullOrEmpty(replyId)) throw new ArgumentNullException("replyId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.replies.delete");
@@ -56,9 +56,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
             
-            if (String.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
-            if (String.IsNullOrEmpty(replyId)) throw new ArgumentNullException("replyId");
-            if (String.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
+            if (string.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
+            if (string.IsNullOrEmpty(replyId)) throw new ArgumentNullException("replyId");
+            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.replies.edit");
@@ -77,8 +77,8 @@ namespace FlickrNet
         /// <returns></returns>
         public TopicReply GroupsDiscussRepliesGetInfo(string topicId, string replyId)
         {
-            if (String.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
-            if (String.IsNullOrEmpty(replyId)) throw new ArgumentNullException("replyId");
+            if (string.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
+            if (string.IsNullOrEmpty(replyId)) throw new ArgumentNullException("replyId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.replies.getInfo");
@@ -97,7 +97,7 @@ namespace FlickrNet
         /// <returns></returns>
         public TopicReplyCollection GroupsDiscussRepliesGetList(string topicId, int page, int perPage)
         {
-            if (String.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
+            if (string.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.replies.getList");
@@ -118,9 +118,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(groupId)) throw new ArgumentNullException("groupId");
-            if (String.IsNullOrEmpty(subject)) throw new ArgumentNullException("subject");
-            if (String.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
+            if (string.IsNullOrEmpty(groupId)) throw new ArgumentNullException("groupId");
+            if (string.IsNullOrEmpty(subject)) throw new ArgumentNullException("subject");
+            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.topics.add");
@@ -140,7 +140,7 @@ namespace FlickrNet
         /// <returns></returns>
         public TopicCollection GroupsDiscussTopicsGetList(string groupId, int page, int perPage)
         {
-            if (String.IsNullOrEmpty(groupId)) throw new ArgumentNullException("groupId");
+            if (string.IsNullOrEmpty(groupId)) throw new ArgumentNullException("groupId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.topics.getList");
@@ -158,7 +158,7 @@ namespace FlickrNet
         /// <returns></returns>
         public Topic GroupsDiscussTopicsGetInfo(string topicId)
         {
-            if (String.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
+            if (string.IsNullOrEmpty(topicId)) throw new ArgumentNullException("topicId");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.groups.discuss.topics.getInfo");

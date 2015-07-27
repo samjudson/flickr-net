@@ -25,7 +25,7 @@ namespace FlickrNetTest
             Assert.IsTrue(p.PerPage >= p.Count, "PerPage should be the same or greater than the number of photos returned.");
         }
 
-        [Test()]
+        [Test]
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PeopleGetPhotosOfAuthRequired()
         {
@@ -34,7 +34,7 @@ namespace FlickrNetTest
             PeoplePhotoCollection p = f.PeopleGetPhotosOf();
         }
 
-        [Test()]
+        [Test]
         [Category("AccessTokenRequired")]
         public void PeopleGetPhotosOfMe()
         {

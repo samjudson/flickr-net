@@ -60,7 +60,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "contact")
             {
-                Contact contact = new Contact();
+                var contact = new Contact();
                 ((IFlickrParsable)contact).Load(reader);
                 Add(contact);
             }

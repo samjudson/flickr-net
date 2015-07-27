@@ -128,7 +128,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "topic")
             {
-                Topic topic = new Topic();
+                var topic = new Topic();
                 ((IFlickrParsable)topic).Load(reader);
                 Add(topic);
             }

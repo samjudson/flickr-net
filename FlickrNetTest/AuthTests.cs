@@ -1,14 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
-using NUnit.Framework;
-using FlickrNet;
-using System.Xml;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Reactive.Subjects;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Xml;
+using FlickrNet;
+using NUnit.Framework;
+
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace FlickrNetTest
 {
@@ -124,11 +122,11 @@ namespace FlickrNetTest
         {
             string authResponse = "<auth><token>TheToken</token><perms>delete</perms><user nsid=\"41888973@N00\" username=\"Sam Judson\" fullname=\"Sam Judson\" /></auth>";
 
-            XmlTextReader reader = new XmlTextReader(new StringReader(authResponse));
+            var reader = new XmlTextReader(new StringReader(authResponse));
             reader.Read();
 
-            Auth auth = new Auth();
-            IFlickrParsable parsable = auth as IFlickrParsable;
+            var auth = new Auth();
+            var parsable = auth as IFlickrParsable;
 
             parsable.Load(reader);
 
@@ -141,3 +139,5 @@ namespace FlickrNetTest
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete

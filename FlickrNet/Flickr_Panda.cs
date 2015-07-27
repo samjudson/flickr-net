@@ -13,12 +13,12 @@ namespace FlickrNet
         /// <returns>An array of panda names.</returns>
         public string[] PandaGetList()
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getList");
 
             UnknownResponse response = GetResponseCache<UnknownResponse>(parameters);
 
-            List<string> pandas = new List<string>();
+            var pandas = new List<string>();
             foreach (System.Xml.XmlNode n in response.GetXmlDocument().SelectNodes("//panda/text()"))
             {
                 pandas.Add(n.Value);
@@ -69,7 +69,7 @@ namespace FlickrNet
         /// <returns>A list of photos for the panda.</returns>
         public PandaPhotoCollection PandaGetPhotos(string pandaName, PhotoSearchExtras extras, int page, int perPage)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.panda.getPhotos");
             parameters.Add("panda_name", pandaName);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));

@@ -18,7 +18,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "group")
             {
-                GroupInfo member = new GroupInfo();
+                var member = new GroupInfo();
                 ((IFlickrParsable)member).Load(reader);
                 Add(member);
             }

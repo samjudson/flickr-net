@@ -63,7 +63,9 @@
     <CodeAnalysisRules>
     </CodeAnalysisRules>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -80,7 +82,8 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -211,6 +214,7 @@
     <Compile Include="GalleryPhotoCollection.cs" />
     <Compile Include="GeoPermissionType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="GroupCategory.cs">
       <SubType>Code</SubType>
     </Compile>

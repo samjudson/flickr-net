@@ -36,7 +36,7 @@ namespace FlickrNet
                         LicenseName = reader.Value;
                         break;
                     case "url":
-                        if (!String.IsNullOrEmpty(reader.Value))
+                        if (!string.IsNullOrEmpty(reader.Value))
                         {
                             LicenseUrl = reader.Value;
                         }

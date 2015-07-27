@@ -34,13 +34,6 @@ namespace FlickrNet
         /// </summary>
         public int PerPage { get; set; }
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public PeoplePhotoCollection()
-        {
-        }
-
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             if (reader.LocalName != "photos")
@@ -76,9 +69,9 @@ namespace FlickrNet
 
             while (reader.LocalName == "photo")
             {
-                Photo p = new Photo();
+                var p = new Photo();
                 ((IFlickrParsable)p).Load(reader);
-                if (!String.IsNullOrEmpty(p.PhotoId)) Add(p);
+                if (!string.IsNullOrEmpty(p.PhotoId)) Add(p);
             }
 
             // Skip to next element (if any)

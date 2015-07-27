@@ -13,10 +13,6 @@ namespace FlickrNet
         private static string configSection = "flickrNet";
         private static FlickrConfigurationSettings settings;
 
-        public FlickrConfigurationManager()
-        {
-        }
-
         public static FlickrConfigurationSettings Settings
         {
             get

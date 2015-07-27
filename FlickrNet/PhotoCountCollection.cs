@@ -19,7 +19,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "photocount")
             {
-                PhotoCount c = new PhotoCount();
+                var c = new PhotoCount();
                 ((IFlickrParsable)c).Load(reader);
                 Add(c);
             }
@@ -58,16 +58,10 @@ namespace FlickrNet
                         Count = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);
                         break;
                     case "fromdate":
-                        if( System.Text.RegularExpressions.Regex.IsMatch(reader.Value, "^\\d+$") )
-                            FromDate = UtilityMethods.UnixTimestampToDate(reader.Value);
-                        else
-                            FromDate = UtilityMethods.MySqlToDate(reader.Value);
+                        FromDate = System.Text.RegularExpressions.Regex.IsMatch(reader.Value, "^\\d+$") ? UtilityMethods.UnixTimestampToDate(reader.Value) : UtilityMethods.MySqlToDate(reader.Value);
                         break;
                     case "todate":
-                        if( System.Text.RegularExpressions.Regex.IsMatch(reader.Value, "^\\d+$") )
-                            ToDate = UtilityMethods.UnixTimestampToDate(reader.Value);
-                        else
-                            ToDate = UtilityMethods.MySqlToDate(reader.Value);
+                        ToDate = System.Text.RegularExpressions.Regex.IsMatch(reader.Value, "^\\d+$") ? UtilityMethods.UnixTimestampToDate(reader.Value) : UtilityMethods.MySqlToDate(reader.Value);
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <exception cref="FlickrApiException">A FlickrApiException is raised if the email address is not found.</exception>
         public void PeopleFindByEmailAsync(string emailAddress, Action<FlickrResult<FoundUser>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.findByEmail");
             parameters.Add("api_key", apiKey);
             parameters.Add("find_email", emailAddress);
@@ -31,7 +31,7 @@ namespace FlickrNet
         /// <exception cref="FlickrApiException">A FlickrApiException is raised if the email address is not found.</exception>
         public void PeopleFindByUserNameAsync(string userName, Action<FlickrResult<FoundUser>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.findByUsername");
             parameters.Add("api_key", apiKey);
             parameters.Add("username", userName);
@@ -48,7 +48,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getGroups");
             parameters.Add("user_id", userId);
 
@@ -63,7 +63,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PeopleGetInfoAsync(string userId, Action<FlickrResult<Person>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getInfo");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
@@ -79,7 +79,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getLimits");
 
             GetResponseAsync<PersonLimits>(parameters, callback);
@@ -91,7 +91,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PeopleGetUploadStatusAsync(Action<FlickrResult<UserStatus>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getUploadStatus");
 
             GetResponseAsync<UserStatus>(parameters, callback);
@@ -104,7 +104,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PeopleGetPublicGroupsAsync(string userId, Action<FlickrResult<GroupInfoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicGroups");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
@@ -149,7 +149,7 @@ namespace FlickrNet
             if (!IsAuthenticated && safetyLevel > SafetyLevel.Safe)
                 throw new ArgumentException("Safety level may only be 'Safe' for unauthenticated calls", "safetyLevel");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPublicPhotos");
             parameters.Add("api_key", apiKey);
             parameters.Add("user_id", userId);
@@ -369,7 +369,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PeopleGetPhotosOfAsync(string userId, PhotoSearchExtras extras, int page, int perPage, Action<FlickrResult<PeoplePhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.people.getPhotosOf");
             parameters.Add("user_id", userId);
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));

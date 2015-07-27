@@ -125,7 +125,7 @@ namespace FlickrNet
         /// <returns>The <see cref="Group"/> instance.</returns>
         public static implicit operator Group(GroupFullInfo groupInfo)
         {
-            Group g = new Group();
+            var g = new Group();
             g.GroupId = groupInfo.GroupId;
             g.GroupName = groupInfo.GroupName;
             g.Members = groupInfo.Members;

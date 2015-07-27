@@ -33,9 +33,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Uri uploadUri = new Uri(UploadUrl);
+            var uploadUri = new Uri(UploadUrl);
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             if (title != null && title.Length > 0)
             {
@@ -69,7 +69,7 @@ namespace FlickrNet
 
             parameters.Add("api_key", apiKey);
 
-            if (!String.IsNullOrEmpty(OAuthAccessToken))
+            if (!string.IsNullOrEmpty(OAuthAccessToken))
             {
                 parameters.Remove("api_key");
                 OAuthGetBasicParameters(parameters);
@@ -94,9 +94,9 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void ReplacePictureAsync(Stream stream, string fileName, string photoId, Action<FlickrResult<string>> callback)
         {
-            Uri replaceUri = new Uri(ReplaceUrl);
+            var replaceUri = new Uri(ReplaceUrl);
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("photo_id", photoId);
             parameters.Add("api_key", apiKey);
@@ -116,7 +116,7 @@ namespace FlickrNet
             var req = WebRequest.Create(uploadUri);
             req.Method = "POST";
             req.ContentType = "multipart/form-data; boundary=" + boundary;
-            if (!String.IsNullOrEmpty(authHeader))
+            if (!string.IsNullOrEmpty(authHeader))
             {
                 req.Headers["Authorization"] = authHeader;
             }
@@ -171,7 +171,7 @@ namespace FlickrNet
                                 if (ex is WebException)
                                 {
                                     var oauthEx = new OAuthException(ex);
-                                    result.Error = String.IsNullOrEmpty(oauthEx.Message) ? ex : oauthEx;
+                                    result.Error = string.IsNullOrEmpty(oauthEx.Message) ? ex : oauthEx;
                                 }
                                 else
                                 {

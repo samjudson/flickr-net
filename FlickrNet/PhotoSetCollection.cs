@@ -72,7 +72,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "photoset")
             {
-                Photoset photoset = new Photoset();
+                var photoset = new Photoset();
                 ((IFlickrParsable)photoset).Load(reader);
                 Add(photoset);
             }

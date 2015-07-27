@@ -58,7 +58,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "domain")
             {
-                StatDomain domain = new StatDomain();
+                var domain = new StatDomain();
                 ((IFlickrParsable)domain).Load(reader);
                 Add(domain);
             }

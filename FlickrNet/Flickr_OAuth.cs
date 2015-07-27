@@ -28,13 +28,13 @@ namespace FlickrNet
             byte[] keyBytes = System.Text.Encoding.UTF8.GetBytes(key);
 
 #if !SILVERLIGHT
-            SortedList<string, string> sorted = new SortedList<string, string>();
+            var sorted = new SortedList<string, string>();
             foreach (KeyValuePair<string, string> pair in parameters) { sorted.Add(pair.Key, pair.Value); }
 #else
                 var sorted = parameters.OrderBy(p => p.Key);
 #endif
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (KeyValuePair<string, string> pair in sorted)
             {
                 sb.Append(pair.Key);
@@ -50,7 +50,7 @@ namespace FlickrNet
 #if WindowsCE
             FlickrNet.Security.Cryptography.HMACSHA1 sha1 = new FlickrNet.Security.Cryptography.HMACSHA1(keyBytes);
 #else
-            System.Security.Cryptography.HMACSHA1 sha1 = new System.Security.Cryptography.HMACSHA1(keyBytes);
+            var sha1 = new System.Security.Cryptography.HMACSHA1(keyBytes);
 #endif
 
             byte[] hashBytes = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(baseString));
@@ -107,7 +107,7 @@ namespace FlickrNet
             string oauthtimestamp = UtilityMethods.DateToUnixTimestamp(DateTime.UtcNow);
             string oauthnonce = Guid.NewGuid().ToString("N");
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("oauth_nonce", oauthnonce);
             parameters.Add("oauth_timestamp", oauthtimestamp);
             parameters.Add("oauth_version", "1.0");

@@ -15,7 +15,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void ReflectionGetMethodsAsync(Action<FlickrResult<MethodCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.reflection.getMethods");
 
             GetResponseAsync<MethodCollection>(parameters, callback);
@@ -28,7 +28,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void ReflectionGetMethodInfoAsync(string methodName, Action<FlickrResult<Method>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.reflection.getMethodInfo");
             parameters.Add("api_key", apiKey);
             parameters.Add("method_name", methodName);

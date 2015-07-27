@@ -19,7 +19,7 @@ namespace FlickrNetTest
         {
             Flickr f = TestData.GetInstance();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("text", "Flowers");
             UnknownResponse response = f.TestGeneric("flickr.groups.search", parameters);
 
@@ -44,7 +44,7 @@ namespace FlickrNetTest
         public void TestEcho()
         {
             Flickr f = TestData.GetInstance();
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("test1", "testvalue");
 
             Dictionary<string, string> returns = f.TestEcho(parameters);

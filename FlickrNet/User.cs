@@ -23,13 +23,6 @@ namespace FlickrNet
         /// </summary>
         public string FullName { get; set; }
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public FoundUser()
-        {
-        }
-
         void IFlickrParsable.Load(XmlReader reader)
         {
             if (reader.LocalName != "user")
@@ -246,11 +239,11 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "uploaded":
-                        if (!String.IsNullOrEmpty(reader.Value))
+                        if (!string.IsNullOrEmpty(reader.Value))
                             VideosUploaded = reader.ReadContentAsInt();
                         break;
                     case "remaining":
-                        if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
+                        if (!string.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
                             VideosRemaining = reader.ReadContentAsInt();
                         break;
                     default:
@@ -291,11 +284,11 @@ namespace FlickrNet
                 switch (reader.LocalName)
                 {
                     case "created":
-                        if (!String.IsNullOrEmpty(reader.Value))
+                        if (!string.IsNullOrEmpty(reader.Value))
                             SetsCreated = reader.ReadContentAsInt();
                         break;
                     case "remaining":
-                        if (!String.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
+                        if (!string.IsNullOrEmpty(reader.Value) && reader.Value != "lots")
                             SetsRemaining = reader.ReadContentAsInt();
                         break;
                     default:

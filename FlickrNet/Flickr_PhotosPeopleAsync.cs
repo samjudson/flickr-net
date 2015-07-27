@@ -31,7 +31,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.people.add");
             parameters.Add("photo_id", photoId);
             parameters.Add("user_id", userId);
@@ -53,7 +53,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.people.delete");
             parameters.Add("photo_id", photoId);
             parameters.Add("user_id", userId);
@@ -71,7 +71,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.people.deleteCoords");
             parameters.Add("photo_id", photoId);
             parameters.Add("user_id", userId);
@@ -93,7 +93,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.people.editCoords");
             parameters.Add("photo_id", photoId);
             parameters.Add("user_id", userId);
@@ -112,7 +112,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosPeopleGetListAsync(string photoId, Action<FlickrResult<PhotoPersonCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.people.getList");
             parameters.Add("photo_id", photoId);
 

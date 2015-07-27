@@ -39,7 +39,7 @@ namespace FlickrNet
                 case AuthLevel.None:
                     return "none";
                 default:
-                    return String.Empty;
+                    return string.Empty;
 
             }
         }
@@ -54,7 +54,7 @@ namespace FlickrNet
             switch (tagMode)
             {
                 case TagMode.None:
-                    return String.Empty;
+                    return string.Empty;
                 case TagMode.AllTags:
                     return "all";
                 case TagMode.AnyTag:
@@ -62,7 +62,7 @@ namespace FlickrNet
                 case TagMode.Boolean:
                     return "bool";
                 default:
-                    return String.Empty;
+                    return string.Empty;
             }
         }
 
@@ -76,13 +76,13 @@ namespace FlickrNet
             switch (machineTagMode)
             {
                 case MachineTagMode.None:
-                    return String.Empty;
+                    return string.Empty;
                 case MachineTagMode.AllTags:
                     return "all";
                 case MachineTagMode.AnyTag:
                     return "any";
                 default:
-                    return String.Empty;
+                    return string.Empty;
             }
 
         }
@@ -116,7 +116,7 @@ namespace FlickrNet
         /// <returns>The <see cref="DateTime"/> object the time represents.</returns>
         public static DateTime UnixTimestampToDate(string timestamp)
         {
-            if (String.IsNullOrEmpty(timestamp)) return DateTime.MinValue;
+            if (string.IsNullOrEmpty(timestamp)) return DateTime.MinValue;
             try
             {
                 return UnixTimestampToDate(Int64.Parse(timestamp, System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -163,7 +163,7 @@ namespace FlickrNet
                 extraList.Add(att.Description);
             }
 
-            return String.Join(",", extraList.ToArray());
+            return string.Join(",", extraList.ToArray());
 
         }
 
@@ -211,7 +211,7 @@ namespace FlickrNet
                 }
             }
 
-            return String.Join(",", colorList.ToArray());
+            return string.Join(",", colorList.ToArray());
 
         }
 
@@ -225,7 +225,7 @@ namespace FlickrNet
 
         private static IEnumerable<Enum> GetValues(Enum enumeration )
         {
-            List<Enum> enumerations = new List<Enum>();
+            var enumerations = new List<Enum>();
             foreach (FieldInfo fieldInfo in enumeration.GetType().GetFields(BindingFlags.Static | BindingFlags.Public))
             {
                 enumerations.Add((Enum)fieldInfo.GetValue(enumeration));
@@ -257,7 +257,7 @@ namespace FlickrNet
                 case PhotoSearchSortOrder.Relevance:
                     return "relevance";
                 default:
-                    return String.Empty;
+                    return string.Empty;
             }
         }
 
@@ -277,7 +277,7 @@ namespace FlickrNet
                 case PopularitySort.Views:
                     return "views";
                 default:
-                    return String.Empty;
+                    return string.Empty;
             }
         }
 
@@ -405,7 +405,7 @@ namespace FlickrNet
 
         private static string UrlFormat(string format, params object[] parameters)
         {
-            return String.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, format, parameters);
         }
 
 
@@ -443,14 +443,14 @@ namespace FlickrNet
 
         internal static string MemberTypeToString(MemberTypes memberTypes)
         {
-            List<string> types = new List<string>();
+            var types = new List<string>();
 
             if ((memberTypes & MemberTypes.Narwhal) == MemberTypes.Narwhal) types.Add("1");
             if ((memberTypes & MemberTypes.Member) == MemberTypes.Member) types.Add("2");
             if ((memberTypes & MemberTypes.Moderator) == MemberTypes.Moderator) types.Add("3");
             if ((memberTypes & MemberTypes.Admin) == MemberTypes.Admin) types.Add("4");
 
-            return String.Join(",", types.ToArray());
+            return string.Join(",", types.ToArray());
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace FlickrNet
                 hashedBytes = csp.ComputeHash(bytes, 0, bytes.Length);
             }
 #endif
-            return BitConverter.ToString(hashedBytes).Replace("-", String.Empty).ToLower(System.Globalization.CultureInfo.InvariantCulture);
+            return BitConverter.ToString(hashedBytes).Replace("-", string.Empty).ToLower(System.Globalization.CultureInfo.InvariantCulture);
         }
 
         internal static DateTime MySqlToDate(string p)
@@ -509,9 +509,9 @@ namespace FlickrNet
         {
             DateTime output = DateTime.MinValue;
 
-            if (String.IsNullOrEmpty(date)) return output;
+            if (string.IsNullOrEmpty(date)) return output;
             if (date == "0000-00-00 00:00:00") return output;
-            if (date.EndsWith("-00-01 00:00:00"))
+            if (date.EndsWith("-00-01 00:00:00", StringComparison.Ordinal))
             {
                 output = new DateTime(int.Parse(date.Substring(0, 4), System.Globalization.NumberFormatInfo.InvariantInfo), 1, 1);
                 return output;
@@ -552,7 +552,7 @@ namespace FlickrNet
                 case MediaType.Videos:
                     return "videos";
                 default:
-                    return String.Empty;
+                    return string.Empty;
             }
         }
 
@@ -567,7 +567,7 @@ namespace FlickrNet
             {
                 throw new ParsingException("Unknown attribute: " + reader.Name + "=" + reader.Value);
             }
-            if (!String.IsNullOrEmpty(reader.Value))
+            if (!string.IsNullOrEmpty(reader.Value))
                 throw new ParsingException("Unknown " + reader.NodeType.ToString() + ": " + reader.Name + "=" + reader.Value);
             else
                 throw new ParsingException("Unknown element: " + reader.Name);
@@ -583,10 +583,10 @@ namespace FlickrNet
         /// <returns></returns>
         public static string BuddyIcon(string server, string farm, string userId)
         {
-            if (String.IsNullOrEmpty(server) || server == "0")
+            if (string.IsNullOrEmpty(server) || server == "0")
                 return "https://www.flickr.com/images/buddyicon.jpg";
             else
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://farm{0}.staticflickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture, "https://farm{0}.staticflickr.com/{1}/buddyicons/{2}.jpg", farm, server, userId);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace FlickrNet
         {
             var dic = new Dictionary<string, string>();
 
-            if (String.IsNullOrEmpty(response)) return dic;
+            if (string.IsNullOrEmpty(response)) return dic;
 
             var parts = response.Split('&');
 

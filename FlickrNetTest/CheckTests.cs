@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FlickrNet;
+﻿using FlickrNet;
 using NUnit.Framework;
+
+#pragma warning disable CS0618 // Type or member is obsolete
 
 namespace FlickrNetTest
 {
@@ -14,7 +12,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(ApiKeyRequiredException))]
         public void CheckApiKeyThrowsExceptionWhenNotPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
 
             f.CheckApiKey();
         }
@@ -22,7 +20,7 @@ namespace FlickrNetTest
         [Test]
         public void CheckApiKeyDoesNotThrowWhenPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
             f.ApiKey = "X";
 
             Assert.DoesNotThrow(f.CheckApiKey);
@@ -32,7 +30,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(SignatureRequiredException))]
         public void CheckSignatureKeyThrowsExceptionWhenSecretNotPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
             f.ApiKey = "X";
             f.CheckSigned();
         }
@@ -40,7 +38,7 @@ namespace FlickrNetTest
         [Test]
         public void CheckSignatureKeyDoesntThrowWhenSecretPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
             f.ApiKey = "X";
             f.ApiSecret = "Y";
 
@@ -51,7 +49,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(AuthenticationRequiredException))]
         public void CheckRequestAuthenticationThrowsExceptionWhenNothingPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
             f.ApiKey = "X";
             f.ApiSecret = "Y";
 
@@ -61,7 +59,7 @@ namespace FlickrNetTest
         [Test]
         public void CheckRequestAuthenticationDoesNotThrowWhenAuthTokenPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
             f.ApiKey = "X";
             f.ApiSecret = "Y";
 
@@ -73,7 +71,7 @@ namespace FlickrNetTest
         [Test]
         public void CheckRequestAuthenticationDoesNotThrowWhenOAuthTokenPresent()
         {
-            Flickr f = new Flickr();
+            var f = new Flickr();
             f.ApiKey = "X";
             f.ApiSecret = "Y";
 

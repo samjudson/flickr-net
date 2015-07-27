@@ -34,7 +34,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TestLoginAsync(Action<FlickrResult<FoundUser>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.test.login");
 
             GetResponseAsync<FoundUser>(parameters, callback);
@@ -46,7 +46,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void TestNullAsync(Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.test.null");
 
             GetResponseAsync<NoResponse>(parameters, callback);

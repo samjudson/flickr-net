@@ -56,8 +56,6 @@ namespace FlickrNet
                     case "total":
                         Total = int.Parse(reader.Value, System.Globalization.CultureInfo.InvariantCulture);
                         break;
-                    default:
-                        break;
                 }
             }
 
@@ -65,7 +63,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "person")
             {
-                PhotoFavorite favorite = new PhotoFavorite();
+                var favorite = new PhotoFavorite();
                 ((IFlickrParsable)favorite).Load(reader);
                 Add(favorite);
             }

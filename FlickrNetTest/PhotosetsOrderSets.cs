@@ -13,7 +13,7 @@ namespace FlickrNetTest
         {
             var mySets = AuthInstance.PhotosetsGetList();
 
-            AuthInstance.PhotosetsOrderSets(String.Join(",", mySets.Select(myset => myset.PhotosetId).ToArray()));
+            AuthInstance.PhotosetsOrderSets(string.Join(",", mySets.Select(myset => myset.PhotosetId).ToArray()));
 
         }
 

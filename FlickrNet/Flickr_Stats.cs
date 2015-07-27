@@ -63,11 +63,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getCollectionDomains");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
-            if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
+            if (!string.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -85,7 +85,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getCSVFiles");
 
@@ -147,11 +147,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotoDomains");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
-            if (!String.IsNullOrEmpty(photoId)) parameters.Add("photo_id", photoId);
+            if (!string.IsNullOrEmpty(photoId)) parameters.Add("photo_id", photoId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -184,7 +184,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotostreamDomains");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
@@ -250,11 +250,11 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotosetDomains");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
-            if (!String.IsNullOrEmpty(photosetId)) parameters.Add("photoset_id", photosetId);
+            if (!string.IsNullOrEmpty(photosetId)) parameters.Add("photoset_id", photosetId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -271,7 +271,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getCollectionStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
@@ -290,7 +290,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotoStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
@@ -309,7 +309,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotostreamStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
@@ -328,7 +328,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotosetStats");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
@@ -393,12 +393,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotoReferrers");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
-            if (!String.IsNullOrEmpty(photoId)) parameters.Add("photo_id", photoId);
+            if (!string.IsNullOrEmpty(photoId)) parameters.Add("photo_id", photoId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -462,12 +462,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotosetReferrers");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
-            if (!String.IsNullOrEmpty(photosetId)) parameters.Add("photoset_id", photosetId);
+            if (!string.IsNullOrEmpty(photosetId)) parameters.Add("photoset_id", photosetId);
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -532,12 +532,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getCollectionReferrers");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             parameters.Add("domain", domain);
-            if (!String.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
+            if (!string.IsNullOrEmpty(collectionId)) parameters.Add("collection_id", UtilityMethods.CleanCollectionId(collectionId));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0) parameters.Add("per_page", perPage.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
 
@@ -570,7 +570,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.stats.getPhotostreamReferrers");
             parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
@@ -599,7 +599,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.stats.getTotalViews");
             if (date != DateTime.MinValue) parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
 
@@ -686,7 +686,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.stats.getPopularPhotos");
             if (date != DateTime.MinValue) parameters.Add("date", UtilityMethods.DateToUnixTimestamp(date));
             if (sort != PopularitySort.None) parameters.Add("sort", UtilityMethods.SortOrderToString(sort));

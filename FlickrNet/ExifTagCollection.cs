@@ -70,7 +70,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "exif")
             {
-                ExifTag tag = new ExifTag();
+                var tag = new ExifTag();
                 ((IFlickrParsable)tag).Load(reader);
                 Add(tag);
             }

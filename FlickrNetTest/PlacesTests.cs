@@ -307,7 +307,7 @@ namespace FlickrNetTest
                 Assert.IsNotNull(kp.Name, "Value should not be null.");
 
                 Assert.IsTrue(Enum.IsDefined(typeof(PlaceType), kp.Id), "PlaceType with ID " + kp.Id + " and Value '" + kp.Name + "' not defined in PlaceType enum.");
-                PlaceType type = (PlaceType)kp.Id;
+                var type = (PlaceType)kp.Id;
                 Assert.AreEqual(type.ToString("G").ToLower(), kp.Name, "Name of enum should match.");
             }
         }

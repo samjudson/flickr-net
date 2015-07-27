@@ -10,7 +10,7 @@ namespace FlickrNetTest
     [TestFixture]
     public class PhotosGetFavouritesTests
     {
-        Flickr f = TestData.GetInstance();
+        readonly Flickr f = TestData.GetInstance();
 
         [Test]
         public void PhotosGetFavoritesNoFavourites()
@@ -35,8 +35,8 @@ namespace FlickrNetTest
 
             foreach (PhotoFavorite p in favs)
             {
-                Assert.IsFalse(String.IsNullOrEmpty(p.UserId), "Should have a user ID.");
-                Assert.IsFalse(String.IsNullOrEmpty(p.UserName), "Should have a user name.");
+                Assert.IsFalse(string.IsNullOrEmpty(p.UserId), "Should have a user ID.");
+                Assert.IsFalse(string.IsNullOrEmpty(p.UserName), "Should have a user name.");
                 Assert.AreNotEqual(default(DateTime), p.FavoriteDate, "Favourite Date should not be default Date value");
                 Assert.IsTrue(p.FavoriteDate < DateTime.Now, "Favourite Date should be in the past.");
             }

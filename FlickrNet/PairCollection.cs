@@ -75,7 +75,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "pair")
             {
-                Pair item = new Pair();
+                var item = new Pair();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

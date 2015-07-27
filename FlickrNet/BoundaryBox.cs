@@ -229,7 +229,7 @@ namespace FlickrNet
         /// <returns>A comma seperated list of co-ordinates defining the boundary box.</returns>
         public override string ToString()
         {
-            return String.Format(System.Globalization.NumberFormatInfo.InvariantInfo, "{0},{1},{2},{3}", MinimumLongitude, MinimumLatitude, MaximumLongitude, MaximumLatitude);
+            return string.Format(System.Globalization.NumberFormatInfo.InvariantInfo, "{0},{1},{2},{3}", MinimumLongitude, MinimumLatitude, MaximumLongitude, MaximumLatitude);
         }
 
         /// <summary>

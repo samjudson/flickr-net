@@ -59,7 +59,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "person")
             {
-                PhotoPerson item = new PhotoPerson();
+                var item = new PhotoPerson();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

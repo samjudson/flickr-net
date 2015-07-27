@@ -19,7 +19,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "subscription")
             {
-                Subscription item = new Subscription();
+                var item = new Subscription();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

@@ -28,7 +28,7 @@ namespace FlickrNet
 
             var response = GetResponseCache<UnknownResponse>(parameters);
             
-            List<string> topics = new List<string>();
+            var topics = new List<string>();
             foreach (System.Xml.XmlNode node in response.GetXmlDocument().SelectNodes("//topic/@name"))
             {
                 topics.Add(node.Value);
@@ -63,9 +63,9 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(topic)) throw new ArgumentNullException("topic");
-            if (String.IsNullOrEmpty(callback)) throw new ArgumentNullException("callback");
-            if (String.IsNullOrEmpty(verify)) throw new ArgumentNullException("verify");
+            if (string.IsNullOrEmpty(topic)) throw new ArgumentNullException("topic");
+            if (string.IsNullOrEmpty(callback)) throw new ArgumentNullException("callback");
+            if (string.IsNullOrEmpty(verify)) throw new ArgumentNullException("verify");
 
             if (topic == "tags" && (tags == null || tags.Length == 0))
                 throw new InvalidOperationException("Must specify at least one tag is using topic of 'tags'");
@@ -75,20 +75,20 @@ namespace FlickrNet
             parameters.Add("topic", topic);
             parameters.Add("callback", callback);
             parameters.Add("verify", verify);
-            if (!String.IsNullOrEmpty(verifyToken)) parameters.Add("verify_token", verifyToken);
+            if (!string.IsNullOrEmpty(verifyToken)) parameters.Add("verify_token", verifyToken);
             if (leaseSeconds > 0)
                 parameters.Add("lease_seconds",
                                leaseSeconds.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (woeIds != null && woeIds.Length > 0)
             {
-                List<string> woeIdList = new List<string>();
+                var woeIdList = new List<string>();
                 foreach (int i in woeIds)
                 {
                     woeIdList.Add(i.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
                 }
-                parameters.Add("woe_ids", String.Join(",", woeIdList.ToArray()));
+                parameters.Add("woe_ids", string.Join(",", woeIdList.ToArray()));
             }
-            if (placeIds != null && placeIds.Length > 0) parameters.Add("place_ids", String.Join(",", placeIds));
+            if (placeIds != null && placeIds.Length > 0) parameters.Add("place_ids", string.Join(",", placeIds));
             if (radiusUnits != RadiusUnit.None) parameters.Add("radius_units", radiusUnits.ToString("d"));
 
             GetResponseNoCache<NoResponse>(parameters);
@@ -106,16 +106,16 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            if (String.IsNullOrEmpty(topic)) throw new ArgumentNullException("topic");
-            if (String.IsNullOrEmpty(callback)) throw new ArgumentNullException("callback");
-            if (String.IsNullOrEmpty(verify)) throw new ArgumentNullException("verify");
+            if (string.IsNullOrEmpty(topic)) throw new ArgumentNullException("topic");
+            if (string.IsNullOrEmpty(callback)) throw new ArgumentNullException("callback");
+            if (string.IsNullOrEmpty(verify)) throw new ArgumentNullException("verify");
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.push.unsubscribe");
             parameters.Add("topic", topic);
             parameters.Add("callback", callback);
             parameters.Add("verify", verify);
-            if (!String.IsNullOrEmpty(verifyToken)) parameters.Add("verif_token", verifyToken);
+            if (!string.IsNullOrEmpty(verifyToken)) parameters.Add("verif_token", verifyToken);
 
             GetResponseNoCache<NoResponse>(parameters);
         }

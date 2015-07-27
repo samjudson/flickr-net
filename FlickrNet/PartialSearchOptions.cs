@@ -148,14 +148,14 @@ namespace FlickrNet
 
         internal PartialSearchOptions(PhotoSearchOptions options)
         {
-            this.Extras = options.Extras;
-            this.MaxTakenDate = options.MaxTakenDate;
-            this.MinTakenDate = options.MinTakenDate;
-            this.MaxUploadDate = options.MaxUploadDate;
-            this.MinUploadDate = options.MinUploadDate;
-            this.Page = options.Page;
-            this.PerPage = options.PerPage;
-            this.PrivacyFilter = options.PrivacyFilter;
+            Extras = options.Extras;
+            MaxTakenDate = options.MaxTakenDate;
+            MinTakenDate = options.MinTakenDate;
+            MaxUploadDate = options.MaxUploadDate;
+            MinUploadDate = options.MinUploadDate;
+            Page = options.Page;
+            PerPage = options.PerPage;
+            PrivacyFilter = options.PrivacyFilter;
         }
 
         internal string ExtrasString

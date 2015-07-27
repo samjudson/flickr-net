@@ -36,7 +36,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "comment")
             {
-                PhotoComment comment = new PhotoComment();
+                var comment = new PhotoComment();
                 ((IFlickrParsable)comment).Load(reader);
                 Add(comment);
             }

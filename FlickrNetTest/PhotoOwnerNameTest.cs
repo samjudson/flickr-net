@@ -16,7 +16,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosSearchOwnerNameTest()
         {
-            PhotoSearchOptions o = new PhotoSearchOptions();
+            var o = new PhotoSearchOptions();
 
             o.UserId = TestData.TestUserId;
             o.PerPage = 10;

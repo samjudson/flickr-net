@@ -8,6 +8,7 @@ using NUnit.Framework;
 namespace FlickrNetTest
 {
     [TestFixture]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Potential Code Quality Issues", "RECS0026:Possible unassigned object created by 'new'")]
     public class BoundaryTests : BaseTest
     {
         [Test]

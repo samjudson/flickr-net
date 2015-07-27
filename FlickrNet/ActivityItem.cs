@@ -244,7 +244,7 @@ namespace FlickrNet
                         reader.ReadToDescendant("event");
                         while (reader.LocalName == "event")
                         {
-                            ActivityEvent e = new ActivityEvent();
+                            var e = new ActivityEvent();
                             ((IFlickrParsable)e).Load(reader);
                             Events.Add(e);
                         }

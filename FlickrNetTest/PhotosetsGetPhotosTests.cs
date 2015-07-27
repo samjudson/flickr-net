@@ -25,7 +25,7 @@ namespace FlickrNetTest
         {
             var set = Instance.PhotosetsGetPhotos("72157594218885767", PhotoSearchExtras.MachineTags, PrivacyFilter.None, 1, 10);
 
-            var machineTagsFound = set.Any(p => !String.IsNullOrEmpty(p.MachineTags));
+            var machineTagsFound = set.Any(p => !string.IsNullOrEmpty(p.MachineTags));
 
             Assert.IsTrue(machineTagsFound, "No machine tags were found in the photoset");
         }
@@ -60,7 +60,7 @@ namespace FlickrNetTest
             foreach(var p in theset)
             {
                 Assert.IsNotNull(p.UserId, "UserId should not be null.");
-                Assert.AreNotEqual(String.Empty, p.UserId, "UserId should not be an empty string.");
+                Assert.AreNotEqual(string.Empty, p.UserId, "UserId should not be an empty string.");
                 var url = "https://www.flickr.com/photos/" + p.UserId + "/" + p.PhotoId + "/";
                 Assert.AreEqual(url, p.WebUrl);
             }

@@ -86,10 +86,10 @@ namespace FlickrNet
 
             while (reader.LocalName == "value")
             {
-                Value item = new Value();
+                var item = new Value();
                 ((IFlickrParsable)item).Load(reader);
-                if (!String.IsNullOrEmpty(NamespaceName) && String.IsNullOrEmpty(item.NamespaceName)) item.NamespaceName = NamespaceName;
-                if (!String.IsNullOrEmpty(PredicateName) && String.IsNullOrEmpty(item.PredicateName)) item.PredicateName = PredicateName;
+                if (!string.IsNullOrEmpty(NamespaceName) && string.IsNullOrEmpty(item.NamespaceName)) item.NamespaceName = NamespaceName;
+                if (!string.IsNullOrEmpty(PredicateName) && string.IsNullOrEmpty(item.PredicateName)) item.PredicateName = PredicateName;
                 Add(item);
             }
 

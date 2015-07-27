@@ -30,7 +30,7 @@ namespace FlickrNet
         public LockFile(string filepath)
         {
             this.filepath = filepath;
-            this.disposeHelper = new DisposeHelper(this);
+            disposeHelper = new DisposeHelper(this);
         }
 
         public IDisposable Acquire()

@@ -77,7 +77,7 @@ namespace FlickrNetTest
             {
                 Assert.AreEqual("dc", p.NamespaceName, "NamespaceName should be 'dc'.");
                 Assert.IsNotNull(p.PairName, "PairName should not be null.");
-                Assert.IsTrue(p.PairName.StartsWith("dc:"), "PairName should start with 'dc:'.");
+                Assert.IsTrue(p.PairName.StartsWith("dc:", StringComparison.Ordinal), "PairName should start with 'dc:'.");
                 Assert.IsNotNull(p.PredicateName, "PredicateName should not be null.");
                 Assert.AreNotEqual(0, p.Usage, "Usage should be greater than zero.");
 
@@ -96,7 +96,7 @@ namespace FlickrNetTest
             {
                 Assert.AreEqual("author", p.PredicateName, "PredicateName should be 'dc'.");
                 Assert.IsNotNull(p.PairName, "PairName should not be null.");
-                Assert.IsTrue(p.PairName.EndsWith(":author"), "PairName should end with ':author'.");
+                Assert.IsTrue(p.PairName.EndsWith(":author", StringComparison.Ordinal), "PairName should end with ':author'.");
                 Assert.IsNotNull(p.NamespaceName, "NamespaceName should not be null.");
                 Assert.AreNotEqual(0, p.Usage, "Usage should be greater than zero.");
 

@@ -36,7 +36,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.HasError = r.HasError;
                     if (r.HasError)
                     {
@@ -57,7 +57,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosCommentsDeleteCommentAsync(string commentId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.deleteComment");
             parameters.Add("comment_id", commentId);
 
@@ -72,7 +72,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosCommentsEditCommentAsync(string commentId, string commentText, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.editComment");
             parameters.Add("comment_id", commentId);
             parameters.Add("comment_text", commentText);
@@ -135,12 +135,12 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.comments.getRecentForContacts");
             if (dateLastComment != DateTime.MinValue)
                 parameters.Add("date_lastcomment", UtilityMethods.DateToUnixTimestamp(dateLastComment));
             if (contactsFilter != null && contactsFilter.Length > 0)
-                parameters.Add("contacts_filter", String.Join(",", contactsFilter));
+                parameters.Add("contacts_filter", string.Join(",", contactsFilter));
             if (extras != PhotoSearchExtras.None) parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
             if (page > 0) parameters.Add("page", page.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             if (perPage > 0)

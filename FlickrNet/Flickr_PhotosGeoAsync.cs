@@ -25,7 +25,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.batchCorrectLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
             parameters.Add("lon", longitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -47,7 +47,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.correctLocation");
             parameters.Add("photo_id", photoId);
             parameters.Add("place_id", placeId);
@@ -63,7 +63,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGeoGetLocationAsync(string photoId, Action<FlickrResult<PlaceInfo>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getLocation");
             parameters.Add("photo_id", photoId);
 
@@ -71,7 +71,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<PlaceInfo> result = new FlickrResult<PlaceInfo>();
+                    var result = new FlickrResult<PlaceInfo>();
                     result.HasError = r.HasError;
                     if (result.HasError)
                     {
@@ -106,7 +106,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGeoSetContextAsync(string photoId, GeoContext context, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.photos.geo.setContext");
             parameters.Add("photo_id", photoId);
@@ -137,7 +137,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGeoSetLocationAsync(string photoId, double latitude, double longitude, GeoAccuracy accuracy, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.setLocation");
             parameters.Add("photo_id", photoId);
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -167,7 +167,7 @@ namespace FlickrNet
         {
             CheckRequiresAuthentication();
 
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
 
             parameters.Add("method", "flickr.photos.geo.photosForLocation");
             parameters.Add("lat", latitude.ToString(System.Globalization.NumberFormatInfo.InvariantInfo));
@@ -189,7 +189,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGeoRemoveLocationAsync(string photoId, Action<FlickrResult<NoResponse>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.removeLocation");
             parameters.Add("photo_id", photoId);
 
@@ -202,7 +202,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetWithoutGeoDataAsync(Action<FlickrResult<PhotoCollection>> callback)
         {
-            PartialSearchOptions options = new PartialSearchOptions();
+            var options = new PartialSearchOptions();
             PhotosGetWithoutGeoDataAsync(options, callback);
         }
 
@@ -213,7 +213,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetWithoutGeoDataAsync(PartialSearchOptions options, Action<FlickrResult<PhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getWithoutGeoData");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -230,7 +230,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetWithGeoDataAsync(Action<FlickrResult<PhotoCollection>> callback)
         {
-            PartialSearchOptions options = new PartialSearchOptions();
+            var options = new PartialSearchOptions();
             PhotosGetWithGeoDataAsync(options, callback);
         }
 
@@ -245,7 +245,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGetWithGeoDataAsync(PartialSearchOptions options, Action<FlickrResult<PhotoCollection>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.getWithGeoData");
             UtilityMethods.PartialOptionsIntoArray(options, parameters);
 
@@ -259,7 +259,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void PhotosGeoGetPermsAsync(string photoId, Action<FlickrResult<GeoPermissions>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.photos.geo.getPerms");
             parameters.Add("photo_id", photoId);
 

@@ -26,13 +26,6 @@ namespace FlickrNet
         /// </summary>
         public DateTime FavoriteDate { get; set; }
 
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public PhotoFavorite()
-        {
-        }
-
         void IFlickrParsable.Load(XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
@@ -47,8 +40,6 @@ namespace FlickrNet
                         break;
                     case "favedate":
                         FavoriteDate = UtilityMethods.UnixTimestampToDate(reader.Value);
-                        break;
-                    default:
                         break;
                 }
             }

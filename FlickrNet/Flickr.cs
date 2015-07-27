@@ -56,7 +56,7 @@ namespace FlickrNet
             get { return baseUri[(int)service]; }
         }
 
-        private readonly Uri[] baseUri = new Uri[] { 
+        private readonly Uri[] baseUri = { 
                                                      new Uri("https://api.flickr.com/services/rest/"), 
                                                      new Uri("http://beta.zooomr.com/bluenote/api/rest"),
                                                      new Uri("http://www.23hq.com/services/rest/")
@@ -66,7 +66,7 @@ namespace FlickrNet
         {
             get { return uploadUrl[(int)service]; }
         }
-        private static string[] uploadUrl = new string[] {
+        private static string[] uploadUrl = {
                                                               "https://up.flickr.com/services/upload/",
                                                               "http://beta.zooomr.com/bluenote/api/upload",
                                                               "http://www.23hq.com/services/upload/"
@@ -76,7 +76,7 @@ namespace FlickrNet
         {
             get { return replaceUrl[(int)service]; }
         }
-        private static string[] replaceUrl = new string[] {
+        private static string[] replaceUrl = {
                                                                "https://up.flickr.com/services/replace/",
                                                                "http://beta.zooomr.com/bluenote/api/replace",
                                                                "http://www.23hq.com/services/replace/"
@@ -86,7 +86,7 @@ namespace FlickrNet
         {
             get { return authUrl[(int)service]; }
         }
-        private static string[] authUrl = new string[] {
+        private static string[] authUrl = {
                                                             "https://www.flickr.com/services/auth/",
                                                             "http://beta.zooomr.com/auth/",
                                                             "http://www.23hq.com/services/auth/"
@@ -245,7 +245,7 @@ namespace FlickrNet
             {
                 service = value;
 #if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-                if (service == SupportedService.Zooomr) ServicePointManager.Expect100Continue = false;
+                ServicePointManager.Expect100Continue &= service != SupportedService.Zooomr;
 #endif
             }
         }
@@ -420,12 +420,12 @@ namespace FlickrNet
         {
             CheckSigned();
 
-            if (!String.IsNullOrEmpty(OAuthAccessToken) && !String.IsNullOrEmpty(OAuthAccessTokenSecret))
+            if (!string.IsNullOrEmpty(OAuthAccessToken) && !string.IsNullOrEmpty(OAuthAccessTokenSecret))
             {
                 return;
             }
 
-            if (!String.IsNullOrEmpty(AuthToken))
+            if (!string.IsNullOrEmpty(AuthToken))
             {
                 return;
             }
@@ -447,7 +447,7 @@ namespace FlickrNet
                 parameters.Add("api_sig", signature);
             }
 
-            StringBuilder url = new StringBuilder();
+            var url = new StringBuilder();
             url.Append("?");
             foreach (KeyValuePair<string, string> pair in parameters)
             {
@@ -512,7 +512,7 @@ namespace FlickrNet
 
 #if !SILVERLIGHT
                 // Silverlight < 5 doesn't support modification of the Authorization header, so all data must be sent in post body.
-                if (key.StartsWith("oauth")) continue;
+                if (key.StartsWith("oauth", StringComparison.Ordinal)) continue;
 #endif
                 hashStringBuilder.Append(key);
                 hashStringBuilder.Append(parameters[key]);

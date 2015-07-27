@@ -101,7 +101,7 @@ namespace FlickrNet
                         reader.Read();
                         while (reader.LocalName == "polyline")
                         {
-                            Collection<PointD> polyline = new Collection<PointD>();
+                            var polyline = new Collection<PointD>();
                             string polystring = reader.ReadElementContentAsString();
                             string[] points = polystring.Split(' ');
                             foreach (string point in points)
@@ -165,7 +165,7 @@ namespace FlickrNet
         /// <returns></returns>
         public static bool operator ==(PointD point1, PointD point2)
         {
-            return point1.X == point2.X && point1.Y == point2.Y;
+            return Math.Abs(point1.X - point2.X) < 0.001 && Math.Abs(point1.Y - point2.Y) < 0.001;
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace FlickrNet
         /// <returns></returns>
         public static bool operator !=(PointD point1, PointD point2)
         {
-            return point1.X != point2.X || point1.Y != point2.Y;
+            return Math.Abs(point1.X - point2.X) > 0.001 || Math.Abs(point1.Y - point2.Y) > 0.001;
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace FlickrNet
             if (obj == null) return false;
             if (obj is PointD)
             {
-                PointD p = (PointD)obj;
-                if (p.X == this.X && p.Y == this.Y) return true;
+                var p = (PointD)obj;
+                return this == p;
 
             }
             return false;

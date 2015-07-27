@@ -39,7 +39,7 @@ namespace FlickrNet
 
             while (reader.LocalName == "tag")
             {
-                HotTag item = new HotTag();
+                var item = new HotTag();
                 ((IFlickrParsable)item).Load(reader);
                 Add(item);
             }

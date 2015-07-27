@@ -31,7 +31,7 @@ namespace FlickrNet
         {
             var method = flickr.CurrentService == SupportedService.Zooomr ? "GET" : "POST";
 
-            var data = String.Empty;
+            var data = string.Empty;
 
             foreach (var k in parameters)
             {
@@ -55,11 +55,11 @@ namespace FlickrNet
             if (parameters.ContainsKey("api_sig")) parameters.Remove("api_sig");
 
             // If OAuth Access Token is set then add token and generate signature.
-            if (!String.IsNullOrEmpty(flickr.OAuthAccessToken) && !parameters.ContainsKey("oauth_token"))
+            if (!string.IsNullOrEmpty(flickr.OAuthAccessToken) && !parameters.ContainsKey("oauth_token"))
             {
                 parameters.Add("oauth_token", flickr.OAuthAccessToken);
             }
-            if (!String.IsNullOrEmpty(flickr.OAuthAccessTokenSecret) && !parameters.ContainsKey("oauth_signature"))
+            if (!string.IsNullOrEmpty(flickr.OAuthAccessTokenSecret) && !parameters.ContainsKey("oauth_signature"))
             {
                 string sig = flickr.OAuthCalculateSignature(method, baseUrl, parameters, flickr.OAuthAccessTokenSecret);
                 parameters.Add("oauth_signature", sig);
@@ -93,17 +93,17 @@ namespace FlickrNet
 
         private static void DownloadDataAsync(string method, string baseUrl, string data, string contentType, string authHeader, Action<FlickrResult<string>> callback)
         {
-            WebClient client = new WebClient();
+            var client = new WebClient();
             client.Encoding = System.Text.Encoding.UTF8;
 
-            if (!String.IsNullOrEmpty(contentType)) client.Headers["Content-Type"] = contentType;
-            if (!String.IsNullOrEmpty(authHeader)) client.Headers["Authorization"] = authHeader;
+            if (!string.IsNullOrEmpty(contentType)) client.Headers["Content-Type"] = contentType;
+            if (!string.IsNullOrEmpty(authHeader)) client.Headers["Authorization"] = authHeader;
 
             if (method == "POST")
             {
                 client.UploadStringCompleted += delegate(object sender, UploadStringCompletedEventArgs e)
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     if (e.Error != null)
                     {
                         result.Error = e.Error;
@@ -122,7 +122,7 @@ namespace FlickrNet
             {
                 client.DownloadStringCompleted += delegate(object sender, DownloadStringCompletedEventArgs e)
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     if (e.Error != null)
                     {
                         result.Error = e.Error;

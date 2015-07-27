@@ -140,7 +140,7 @@ namespace FlickrNet
         {
             get
             {
-                return String.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", String.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
+                return string.Format(System.Globalization.CultureInfo.InvariantCulture, "https://www.flickr.com/photos/{0}/{1}/", string.IsNullOrEmpty(PathAlias) ? UserId : PathAlias, PhotoId);
             }
         }
 
@@ -308,12 +308,30 @@ namespace FlickrNet
         /// </summary>
         public int? Medium800Height { get; set; }
 
+        /// <summary>
+        /// Large (1600 pixel) image url, if it exists.
+        /// </summary>
         public string Large1600Url { get; set; }
+        /// <summary>
+        /// Width of Large (1600 pixel) image.
+        /// </summary>
         public int? Large1600Width { get; set; }
+        /// <summary>
+        /// Height of Large (1600 pixel) image.
+        /// </summary>
         public int? Large1600Height { get; set; }
 
+        /// <summary>
+        /// Large (2048 pixel) image, if it exists.
+        /// </summary>
         public string Large2048Url { get; set; }
+        /// <summary>
+        /// Width of Large (2048 pixel) image.
+        /// </summary>
         public int? Large2048Width { get; set; }
+        /// <summary>
+        /// Height of Large (2048 pixel) image.
+        /// </summary>
         public int? Large2048Height { get; set; }
 
         /// <summary>
@@ -328,7 +346,7 @@ namespace FlickrNet
                 if (urlMedium != null)
                     return urlMedium;
                 else
-                    return UtilityMethods.UrlFormat(this, String.Empty, "jpg");
+                    return UtilityMethods.UrlFormat(this, string.Empty, "jpg");
             }
         }
 
@@ -561,7 +579,7 @@ namespace FlickrNet
                 {
                     case "id":
                         PhotoId = reader.Value;
-                        if (String.IsNullOrEmpty(reader.Value))
+                        if (string.IsNullOrEmpty(reader.Value))
                         {
                             reader.Skip();
                             return;

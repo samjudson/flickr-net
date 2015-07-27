@@ -14,7 +14,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void UrlsGetGroupAsync(string groupId, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.getGroup");
             parameters.Add("group_id", groupId);
 
@@ -22,7 +22,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -51,7 +51,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void UrlsGetUserPhotosAsync(string userId, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.getUserPhotos");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -59,7 +59,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -87,7 +87,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void UrlsGetUserProfileAsync(string userId, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.getUserProfile");
             if (userId != null && userId.Length > 0) parameters.Add("user_id", userId);
 
@@ -95,7 +95,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -112,7 +112,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void UrlsLookupGalleryAsync(string url, Action<FlickrResult<Gallery>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGallery");
             parameters.Add("api_key", apiKey);
             parameters.Add("url", url);
@@ -127,7 +127,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void UrlsLookupGroupAsync(string urlToFind, Action<FlickrResult<string>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupGroup");
             parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
@@ -136,7 +136,7 @@ namespace FlickrNet
                 parameters,
                 r =>
                 {
-                    FlickrResult<string> result = new FlickrResult<string>();
+                    var result = new FlickrResult<string>();
                     result.Error = r.Error;
                     if (!r.HasError)
                     {
@@ -153,7 +153,7 @@ namespace FlickrNet
         /// <param name="callback">Callback method to call upon return of the response from Flickr.</param>
         public void UrlsLookupUserAsync(string urlToFind, Action<FlickrResult<FoundUser>> callback)
         {
-            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.urls.lookupUser");
             parameters.Add("api_key", apiKey);
             parameters.Add("url", urlToFind);
