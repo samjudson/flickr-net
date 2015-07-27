@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 
   <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
-  <Import Project="help.proj"/>
+  <!--<Import Project="help.proj"/>-->
 
   <PropertyGroup>
     <Major>3</Major>
@@ -13,16 +13,16 @@
     <NugetKey></NugetKey>
   </PropertyGroup>
 
-  <Target Name="Build" DependsOnTargets="Version;Compile;Help;Zip">
+  <Target Name="Build" DependsOnTargets="Version;Compile;Zip">
   </Target>
 
   <Target Name="NuGet" DependsOnTargets="Build">
     <CreateItem Include="FlickrNet\bin\Release\*.*">
       <Output TaskParameter="Include" ItemName="ReleaseFiles"/>
     </CreateItem>
-    <CreateItem Include="Sandcastle\Help\FlickrNet.chm">
+    <!--<CreateItem Include="Sandcastle\Help\FlickrNet.chm">
       <Output TaskParameter="Include" ItemName="HelpFile"/>
-    </CreateItem>
+    </CreateItem>-->
     <Copy SourceFiles="@(ReleaseFiles)" DestinationFolder="Builds"/>
     <Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>
 
