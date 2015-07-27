@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using FlickrNet;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -251,14 +252,8 @@ namespace FlickrNetTest
             //https://www.flickr.com/photos/tedsherarts/4399135415/
             var sizes = TestData.GetInstance().PhotosGetSizes("4399135415");
 
-            bool findVideo = false;
-            bool findPhoto = false;
-            foreach (var s in sizes)
-            {
-                findVideo |= (s.MediaType == MediaType.Videos || s.MediaType == MediaType.Photos);
-            }
-            Assert.IsTrue(findVideo, "At least one size should contain a Video media type.");
-            Assert.IsTrue(findPhoto, "At least one size should contain a Photo media type.");
+            sizes.ShouldContain(s => s.MediaType == MediaType.Videos, "At least one size should contain a Video media type.");
+            sizes.ShouldContain(s => s.MediaType == MediaType.Photos, "At least one size should contain a Photo media type.");
         }
 
         [Test]
