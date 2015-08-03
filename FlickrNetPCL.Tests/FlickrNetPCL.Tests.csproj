@@ -67,6 +67,7 @@
     <Compile Include="PhotoSearchTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
+    <Compile Include="UploadTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

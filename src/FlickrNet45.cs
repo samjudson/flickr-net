@@ -187,10 +187,26 @@ namespace FlickrNet
 
             var match = Regex.Match(response, "<photoid>(\\d+)</photoid>");
 
-            if( !match.Success)
-                throw new FlickrException("Unable to determine photo id from upload response: " + response);
+            if (match.Success)
+            {
+                return match.Groups[1].Value;
+            }
 
-            return match.Groups[1].Value;
+            using (var reader = XmlReader.Create(new StringReader(response), new XmlReaderSettings { IgnoreWhitespace = true }))
+            {
+                if (!reader.ReadToDescendant("rsp"))
+                {
+                    throw new XmlException("Unable to find response element 'rsp' in Flickr response");
+                }
+                while (reader.MoveToNextAttribute())
+                {
+                    if (reader.LocalName == "stat" && reader.Value == "fail")
+                        throw ExceptionHandler.CreateResponseException(reader);
+                }
+
+            }
+
+            throw new FlickrException("Unable to determine photo id from upload response: " + response);
         }
     }
 }
