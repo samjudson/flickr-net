@@ -71,7 +71,7 @@ namespace FlickrNetPCL.Tests
             const string desc = "Test Description\nSecond Line";
             const string tags = "testtag1,testtag2";
             var photoId = await AuthInstance.UploadPictureAsync(s, "Test.fig", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
-
+            Exception ex = null;
             try
             {
                 PhotoInfo info = await AuthInstance.PhotosGetInfoAsync(photoId);
@@ -97,10 +97,14 @@ namespace FlickrNetPCL.Tests
                     Assert.AreEqual(TestData.TestImageBase64, downloadBase64);
                 }
             }
-            finally
+            catch(Exception exception)
             {
-                await AuthInstance.PhotosDeleteAsync(photoId);
+                ex = exception;
             }
+
+            await AuthInstance.PhotosDeleteAsync(photoId);
+
+            if (ex != null) throw ex;
 
         }
     }

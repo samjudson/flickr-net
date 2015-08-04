@@ -247,6 +247,9 @@ namespace FlickrNet
                     case "has_stats":
                         HasStats = reader.Value == "1";
                         break;
+                    case "expire":
+                        //TODO: Not sure what "expire" signifies. Is it a boolean (0 or 1) or something else.
+                        break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
                         break;
