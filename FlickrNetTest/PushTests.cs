@@ -60,8 +60,8 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void SubscribeTwiceUnsubscribeTest()
         {
-            var callback1 = "http://www.wackylabs.net/dev/push/test.php?id=1";
-            var callback2 = "http://www.wackylabs.net/dev/push/test.php?id=2";
+            var callback1 = "http://www.wackylabs.net/dev/push/test.php?id=4";
+            var callback2 = "http://www.wackylabs.net/dev/push/test.php?id=5";
             var topic = "contacts_photos";
             var lease = 0;
             var verify = "sync";
