@@ -151,7 +151,7 @@ namespace FlickrNet
         /// <param name="userId">The user id of the user.</param>
         /// <param name="extras">Which (if any) extra information to return. The default is none.</param>
         /// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
-        public PhotoCollection PeoplGetPublicPhotos(string userId, PhotoSearchExtras extras)
+        public PhotoCollection PeopleGetPublicPhotos(string userId, PhotoSearchExtras extras)
         {
             return PeopleGetPublicPhotos(userId, 0, 0, SafetyLevel.None, extras);
         }
