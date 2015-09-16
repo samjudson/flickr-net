@@ -149,6 +149,17 @@ namespace FlickrNet
         /// Gets a users public photos. Excludes private photos.
         /// </summary>
         /// <param name="userId">The user id of the user.</param>
+        /// <param name="extras">Which (if any) extra information to return. The default is none.</param>
+        /// <returns>The collection of photos contained within a <see cref="Photo"/> object.</returns>
+        public PhotoCollection PeoplGetPublicPhotos(string userId, PhotoSearchExtras extras)
+        {
+            return PeopleGetPublicPhotos(userId, 0, 0, SafetyLevel.None, extras);
+        }
+
+        /// <summary>
+        /// Gets a users public photos. Excludes private photos.
+        /// </summary>
+        /// <param name="userId">The user id of the user.</param>
         /// <param name="page">The page to return. Defaults to page 1.</param>
         /// <param name="perPage">The number of photos to return per page. Default is 100.</param>
         /// <param name="extras">Which (if any) extra information to return. The default is none.</param>
