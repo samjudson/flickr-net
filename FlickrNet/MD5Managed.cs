@@ -11,9 +11,9 @@ using System.Security.Cryptography;
 // **************************************************************
 
 #if SILVERLIGHT
-public class MD5Managed : HashAlgorithm
+public sealed class MD5Managed : HashAlgorithm
 #else
-public class MD5Managed : MD5
+public sealed class MD5Managed : MD5
 #endif
 {
     private byte[] _data;

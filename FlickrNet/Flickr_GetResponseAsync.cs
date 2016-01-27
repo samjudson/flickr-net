@@ -4,6 +4,8 @@ using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 
+#pragma warning disable CS0618 // Type or member is obsolete
+
 namespace FlickrNet
 {
     public partial class Flickr
