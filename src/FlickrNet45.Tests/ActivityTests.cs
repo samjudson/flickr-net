@@ -67,7 +67,7 @@ namespace FlickrNet45.Tests
                     // For Gallery events the comment is optional.
                     if (e.EventType != ActivityEventType.Gallery)
                     {
-                        if (e.EventType == ActivityEventType.Note || e.EventType == ActivityEventType.Comment)
+                        if (e.EventType == ActivityEventType.Note || e.EventType == ActivityEventType.Comment || e.EventType == ActivityEventType.Tag)
                             Assert.IsNotNull(e.Value, "Value should not be null for a non-favorite event.");
                         else
                             Assert.IsNull(e.Value, "Value should be null for a favorite event.");

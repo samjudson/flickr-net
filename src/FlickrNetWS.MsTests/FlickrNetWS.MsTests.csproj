@@ -17,7 +17,7 @@
     <PackageCertificateKeyFile>FlickrNetWS.MsTests_TemporaryKey.pfx</PackageCertificateKeyFile>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PackageCertificateThumbprint>992D43F6F9DE6FE01CE00FCAD630F702973723F7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>9C1A58E2E8CC70FB88E257983B04E0C309A03C21</PackageCertificateThumbprint>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
     <TargetFrameworkVersion />
