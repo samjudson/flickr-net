@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using FlickrNet;
+using System.Threading;
 
 namespace FlickrNetTest
 {
@@ -14,30 +15,40 @@ namespace FlickrNetTest
         public void GroupsDiscussRepliesAddTest()
         {
             var topicId = "72157630982877126";
-            var message = "Test message reply\r\n" + DateTime.Now.ToString("o");
-            var newMessage = "New Message reply\r\n" + DateTime.Now.ToString("o");
+            var message = "Test message reply\n" + DateTime.Now.ToString("o");
+            var newMessage = "New Message reply\n" + DateTime.Now.ToString("o");
 
-            AuthInstance.GroupsDiscussRepliesAdd(topicId, message);
+            TopicReply reply = null;
+            TopicReplyCollection topicReplies;
+            try
+            {
+                AuthInstance.GroupsDiscussRepliesAdd(topicId, message);
 
-            var topicReplies = AuthInstance.GroupsDiscussRepliesGetList(topicId, 1, 100);
+                Thread.Sleep(1000);
 
-            var reply = topicReplies.FirstOrDefault(r => r.Message == message);
+                topicReplies = AuthInstance.GroupsDiscussRepliesGetList(topicId, 1, 100);
 
-            Assert.IsNotNull(reply, "Cannot find matching message.");
+                reply = topicReplies.FirstOrDefault(r => r.Message == message);
 
-            AuthInstance.GroupsDiscussRepliesEdit(topicId, reply.ReplyId, newMessage);
+                Assert.IsNotNull(reply, "Cannot find matching message.");
 
-            var reply2 = AuthInstance.GroupsDiscussRepliesGetInfo(topicId, reply.ReplyId);
+                AuthInstance.GroupsDiscussRepliesEdit(topicId, reply.ReplyId, newMessage);
 
-            Assert.AreEqual(newMessage, reply2.Message, "Message should have been updated.");
+                var reply2 = AuthInstance.GroupsDiscussRepliesGetInfo(topicId, reply.ReplyId);
 
-            AuthInstance.GroupsDiscussRepliesDelete(topicId, reply.ReplyId);
+                Assert.AreEqual(newMessage, reply2.Message, "Message should have been updated.");
 
-            topicReplies = AuthInstance.GroupsDiscussRepliesGetList(topicId, 1, 100);
-
-            var reply3 = topicReplies.FirstOrDefault(r => r.ReplyId == reply.ReplyId);
-
-            Assert.IsNull(reply3, "Reply should not exist anymore.");
+            }
+            finally
+            {
+                if (reply != null)
+                {
+                    AuthInstance.GroupsDiscussRepliesDelete(topicId, reply.ReplyId);
+                    topicReplies = AuthInstance.GroupsDiscussRepliesGetList(topicId, 1, 100);
+                    var reply3 = topicReplies.FirstOrDefault(r => r.ReplyId == reply.ReplyId);
+                    Assert.IsNull(reply3, "Reply should not exist anymore.");
+                }
+            }
 
         }
 
