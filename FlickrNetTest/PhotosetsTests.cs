@@ -135,6 +135,13 @@ namespace FlickrNetTest
 
             try
             {
+                var photos = AuthInstance.PhotosetsGetPhotos(photoset.PhotosetId, PhotoSearchExtras.OriginalFormat | PhotoSearchExtras.Media, PrivacyFilter.None, 1, 30, MediaType.None);
+
+                Console.WriteLine(AuthInstance.LastRequest);
+
+                Assert.AreEqual(1, photos.Count, "Photoset should contain 1 photo");
+                Assert.IsFalse(photos[0].IsPublic, "Photo 1 should be private");
+
                 // Add second photo to photoset.
                 AuthInstance.PhotosetsAddPhoto(photoset.PhotosetId, photoId2);
 
