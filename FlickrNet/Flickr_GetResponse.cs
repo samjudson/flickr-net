@@ -92,32 +92,14 @@ namespace FlickrNet
 
             lastResponse = responseXml;
 
-            //responseXml = responseXml.Trim();
-
-            var reader = new XmlTextReader(new StringReader(responseXml))
-                             {
-                                 WhitespaceHandling = WhitespaceHandling.None,
-                             };
-
-            if (!reader.ReadToDescendant("rsp"))
-            {
-                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
-            }
-            while (reader.MoveToNextAttribute())
-            {
-                if (reader.LocalName == "stat" && reader.Value == "fail")
-                    throw ExceptionHandler.CreateResponseException(reader);
-            }
-
-            reader.MoveToElement();
-            reader.Read();
-
             var item = new T();
-            item.Load(reader);
+            item.Load(responseXml);
 
             return item;
 
         }
 
     }
+
+
 }

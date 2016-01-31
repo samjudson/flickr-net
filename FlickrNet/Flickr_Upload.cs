@@ -163,24 +163,8 @@ namespace FlickrNet
 
             string responseXml = UploadData(stream, fileName, uploadUri, parameters);
 
-            var settings = new XmlReaderSettings {IgnoreWhitespace = true};
-            var reader = XmlReader.Create(new StringReader(responseXml), settings);
-
-            if (!reader.ReadToDescendant("rsp"))
-            {
-                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
-            }
-            while (reader.MoveToNextAttribute())
-            {
-                if (reader.LocalName == "stat" && reader.Value == "fail")
-                    throw ExceptionHandler.CreateResponseException(reader);
-            }
-
-            reader.MoveToElement();
-            reader.Read();
-
-            var t = new UnknownResponse();
-            ((IFlickrParsable) t).Load(reader);
+           var t = new UnknownResponse();
+            ((IFlickrParsable) t).Load(responseXml);
             return t.GetElementValue("photoid");
         }
 
@@ -276,25 +260,9 @@ namespace FlickrNet
             }
 
             var responseXml = UploadData(stream, fileName, replaceUri, parameters);
-
-            var settings = new XmlReaderSettings {IgnoreWhitespace = true};
-            var reader = XmlReader.Create(new StringReader(responseXml), settings);
-
-            if (!reader.ReadToDescendant("rsp"))
-            {
-                throw new XmlException("Unable to find response element 'rsp' in Flickr response");
-            }
-            while (reader.MoveToNextAttribute())
-            {
-                if (reader.LocalName == "stat" && reader.Value == "fail")
-                    throw ExceptionHandler.CreateResponseException(reader);
-            }
-
-            reader.MoveToElement();
-            reader.Read();
-
+            
             var t = new UnknownResponse();
-            ((IFlickrParsable)t).Load(reader);
+            ((IFlickrParsable)t).Load(responseXml);
             return t.GetElementValue("photoid");
         }
 
