@@ -1,12 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A78529B5-8396-4ECE-84B4-E42E66B4F0F9}"
 	ProjectSection(SolutionItems) = preProject
 		deploy.proj = deploy.proj
+		NuGet\FlickrNet.CF.nuspec = NuGet\FlickrNet.CF.nuspec
 		NuGet\FlickrNet.nuspec = NuGet\FlickrNet.nuspec
+		NuGet\FlickrNet.Silverlight.nuspec = NuGet\FlickrNet.Silverlight.nuspec
+		NuGet\FlickrNet.WP7.nuspec = NuGet\FlickrNet.WP7.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6B0B4EB0-4A9F-45D5-B79D-F7234CC7B4C8}"

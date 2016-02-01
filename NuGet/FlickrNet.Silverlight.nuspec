@@ -14,7 +14,6 @@
     <tags>flickr photo photography social</tags>
   </metadata>
   <files>
-    <file src="..\Builds\FlickrNet.chm" target="content\FlickrNet\FlickrNet.chm" />
     <file src="..\Builds\FlickrNetSilverlight.pdb" target="lib\sl30\FlickrNetSilverlight.pdb" />
     <file src="..\Builds\FlickrNetSilverlight.dll" target="lib\sl30\FlickrNetSilverlight.dll" />
   </files>

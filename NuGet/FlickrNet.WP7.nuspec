@@ -14,7 +14,6 @@
     <tags>flickr photo photography social</tags>
   </metadata>
   <files>
-    <file src="..\Builds\FlickrNet.chm" target="content\FlickrNet\FlickrNet.chm" />
     <file src="..\Builds\FlickrNetWP7.pdb" target="lib\sl3-wp\FlickrNetWP7.pdb" />
     <file src="..\Builds\FlickrNetWP7.dll" target="lib\sl3-wp\FlickrNetWP7.dll" />
   </files>
