@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FlickrNet.Exceptions;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
@@ -273,6 +274,16 @@ namespace FlickrNetTest
 
             Assert.AreEqual(photo.LargeUrl, info.LargeUrl);
             Assert.AreEqual(photo.Small320Url, info.Small320Url);
+        }
+
+        [Test]
+        [TestCase("46611802@N00", "")]
+        [TestCase("51266254@N00", "Curitiba, Brazil")]
+        public void GetInfoWithInvalidXmlTests(string userId, string location)
+        {
+            var userInfo = Instance.PeopleGetInfo(userId);
+            Assert.That(userInfo.UserId, Is.EqualTo(userId));
+            Assert.That(userInfo.Location, Is.EqualTo(location));
         }
 
     }
