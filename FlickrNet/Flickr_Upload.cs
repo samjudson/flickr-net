@@ -186,6 +186,7 @@ namespace FlickrNet
                 req.Headers["Authorization"] = authHeader;
             }
 
+            req.AllowWriteStreamBuffering = false;
             req.ContentLength = dataBuffer.Length;
 
             using (var reqStream = req.GetRequestStream())
