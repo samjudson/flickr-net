@@ -4,8 +4,8 @@
     <version>3.4.0</version>
     <authors>Sam Judson</authors>
     <owners>Sam Judson</owners>
-    <licenseUrl>http://flickrnet.codeplex.com/license</licenseUrl>
-    <projectUrl>http://flickrnet.codeplex.com/</projectUrl>
+    <projectUrl>https://github.com/samjudson/flickr-net</projectUrl>
+    <licenseUrl>https://github.com/samjudson/flickr-net/blob/master/LICENSE</licenseUrl>
     <id>FlickrNet.WP7</id>
     <title>FlickrNet API Library for Windows Phone 7</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
