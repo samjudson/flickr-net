@@ -13,7 +13,7 @@ namespace FlickrNet
         public long BytesSent { get; internal set; }
 
         /// <summary>
-        /// Total bytes to be sent
+        /// Total bytes to be sent. -1 if this is unknown.
         /// </summary>
         public long TotalBytesToSend { get; internal set; }
 

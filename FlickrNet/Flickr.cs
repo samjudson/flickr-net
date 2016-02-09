@@ -486,15 +486,17 @@ namespace FlickrNet
                 return nonSeekableStream;
             }
 
-            var ms = new MemoryStream();
-            var buffer = new byte[1024];
-            int bytes;
-            while ((bytes = nonSeekableStream.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                ms.Write(buffer, 0, bytes);
-            }
-            ms.Position = 0;
-            return ms;
+            return nonSeekableStream;
+
+            //var ms = new MemoryStream();
+            //var buffer = new byte[1024];
+            //int bytes;
+            //while ((bytes = nonSeekableStream.Read(buffer, 0, buffer.Length)) > 0)
+            //{
+            //    ms.Write(buffer, 0, bytes);
+            //}
+            //ms.Position = 0;
+            //return ms;
         }
 
         private StreamCollection CreateUploadData(Stream imageStream, string fileName, Dictionary<string, string> parameters, string boundary)
@@ -563,16 +565,18 @@ namespace FlickrNet
 
             public void ResetPosition()
             {
-                Streams.ForEach(s => s.Position = 0);
+                Streams.ForEach(s => { if (s.CanSeek) { s.Position = 0; } });
             }
 
-            public long Length
+            public long? Length
             {
                 get
                 {
                     long l = 0;
                     foreach (var s in Streams)
                     {
+                        if (!s.CanSeek) return null;
+
                         l += s.Length;
                     }
                     return l;
@@ -597,7 +601,7 @@ namespace FlickrNet
                         soFar += read;
                         stream.Write(buffer, 0, read);
                         if( UploadProgress != null)
-                            UploadProgress(this, new UploadProgressEventArgs { BytesSent = soFar, TotalBytesToSend = l });
+                            UploadProgress(this, new UploadProgressEventArgs { BytesSent = soFar, TotalBytesToSend = l.GetValueOrDefault(-1) });
                     }
                     stream.Flush();
                 }

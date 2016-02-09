@@ -187,7 +187,8 @@ namespace FlickrNet
             }
 
             req.AllowWriteStreamBuffering = false;
-            req.ContentLength = dataBuffer.Length;
+            req.SendChunked = true;
+            //req.ContentLength = dataBuffer.Length;
 
             using (var reqStream = req.GetRequestStream())
             {

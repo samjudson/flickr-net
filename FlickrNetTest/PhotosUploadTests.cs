@@ -162,6 +162,23 @@ namespace FlickrNetTest
             }
         }
 
+        [Test, Ignore("Long running test")]
+        public void UploadLargeVideoFromUrl()
+        {
+            string url = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4";
+            Flickr f = TestData.GetAuthInstance();
+            
+            using (WebClient client = new WebClient())
+            {
+                using (Stream s = client.OpenRead(url))
+                {
+                    string photoId = f.UploadPicture(s, "bunny.mp4", "Big Buck Bunny", "Sample Video", "", false, false, false, ContentType.Photo, SafetyLevel.None, HiddenFromSearch.None);
+                    f.PhotosDelete(photoId);
+                }
+            }
+        }
+        // 
+
         [Ignore]
         [Test]
         public void UploadPictureVideoTests()
