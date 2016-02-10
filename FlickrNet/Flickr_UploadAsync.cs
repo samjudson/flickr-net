@@ -113,9 +113,12 @@ namespace FlickrNet
 
             var dataBuffer = CreateUploadData(imageStream, fileName, parameters, boundary);
 
-            var req = WebRequest.Create(uploadUri);
+            var req = (HttpWebRequest)WebRequest.Create(uploadUri);
             req.Method = "POST";
             req.ContentType = "multipart/form-data; boundary=" + boundary;
+            req.SendChunked = true;
+            req.AllowWriteStreamBuffering = false;
+
             if (!string.IsNullOrEmpty(authHeader))
             {
                 req.Headers["Authorization"] = authHeader;
