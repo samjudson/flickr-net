@@ -116,7 +116,9 @@ namespace FlickrNet
             var req = (HttpWebRequest)WebRequest.Create(uploadUri);
             req.Method = "POST";
             req.ContentType = "multipart/form-data; boundary=" + boundary;
+#if (!SILVERLIGHT && !WINDOWS_PHONE)
             req.SendChunked = true;
+#endif
             req.AllowWriteStreamBuffering = false;
 
             if (!string.IsNullOrEmpty(authHeader))
