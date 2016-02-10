@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -12,12 +9,12 @@ namespace FlickrNetTest
     /// </summary>
     [TestFixture]
     [Category("AccessTokenRequired")]
-    public class PrefsTests
+    public class PrefsTests : BaseTest
     {
         [Test]
         public void PrefsGetContentTypeTest()
         {
-            var s = TestData.GetAuthInstance().PrefsGetContentType();
+            var s = AuthInstance.PrefsGetContentType();
 
             Assert.IsNotNull(s);
             Assert.AreNotEqual(ContentType.None, s);
@@ -26,7 +23,7 @@ namespace FlickrNetTest
         [Test]
         public void PrefsGetGeoPermsTest()
         {
-            var p = TestData.GetAuthInstance().PrefsGetGeoPerms();
+            var p = AuthInstance.PrefsGetGeoPerms();
 
             Assert.IsNotNull(p);
             Assert.IsTrue(p.ImportGeoExif);
@@ -36,7 +33,7 @@ namespace FlickrNetTest
         [Test]
         public void PrefsGetHiddenTest()
         {
-            var s = TestData.GetAuthInstance().PrefsGetHidden();
+            var s = AuthInstance.PrefsGetHidden();
 
             Assert.IsNotNull(s);
             Assert.AreNotEqual(HiddenFromSearch.None, s);
@@ -45,7 +42,7 @@ namespace FlickrNetTest
         [Test]
         public void PrefsGetPrivacyTest()
         {
-            var p = TestData.GetAuthInstance().PrefsGetPrivacy();
+            var p = AuthInstance.PrefsGetPrivacy();
 
             Assert.IsNotNull(p);
             Assert.AreEqual(PrivacyFilter.PublicPhotos, p);
@@ -54,7 +51,7 @@ namespace FlickrNetTest
         [Test]
         public void PrefsGetSafetyLevelTest()
         {
-            var s = TestData.GetAuthInstance().PrefsGetSafetyLevel();
+            var s = AuthInstance.PrefsGetSafetyLevel();
 
             Assert.IsNotNull(s);
             Assert.AreEqual(SafetyLevel.Safe, s);

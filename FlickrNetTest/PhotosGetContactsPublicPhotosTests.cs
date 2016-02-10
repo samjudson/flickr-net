@@ -1,18 +1,17 @@
 ﻿using FlickrNet;
 using NUnit.Framework;
-using System;
 
 namespace FlickrNetTest
 {
-    
+
     [TestFixtureAttribute]
-    public class PhotosGetContactsPublicPhotosTests
+    public class PhotosGetContactsPublicPhotosTests : BaseTest
     {
 
         [TestAttribute]
         public void PhotosGetContactsPublicPhotosUserIdExtrasTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string userId = TestData.TestUserId;
             PhotoSearchExtras extras = PhotoSearchExtras.All;
@@ -25,7 +24,7 @@ namespace FlickrNetTest
         [TestAttribute]
         public void PhotosGetContactsPublicPhotosAllParamsTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string userId = TestData.TestUserId;
 
@@ -44,7 +43,7 @@ namespace FlickrNetTest
         [TestAttribute]
         public void PhotosGetContactsPublicPhotosExceptExtrasTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string userId = TestData.TestUserId;
 
@@ -62,7 +61,7 @@ namespace FlickrNetTest
         [TestAttribute]
         public void PhotosGetContactsPublicPhotosUserIdTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string userId = TestData.TestUserId;
 
@@ -75,7 +74,7 @@ namespace FlickrNetTest
         [TestAttribute]
         public void PhotosGetContactsPublicPhotosUserIdCountExtrasTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string userId = TestData.TestUserId;
 
@@ -91,7 +90,7 @@ namespace FlickrNetTest
         [TestAttribute]
         public void PhotosGetContactsPublicPhotosUserIdCountTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string userId = TestData.TestUserId;
 

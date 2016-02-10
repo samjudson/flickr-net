@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -12,7 +10,7 @@ namespace FlickrNetTest
     /// </summary>
     [TestFixture]
     [Category("AccessTokenRequired")]
-    public class StatsGetReferrerTests
+    public class StatsGetReferrerTests : BaseTest
     {
         string collectionId = "78188-72157600072356354";
         string photoId = "5890800";
@@ -25,7 +23,7 @@ namespace FlickrNetTest
         {
             string domain = "flickr.com";
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             StatReferrerCollection referrers = f.StatsGetPhotoReferrers(lastWeek, domain, 1, 10);
 
@@ -60,7 +58,7 @@ namespace FlickrNetTest
         {
             string domain = "flickr.com";
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             StatReferrerCollection referrers = f.StatsGetPhotosetReferrers(lastWeek, domain, 1, 10);
 
@@ -98,7 +96,7 @@ namespace FlickrNetTest
         {
             string domain = "flickr.com";
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             StatReferrerCollection referrers = f.StatsGetPhotostreamReferrers(lastWeek, domain, 1, 10);
 
@@ -129,7 +127,7 @@ namespace FlickrNetTest
         {
             string domain = "flickr.com";
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var referrers = f.StatsGetCollectionReferrers(lastWeek, domain, 1, 10);
 

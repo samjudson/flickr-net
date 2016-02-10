@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,13 +8,13 @@ namespace FlickrNetTest
     /// Summary description for CommonsTests
     /// </summary>
     [TestFixture]
-    public class CommonsTests
+    public class CommonsTests : BaseTest
     {
        
         [Test]
         public void CommonsGetInstitutions()
         {
-            InstitutionCollection insts = TestData.GetInstance().CommonsGetInstitutions();
+            InstitutionCollection insts = Instance.CommonsGetInstitutions();
 
             Assert.IsNotNull(insts);
             Assert.IsTrue(insts.Count > 5);

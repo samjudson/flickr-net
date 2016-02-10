@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     [TestFixture]
-    public class CameraTests
+    public class CameraTests : BaseTest
     {
         [Test]
         public void ShouldReturnListOfCameraBrands()
         {
-            var brands = TestData.GetInstance().CamerasGetBrands();
+            var brands = Instance.CamerasGetBrands();
 
             Assert.IsNotNull((brands));
             Assert.AreNotEqual(0, brands.Count);
@@ -24,7 +21,7 @@ namespace FlickrNetTest
         [Test]
         public void ShouldReturnListOfCanonCameraModels()
         {
-            var models = TestData.GetInstance().CamerasGetBrandModels("canon");
+            var models = Instance.CamerasGetBrandModels("canon");
 
             Assert.IsNotNull((models));
             Assert.AreNotEqual(0, models.Count);

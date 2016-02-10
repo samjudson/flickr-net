@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,7 +9,7 @@ namespace FlickrNetTest
     /// Summary description for OAuthTests
     /// </summary>
     [TestFixture]
-    public class OAuthTests
+    public class OAuthTests : BaseTest
     {
         [Test]
         [Ignore]
@@ -60,7 +58,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void OAuthPeopleGetPhotosBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             PhotoCollection photos = f.PeopleGetPhotos("me");
         }
@@ -71,7 +69,7 @@ namespace FlickrNetTest
         {
             Flickr.CacheDisabled = true;
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             f.ApiSecret = "asdasd";
             f.OAuthGetRequestToken("oob");
         }
@@ -80,7 +78,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void OAuthCheckTokenTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             Auth a = f.AuthOAuthCheckToken();
 

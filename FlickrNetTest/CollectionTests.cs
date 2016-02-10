@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,7 +8,7 @@ namespace FlickrNetTest
     /// Summary description for CollectionGetTreeTest
     /// </summary>
     [TestFixture]
-    public class CollectionTests
+    public class CollectionTests : BaseTest
     {
         
         [Test]
@@ -20,7 +17,7 @@ namespace FlickrNetTest
         {
             string id = "78188-72157618817175751";
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             CollectionInfo info = f.CollectionsGetInfo(id);
 
@@ -39,7 +36,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void CollectionGetTreeRootTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             CollectionCollection tree = f.CollectionsGetTree();
 
             Assert.IsNotNull(tree, "CollectionList should not be null.");
@@ -65,7 +62,7 @@ namespace FlickrNetTest
         [Test]
         public void CollectionGetTreeRootForSpecificUser()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             CollectionCollection tree = f.CollectionsGetTree(null, TestData.TestUserId);
 
             Assert.IsNotNull(tree, "CollectionList should not be null.");
@@ -92,7 +89,7 @@ namespace FlickrNetTest
         public void CollectionGetSubTreeForSpecificUser()
         {
             string id = "78188-72157618817175751";
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             CollectionCollection tree = f.CollectionsGetTree(id, TestData.TestUserId);
 
             Assert.IsNotNull(tree, "CollectionList should not be null.");
@@ -122,7 +119,7 @@ namespace FlickrNetTest
             string id = "78188-72157618817175751";
 
             Flickr.CacheDisabled = true;
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             CollectionInfo info = f.CollectionsGetInfo(id);
 
@@ -141,7 +138,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void CollectionsEmptyCollection()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             // Get global collection
             CollectionCollection collections = f.CollectionsGetTree("78188-72157618817175751", null);

@@ -12,7 +12,7 @@ namespace FlickrNetTest
     ///to contain all FlickrConfigurationSettingsTest Unit Tests
     ///</summary>
     [TestFixture]
-    public class FlickrConfigurationSettingsTest
+    public class FlickrConfigurationSettingsTest : BaseTest
     {
 
         /// <summary>

@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
 {
     [TestFixture]
-    public class PhotosLicensesTests
+    public class PhotosLicensesTests : BaseTest
     {
         [Test]
         public void PhotosLicensesGetInfoBasicTest()
         {
-            LicenseCollection col = TestData.GetInstance().PhotosLicensesGetInfo();
+            LicenseCollection col = Instance.PhotosLicensesGetInfo();
 
             foreach (License lic in col)
             {
@@ -28,7 +25,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosLicensesSetLicenseTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             string photoId = "7176125763";
 
             var photoInfo = f.PhotosGetInfo(photoId); // Rainbow Rose

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,12 +8,12 @@ namespace FlickrNetTest
     /// Summary description for PhotosetCommentsGetListTests
     /// </summary>
     [TestFixture]
-    public class PhotosetCommentsGetListTests
+    public class PhotosetCommentsGetListTests : BaseTest
     {
        [Test]
         public void PhotosetsCommentsGetListBasicTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             PhotosetCommentCollection comments = f.PhotosetsCommentsGetList("1335934");
 

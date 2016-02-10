@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -11,12 +9,12 @@ namespace FlickrNetTest
     /// Summary description for PhotosCommentsGetListTests
     /// </summary>
     [TestFixture]
-    public class PhotosCommentsTests
+    public class PhotosCommentsTests : BaseTest
     {
         [Test]
         public void PhotosCommentsGetListBasicTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             PhotoCommentCollection comments = f.PhotosCommentsGetList("3546335765");
 
@@ -32,7 +30,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosCommentsGetRecentForContactsBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosCommentsGetRecentForContacts();
             Assert.IsNotNull(photos, "PhotoCollection should not be null.");
@@ -42,7 +40,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosCommentsGetRecentForContactsFullParamTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosCommentsGetRecentForContacts(DateTime.Now.AddHours(-1), PhotoSearchExtras.All, 1, 20);
             Assert.IsNotNull(photos, "PhotoCollection should not be null.");

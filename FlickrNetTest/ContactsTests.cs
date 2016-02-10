@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -11,14 +9,14 @@ namespace FlickrNetTest
     /// Summary description for ContactsTests
     /// </summary>
     [TestFixture]
-    public class ContactsTests
+    public class ContactsTests : BaseTest
     {
         
         [Test]
         [Category("AccessTokenRequired")]
         public void ContactsGetListTestBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             var contacts = f.ContactsGetList();
 
             Assert.IsNotNull(contacts);
@@ -35,7 +33,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void ContactsGetListFullParamTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             ContactCollection contacts = f.ContactsGetList(null, 0, 0);
 
@@ -46,7 +44,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void ContactsGetListFilteredTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             var contacts = f.ContactsGetList("friends");
 
             Assert.IsNotNull(contacts);
@@ -65,7 +63,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void ContactsGetListPagedTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             var contacts = f.ContactsGetList(2, 20);
 
             Assert.IsNotNull(contacts);
@@ -84,7 +82,7 @@ namespace FlickrNetTest
         [Test]
         public void ContactsGetPublicListTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             ContactCollection contacts = f.ContactsGetPublicList(TestData.TestUserId);
 
@@ -98,7 +96,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void ContactsGetRecentlyUpdatedTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             ContactCollection contacts = f.ContactsGetListRecentlyUploaded(DateTime.Now.AddDays(-1), null);
 
@@ -109,7 +107,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void ContactsGetTaggingSuggestions()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var contacts = f.ContactsGetTaggingSuggestions();
 

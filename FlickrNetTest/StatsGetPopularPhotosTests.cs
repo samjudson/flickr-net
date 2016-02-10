@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -37,7 +35,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPopularPhotosNoParamsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             PopularPhotoCollection photos = f.StatsGetPopularPhotos();
 

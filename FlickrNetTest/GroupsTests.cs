@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,13 +8,13 @@ namespace FlickrNetTest
     /// Summary description for GroupsBrowseTests
     /// </summary>
     [TestFixture]
-    public class GroupsTests
+    public class GroupsTests : BaseTest
     {
         [Test]
         [Category("AccessTokenRequired")]
         public void GroupsBrowseBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             GroupCategory cat = f.GroupsBrowse();
 
             Assert.IsNotNull(cat, "GroupCategory should not be null.");
@@ -31,7 +28,7 @@ namespace FlickrNetTest
         [Test]
         public void GroupsSearchBasicTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             GroupSearchResultCollection results = f.GroupsSearch("Buses");
 
@@ -51,7 +48,7 @@ namespace FlickrNetTest
         [Test]
         public void GroupsGetInfoBasicTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             GroupFullInfo info = f.GroupsGetInfo(TestData.GroupId);
 
@@ -75,7 +72,7 @@ namespace FlickrNetTest
         public void GroupsGetInfoNoGroupIconTest()
         {
             string groupId = "562176@N20";
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             GroupFullInfo info = f.GroupsGetInfo(groupId);
 
@@ -89,7 +86,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsMembersGetListBasicTest()
         {
-            var ms = TestData.GetAuthInstance().GroupsMembersGetList(TestData.GroupId);
+            var ms = AuthInstance.GroupsMembersGetList(TestData.GroupId);
 
             Assert.IsNotNull(ms);
             Assert.AreNotEqual(0, ms.Count, "Count should not be zero.");

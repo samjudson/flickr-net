@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,10 +8,8 @@ namespace FlickrNetTest
     /// Summary description for TagsGetListRaw
     /// </summary>
     [TestFixture]
-    public class TagsTests
+    public class TagsTests : BaseTest
     {
-        Flickr f = TestData.GetAuthInstance();
-
         public TagsTests()
         {
             Flickr.CacheDisabled = true;
@@ -24,7 +19,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(SignatureRequiredException))]
         public void TagsGetListUserRawAuthenticationTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             f.TagsGetListUserRaw();
         }
 
@@ -32,7 +27,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void TagsGetListUserRawBasicTest()
         {
-            var tags = f.TagsGetListUserRaw();
+            var tags = AuthInstance.TagsGetListUserRaw();
 
             Assert.AreNotEqual(0, tags.Count, "There should be one or more raw tags returned");
 
@@ -48,7 +43,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void TagsGetListUserPopularBasicTest()
         {
-            TagCollection tags = TestData.GetAuthInstance().TagsGetListUserPopular();
+            TagCollection tags = AuthInstance.TagsGetListUserPopular();
 
             Assert.IsNotNull(tags, "TagCollection should not be null.");
             Assert.AreNotEqual(0, tags.Count, "TagCollection.Count should not be zero.");
@@ -64,7 +59,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void TagsGetListUserBasicTest()
         {
-            TagCollection tags = TestData.GetAuthInstance().TagsGetListUser();
+            TagCollection tags = AuthInstance.TagsGetListUser();
 
             Assert.IsNotNull(tags, "TagCollection should not be null.");
             Assert.AreNotEqual(0, tags.Count, "TagCollection.Count should not be zero.");
@@ -79,7 +74,7 @@ namespace FlickrNetTest
         [Test]
         public void TagsGetListPhotoBasicTest()
         {
-            var tags = TestData.GetInstance().TagsGetListPhoto(TestData.PhotoId);
+            var tags = Instance.TagsGetListPhoto(TestData.PhotoId);
 
             Assert.IsNotNull(tags, "tags should not be null.");
             Assert.AreNotEqual(0, tags.Count, "Length should be greater than zero.");
@@ -97,7 +92,7 @@ namespace FlickrNetTest
         [Test]
         public void TagsGetClustersNewcastleTest()
         {
-            var col = TestData.GetInstance().TagsGetClusters("newcastle");
+            var col = Instance.TagsGetClusters("newcastle");
 
             Assert.IsNotNull(col);
 
@@ -119,7 +114,7 @@ namespace FlickrNetTest
         [Test]
         public void TagsGetClusterPhotosNewcastleTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             var col = f.TagsGetClusters("newcastle");
 
             foreach (var c in col)
@@ -133,7 +128,7 @@ namespace FlickrNetTest
         [Test]
         public void TagsGetHotListTest()
         {
-            var col = TestData.GetInstance().TagsGetHotList();
+            var col = Instance.TagsGetHotList();
 
             Assert.AreNotEqual(0, col.Count, "Count should not be zero.");
 
@@ -148,14 +143,14 @@ namespace FlickrNetTest
         [Test]
         public void TagsGetListUserTest()
         {
-            var col = TestData.GetInstance().TagsGetListUser(TestData.TestUserId);
+            var col = Instance.TagsGetListUser(TestData.TestUserId);
         }
 
         [Test]
         [Category("AccessTokenRequired")]
         public void TagsGetMostFrequentlyUsedTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var tags = f.TagsGetMostFrequentlyUsed();
 

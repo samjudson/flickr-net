@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
 
 namespace FlickrNetTest
 {
-    /// <summary>
-    /// Summary description for StatsGetCollectionDomainsTests
-    /// </summary>
     [TestFixture]
     [Category("AccessTokenRequired")]
-    public class StatsGetDomainsTests
+    public class StatsGetDomainsTests : BaseTest
     {
         string collectionId = "78188-72157600072356354";
         string photoId = "5890800";
@@ -21,7 +16,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetCollectionDomainsBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var domains = f.StatsGetCollectionDomains(DateTime.Today.AddDays(-2));
 
@@ -42,7 +37,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetCollectionStatsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             Stats stats = f.StatsGetCollectionStats(DateTime.Today.AddDays(-2), collectionId);
 
@@ -52,7 +47,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPhotoDomainsTests()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var domains = f.StatsGetPhotoDomains(DateTime.Today.AddDays(-2));
             Assert.IsNotNull(domains, "StatDomains should not be null.");
@@ -79,7 +74,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPhotoStatsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var stats = f.StatsGetPhotoStats(DateTime.Today.AddDays(-5), photoId);
 
@@ -89,7 +84,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPhotosetDomainsBasic()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var domains = f.StatsGetPhotosetDomains(DateTime.Today.AddDays(-2));
             Assert.IsNotNull(domains, "StatDomains should not be null.");
@@ -116,7 +111,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPhotosetStatsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var stats = f.StatsGetPhotosetStats(DateTime.Today.AddDays(-5), photosetId);
 
@@ -126,7 +121,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPhotostreamDomainsBasic()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var domains = f.StatsGetPhotostreamDomains(DateTime.Today.AddDays(-2));
             Assert.IsNotNull(domains, "StatDomains should not be null.");
@@ -145,7 +140,7 @@ namespace FlickrNetTest
         [Test]
         public void StatsGetPhotostreamStatsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var stats = f.StatsGetPhotostreamStats(DateTime.Today.AddDays(-5));
 

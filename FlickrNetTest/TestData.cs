@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using FlickrNet;
 
 namespace FlickrNetTest
@@ -80,11 +78,9 @@ namespace FlickrNetTest
                 return null;
         }
 
-
-
         public static Flickr GetInstance()
         {
-            return new Flickr(ApiKey) {InstanceCacheDisabled = true};
+            return new Flickr(ApiKey) { InstanceCacheDisabled = true };
         }
 
         public static Flickr GetSignedInstance()

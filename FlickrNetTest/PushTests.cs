@@ -1,18 +1,15 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 
 namespace FlickrNetTest
 {
     [TestFixture]
-    public class PushTests
+    public class PushTests : BaseTest
     {
         [Test]
         public void GetTopicsTest()
         {
-            var f = TestData.GetInstance();
+            var f = Instance;
 
             var topics = f.PushGetTopics();
 
@@ -34,7 +31,7 @@ namespace FlickrNetTest
             var lease = 0;
             var verify = "sync";
 
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             f.PushSubscribe(topic, callback, verify, null, lease, null, null, 0, 0, 0, FlickrNet.RadiusUnit.None, FlickrNet.GeoAccuracy.None, null, null);
 
             var subscriptions = f.PushGetSubscriptions();
@@ -66,7 +63,7 @@ namespace FlickrNetTest
             var lease = 0;
             var verify = "sync";
 
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             f.PushSubscribe(topic, callback1, verify, null, lease, null, null, 0, 0, 0, FlickrNet.RadiusUnit.None, FlickrNet.GeoAccuracy.None, null, null);
             f.PushSubscribe(topic, callback2, verify, null, lease, null, null, 0, 0, 0, FlickrNet.RadiusUnit.None, FlickrNet.GeoAccuracy.None, null, null);
 

@@ -7,17 +7,14 @@ using Shouldly;
 
 namespace FlickrNetTest
 {
-    /// <summary>
-    /// Summary description for PhotosTests
-    /// </summary>
     [TestFixture]
-    public class PhotosTests
+    public class PhotosTests : BaseTest
     {
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosSetDatesTest()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             var photoId = TestData.PhotoId;
 
             var info = f.PhotosGetInfo(photoId);
@@ -29,7 +26,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosAddTagsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             string testtag = "thisisatesttag";
             string photoId = "6282363572";
 
@@ -54,7 +51,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetAllContextsBasicTest()
         {
-            var a = TestData.GetInstance().PhotosGetAllContexts("4114887196");
+            var a = Instance.PhotosGetAllContexts("4114887196");
 
             Assert.IsNotNull(a);
             Assert.IsNotNull(a.Groups, "Groups should not be null.");
@@ -67,7 +64,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetExifTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             ExifTagCollection tags = f.PhotosGetExif("4268023123");
 
@@ -91,7 +88,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetContextBasicTest()
         {
-            var context = TestData.GetInstance().PhotosGetContext("3845365350");
+            var context = Instance.PhotosGetContext("3845365350");
 
             Assert.IsNotNull(context);
 
@@ -103,7 +100,7 @@ namespace FlickrNetTest
         public void PhotosGetExifIPhoneTest()
         {
             bool bFound = false;
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             ExifTagCollection tags = f.PhotosGetExif("5899928191");
 
@@ -125,7 +122,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetNotInSetAllParamsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetNotInSet(1, 10, PhotoSearchExtras.All);
 
@@ -137,7 +134,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetNotInSetNoParamsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetNotInSet();
         }
@@ -146,7 +143,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetNotInSetPagesTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetNotInSet(1, 11);
 
@@ -163,7 +160,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetPermsBasicTest()
         {
-            var p = TestData.GetAuthInstance().PhotosGetPerms("4114887196");
+            var p = AuthInstance.PhotosGetPerms("4114887196");
 
             Assert.IsNotNull(p);
             Assert.AreEqual("4114887196", p.PhotoId);
@@ -173,7 +170,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetRecentBlankTest()
         {
-            var photos = TestData.GetInstance().PhotosGetRecent();
+            var photos = Instance.PhotosGetRecent();
 
             Assert.IsNotNull(photos);
         }
@@ -181,7 +178,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetRecentAllParamsTest()
         {
-            var photos = TestData.GetInstance().PhotosGetRecent(1, 20, PhotoSearchExtras.All);
+            var photos = Instance.PhotosGetRecent(1, 20, PhotoSearchExtras.All);
 
             Assert.IsNotNull(photos);
             Assert.AreEqual(20, photos.PerPage);
@@ -191,7 +188,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetRecentPagesTest()
         {
-            var photos = TestData.GetInstance().PhotosGetRecent(1, 20);
+            var photos = Instance.PhotosGetRecent(1, 20);
 
             Assert.IsNotNull(photos);
             Assert.AreEqual(20, photos.PerPage);
@@ -201,7 +198,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetRecentExtrasTest()
         {
-            var photos = TestData.GetInstance().PhotosGetRecent(PhotoSearchExtras.OwnerName);
+            var photos = Instance.PhotosGetRecent(PhotoSearchExtras.OwnerName);
 
             Assert.IsNotNull(photos);
             Assert.AreNotEqual(0, photos.Count);
@@ -215,11 +212,11 @@ namespace FlickrNetTest
         {
             var o = new PhotoSearchOptions {Tags = "microsoft", PerPage = 10};
 
-            var photos = TestData.GetInstance().PhotosSearch(o);
+            var photos = Instance.PhotosSearch(o);
 
             foreach (var p in photos)
             {
-                var sizes = TestData.GetInstance().PhotosGetSizes(p.PhotoId);
+                var sizes = Instance.PhotosGetSizes(p.PhotoId);
                 foreach (var s in sizes)
                 {
 
@@ -230,7 +227,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetSizesBasicTest()
         {
-            var sizes = TestData.GetInstance().PhotosGetSizes("4114887196");
+            var sizes = Instance.PhotosGetSizes("4114887196");
 
             Assert.IsNotNull(sizes);
             Assert.AreNotEqual(0, sizes.Count);
@@ -250,7 +247,7 @@ namespace FlickrNetTest
         public void PhotosGetSizesVideoTest()
         {
             //https://www.flickr.com/photos/tedsherarts/4399135415/
-            var sizes = TestData.GetInstance().PhotosGetSizes("4399135415");
+            var sizes = Instance.PhotosGetSizes("4399135415");
 
             sizes.ShouldContain(s => s.MediaType == MediaType.Videos, "At least one size should contain a Video media type.");
             sizes.ShouldContain(s => s.MediaType == MediaType.Photos, "At least one size should contain a Photo media type.");
@@ -260,7 +257,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedAllParamsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetUntagged(1, 10, PhotoSearchExtras.All);
         }
@@ -269,7 +266,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedNoParamsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetUntagged();
 
@@ -283,7 +280,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedExtrasTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetUntagged(PhotoSearchExtras.OwnerName);
 
@@ -299,7 +296,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetUntaggedPagesTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photos = f.PhotosGetUntagged(1, 10);
 
@@ -312,7 +309,7 @@ namespace FlickrNetTest
         public void PhotosRecentlyUpdatedTests()
         {
             var sixMonthsAgo = DateTime.Today.AddMonths(-6);
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
 
             var photos = f.PhotosRecentlyUpdated(sixMonthsAgo, PhotoSearchExtras.All, 1, 20);
 
@@ -335,7 +332,7 @@ namespace FlickrNetTest
             o.PerPage = 50;
             o.Tags = "test";
 
-            PhotoCollection photos = TestData.GetInstance().PhotosSearch(o);
+            PhotoCollection photos = Instance.PhotosSearch(o);
 
             foreach (Photo p in photos)
             {
@@ -360,14 +357,14 @@ namespace FlickrNetTest
             string title = "Blacksway Cat";
             string photoId = "5279984467";
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             f.PhotosSetMeta(photoId, title, description);
         }
 
         [Test]
         public void PhotosUploadCheckTicketsTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             string[] tickets = new string[3];
             tickets[0] = "invalid1";
@@ -388,7 +385,7 @@ namespace FlickrNetTest
         {
             var photoId = "3547137580";
 
-            var people = TestData.GetInstance().PhotosPeopleGetList(photoId);
+            var people = Instance.PhotosPeopleGetList(photoId);
 
             Assert.AreNotEqual(0, people.Total, "Total should not be zero.");
             Assert.AreNotEqual(0, people.Count, "Count should not be zero.");
@@ -408,7 +405,7 @@ namespace FlickrNetTest
             string photoId = "104267998"; // https://www.flickr.com/photos/thunderchild5/104267998/
             string userId = "41888973@N00"; //sam judsons nsid
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             PhotoPersonCollection ppl = f.PhotosPeopleGetList(photoId);
             PhotoPerson pp = ppl[0];
             Assert.AreEqual(userId, pp.UserId);
@@ -425,7 +422,7 @@ namespace FlickrNetTest
                             Extras = PhotoSearchExtras.PathAlias
                         };
 
-            var flickr = TestData.GetInstance();
+            var flickr = Instance;
             var photos = flickr.PhotosSearch(options);
 
             string webUrl = photos[0].WebUrl;
@@ -457,7 +454,7 @@ namespace FlickrNetTest
             o.UserId = TestData.TestUserId;
             o.PerPage = 10;
 
-            var photos = TestData.GetInstance().PhotosSearch(o);
+            var photos = Instance.PhotosSearch(o);
             Assert.IsTrue(photos.Count > 0, "Should return more than zero photos.");
 
             foreach (var photo in photos)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,14 +8,12 @@ namespace FlickrNetTest
     /// Summary description for PandaGetListTest
     /// </summary>
     [TestFixture]
-    public class PandaTest
+    public class PandaTest : BaseTest
     {
         [Test]
         public void PandaGetListBasicTest()
         {
-            Flickr f = TestData.GetInstance();
-
-            string[] pandas = f.PandaGetList();
+            string[] pandas = Instance.PandaGetList();
 
             Assert.IsNotNull(pandas, "Should return string array");
             Assert.IsTrue(pandas.Length > 0, "Should not return empty array");
@@ -31,9 +26,7 @@ namespace FlickrNetTest
         [Test]
         public void PandaGetPhotosLingLingTest()
         {
-            Flickr f = TestData.GetInstance();
-
-            var photos = f.PandaGetPhotos("ling ling");
+            var photos = Instance.PandaGetPhotos("ling ling");
 
             Assert.IsNotNull(photos, "PandaPhotos should not be null.");
             Assert.AreEqual(photos.Count, photos.Total, "PandaPhotos.Count should equal PandaPhotos.Total.");

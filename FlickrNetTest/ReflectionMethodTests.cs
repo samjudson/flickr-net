@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 
 using NUnit.Framework;
@@ -12,12 +11,12 @@ namespace FlickrNetTest
     /// Summary description for ReflectionMethodTests
     /// </summary>
     [TestFixture]
-    public class ReflectionMethodTests
+    public class ReflectionMethodTests : BaseTest
     {
         [Test]
         public void ReflectionMethodsBasic()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             MethodCollection methodNames = f.ReflectionGetMethods();
 
@@ -30,7 +29,7 @@ namespace FlickrNetTest
         [Test]
         public void ReflectionMethodsCheckWeSupport()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             MethodCollection methodNames = f.ReflectionGetMethods();
 
@@ -68,7 +67,7 @@ namespace FlickrNetTest
         [Test]
         public void ReflectionMethodsCheckWeSupportAsync()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             MethodCollection methodNames = f.ReflectionGetMethods();
 
@@ -108,7 +107,7 @@ namespace FlickrNetTest
         {
             PropertyInfo[] properties = typeof(PhotoSearchOptions).GetProperties();
 
-            Method flickrMethod = TestData.GetInstance().ReflectionGetMethodInfo("flickr.photos.search");
+            Method flickrMethod = Instance.ReflectionGetMethodInfo("flickr.photos.search");
 
             // These arguments are covered, but are named slightly differently from Flickr.
             var exceptions = new Dictionary<string, string>();
@@ -166,7 +165,7 @@ namespace FlickrNetTest
             exceptions.Add("flickr.photos.getNotInSet");
             exceptions.Add("flickr.photos.getUntagged");
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             MethodCollection methodNames = f.ReflectionGetMethods();
 
@@ -223,7 +222,7 @@ namespace FlickrNetTest
         [Test]
         public void ReflectionGetMethodInfoTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             Method method = f.ReflectionGetMethodInfo("flickr.reflection.getMethodInfo");
 
             Assert.IsNotNull(method, "Method should not be null");
@@ -245,7 +244,7 @@ namespace FlickrNetTest
         public void ReflectionGetMethodInfoFavContextArguments()
         {
             var methodName = "flickr.favorites.getContext";
-            var method = TestData.GetInstance().ReflectionGetMethodInfo(methodName);
+            var method = Instance.ReflectionGetMethodInfo(methodName);
 
             Assert.AreEqual(3, method.Arguments.Count);
             Assert.AreEqual("The id of the photo to fetch the context for.", method.Arguments[1].Description);
@@ -257,7 +256,7 @@ namespace FlickrNetTest
             var errors = new Dictionary<int, List<string>>();
             Flickr.CacheDisabled = true;
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             var list = f.ReflectionGetMethods();
             foreach (var methodName in list)
             {

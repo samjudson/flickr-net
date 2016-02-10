@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -12,12 +11,12 @@ namespace FlickrNetTest.Async
 {
     [TestFixture]
     [Category("AccessTokenRequired")]
-    public class StatsAsyncTests
+    public class StatsAsyncTests : BaseTest
     {
         [Test]
         public void StatsGetCollectionDomainsAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             DateTime d = DateTime.Today.AddDays(-7);
 
@@ -31,7 +30,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void StatsGetPhotoDomainsAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             DateTime d = DateTime.Today.AddDays(-7);
 
@@ -45,7 +44,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void StatsGetPhotostreamDomainsAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             DateTime d = DateTime.Today.AddDays(-7);
 
@@ -59,7 +58,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void StatsGetPhotosetDomainsAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             DateTime d = DateTime.Today.AddDays(-7);
 
@@ -74,7 +73,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void StatsGetCollectionStatsAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var collection = f.CollectionsGetTree().First();
 
@@ -93,7 +92,7 @@ namespace FlickrNetTest.Async
         {
             Flickr.CacheDisabled = true;
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             DateTime d = DateTime.Today.AddDays(-7);
 
@@ -109,7 +108,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void StatsGetPhotostreamStatsAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var range = Enumerable.Range(7, 5);
             var list = new List<Stats>();

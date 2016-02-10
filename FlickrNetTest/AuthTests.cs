@@ -14,7 +14,7 @@ namespace FlickrNetTest
     /// Summary description for AuthTests
     /// </summary>
     [TestFixture]
-    public class AuthTests
+    public class AuthTests : BaseTest
     {
         [Test]
         public void AuthGetFrobTest()
@@ -47,7 +47,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthGetFrobSignRequiredTest()
         {
-            string frob = TestData.GetInstance().AuthGetFrob();
+            string frob = Instance.AuthGetFrob();
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace FlickrNetTest
         {
             string frob = "abcdefgh";
 
-            string url = TestData.GetInstance().AuthCalcUrl(frob, AuthLevel.Read);
+            string url = Instance.AuthCalcUrl(frob, AuthLevel.Read);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace FlickrNetTest
         {
             string token = "abcdefgh";
 
-            TestData.GetInstance().AuthCheckToken(token);
+            Instance.AuthCheckToken(token);
         }
 
         [Test]

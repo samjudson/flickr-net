@@ -10,7 +10,7 @@ namespace FlickrNetTest
     ///to contain all FlickrNet.Utils Unit Tests
     ///</summary>
     [TestFixture]
-    public class UtilityMethodsTests
+    public class UtilityMethodsTests : BaseTest
     {
         readonly Dictionary<DateTime, string> _timestampTests = new Dictionary<DateTime, string>
                                                                             {
@@ -417,7 +417,7 @@ namespace FlickrNetTest
             var extension = "jpg";
             var expected = "https://farm9.staticflickr.com/8162/7176125763_7eac68f450.jpg";
 
-            var photoInfo = TestData.GetAuthInstance().PhotosGetInfo(photoId);
+            var photoInfo = AuthInstance.PhotosGetInfo(photoId);
 
             var actual = UtilityMethods.UrlFormat(photoInfo, size, extension);
 

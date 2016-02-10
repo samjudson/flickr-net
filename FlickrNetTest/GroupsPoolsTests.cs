@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -19,7 +17,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsPoolsAddBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             byte[] imageBytes = TestData.TestImageBytes;
             var s = new MemoryStream(imageBytes);
@@ -46,7 +44,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GroupsPoolsAddNotAuthTestTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             byte[] imageBytes = TestData.TestImageBytes;
             var s = new MemoryStream(imageBytes);
@@ -59,7 +57,7 @@ namespace FlickrNetTest
 
             try
             {
-                TestData.GetInstance().GroupsPoolsAdd(photoId, TestData.FlickrNetTestGroupId);
+                Instance.GroupsPoolsAdd(photoId, TestData.FlickrNetTestGroupId);
             }
             finally
             {
@@ -71,7 +69,7 @@ namespace FlickrNetTest
         [Test]
         public void GroupsPoolGetPhotosFullParamTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             PhotoCollection photos = f.GroupsPoolsGetPhotos(TestData.GroupId, null, TestData.TestUserId, PhotoSearchExtras.All, 1, 20);
 
@@ -91,7 +89,7 @@ namespace FlickrNetTest
         [Test]
         public void GroupsPoolGetPhotosDateAddedTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             PhotoCollection photos = f.GroupsPoolsGetPhotos(TestData.GroupId);
 

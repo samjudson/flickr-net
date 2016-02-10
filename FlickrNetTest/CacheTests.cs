@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -12,7 +10,7 @@ namespace FlickrNetTest
     /// Summary description for CacheTests
     /// </summary>
     [TestFixture]
-    public class CacheTests
+    public class CacheTests : BaseTest
     {
         [Test]
         public void CacheLocationTest()
@@ -41,7 +39,7 @@ namespace FlickrNetTest
                 Directory.Delete(Flickr.CacheLocation, true);
             }
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             Flickr.FlushCache();
             f.InstanceCacheDisabled = false;
 

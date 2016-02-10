@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,14 +8,14 @@ namespace FlickrNetTest
     /// Summary description for GeoTests
     /// </summary>
     [TestFixture]
-    public class GeoTests
+    public class GeoTests : BaseTest
     {
        
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGeoGetPermsBasicTest()
         {
-            GeoPermissions perms = TestData.GetAuthInstance().PhotosGeoGetPerms(TestData.PhotoId);
+            GeoPermissions perms = AuthInstance.PhotosGeoGetPerms(TestData.PhotoId);
 
             Assert.IsNotNull(perms);
             Assert.AreEqual(TestData.PhotoId, perms.PhotoId);
@@ -29,7 +26,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetWithGeoDataBasicTest()
         {
-            PhotoCollection photos = TestData.GetAuthInstance().PhotosGetWithGeoData();
+            PhotoCollection photos = AuthInstance.PhotosGetWithGeoData();
 
             Assert.IsNotNull(photos);
             Assert.AreNotEqual(0, photos.Count);

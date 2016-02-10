@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using System.Linq;
 using FlickrNet.Exceptions;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;

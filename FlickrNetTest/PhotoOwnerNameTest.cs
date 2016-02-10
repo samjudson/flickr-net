@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,7 +8,7 @@ namespace FlickrNetTest
     /// Summary description for PhotoOwnerNameTest
     /// </summary>
     [TestFixture]
-    public class PhotoOwnerNameTest
+    public class PhotoOwnerNameTest : BaseTest
     {
         [Test]
         public void PhotosSearchOwnerNameTest()
@@ -22,7 +19,7 @@ namespace FlickrNetTest
             o.PerPage = 10;
             o.Extras = PhotoSearchExtras.OwnerName;
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             PhotoCollection photos = f.PhotosSearch(o);
 
             Assert.IsNotNull(photos[0].OwnerName);
@@ -32,7 +29,7 @@ namespace FlickrNetTest
         [Test]
         public void PhotosGetContactsPublicPhotosOwnerNameTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             PhotoCollection photos = f.PhotosGetContactsPublicPhotos(TestData.TestUserId, PhotoSearchExtras.OwnerName);
 
             Assert.IsNotNull(photos[0].OwnerName);

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -11,14 +9,12 @@ namespace FlickrNetTest
     /// Summary description for PeopleTests
     /// </summary>
     [TestFixture]
-    public class PeopleTests
+    public class PeopleTests : BaseTest
     {
         [Test]
         public void PeopleGetPhotosOfBasicTest()
         {
-            Flickr f = TestData.GetInstance();
-
-            PeoplePhotoCollection p = f.PeopleGetPhotosOf(TestData.TestUserId);
+            PeoplePhotoCollection p = Instance.PeopleGetPhotosOf(TestData.TestUserId);
 
             Assert.IsNotNull(p, "PeoplePhotos should not be null.");
             Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
@@ -29,18 +25,14 @@ namespace FlickrNetTest
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PeopleGetPhotosOfAuthRequired()
         {
-            Flickr f = TestData.GetInstance();
-
-            PeoplePhotoCollection p = f.PeopleGetPhotosOf();
+            PeoplePhotoCollection p = Instance.PeopleGetPhotosOf();
         }
 
         [Test]
         [Category("AccessTokenRequired")]
         public void PeopleGetPhotosOfMe()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PeoplePhotoCollection p = f.PeopleGetPhotosOf();
+            PeoplePhotoCollection p = AuthInstance.PeopleGetPhotosOf();
 
             Assert.IsNotNull(p, "PeoplePhotos should not be null.");
             Assert.AreNotEqual(0, p.Count, "PeoplePhotos.Count should be greater than zero.");
@@ -51,9 +43,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetPhotosBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PhotoCollection photos = f.PeopleGetPhotos();
+            PhotoCollection photos = AuthInstance.PeopleGetPhotos();
 
             Assert.IsNotNull(photos);
             Assert.AreNotEqual(0, photos.Count, "Count should not be zero.");
@@ -64,9 +54,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetPhotosFullParamTest()
         {
-            Flickr f = TestData.GetAuthInstance();
-
-            PhotoCollection photos = f.PeopleGetPhotos(TestData.TestUserId, SafetyLevel.Safe, new DateTime(2010, 1, 1),
+            PhotoCollection photos = AuthInstance.PeopleGetPhotos(TestData.TestUserId, SafetyLevel.Safe, new DateTime(2010, 1, 1),
                                                        new DateTime(2012, 1, 1), new DateTime(2010, 1, 1),
                                                        new DateTime(2012, 1, 1), ContentTypeSearch.All,
                                                        PrivacyFilter.PublicPhotos, PhotoSearchExtras.All, 1, 20);
@@ -78,7 +66,7 @@ namespace FlickrNetTest
         [Test]
         public void PeopleGetInfoBasicTestUnauth()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             Person p = f.PeopleGetInfo(TestData.TestUserId);
 
             Assert.AreEqual("Sam Judson", p.UserName);
@@ -95,7 +83,7 @@ namespace FlickrNetTest
         [Test]
         public void PeopleGetInfoGenderNoAuthTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             Person p = f.PeopleGetInfo("10973297@N00");
 
             Assert.IsNotNull(p, "Person object should be returned");
@@ -111,7 +99,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetInfoGenderTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             Person p = f.PeopleGetInfo("10973297@N00");
 
             Assert.IsNotNull(p, "Person object should be returned");
@@ -129,7 +117,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetInfoBuddyIconTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             Person p = f.PeopleGetInfo(TestData.TestUserId);
             Assert.IsTrue(p.BuddyIconUrl.Contains(".staticflickr.com/"), "Buddy icon doesn't contain correct details.");
         }
@@ -138,7 +126,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetInfoSelfTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             Person p = f.PeopleGetInfo(TestData.TestUserId);
 
@@ -152,7 +140,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetGroupsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var groups = f.PeopleGetGroups(TestData.TestUserId);
 
@@ -164,7 +152,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetLimitsTest()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
 
             var limits = f.PeopleGetLimits();
 
@@ -181,7 +169,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleFindByUsername()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             FoundUser user = f.PeopleFindByUserName("Sam Judson");
 
@@ -193,7 +181,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleFindByEmail()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             FoundUser user = f.PeopleFindByEmail("samjudson@gmail.com");
 
@@ -204,7 +192,7 @@ namespace FlickrNetTest
         [Test]
         public void PeopleGetPublicPhotosBasicTest()
         {
-            var f = TestData.GetInstance();
+            var f = Instance;
             var photos = f.PeopleGetPublicPhotos(TestData.TestUserId, 1, 100, SafetyLevel.None, PhotoSearchExtras.OriginalDimensions);
 
             Assert.IsNotNull(photos);
@@ -223,7 +211,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetPublicGroupsBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             GroupInfoCollection groups = f.PeopleGetPublicGroups(TestData.TestUserId);
 
@@ -240,7 +228,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PeopleGetUploadStatusBasicTest()
         {
-            var u = TestData.GetAuthInstance().PeopleGetUploadStatus();
+            var u = AuthInstance.PeopleGetUploadStatus();
 
             Assert.IsNotNull(u);
             Assert.IsNotNull(u.UserId);
@@ -251,19 +239,19 @@ namespace FlickrNetTest
         [Test]
         public void PeopleGetInfoBlankDate()
         {
-            var p = TestData.GetInstance().PeopleGetInfo("18387778@N00");
+            var p = Instance.PeopleGetInfo("18387778@N00");
         }
 
         [Test]
         public void PeopleGetInfoZeroDate()
         {
-            var p = TestData.GetInstance().PeopleGetInfo("47963952@N03");
+            var p = Instance.PeopleGetInfo("47963952@N03");
         }
 
         [Test]
         public void PeopleGetInfoInternationalCharacters()
         {
-            var p = TestData.GetInstance().PeopleGetInfo("24754141@N08");
+            var p = Instance.PeopleGetInfo("24754141@N08");
 
             Assert.AreEqual("24754141@N08", p.UserId, "UserId should match.");
             Assert.AreEqual("Pierre Hsiu 脩丕政", p.RealName, "RealName should match");

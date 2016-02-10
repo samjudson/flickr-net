@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 
 using NUnit.Framework;
@@ -11,13 +10,13 @@ namespace FlickrNetTest
     /// Summary description for PhotosGetCountTests
     /// </summary>
     [TestFixture]
-    public class PhotosGetCountTests
+    public class PhotosGetCountTests : BaseTest
     {
         [Test]
         [Category("AccessTokenRequired")]
         public void PhotosGetCountTakenTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var dates = new List<DateTime>();
             var date1 = new DateTime(2009, 1, 12);
@@ -46,7 +45,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosGetCountUloadTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var dates = new List<DateTime>();
             var date1 = new DateTime(2009, 7, 12);

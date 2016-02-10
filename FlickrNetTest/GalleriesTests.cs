@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 
 using NUnit.Framework;
@@ -11,13 +10,13 @@ namespace FlickrNetTest
     /// Summary description for GalleriesTests
     /// </summary>
     [TestFixture]
-    public class GalleriesTests
+    public class GalleriesTests : BaseTest
     {
         
         [Test]
         public void GalleriesGetListUserIdTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             GalleryCollection galleries = f.GalleriesGetList(TestData.TestUserId);
 
@@ -38,7 +37,7 @@ namespace FlickrNetTest
         {
             string photoId = "2891347068";
 
-            var galleries = TestData.GetInstance().GalleriesGetListForPhoto(photoId);
+            var galleries = Instance.GalleriesGetListForPhoto(photoId);
 
             Assert.IsNotNull(galleries, "GalleryCollection should not be null.");
             Assert.AreNotEqual(0, galleries.Count, "Count should not be zero.");
@@ -59,7 +58,7 @@ namespace FlickrNetTest
             // https://www.flickr.com/photos/lesliescarter/galleries/72157622656415345
             string galleryId = "13834290-72157622656415345";
 
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             GalleryPhotoCollection photos = f.GalleriesGetPhotos(galleryId, PhotoSearchExtras.All);
 
@@ -82,7 +81,7 @@ namespace FlickrNetTest
             Flickr.FlushCache();
             Flickr.CacheDisabled = true;
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             string galleryId = "78188-72157622589312064";
 
@@ -115,7 +114,7 @@ namespace FlickrNetTest
             Flickr.FlushCache();
             Flickr.CacheDisabled = true;
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             string galleryId = "78188-72157622589312064";
 
@@ -144,7 +143,7 @@ namespace FlickrNetTest
 
             string comment = "You don't get much better than this for the best Entrance to Hell.\n\n" + DateTime.Now.ToString();
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             f.GalleriesEditPhoto(galleryId, photoId, comment);
 
             var photos = f.GalleriesGetPhotos(galleryId);
@@ -176,7 +175,7 @@ namespace FlickrNetTest
             string galleryId = "78188-72157622589312064";
 
 
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             // Get photos
             var photos = f.GalleriesGetPhotos(galleryId);

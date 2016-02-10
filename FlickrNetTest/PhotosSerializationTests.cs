@@ -1,10 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
-using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
 
@@ -14,7 +10,7 @@ namespace FlickrNetTest
     /// Summary description for PhotosSerializationTests
     /// </summary>
     [TestFixture]
-    public class PhotosSerializationTests
+    public class PhotosSerializationTests : BaseTest
     {
         [Test]
         public void PhotosSerializationSkipBlankPhotoRowTest()

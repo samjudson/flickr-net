@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
@@ -10,12 +7,12 @@ using System.Reactive.Linq;
 namespace FlickrNetTest.Async
 {
     [TestFixture]
-    public class PhotosetsAsyncTests
+    public class PhotosetsAsyncTests : BaseTest
     {
         [Test]
         public void PhotosetsGetContextAsyncTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             var photosetId = "72157626420254033"; // Beamish
             var photos = f.PhotosetsGetPhotos(photosetId, 1, 100);
@@ -50,7 +47,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void PhotosetsGetInfoAsyncTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             var photoset = f.PhotosetsGetList(TestData.TestUserId).First();
 
@@ -64,7 +61,7 @@ namespace FlickrNetTest.Async
         [Category("AccessTokenRequired")]
         public void PhotosetsGeneralAsyncTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var photoId1 = "7519320006"; // Tree/Write/Wall
             var photoId2 = "7176125763"; // Rainbow Rose
@@ -103,7 +100,7 @@ namespace FlickrNetTest.Async
         [Test]
         public void PhotosetsGetPhotosAsyncTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             var photoset = f.PhotosetsGetList(TestData.TestUserId).First();
 

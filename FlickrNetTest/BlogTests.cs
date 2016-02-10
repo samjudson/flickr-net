@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-
+﻿
 using NUnit.Framework;
 using FlickrNet;
 
@@ -11,14 +8,14 @@ namespace FlickrNetTest
     /// Summary description for BlogTests
     /// </summary>
     [TestFixture]
-    public class BlogTests
+    public class BlogTests : BaseTest
     {
        
         [Test]
         [Category("AccessTokenRequired")]
         public void BlogsGetListTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             BlogCollection blogs = f.BlogsGetList();
 
@@ -37,7 +34,7 @@ namespace FlickrNetTest
         [Test]
         public void BlogGetServicesTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             BlogServiceCollection services = f.BlogsGetServices();
 

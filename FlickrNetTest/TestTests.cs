@@ -1,10 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
-using System.Xml;
 
 namespace FlickrNetTest
 {
@@ -12,12 +9,12 @@ namespace FlickrNetTest
     /// Summary description for TestTests
     /// </summary>
     [TestFixture]
-    public class TestTests
+    public class TestTests : BaseTest
     {
         [Test]
         public void TestGenericGroupSearch()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             var parameters = new Dictionary<string, string>();
             parameters.Add("text", "Flowers");
@@ -32,7 +29,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void TestGenericTestNull()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             UnknownResponse response = f.TestGeneric("flickr.test.null", null);
 
@@ -43,7 +40,7 @@ namespace FlickrNetTest
         [Test]
         public void TestEcho()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             var parameters = new Dictionary<string, string>();
             parameters.Add("test1", "testvalue");
 

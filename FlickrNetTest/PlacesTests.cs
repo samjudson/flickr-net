@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -11,12 +9,12 @@ namespace FlickrNetTest
     /// Summary description for PlacesForUserTests
     /// </summary>
     [TestFixture]
-    public class PlacesTests
+    public class PlacesTests : BaseTest
     {
         [Test]
         public void PlacesFindBasicTest()
         {
-            var places = TestData.GetInstance().PlacesFind("Newcastle");
+            var places = Instance.PlacesFind("Newcastle");
 
             Assert.IsNotNull(places);
             Assert.AreNotEqual(0, places.Count);
@@ -25,7 +23,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesFindNewcastleTest()
         {
-            var places = TestData.GetInstance().PlacesFind("Newcastle upon Tyne");
+            var places = Instance.PlacesFind("Newcastle upon Tyne");
 
             Assert.IsNotNull(places);
             Assert.AreEqual(1, places.Count);
@@ -37,7 +35,7 @@ namespace FlickrNetTest
             double lat = 54.977;
             double lon = -1.612;
 
-            var place = TestData.GetInstance().PlacesFindByLatLon(lat, lon);
+            var place = Instance.PlacesFindByLatLon(lat, lon);
 
             Assert.IsNotNull(place);
             Assert.AreEqual("Haymarket, Newcastle upon Tyne, England, GB, United Kingdom", place.Description);
@@ -47,7 +45,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PlacesPlacesForUserAuthenticationRequiredTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
             f.PlacesPlacesForUser();
         }
 
@@ -55,7 +53,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PlacesPlacesForUserHasContinentsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             PlaceCollection places = f.PlacesPlacesForUser();
 
             foreach (Place place in places)
@@ -76,7 +74,7 @@ namespace FlickrNetTest
         public void PlacesGetChildrenWithPhotosPublicPlaceIdTest()
         {
             string placeId = "6dCBhRRTVrJiB5xOrg"; // Europe
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             var places = f.PlacesGetChildrenWithPhotosPublic(placeId, null);
             Console.WriteLine(f.LastRequest);
@@ -96,7 +94,7 @@ namespace FlickrNetTest
         {
             string woeId = "24865675"; // Europe
 
-            var places = TestData.GetInstance().PlacesGetChildrenWithPhotosPublic(null, woeId);
+            var places = Instance.PlacesGetChildrenWithPhotosPublic(null, woeId);
             Assert.IsNotNull(places);
             Assert.AreNotEqual(0, places.Count);
 
@@ -110,7 +108,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PlacesPlacesForUserContinentHasRegionsTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             // Test place ID of '6dCBhRRTVrJiB5xOrg' is Europe
             PlaceCollection p = f.PlacesPlacesForUser(PlaceType.Region, null, "6dCBhRRTVrJiB5xOrg");
@@ -129,7 +127,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PlacesPlacesForContactsBasicTest()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             var places = f.PlacesPlacesForContacts(PlaceType.Country, null, null, 0, ContactSearch.AllContacts, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
 
             Assert.IsNotNull(places);
@@ -150,7 +148,7 @@ namespace FlickrNetTest
             DateTime lastYear = DateTime.Today.AddYears(-1);
             DateTime today = DateTime.Today;
 
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             var places = f.PlacesPlacesForContacts(PlaceType.Country, null, null, 1, ContactSearch.AllContacts, lastYear, today, lastYear, today);
 
             Console.WriteLine(f.LastRequest);
@@ -170,7 +168,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PlacesPlacesForTagsBasicTest()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] {"newcastle"},
                                                TagMode.AllTags, null, MachineTagMode.None, DateTime.MinValue,
                                                DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
@@ -190,7 +188,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PlacesPlacesForTagsFullParamTest()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
             var places = f.PlacesPlacesForTags(PlaceType.Country, null, null, 0, new string[] {"newcastle"},
                                                TagMode.AllTags, new string[] {"dc:author=*"}, MachineTagMode.AllTags,
                                                DateTime.Today.AddYears(-10), DateTime.Today,
@@ -202,7 +200,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesGetInfoBasicTest()
         {
-            var f = TestData.GetInstance();
+            var f = Instance;
             var placeId = "X9sTR3BSUrqorQ";
             PlaceInfo p = f.PlacesGetInfo(placeId, null);
 
@@ -231,7 +229,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesGetInfoByUrlBasicTest()
         {
-            var f = TestData.GetInstance();
+            var f = Instance;
             var placeId = "X9sTR3BSUrqorQ";
             PlaceInfo p1 = f.PlacesGetInfo(placeId, null);
             PlaceInfo p2 = f.PlacesGetInfoByUrl(p1.PlaceUrl);
@@ -248,7 +246,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesGetTopPlacesListTest()
         {
-            var f = TestData.GetInstance();
+            var f = Instance;
             var places = f.PlacesGetTopPlacesList(PlaceType.Continent);
 
             Assert.IsNotNull(places);
@@ -266,7 +264,7 @@ namespace FlickrNetTest
         public void PlacesGetShapeHistoryTest()
         {
             var placeId = "X9sTR3BSUrqorQ";
-            var f = TestData.GetInstance();
+            var f = Instance;
             var col = f.PlacesGetShapeHistory(placeId, null);
 
             Assert.IsNotNull(col, "ShapeDataCollection should not be null.");
@@ -280,7 +278,7 @@ namespace FlickrNetTest
         public void PlacesGetTagsForPlace()
         {
             var placeId = "X9sTR3BSUrqorQ";
-            var f = TestData.GetInstance();
+            var f = Instance;
             var col = f.PlacesTagsForPlace(placeId, null);
 
             Assert.IsNotNull(col, "TagCollection should not be null.");
@@ -297,7 +295,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesGetPlaceTypes()
         {
-            var pts = TestData.GetInstance().PlacesGetPlaceTypes();
+            var pts = Instance.PlacesGetPlaceTypes();
             Assert.IsNotNull(pts);
             Assert.IsTrue(pts.Count > 1, "Count should be greater than one. Count = " + pts.Count + ".");
 
@@ -315,7 +313,7 @@ namespace FlickrNetTest
         [Test]
         public void PlacesPlacesForBoundingBoxUsaTest()
         {
-            Flickr f = TestData.GetInstance();
+            Flickr f = Instance;
 
             var places = f.PlacesPlacesForBoundingBox(PlaceType.County, null, null, BoundaryBox.UKNewcastle);
 

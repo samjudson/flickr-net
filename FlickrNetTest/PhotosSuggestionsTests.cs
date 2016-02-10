@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using FlickrNet;
@@ -8,7 +6,7 @@ using FlickrNet;
 namespace FlickrNetTest
 {
     [TestFixture]
-    public class PhotosSuggestionsTests
+    public class PhotosSuggestionsTests : BaseTest
     {
         string photoId = "6282363572";
 
@@ -22,7 +20,7 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void GetListTest()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
 
             // Remove any pending suggestions
             var suggestions = f.PhotosSuggestionsGetList(photoId, SuggestionStatus.Pending);
@@ -67,7 +65,7 @@ namespace FlickrNetTest
 
         public void AddSuggestion()
         {
-            var f = TestData.GetAuthInstance();
+            var f = AuthInstance;
 
             var lat = 54.977;
             var lon = -1.612;

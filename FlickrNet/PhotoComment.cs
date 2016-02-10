@@ -70,6 +70,11 @@ namespace FlickrNet
         /// The comment text (can contain HTML).
         /// </summary>
         public string CommentHtml { get; set; }
+
+
+        /// <summary>
+        /// The account of the author of this comment has been deleted.
+        /// </summary>
         public bool AuthorIsDeleted { get; set; }
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
@@ -9,7 +7,6 @@ using System.Net;
 using System.Linq;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
-using System.Diagnostics;
 
 namespace FlickrNetTest
 {
@@ -23,7 +20,7 @@ namespace FlickrNetTest
         [Test]
         public void UploadPictureAsyncBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             var w = new AsyncSubject<FlickrResult<string>>();
 
@@ -55,7 +52,7 @@ namespace FlickrNetTest
         [Test]
         public void UploadPictureBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             f.OnUploadProgress += (sender, args) => {
                 // Do nothing
@@ -124,7 +121,7 @@ namespace FlickrNetTest
         [Test]
         public void ReplacePictureBasicTest()
         {
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             byte[] imageBytes = TestData.TestImageBytes;
             var s = new MemoryStream(imageBytes);
@@ -150,7 +147,7 @@ namespace FlickrNetTest
         public void UploadPictureFromUrl()
         {
             string url = "http://www.google.co.uk/intl/en_com/images/srpr/logo1w.png";
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
 
             using (WebClient client = new WebClient())
             {
@@ -166,7 +163,7 @@ namespace FlickrNetTest
         public void UploadLargeVideoFromUrl()
         {
             string url = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_50mb.mp4";
-            Flickr f = TestData.GetAuthInstance();
+            Flickr f = AuthInstance;
             
             using (WebClient client = new WebClient())
             {
@@ -195,7 +192,7 @@ namespace FlickrNetTest
                 {
                     using (Stream s = new FileStream(Path.Combine(directory, file), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
-                        Flickr f = TestData.GetAuthInstance();
+                        Flickr f = AuthInstance;
                         string photoId = f.UploadPicture(s, file, "Video Upload Test", file, "video, test", false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.None);
                         f.PhotosDelete(photoId);
                     }
