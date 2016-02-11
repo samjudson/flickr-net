@@ -12,7 +12,7 @@ namespace FlickrNetTest
         [ExpectedException(typeof(SignatureRequiredException))]
         public void PhotosGetContactsPhotosSignatureRequiredTest()
         {
-            AuthInstance.PhotosGetContactsPhotos();
+            Instance.PhotosGetContactsPhotos();
         }
 
         [Test]

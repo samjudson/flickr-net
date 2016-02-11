@@ -423,11 +423,11 @@ namespace FlickrNetTest
 
             PhotoCollection photos = Instance.PhotosSearch(o);
 
-            Assert.IsTrue(photos.Total > 0);
-            Assert.IsTrue(photos.Pages > 0);
-            Assert.AreEqual(10, photos.PerPage, "PerPage should be 10.");
-            Assert.AreEqual(10, photos.Count, "Count should be 10.");
-            Assert.AreEqual(1, photos.Page, "Page should be 1.");
+            photos.Total.ShouldBeGreaterThan(0);
+            photos.Pages.ShouldBeGreaterThan(0);
+            photos.PerPage.ShouldBe(10);
+            photos.Page.ShouldBe(1);
+            photos.Count.ShouldBeInRange(9, 10, "Ideally should be 10, but sometimes returns 9");
 
             foreach (Photo photo in photos)
             {
