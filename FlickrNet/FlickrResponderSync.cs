@@ -110,14 +110,29 @@ namespace FlickrNet
         {
             using (WebClient client = new WebClient())
             {
-                client.Encoding = System.Text.Encoding.UTF8;
+                client.Encoding = Encoding.UTF8;
                 if (!string.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
                 if (!string.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
 
-                if (method == "POST")
-                    return client.UploadString(baseUrl, data);
-                else
-                    return client.DownloadString(baseUrl);
+                Func<string> f = () => method == "POST" ? client.UploadString(baseUrl, data) : client.DownloadString(baseUrl);
+
+                try
+                {
+                    return f();
+                }
+                catch (WebException ex)
+                {
+                    if (ex.Status == WebExceptionStatus.ProtocolError)
+                    {
+                        var response = ex.Response as HttpWebResponse;
+                        if (response != null && response.StatusCode == HttpStatusCode.BadGateway)
+                        {
+                            System.Threading.Thread.Sleep(1000);
+                            return f();
+                        }
+                    }
+                    throw;
+                }
             }
         }
 #else
