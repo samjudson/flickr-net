@@ -110,23 +110,17 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof (ApiKeyRequiredException))]
         public void PhotosSearchNoApiKey()
         {
             Instance.ApiKey = "";
-            Instance.PhotosSearch(new PhotoSearchOptions());
-
-            Assert.Fail("Shouldn't get here");
+            Should.Throw<ApiKeyRequiredException>(() => Instance.PhotosSearch(new PhotoSearchOptions()));
         }
 
         [Test]
-        [ExpectedException(typeof (ApiKeyRequiredException))]
         public void GetOauthRequestTokenNoApiKey()
         {
             Instance.ApiKey = "";
-            Instance.OAuthGetRequestToken("oob");
-
-            Assert.Fail("Shouldn't get here");
+            Should.Throw<ApiKeyRequiredException>(() => Instance.OAuthGetRequestToken("oob"));
         }
 
         [Test]
@@ -439,7 +433,7 @@ namespace FlickrNetTest
         // Flickr sometimes returns different totals for the same search when a different perPage value is used.
         // As I have no control over this, and I am correctly setting the properties as returned I am ignoring this test.
         [Test]
-        [Ignore]
+        [Ignore("Flickr often returns different totals than requested.")]
         public void PhotosSearchPerPageMultipleTest()
         {
             var o = new PhotoSearchOptions {Tags = "microsoft"};
@@ -1007,7 +1001,6 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(FlickrApiException))]
         public void ExcessiveTagsShouldNotThrowUriFormatException()
         {
             var list = Enumerable.Range(1, 9000).Select(i => "reallybigtag" + i).ToList();
@@ -1015,7 +1008,7 @@ namespace FlickrNetTest
                 Tags = string.Join(",", list)
             };
 
-            var photos = Instance.PhotosSearch(options);
+            Should.Throw<FlickrApiException>(() => Instance.PhotosSearch(options));
         }
     }
 }

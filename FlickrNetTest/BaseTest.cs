@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FlickrNet;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace FlickrNetTest
 {
@@ -57,9 +58,9 @@ namespace FlickrNetTest
         [TearDown]
         public void ErrorLogging()
         {
-            if (_testCount % 10 == 0) System.Threading.Thread.Sleep(2000);
+            if( (_testCount % 10) > 0 ) System.Threading.Thread.Sleep(200);
 
-            if (TestContext.CurrentContext.Result.Status != TestStatus.Failed) return;
+            if (TestContext.CurrentContext.Result.Outcome.Status != TestStatus.Failed) return;
 
             if (InstanceUsed)
             {

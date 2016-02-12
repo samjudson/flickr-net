@@ -13,7 +13,7 @@ namespace FlickrNetTest
         /// This method will authenticate the current user, and then store the AuthToken in the 
         /// </summary>
         [Test]
-        [Ignore]
+        [Ignore("Use this to generate a new aut token if required")]
         public void AuthHelperMethod()
         {
             Flickr f = TestData.GetOldSignedInstance();

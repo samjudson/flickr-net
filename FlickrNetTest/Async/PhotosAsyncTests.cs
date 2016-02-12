@@ -12,13 +12,6 @@ namespace FlickrNetTest.Async
     public class PhotosAsyncTests : BaseTest
     {
         [Test]
-        public void TestMethod1()
-        {
-            Flickr f = Instance;
-
-        }
-
-        [Test]
         public void PhotosSearchRussianAsync()
         {
             var o = new PhotoSearchOptions();
@@ -50,7 +43,7 @@ namespace FlickrNetTest.Async
             Flickr f = Instance;
 
             var w = new AsyncSubject<FlickrResult<PhotoCollection>>();
-            f.PhotosGetContactsPublicPhotosAsync(TestData.TestUserId, 50, true, true, true, PhotoSearchExtras.All, r => { w.OnNext(r); w.OnCompleted(); });
+            f.PhotosGetContactsPublicPhotosAsync(TestData.TestUserId, 5, true, true, true, PhotoSearchExtras.All, r => { w.OnNext(r); w.OnCompleted(); });
             var result = w.Next().First();
 
             Assert.IsFalse(result.HasError);

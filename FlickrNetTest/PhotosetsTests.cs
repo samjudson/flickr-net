@@ -82,14 +82,14 @@ namespace FlickrNetTest
         [Category("AccessTokenRequired")]
         public void PhotosetsGetListWithExtras()
         {
-            var sets = AuthInstance.PhotosetsGetList(TestData.TestUserId, 1, 5, PhotoSearchExtras.All);
+            var testUserPhotoSets = AuthInstance.PhotosetsGetList(TestData.TestUserId, 1, 5, PhotoSearchExtras.All);
 
-            Assert.AreNotEqual(0, sets.Count, "Should have returned at least 1 set for the authenticated user.");
+            testUserPhotoSets.Count.ShouldBeGreaterThan(0, "Should have returned at least 1 set for the authenticated user.");
 
-            var firstSet = sets.First();
+            var firstPhotoSet = testUserPhotoSets.First();
 
-            Assert.IsNotNull(firstSet.PrimaryPhoto, "Primary Photo should not be null.");
-            Assert.IsNotNullOrEmpty(firstSet.PrimaryPhoto.LargeSquareThumbnailUrl, "LargeSquareThumbnailUrl should not be empty.");
+            firstPhotoSet.PrimaryPhoto.ShouldNotBeNull("Primary Photo should not be null.");
+            firstPhotoSet.PrimaryPhoto.LargeSquareThumbnailUrl.ShouldNotBeNullOrEmpty("LargeSquareThumbnailUrl should not be empty.");
         }
 
         [Test]

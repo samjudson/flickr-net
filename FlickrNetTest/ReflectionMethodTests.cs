@@ -155,7 +155,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Test takes a long time")]
         public void ReflectionMethodsCheckWeSupportAndParametersMatch()
         {
             var exceptions = new List<string>();

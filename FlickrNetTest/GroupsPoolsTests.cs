@@ -3,6 +3,7 @@
 using NUnit.Framework;
 using FlickrNet;
 using System.IO;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -40,30 +41,12 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         [Category("AccessTokenRequired")]
         public void GroupsPoolsAddNotAuthTestTest()
         {
-            Flickr f = AuthInstance;
+            string photoId = "12345";
 
-            byte[] imageBytes = TestData.TestImageBytes;
-            var s = new MemoryStream(imageBytes);
-            s.Position = 0;
-
-            string title = "Test Title";
-            string desc = "Test Description\nSecond Line";
-            string tags = "testtag1,testtag2";
-            string photoId = f.UploadPicture(s, "Test.jpg", title, desc, tags, false, false, false, ContentType.Other, SafetyLevel.Safe, HiddenFromSearch.Visible);
-
-            try
-            {
-                Instance.GroupsPoolsAdd(photoId, TestData.FlickrNetTestGroupId);
-            }
-            finally
-            {
-                f.PhotosDelete(photoId);
-            }
-
+            Should.Throw<SignatureRequiredException>(() => Instance.GroupsPoolsAdd(photoId, TestData.FlickrNetTestGroupId));
         }
 
         [Test]

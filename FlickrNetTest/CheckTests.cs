@@ -1,5 +1,6 @@
 ﻿using FlickrNet;
 using NUnit.Framework;
+using Shouldly;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
@@ -9,12 +10,11 @@ namespace FlickrNetTest
     public class CheckTests : BaseTest
     {
         [Test]
-        [ExpectedException(typeof(ApiKeyRequiredException))]
         public void CheckApiKeyThrowsExceptionWhenNotPresent()
         {
             var f = new Flickr();
 
-            f.CheckApiKey();
+            Should.Throw<ApiKeyRequiredException>(() => f.CheckApiKey());
         }
 
         [Test]
@@ -23,16 +23,15 @@ namespace FlickrNetTest
             var f = new Flickr();
             f.ApiKey = "X";
 
-            Assert.DoesNotThrow(f.CheckApiKey);
+            Should.NotThrow(() => f.CheckApiKey());
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void CheckSignatureKeyThrowsExceptionWhenSecretNotPresent()
         {
             var f = new Flickr();
             f.ApiKey = "X";
-            f.CheckSigned();
+            Should.Throw<SignatureRequiredException>(() => f.CheckSigned());
         }
 
         [Test]
@@ -42,18 +41,17 @@ namespace FlickrNetTest
             f.ApiKey = "X";
             f.ApiSecret = "Y";
 
-            Assert.DoesNotThrow(f.CheckSigned);
+            Should.NotThrow(() => f.CheckSigned());
         }
 
         [Test]
-        [ExpectedException(typeof(AuthenticationRequiredException))]
         public void CheckRequestAuthenticationThrowsExceptionWhenNothingPresent()
         {
             var f = new Flickr();
             f.ApiKey = "X";
             f.ApiSecret = "Y";
 
-            f.CheckRequiresAuthentication();
+            Should.Throw<AuthenticationRequiredException>(() => f.CheckRequiresAuthentication());
         }
 
         [Test]

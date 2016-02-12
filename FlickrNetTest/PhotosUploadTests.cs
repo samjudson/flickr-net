@@ -176,8 +176,8 @@ namespace FlickrNetTest
         }
         // 
 
-        [Ignore]
         [Test]
+        [Ignore("Large time consuming uploads")]
         public void UploadPictureVideoTests()
         {
             // Samples downloaded from http://support.apple.com/kb/HT1425

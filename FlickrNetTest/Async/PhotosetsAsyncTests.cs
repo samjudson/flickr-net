@@ -100,13 +100,11 @@ namespace FlickrNetTest.Async
         [Test]
         public void PhotosetsGetPhotosAsyncTest()
         {
-            Flickr f = Instance;
-
-            var photoset = f.PhotosetsGetList(TestData.TestUserId).First();
+            var photoset = Instance.PhotosetsGetList(TestData.TestUserId).First();
 
             var w = new AsyncSubject<FlickrResult<PhotosetPhotoCollection>>();
 
-            f.PhotosetsGetPhotosAsync(photoset.PhotosetId, PhotoSearchExtras.All, PrivacyFilter.PublicPhotos, 1, 50, MediaType.All, r => { w.OnNext(r); w.OnCompleted(); });
+            Instance.PhotosetsGetPhotosAsync(photoset.PhotosetId, PhotoSearchExtras.All, PrivacyFilter.PublicPhotos, 1, 50, MediaType.All, r => { w.OnNext(r); w.OnCompleted(); });
             var result = w.Next().First();
 
             Assert.IsFalse(result.HasError);

@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using FlickrNet;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -42,11 +43,10 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void PlacesPlacesForUserAuthenticationRequiredTest()
         {
             Flickr f = Instance;
-            f.PlacesPlacesForUser();
+            Should.Throw<SignatureRequiredException>(() => f.PlacesPlacesForUser());
         }
 
         [Test]

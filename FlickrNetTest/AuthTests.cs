@@ -5,6 +5,9 @@ using System.Reactive.Subjects;
 using System.Xml;
 using FlickrNet;
 using NUnit.Framework;
+using System;
+using Shouldly;
+using FlickrNet.Exceptions;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
@@ -26,7 +29,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Calling this will invalidate the existing token so use wisely.")]
         public void AuthGetFrobAsyncTest()
         {
             var w = new AsyncSubject<FlickrResult<string>>();
@@ -44,10 +47,10 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthGetFrobSignRequiredTest()
         {
-            string frob = Instance.AuthGetFrob();
+            Action getFrobAction = () => Instance.AuthGetFrob();
+            getFrobAction.ShouldThrow<SignatureRequiredException>();
         }
 
         [Test]
@@ -61,17 +64,16 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthCalcUrlSignRequiredTest()
         {
             string frob = "abcdefgh";
 
-            string url = Instance.AuthCalcUrl(frob, AuthLevel.Read);
+            Action calcUrlAction = () => Instance.AuthCalcUrl(frob, AuthLevel.Read);
+            calcUrlAction.ShouldThrow<SignatureRequiredException>();
         }
 
         [Test]
-        [Ignore]
-        // Test method for old auth no longer needed.
+        [Ignore("No longer needed. Delete in future version")]
         public void AuthCheckTokenBasicTest()
         {
             Flickr f = TestData.GetOldAuthInstance();
@@ -87,8 +89,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [Ignore]
-        // Test for old auth, which no longer is used.
+        [Ignore("No longer needed. Delete in future version")]
         public void AuthCheckTokenCurrentTest()
         {
             Flickr f = TestData.GetOldAuthInstance();
@@ -100,21 +101,19 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void AuthCheckTokenSignRequiredTest()
         {
             string token = "abcdefgh";
 
-            Instance.AuthCheckToken(token);
+            Should.Throw<SignatureRequiredException>(() => Instance.AuthCheckToken(token));
         }
 
         [Test]
-        [ExpectedException(typeof(FlickrNet.Exceptions.LoginFailedInvalidTokenException))]
         public void AuthCheckTokenInvalidTokenTest()
         {
             string token = "abcdefgh";
 
-            TestData.GetOldSignedInstance().AuthCheckToken(token);
+            Should.Throw<LoginFailedInvalidTokenException>(() => TestData.GetOldSignedInstance().AuthCheckToken(token));
         }
 
         [Test]

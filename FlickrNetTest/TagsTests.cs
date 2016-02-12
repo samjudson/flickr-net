@@ -1,12 +1,10 @@
 ﻿
 using NUnit.Framework;
 using FlickrNet;
+using Shouldly;
 
 namespace FlickrNetTest
 {
-    /// <summary>
-    /// Summary description for TagsGetListRaw
-    /// </summary>
     [TestFixture]
     public class TagsTests : BaseTest
     {
@@ -16,11 +14,10 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void TagsGetListUserRawAuthenticationTest()
         {
             Flickr f = Instance;
-            f.TagsGetListUserRaw();
+            Should.Throw<SignatureRequiredException>(() => f.TagsGetListUserRaw());
         }
 
         [Test]

@@ -1,5 +1,7 @@
 ﻿using FlickrNet;
 using NUnit.Framework;
+using Shouldly;
+using System;
 
 namespace FlickrNetTest
 {
@@ -18,33 +20,14 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException]
-        public void BoundaryBoxThrowExceptionOnInvalidMinLat()
+        [TestCase(-180, -91, 180, 90)]
+        [TestCase(-181, -90, 180, 90)]
+        [TestCase(-180, -90, 180, 91)]
+        [TestCase(-180, -90, 181, 90)]
+        public void BoundaryBoxThrowExceptionOnInvalidMinLat(double minLong, double minLat, double maxLong, double maxLat)
         {
-            new BoundaryBox(-180, -91, 180, 90);
+            Should.Throw<ArgumentOutOfRangeException>(() => new BoundaryBox(minLong, minLat, maxLong, maxLat));
         }
-
-        [Test]
-        [ExpectedException]
-        public void BoundaryBoxThrowExceptionOnInvalidMinLong()
-        {
-            new BoundaryBox(-181, -90, 180, 90);
-        }
-
-        [Test]
-        [ExpectedException]
-        public void BoundaryBoxThrowExceptionOnInvalidMaxLat()
-        {
-            new BoundaryBox(-180, -90, 180, 91);
-        }
-
-        [Test]
-        [ExpectedException]
-        public void BoundaryBoxThrowExceptionOnInvalidMaxLon()
-        {
-            new BoundaryBox(-180, -90, 181, 90);
-        }
-
 
         [Test]
         public void BoundaryBoxCalculateSizesFrankfurtToBerlin()
@@ -56,24 +39,21 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException]
         public void BoundaryBoxWithNullPointStringThrows()
         {
-            new BoundaryBox(null);
+            Should.Throw<ArgumentNullException>(() => new BoundaryBox(null));
         }
 
         [Test]
-        [ExpectedException]
         public void BoundaryBoxWithInvalidPointStringThrows()
         {
-            new BoundaryBox("1,2,3");
+            Should.Throw<ArgumentException>(() => new BoundaryBox("1,2,3"));
         }
 
         [Test]
-        [ExpectedException]
         public void BoundaryBoxWithNoneNumericPointStringThrows()
         {
-            new BoundaryBox("1,2,3,A");
+            Should.Throw<ArgumentException>(() => new BoundaryBox("1,2,3,A"));
         }
 
         [Test]

@@ -83,7 +83,7 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [Ignore] // Got this working, now ignore as there is no way to delete topics!
+        [Ignore("Got this working, now ignore as there is no way to delete topics!")] 
         [Category("AccessTokenRequired")]
         public void GroupsDiscussTopicsAddTest()
         {

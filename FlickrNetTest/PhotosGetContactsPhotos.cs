@@ -1,6 +1,7 @@
 using System;
 using FlickrNet;
 using NUnit.Framework;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -9,17 +10,15 @@ namespace FlickrNetTest
     public class PhotosGetContactsPhotos : BaseTest
     {
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void PhotosGetContactsPhotosSignatureRequiredTest()
         {
-            Instance.PhotosGetContactsPhotos();
+            Should.Throw<SignatureRequiredException>(() => Instance.PhotosGetContactsPhotos());
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void PhotosGetContactsPhotosIncorrectCountTest()
         {
-            AuthInstance.PhotosGetContactsPhotos(51);
+            Should.Throw<ArgumentOutOfRangeException>(() => AuthInstance.PhotosGetContactsPhotos(51));
         }
 
         [Test]

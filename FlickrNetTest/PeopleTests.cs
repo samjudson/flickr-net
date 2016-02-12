@@ -2,6 +2,7 @@
 
 using NUnit.Framework;
 using FlickrNet;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -22,10 +23,9 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(SignatureRequiredException))]
         public void PeopleGetPhotosOfAuthRequired()
         {
-            PeoplePhotoCollection p = Instance.PeopleGetPhotosOf();
+            Should.Throw<SignatureRequiredException>(() => Instance.PeopleGetPhotosOf());
         }
 
         [Test]

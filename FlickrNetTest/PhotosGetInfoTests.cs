@@ -5,7 +5,7 @@ using NUnit.Framework;
 using FlickrNet;
 using System.Reactive.Subjects;
 using System.Reactive.Linq;
-
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -212,14 +212,12 @@ namespace FlickrNetTest
         }
 
         [Test]
-        [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFound()
         {
-            Instance.PhotosGetInfo("abcd");
+            Should.Throw< PhotoNotFoundException>(() => Instance.PhotosGetInfo("abcd"));
         }
 
         [Test]
-        [ExpectedException(typeof(PhotoNotFoundException))]
         public void TestPhotoNotFoundAsync()
         {
             var w = new AsyncSubject<FlickrResult<PhotoInfo>>();
@@ -227,8 +225,8 @@ namespace FlickrNetTest
             Instance.PhotosGetInfoAsync("abcd", r => { w.OnNext(r); w.OnCompleted(); });
             var result = w.Next().First();
 
-            Assert.IsTrue(result.HasError);
-            throw result.Error;
+            result.HasError.ShouldBeTrue();
+            result.Error.ShouldBeOfType<PhotoNotFoundException>();
         }
 
         [Test]
