@@ -127,7 +127,7 @@ namespace FlickrNet
                         var response = ex.Response as HttpWebResponse;
                         if (response != null && (response.StatusCode == HttpStatusCode.BadGateway || response.StatusCode == HttpStatusCode.GatewayTimeout))
                         {
-                            Debug.WriteLine("WebException ({0}) occurrefd. Retry request.", response.StatusCode);
+                            Trace.WriteLine(string.Format("WebException ({0}) occurrefd. Retry request.", response.StatusCode));
                             System.Threading.Thread.Sleep(1000);
                             return f();
                         }
