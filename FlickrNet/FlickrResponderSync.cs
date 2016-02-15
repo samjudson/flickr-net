@@ -108,33 +108,40 @@ namespace FlickrNet
 #if !WindowsCE
         private static string DownloadData(string method, string baseUrl, string data, string contentType, string authHeader)
         {
-            using (WebClient client = new WebClient())
+            Func<string> f = () =>
             {
-                client.Encoding = Encoding.UTF8;
-                if (!string.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
-                if (!string.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
-
-                Func<string> f = () => method == "POST" ? client.UploadString(baseUrl, data) : client.DownloadString(baseUrl);
-
-                try
+                using (WebClient client = new WebClient())
                 {
-                    return f();
-                }
-                catch (WebException ex)
-                {
-                    if (ex.Status == WebExceptionStatus.ProtocolError)
+                    client.Encoding = Encoding.UTF8;
+                    if (!string.IsNullOrEmpty(contentType)) client.Headers.Add("Content-Type", contentType);
+                    if (!string.IsNullOrEmpty(authHeader)) client.Headers.Add("Authorization", authHeader);
+
+                    if (method == "POST")
                     {
-                        var response = ex.Response as HttpWebResponse;
-                        if (response != null && (response.StatusCode == HttpStatusCode.BadGateway || response.StatusCode == HttpStatusCode.GatewayTimeout))
-                        {
-                            Console.WriteLine(string.Format("WebException ({0}) occurrefd. Retry request.", response.StatusCode));
-                            System.Threading.Thread.Sleep(1000);
-                            return f();
-                        }
+                        return client.UploadString(baseUrl, data);
                     }
-                    throw;
+                    return client.DownloadString(baseUrl);
                 }
+            };
+
+            try
+            {
+                return f();
             }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+                    var response = ex.Response as HttpWebResponse;
+                    if (response != null && (response.StatusCode == HttpStatusCode.BadGateway || response.StatusCode == HttpStatusCode.GatewayTimeout))
+                    {
+                        System.Threading.Thread.Sleep(1000);
+                        return f();
+                    }
+                }
+                throw;
+            }
+
         }
 #else
         private static string DownloadData(string method, string baseUrl, string data, string contentType, string authHeader)
