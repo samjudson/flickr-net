@@ -783,6 +783,16 @@ namespace FlickrNet
         public string AuthorName { get; set; }
 
         /// <summary>
+        /// The real name of the user who wrote the note.
+        /// </summary>
+        public string AuthorRealName { get; set; }
+
+        /// <summary>
+        /// Is the author of this note a Flickr Pro account holder.
+        /// </summary>
+        public bool? AuthorIsPro { get; set; }
+
+        /// <summary>
         /// The x (left) position of the top left corner of the note.
         /// </summary>
         public int XPosition { get; set; }
@@ -840,6 +850,12 @@ namespace FlickrNet
                         break;
                     case "authorname":
                         AuthorName = reader.Value;
+                        break;
+                    case "authorrealname":
+                        AuthorRealName = reader.Value;
+                        break;
+                    case "authorispro":
+                        AuthorIsPro = reader.Value == "1";
                         break;
                     case "x":
                         XPosition = int.Parse(reader.Value, NumberFormatInfo.InvariantInfo);
