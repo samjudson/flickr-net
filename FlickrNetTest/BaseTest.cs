@@ -13,7 +13,7 @@ namespace FlickrNetTest
         Flickr _authInstance;
         Dictionary<string, string> _errorLog;
 
-        static int _testCount = 0;
+        static int _testCount;
 
         protected Flickr Instance
         {
