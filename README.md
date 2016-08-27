@@ -43,7 +43,7 @@ PhotoCollection photos = flickr.PhotosSearch(options);
 
 foreach(Photo photo in photos) 
 {
-  Console.WriteLine("Photo {0} has title {1}", photo.PhotoID, photo.Title);
+  Console.WriteLine("Photo {0} has title {1}", photo.PhotoId, photo.Title);
 }
 ~~~
 
