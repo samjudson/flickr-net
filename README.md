@@ -1,18 +1,18 @@
-FlickrNet-Experimental
+FlickrNet V4
 ======================
 
-Experimental repository for the next version of the FlickrNet API library.
+Branch for the next version of the FlickrNet API library.
 
 Currently I am attempting to convert the library into a T4 based project, 
 so that seperate DLLs can be created easily targetting different platforms.
 
-For the current stable version go to http://flickrnet.codeplex.com 
-or better still just download it from http://www.nuget.org/packages/FlickrNet.
+For the current stable version go to https://github.com/samjudson/flickr-net
+or better still just download it from https://www.nuget.org/packages/FlickrNet.
 
 Change Log
 ==========
 
-July 2015: PCL version released via NuGet. Get [Flickr-4.0.2-alpha](http://www.nuget.org/packages/FlickrNet/4.0.2-alpha) to use.
+July 2015: PCL version released via NuGet. Get [Flickr-4.0.4-alpha](https://www.nuget.org/packages/FlickrNet/4.0.4-alpha) to use.
 
 Feb 2014: Loads of tests being added. I've got the .Net 4.5 branch stable now. 
 I have a few more tests I want to migrate over, 
