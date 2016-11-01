@@ -72,6 +72,11 @@ namespace FlickrNet
         public string GroupName { get; set; }
 
         /// <summary>
+        /// Is the activity type muted.
+        /// </summary>
+        public bool? IsMuted { get; set; }
+
+        /// <summary>
         /// If this is a gallery activityits then this will contain the ID of the gallery.
         /// </summary>
         public string GalleryId { get; set; }
@@ -140,6 +145,9 @@ namespace FlickrNet
                         break;
                     case "group_name":
                         GroupName = reader.Value;
+                        break;
+                    case "is_muted":
+                        IsMuted = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
