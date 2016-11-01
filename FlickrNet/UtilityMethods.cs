@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Collections.Generic;
+using System.Linq;
 #if SILVERLIGHT
 using System.Linq;
 #endif
@@ -669,6 +670,19 @@ namespace FlickrNet
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Converts a collection of <see cref="Style"/> values to a string literal containing the 
+        /// lowercase string representations of each distinct style once, separated by commas.
+        /// </summary>
+        /// <param name="styles">Set of styles.</param>
+        /// <returns>Concatenated styles.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="styles"/> is null.</exception>
+        /// <exception cref="OutOfMemoryException">Out of memory.</exception>
+        public static string StylesToString(ICollection<Style> styles)
+        {
+            return string.Join(",", styles.Distinct().Select(s => s.ToString().ToLower()));
         }
     }
 

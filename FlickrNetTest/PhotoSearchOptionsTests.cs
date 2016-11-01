@@ -1,6 +1,7 @@
 ﻿
 using NUnit.Framework;
 using FlickrNet;
+using System.Collections.Generic;
 
 namespace FlickrNetTest
 {
@@ -36,6 +37,42 @@ namespace FlickrNetTest
             {
                 Assert.IsTrue(photo.Views.HasValue);
             }
+        }
+
+        [Test]
+        public void StylesNotAddedToParameters_WhenItIsNotSet()
+        {
+            var o = new PhotoSearchOptions();
+            var parameters = new Dictionary<string, string>();
+
+            o.AddToDictionary(parameters);
+
+            Assert.IsFalse(parameters.ContainsKey("styles"));
+        }
+
+        [Test]
+        public void StylesNotAddedToParameters_WhenItIsEmpty()
+        {
+            var o = new PhotoSearchOptions { Styles = new List<Style>() };
+            var parameters = new Dictionary<string, string>();
+
+            o.AddToDictionary(parameters);
+
+            Assert.IsFalse(parameters.ContainsKey("styles"));
+        }
+
+        [TestCase(Style.BlackAndWhite)]
+        [TestCase(Style.BlackAndWhite, Style.DepthOfField)]
+        [TestCase(Style.BlackAndWhite, Style.DepthOfField, Style.Minimalism)]
+        [TestCase(Style.BlackAndWhite, Style.DepthOfField, Style.Minimalism, Style.Pattern)]
+        public void StylesAddedToParameters_WhenItIsNotNullOrEmpty(params Style[] styles)
+        {
+            var o = new PhotoSearchOptions { Styles = new List<Style>(styles) };
+            var parameters = new Dictionary<string, string>();
+
+            o.AddToDictionary(parameters);
+
+            Assert.IsTrue(parameters.ContainsKey("styles"));
         }
     }
 }
