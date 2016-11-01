@@ -365,6 +365,11 @@ namespace FlickrNet
         public ICollection<string> ColorCodes { get; set; }
 
         /// <summary>
+        /// A collection of styles the search results will be filtered against.
+        /// </summary>
+        public ICollection<Style> Styles { get; set; }
+
+        /// <summary>
         /// Calculates the Uri for a Flash slideshow for the given search options.
         /// </summary>
         /// <returns></returns>
@@ -452,7 +457,8 @@ namespace FlickrNet
             if (FoursquareVenueID != null) parameters.Add("foursquare_venueid", FoursquareVenueID);
             if (FoursquareWoeID != null) parameters.Add("foursquare_woeid", FoursquareWoeID);
             if (GroupPathAlias != null) parameters.Add("group_path_alias", GroupPathAlias);
-            if( ColorCodes != null && ColorCodes.Count != 0 ) parameters.Add("color_codes", ColorCodeString);
+            if (ColorCodes != null && ColorCodes.Count != 0 ) parameters.Add("color_codes", ColorCodeString);
+            if (Styles != null && Styles.Count != 0) parameters.Add("styles", UtilityMethods.StylesToString(Styles));
         }
 
     }

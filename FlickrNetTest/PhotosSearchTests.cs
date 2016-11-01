@@ -331,6 +331,26 @@ namespace FlickrNetTest
             }
         }
 
+        [TestCase(Style.BlackAndWhite)]
+        [TestCase(Style.DepthOfField)]
+        [TestCase(Style.Minimalism)]
+        [TestCase(Style.Pattern)]
+        public void PhotoSearchByStyles(Style style)
+        {
+            var o = new PhotoSearchOptions
+            {
+                Text = "nature",
+                Page = 1,
+                PerPage = 10,
+                Styles = new[] { style }
+            };
+
+            var photos = Instance.PhotosSearch(o);
+
+            Assert.IsNotNull(photos);
+            Assert.IsNotEmpty(photos);
+        }
+
         [Test]
         public void PhotosSearchIsCommons()
         {

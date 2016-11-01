@@ -461,5 +461,41 @@ namespace FlickrNetTest
             Assert.AreEqual(string.Empty, b);
         }
 
+        [Test]
+        public void StylesToString_ParameterIsNull_ThrowsException()
+        {
+            Assert.Throws<ArgumentNullException>(() => UtilityMethods.StylesToString(null));
+        }
+
+        [Test]
+        public void StyleToString_ParameterIsEmpty_ReturnsEmptyString()
+        {
+            Assert.AreEqual(UtilityMethods.StylesToString(new List<Style>()), string.Empty);
+        }
+
+        [TestCase(Style.BlackAndWhite, "blackandwhite")]
+        [TestCase(Style.DepthOfField, "depthoffield")]
+        [TestCase(Style.Minimalism, "minimalism")]
+        [TestCase(Style.Pattern, "pattern")]
+        public void StylesToString_ConvertsSingletonCollectionIntoString(Style style, string excepted)
+        {
+            Assert.AreEqual(UtilityMethods.StylesToString(new[] { style }), excepted);
+        }
+
+        [TestCase("blackandwhite,depthoffield", Style.BlackAndWhite, Style.DepthOfField)]
+        [TestCase("depthoffield,minimalism,pattern", Style.DepthOfField, Style.Minimalism, Style.Pattern)]
+        [TestCase("minimalism,pattern,depthoffield,blackandwhite", Style.Minimalism, Style.Pattern, Style.DepthOfField, Style.BlackAndWhite)]
+        public void StylesToString_SeparatesValuesByComma(string expected, params Style[] styles)
+        {
+            Assert.AreEqual(UtilityMethods.StylesToString(styles), expected);
+        }
+
+        [TestCase("blackandwhite", Style.BlackAndWhite, Style.BlackAndWhite)]
+        [TestCase("blackandwhite,minimalism", Style.BlackAndWhite, Style.BlackAndWhite, Style.Minimalism, Style.Minimalism)]
+        [TestCase("blackandwhite,pattern,minimalism", Style.BlackAndWhite, Style.BlackAndWhite, Style.Pattern, Style.Minimalism, Style.Minimalism)]
+        public void StylesToString_FiltersOutRecurrences(string expected, params Style[] styles)
+        {
+            Assert.AreEqual(UtilityMethods.StylesToString(styles), expected);
+        }
     }
 }
