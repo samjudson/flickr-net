@@ -52,6 +52,11 @@ namespace FlickrNet
         public string Value { get; set; }
 
         /// <summary>
+        /// Has the user or activity been muted by the user.
+        /// </summary>
+        public bool? IsMuted { get; set; }
+
+        /// <summary>
         /// If this event is a comment then this is the ID of the comment.
         /// </summary>
         public string CommentId { get; set; }
@@ -140,6 +145,9 @@ namespace FlickrNet
                         break;
                     case "group_name":
                         GroupName = reader.Value;
+                        break;
+                    case "is_muted":
+                        IsMuted = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
