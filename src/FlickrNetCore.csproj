@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;NETFX_CORE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_3;NETFX_CORE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="FlickrNet45.Tests\**" />
+    <Compile Remove="FlickrNetPCL\**" />
+    <Compile Remove="FlickrNetWS.MsTests\**" />
+    <Compile Remove="FlickrNetWS.Tests\**" />
+    <Compile Remove="FlickrNetWS\**" />
+    <EmbeddedResource Remove="FlickrNet45.Tests\**" />
+    <EmbeddedResource Remove="FlickrNetPCL\**" />
+    <EmbeddedResource Remove="FlickrNetWS.MsTests\**" />
+    <EmbeddedResource Remove="FlickrNetWS.Tests\**" />
+    <EmbeddedResource Remove="FlickrNetWS\**" />
+    <None Remove="FlickrNet45.Tests\**" />
+    <None Remove="FlickrNetPCL\**" />
+    <None Remove="FlickrNetWS.MsTests\**" />
+    <None Remove="FlickrNetWS.Tests\**" />
+    <None Remove="FlickrNetWS\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="FlickrNet45.cs" />
+    <Compile Remove="FlickrPCL.cs" />
+    <Compile Remove="FlickrWS.cs" />
+    <Compile Remove="Internals\FlickrResponder45.cs" />
+    <Compile Remove="Internals\FlickrResponderAsync.cs" />
+    <Compile Remove="Internals\FlickrResponderSync.cs" />
+    <Compile Remove="Internals\FlickrResponderW8.cs" />
+    <Compile Remove="Properties\AssemblyInfo.cs" />
+    <Compile Remove="T4\FlickrNetSync.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FlickrNet.nuspec" />
+    <None Remove="packages.config" />
+    <None Remove="T4\FlickrNetSync.tt" />
+  </ItemGroup>
+  
+</Project>
