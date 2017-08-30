@@ -7,6 +7,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;NETFX_CORE</DefineConstants>
     <OutputPath>bin\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>obj-core\</BaseIntermediateOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
