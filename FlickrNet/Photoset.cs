@@ -178,11 +178,11 @@ namespace FlickrNet
                         break;
                     case "photos":
                     case "count_photos":
-                        NumberOfPhotos = reader.ReadContentAsInt();
+                        NumberOfPhotos = string.IsNullOrEmpty(reader.Value) ? -1 : reader.ReadContentAsInt();
                         break;
                     case "videos":
                     case "count_videos":
-                        NumberOfVideos = reader.ReadContentAsInt();
+                        NumberOfVideos = string.IsNullOrEmpty(reader.Value) ? -1 : reader.ReadContentAsInt();
                         break;
                     case "needs_interstitial":
                         // Who knows what this is for.
@@ -198,11 +198,11 @@ namespace FlickrNet
                         break;
                     case "view_count":
                     case "count_views":
-                        ViewCount = reader.ReadContentAsInt();
+                        ViewCount = string.IsNullOrEmpty(reader.Value) ? -1 : reader.ReadContentAsInt();
                         break;
                     case "comment_count":
                     case "count_comments":
-                        CommentCount = reader.ReadContentAsInt();
+                        CommentCount = string.IsNullOrEmpty(reader.Value) ? -1 : reader.ReadContentAsInt();
                         break;
                     case "can_comment":
                         CanComment = reader.Value == "1";
