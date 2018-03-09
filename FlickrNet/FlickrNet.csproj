@@ -195,6 +195,7 @@
     <Compile Include="Flickr_PhotosSuggestionsAsync.cs" />
     <Compile Include="Flickr_PlacesAsync.cs" />
     <Compile Include="Flickr_PrefsAsync.cs" />
+    <Compile Include="Flickr_Profile.cs" />
     <Compile Include="Flickr_Push.cs" />
     <Compile Include="Flickr_PushAsync.cs" />
     <Compile Include="Flickr_ReflectionAsync.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="PredicateCollection.cs" />
     <Compile Include="GroupInfo.cs" />
     <Compile Include="GroupInfoCollection.cs" />
+    <Compile Include="Profile.cs" />
     <Compile Include="ShapeData.cs" />
     <Compile Include="ShapeDataCollection.cs" />
     <Compile Include="StatReferrer.cs" />
