@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using NUnit.Framework;
 using FlickrNet;
+using Shouldly;
 
 namespace FlickrNetTest
 {
@@ -129,6 +130,25 @@ namespace FlickrNetTest
 
             Assert.AreEqual(title, gallery.Title);
             Assert.AreEqual(description, gallery.Description);
+        }
+
+        [Test, Category("AccessTokenRequired")]
+        public void GalleriesAddRemovePhoto()
+        {
+            string photoId = "18841298081";
+            string galleryId = "78188-72157622589312064";
+            string comment = "no comment";
+
+            Flickr f = AuthInstance;
+            f.GalleriesAddPhoto(galleryId, photoId, comment);
+
+            var photos = f.GalleriesGetPhotos(galleryId);
+            photos.ShouldContain(p => p.PhotoId == photoId);
+
+            f.GalleriesRemovePhoto(galleryId, photoId, "");
+
+            photos = f.GalleriesGetPhotos(galleryId);
+            photos.ShouldNotContain(p => p.PhotoId == photoId);
         }
 
         [Test]

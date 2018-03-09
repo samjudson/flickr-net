@@ -353,6 +353,49 @@ namespace FlickrNet
         }
 
         /// <summary>
+        /// Get popular photos for the authenticated user.
+        /// </summary>
+        /// <param name="extras"></param>
+        /// <param name="sort"></param>
+        /// <param name="perPage"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public PhotoCollection PhotosGetPopular(PhotoSearchExtras extras = PhotoSearchExtras.None, string sort = "interesting", int perPage = 100, int page = 1)
+        {
+            return PhotosGetPopular(null, extras, sort, perPage, page);
+        }
+
+        /// <summary>
+        /// Get a users popular photos
+        /// </summary>
+        /// <param name="userId">The user id - if null then it is the authenticated user.</param>
+        /// <param name="extras"></param>
+        /// <param name="sort"></param>
+        /// <param name="perPage"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+            public PhotoCollection PhotosGetPopular(string userId, PhotoSearchExtras extras = PhotoSearchExtras.None, string sort = "interesting", int perPage = 100, int page = 1)
+        {
+            if( userId == null)
+            {
+                CheckRequiresAuthentication();
+            }
+
+            var parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.photos.getPopular");
+            if (userId != null)
+            {
+                parameters.Add("user_id", userId);
+            }
+            parameters.Add("sort", sort);
+            parameters.Add("extras", UtilityMethods.ExtrasToString(extras));
+            parameters.Add("per_page", perPage.ToString("0"));
+            parameters.Add("page", page.ToString("0"));
+
+            return GetResponseCache<PhotoCollection>(parameters);
+        }
+
+        /// <summary>
         /// Returns a list of the latest public photos uploaded to flickr.
         /// </summary>
         /// <returns>A <see cref="PhotoCollection"/> class containing the list of photos.</returns>

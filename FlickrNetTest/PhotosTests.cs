@@ -62,6 +62,14 @@ namespace FlickrNetTest
         }
 
         [Test]
+        public void PhotosGetPopular()
+        {
+            var photos = Instance.PhotosGetPopular(TestData.TestUserId);
+
+            photos.ShouldNotBeEmpty();
+        }
+
+        [Test]
         public void PhotosGetExifTest()
         {
             Flickr f = Instance;

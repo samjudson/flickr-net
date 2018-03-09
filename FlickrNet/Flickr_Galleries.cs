@@ -28,6 +28,8 @@ namespace FlickrNet
         /// <param name="comment">A short comment or story to accompany the photo.</param>
         public void GalleriesAddPhoto(string galleryId, string photoId, string comment)
         {
+            CheckRequiresAuthentication();
+
             var parameters = new Dictionary<string, string>();
             parameters.Add("method", "flickr.galleries.addPhoto");
             parameters.Add("gallery_id", galleryId);
@@ -62,6 +64,25 @@ namespace FlickrNet
             parameters.Add("title", title);
             parameters.Add("description", description);
             if (!string.IsNullOrEmpty(primaryPhotoId)) parameters.Add("primary_photo_id", primaryPhotoId);
+
+            GetResponseNoCache<NoResponse>(parameters);
+        }
+
+        /// <summary>
+        /// Remove a photo from a gallery (and optionally update the gallery description).
+        /// </summary>
+        /// <param name="galleryId"></param>
+        /// <param name="photoId"></param>
+        /// <param name="fullResponse"></param>
+        public void GalleriesRemovePhoto(string galleryId, string photoId, string fullResponse = null)
+        {
+            CheckRequiresAuthentication();
+
+            var parameters = new Dictionary<string, string>();
+            parameters.Add("method", "flickr.galleries.removePhoto");
+            parameters.Add("gallery_id", galleryId);
+            parameters.Add("photo_id", photoId);
+            parameters.Add("full_response", fullResponse ?? "");
 
             GetResponseNoCache<NoResponse>(parameters);
         }
