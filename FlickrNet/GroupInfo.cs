@@ -74,6 +74,10 @@ namespace FlickrNet
         /// The total number of photos in the group.
         /// </summary>
         public long PoolCount { get; set; }
+        /// <summary>
+        /// The number of 'topics' in a group?
+        /// </summary>
+        public long TopicCount { get; set; }
 
         /// <summary>
         /// The URL for the group web page.
@@ -122,6 +126,9 @@ namespace FlickrNet
                         break;
                     case "pool_count":
                         PoolCount = reader.ReadContentAsLong();
+                        break;
+                    case "topic_count":
+                        TopicCount = reader.ReadContentAsLong();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

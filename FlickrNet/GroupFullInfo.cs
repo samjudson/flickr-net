@@ -61,6 +61,11 @@ namespace FlickrNet
         public bool IsPoolModerated { get; set; }
 
         /// <summary>
+        /// Something to do with photo limit opt out?
+        /// </summary>
+        public bool PhotoLimitOptOut { get; set; }
+
+        /// <summary>
         /// The HTML for the group's 'Blast' (the banner seen on the group home page).
         /// </summary>
         public string BlastHtml { get; set; }
@@ -167,6 +172,9 @@ namespace FlickrNet
                         break;
                     case "path_alias":
                         PathAlias = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "photo_limit_opt_out":
+                        PhotoLimitOptOut = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

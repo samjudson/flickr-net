@@ -273,7 +273,6 @@ namespace FlickrNetTest
 
         [Test]
         [TestCase("46611802@N00", "")]
-        [TestCase("51266254@N00", "Curitiba, Brazil")]
         public void GetInfoWithInvalidXmlTests(string userId, string location)
         {
             var userInfo = Instance.PeopleGetInfo(userId);

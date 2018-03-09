@@ -66,7 +66,7 @@ namespace FlickrNetTest
             Console.WriteLine(f.LastRequest);
 
             Assert.IsNotNull(photos);
-            Assert.AreEqual(18, photos.Count, "Count should be eighteen.");
+            Assert.AreEqual(16, photos.Count, "Count should be eighteen.");
 
             foreach (var photo in photos)
             {
