@@ -154,6 +154,11 @@ namespace FlickrNet
             }
         }
 
+        /// <summary>
+        /// I don't know what this means. Seems to be blank for most groups.
+        /// </summary>
+        public string SortGroup { get; private set; }
+
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
             while (reader.MoveToNextAttribute())
@@ -162,6 +167,9 @@ namespace FlickrNet
                 {
                     case "id":
                         GalleryId = reader.Value;
+                        break;
+                    case "gallery_id":
+                        // Duplicate of above but not compound
                         break;
                     case "url":
                         if (reader.Value.IndexOf("www.flickr.com", StringComparison.Ordinal) > 0)
@@ -215,6 +223,9 @@ namespace FlickrNet
                         break;
                     case "count_comments":
                         CommentCount = reader.ReadContentAsInt();
+                        break;
+                    case "sort_group":
+                        SortGroup = reader.Value == "" ? null : reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
