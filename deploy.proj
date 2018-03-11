@@ -38,9 +38,9 @@
   </Target>
 
   <Target Name="NuGetPublish" DependsOnTargets="NuGet">
-    <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg $(NugetKey)"/>
-    <Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg $(NugetKey)"/>
-    <Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg $(NugetKey)"/>
+    <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>
+    <Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>
+    <Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>
   </Target>
 
   <Target Name="Version">
