@@ -8,7 +8,6 @@ using System.Security.Permissions;
 
 #if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
 [assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityPermission(SecurityAction.RequestMinimum, Execution = true)]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("FlickrNetTest, PublicKey="+
 "002400000480000094000000060200000024000052534131000400000100010039a991f658101cf8"+
 "2d418ece9ab591a8acd377989a62476f1d58198bed5af088625ca7b04abb869226a06c6dbaecc583"+

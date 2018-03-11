@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace FlickrNet
 {
     public partial class Flickr
     {
+        /// <summary>
+        /// Get a users profile properties.
+        /// </summary>
+        /// <param name="userId">The id of the user to get the profile for.</param>
+        /// <returns>A <see cref="Profile"/> instance containing the details of the users profile.</returns>
         public Profile ProfileGetProfile(string userId)
         {
             var parameters = new Dictionary<string, string> {

@@ -9,9 +9,6 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
-#if SILVERLIGHT
-using System.Linq;
-#endif
 
 namespace FlickrNet
 {
