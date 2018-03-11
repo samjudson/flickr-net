@@ -173,5 +173,24 @@ namespace FlickrNetTest
 
             Assert.AreEqual("Sítio em Arujá - 14/08/2011", pset.Title);
         }
+
+        [Test]
+        public void PhotosetGetInfoGetList()
+        {
+            const string photosetId = "72157660633195178";
+
+            var photosetInfo = AuthInstance.PhotosetsGetInfo(photosetId);
+
+            photosetInfo.NumberOfVideos.ShouldBe(2);
+            photosetInfo.NumberOfPhotos.ShouldBe(72);
+            photosetInfo.Total.ShouldBe(74);
+
+            var photosetList = AuthInstance.PhotosetsGetList();
+
+            var photosetListInfo = photosetList.First(s => s.PhotosetId == photosetId);
+            photosetListInfo.NumberOfVideos.ShouldBe(2);
+            photosetListInfo.NumberOfPhotos.ShouldBe(72);
+            photosetListInfo.Total.ShouldBe(74);
+        }
     }
 }
