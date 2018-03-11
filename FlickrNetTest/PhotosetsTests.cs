@@ -175,6 +175,7 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [Category("AccessTokenRequired")]
         public void PhotosetGetInfoGetList()
         {
             const string photosetId = "72157660633195178";
