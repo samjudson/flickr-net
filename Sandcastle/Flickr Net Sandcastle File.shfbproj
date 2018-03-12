@@ -34,8 +34,8 @@
     </BuildLogFile>
     <FrameworkVersion>.NET 2.0.50727</FrameworkVersion>
     <HelpTitle>Flickr.Net API Library</HelpTitle>
-    <CopyrightHref>http://flickrnet.codeplex.com</CopyrightHref>
-    <CopyrightText>Flickr.Net API Library, GPL 2.0</CopyrightText>
+    <CopyrightHref>https://github.com/samjudson/flickr-net</CopyrightHref>
+    <CopyrightText>Flickr.Net API Library, Appache 2.0 and LGPL 2.1</CopyrightText>
     <FeedbackEMailAddress>sam%40wackylabs.net</FeedbackEMailAddress>
     <FeedbackEMailLinkText>Contact Sam Judson</FeedbackEMailLinkText>
     <PresentationStyle>vs2005</PresentationStyle>

@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FlickrNetTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BT")]
+[assembly: AssemblyCompany("Wackylabs")]
 [assembly: AssemblyProduct("FlickrNetTest")]
-[assembly: AssemblyCopyright("Copyright © BT 2009")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Copyright © Sam Judson 2018")]
+[assembly: AssemblyTrademark("Apache 2.0 + LGPL 2.1 License")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 

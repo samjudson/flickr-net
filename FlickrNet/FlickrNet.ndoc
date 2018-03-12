@@ -31,8 +31,8 @@
             <property name="ShowMissingReturns" value="True" />
             <property name="ShowMissingValues" value="True" />
             <property name="AssemblyVersionInfo" value="AssemblyVersion" />
-            <property name="CopyrightText" value="Released under Common Public License 1.0" />
-            <property name="CopyrightHref" value="http://www.opensource.org/licenses/cpl.php" />
+            <property name="CopyrightText" value="Documentation released under Common Public License 1.0. Library is released under Apache 2.0 and LGPL 2.1 License" />
+            <property name="CopyrightHref" value="https://github.com/samjudson/flickr-net#license" />
             <property name="DocumentAttributes" value="True" />
         </documenter>
         <documenter name="MSDN 2003">
