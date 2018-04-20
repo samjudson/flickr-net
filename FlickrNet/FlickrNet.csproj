@@ -5,6 +5,7 @@
     <PackageId>FlickrNet.Core</PackageId>
     <Description>.Net Core library for accessing Flickr.com Api functionality</Description>
     <Copyright>Copyright © Sam Judson 2010</Copyright>
+    <Version>5.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
