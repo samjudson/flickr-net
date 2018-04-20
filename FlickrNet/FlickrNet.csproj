@@ -1,19 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net40;net45</TargetFrameworks>
     <PackageId>FlickrNet.Core</PackageId>
     <Description>.Net Core library for accessing Flickr.com Api functionality</Description>
     <Copyright>Copyright © Sam Judson 2010</Copyright>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Security.Permissions">
-      <Version>4.4.1</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="System.Security.Permissions" Version="4.4.1" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 
