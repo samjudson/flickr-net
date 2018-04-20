@@ -45,10 +45,11 @@ namespace FlickrNet
         {
             get
             {
-#if !(WindowsCE || MONOTOUCH || SILVERLIGHT)
-                if (cacheDisabled == Tristate.Null && FlickrConfigurationManager.Settings != null)
-                    cacheDisabled = FlickrConfigurationManager.Settings.CacheDisabled ? Tristate.True : Tristate.False;
-#endif
+                // TODO FIX THIS
+                //#if !(WindowsCE || MONOTOUCH || SILVERLIGHT)
+                //                if (cacheDisabled == Tristate.Null && FlickrConfigurationManager.Settings != null)
+                //                    cacheDisabled = FlickrConfigurationManager.Settings.CacheDisabled ? Tristate.True : Tristate.False;
+                //#endif
                 if (cacheDisabled == Tristate.Null) cacheDisabled = Tristate.False;
 
                 return cacheDisabled == Tristate.True;
@@ -68,26 +69,28 @@ namespace FlickrNet
         {
             get
             {
-#if !(WindowsCE || MONOTOUCH || SILVERLIGHT)
-                if (cacheLocation == null && FlickrConfigurationManager.Settings != null)
-                    cacheLocation = FlickrConfigurationManager.Settings.CacheLocation;
-#endif
+                // TODO FIX THIS
+                //#if !(WindowsCE || MONOTOUCH || SILVERLIGHT)
+                //                if (cacheLocation == null && FlickrConfigurationManager.Settings != null)
+                //                    cacheLocation = FlickrConfigurationManager.Settings.CacheLocation;
+                //#endif
                 if (cacheLocation == null)
                 {
                     try
                     {
-#if !(WindowsCE || MONOTOUCH || SILVERLIGHT)
-                        cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FlickrNet");
-#endif
-#if MONOTOUCH
-                        cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "../Library/Caches");
-#endif
-#if WindowsCE
-                        cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FlickrNetCache");
-#endif
-#if SILVERLIGHT
-                        cacheLocation = string.Empty;
-#endif
+                        // TODO FIX THIS
+                        //#if !(WindowsCE || MONOTOUCH || SILVERLIGHT)
+                        //                        cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FlickrNet");
+                        //#endif
+                        //#if MONOTOUCH
+                        //                        cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "../Library/Caches");
+                        //#endif
+                        //#if WindowsCE
+                        //                        cacheLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FlickrNetCache");
+                        //#endif
+                        //#if SILVERLIGHT
+                        //                        cacheLocation = string.Empty;
+                        //#endif
 
                     }
                     catch (System.Security.SecurityException)

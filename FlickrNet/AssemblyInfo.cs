@@ -9,17 +9,11 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Flickr .Net Api Library")]
-[assembly: AssemblyDescription(".Net library for accessing Flickr.com Api functionality")]
-[assembly: AssemblyCompany("http://flickrnet.codeplex.com")]
-[assembly: AssemblyProduct("Flickr .Net Api Library")]
-[assembly: AssemblyCopyright("Copyright © Sam Judson 2010")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
-[assembly: AssemblyVersion("3.14.0.0")]
+[assembly: InternalsVisibleTo("FlickrNetTest")]
 
 

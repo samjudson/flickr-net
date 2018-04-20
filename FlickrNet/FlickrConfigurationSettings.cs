@@ -1,4 +1,5 @@
 #if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+using FlickrNet.Exceptions;
 using System;
 using System.Collections.Specialized;
 using System.Xml;
@@ -82,7 +83,7 @@ namespace FlickrNet
                         }
                         catch (FormatException ex)
                         {
-                            throw new System.Configuration.ConfigurationErrorsException("cacheDisbled should be \"true\" or \"false\"", ex, configNode);
+                            throw new ConfigurationErrorsException("cacheDisbled should be \"true\" or \"false\"", ex, configNode);
                         }
                     case "cacheSize":
                         try
@@ -92,7 +93,7 @@ namespace FlickrNet
                         }
                         catch (FormatException ex)
                         {
-                            throw new System.Configuration.ConfigurationErrorsException("cacheSize should be integer value", ex, configNode);
+                            throw new ConfigurationErrorsException("cacheSize should be integer value", ex, configNode);
                         }
                     case "cacheTimeout":
                         try
@@ -102,7 +103,7 @@ namespace FlickrNet
                         }
                         catch (FormatException ex)
                         {
-                            throw new System.Configuration.ConfigurationErrorsException("cacheTimeout should be TimeSpan value ([d:]HH:mm:ss)", ex, configNode);
+                            throw new ConfigurationErrorsException("cacheTimeout should be TimeSpan value ([d:]HH:mm:ss)", ex, configNode);
                         }
                     case "cacheLocation":
                         cacheLocation = attribute.Value;
@@ -116,12 +117,12 @@ namespace FlickrNet
                         }
                         catch (ArgumentException ex)
                         {
-                            throw new System.Configuration.ConfigurationErrorsException(
+                            throw new ConfigurationErrorsException(
                                 "service must be one of the supported services (See SupportedServices enum)", ex, configNode);
                         }
 
                     default:
-                        throw new System.Configuration.ConfigurationErrorsException(
+                        throw new ConfigurationErrorsException(
                             string.Format(
                                 System.Globalization.CultureInfo.InvariantCulture, 
                                 "Unknown attribute '{0}' in flickrNet node", attribute.Name), configNode);
@@ -136,7 +137,7 @@ namespace FlickrNet
                         ProcessProxyNode(node, configNode);
                         break;
                     default:
-                        throw new System.Configuration.ConfigurationErrorsException(
+                        throw new ConfigurationErrorsException(
                             string.Format(System.Globalization.CultureInfo.InvariantCulture, 
                             "Unknown node '{0}' in flickrNet node", node.Name), configNode);
                 }
@@ -147,7 +148,7 @@ namespace FlickrNet
         private void ProcessProxyNode(XmlNode proxy, XmlNode configNode)
         {
             if (proxy.ChildNodes.Count > 0)
-                throw new System.Configuration.ConfigurationErrorsException("proxy element does not support child elements");
+                throw new ConfigurationErrorsException("proxy element does not support child elements");
 
             proxyDefined = true;
             foreach (XmlAttribute attribute in proxy.Attributes)
@@ -165,7 +166,7 @@ namespace FlickrNet
                         }
                         catch (FormatException ex)
                         {
-                            throw new System.Configuration.ConfigurationErrorsException("proxy port should be integer value", ex, configNode);
+                            throw new ConfigurationErrorsException("proxy port should be integer value", ex, configNode);
                         }
                         break;
                     case "username":
@@ -178,22 +179,22 @@ namespace FlickrNet
                         proxyDomain = attribute.Value;
                         break;
                     default:
-                        throw new System.Configuration.ConfigurationErrorsException(
+                        throw new ConfigurationErrorsException(
                             string.Format(System.Globalization.CultureInfo.InvariantCulture, 
                             "Unknown attribute '{0}' in flickrNet/proxy node", attribute.Name), configNode);
                 }
             }
 
             if (proxyAddress == null)
-                throw new System.Configuration.ConfigurationErrorsException("proxy ipaddress is mandatory if you specify the proxy element");
+                throw new ConfigurationErrorsException("proxy ipaddress is mandatory if you specify the proxy element");
             if (proxyPort == 0)
-                throw new System.Configuration.ConfigurationErrorsException("proxy port is mandatory if you specify the proxy element");
+                throw new ConfigurationErrorsException("proxy port is mandatory if you specify the proxy element");
             if (proxyUsername != null && proxyPassword == null)
-                throw new System.Configuration.ConfigurationErrorsException("proxy password must be specified if proxy username is specified");
+                throw new ConfigurationErrorsException("proxy password must be specified if proxy username is specified");
             if (proxyUsername == null && proxyPassword != null)
-                throw new System.Configuration.ConfigurationErrorsException("proxy username must be specified if proxy password is specified");
+                throw new ConfigurationErrorsException("proxy username must be specified if proxy password is specified");
             if (proxyDomain != null && proxyUsername == null)
-                throw new System.Configuration.ConfigurationErrorsException("proxy username/password must be specified if proxy domain is specified");
+                throw new ConfigurationErrorsException("proxy username/password must be specified if proxy domain is specified");
         }
 
         /// <summary>
