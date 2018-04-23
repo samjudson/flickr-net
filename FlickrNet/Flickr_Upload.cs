@@ -177,7 +177,8 @@ namespace FlickrNet
             
             var req = (HttpWebRequest)WebRequest.Create(uploadUri);
             req.Method = "POST";
-            if (Proxy != null) req.Proxy = Proxy;
+            // TODO FIX THIS
+            //if (Proxy != null) req.Proxy = Proxy;
             req.Timeout = HttpTimeout;
             req.ContentType = "multipart/form-data; boundary=" + boundary;
 

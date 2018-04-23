@@ -42,10 +42,10 @@ namespace FlickrNet
         /// uploaded is recorded in the <see cref="UploadProgressEventArgs"/> class.
         /// </summary>
         public event EventHandler<UploadProgressEventArgs> OnUploadProgress;
-
-#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-        private static bool isServiceSet;
-#endif
+        // TODO FIX THIS
+        //#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+        //        private static bool isServiceSet;
+        //#endif
         private static SupportedService defaultService = SupportedService.Flickr;
 
         private SupportedService service = SupportedService.Flickr;
@@ -102,10 +102,10 @@ namespace FlickrNet
 
         private string lastRequest;
         private string lastResponse;
-
-#if !SILVERLIGHT
-        private WebProxy proxy; 
-#endif
+        // TODO FIX THIS
+        //#if !SILVERLIGHT
+        //        private WebProxy proxy; 
+        //#endif
 
         /// <summary>
         /// Get or set the API Key to be used by all calls. API key is mandatory for all 
@@ -216,21 +216,23 @@ namespace FlickrNet
         {
             get
             {
-#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-                if (!isServiceSet && FlickrConfigurationManager.Settings != null)
-                {
-                    defaultService = FlickrConfigurationManager.Settings.Service;
-                    isServiceSet = true;
-                }
-#endif
+                // TODO FIX THIS
+                //#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+                //                if (!isServiceSet && FlickrConfigurationManager.Settings != null)
+                //                {
+                //                    defaultService = FlickrConfigurationManager.Settings.Service;
+                //                    isServiceSet = true;
+                //                }
+                //#endif
                 return defaultService;
             }
             set
             {
                 defaultService = value;
-#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
-                isServiceSet = true;
-#endif
+                // TODO FIX THIS
+                //#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+                //                isServiceSet = true;
+                //#endif
             }
         }
 
@@ -290,14 +292,14 @@ namespace FlickrNet
             get { return lastRequest; }
         }
 
-#if !SILVERLIGHT
-        /// <summary>
-        /// You can set the <see cref="WebProxy"/> or alter its properties.
-        /// It defaults to your internet explorer proxy settings.
-        /// </summary>
+//#if !SILVERLIGHT
+//        /// <summary>
+//        /// You can set the <see cref="WebProxy"/> or alter its properties.
+//        /// It defaults to your internet explorer proxy settings.
+//        /// </summary>
 
-        public WebProxy Proxy { get { return proxy; } set { proxy = value; } }
-#endif
+//        public WebProxy Proxy { get { return proxy; } set { proxy = value; } }
+//#endif
 
         /// <summary>
         /// Clears the cache completely.
@@ -341,32 +343,32 @@ namespace FlickrNet
             InstanceCacheDisabled = CacheDisabled;
             CurrentService = DefaultService;
 
-#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
+//#if !(MONOTOUCH || WindowsCE || SILVERLIGHT)
 
-            var settings = FlickrConfigurationManager.Settings;
-            if (settings == null) return;
+//            var settings = FlickrConfigurationManager.Settings;
+//            if (settings == null) return;
 
-            if (settings.CacheSize != 0) CacheSizeLimit = settings.CacheSize;
-            if (settings.CacheTimeout != TimeSpan.MinValue) CacheTimeout = settings.CacheTimeout;
-            ApiKey = settings.ApiKey;
-            AuthToken = settings.ApiToken;
-            ApiSecret = settings.SharedSecret;
+//            if (settings.CacheSize != 0) CacheSizeLimit = settings.CacheSize;
+//            if (settings.CacheTimeout != TimeSpan.MinValue) CacheTimeout = settings.CacheTimeout;
+//            ApiKey = settings.ApiKey;
+//            AuthToken = settings.ApiToken;
+//            ApiSecret = settings.SharedSecret;
 
-            if (!settings.IsProxyDefined) return;
+//            if (!settings.IsProxyDefined) return;
 
-            Proxy = new WebProxy {Address = new Uri("http://" + settings.ProxyIPAddress + ":" + settings.ProxyPort)};
+//            Proxy = new WebProxy {Address = new Uri("http://" + settings.ProxyIPAddress + ":" + settings.ProxyPort)};
 
-            if (string.IsNullOrEmpty(settings.ProxyUsername)) return;
+//            if (string.IsNullOrEmpty(settings.ProxyUsername)) return;
 
-            var creds = new NetworkCredential
-                        {
-                            UserName = settings.ProxyUsername,
-                            Password = settings.ProxyPassword,
-                            Domain = settings.ProxyDomain
-                        };
-            Proxy.Credentials = creds;
+//            var creds = new NetworkCredential
+//                        {
+//                            UserName = settings.ProxyUsername,
+//                            Password = settings.ProxyPassword,
+//                            Domain = settings.ProxyDomain
+//                        };
+//            Proxy.Credentials = creds;
 
-#endif
+//#endif
         }
 
         /// <summary>
