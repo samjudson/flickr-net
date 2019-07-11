@@ -53,6 +53,11 @@ namespace FlickrNet
         public int? PositionHeight { get; set; }
 
         /// <summary>
+        /// Is the user account deleted?
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
+        /// <summary>
         /// The path alias for the users photostream, if they have set it.
         /// </summary>
         public string PathAlias { get; set; }
@@ -117,6 +122,9 @@ namespace FlickrNet
                         break;
                     case "h":
                         PositionHeight = reader.ReadContentAsInt();
+                        break;
+                    case "is_deleted":
+                        IsDeleted = reader.Value == "1";
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

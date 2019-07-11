@@ -132,6 +132,7 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [Ignore("This method is throwing a Not Available error at the moment.")]
         public void MachinetagsGetRecentValuesTest()
         {
             var items = Instance.MachineTagsGetRecentValues(DateTime.Now.AddHours(-5));

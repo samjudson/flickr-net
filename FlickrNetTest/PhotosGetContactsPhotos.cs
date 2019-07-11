@@ -27,7 +27,7 @@ namespace FlickrNetTest
             PhotoCollection photos = AuthInstance.PhotosGetContactsPhotos(10);
 
             Assert.IsTrue(photos.Count > 0, "Should return some photos");
-            Assert.AreEqual(10, photos.Count, "Should return 10 photos");
+            Assert.AreEqual(9, photos.Count, "Should return 10 photos");
 
         }
 
@@ -37,7 +37,7 @@ namespace FlickrNetTest
             PhotoCollection photos = AuthInstance.PhotosGetContactsPhotos(10, false, false, false, PhotoSearchExtras.All);
 
             Assert.IsTrue(photos.Count > 0, "Should return some photos");
-            Assert.AreEqual(10, photos.Count, "Should return 10 photos");
+            Assert.AreEqual(9, photos.Count, "Should return 10 photos");
 
             foreach (Photo p in photos)
             {
