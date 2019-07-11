@@ -796,6 +796,16 @@ namespace FlickrNet
         public bool? AuthorIsPro { get; set; }
 
         /// <summary>
+        /// The badge style for a pro user.
+        /// </summary>
+        public string AuthorProBadgeStyle { get; set; }
+
+        /// <summary>
+        /// Is the author of this note has been deleted.
+        /// </summary>
+        public bool? AuthorIsDeleted { get; set; }
+        
+        /// <summary>
         /// The x (left) position of the top left corner of the note.
         /// </summary>
         public int XPosition { get; set; }
@@ -862,6 +872,8 @@ namespace FlickrNet
             {
                 switch (reader.LocalName)
                 {
+                    case "photo_id":
+                        break;
                     case "id":
                         NoteId = reader.Value;
                         break;
@@ -876,6 +888,12 @@ namespace FlickrNet
                         break;
                     case "authorispro":
                         AuthorIsPro = reader.Value == "1";
+                        break;
+                    case "pro_badge":
+                        AuthorProBadgeStyle = reader.Value;
+                        break;
+                    case "authorisdeleted":
+                        AuthorIsDeleted = reader.Value == "1";
                         break;
                     case "x":
                         XPosition = int.Parse(reader.Value, System.Globalization.NumberFormatInfo.InvariantInfo);

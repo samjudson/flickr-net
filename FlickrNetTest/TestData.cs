@@ -71,6 +71,11 @@ namespace FlickrNetTest
 
         static string GetRegistryKey(string name)
         {
+            var value = Environment.GetEnvironmentVariable("FLICKR_TEST_" + name.ToLower());
+            if (!string.IsNullOrEmpty(value))
+            {
+                return value;
+            }
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FlickrNetTest", true);
             if (key != null && key.GetValue(name) != null)
                 return key.GetValue(name).ToString();
@@ -85,31 +90,31 @@ namespace FlickrNetTest
 
         public static Flickr GetSignedInstance()
         {
-            return new Flickr(ApiKey, SharedSecret) {InstanceCacheDisabled = true};
+            return new Flickr(ApiKey, SharedSecret) { InstanceCacheDisabled = true };
         }
 
         public static Flickr GetAuthInstance()
         {
             return new Flickr(ApiKey, SharedSecret)
-                           {
-                               InstanceCacheDisabled = true,
-                               OAuthAccessToken = AccessToken,
-                               OAuthAccessTokenSecret = AccessTokenSecret
-                           };
+            {
+                InstanceCacheDisabled = true,
+                OAuthAccessToken = AccessToken,
+                OAuthAccessTokenSecret = AccessTokenSecret
+            };
         }
 
         public static Flickr GetOldSignedInstance()
         {
-            return new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269") {InstanceCacheDisabled = true};
+            return new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269") { InstanceCacheDisabled = true };
         }
 
         public static Flickr GetOldAuthInstance()
         {
             return new Flickr("3dce465686fd9144c157cb5157bd0e78", "aea31b62c6714269", AuthToken)
-                           {
-                               InstanceCacheDisabled
+            {
+                InstanceCacheDisabled
                                    = true
-                           };
+            };
         }
 
     }

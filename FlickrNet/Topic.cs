@@ -34,6 +34,10 @@ namespace FlickrNet
         /// </summary>
         public bool AuthorIsPro { get; set; }
         /// <summary>
+        /// The badge style for the user if they are a pro.
+        /// </summary>
+        public string ProBadgeStyle { get; set; }
+        /// <summary>
         /// The role within the group of the author of the topic.
         /// </summary>
         public MemberTypes AuthorRole { get; set; }
@@ -185,6 +189,9 @@ namespace FlickrNet
                         break;
                     case "lastedit":
                         DateLastEdited = reader.Value == "" || reader.Value == "0" ? (DateTime?)null : UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "pro_badge":
+                        ProBadgeStyle = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

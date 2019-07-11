@@ -198,10 +198,16 @@ namespace FlickrNet
                         WoeName = reader.Value;
                         break;
                     case "latitude":
-                        Latitude = reader.ReadContentAsDouble();
+                        if (reader.Value != "")
+                        {
+                            Latitude = reader.ReadContentAsDouble();
+                        }
                         break;
                     case "longitude":
-                        Longitude = reader.ReadContentAsDouble();
+                        if (reader.Value != "")
+                        {
+                            Longitude = reader.ReadContentAsDouble();
+                        }
                         break;
                     case "accuracy":
                         Accuracy = (GeoAccuracy)reader.ReadContentAsInt();

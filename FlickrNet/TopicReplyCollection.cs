@@ -151,6 +151,11 @@ namespace FlickrNet
         /// </summary>
         public string AuthorPathAlias { get; set; }
 
+        /// <summary>
+        /// The badge style for the user if they are a pro.
+        /// </summary>
+        public string ProBadgeStyle { get; set; }
+
 
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
@@ -246,6 +251,9 @@ namespace FlickrNet
                         LastEdit = reader.Value == "" || reader.Value == "0"
                             ? (DateTime?)null
                             : UtilityMethods.UnixTimestampToDate(reader.Value);
+                        break;
+                    case "pro_badge":
+                        ProBadgeStyle = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

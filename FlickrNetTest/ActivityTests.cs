@@ -51,7 +51,11 @@ namespace FlickrNetTest
 
             Assert.IsNotNull(items, "ActivityItemCollection should not be null.");
 
-            Assert.AreNotEqual(0, items.Count, "ActivityItemCollection should not be zero.");
+            if( items.Count == 0)
+            {
+                Assert.Inconclusive("Unable to continue the test as no recent activity");
+                return;
+            }
 
             foreach (ActivityItem item in items)
             {

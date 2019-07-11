@@ -96,6 +96,11 @@ namespace FlickrNet
         public int ViewCount { get; set; }
 
         /// <summary>
+        /// The number of items in this gallery.
+        /// </summary>
+        public int TotalCount { get; set; }
+
+        /// <summary>
         /// The number of comments on the gallery.
         /// </summary>
         public int CommentCount { get; set; }
@@ -221,11 +226,17 @@ namespace FlickrNet
                     case "count_views":
                         ViewCount = reader.ReadContentAsInt();
                         break;
+                    case "count_total":
+                        TotalCount = reader.ReadContentAsInt();
+                        break;
                     case "count_comments":
                         CommentCount = reader.ReadContentAsInt();
                         break;
                     case "sort_group":
                         SortGroup = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "current_state":
+                        // Unknown attributes
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
@@ -244,6 +255,9 @@ namespace FlickrNet
                         break;
                     case "description":
                         Description = reader.ReadElementContentAsString();
+                        break;
+                    case "cover_photos":
+                        reader.Skip();
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

@@ -69,6 +69,11 @@ namespace FlickrNet
         public bool? CanBuyPro { get; set; }
 
         /// <summary>
+        /// If the user is a Pro account holder will signify the style of their badge.
+        /// </summary>
+        public string ProBadgeStyle { get; set; }
+
+        /// <summary>
         /// Not sure?
         /// </summary>
         public bool? HasStats { get; set; }
@@ -250,6 +255,9 @@ namespace FlickrNet
                         break;
                     case "expire":
                         // TODO: Not sure what the 'expire' attribute signifies. Is it a Bool?
+                        break;
+                    case "pro_badge":
+                        ProBadgeStyle = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

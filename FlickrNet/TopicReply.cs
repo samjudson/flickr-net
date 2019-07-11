@@ -42,6 +42,10 @@ namespace FlickrNet
         /// </summary>
         public string AuthorPathAlias { get; set; }
         /// <summary>
+        /// The badge style for the user if they are a pro.
+        /// </summary>
+        public string ProBadgeStyle { get; set; }
+        /// <summary>
         /// Can the calling user edit the reply.
         /// </summary>
         public bool CanEdit { get; set; }
@@ -125,6 +129,9 @@ namespace FlickrNet
                         break;
                     case "author_path_alias":
                         AuthorPathAlias = reader.Value == "" ? null : reader.Value;
+                        break;
+                    case "pro_badge":
+                        ProBadgeStyle = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

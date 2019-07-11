@@ -75,6 +75,8 @@ namespace FlickrNet
         /// <param name="reader"></param>
         void IFlickrParsable.Load(System.Xml.XmlReader reader)
         {
+            var elementName = reader.LocalName;
+
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -120,6 +122,11 @@ namespace FlickrNet
 
             reader.Read();
 
+            if( (reader.NodeType == XmlNodeType.Element || reader.NodeType == XmlNodeType.EndElement) && reader.LocalName != elementName)
+            {
+                return;
+            }
+
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 if (reader.NodeType == XmlNodeType.Text)
@@ -137,7 +144,10 @@ namespace FlickrNet
                 }
             }
 
-            reader.Read();
+            if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName == elementName)
+            {
+                reader.Read();
+            }
         }
     }
 }

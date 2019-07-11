@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using FlickrNet;
 using Shouldly;
+using System.Linq;
 
 namespace FlickrNetTest
 {
@@ -66,7 +67,7 @@ namespace FlickrNetTest
             Console.WriteLine(f.LastRequest);
 
             Assert.IsNotNull(photos);
-            Assert.AreEqual(16, photos.Count, "Count should be eighteen.");
+            Assert.AreEqual(15, photos.Count, "Count should be fifteen.");
 
             foreach (var photo in photos)
             {
@@ -194,7 +195,6 @@ namespace FlickrNetTest
             string comment = "You don't get much better than this for the best Entrance to Hell.\n\n" + DateTime.Now.ToString();
             string galleryId = "78188-72157622589312064";
 
-
             Flickr f = AuthInstance;
 
             // Get photos
@@ -204,7 +204,7 @@ namespace FlickrNetTest
             foreach (var p in photos) photoIds.Add(p.PhotoId);
 
             // Remove the last one.
-            GalleryPhoto photo = photos[photos.Count - 1];
+            GalleryPhoto photo = photos.Last(p => p.PhotoId != primaryPhotoId);
             photoIds.Remove(photo.PhotoId);
 
             // Update the gallery
