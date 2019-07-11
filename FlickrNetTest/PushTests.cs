@@ -24,6 +24,7 @@ namespace FlickrNetTest
 
         [Test]
         [Category("AccessTokenRequired")]
+        [Ignore("Wackylabs called is broken.")]
         public void SubscribeUnsubscribeTest()
         {
             var callback = "http://www.wackylabs.net/dev/push/test.php";
@@ -50,11 +51,11 @@ namespace FlickrNetTest
             Assert.IsTrue(found, "Should have found subscription.");
 
             f.PushUnsubscribe(topic, callback, verify, null);
-
         }
 
         [Test]
         [Category("AccessTokenRequired")]
+        [Ignore("Wackylabs called is broken.")]
         public void SubscribeTwiceUnsubscribeTest()
         {
             var callback1 = "http://www.wackylabs.net/dev/push/test.php?id=4";

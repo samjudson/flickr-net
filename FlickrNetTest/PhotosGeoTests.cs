@@ -105,6 +105,7 @@ namespace FlickrNetTest
 
         [Test]
         [Category("AccessTokenRequired")]
+        [Ignore("Flickr not returning place id correctly.")]
         public void PhotosGetCorrectLocationTest()
         {
             var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
@@ -136,6 +137,7 @@ namespace FlickrNetTest
 
         [Test]
         [Category("AccessTokenRequired")]
+        [Ignore("Flickr returning 'Sorry, the Flickr API service is not currently available' error.")]
         public void PhotosGeoSetLocationTest()
         {
             var photo = AuthInstance.PhotosSearch(new PhotoSearchOptions { HasGeo = true, UserId = TestData.TestUserId, Extras = PhotoSearchExtras.Geo }).First();
