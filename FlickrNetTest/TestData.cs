@@ -71,7 +71,7 @@ namespace FlickrNetTest
 
         static string GetRegistryKey(string name)
         {
-            var value = Environment.GetEnvironmentVariable("FLICKR_TEST_" + name.ToLower());
+            var value = Environment.GetEnvironmentVariable("FLICKR_TEST_" + name.ToUpper());
             if (!string.IsNullOrEmpty(value))
             {
                 return value;

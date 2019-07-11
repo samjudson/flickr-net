@@ -1,6 +1,7 @@
 using System;
 using FlickrNet;
 using NUnit.Framework;
+using Shouldly;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 
@@ -9,6 +10,13 @@ namespace FlickrNetTest
     [TestFixture]
     public class AuthHelper
     {
+        [Test]
+        public void CheckEnvironmentVariableForAccessToken()
+        {
+            var value = Environment.GetEnvironmentVariable("FLICKR_TEST_ACCESSTOKEN");
+            value.ShouldNotBeNullOrEmpty();
+        }
+
         /// <summary>
         /// This method will authenticate the current user, and then store the AuthToken in the 
         /// </summary>
