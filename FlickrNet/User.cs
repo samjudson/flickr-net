@@ -79,6 +79,26 @@ namespace FlickrNet
         public bool IsPro { get; set; }
 
         /// <summary>
+        /// If the user is a Pro account holder will signify the style of their badge.
+        /// </summary>
+        public string ProBadgeStyle { get; set; }
+
+        /// <summary>
+        /// What is the upload count for this user.
+        /// </summary>
+        public int? UploadCount { get; set; }
+
+        /// <summary>
+        /// What is the upload limit for this user.
+        /// </summary>
+        public int? UploadLimit { get; set; }
+
+        /// <summary>
+        /// Current status of the user's upload limit.
+        /// </summary>
+        public string UploadLimitStatus { get; set; }
+
+        /// <summary>
         /// The maximum bandwidth (in bytes) that the user can use each month.
         /// </summary>
         public long BandwidthMax { get; set; }
@@ -222,6 +242,25 @@ namespace FlickrNet
                         break;
                     case "ispro":
                         IsPro = reader.Value == "1";
+                        break;
+                    case "pro_badge":
+                        ProBadgeStyle = reader.Value;
+                        break;
+                    case "upload_count":
+                        {
+                            UploadCount = int.TryParse(reader.Value, out int i) ? (int?)i : null;
+                            break;
+                        }
+                    case "upload_limit":
+                        {
+                            if (reader.Value != "-1")
+                            {
+                                UploadLimit = int.TryParse(reader.Value, out int i) ? (int?)i : null;
+                            }
+                            break;
+                        }
+                    case "upload_limit_status":
+                        UploadLimitStatus = reader.Value;
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);

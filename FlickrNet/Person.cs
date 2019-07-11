@@ -74,6 +74,18 @@ namespace FlickrNet
         public string ProBadgeStyle { get; set; }
 
         /// <summary>
+        /// What is the upload count for this user.
+        /// </summary>
+        public int? UploadCount { get; set; }
+        /// <summary>
+        /// What is the upload limit for this user.
+        /// </summary>
+        public int? UploadLimit { get; set; }
+        /// <summary>
+        /// Current status of the user's upload limit.
+        /// </summary>
+        public string UploadLimitStatus { get; set; }
+        /// <summary>
         /// Not sure?
         /// </summary>
         public bool? HasStats { get; set; }
@@ -258,6 +270,25 @@ namespace FlickrNet
                         break;
                     case "pro_badge":
                         ProBadgeStyle = reader.Value;
+                        break;
+                    case "upload_count":
+                        {
+                            UploadCount = int.TryParse(reader.Value, out int i) ? (int?)i : null;
+                            break;
+                        }
+                    case "upload_limit":
+                        {
+                            if (reader.Value != "-1")
+                            {
+                                UploadLimit = int.TryParse(reader.Value, out int i) ? (int?)i : null;
+                            }
+                            break;
+                        }
+                    case "upload_limit_status":
+                        UploadLimitStatus = reader.Value;
+                        break;
+                    case "is_cognito_user":
+                    case "all_rights_reserved_photos_count":
                         break;
                     default:
                         UtilityMethods.CheckParsingException(reader);
