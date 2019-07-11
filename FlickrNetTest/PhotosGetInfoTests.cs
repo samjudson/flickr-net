@@ -253,6 +253,7 @@ namespace FlickrNetTest
         }
 
         [Test]
+        [Ignore("Photo urls appear to have changed to start with 'live' so test is invalid")]
         public void PhotoInfoUrlsShouldMatchSizes()
         {
             var photos =
