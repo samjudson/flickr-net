@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A78529B5-8396-4ECE-84B4-E42E66B4F0F9}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,13 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6B0B4EB0-4A9F-45D5-B79D-F7234CC7B4C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetWP7", "FlickrNet\FlickrNetWP7.csproj", "{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNet", "FlickrNet\FlickrNet.csproj", "{5F017126-C1FF-4996-85CC-6150E80C6AFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetTest", "FlickrNetTest\FlickrNetTest.csproj", "{169D2B40-8833-4AF1-B8CD-CA8B26E2A195}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrNetSilverlight", "FlickrNet\FlickrNetSilverlight.csproj", "{99FD3B5A-FAB3-488E-8169-37842B4F0B18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,18 +28,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Debug|ARM.ActiveCfg = Debug|ARM
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Debug|ARM.Build.0 = Debug|ARM
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Debug|x86.ActiveCfg = Debug|x86
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Debug|x86.Build.0 = Debug|x86
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Release|ARM.ActiveCfg = Release|ARM
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Release|ARM.Build.0 = Release|ARM
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Release|x86.ActiveCfg = Release|x86
-		{56086D96-2F0C-4788-B9E0-9E8EEB671BC9}.Release|x86.Build.0 = Release|x86
 		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F017126-C1FF-4996-85CC-6150E80C6AFC}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -60,16 +44,11 @@ Global
 		{169D2B40-8833-4AF1-B8CD-CA8B26E2A195}.Release|Any CPU.Build.0 = Release|Any CPU
 		{169D2B40-8833-4AF1-B8CD-CA8B26E2A195}.Release|ARM.ActiveCfg = Release|Any CPU
 		{169D2B40-8833-4AF1-B8CD-CA8B26E2A195}.Release|x86.ActiveCfg = Release|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Release|ARM.ActiveCfg = Release|Any CPU
-		{99FD3B5A-FAB3-488E-8169-37842B4F0B18}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B440135E-6B1D-4748-8721-BF6D8467DBB2}
 	EndGlobalSection
 EndGlobal
