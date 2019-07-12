@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 
-  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
-  <!--<Import Project="help.proj"/>-->
+  <!-- <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/> -->
+  <!-- <Import Project="help.proj"/> -->
 
   <PropertyGroup>
     <Major>3</Major>
@@ -13,7 +13,7 @@
     <NugetKey></NugetKey>
   </PropertyGroup>
 
-  <Target Name="Build" DependsOnTargets="Version;Compile;Zip">
+  <Target Name="Build" DependsOnTargets="Compile">
   </Target>
 
   <Target Name="NuGet" DependsOnTargets="Build">
@@ -27,24 +27,25 @@
     <!--<Copy SourceFiles="@(HelpFile)" DestinationFolder="Builds"/>-->
 
     <Exec Command="nuget pack FlickrNet.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
-    <Exec Command="nuget pack FlickrNet.WP7.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
-    <Exec Command="nuget pack FlickrNet.Silverlight.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>
+    <!--<Exec Command="nuget pack FlickrNet.WP7.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>-->
+    <!--<Exec Command="nuget pack FlickrNet.Silverlight.nuspec -Version $(ShortVersion)" WorkingDirectory="Nuget"/>-->
     <!--<Exec Command="nuget pack FlickrNet.CF.nuspec -Version $(ShortVersion)"  WorkingDirectory="Nuget"/>-->
 
     <WriteLinesToFile File="publish.bat" Overwrite="true" Lines="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg $(NugetKey)"/>
-    <WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg $(NugetKey)"/>
-    <WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg $(NugetKey)"/>
+    <!--<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg $(NugetKey)"/>-->
+    <!--<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg $(NugetKey)"/>-->
     <!--<WriteLinesToFile File="publish.bat" Overwrite="false" Lines="nuget push Nuget\FlickrNet.CF.$(ShortVersion).nupkg"/>-->
   </Target>
 
   <Target Name="NuGetPublish" DependsOnTargets="NuGet">
     <Exec Command="nuget push Nuget\FlickrNet.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>
-    <Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>
-    <Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>
+    <!--<Exec Command="nuget push Nuget\FlickrNet.WP7.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>-->
+    <!--<Exec Command="nuget push Nuget\FlickrNet.Silverlight.$(ShortVersion).nupkg -ApiKey $(NugetKey) -source https://api.nuget.org/v3/index.json"/>-->
   </Target>
 
   <Target Name="Version">
 
+    <!-- Move this to a pre-build step in Azure -->
     <AssemblyInfo CodeLanguage="CS"
       OutputFile="FlickrNet\AssemblyInfo.cs"
       AssemblyTitle="Flickr .Net Api Library"
@@ -58,14 +59,12 @@
                />
   </Target>
 
-  <Target Name="Compile" DependsOnTargets="Version">
-    <!-- Compact Framework in VS 2008 -->
-    <!--<MSBuild Projects="FlickrNet.sln" Properties="Configuration=Release" Targets="Rebuild"/>-->
-    <!-- Everything else in VS 2010 -->
+  <Target Name="Compile">
     <MSBuild Projects="FlickrNetVS10.sln" Properties="Configuration=Release" Targets="Rebuild"/>
   </Target>
 
   <Target Name="Zip" DependsOnTargets="Compile">
+    <!-- Move this to a post-build step in Azure -->
     <ItemGroup>
       <ZipFiles Include="FlickrNet\bin\Release\*.*" Exclude="**\*.pdb" />
       <!--<ZipFiles Include="Sandcastle\Help\FlickrNet.chm" />-->

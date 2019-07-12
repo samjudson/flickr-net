@@ -5,7 +5,7 @@
     <authors>Sam Judson</authors>
     <owners>Sam Judson</owners>
     <projectUrl>https://github.com/samjudson/flickr-net</projectUrl>
-    <licenseUrl>https://github.com/samjudson/flickr-net/blob/master/LICENSE</licenseUrl>
+    <license type="expression">LGPL-2.1-only OR Apache-2.0</license>
     <id>FlickrNet</id>
     <title>FlickrNet API Library</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
